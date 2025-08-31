@@ -1,13 +1,16 @@
 <!doctype html>
 
-<!-- Owned by Team "Main Menu" -->
+<!-- Owned by Team 01 -->
 
 <html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Basic Static Site</title>
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="../style.css" />
+
+  <script src="../scripts/vocabulary.js"></script>
+  <script src="../scripts/save.js"></script>
 
   <!-- You are allowed to use JQuery and Vue.js but don't have to. They just make a
   lot of things easier
@@ -22,7 +25,7 @@
 </head>
 <body>
   <header>
-    <h1>Main Menu</h1>
+    <h1>Team 01</h1>
   </header>
 
   <!-- TODO: Remove this div and it's content -->
@@ -32,24 +35,17 @@
 
       <p>Font awesome is working: <i class="fa-solid fa-check"></i> (A checkmark should be visible)</p>
 
-      <button id="check-jquery">Check if Javascript and JQuery is working</button> (Clicking the button should show an altert)
+      <button id="check-jquery">Check if Javascript and JQuery is working</button> (Clicking the button should show an alert)
+
+      <button id="check-saving">Click this button to see if saving works</button>
       <hr>
   </div>
 
-  <main>
+  <main class="game-frame">
+    Implement your game inside this tag.
 
-    <ul>
-      <li><a href="./team01/index.html">Game 1 by Team 1</a></li>
-    </ul>
-
-    <!-- Games can later be displayed using an iframe like this:
-
-    <iframe class="game-frame" style="border: 1px solid black" src="./team01/index.html"></iframe>
-
-    Note that the header and footer of the embedded website should be hidden to
-    make the frame size line up.
-    -->
-
+    <hr>
+    Learning: <div id="display-vocab">(This should be replaced by a word)</div>
   </main>
 
   <footer>
