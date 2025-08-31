@@ -1,0 +1,21 @@
+/*
+=================================================
+Owned by the Menu Team
+=================================================
+*/
+
+body {
+    --frame-width: 800px;
+    --frame-height: 600px;
+}
+
+body {
+    font-family: Arial, sans-serif;
+}
+
+.game-frame {
+    width: var(--frame-width);
+    height: var(--frame-height);
+    margin-left: auto;
+    margin-right: auto;
+}

@@ -1,0 +1,36 @@
+# Fallback, if no other rule matches
+* @xFrednet
+
+# Files owned by the data team
+/scripts/save.js @uu-semp/2025-data-team
+/scripts/vocabulary.js @uu-semp/2025-data-team
+/assets/vocabulary.json @uu-semp/2025-data-team
+
+# Files owned by the menu team
+/index.css @uu-semp/2025-menu-team
+/index.html @uu-semp/2025-menu-team
+/index.js @uu-semp/2025-menu-team
+/style.css @uu-semp/2025-menu-team
+
+# Game Teams:
+
+/team01/ @uu-semp/2025-team-01
+/team02/ @uu-semp/2025-team-02
+/team03/ @uu-semp/2025-team-03
+/team04/ @uu-semp/2025-team-04
+/team05/ @uu-semp/2025-team-05
+/team06/ @uu-semp/2025-team-06
+/team07/ @uu-semp/2025-team-07
+/team08/ @uu-semp/2025-team-08
+/team09/ @uu-semp/2025-team-09
+/team10/ @uu-semp/2025-team-10
+/team11/ @uu-semp/2025-team-11
+/team12/ @uu-semp/2025-team-12
+/team13/ @uu-semp/2025-team-13
+/team14/ @uu-semp/2025-team-14
+/team15/ @uu-semp/2025-team-15
+/team16/ @uu-semp/2025-team-16
+/team17/ @uu-semp/2025-team-17
+/team18/ @uu-semp/2025-team-18
+/team19/ @uu-semp/2025-team-19
+/team20/ @uu-semp/2025-team-20
