@@ -1,8 +1,11 @@
-// Owned by Team "Main Menu"
+// ==============================================
+// Owned by Team 01
+// ==============================================
 
 "use strict";
 
-$(function() {
+$(function() {window.vocabulary.when_ready(function () {
+
   // These are only dummy functions and can be removed.
   $("#check-jquery").on("click", () => {
     alert("JavaScript and jQuery are working.");
@@ -18,6 +21,6 @@ $(function() {
     window.save.set("team01", data);
   });
 
-});
+})});
 
 

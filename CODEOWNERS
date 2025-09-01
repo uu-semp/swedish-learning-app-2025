@@ -1,0 +1,17 @@
+# Fallback, if no other rule matches
+* @xFrednet
+
+# Files owned by the data team
+/scripts/save.js @uu-semp/2025-data-team
+/scripts/vocabulary.js @uu-semp/2025-data-team
+/assets/vocabulary.json @uu-semp/2025-data-team
+
+# Files owned by the menu team
+/index.css @uu-semp/2025-menu-team
+/index.html @uu-semp/2025-menu-team
+/index.js @uu-semp/2025-menu-team
+/style.css @uu-semp/2025-menu-team
+
+# Game Teams:
+
+/team01/ @uu-semp/2025-team-01
