@@ -7,7 +7,9 @@
 "use strict";
 
 // This request is async
-fetch("/assets/vocabulary.json")
+// The .. is relative from a team folder. This is needed to support localhost
+// and GH pages
+fetch("../assets/vocabulary.json")
     .then(res => res.json())
     .then(data => {
         console.log("Successfully loaded the vocabulary")
