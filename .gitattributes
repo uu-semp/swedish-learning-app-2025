@@ -1,0 +1,6 @@
+# Unify line endings
+* text=auto eol=lf
+
+# Mark these files as generated
+assets/vocabulary.json linguist-generated=true
+assets/categories.json linguist-generated=true

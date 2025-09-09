@@ -1,20 +1,190 @@
 {
-    "vocab": [
-        {
-            "sv": "ett fönster",
-            "en": "window"
-        },
-        {
-            "sv": "en dörr",
-            "en": "door"
-        },
-        {
-            "sv": "ett bord",
-            "en": "table"
-        },
-        {
-            "sv": "en stol",
-            "en": "chair"
-        }
-    ]
+  "292c5778": {
+    "en": "window",
+    "sv": "fönster",
+    "article": "ett"
+  },
+  "1b2d5670": {
+    "en": "door",
+    "sv": "dörr",
+    "article": "en"
+  },
+  "196a2e09": {
+    "en": "blackboard",
+    "sv": "tavla",
+    "article": "en"
+  },
+  "7e6c5812": {
+    "en": "table",
+    "sv": "bord",
+    "article": "ett"
+  },
+  "031e117b": {
+    "en": "chair",
+    "sv": "stol",
+    "article": "en"
+  },
+  "6d375947": {
+    "en": "zero",
+    "sv": "noll",
+    "literal": "0"
+  },
+  "29162632": {
+    "en": "one",
+    "sv": "ett",
+    "literal": "1"
+  },
+  "73202703": {
+    "en": "two",
+    "sv": "två",
+    "literal": "2"
+  },
+  "7d4e666c": {
+    "en": "three",
+    "sv": "tre",
+    "literal": "3"
+  },
+  "36211275": {
+    "en": "first",
+    "sv": "första",
+    "literal": "1."
+  },
+  "51085e77": {
+    "en": "second",
+    "sv": "andra",
+    "literal": "2."
+  },
+  "1e055517": {
+    "en": "third",
+    "sv": "tredje",
+    "literal": "3."
+  },
+  "1775693f": {
+    "en": "fourth",
+    "sv": "fjärde",
+    "literal": "4."
+  },
+  "1f780c21": {
+    "en": "fifth",
+    "sv": "femte",
+    "literal": "5."
+  },
+  "101c5e1d": {
+    "en": "sixth",
+    "sv": "sjätte",
+    "literal": "6."
+  },
+  "1431537c": {
+    "en": "seventh",
+    "sv": "sjunde",
+    "literal": "7."
+  },
+  "773e7806": {
+    "en": "eighth",
+    "sv": "åttonde",
+    "literal": "8."
+  },
+  "5d210e41": {
+    "en": "ninth",
+    "sv": "nionde",
+    "literal": "9."
+  },
+  "79152e28": {
+    "en": "tenth",
+    "sv": "tionde",
+    "literal": "10."
+  },
+  "5608397a": {
+    "en": "eleventh",
+    "sv": "elfte",
+    "literal": "11."
+  },
+  "30291c0b": {
+    "en": "twelfth",
+    "sv": "tolfte",
+    "literal": "12."
+  },
+  "5344105d": {
+    "en": "five minutes past",
+    "sv": "Fem över"
+  },
+  "4f192d3c": {
+    "en": "ten minutes past",
+    "sv": "Tio over"
+  },
+  "41331c49": {
+    "en": "quarter past",
+    "sv": "Kvart över"
+  },
+  "3b6c3160": {
+    "en": "it rains",
+    "sv": "det regnar"
+  },
+  "4043786f": {
+    "en": "it snows",
+    "sv": "det snöar"
+  },
+  "14707508": {
+    "en": "it is windy",
+    "sv": "det blåser"
+  },
+  "3501691b": {
+    "en": "it is sunny",
+    "sv": "det är soligt"
+  },
+  "27657a44": {
+    "en": "it is cloudy",
+    "sv": "det är molnigt"
+  },
+  "761f5c6a": {
+    "en": "Monday",
+    "sv": "måndag"
+  },
+  "1d7e2e33": {
+    "en": "Tuesday",
+    "sv": "tisdag"
+  },
+  "2331362b": {
+    "en": "Wednesday",
+    "sv": "onsdag"
+  },
+  "01301227": {
+    "en": "January",
+    "sv": "januari"
+  },
+  "4a0a7202": {
+    "en": "February",
+    "sv": "februari"
+  },
+  "3d50140b": {
+    "en": "March",
+    "sv": "march"
+  },
+  "31034e02": {
+    "en": "T-Shirt",
+    "sv": "t-shirt",
+    "article": "en"
+  },
+  "0c1b5a68": {
+    "en": "sweater",
+    "sv": "tröja",
+    "article": "en"
+  },
+  "0c613e21": {
+    "en": "a pair of jeans",
+    "sv": "par jeans",
+    "article": "ett"
+  },
+  "657d5907": {
+    "en": "white",
+    "sv": "vit"
+  },
+  "52145c35": {
+    "en": "yellow",
+    "sv": "gul"
+  },
+  "6e45235f": {
+    "en": "red",
+    "sv": "röd"
+  }
 }
