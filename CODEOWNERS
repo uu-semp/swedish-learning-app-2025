@@ -1,9 +1,17 @@
 # Fallback, if no other rule matches
 * @xFrednet
 
+# Admin files
+/.gitattributes @xFrednet
+/CODEOWNERS @xFrednet
+/.gitignore @xFrednet
+/README.md @xFrednet
+
 # Files owned by the data team
-/scripts/vocabulary.js @uu-semp/2025-data-team
+/words.csv @uu-semp/2025-data-team
+/assets/gen-vocab.py @uu-semp/2025-data-team
 /assets/vocabulary.json @uu-semp/2025-data-team
+/assets/categories.json @uu-semp/2025-data-team
 
 # Files owned by the menu team
 /scripts/save.js @uu-semp/2025-menu-team
