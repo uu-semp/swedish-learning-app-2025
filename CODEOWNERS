@@ -2,11 +2,11 @@
 * @xFrednet
 
 # Files owned by the data team
-/scripts/save.js @uu-semp/2025-data-team
 /scripts/vocabulary.js @uu-semp/2025-data-team
 /assets/vocabulary.json @uu-semp/2025-data-team
 
 # Files owned by the menu team
+/scripts/save.js @uu-semp/2025-menu-team
 /index.css @uu-semp/2025-menu-team
 /index.html @uu-semp/2025-menu-team
 /index.js @uu-semp/2025-menu-team
