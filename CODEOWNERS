@@ -6,6 +6,7 @@
 /CODEOWNERS @xFrednet
 /.gitignore @xFrednet
 /README.md @xFrednet
+/.github @xFrednet
 
 # Files owned by the data team
 /words.csv @uu-semp/2025-data-team
