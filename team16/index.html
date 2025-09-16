@@ -8,11 +8,11 @@
 </head>
 <body>
 <div id="app" v-cloak>
+
   <!-- Statusbar -->
   <div class="status-bar">
-<html lang="sv">
-<head>
-  <meta charset="UTF-8" />
+    <div>❤️ Liv: {{ lives }}</div>
+    <div>⭐ Poäng: {{ score }}</div>
   <title>Svenska Lärspel</title>
   <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
   <link rel="stylesheet" href="style.css" />
@@ -26,7 +26,7 @@
     <div>📈 Nivå: {{ level }}</div>
   </div>
 
-  <!-- Kevin + fråga -->
+  <!--- Kevin + question -->
   <div class="character-section">
   <div class="character">
     <div class="character-name"><strong>{{ character.name }}</strong></div>
@@ -36,17 +36,17 @@
   <div class="speech" v-if="currentQuestion">
     <div>{{ currentQuestion.instruction }}</div>
 
-    <!-- Översättning -->
+    <!-- Translation -->
     <div v-if="translation" class="translation">{{ translation }}</div>
     <button class="translate-btn" @click="translateQuestion">🌍 Översätt</button>
 
-    <!-- Level 2: färgfrågor -->
+    <!-- Level 2: color questions -->
     <div class="text-question" v-if="currentQuestion.type === 'color'">
       <input v-model="textAnswer" placeholder="Skriv färgen">
       <button @click="checkColorAnswer">Skicka</button>
     </div>
 
-    <!-- Level 3: pekade hus -->
+    <!-- Level 3: pointed houses -->
     <div class="text-question" v-if="currentQuestion.type === 'point'">
       <input v-model="textAnswer" placeholder="Ex: Storgatan 14">
       <button @click="checkPointAnswer">Skicka</button>
@@ -59,7 +59,7 @@
 </div>
 
 
-  <!-- Karta -->
+  <!-- map -->
   <div class="map-wrapper" @click="logCoords($event)">
     <img src="map.png" alt="Karta" class="map-image">
     <button
@@ -73,7 +73,7 @@
       {{ h.number }}
     </button>
 
-    <!-- Markering för level 3 -->
+    <!-- Marker for level 3 -->
     <div 
       v-if="currentQuestion && currentQuestion.type==='point'" 
       class="pointer"
