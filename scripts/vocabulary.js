@@ -12,33 +12,26 @@ window._vocabulary = {
     pending: 0
 }
 
-window._vocabulary.pending += 1;
-// This request is async
+function fetch_json_file(file, field) {
+    window._vocabulary.pending += 1;
+
+    // This request is async
+    fetch(file)
+        .then(res => res.json())
+        .then(data => {
+            console.log(`Data: Successfully loaded \`${file}\``)
+            window._vocabulary[field] = data;
+
+            window._vocabulary.pending -= 1;
+            checkCallbacks();
+        })
+        .catch(err => console.error(`Data: Failed to load \`${file}\``, err));
+}
+
 // The .. is relative from a team folder. This is needed to support localhost
 // and GH pages
-fetch("../assets/vocabulary.json")
-    .then(res => res.json())
-    .then(data => {
-        console.log("Successfully loaded the vocabulary")
-        window._vocabulary.vocab = data;
-
-        window._vocabulary.pending -= 1;
-        checkCallbacks();
-    })
-    .catch(err => console.error("Failed to load `vocabulary.json`", err));
-
-window._vocabulary.pending += 1;
-fetch("../assets/categories.json")
-    .then(res => res.json())
-    .then(data => {
-        console.log("Successfully loaded the categories")
-        window._vocabulary.categories = data;
-
-        window._vocabulary.pending -= 1;
-        checkCallbacks();
-    })
-    .catch(err => console.error("Failed to load `categories.json`", err));
-
+fetch_json_file("../assets/vocabulary.json", "vocab");
+fetch_json_file("../assets/categories.json", "categories");
 
 // Provide functions to be used by other scripts
 window.vocabulary = {
@@ -81,6 +74,37 @@ window.vocabulary = {
         } else {
             this.callbacks.push(callback);
         }
+    },
+
+    load_team_data(team_id) {
+        // Stringify incase this get a number
+        const team_id_str = String(team_id).padStart(2, "0");
+        const team_file = `../assets/team${team_id_str}/vocab_data.json`
+
+        // Only one team should have access at a time. So it should be safe,
+        // to store it in a generic `team` field
+        fetch_json_file(team_file, "team");
+    },
+
+    // This returns the team metadata belonging to the given ID.
+    get_team_data(id) {
+        const team_data = window._vocabulary?.team ?? {};
+
+        if (id in team_data) {
+            return team_data[id];
+        }
+
+        return null;
+    },
+
+    // Returns all keys available in the loaded team data. Note that
+    // `load_team_data()` has to be called first and should be done before
+    // `when_ready()`
+
+    get_team_data_keys() {
+        const team_data = window._vocabulary?.team ?? {};
+
+        return Object.keys(team_data);
     }
 };
 
