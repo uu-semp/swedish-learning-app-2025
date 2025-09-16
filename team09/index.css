@@ -9,4 +9,44 @@ body {
     width: 1000px;
     margin-left: auto;
     margin-right: auto;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
 }
+main.game-frame {
+    
+    padding-bottom: 10rem; 
+  }
+  
+.card {
+    background: #fff;
+    border-radius: 1rem;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    padding: 10rem;
+    text-align: center;
+  }
+  
+  .garment-image {
+    max-width: 200px;
+    margin-bottom: 1rem;
+  }
+  
+  .option {
+    background: #4cafef;
+    color: white;
+    border: none;
+    width: 500px;
+    padding: 0.8rem 1.2rem;
+    border-radius: 0.5rem;
+    margin: 0.5rem;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: transform 0.2s, background 0.2s;
+    text-align: center;
+  }
+  
+  .option:hover {
+    background: #3a9ad9;
+    transform: scale(1.05);
+  }
+  
