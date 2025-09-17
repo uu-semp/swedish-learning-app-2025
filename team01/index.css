@@ -4,9 +4,149 @@ Owned by Team 01
 =================================================
 */
 
+/* Body background */
 body {
-    font-family: Arial, sans-serif;
-    width: 1000px;
-    margin-left: auto;
-    margin-right: auto;
+    background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+    min-height: 100vh;
+}
+
+/* Header styling */
+header h1 {
+    text-align: center;
+    color: #2c3e50;
+    margin: 20px 0;
+    font-size: 2em;
+}
+
+/* Game frame styling */
+.game-frame {
+    background-color: #ffffffcc;
+    /* slightly transparent white */
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Screens (menu, game, end) */
+.game-frame section {
+    text-align: center;
+    padding: 20px;
+}
+
+/* Game board grid for cards */
+#game-board {
+    display: grid;
+    grid-template-columns: repeat(4, 100px);
+    gap: 10px;
+    justify-content: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+/* Memory card styling */
+.card {
+    width: 100px;
+    height: 100px;
+    background-color: #2c3e50;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    cursor: pointer;
+    border-radius: 10px;
+    user-select: none;
+    transition: transform 0.3s, background-color 0.3s;
+}
+
+/* Buttons styling */
+button {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    font-size: 1em;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+button:hover {
+    background-color: #2980b9;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+button:active {
+    transform: translateY(0);
+    box-shadow: none;
+}
+
+/* Menu screen layout */
+#menu-screen {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    /* space between elements */
+    padding: 20px;
+}
+
+/* Info box styling */
+#info-box {
+    background-color: #f9e79f;
+    border-left: 6px solid #f1c40f;
+    padding: 15px 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    width: 100%;
+    text-align: left;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+#info-box h3 {
+    margin-top: 0;
+    color: #b7950b;
+}
+
+#info-box ol {
+    padding-left: 20px;
+}
+
+#info-box li {
+    margin: 8px 0;
+    line-height: 1.5;
+    color: #5d4037;
+}
+
+#info-box p {
+    margin-top: 15px;
+    font-weight: bold;
+    color: #5d4037;
+}
+
+#start-game {
+    padding: 20px 40px;
+    font-size: 2em;
+    padding: 20px 40px;
+    font-size: 1.5em;
+    border-radius: 10px;
+}
+
+#restart-game {
+    padding: 20px 40px;
+    font-size: 2em;
+    padding: 20px 40px;
+    font-size: 1.5em;
+    border-radius: 10px;
+}
+
+footer {
+    width: 800px;
+    margin: 20px auto 0 auto;
+    text-align: center;
+    font-size: 0.9em;
+    color: #555;
 }
