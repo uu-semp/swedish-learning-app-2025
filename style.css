@@ -14,6 +14,4 @@ body {
 .game-frame {
     width: var(--frame-width);
     height: var(--frame-height);
-    margin-left: auto;
-    margin-right: auto;
 }
