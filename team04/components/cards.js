@@ -1,4 +1,4 @@
-export default {
+window.cards = {
     name: "Cards",
     template: `
       <div class="cards-group">
