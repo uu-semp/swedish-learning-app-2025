@@ -12,9 +12,11 @@ Owned by Team 16
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Basic Static Site</title>
   <link rel="stylesheet" href="../style.css" />
+  <link rel="stylesheet" href="welcomeComponent.css" />
 
   <script src="../scripts/vocabulary.js"></script>
   <script src="../scripts/save.js"></script>
+  <script src="welcomeComponent.js"></script>
 
   <!-- You are allowed to use JQuery and Vue.js but don't have to. They just make a
   lot of things easier
@@ -48,21 +50,28 @@ Owned by Team 16
   <main class="game-frame">
     <!--Implement your game inside this tag. -->
     <div class="welcome-container">
-      <h1 class="game-title">???Game Name????</h1>
+      <h1 class="game-title">Game Name</h1>
       <h2 class="welcome-message">Välkommen!</h2>
       <p class="subtitle">Välj en nivå...</p>
       
-      <div class="level-buttons">
-        <button class="level-btn" onclick="startLevel(1)">
-          Nivå 1 <span class="progress-indicator">- 0/10</span>
-        </button>
-        <button class="level-btn" onclick="startLevel(2)">
-          Nivå 2 <span class="progress-indicator">- 0/10</span>
-        </button>
-        <button class="level-btn" onclick="startLevel(3)">
-          Nivå 3 <span class="progress-indicator">- 0/10</span>
-        </button>
+      <div class="level-buttons" id="levelButtons">
+          <!-- Levels will be populated by JavaScript -->
       </div>
+      
+      <button class="summary-btn" onclick="showSummary()">Visa Sammanfattning</button>
+    </div>
+
+  <!-- Summary Modal -->
+    <div id="summaryModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Elevens Framsteg</h2>
+                <span class="close" onclick="closeSummary()">&times;</span>
+            </div>
+            <div class="modal-body" id="summaryContent">
+                <!-- Summary content will be populated by JavaScript -->
+            </div>
+        </div>
     </div>
 
     <hr>
