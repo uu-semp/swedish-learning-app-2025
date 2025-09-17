@@ -4,79 +4,168 @@ Owned by the Menu Team
 =================================================
 */
 
-body {
-    font-family: Arial, sans-serif;
-    width: auto;
-    height: auto;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.game-display {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 90vw;
-    height: 90vh;
-    margin: 5vh 5vw;
-    background-color: rgba(0, 0, 0, 0.8);
-}
-
-.game-display iframe {
-    width: 90vw;
-    height: 90vh;
-}
-
-.header {
+header {
     display: flex;
-    flex-direction: row;
-    width: auto;
-    height: 120px;
-}
-
-.border {
-    display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
-    width: auto;
-    height: 235px;
-    background-color: red;
-}
-
-.border h1 {
+    padding: 10px 10px;
+    height: 50px;
+    background-color: rgb(36, 34, 34);
     color: white;
 }
 
-
-/* https://css-tricks.com/snippets/css/a-guide-to-flexbox/ */
-
-.container {
-    display: flex;
-    flex-direction: row;
-    width: auto;
-    height: auto;
-    justify-content: space-evenly;
+header img {
+    height: 100%;
+    max-height: 100%;
 }
 
-.column {
+.header-btn {
+    background: transparent; 
+    border: 1px solid #ccc; 
+    padding: 0.35rem 0.9rem;
+    border-radius: 20px; 
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s, border-color 0.2s;
+    color: rgb(255, 255, 255);
+}
+
+.header-btn:hover {
+    background: white;
+    color: rgb(55, 54, 54);
+    border-color: white;
+    transform: scale(0.97); 
+}
+
+.menu-bar {
     display: flex;
     flex-direction: column;
-    width: auto;
-    justify-content: flex-start;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 5%;
 }
 
-.item {
+#intro-text {
+    text-align: center;
+    max-width: 700px;
+    margin-bottom: 1rem;
+    color: #222;
+    font-size: 1.1rem;
+    line-height: 1.6;
+}
+
+.filter-bar {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.filter-bar button {
+    background: #fcfcfc;
+    border: 2px solid #542020;
+    padding: 0.3rem 0.9rem;
+    border-radius: 20px;
+    transition: background 0.4s, transform 0.4s;
+}
+
+.filter-bar button:hover {
+    transform: scale(1.1);
+}
+
+.filter-bar button.active {
+    background: #5d1212;
+    color: white;
+    transform: scale(1);
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+    padding: 1rem;
+    align-items: start;
+}
+
+.card {
     display: flex;
     flex-direction: column;
-    width: 512px;
-    height: 720px;
-    margin: 20px;
-    background: blue;
-    stroke: black;
+    height: 100%;
+    border: 2px solid #ddd;
+    border-radius: 12px;
+    transition: transform 0.15s ease;
+    cursor: pointer;
+}
+.card:hover {
+    transform: translateY(-3px);
 }
 
-.game-image {
-    width: auto;
-    height: 240;
+.card img {
+    margin: 15px;
+    aspect-ratio: 16/9; 
+    object-fit: cover;
+    display: block;
+    border-radius: 20px;
+}
+
+.card-body {
+    padding: 14px 16px;
+}
+.card-body h3 {
+    margin: 0 0 6px;
+    font-size: 1.15rem;
+}
+.card-body p {
+    margin: 0;
+    color: #333;
+    line-height: 1.45;
+}
+
+.card-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.75rem;
+}
+
+.tag {
+    background: #701616; 
+    color: #fff;
+    padding: 0.35rem 0.75rem;
+    border-radius: 999px; 
+    font-size: 0.8rem;
+    line-height: 1;
+    white-space: nowrap;
+}
+
+#game-stage {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center; 
+}
+
+#game-stage[hidden] {
+  display: none !important;
+}
+
+.stage-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: var(--frame-width);
+}
+
+#back-btn {
+    margin: 10px 20px;
+    border: 2px solid #000000; 
+    padding: 0.35rem 0.9rem;
+    border-radius: 20px; 
+    cursor: pointer;
+}
+
+#back-btn:hover {
+    background-color: #bbbbbb;
 }
