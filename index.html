@@ -7,73 +7,89 @@ Owned by the Menu Team
 -->
 
 <html lang="en">
+
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Basic Static Site</title>
-  <link rel="stylesheet" href="style.css" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Basic Static Site</title>
+    <link rel="stylesheet" href="style.css" />
 
-  <script src="./scripts/vocabulary.js"></script>
-  <script src="./scripts/save.js"></script>
+    <script src="./scripts/vocabulary.js"></script>
+    <script src="./scripts/save.js"></script>
 
-  <!-- You are allowed to use JQuery and Vue.js but don't have to. They just make a
+    <!-- You are allowed to use JQuery and Vue.js but don't have to. They just make a
   lot of things easier
   -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css"> 
-  <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
-  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 
-  <!-- Site specific scripts and styles -->
-  <link rel="stylesheet" href="index.css" />
-  <script src="index.js" defer></script>
+    <!-- Site specific scripts and styles -->
+    <link rel="stylesheet" href="index.css" />
+    <script src="index.js" defer></script>
 </head>
+
 <body>
-  <header>
-    <h1>Main Menu</h1>
-  </header>
-
-  <!-- TODO: Remove this div and it's content -->
-  <div>
-      <hr>
-      <h2>A basic section to make sure that everything works for everyone</h2>
-
-      <p>Font awesome is working: <i class="fa-solid fa-check"></i> (A checkmark should be visible)</p>
-
-      <button id="check-jquery">Check if Javascript and JQuery is working</button> (Clicking the button should show an alert)
-      <hr>
-  </div>
-
-  <main>
-
-    <ul>
-      <li><a href="./team01/index.html">Game by Team 01</a></li>
-      <li><a href="./team02/index.html">Game by Team 02</a></li>
-      <li><a href="./team04/index.html">Game by Team 04</a></li>
-      <li><a href="./team05/index.html">Game by Team 05</a></li>
-      <li><a href="./team06/index.html">Game by Team 06</a></li>
-      <li><a href="./team07/index.html">Game by Team 07</a></li>
-      <li><a href="./team08/index.html">Game by Team 08</a></li>
-      <li><a href="./team09/index.html">Game by Team 09</a></li>
-      <li><a href="./team10/index.html">Game by Team 10</a></li>
-      <li><a href="./team11/index.html">Game by Team 11</a></li>
-      <li><a href="./team13/index.html">Game by Team 13</a></li>
-      <li><a href="./team14/index.html">Game by Team 14</a></li>
-      <li><a href="./team15/index.html">Game by Team 15</a></li>
-      <li><a href="./team16/index.html">Game by Team 16</a></li>
-    </ul>
-
-    <!-- Games can later be displayed using an iframe like this:
-
-    <iframe class="game-frame" style="border: 1px solid black" src="./team01/index.html"></iframe>
-
-    Note that the header and footer of the embedded website should be hidden to
-    make the frame size line up.
-    -->
-
-  </main>
-
-  <footer>
-    <small>Created as part of the "Software Engineering and Project Management" course 2025</small>
-  </footer>
+    <header>
+        <div class="header">
+            <small>Uppsala-Logo </small>
+            <small>Langauge </small>
+            <small>About </small>
+            <small>Dark-Mode </small>
+        </div>
+    </header>
+    <main>
+        <div class="game-display">
+            <iframe src="./team01/index.html"></iframe>
+        </div>
+        <div class="border">
+            <h1>UU-GAMES</h1>
+        </div>
+        <div class="container">
+            <div class="column">
+                <div class="item">
+                    <img onclick="openIframe('./team01/index.html')" src="image.png" style="width:512px;height:240px;">
+                    <h1>game1</h1>
+                    <p>some game description goes here.................</p>
+                </div>
+                <div class="item">
+                    <img onclick="openIframe('./team03/index.html')" src="image.png" style="width:512px;height:240px;">
+                    <h1>game3</h1>
+                    <p>some game description goes here.................</p>
+                </div>
+                <div class="item">
+                    <img onclick="openIframe('./team05/index.html')" src="image.png" style="width:512px;height:240px;">
+                    <h1>game5</h1>
+                    <p>some game description goes here.................</p>
+                </div>
+                <div class="item">
+                    <img onclick="openIframe('./team07/index.html')" src="image.png" style="width:512px;height:240px;">
+                    <h1>game7</h1>
+                    <p>some game description goes here.................</p>
+                </div>
+            </div>
+            <div class="column">
+                <div class="item">
+                    <img onclick="openIframe('./team02/index.html')" src="image.png" style="width:512px;height:240px;">
+                    <h1>game2</h1>
+                    <p>some game description goes here.................</p>
+                </div>
+                <div class="item">
+                    <img onclick="openIframe('./team04/index.html')" src="image.png" style="width:512px;height:240px;">
+                    <h1>game4</h1>
+                    <p>some game description goes here.................</p>
+                </div>
+                <div class="item">
+                    <img onclick="openIframe('./team06/index.html')" src="image.png" style="width:512px;height:240px;">
+                    <h1>game6</h1>
+                    <p>some game description goes here.................</p>
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer>
+        <small>Created as part of the "Software Engineering and Project Management" course 2025</small>
+    </footer>
 </body>
+
 </html>

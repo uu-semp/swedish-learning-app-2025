@@ -6,7 +6,77 @@ Owned by the Menu Team
 
 body {
     font-family: Arial, sans-serif;
-    width: 1000px;
+    width: auto;
+    height: auto;
     margin-left: auto;
     margin-right: auto;
+}
+
+.game-display {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 90vw;
+    height: 90vh;
+    margin: 5vh 5vw;
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+.game-display iframe {
+    width: 90vw;
+    height: 90vh;
+}
+
+.header {
+    display: flex;
+    flex-direction: row;
+    width: auto;
+    height: 120px;
+}
+
+.border {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: auto;
+    height: 235px;
+    background-color: red;
+}
+
+.border h1 {
+    color: white;
+}
+
+
+/* https://css-tricks.com/snippets/css/a-guide-to-flexbox/ */
+
+.container {
+    display: flex;
+    flex-direction: row;
+    width: auto;
+    height: auto;
+    justify-content: space-evenly;
+}
+
+.column {
+    display: flex;
+    flex-direction: column;
+    width: auto;
+    justify-content: flex-start;
+}
+
+.item {
+    display: flex;
+    flex-direction: column;
+    width: 512px;
+    height: 720px;
+    margin: 20px;
+    background: blue;
+    stroke: black;
+}
+
+.game-image {
+    width: auto;
+    height: 240;
 }
