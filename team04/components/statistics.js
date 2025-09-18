@@ -1,4 +1,4 @@
-window.statistics = {
+export default {
     name: "Statistics",
     template: `
       <section class="statistics">

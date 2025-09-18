@@ -1,5 +1,5 @@
 // components/gameView.js
-window.gameView = {
+export default {
   name: "GameView",
   template: `
     <div>

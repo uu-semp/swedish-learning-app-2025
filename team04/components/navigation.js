@@ -1,4 +1,4 @@
-window.navigation = {
+export default {
     name: "Navigation",
     template: `
       <nav class="navigation">

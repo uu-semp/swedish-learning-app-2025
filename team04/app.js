@@ -1,7 +1,14 @@
+import gameView from "./components/gameView.js";
+import clock from "./components/clock.js";
+import cards from "./components/cards.js";
+import navigation from "./components/navigation.js";
+import statistics from "./components/statistics.js";
+import finishView from "./components/finishView.js";
+
 const app = Vue.createApp({
   data() {
     return {
-      currentView: 'finish' // can be 'game', 'finish', or 'review'
+      currentView: 'game' // can be 'game', 'finish', or 'review'
     };
   },
   computed: {
@@ -10,18 +17,18 @@ const app = Vue.createApp({
         case 'game': return 'game-view';
         case 'finish': return 'finish-view';
         case 'review': return 'review-view';
+        default: return 'game-view'; // fallback
       }
     }
   },
   template: `<component :is="currentComponent"></component>`
 });
 
-// Use globally defined components (retrieved from window.xxx)
-app.component("game-view", window.gameView);
-app.component("clock", window.clock);
-app.component("cards", window.cards);
-app.component("navigation", window.navigation);
-app.component("statistics", window.statistics);
-app.component("finish-view", window.finishView);
+app.component("game-view", gameView);
+app.component("clock", clock);
+app.component("cards", cards);
+app.component("navigation", navigation);
+app.component("statistics", statistics);
+app.component("finish-view", finishView);
 
 app.mount("#app");
