@@ -1,0 +1,102 @@
+<!doctype html>
+
+<!--
+=================================================
+Owned by Team 05
+=================================================
+-->
+
+
+
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Basic Static Site</title>
+  <link rel="stylesheet" href="../style.css" />
+
+  <script src="../scripts/vocabulary.js"></script>
+  <script src="../scripts/save.js"></script>
+
+  <!-- You are allowed to use JQuery and Vue.js but don't have to. They just make a
+  lot of things easier
+  -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css"> 
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+  <!-- Site specific scripts and styles -->
+  <link rel="stylesheet" href="index.css" />
+  <script src="index.js" defer></script>
+</head>
+<body>
+  <header>
+    <h1>Team 05</h1>
+  </header>
+
+  <!-- TODO: Remove this div and it's content -->
+  <div>
+      <hr>
+      <h2>A basic section to make sure that everything works for everyone</h2>
+
+      <p>Font awesome is working: <i class="fa-solid fa-check"></i> (A checkmark should be visible)</p>
+
+      <button id="check-jquery">Check if Javascript and JQuery is working</button> (Clicking the button should show an alert)
+
+      <button id="check-saving">Click this button to see if saving works</button>
+      <hr>
+  </div>
+
+<main class="game-frame">
+  <!-- Start Screen -->
+  <div id="start-screen" class="start-screen">
+    <h2 class="game-title">Red Room</h2>
+    <div class="menu">
+      <button class="menu-btn" id="btn-start"><i class="fa-solid fa-play"></i> Start Game</button>
+      <button class="menu-btn" id="btn-continue"><i class="fa-solid fa-forward"></i> Continue</button>
+      <button class="menu-btn" id="btn-intro"><i class="fa-solid fa-info-circle"></i> Introduction</button>
+      <button class="menu-btn" id="btn-help"><i class="fa-solid fa-question-circle"></i> Help</button>
+    </div>
+  </div>
+
+  <!-- Game Area (hidden by default) -->
+  <div id="game-content" class="hidden">
+    <h3>Learning</h3>
+
+    <!-- word display -->
+    <p id="word-display">(Word will appear here)</p>
+
+    <!-- answer input + check button on the same line -->
+    <div class="answer-row">
+      <input type="text" id="answer-input" placeholder="Enter Swedish translation" autocomplete="off" />
+      <button id="check-answer" class="primary-btn">Check Answer</button>
+    </div>
+
+    <p id="feedback" aria-live="polite"></p>
+
+    <!-- back button only shown inside game area -->
+    <button id="btn-back" class="back-btn"><i class="fa-solid fa-arrow-left"></i> Back to Menu</button>
+  </div>
+
+  <!-- Introduction Modal -->
+  <div id="intro-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="intro-title">
+    <div class="modal-content">
+      <h3 id="intro-title">About Red Room</h3>
+      <p>
+        Red Room is a simple and fun vocabulary game.<br>
+        Use basic English words to learn their Swedish translations.<br>
+        Enjoy your learning journey!
+      </p>
+      <button id="close-intro" class="close-btn"><i class="fa-solid fa-xmark"></i> Close</button>
+    </div>
+  </div>
+</main>
+
+
+
+
+  <footer>
+    <small>Created as part of the "Software Engineering and Project Management" course 2025</small>
+  </footer>
+</body>
+</html>
