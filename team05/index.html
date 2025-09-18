@@ -45,12 +45,53 @@ Owned by Team 05
       <hr>
   </div>
 
-  <main class="game-frame">
-    Implement your game inside this tag.
+<main class="game-frame">
+  <!-- Start Screen -->
+  <div id="start-screen" class="start-screen">
+    <h2 class="game-title">Red Room</h2>
+    <div class="menu">
+      <button class="menu-btn" id="btn-start"><i class="fa-solid fa-play"></i> Start Game</button>
+      <button class="menu-btn" id="btn-continue"><i class="fa-solid fa-forward"></i> Continue</button>
+      <button class="menu-btn" id="btn-intro"><i class="fa-solid fa-info-circle"></i> Introduction</button>
+      <button class="menu-btn" id="btn-help"><i class="fa-solid fa-question-circle"></i> Help</button>
+    </div>
+  </div>
 
-    <hr>
-    Learning: <div id="display-vocab">(This should be replaced by a word)</div>
-  </main>
+  <!-- Game Area (hidden by default) -->
+  <div id="game-content" class="hidden">
+    <h3>Learning</h3>
+
+    <!-- word display -->
+    <p id="word-display">(Word will appear here)</p>
+
+    <!-- answer input + check button on the same line -->
+    <div class="answer-row">
+      <input type="text" id="answer-input" placeholder="Enter Swedish translation" autocomplete="off" />
+      <button id="check-answer" class="primary-btn">Check Answer</button>
+    </div>
+
+    <p id="feedback" aria-live="polite"></p>
+
+    <!-- back button only shown inside game area -->
+    <button id="btn-back" class="back-btn"><i class="fa-solid fa-arrow-left"></i> Back to Menu</button>
+  </div>
+
+  <!-- Introduction Modal -->
+  <div id="intro-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="intro-title">
+    <div class="modal-content">
+      <h3 id="intro-title">About Red Room</h3>
+      <p>
+        Red Room is a simple and fun vocabulary game.<br>
+        Use basic English words to learn their Swedish translations.<br>
+        Enjoy your learning journey!
+      </p>
+      <button id="close-intro" class="close-btn"><i class="fa-solid fa-xmark"></i> Close</button>
+    </div>
+  </div>
+</main>
+
+
+
 
   <footer>
     <small>Created as part of the "Software Engineering and Project Management" course 2025</small>
