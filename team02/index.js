@@ -4,7 +4,6 @@
 
 "use strict";
 
-window.vocabulary.load_team_data(2);
 $(function() {window.vocabulary.when_ready(function () {
 
   // These are only dummy functions and can be removed.

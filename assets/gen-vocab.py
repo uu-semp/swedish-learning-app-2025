@@ -40,9 +40,9 @@ with open(input_file, newline="", encoding="utf-8") as f:
         if row.get("Literal"):
             meta["literal"] = row["Literal"]
         if row.get("Image-path"):
-            meta["img"] = row["Image-path"]
+            meta["img"] = row["Image-url"]
         if row.get("Audio-path"):
-            meta["audio"] = row["Audio-path"]
+            meta["audio"] = row["Audio-url"]
 
         id_to_meta[id_] = meta
 

@@ -4,3 +4,18 @@
 # Mark these files as generated
 assets/vocabulary.json linguist-generated=true
 assets/categories.json linguist-generated=true
+assets/team01/vocab_data.json linguist-generated=true
+assets/team02/vocab_data.json linguist-generated=true
+assets/team03/vocab_data.json linguist-generated=true
+assets/team04/vocab_data.json linguist-generated=true
+assets/team05/vocab_data.json linguist-generated=true
+assets/team06/vocab_data.json linguist-generated=true
+assets/team07/vocab_data.json linguist-generated=true
+assets/team08/vocab_data.json linguist-generated=true
+assets/team09/vocab_data.json linguist-generated=true
+assets/team10/vocab_data.json linguist-generated=true
+assets/team11/vocab_data.json linguist-generated=true
+assets/team13/vocab_data.json linguist-generated=true
+assets/team14/vocab_data.json linguist-generated=true
+assets/team15/vocab_data.json linguist-generated=true
+assets/team16/vocab_data.json linguist-generated=true

@@ -6,32 +6,137 @@
 
 "use strict";
 
+// Indicates if the vocabulary data should be fetched from the repository
+// or from an external source.
+const FETCH_EXTERNAL = true;
+
 window._vocabulary = {
     vocab: null,
     categories: null,
-    pending: 0
+    pending: 0,
+    team: null,
+    populate_team_data: null,
 }
 
-function fetch_json_file(file, field) {
+// ===================================================================================================
+// TODO: Fetching from Google Sheets is a temporary hack and should be replaced with files in the repo
+// ===================================================================================================
+if (FETCH_EXTERNAL) {
     window._vocabulary.pending += 1;
+    (async () => {
+        const papa_promise = new Promise((resolve, reject) => {
+            const script = document.createElement("script");
+            script.src = "https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js";
+            script.onload = resolve;
+            script.onerror = reject;
+            document.head.appendChild(script);
+        });
 
-    // This request is async
-    fetch(file)
-        .then(res => res.json())
-        .then(data => {
-            console.log(`Data: Successfully loaded \`${file}\``)
-            window._vocabulary[field] = data;
+        const sheetId = "1de16iRzmgSqWvTTxiNvQYM79sWJBwFJN0Up3Y0allDg";
+        const url = `https://docs.google.com/spreadsheets/d/${sheetId}/export?format=csv&gid=0`;
 
-            window._vocabulary.pending -= 1;
-            checkCallbacks();
-        })
-        .catch(err => console.error(`Data: Failed to load \`${file}\``, err));
+        const resp = await fetch(url);
+        const text = await resp.text();
+        await papa_promise;
+
+        console.log("Data: All data received")
+        const parsed = Papa.parse(text, { header: true, skipEmptyLines: true });
+        const rows = parsed.data;
+
+        const idToMeta = {};
+        const catToIds = {};
+
+        for (const row of rows) {
+            const id = row["ID"]?.trim();
+            if (!id) continue;
+
+            // Metadata
+            const meta = { en: row["English"], sv: row["Swedish"] };
+            if (row["Article"]?.trim()) meta.article = row["Article"];
+            if (row["Literal"]?.trim()) meta.literal = row["Literal"];
+            if (row["Image-url"]?.trim()) meta.img = row["Image-url"];
+            if (row["Audio-url"]?.trim()) meta.audio = row["Audio-url"];
+            idToMeta[id] = meta;
+
+            // Category
+            const cat = row["Category"]?.trim();
+            if (cat) {
+                if (!catToIds[cat]) catToIds[cat] = [];
+                catToIds[cat].push(id);
+            }
+        }
+
+        window._vocabulary["rows"] = rows;
+        window._vocabulary["vocab"] = idToMeta;
+        window._vocabulary["categories"] = catToIds;
+
+        // Mark operation as done
+        console.log("Data: Parsing complete");
+
+        if (window._vocabulary.team) {
+            window._vocabulary.populate_team_data(window._vocabulary.team);
+        }
+
+        // Check callbacks
+        window._vocabulary.pending -= 1;
+        checkCallbacks();
+    })();
+
+    window._vocabulary.populate_team_data = (team_id) => {
+        if (!("rows" in window._vocabulary)) {
+            window._vocabulary.team = team_id;
+            // This function will be called again, once the raw data is available
+            return;
+        }
+
+        // Stringify incase this get a number
+        const team_id_str = String(team_id).padStart(2, "0");
+        const column_name = `Team${team_id_str}`;
+
+        const idToMeta = {};
+        for (const row of window._vocabulary.rows) {
+            if (!row[column_name] || !row["ID"]) continue;
+
+            const id = row["ID"].trim();
+            idToMeta[id] = row[column_name].trim();
+        }
+
+        window._vocabulary.team = idToMeta;
+        console.log("Data: Loading team data complete");
+    }
+} else {
+    function fetch_json_file(file, field) {
+        window._vocabulary.pending += 1;
+
+        // This request is async
+        fetch(file)
+            .then(res => res.json())
+            .then(data => {
+                console.log(`Data: Successfully loaded \`${file}\``)
+                window._vocabulary[field] = data;
+
+                window._vocabulary.pending -= 1;
+                checkCallbacks();
+            })
+            .catch(err => console.error(`Data: Failed to load \`${file}\``, err));
+    }
+
+    // The .. is relative from a team folder. This is needed to support localhost
+    // and GH pages
+    fetch_json_file("../assets/vocabulary.json", "vocab");
+    fetch_json_file("../assets/categories.json", "categories");
+
+    window._vocabulary.populate_team_data = (team_id) => {
+        // Stringify incase this get a number
+        const team_id_str = String(team_id).padStart(2, "0");
+        const team_file = `../assets/team${team_id_str}/vocab_data.json`
+
+        // Only one team should have access at a time. So it should be safe,
+        // to store it in a generic `team` field
+        fetch_json_file(team_file, "team");
+    }
 }
 
-// The .. is relative from a team folder. This is needed to support localhost
-// and GH pages
-fetch_json_file("../assets/vocabulary.json", "vocab");
-fetch_json_file("../assets/categories.json", "categories");
 
 // Provide functions to be used by other scripts
 window.vocabulary = {
@@ -44,6 +149,8 @@ window.vocabulary = {
     // - `sv`       The vocabulary in swedish
     // - `article`  The article of the word (Optional)
     // - `literal`  The literal representation of the word (Optional)
+    // - `img`      The URL of the image for this word (Optional)
+    // - `audio`    The URL of the audio for this word (Optional)
     get_vocab(id) {
         if (id in window._vocabulary.vocab) {
             return window._vocabulary.vocab[id];
@@ -69,7 +176,7 @@ window.vocabulary = {
     },
 
     when_ready(callback) {
-        if (window._vocabulary !== undefined) {
+        if (window._vocabulary !== undefined && window._vocabulary.pending == 0) {
             callback();
         } else {
             this.callbacks.push(callback);
@@ -77,13 +184,7 @@ window.vocabulary = {
     },
 
     load_team_data(team_id) {
-        // Stringify incase this get a number
-        const team_id_str = String(team_id).padStart(2, "0");
-        const team_file = `../assets/team${team_id_str}/vocab_data.json`
-
-        // Only one team should have access at a time. So it should be safe,
-        // to store it in a generic `team` field
-        fetch_json_file(team_file, "team");
+        window._vocabulary.populate_team_data(team_id);
     },
 
     // This returns the team metadata belonging to the given ID.
@@ -100,7 +201,6 @@ window.vocabulary = {
     // Returns all keys available in the loaded team data. Note that
     // `load_team_data()` has to be called first and should be done before
     // `when_ready()`
-
     get_team_data_keys() {
         const team_data = window._vocabulary?.team ?? {};
 
