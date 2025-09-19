@@ -1,6 +1,7 @@
 [v-cloak]{display:none}
 
 body {
+
 font-family: Arial, sans-serif;
 margin: 0;
 padding: 0;
@@ -178,4 +179,62 @@ animation: pulse 1.5s infinite;
 @keyframes pulse {
 0% { transform: translate(-50%,-50%) scale(1); opacity:1; }
 100% { transform: translate(-50%,-50%) scale(1.5); opacity:0; }
+    font-family: Arial, sans-serif;
+    width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #f5f5dc;
+}
+
+.welcome-container {
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 40px;
+    text-align: center;
+    margin: 50px auto;
+    max-width: 400px;
+}
+
+.game-title {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.welcome-message {
+    font-size: 32px;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.subtitle {
+    font-size: 18px;
+    color: #666;
+    margin-bottom: 30px;
+}
+
+.level-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.level-btn {
+    background-color: #ff9f4a;
+    border: 1px solid #e6903d;
+    border-radius: 5px;
+    padding: 12px 20px;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.level-btn:hover {
+    background-color: #ff8c2e;
+}
+
+.progress-indicator {
+    color: white;
+    font-size: 14px;
 }

@@ -59,6 +59,26 @@
 </div>
 
 
+  <main class="game-frame">
+    <!--Implement your game inside this tag. -->
+    <div class="welcome-container">
+      <h1 class="game-title">???Game Name????</h1>
+      <h2 class="welcome-message">Välkommen!</h2>
+      <p class="subtitle">Välj en nivå...</p>
+      
+      <div class="level-buttons">
+        <button class="level-btn" onclick="startLevel(1)">
+          Nivå 1 <span class="progress-indicator">- 0/10</span>
+        </button>
+        <button class="level-btn" onclick="startLevel(2)">
+          Nivå 2 <span class="progress-indicator">- 0/10</span>
+        </button>
+        <button class="level-btn" onclick="startLevel(3)">
+          Nivå 3 <span class="progress-indicator">- 0/10</span>
+        </button>
+      </div>
+    </div>
+
   <!-- Karta -->
   <div class="map-wrapper" @click="logCoords($event)">
     <img src="map.png" alt="Karta" class="map-image">
