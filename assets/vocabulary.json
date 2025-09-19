@@ -1,20 +1,8 @@
 {
-    "vocab": [
-        {
-            "sv": "ett fönster",
-            "en": "window"
-        },
-        {
-            "sv": "en dörr",
-            "en": "door"
-        },
-        {
-            "sv": "ett bord",
-            "en": "table"
-        },
-        {
-            "sv": "en stol",
-            "en": "chair"
-        }
-    ]
+  "use": {
+    "en": "google sheets",
+    "sv": "development",
+    "article": "during",
+    "literal": "this"
+  }
 }
