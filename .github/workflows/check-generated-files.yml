@@ -1,0 +1,27 @@
+name: Vocab Generation Check
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  check-vocab:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Run vocab generator
+        run: python3 ./assets/gen-vocab.py
+
+      - name: Check for uncommitted changes
+        run: |
+          if ! git diff --exit-code; then
+            echo "❌ Generated vocab files are out of date."
+            echo "Please run 'python3 ./assets/gen-vocab.py' and commit the updated files."
+            exit 1
+          fi
