@@ -42,106 +42,10 @@ header img {
     transform: scale(0.97); 
 }
 
-.menu-bar {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 10px 5%;
-}
-
-#intro-text {
-    text-align: center;
-    max-width: 700px;
-    margin-bottom: 1rem;
-    color: #222;
-    font-size: 1.1rem;
-    line-height: 1.6;
-}
-
-.filter-bar {
-    display: flex;
-    gap: 12px;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-}
-
-.filter-bar button {
-    background: #fcfcfc;
-    border: 2px solid #542020;
-    padding: 0.3rem 0.9rem;
-    border-radius: 20px;
-    transition: background 0.4s, transform 0.4s;
-}
-
-.filter-bar button:hover {
-    transform: scale(1.1);
-}
-
-.filter-bar button.active {
-    background: #5d1212;
-    color: white;
-    transform: scale(1);
-}
-
-.grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 1.5rem;
-    padding: 1rem;
-    align-items: start;
-}
-
-.card {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    border: 2px solid #ddd;
-    border-radius: 12px;
-    transition: transform 0.15s ease;
+ul li a:hover {
     cursor: pointer;
-}
-.card:hover {
-    transform: translateY(-3px);
-}
-
-.card img {
-    margin: 15px;
-    aspect-ratio: 16/9; 
-    object-fit: cover;
-    display: block;
-    border-radius: 20px;
-}
-
-.card-body {
-    padding: 14px 16px;
-}
-.card-body h3 {
-    margin: 0 0 6px;
-    font-size: 1.15rem;
-}
-.card-body p {
-    margin: 0;
-    color: #333;
-    line-height: 1.45;
-}
-
-.card-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    margin-top: 0.75rem;
-}
-
-.tag {
-    background: #701616; 
-    color: #fff;
-    padding: 0.35rem 0.75rem;
-    border-radius: 999px; 
-    font-size: 0.8rem;
-    line-height: 1;
-    white-space: nowrap;
+    color: darkblue;
+    text-decoration: underline;
 }
 
 #game-stage {
