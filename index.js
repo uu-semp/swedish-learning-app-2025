@@ -12,8 +12,10 @@ $(function() {
 });
 
 // Elements
+const frame = document.getElementById("game-frame");
 const menu = document.getElementById("game-menu");
 const stage = document.getElementById("game-stage");
+const backBtn = document.getElementById("back-btn");
 
 
 //// Navigation ////
