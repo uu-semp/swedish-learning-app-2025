@@ -9,9 +9,11 @@ body {
     --frame-width: 800px;
     --frame-height: 600px;
     font-family: 'Work Sans', sans-serif;
+    background-color: rgb(161, 187, 212); /* The blue background should not be visible when iframe is used */
 }
 
 .game-frame {
     width: var(--frame-width);
     height: var(--frame-height);
+    background-color: white;
 }
