@@ -9,4 +9,75 @@ body {
     width: 1000px;
     margin-left: auto;
     margin-right: auto;
+    background-color: #CEFFD7;
 }
+
+.game-frame{
+    margin-top:100px;
+    margin-bottom:100px;
+    background: #9EFFB0;
+    padding: 100px;
+    border-color: #02B823;
+    border-width: 20px;
+    border-radius: 20%;
+
+    border-style:dotted ;
+
+
+}
+
+.main-text{
+    font-weight: bolder;
+    color: black;
+    font-size: 60px;
+    text-align: center;
+    margin-bottom: 100px;
+    margin-top: 100px;
+    
+}
+
+.big-buttons{  
+    font-weight: bold;  
+    background-color: #CEFFD7;
+    border: solid;
+    border-width: 20px;
+    border-radius: 30px;
+    border-color: #02B823;
+    padding: 25px;
+    text-align: center;
+    font-size: 40px;
+    margin: 0px 15px 100px 15px;  /* top right bottom left*/
+}
+
+.big-buttons:hover{
+    background-color: #b6f4c1;
+    cursor: grab;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    transition:  0.3s ease;
+}
+.button-wrapper{
+    display: grid;
+    grid-template-columns: 50% 50%;
+
+}
+
+.info-button{
+    height: 50px;
+    width: 50px;
+    background-color: #CEFFD7;
+    border:solid;
+    border-color: #02B823;
+    border-width: 5px;
+    font-size: 30px;
+    border-radius: 50%;
+
+    float: right;
+}
+
+.info-button:hover{
+    background-color: #b6f4c1;
+    cursor: grab;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    transition:  0.3s ease;
+}
+ 
