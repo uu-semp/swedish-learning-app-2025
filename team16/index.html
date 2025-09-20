@@ -12,10 +12,26 @@
   <div class="status-bar">
 <html lang="sv">
 <head>
-  <meta charset="UTF-8" />
-  <title>Svenska Lärspel</title>
-  <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Basic Static Site</title>
+  <link rel="stylesheet" href="../style.css" />
+  <link rel="stylesheet" href="welcomeComponent.css" />
+
+  <script src="../scripts/vocabulary.js"></script>
+  <script src="../scripts/save.js"></script>
+  <script src="welcomeComponent.js"></script>
+
+  <!-- You are allowed to use JQuery and Vue.js but don't have to. They just make a
+  lot of things easier
+  -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css"> 
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+  <!-- Site specific scripts and styles -->
+  <link rel="stylesheet" href="index.css" />
+  <script src="index.js" defer></script>
 </head>
 <body>
 <div id="app" v-cloak>
@@ -62,21 +78,28 @@
   <main class="game-frame">
     <!--Implement your game inside this tag. -->
     <div class="welcome-container">
-      <h1 class="game-title">???Game Name????</h1>
+      <h1 class="game-title">Game Name</h1>
       <h2 class="welcome-message">Välkommen!</h2>
       <p class="subtitle">Välj en nivå...</p>
       
-      <div class="level-buttons">
-        <button class="level-btn" onclick="startLevel(1)">
-          Nivå 1 <span class="progress-indicator">- 0/10</span>
-        </button>
-        <button class="level-btn" onclick="startLevel(2)">
-          Nivå 2 <span class="progress-indicator">- 0/10</span>
-        </button>
-        <button class="level-btn" onclick="startLevel(3)">
-          Nivå 3 <span class="progress-indicator">- 0/10</span>
-        </button>
+      <div class="level-buttons" id="levelButtons">
+          <!-- Levels will be populated by JavaScript -->
       </div>
+      
+      <button class="summary-btn" onclick="showSummary()">Visa Sammanfattning</button>
+    </div>
+
+  <!-- Summary Modal -->
+    <div id="summaryModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Elevens Framsteg</h2>
+                <span class="close" onclick="closeSummary()">&times;</span>
+            </div>
+            <div class="modal-body" id="summaryContent">
+                <!-- Summary content will be populated by JavaScript -->
+            </div>
+        </div>
     </div>
 
   <!-- Karta -->
