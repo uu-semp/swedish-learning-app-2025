@@ -1,0 +1,13 @@
+.navigation {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    width: 50vw;
+    background-color: pink;
+}
+
+.navigation button {
+    height: 50px;
+    width: 100px;
+}
+

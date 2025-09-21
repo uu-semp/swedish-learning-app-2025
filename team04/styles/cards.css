@@ -1,0 +1,13 @@
+.cards-group {
+    background-color: darksalmon;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: space-between;
+}
+
+.card {
+    border-radius: 10px;
+    height: 5vh;
+    width: 15vw;
+}
