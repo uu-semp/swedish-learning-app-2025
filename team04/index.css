@@ -4,9 +4,33 @@ Owned by Team 04
 =================================================
 */
 
-body {
-    font-family: Arial, sans-serif;
-    width: 1000px;
-    margin-left: auto;
-    margin-right: auto;
+* {
+    margin: 0;
+    padding: 0;
 }
+
+button {
+    cursor: pointer;
+}
+
+#app {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    min-height: 100vh;
+    min-width: 100vw;
+}
+
+/* Cards + Clock */ 
+.center-section {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 5vw;
+    height: 50vh;
+}
+
+
