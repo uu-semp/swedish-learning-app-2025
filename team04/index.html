@@ -25,29 +25,28 @@ Owned by Team 04
 
   <!-- Site specific scripts and styles -->
   <link rel="stylesheet" href="index.css" />
+  <link rel="stylesheet" href="index.css" />
+  <link rel="stylesheet" href="./styles/clock.css">
+  <link rel="stylesheet" href="./styles/cards.css">
+  <link rel="stylesheet" href="./styles/navigation.css">
+  <link rel="stylesheet" href="./styles/statistics.css">
+
   <script src="index.js" defer></script>
+  <!-- Vue App (using ES module) -->
+  <script type="module" src="app.js"></script>
 </head>
+
 <body>
   <header>
     <h1>Team 04</h1>
   </header>
 
-  <!-- TODO: Remove this div and it's content -->
-  <div>
-      <hr>
-      <h2>A basic section to make sure that everything works for everyone</h2>
-
-      <p>Font awesome is working: <i class="fa-solid fa-check"></i> (A checkmark should be visible)</p>
-
-      <button id="check-jquery">Check if Javascript and JQuery is working</button> (Clicking the button should show an alert)
-
-      <button id="check-saving">Click this button to see if saving works</button>
-      <hr>
-  </div>
-
+ 
+ 
   <main class="game-frame">
     Implement your game inside this tag.
-
+    <div id="app">
+      </div>
     <hr>
     Learning: <div id="display-vocab">(This should be replaced by a word)</div>
   </main>
@@ -55,5 +54,7 @@ Owned by Team 04
   <footer>
     <small>Created as part of the "Software Engineering and Project Management" course 2025</small>
   </footer>
+
 </body>
+  
 </html>
