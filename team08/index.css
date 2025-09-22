@@ -96,3 +96,23 @@ input[type="checkbox"]:checked::before {
   background-color: var(--true);
   left: 20px;
 }
+
+/* Welcome screen styles */
+.welcome {
+    width: 800px;
+    height: 600px;
+    max-width: 800px;
+    max-height: 600px;
+    margin: 4rem auto;
+    text-align: center;
+    padding: 0 1rem;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.welcome__title { font-size: clamp(2rem, 3vw + 1rem, 3rem); margin: 0 0 0.5rem; }
+.welcome__subtitle { font-size: clamp(1rem, 1vw + 0.9rem, 1.5rem); margin: 0 0 2rem; color: #111; }
+.welcome__tutorial-box { width: 100%; height: 320px; background: #ddd; border-radius: 8px; margin: 0 auto 2rem; }
+.welcome__start-btn { display: inline-block; font-size: 1.25rem; padding: 1rem 3rem; border: none; border-radius: 8px; background: #A6E389; cursor: pointer; }
+.welcome__start-btn:hover, .welcome__start-btn:focus { outline: 2px solid #222; outline-offset: 2px; filter: brightness(0.97); }
