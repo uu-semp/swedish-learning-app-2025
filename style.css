@@ -3,15 +3,49 @@
 Owned by the Menu Team
 =================================================
 */
+/*
+Style Guide
+
+Use Work Sans for all text.
+Keep headings (h1, h2, h3) black, body (p) text in medium gray,
+and apply the primary red variable (--primary-color) for accents.
+The game frame size is fixed at 800px × 600px.
+
+Aim for a airy, and light UI throughout.
+*/
+@import url('https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+
 
 body {
     --frame-width: 800px;
     --frame-height: 600px;
+    --primary-color: #9d0000
 }
 
 body {
-    font-family: Arial, sans-serif;
+    font:400 1rem/1.375 Work Sans, sans-serif
 }
+
+main{
+    background-color: #fff;
+}
+
+header, footer{
+    display: none;
+}
+
+body>div{
+    display: none;
+}
+
+h1, h2, h3{
+    color: #000;
+}
+
+p{
+    color: #555;
+}
+
 
 .game-frame {
     width: var(--frame-width);
