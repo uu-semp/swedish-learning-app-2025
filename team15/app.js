@@ -1,15 +1,18 @@
-import { StartGameButton, HowToPlayButton } from "./components/buttons.js";
-import { StartView } from "./views/startView.js";
+import { createApp } from "https://unpkg.com/vue@3/dist/vue.esm-browser.js";
+ import components from "./components/index.js";
 
-const app = Vue.createApp({
+
+const app = createApp({
     template : `
     <start-view></start-view>
     `
 
 })
 
-app.component("start-game-button", StartGameButton)
-app.component("how-to-play-button", HowToPlayButton)
-app.component("start-view", StartView)
+// register all global components by gen AI
+Object.entries(components).forEach(([name, component]) => {
+    app.component(name, component);
+  });
+
 
 app.mount("#app")
