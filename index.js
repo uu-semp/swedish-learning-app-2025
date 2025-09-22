@@ -4,13 +4,6 @@
 
 "use strict";
 
-// TODO: Remove this test code
-$(function() {
-    $("#check-jquery").on("click", () => {
-        alert("JavaScript and jQuery are working.");
-    });
-});
-
 // Elements
 const frame = document.getElementById("game-frame");
 const menu = document.getElementById("game-menu");
