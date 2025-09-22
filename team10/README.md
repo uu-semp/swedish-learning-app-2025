@@ -56,3 +56,32 @@ All changes to the source code must have a ticket created in Jira. For example:
 6. **Create a Pull Request** on GitHub.
 
 7. **Approval required:** Follow the current git rule. At least one approval from any team member is required before merging changes to the main branch.
+
+# Dev Tools
+
+The aim of this folder is to have digestible practical tools and information to speed the development process
+
+## Update word list
+
+# To do, run this from code runner.
+
+```bash
+sed -i 's/const FETCH_EXTERNAL = true;/const FETCH_EXTERNAL = false;/' scripts/vocabulary.js
+
+curl -L "https://docs.google.com/spreadsheets/d/1de16iRzmgSqWvTTxiNvQYM79sWJBwFJN0Up3Y0allDg/export?format=csv&gid=0" -o words.csv
+
+grep "const FETCH_EXTERNAL" scripts/vocabulary.js
+
+ls -ltra words.csv
+
+python3 ./assets/gen-vocab.py
+
+wc -l assets/vocabulary.json
+```
+
+## Run static webside locally
+
+
+```bash
+python3 -m http.server 8000
+```
