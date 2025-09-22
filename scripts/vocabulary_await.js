@@ -2,6 +2,8 @@
 // Owned by the Data Team
 // ==============================================
 
+const FETCH_EXTERNAL = false;
+
 /**
  * @typedef {Object} VocabEntry
  * @property {string} en - English word (e.g., "sweater").
@@ -58,6 +60,14 @@
  * @property {number} categoryLength
  */
 
+export async function fetch_sheets() {
+  const sheetId = "1de16iRzmgSqWvTTxiNvQYM79sWJBwFJN0Up3Y0allDg";
+  const external_url = `https://docs.google.com/spreadsheets/d/${sheetId}/export?format=csv&gid=0`;
+
+  const resp = await fetch(FETCH_EXTERNAL ? external_url : "../words.csv");
+  return await resp.text();
+}
+
 /**
  *
  * @returns { Promise<Database>}
@@ -75,11 +85,7 @@ export async function loaddb() {
   await papa_promise;
 
   // Fetching sheets
-  const sheetId = "1de16iRzmgSqWvTTxiNvQYM79sWJBwFJN0Up3Y0allDg";
-  const url = `https://docs.google.com/spreadsheets/d/${sheetId}/export?format=csv&gid=0`;
-
-  const resp = await fetch(url);
-  const text = await resp.text();
+  const text = await fetch_sheets();
 
   console.log("Data: All data received");
 
