@@ -16,6 +16,7 @@ body {
   }
 
 .game-frame {
+    background-image: url(assets/Background.png);
   position: relative;     
 
 }
