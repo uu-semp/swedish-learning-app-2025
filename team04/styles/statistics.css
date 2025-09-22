@@ -1,0 +1,13 @@
+.statistics {
+    align-items: center;
+    background-color: aquamarine;
+    display: flex;
+    height: 10vh;
+    justify-content: center;
+    width: 50vw;
+}
+
+.level-indicator {
+    font-size: 50px;
+    font-weight: bold;
+}

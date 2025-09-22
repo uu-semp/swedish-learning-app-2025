@@ -1,0 +1,200 @@
+.welcome-container {
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 40px;
+    text-align: center;
+    margin: 50px auto;
+    max-width: 400px;
+}
+
+.game-title {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.welcome-message {
+    font-size: 32px;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.subtitle {
+    font-size: 18px;
+    color: #666;
+    margin-bottom: 30px;
+}
+
+.level-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.level-btn {
+    background-color: #ff9f4a;
+    border: 1px solid #e6903d;
+    border-radius: 5px;
+    padding: 12px 20px;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.level-btn:hover {
+    background-color: #ff8c2e;
+}
+
+.level-btn.locked {
+    background-color: #ccc;
+    border: 1px solid #999;
+    cursor: not-allowed;
+    color: #666;
+}
+
+.level-btn.locked:hover {
+    background-color: #ccc;
+}
+
+.level-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.level-name {
+    font-size: 16px;
+}
+
+.progress-indicator {
+    font-size: 14px;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 8px;
+    background-color: rgba(255, 255, 255, 0.3);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background-color: white;
+    border-radius: 4px;
+    transition: width 0.3s ease;
+}
+
+.locked-icon {
+    font-size: 14px;
+    margin-left: 5px;
+}
+
+.summary-btn {
+    background-color: #4CAF50;
+    border: 1px solid #45a049;
+    border-radius: 5px;
+    padding: 10px 20px;
+    color: white;
+    font-size: 14px;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+.summary-btn:hover {
+    background-color: #45a049;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+    background-color: white;
+    margin: 5% auto;
+    padding: 0;
+    border-radius: 8px;
+    width: 80%;
+    max-width: 500px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.modal-header {
+    background-color: #f5f5f5;
+    padding: 15px 20px;
+    border-bottom: 1px solid #ddd;
+    border-radius: 8px 8px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-header h2 {
+    margin: 0;
+    color: #333;
+    font-size: 18px;
+}
+
+.close {
+    color: #999;
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+    line-height: 1;
+}
+
+.close:hover {
+    color: #333;
+}
+
+.modal-body {
+    padding: 20px;
+}
+
+.summary-item {
+    margin-bottom: 15px;
+    padding: 10px;
+    border: 1px solid #eee;
+    border-radius: 5px;
+    background-color: #fafafa;
+}
+
+.summary-level {
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.summary-details {
+    font-size: 14px;
+    color: #666;
+    line-height: 1.4;
+}
+
+.status-completed {
+    color: #4CAF50;
+    font-weight: bold;
+}
+
+.status-in-progress {
+    color: #ff9f4a;
+    font-weight: bold;
+}
+
+.status-locked {
+    color: #999;
+    font-weight: bold;
+}
