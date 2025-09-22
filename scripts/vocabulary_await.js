@@ -2,11 +2,6 @@
 // Owned by the Data Team
 // ==============================================
 
-// This creates the `data` object to import the vocabulary
-
-// Indicates if the vocabulary data should be fetched from the repository
-// or from an external source.
-
 /**
  * @typedef {Object} VocabItem
  * @property {string} en - English word (e.g., "sweater").
@@ -54,6 +49,7 @@
  * @returns { Promise<Database>}
  */
 export async function loaddb() {
+  // Fetching a parser
   const papa_promise = new Promise((resolve, reject) => {
     const script = document.createElement("script");
     script.src =
@@ -62,18 +58,22 @@ export async function loaddb() {
     script.onerror = reject;
     document.head.appendChild(script);
   });
+  await papa_promise;
 
+  // Fetching sheets
   const sheetId = "1de16iRzmgSqWvTTxiNvQYM79sWJBwFJN0Up3Y0allDg";
   const url = `https://docs.google.com/spreadsheets/d/${sheetId}/export?format=csv&gid=0`;
 
   const resp = await fetch(url);
   const text = await resp.text();
-  await papa_promise;
 
   console.log("Data: All data received");
+
+  // Parsing sheets
   const parsed = Papa.parse(text, { header: true, skipEmptyLines: true });
   const rows = parsed.data;
 
+  // Creating two alternative access patterns based on rows
   const idToMeta = {};
   const catToIds = {};
 
