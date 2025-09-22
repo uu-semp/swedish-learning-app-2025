@@ -55,4 +55,4 @@ All changes to the source code must have a ticket created in Jira. For example:
 
 6. **Create a Pull Request** on GitHub.
 
-7. **Approval required:** At least one approval from any team member is required before merging changes to the main branch.
+7. **Approval required:** Follow the current git rule. At least one approval from any team member is required before merging changes to the main branch.
