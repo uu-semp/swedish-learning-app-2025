@@ -1,4 +1,4 @@
-import { loaddb } from "../scripts/vocabulary_await.js";
+import { loaddb, get_random } from "../scripts/vocabulary_await.js";
 // ==============================================
 // Owned by Team 08
 // ==============================================
@@ -10,3 +10,4 @@ function get_vocabulary_word() {
 }
 
 document.querySelector("#display-vocab").textContent = get_vocabulary_word();
+document.querySelector("#display-vocab").textContent = get_random(db);

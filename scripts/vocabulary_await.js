@@ -3,10 +3,20 @@
 // ==============================================
 
 /**
- * @typedef {Object} VocabItem
+ * @typedef {Object} VocabEntry
  * @property {string} en - English word (e.g., "sweater").
- * @property {string} sv - Swedish translation (e.g., "tröja").
+ * @property {string} sv - Swedish translation.
  * @property {string} article - Swedish article ("en" or "ett").
+ */
+
+/**
+ * @typedef {Object.<string, VocabEntry>} VocabMap
+ * A map where keys are strings and values are VocabEntry objects.
+ */
+
+/**
+ * @typedef {Object.<string, string[]>} CategoryMap
+ * A map where keys are categories and values are a list of ids.
  */
 
 /**
@@ -39,9 +49,11 @@
 
 /**
  * @typedef {Object} Database
- * @property {VocabItem[]} vocab - Array of basic vocabulary entries.
- * @property {RowItem[]} rows - Array of detailed entries with metadata.
- * @property {string[]} category - List of category names.
+ * @property {RowItem[]} rows
+ * @property {VocabMap} vocab
+ * @property {number} vocabLength
+ * @property {CategoryMap} categories
+ * @property {number} categoryLength
  */
 
 /**
@@ -101,5 +113,46 @@ export async function loaddb() {
     vocab: idToMeta,
     categories: catToIds,
     rows: rows,
+    vocabLength: Object.keys(idToMeta).length,
+    categoriesLength: Object.keys(catToIds).length,
   };
+}
+
+/**
+ *
+ * @param {Database} db
+ * @param {string} id
+ * @returns {string | null}
+ */
+export function get_vocab(db, id) {
+  if (id in db.vocab) {
+    return db.vocab[id];
+  }
+
+  return null;
+}
+
+/**
+ * Returns a list of vocabulary IDs belonging to the given category.
+ * @param {Database} db
+ * @param {string} category
+ * @returns {string | null}
+ */
+export function get_category(db, category) {
+  if (category in db.categories) {
+    return db.categories[category];
+  }
+
+  return null;
+}
+
+/**
+ * @description Returns a random vocabulary item. See `get_vocab()`
+ * @param {Database} db
+ * @returns {string}
+ */
+export function get_random(db) {
+  const ids = Object.keys(db.vocab);
+  const randomIndex = Math.floor(Math.random() * vocabLength);
+  return db.vocab[ids[randomIndex]];
 }
