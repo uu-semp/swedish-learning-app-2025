@@ -3,7 +3,9 @@
 All changes to the source code must have a ticket created in Jira. For example:
 
 > **User Story:**  
-> As a developer, I want to have documentation about the development practices we are going to follow as a team, so that we can contribute effectively with fewer conflicts and a consistent quality baseline.
+> As a developer, 
+> I want to have documentation about the development practices we are going to follow as a team, 
+> so that we can contribute effectively with fewer conflicts and a consistent quality baseline.
 >
 > **Acceptance Criteria:**
 > - A file called README.md should be created in the team10 folder
