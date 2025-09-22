@@ -14,8 +14,14 @@ body {
   }
 
 .game-frame {
+<<<<<<< HEAD
   position: relative;     
 
+=======
+    border-style: solid;
+    border-width: 1vh;
+    background-image: url(assets/Background.png);
+>>>>>>> 41713b5 (removed our local css border)
 }
 
 .paper {
