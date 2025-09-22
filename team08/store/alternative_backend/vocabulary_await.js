@@ -64,7 +64,9 @@ export async function fetch_sheets() {
   const sheetId = "1de16iRzmgSqWvTTxiNvQYM79sWJBwFJN0Up3Y0allDg";
   const external_url = `https://docs.google.com/spreadsheets/d/${sheetId}/export?format=csv&gid=0`;
 
-  const resp = await fetch(FETCH_EXTERNAL ? external_url : "../words.csv");
+  const resp = await fetch(
+    FETCH_EXTERNAL ? external_url : "../../../words.csv"
+  );
   return await resp.text();
 }
 
