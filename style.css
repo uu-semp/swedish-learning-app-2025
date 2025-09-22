@@ -3,15 +3,31 @@
 Owned by the Menu Team
 =================================================
 */
+@import url('https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+
 
 body {
     --frame-width: 800px;
     --frame-height: 600px;
+    --primary-color: #9d0000
 }
 
 body {
-    font-family: Arial, sans-serif;
+    font:400 1rem/1.375 Work Sans, sans-serif
 }
+
+main{
+    background-color: #fff;
+}
+
+h1, h2, h3{
+    color: #000;
+}
+
+p{
+    color: #555;
+}
+
 
 .game-frame {
     width: var(--frame-width);
