@@ -12,8 +12,6 @@ body {
 }
 
 .game-frame {
-    width: 800;
-    height: 600;
     border-style: solid;
     border-width: 1vh;
     background-image: url(assets/Background.png);
