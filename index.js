@@ -28,7 +28,7 @@ function openIframe(src) {
 
 // Back to menu
 backBtn.addEventListener("click", () => {
-  frame.src = "about:blank"; // Stop the game
+  frame.src = ""; // Stop the game
   stage.hidden = true;
   menu.hidden = false;
 });

@@ -25,6 +25,7 @@ body {
 body {
     font:400 1rem/1.375 Work Sans, sans-serif;
     background-color: rgb(161, 187, 212); /* The blue background should not be visible when iframe is used */
+    margin: 0;
 }
 
 main{
