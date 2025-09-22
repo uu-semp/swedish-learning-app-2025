@@ -1,0 +1,1 @@
+git clone git@github.com:uu-semp/swedish-learning-app-2025.git
