@@ -4,6 +4,31 @@
 
 "use strict";
 
+// Returns an array with all ids for this teams items.
+function getItemsIds() {
+  const Ids = [];
+  const foods = window.vocabulary.get_category("food");
+  const fruits = window.vocabulary.get_category("fruit");
+  foods.map(id => {
+    Ids.push(id);
+  })
+  fruits.map(id => {
+    Ids.push(id);
+  })
+  return Ids;
+}
+
+// Returns an array of Items.
+function getItems() {
+  const items = []
+  const ids = getItemsIds();
+  ids.map(id => {
+    items.push(window.vocabulary.get_vocab(id))
+  })
+  return items;
+
+}
+
 $(function() {window.vocabulary.when_ready(function () {
   // These are only dummy functions and can be removed.
   $("#check-jquery").on("click", () => {
@@ -21,8 +46,9 @@ $(function() {window.vocabulary.when_ready(function () {
   });
 
   // Load all team specific data
-  const keys = window.vocabulary.get_team_data_keys();
-  const items = keys.map(key => window.vocabulary.get_team_data(key));
-  console.log(items);
-})});
+  const items = getItems();
+  if (items != null) {
+    console.log("Fetch all items")
+  }
 
+});});
