@@ -1,4 +1,4 @@
-import { loaddb } from "./vocabulary_await.js";
+import { loaddb } from "../team08/store/alternative_backend/vocabulary_await.js";
 
 const db = await loaddb();
 
