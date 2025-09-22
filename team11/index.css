@@ -15,11 +15,14 @@ body {
 
 .game-frame {
 <<<<<<< HEAD
+<<<<<<< HEAD
   position: relative;     
 
 =======
     border-style: solid;
     border-width: 1vh;
+=======
+>>>>>>> 89e1db7 (Fetch items function + css change)
     background-image: url(assets/Background.png);
 >>>>>>> cc5a64d (removed our local css border)
 }
