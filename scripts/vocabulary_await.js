@@ -130,7 +130,7 @@ export async function loaddb() {
  *
  * @param {Database} db
  * @param {string} id
- * @returns {string | null}
+ * @returns {VocabEntry | null}
  */
 export function get_vocab(db, id) {
   if (id in db.vocab) {
@@ -144,7 +144,7 @@ export function get_vocab(db, id) {
  * Returns a list of vocabulary IDs belonging to the given category.
  * @param {Database} db
  * @param {string} category
- * @returns {string | null}
+ * @returns {string[] | null}
  */
 export function get_category(db, category) {
   if (category in db.categories) {
@@ -157,7 +157,7 @@ export function get_category(db, category) {
 /**
  * @description Returns a random vocabulary item. See `get_vocab()`
  * @param {Database} db
- * @returns {string}
+ * @returns {VocabEntry}
  */
 export function get_random(db) {
   const ids = Object.keys(db.vocab);

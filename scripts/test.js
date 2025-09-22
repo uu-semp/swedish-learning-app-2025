@@ -69,3 +69,7 @@ Object.keys(db.vocab).forEach((key) => {
 });
 
 console.log(result);
+
+console.log(get_vocabulary_word());
+console.log(get_random(db).sv);
+console.log(get_category(db, "food"));
