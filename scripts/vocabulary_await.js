@@ -19,16 +19,19 @@
  * A map where keys are categories and values are a list of ids.
  */
 
+// Currently there are some problems with these typings because of how the database is structured.
 /**
  * @typedef {Object} RowItem
- * @property {string} Article - The grammatical article ("ett" or "en").
- * @property {string} AudioUrl - URL to audio pronunciation (may be empty).
- * @property {string} Category - Category of the word (e.g., "furniture").
+ * @property {string} Article - The grammatical article (e.g., "ett" or "en").
+ * @property {string} Audio_url - URL or path to audio pronunciation (may be empty).
+ * @property {string} Category - Category of the item (e.g., "furniture").
  * @property {string} English - English word (e.g., "window").
  * @property {string} ID - Unique identifier for the entry.
- * @property {string} ImageUrl - Path or URL to the image (e.g., "/team08/assets/images/image1.png").
+ * @property {string} Image_copyright_info - Copyright or license information for the image.
+ * @property {string} Image_url - URL or path to the image.
  * @property {string} Literal - Literal translation (can be empty).
  * @property {string} Swedish - Swedish word (e.g., "fönster").
+ * @property {string} Swedish_Plural - Swedish plural form (may be empty).
  * @property {string} Team01
  * @property {string} Team02
  * @property {string} Team03
@@ -44,7 +47,6 @@
  * @property {string} Team14
  * @property {string} Team15
  * @property {string} Team16
- * @property {string} Team17
  */
 
 /**
