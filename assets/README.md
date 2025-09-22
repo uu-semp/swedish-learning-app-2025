@@ -33,16 +33,18 @@ Each row on the sheet corresponds to one vocabulary. The following is a descript
 | English | The vocabulary in English |
 | Article | The article, or leave empty if none |
 | Swedish | The vocabulary in Swedish |
+| Swedish_plural | The vocabulary in Swedish |
 | Literal | The literal representation of the vocabulary or empty |
 | Category | The category this word belongs to |
 | Image-url | URL of an image. Can be relative (/assets/images/<id>.png) or an external URL. Supported: PNG, JPG. |
+| Image_copyright_info | Copyright information which might need to be displayed with the image for legal reasons. |
 | Audio-url | URL of an audio file. Can be relative (/assets/audio/<id>.mp3) or an external URL. Supported: MP3, WAV. |
 
-⚠️ Check license information before adding images or audio files. Most assets require attribution.
+⚠️ Check license information before adding images or audio files. Most assets require attribution. Prefer making your own assets or using images from the public domain, which don't require attribution.
 
-| ID       | English | Article | Swedish | Literal | Category  | Image URL                | Audio URL               |
-| -------- | ------- | ------- | ------- | ------- | --------- | ------------------------ | ----------------------- |
-| a1b2c3d4 | chair   | en      | stol    |         | furniture | /assets/images/chair.png | /assets/audio/chair.mp3 |
+| ID       | English | Article | Swedish | Swedish_plural | Literal | Category  | Image_URL                | Image_copyright_info | Audio_URL               |
+| -------- | ------- | ------- | ------- |--------------- | ------- | --------- | ------------------------ | -------------------- | ----------------------- |
+| a1b2c3d4 | chair   | en      | stol    | stolar         |         | furniture | /assets/images/chair.png | "Standard chair modern" by <a href="https://commons.wikimedia.org/wiki/user:Pk0001">Pk0001</a> licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0">CC BY-SA 4.0</a> | /assets/audio/chair.mp3 |
 
 #### Access general data
 
@@ -51,12 +53,14 @@ The data is structured like a relational database, keyed by vocabulary ID. Use t
 * `window.vocabulary.get_vocab(id)`: This returns the vocabulary metadata belonging to the given ID.
 
     Words usually have the following metadata:
-    - `en`       The vocabulary in english
-    - `sv`       The vocabulary in swedish
-    - `article`  The article of the word (Optional)
-    - `literal`  The literal representation of the word (Optional)
-    - `img`      The URL of the image for this word (Optional)
-    - `audio`    The URL of the audio for this word (Optional)
+    - `en`              The vocabulary in english
+    - `sv`              The vocabulary in swedish
+    - `sv_pl`           The plural of the vocabulary in swedish (Optional)
+    - `article`         The article of the word (Optional)
+    - `literal`         The literal representation of the word (Optional)
+    - `img`             The URL of the image for this word (Optional)
+    - `img_copyright`   The copyright information for this image if it needs to be displayed (Optional)
+    - `audio`           The URL of the audio for this word (Optional)
 
 * `window.vocabulary.get_category(category)`: Returns a list of vocabulary IDs belonging to the given category.
 

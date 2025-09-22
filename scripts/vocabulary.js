@@ -52,10 +52,12 @@ if (FETCH_EXTERNAL) {
 
             // Metadata
             const meta = { en: row["English"], sv: row["Swedish"] };
+            if (row["Swedish_plural"]?.trim()) meta.sv_pl = row["Swedish_plural"];
             if (row["Article"]?.trim()) meta.article = row["Article"];
             if (row["Literal"]?.trim()) meta.literal = row["Literal"];
-            if (row["Image-url"]?.trim()) meta.img = row["Image-url"];
-            if (row["Audio-url"]?.trim()) meta.audio = row["Audio-url"];
+            if (row["Image_url"]?.trim()) meta.img = row["Image_url"];
+            if (row["Image_copyright_info"]?.trim()) meta.img_copyright = row["Image_copyright_info"];
+            if (row["Audio_url"]?.trim()) meta.audio = row["Audio_url"];
             idToMeta[id] = meta;
 
             // Category
