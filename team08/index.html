@@ -46,10 +46,15 @@ Owned by Team 08
   </div>
 
   <main class="game-frame">
-    Implement your game inside this tag.
+    <section id="welcome" class="welcome" aria-labelledby="welcome-title">
+      <h1 id="welcome-title" class="welcome__title">Say what?</h1>
+      <p class="welcome__subtitle">A game of matching picture to audio</p>
 
-    <hr>
-    Learning: <div id="display-vocab">(This should be replaced by a word)</div>
+      <!-- Empty tutorial placeholder with grey background -->
+      <div class="welcome__tutorial-box" aria-hidden="true"></div>
+
+      <button id="start-btn" class="welcome__start-btn" type="button">START</button>
+    </section>
   </main>
 
   <footer>
