@@ -4,13 +4,79 @@ Owned by the Menu Team
 =================================================
 */
 
-
 body {
-    width: 1000px;
-    margin-left: auto;
-    margin-right: auto;
+    background-color: white;
 }
 
 header, footer{
     display: flex;
+}
+
+header {
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 10px;
+    height: 50px;
+    background-color: rgb(36, 34, 34);
+    color: white;
+}
+
+header img {
+    height: 100%;
+    max-height: 100%;
+}
+
+.header-btn {
+    background: transparent; 
+    border: 1px solid #ccc; 
+    padding: 0.35rem 0.9rem;
+    border-radius: 20px; 
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s, border-color 0.2s;
+    color: rgb(255, 255, 255);
+}
+
+.header-btn:hover {
+    background: white;
+    color: rgb(55, 54, 54);
+    border-color: white;
+    transform: scale(0.97); 
+}
+
+ul li a:hover {
+    cursor: pointer;
+    color: darkblue;
+    text-decoration: underline;
+}
+
+#game-stage {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center; 
+}
+
+#game-stage[hidden] {
+  display: none !important;
+}
+
+.stage-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: var(--frame-width);
+}
+
+#back-btn {
+    margin: 10px 20px;
+    border: 2px solid #000000; 
+    padding: 0.35rem 0.9rem;
+    border-radius: 20px; 
+    cursor: pointer;
+}
+
+#back-btn:hover {
+    background-color: #bbbbbb;
 }

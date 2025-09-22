@@ -23,7 +23,9 @@ body {
 }
 
 body {
-    font:400 1rem/1.375 Work Sans, sans-serif
+    font:400 1rem/1.375 Work Sans, sans-serif;
+    background-color: rgb(161, 187, 212); /* The blue background should not be visible when iframe is used */
+    margin: 0;
 }
 
 main{
@@ -50,6 +52,4 @@ p{
 .game-frame {
     width: var(--frame-width);
     height: var(--frame-height);
-    margin-left: auto;
-    margin-right: auto;
 }
