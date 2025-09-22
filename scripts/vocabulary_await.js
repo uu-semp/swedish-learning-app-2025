@@ -33,7 +33,7 @@ const FETCH_EXTERNAL = false;
  * @property {string} Image_url - URL or path to the image.
  * @property {string} Literal - Literal translation (can be empty).
  * @property {string} Swedish - Swedish word (e.g., "fönster").
- * @property {string} Swedish_Plural - Swedish plural form (may be empty).
+ * @property {string} Swedish_plural - Swedish plural form (may be empty).
  * @property {string} Team01
  * @property {string} Team02
  * @property {string} Team03
@@ -161,6 +161,6 @@ export function get_category(db, category) {
  */
 export function get_random(db) {
   const ids = Object.keys(db.vocab);
-  const randomIndex = Math.floor(Math.random() * vocabLength);
+  const randomIndex = Math.floor(Math.random() * db.vocabLength);
   return db.vocab[ids[randomIndex]];
 }
