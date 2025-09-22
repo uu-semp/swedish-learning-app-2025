@@ -177,3 +177,6 @@ header img {
 #back-btn:hover {
     background-color: #bbbbbb;
 }
+header, footer{
+    display: flex;
+}
