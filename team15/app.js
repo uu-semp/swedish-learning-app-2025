@@ -5,7 +5,7 @@ import { createApp } from "https://unpkg.com/vue@3/dist/vue.esm-browser.js";
 const app = createApp({
   data(){
     return {
-      currentView: "StartView"  //First default page
+      currentView: "StartView"  //Default start page
     };
   },
 
@@ -20,10 +20,8 @@ const app = createApp({
 
 })
 
-console.log("HELLO?")
-// register all global components by gen AI
+// Register all global components, created with help of generative AI
 Object.entries(components).forEach(([name, component]) => {
-    console.log("HELLO", component, name)
     app.component(name, component);
   });
 

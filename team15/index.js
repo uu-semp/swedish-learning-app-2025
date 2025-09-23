@@ -23,11 +23,11 @@ $(function() {window.vocabulary.when_ready(function () {
 
 })});
 
-$(function() {
-  $("#start-game-button").on("click", () => {
-    alert("Pressed start game button");
-  });
-});
+// $(function() {
+//   $("#start-game-button").on("click", () => {
+//     alert("Pressed start game button");
+//   });
+// });
 
 // $(function() {
 //   $("#how-to-play-button").on("click", () => {
