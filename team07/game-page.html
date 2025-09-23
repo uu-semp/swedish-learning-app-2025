@@ -35,6 +35,8 @@ Owned by Team 07
   </header>
 
   <main class="game-frame">
+    <i id="back-button" class="fa-solid fa-arrow-left"></i> 
+
 
     <!-- Ljudspelare -->
     <audio id="word-audio">
@@ -66,4 +68,12 @@ Owned by Team 07
     <small>Created as part of the "Software Engineering and Project Management" course 2025</small>
   </footer>
 </body>
+
+<script>
+    // Funktionalitet av tillbaka knapp till startsidan
+    document.getElementById('back-button').addEventListener('click', function() {
+        window.location.href = 'index.html'; 
+    });
+</script>
+
 </html>

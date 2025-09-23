@@ -37,6 +37,14 @@ Owned by Team 07
     font-size: 2rem;
 }
 
+.game-frame .fa-solid.fa-arrow-left {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    font-size: 2rem;
+    cursor: pointer;
+}
+
 
 .game-frame #next-button {
     position: relative;
@@ -45,3 +53,5 @@ Owned by Team 07
     cursor: pointer;
 
 }
+
+
