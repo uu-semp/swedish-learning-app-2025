@@ -47,11 +47,11 @@ Owned by Team 07
 
 
 .game-frame #next-button {
-    position: relative;
-    right: -300px;
-    font-size: 1rem;
+    position: absolute;
+    right: 20px;
+    bottom: 20px;
+    font-size: 1.5rem;
     cursor: pointer;
-
 }
 
 
