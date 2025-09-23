@@ -5,14 +5,16 @@ import * as DB from "./database_type.js";
 
 const FETCH_EXTERNAL = true;
 
-export async function fetch_sheets() {
-  const sheetId = "1de16iRzmgSqWvTTxiNvQYM79sWJBwFJN0Up3Y0allDg";
-  const external_url = `https://docs.google.com/spreadsheets/d/${sheetId}/export?format=csv&gid=0`;
+// Change this if you google sheets location has changed
+const SHEETID = "1de16iRzmgSqWvTTxiNvQYM79sWJBwFJN0Up3Y0allDg";
+const EXTERNAL_URL = `https://docs.google.com/spreadsheets/d/${SHEETID}/export?format=csv&gid=0`;
 
-  const resp = await fetch(
-    FETCH_EXTERNAL ? external_url : "../../../words.csv"
-  );
-  return await resp.text();
+// Change this if you have changed csv file
+const INTERNAL_URL = "../../../words.csv";
+
+export async function fetch_sheets() {
+  const RESP = await fetch(FETCH_EXTERNAL ? EXTERNAL_URL : INTERNAL_URL);
+  return await RESP.text();
 }
 
 /**
