@@ -1,4 +1,4 @@
-import { loaddb } from "../team08/store/alternative_backend/vocabulary_await.js";
+import { loaddb } from "./vocabulary_await.js";
 
 const db = await loaddb();
 
@@ -19,6 +19,7 @@ console.log(db.rows[0].Team08 != null);
 console.log(db.rows[0].Team09 != null);
 console.log(db.rows[0].Team10 != null);
 console.log(db.rows[0].Team11 != null);
+console.log(db.rows[0].Team12 != null);
 console.log(db.rows[0].Team13 != null);
 console.log(db.rows[0].Team14 != null);
 console.log(db.rows[0].Team15 != null);
@@ -47,6 +48,7 @@ db.rows.forEach((el) => {
       el.Team09 == null ||
       el.Team10 == null ||
       el.Team11 == null ||
+      el.Team12 == null ||
       el.Team13 == null ||
       el.Team14 == null ||
       el.Team15 == null ||
@@ -69,7 +71,3 @@ Object.keys(db.vocab).forEach((key) => {
 });
 
 console.log(result);
-
-console.log(get_vocabulary_word());
-console.log(get_random(db).sv);
-console.log(get_category(db, "food"));
