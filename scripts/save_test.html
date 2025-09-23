@@ -18,9 +18,9 @@ Owned by the Menu Team
         function test(name, fn) {
             try {
                 fn();
-                results.push(`PASS: ${name}`);
+                results.push(`✅PASS: ${name}`);
             } catch (err) {
-                results.push(`FAIL: ${name} – ${err.message}`);
+                results.push(`❌FAIL: ${name} – ${err.message}`);
             }
         }
 
@@ -41,7 +41,7 @@ Owned by the Menu Team
                 window.save.set("team12", {
                     score: 10
                 });
-                const result = window.save.get("score");
+                const result = window.save.get("team12");
                 if (JSON.stringify(result) !== JSON.stringify({
                         score: 10
                     }))
