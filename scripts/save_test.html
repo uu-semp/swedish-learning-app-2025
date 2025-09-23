@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+
+<!--
+=================================================
+Owned by the Menu Team
+=================================================
+-->
+
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Save.js Tests</title>
+    <script src="save.js"></script>
+    <script>
+        const results = [];
+
+        function test(name, fn) {
+            try {
+                fn();
+                results.push(`✅PASS: ${name}`);
+            } catch (err) {
+                results.push(`❌FAIL: ${name} – ${err.message}`);
+            }
+        }
+
+        function runTests() {
+            console.clear();
+            results.length = 0;
+
+            const resetStorage = () => localStorage.clear();
+
+            test("get() should return empty object if group does not exist", () => {
+                resetStorage();
+                const result = window.save.get("nonexistent");
+                if (JSON.stringify(result) !== "{}") throw new Error("expected {}");
+            });
+
+            test("get() should return stored object", () => {
+                resetStorage();
+                window.save.set("team12", {
+                    score: 10
+                });
+                const result = window.save.get("team12");
+                if (JSON.stringify(result) !== JSON.stringify({
+                        score: 10
+                    }))
+                    throw new Error("expected {score: 10}");
+            });
+
+            test("get(group, key) should return specific value", () => {
+                resetStorage();
+                window.save.set("team12", "score", 12);
+                if (window.save.get("team12", "score") !== 12)
+                    throw new Error("expected 12");
+            });
+
+            test("set() with object should merge data", () => {
+                resetStorage();
+                window.save.set("team12", {
+                    score: 12
+                });
+                window.save.set("team12", {
+                    difficulty: "easy"
+                });
+                const result = window.save.get("team12");
+                if (JSON.stringify(result) !== JSON.stringify({
+                        score: 12,
+                        difficulty: "easy"
+                    }))
+                    throw new Error("merge failed");
+            });
+
+            test("set() with key and value should update correctly", () => {
+                resetStorage();
+                window.save.set("team12", "score", 12);
+                const result = window.save.get("team12");
+                if (JSON.stringify(result) !== JSON.stringify({
+                        score: 12
+                    }))
+                    throw new Error("expected {score: 12}");
+            });
+
+            test("clear() should remove group data", () => {
+                resetStorage();
+                window.save.set("team12", {
+                    score: 12
+                });
+                window.save.clear("team12");
+                const result = window.save.get("team12");
+                if (JSON.stringify(result) !== "{}") throw new Error("expected {} after clear");
+            });
+
+            test("should handle invalid JSON gracefully", () => {
+                resetStorage();
+                localStorage.setItem("bad", "{invalid json}");
+                const result = window.save.get("bad");
+                if (JSON.stringify(result) !== "{}") throw new Error("malformed JSON not handled");
+            });
+
+            test("get() should return {} if getItem throws", () => {
+                resetStorage();
+                const original = localStorage.getItem;
+                localStorage.getItem = () => {
+                    throw new Error("getItem failed");
+                };
+                const result = window.save.get("team12");
+                if (JSON.stringify(result) !== "{}") throw new Error("expected {} on error");
+                localStorage.getItem = original;
+            });
+
+            test("get(group, key) should return null if getItem throws", () => {
+                resetStorage();
+                const original = localStorage.getItem;
+                localStorage.getItem = () => {
+                    throw new Error("getItem failed");
+                };
+                const result = window.save.get("team12", "score");
+                if (result !== null) throw new Error("expected null on error");
+                localStorage.getItem = original;
+            });
+
+            test("set() should return false if setItem throws", () => {
+                resetStorage();
+                const original = localStorage.setItem;
+                localStorage.setItem = () => {
+                    throw new Error("setItem failed");
+                };
+                const result = window.save.set("team12", "score", 12);
+                if (result !== false) throw new Error("expected false on error");
+                localStorage.setItem = original;
+            });
+
+            test("clear() should return false if removeItem throws", () => {
+                resetStorage();
+                const original = localStorage.removeItem;
+                localStorage.removeItem = () => {
+                    throw new Error("removeItem failed");
+                };
+                const result = window.save.clear("team12");
+                if (result !== false) throw new Error("expected false on error");
+                localStorage.removeItem = original;
+            });
+
+            results.forEach(r => console.log(r));
+        }
+
+        window.onload = runTests;
+    </script>
+</head>
+
+<body>
+    <h1>Save.js Test Suite</h1>
+    <p>Open the console (F12) to view results.</p>
+    <p>TODO: Switch over to jest in the future</p>
+</body>
+
+</html>
