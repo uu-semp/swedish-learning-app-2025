@@ -1,52 +1,59 @@
-import {
-  get_next_word_and_images,
-  update_selection,
-  finish_game,
-} from "./selection.js";
-// <p id="display_correct">
-
-// </p>
-// <div id="display_guesses">
-
-// </div>
+import { get_next_words, update_selection, finish_game } from "./selection.js";
 
 const DISPLAY_CORRECT = document.querySelector("#display_correct");
 const DISPLAY_GUESSES = document.querySelector("#display_guesses");
 const BUTTON_ONE = document.querySelector("#button1");
 const BUTTON_TWO = document.querySelector("#button2");
 const BUTTON_THREE = document.querySelector("#button3");
+let turns = 10;
+
+/**
+ * @type {import("./selection.js").FrontVocab[]}
+ */
+let current_words = [];
 
 let correct = null;
-let assigned_one = null;
-let assigned_two = null;
-let assigned_three = null;
+let assigned = [];
 
 BUTTON_ONE.addEventListener("click", () => {
-  update_selection({
-    id: assigned_one,
-    guessed_correct: assigned_one == correct,
-  });
-  const next_word = get_next_word_and_images();
-  DISPLAY_CORRECT.textContent = next_word.correct_word.Swedish;
-  BUTTON_ONE;
+  button_update_selection(0);
 });
 
 BUTTON_TWO.addEventListener("click", () => {
-  update_selection({
-    id: assigned_two,
-    guessed_correct: assigned_two == correct,
-  });
-  const next_word = get_next_word_and_images();
-  DISPLAY_CORRECT.textContent = next_word.correct_word.Swedish;
-  BUTTON_ONE;
+  button_update_selection(1);
 });
 
 BUTTON_THREE.addEventListener("click", () => {
-  update_selection({
-    id: assigned_one,
-    guessed_correct: assigned_three == correct,
-  });
-  const next_word = get_next_word_and_images();
-  DISPLAY_CORRECT.textContent = next_word.correct_word.Swedish;
-  BUTTON_ONE;
+  button_update_selection(2);
 });
+
+/**
+ *
+ * @param {Number} assigned
+ */
+function button_update_selection(assigned) {
+  update_selection({
+    id: current_words[assigned].id,
+    guessed_correct: correct == assigned,
+  });
+  alert(correct == assigned);
+  game_update();
+}
+
+function game_update() {
+  if (turns == 0) {
+    finish_game();
+    DISPLAY_GUESSES.remove();
+    return;
+  }
+  const DATA = get_next_words();
+  current_words = DATA.words;
+  correct = DATA.correct_index;
+  BUTTON_ONE.textContent = current_words[0].en;
+  BUTTON_TWO.textContent = current_words[1].en;
+  BUTTON_THREE.textContent = current_words[2].en;
+  DISPLAY_CORRECT.textContent = current_words[correct].sv;
+  turns = turns - 1;
+}
+
+game_update();

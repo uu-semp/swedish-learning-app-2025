@@ -56,7 +56,7 @@ export function db_get_categories(categories) {
  */
 export function db_get_n_random_words(ids, n) {
   const result = [];
-  if (result.length < n) {
+  if (ids.length < n) {
     console.error("Not enough words");
     return [];
   }
