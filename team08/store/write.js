@@ -8,7 +8,7 @@ import { TEAM, CATEGORIES } from "./store_config.js";
  * @returns {Number} 0 if success else fail
  */
 export function local_set_volume(percentage) {
-  if (percentage <= 100 && percentage >= 0) {
+  if (percentage > 100 || percentage < 0) {
     console.error("Volume is outside range");
     return 1;
   }
