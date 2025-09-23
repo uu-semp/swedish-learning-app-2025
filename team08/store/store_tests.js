@@ -4,7 +4,7 @@ import {
   db_get_vocabs,
   init_db,
 } from "./read.js";
-import { CATEGORIES } from "./write.js";
+import { CATEGORIES } from "./store_config.js";
 await init_db();
 
 function test_get_categories() {

@@ -2,6 +2,7 @@ import { get } from "./alternative_backend/save.js";
 import * as Types from "./storage_type.js";
 import * as DB from "./alternative_backend/database_type.js";
 import { get_vocab, loaddb } from "./alternative_backend/vocabulary_await.js";
+import { TEAM, CATEGORIES } from "./store_config.js";
 
 /** @type {DB.Database} */
 let db = null;
@@ -16,7 +17,7 @@ export async function init_db() {
  */
 export function local_get_volume() {
   /** @type {Types.Team8Storage} */
-  let data = get("team8");
+  let data = get(TEAM);
   if (data.volume === undefined) {
     return null;
   }
@@ -29,13 +30,13 @@ export function local_get_volume() {
  */
 export function local_get_categories() {
   /** @type {Types.Team8Storage} */
-  let data = get("team8");
+  let data = get(TEAM);
 
   if (data.category === undefined) {
     return null;
   }
 
-  return get("team8").category;
+  return get(TEAM).category;
 }
 
 /**

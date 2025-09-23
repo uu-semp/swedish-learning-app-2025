@@ -1,11 +1,6 @@
 import { get, set } from "./alternative_backend/save.js";
 import * as Types from "./storage_type.js";
-
-export const CATEGORIES = {
-  FOOD: "food",
-  CLOTHING: "clothing",
-  FURNITURE: "furniture",
-};
+import { TEAM, CATEGORIES } from "./store_config.js";
 
 /**
  *
@@ -18,11 +13,11 @@ export function local_set_volume(percentage) {
     return 1;
   }
   /** @type {Types.Team8Storage} */
-  let data = get("team8");
+  let data = get(TEAM);
 
   data.volume = percentage;
 
-  set("team8", data);
+  set(TEAM, data);
 }
 
 /**
@@ -30,7 +25,7 @@ export function local_set_volume(percentage) {
  * @param {String[]} categories
  * @returns {Number} 0 if success else fail
  */
-export function local_get_categories(categories) {
+export function local_set_categories(categories) {
   if (
     categories.length > 3 ||
     !categories.every((item) =>
@@ -41,7 +36,9 @@ export function local_get_categories(categories) {
     return 1;
   }
   /** @type {Types.Team8Storage} */
-  let data = get("team8");
+  let data = get(TEAM);
 
   data.category = categories;
+
+  set(TEAM, data);
 }
