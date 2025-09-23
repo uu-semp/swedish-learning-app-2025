@@ -6,7 +6,7 @@ import statistics from "./components/statistics.js";
 import finishView from "./components/finishView.js";
 import headerComponent from "./components/header.js";
 import footerComponent from "./components/footer.js";
-// testing commit
+
 const app = Vue.createApp({
 
   data() {
