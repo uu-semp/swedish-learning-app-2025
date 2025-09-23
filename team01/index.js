@@ -4,23 +4,27 @@
 
 "use strict";
 
-$(function() {window.vocabulary.when_ready(function () {
+$(function () {
 
-  // These are only dummy functions and can be removed.
-  $("#check-jquery").on("click", () => {
-    alert("JavaScript and jQuery are working.");
+  // Function to show only one screen at a time
+  function showScreen(screenId) {
+    $("#menu-screen, #game-screen, #end-screen").hide();
+    $("#" + screenId).show();
+  }
+
+  // Button handlers
+  $("#start-game").on("click", function () {
+    showScreen("game-screen");
   });
 
-  $("#display-vocab").text(JSON.stringify(window.vocabulary.get_random()));
-
-  $("#check-saving").on("click", () => {
-    var data = window.save.get("team01");
-    data.counter = data.counter ?? 0;
-    data.counter += 1;
-    $("#check-saving").text(`This button has been pressed ${data.counter} times`);
-    window.save.set("team01", data);
+  $("#end-game").on("click", function () {
+    showScreen("end-screen");
   });
 
-})});
+  $("#restart-game").on("click", function () {
+    showScreen("menu-screen");
+  });
 
-
+  // Initialize on menu screen
+  showScreen("menu-screen");
+});
