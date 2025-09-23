@@ -5,95 +5,84 @@ Owned by Team 15
 */
 
 body {
-    font-family: Arial, sans-serif;
-    width: 1000px;
-    margin-left: auto;
-    margin-right: auto;
-    background-color: #CEFFD7;
+  font-family: Arial, sans-serif;
+  width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: #ceffd7;
 }
 
-.game-frame{
-  
-    width: 100%;
-    background: #9EFFB0;
-    border-color: #02B823;
-    border-width: 20px;
-    border-style: solid;
-    box-sizing: border-box;
+body {
+  font-family: Arial, sans-serif;
+  width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-.app-frame{
-    width: var(--frame-width);
-    height: var(--frame-height);
-    margin-left: auto;
-    margin-right: auto;
-    background: #9EFFB0;
-    border-color: #02B823;
-    border-width: 20px;
-    border-style: solid;
-    box-sizing: border-box;
+.game-frame {
+  background: #9effb0;
+  border-color: #02b823;
+  border-width: 20px;
+  border-style: solid;
+  box-sizing: border-box;
 }
 
-.main-text{
-    font-weight: bolder;
-    color: black;
-    font-size: 300%;
-    text-align: center;
-    margin-bottom: 100px;
-    margin-top: 100px;
-    
+.main-text {
+  font-weight: bolder;
+  color: black;
+  font-size: 300%;
+  text-align: center;
+  margin-bottom: 100px;
+  margin-top: 100px;
 }
 
-.big-buttons{  
-    font-weight: bold;  
-    background-color: #CEFFD7;
-    border: solid;
-    border-width: 10px;
-    border-radius: 30px;
-    border-color: #02B823;
-    padding: 25px;
-    text-align: center;
-    font-size: 30px;
-    /* margin: 0px 15px 100px 15px;  top right bottom left */
+.big-buttons {
+  font-weight: bold;
+  background-color: #ceffd7;
+  border: solid;
+  border-width: 10px;
+  border-radius: 30px;
+  border-color: #02b823;
+  padding: 25px;
+  text-align: center;
+  font-size: 30px;
+  /* margin: 0px 15px 100px 15px;  top right bottom left */
 }
 
-.big-buttons:hover{
-    background-color: #b6f4c1;
-    cursor: grab;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
-    transition:  0.3s ease;
+.big-buttons:hover {
+  background-color: #b6f4c1;
+  cursor: grab;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+  transition: 0.3s ease;
 }
-.button-grid{
-    display: grid;
-    grid-template-columns: 50% 50%;
-  }
-
-  
-.button-container{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
+.button-grid {
+  display: grid;
+  grid-template-columns: 50% 50%;
 }
 
-.info-button{
-    height: 50px;
-    width: 50px;
-    background-color: #CEFFD7;
-    border:solid;
-    border-color: #02B823;
-    border-width: 5px;
-    font-size: 30px;
-    border-radius: 50%;
-    margin: 20px;
-    margin-top:100px;
-    float: right;
+.button-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.info-button:hover{
-    background-color: #b6f4c1;
-    cursor: grab;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
-    transition:  0.3s ease;
+.info-button {
+  height: 50px;
+  width: 50px;
+  background-color: #ceffd7;
+  border: solid;
+  border-color: #02b823;
+  border-width: 5px;
+  font-size: 30px;
+  border-radius: 50%;
+  margin: 20px;
+  margin-top: 50px;
+  float: right;
 }
- 
+
+.info-button:hover {
+  background-color: #b6f4c1;
+  cursor: grab;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+  transition: 0.3s ease;
+}
