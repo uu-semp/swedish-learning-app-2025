@@ -1,16 +1,12 @@
 import * as DB from "./database_type.js";
+import {
+  FETCH_EXTERNAL,
+  EXTERNAL_URL,
+  INTERNAL_URL,
+} from "./database_config.js";
 // ==============================================
 // Owned by the Data Team and Team08
 // ==============================================
-
-const FETCH_EXTERNAL = true;
-
-// Change this if you google sheets location has changed
-const SHEETID = "1de16iRzmgSqWvTTxiNvQYM79sWJBwFJN0Up3Y0allDg";
-const EXTERNAL_URL = `https://docs.google.com/spreadsheets/d/${SHEETID}/export?format=csv&gid=0`;
-
-// Change this if you have changed csv file
-const INTERNAL_URL = "../../../words.csv";
 
 export async function fetch_sheets() {
   const RESP = await fetch(FETCH_EXTERNAL ? EXTERNAL_URL : INTERNAL_URL);
