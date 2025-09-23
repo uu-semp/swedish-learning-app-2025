@@ -81,6 +81,17 @@ export function db_get_images_of_ids(ids) {
 /**
  *
  * @param {String[]} ids
+ * @returns {String[]} list of urls
+ */
+export function db_get_audio_of_ids(ids) {
+  return ids.map((id) => {
+    return get_vocab(db, id).audio;
+  });
+}
+
+/**
+ *
+ * @param {String[]} ids
  * @returns {DB.VocabEntry[]}
  */
 export function db_get_vocabs(ids) {
