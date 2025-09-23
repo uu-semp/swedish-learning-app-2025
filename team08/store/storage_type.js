@@ -1,7 +1,7 @@
 /**
  * @typedef Team8Storage
  * @property {Number} volume
- * @property {String} category
+ * @property {String[]} category
  */
 
 export const Types = {};
