@@ -1,3 +1,4 @@
+import { local_get_guesses_with_vocab } from "../store/read.js";
 import { get_next_words, update_selection, finish_game } from "./selection.js";
 
 const DISPLAY_CORRECT = document.querySelector("#display_correct");
@@ -13,7 +14,6 @@ let turns = 10;
 let current_words = [];
 
 let correct = null;
-let assigned = [];
 
 BUTTON_ONE.addEventListener("click", () => {
   button_update_selection(0);
@@ -43,9 +43,17 @@ function button_update_selection(assigned) {
 function game_update() {
   if (turns == 0) {
     finish_game();
-    DISPLAY_GUESSES.remove();
+    DISPLAY_CORRECT.remove();
+    DISPLAY_GUESSES.innerHTML = "";
+    let guesses = local_get_guesses_with_vocab();
+    guesses.forEach((guess) => {
+      const NODE = document.createElement("p");
+      NODE.textContent = guess.vocab.en + " " + guess.guessed_correct;
+      DISPLAY_GUESSES.appendChild(NODE);
+    });
     return;
   }
+  console.log(turns);
   const DATA = get_next_words();
   current_words = DATA.words;
   correct = DATA.correct_index;

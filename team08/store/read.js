@@ -107,3 +107,22 @@ export function local_get_guesses() {
   let data = get(TEAM);
   return data.guesses;
 }
+
+/**
+ * @typedef CleanGuesses
+ * @property {String} guessed_correct
+ * @property {DB.VocabEntry} vocab
+ */
+
+/**
+ *
+ * @returns {CleanGuesses[]}
+ */
+export function local_get_guesses_with_vocab() {
+  return local_get_guesses().map((guess) => {
+    return {
+      guessed_correct: guess.guessed_correct,
+      vocab: get_vocab(db, guess.id),
+    };
+  });
+}
