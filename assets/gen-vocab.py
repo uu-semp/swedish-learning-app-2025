@@ -35,14 +35,18 @@ with open(input_file, newline="", encoding="utf-8") as f:
         }
 
         # Optional fields
+        if row.get("Swedish_plural"):
+            meta["sv_pl"] = row["Swedish_plural"]
         if row.get("Article"):
             meta["article"] = row["Article"]
         if row.get("Literal"):
             meta["literal"] = row["Literal"]
-        if row.get("Image-path"):
-            meta["img"] = row["Image-url"]
-        if row.get("Audio-path"):
-            meta["audio"] = row["Audio-url"]
+        if row.get("Image_url"):
+            meta["img"] = row["Image_url"]
+        if row.get("Image_copyright_info"):
+            meta["img_copyright"] = row["Image_copyright_info"]
+        if row.get("Audio_url"):
+            meta["audio"] = row["Audio_url"]
 
         id_to_meta[id_] = meta
 

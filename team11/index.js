@@ -5,7 +5,6 @@
 "use strict";
 
 $(function() {window.vocabulary.when_ready(function () {
-
   // These are only dummy functions and can be removed.
   $("#check-jquery").on("click", () => {
     alert("JavaScript and jQuery are working.");
@@ -21,6 +20,9 @@ $(function() {window.vocabulary.when_ready(function () {
     window.save.set("team11", data);
   });
 
+  // Load all team specific data
+  const keys = window.vocabulary.get_team_data_keys();
+  const items = keys.map(key => window.vocabulary.get_team_data(key));
+  console.log(items);
 })});
-
 
