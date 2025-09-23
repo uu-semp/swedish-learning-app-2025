@@ -1,9 +1,12 @@
 import {StartView} from  "./views/startView.js";
-import {StartGameButton, HowToPlayButton} from "./elements/buttons.js";
+import { HelpView } from "./views/helpView.js";
+import {StartGameButton, HowToPlayButton, InfoButton} from "./elements/buttons.js";
 
 
 export default{
+    StartView,
+    HelpView,
     StartGameButton,
     HowToPlayButton,
-    StartView,
+    InfoButton,
 };

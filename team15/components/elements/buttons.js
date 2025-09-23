@@ -6,9 +6,16 @@ export const StartGameButton = {
 };
 
 export const HowToPlayButton = {
-  name: "How-To-Play-Button",
+  name: "how-to-play-button",
+  props: ["switchTo"],
   template:`
-   <button class = "big-buttons" id="how-to-play-button">HOW TO PLAY</button>
+   <button class = "big-buttons" id="how-to-play-button" @click="switchTo('HelpView')">HOW TO PLAY</button>
   `
 }
 
+export const InfoButton = {
+  name: "info-button",
+  template: `
+ <button class = "info-button">?</button>
+  `
+}

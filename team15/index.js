@@ -29,8 +29,8 @@ $(function() {
   });
 });
 
-$(function() {
-  $("#how-to-play-button").on("click", () => {
-    alert("Info button pressed");
-  });
-});
+// $(function() {
+//   $("#how-to-play-button").on("click", () => {
+//     alert("Info button pressed");
+//   });
+// });

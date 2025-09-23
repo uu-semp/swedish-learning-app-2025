@@ -1,9 +1,18 @@
 export const StartView =  {
     name: "start-view",
+    props: ["switchTo"],
     template: `
       <div>
-        <start-game-button></start-game-button>
-        <how-to-play-button></how-to-play-button>
+      <header class = "main-text">WELCOME TO THE DRESSING PELLE GAME</header> 
+      <div class = button-grid>
+        <div class = button-container> 
+          <start-game-button></start-game-button>
+        </div>
+        <div class = button-container> 
+          <how-to-play-button :switch-to="switchTo"></how-to-play-button>
+        </div>
+        </div>
+        <info-button></info-button>
       </div>
     `
   };
