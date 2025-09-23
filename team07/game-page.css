@@ -30,3 +30,10 @@ Owned by Team 07
     border: 2px solid #000000;
     cursor: pointer;
 }
+
+.game-frame .fa-volume-high {
+    color: black;
+    cursor: pointer;
+    font-size: 2rem;
+}
+
