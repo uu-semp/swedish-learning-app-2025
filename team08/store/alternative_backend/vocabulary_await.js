@@ -1,6 +1,6 @@
 import * as DB from "./database_type.js";
 // ==============================================
-// Owned by the Data Team
+// Owned by the Data Team and Team08
 // ==============================================
 
 const FETCH_EXTERNAL = true;
