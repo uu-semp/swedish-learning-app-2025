@@ -18,6 +18,7 @@ export function local_set_volume(percentage) {
   data.volume = percentage;
 
   set(TEAM, data);
+  return 0;
 }
 
 /**
@@ -41,4 +42,20 @@ export function local_set_categories(categories) {
   data.category = categories;
 
   set(TEAM, data);
+  return 0;
+}
+
+/**
+ * Guesses must contain valid ids
+ * @param {Types.Guess[]} guesses
+ */
+export function local_set_guesses(guesses) {
+  /** @type {Types.Team8Storage} */
+  let data = get(TEAM);
+  data.guesses = guesses;
+  set(TEAM, data);
+}
+
+export function local_wipe_guesses() {
+  local_set_guesses([]);
 }

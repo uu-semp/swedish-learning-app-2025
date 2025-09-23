@@ -98,3 +98,12 @@ export function db_get_audio_of_ids(ids) {
 export function db_get_vocabs(ids) {
   return ids.map((id) => get_vocab(db, id));
 }
+
+/**
+ * @returns {Types.Guess[]} guesses
+ */
+export function local_get_guesses() {
+  /** @type {Types.Team8Storage} */
+  let data = get(TEAM);
+  return data.guesses;
+}
