@@ -12,7 +12,7 @@ export const CATEGORIES = {
  * @param {Number} percentage
  * @returns {Number} 0 if success else fail
  */
-export function set_volume(percentage) {
+export function local_set_volume(percentage) {
   if (percentage <= 100 && percentage >= 0) {
     console.error("Volume is outside range");
     return 1;
@@ -30,7 +30,7 @@ export function set_volume(percentage) {
  * @param {String[]} categories
  * @returns {Number} 0 if success else fail
  */
-export function set_categories(categories) {
+export function local_get_categories(categories) {
   if (
     categories.length > 3 ||
     !categories.every((item) =>

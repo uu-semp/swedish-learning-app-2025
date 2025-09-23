@@ -1,64 +1,9 @@
+import * as DB from "./database_type.js";
 // ==============================================
 // Owned by the Data Team
 // ==============================================
 
-const FETCH_EXTERNAL = false;
-
-/**
- * @typedef {Object} VocabEntry
- * @property {string} en - English word (e.g., "sweater").
- * @property {string} sv - Swedish translation.
- * @property {string} article - Swedish article ("en" or "ett").
- */
-
-/**
- * @typedef {Object.<string, VocabEntry>} VocabMap
- * A map where keys are strings and values are VocabEntry objects.
- */
-
-/**
- * @typedef {Object.<string, string[]>} CategoryMap
- * A map where keys are categories and values are a list of ids.
- */
-
-// Currently there are some problems with these typings because of how the database is structured.
-/**
- * @typedef {Object} RowItem
- * @property {string} Article - The grammatical article (e.g., "ett" or "en").
- * @property {string} Audio_url - URL or path to audio pronunciation (may be empty).
- * @property {string} Category - Category of the item (e.g., "furniture").
- * @property {string} English - English word (e.g., "window").
- * @property {string} ID - Unique identifier for the entry.
- * @property {string} Image_copyright_info - Copyright or license information for the image.
- * @property {string} Image_url - URL or path to the image.
- * @property {string} Literal - Literal translation (can be empty).
- * @property {string} Swedish - Swedish word (e.g., "fönster").
- * @property {string} Swedish_plural - Swedish plural form (may be empty).
- * @property {string} Team01
- * @property {string} Team02
- * @property {string} Team03
- * @property {string} Team04
- * @property {string} Team05
- * @property {string} Team06
- * @property {string} Team07
- * @property {string} Team08
- * @property {string} Team09
- * @property {string} Team10
- * @property {string} Team11
- * @property {string} Team13
- * @property {string} Team14
- * @property {string} Team15
- * @property {string} Team16
- */
-
-/**
- * @typedef {Object} Database
- * @property {RowItem[]} rows
- * @property {VocabMap} vocab
- * @property {number} vocabLength
- * @property {CategoryMap} categories
- * @property {number} categoryLength
- */
+const FETCH_EXTERNAL = true;
 
 export async function fetch_sheets() {
   const sheetId = "1de16iRzmgSqWvTTxiNvQYM79sWJBwFJN0Up3Y0allDg";
@@ -72,7 +17,7 @@ export async function fetch_sheets() {
 
 /**
  *
- * @returns { Promise<Database>}
+ * @returns { Promise<DB.Database>}
  */
 export async function loaddb() {
   // Fetching a parser
@@ -107,8 +52,10 @@ export async function loaddb() {
     const meta = { en: row["English"], sv: row["Swedish"] };
     if (row["Article"]?.trim()) meta.article = row["Article"];
     if (row["Literal"]?.trim()) meta.literal = row["Literal"];
-    if (row["Image-url"]?.trim()) meta.img = row["Image-url"];
-    if (row["Audio-url"]?.trim()) meta.audio = row["Audio-url"];
+    if (row["Image_url"]?.trim()) meta.img = row["Image_url"];
+    if (row["Image_copyright_info"]?.trim())
+      meta.img_copyright = row["Image_copyright_info"];
+    if (row["Audio_url"]?.trim()) meta.audio = row["Audio_url"];
     idToMeta[id] = meta;
 
     // Category
@@ -130,9 +77,9 @@ export async function loaddb() {
 
 /**
  *
- * @param {Database} db
+ * @param {DB.Database} db
  * @param {string} id
- * @returns {VocabEntry | null}
+ * @returns {DB.VocabEntry | null}
  */
 export function get_vocab(db, id) {
   if (id in db.vocab) {
@@ -144,7 +91,7 @@ export function get_vocab(db, id) {
 
 /**
  * Returns a list of vocabulary IDs belonging to the given category.
- * @param {Database} db
+ * @param {DB.Database} db
  * @param {string} category
  * @returns {string[] | null}
  */
@@ -158,8 +105,8 @@ export function get_category(db, category) {
 
 /**
  * @description Returns a random vocabulary item. See `get_vocab()`
- * @param {Database} db
- * @returns {VocabEntry}
+ * @param {DB.Database} db
+ * @returns {DB.VocabEntry}
  */
 export function get_random(db) {
   const ids = Object.keys(db.vocab);
