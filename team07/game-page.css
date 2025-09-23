@@ -37,3 +37,11 @@ Owned by Team 07
     font-size: 2rem;
 }
 
+
+.game-frame #next-button {
+    position: relative;
+    right: -300px;
+    font-size: 1rem;
+    cursor: pointer;
+
+}
