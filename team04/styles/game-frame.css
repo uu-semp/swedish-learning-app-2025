@@ -1,0 +1,13 @@
+.game-frame {
+    border: 2px solid black;
+}
+
+/* Cards + Clock */ 
+.center-section {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 5vw;
+}
