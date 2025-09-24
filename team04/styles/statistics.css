@@ -2,9 +2,8 @@
     align-items: center;
     background-color: aquamarine;
     display: flex;
-    height: 10vh;
     justify-content: center;
-    width: 50vw;
+    width: 100%;
 }
 
 .level-indicator {
