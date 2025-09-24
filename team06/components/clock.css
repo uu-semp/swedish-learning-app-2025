@@ -1,0 +1,77 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: #ffffff;
+    margin: 0;
+}
+.clock {
+    width: 300px;
+    height: 300px;
+    border: 8px solid black;
+    border-radius: 50%;
+    position: relative;
+    padding: 20px;
+    background: white;
+}
+
+.clock-face {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform: translateY(-3px);
+}
+
+.hand {
+    background: black;
+    position: absolute;
+    top: 50%;
+    transform-origin: 100% 50%;
+    transform: rotate(90deg);
+    transition: all 0.05;
+    transition-timing-function: cubic-bezier(0.1, 2.7, 0.58, 1);
+}
+
+.hour-hand { 
+    --hour-hand-width: 32%;
+    height: 6px;
+    width: var(--hour-hand-width);
+    left: calc(50% - var(--hour-hand-width));
+}
+
+.minute-hand { 
+    --minute-hand-width: 42%;
+    height: 4px;
+    width: var(--minute-hand-width);
+    left: calc(50% - var(--minute-hand-width));
+}
+
+.number {
+    position: absolute;
+    font-size: 1.5em;
+    color: black;
+    font-family: Arial, sans-serif;
+    font-weight: bold;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: 50%;
+    left: 50%;
+    transform-origin: 0 0;
+}
+
+.number1  { transform: translate(-15px, -15px) rotate(30deg) translate(0, -140px) rotate(-30deg); }
+.number2  { transform: translate(-15px, -15px) rotate(60deg) translate(0, -140px) rotate(-60deg); }
+.number3  { transform: translate(-15px, -15px) rotate(90deg) translate(0, -140px) rotate(-90deg); }
+.number4  { transform: translate(-15px, -15px) rotate(120deg) translate(0, -140px) rotate(-120deg); }
+.number5  { transform: translate(-15px, -15px) rotate(150deg) translate(0, -140px) rotate(-150deg); }
+.number6  { transform: translate(-15px, -15px) rotate(180deg) translate(0, -140px) rotate(-180deg); }
+.number7  { transform: translate(-15px, -15px) rotate(210deg) translate(0, -140px) rotate(-210deg); }
+.number8  { transform: translate(-15px, -15px) rotate(240deg) translate(0, -140px) rotate(-240deg); }
+.number9  { transform: translate(-15px, -15px) rotate(270deg) translate(0, -140px) rotate(-270deg); }
+.number10 { transform: translate(-15px, -15px) rotate(300deg) translate(0, -140px) rotate(-300deg); }
+.number11 { transform: translate(-15px, -15px) rotate(330deg) translate(0, -140px) rotate(-330deg); }
+.number12 { transform: translate(-15px, -15px) rotate(0deg) translate(0, -140px) rotate(0deg); }
