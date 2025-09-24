@@ -64,8 +64,8 @@ export function local_wipe_guesses() {
  * Saves state of sound effect to local storage.
  * @param {boolean} enabled
  */
- export function local_set_sound_effects(enabled) {
-  let data = get("team8");
+export function local_set_sound_effects(enabled) {
+  let data = get(TEAM);
   data.sound_effects_enabled = enabled;
-  set("team8", data);
+  set(TEAM, data);
 }

@@ -104,7 +104,7 @@ export function db_get_vocabs(ids) {
  * @returns {boolean}
  */
 export function local_get_sound_effects() {
-  let data = get("team8");
+  let data = get(TEAM);
 
   return data.sound_effects_enabled || false;
 }
