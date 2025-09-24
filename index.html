@@ -34,7 +34,9 @@ Owned by the Menu Team
         <header>
             <img src="assets/main_menu/images/UU_logo.png" alt="Uppsala University Logo">
             <div>
-                <button class="header-btn">Language</button>
+                <!-- TODO: switch english/svenska to flags -->
+                <button class="header-btn" id="lng_toggle" onclick="toggleEnglish()">English</button>
+                <button class="header-btn" id="lng_toggle" onclick="toggleSwedish()">Svenska</button>
                 <button class="header-btn">About</button>
                 <button class="header-btn">Settings</button>
             </div>
@@ -71,7 +73,7 @@ Owned by the Menu Team
             </section>
         </main>
         <footer>
-            <small>
+            <small id="footer-text">
                 Created as part of the "Software Engineering and Project
                 Management" course 2025
             </small>

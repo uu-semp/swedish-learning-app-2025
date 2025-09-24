@@ -25,3 +25,16 @@ backBtn.addEventListener("click", () => {
   stage.hidden = true;
   menu.hidden = false;
 });
+
+
+//// Language toggle ////
+ 
+function toggleEnglish() {
+  let footer = document.getElementById("footer-text")
+  footer.innerHTML = "Created as part of the 'Software Engineering and Project Management' course 2025"
+}
+
+function toggleSwedish() {
+  let footer = document.getElementById("footer-text")
+  footer.innerHTML = "Skapad som en del av kursen 'Metoder och projektledning för mjukvaruutveckling' år 2025"
+}
