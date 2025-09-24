@@ -32,7 +32,11 @@ Owned by Team 08
 <body>
   <header>
     <h1>Team 08</h1>
-  </header>
+
+    <button id="open-settings-button">
+      <i class="fa-solid fa-gear"></i> Settings
+    </button>
+</header>
 
   <!-- TODO: Remove this div and it's content -->
   <div>
@@ -55,9 +59,23 @@ Owned by Team 08
     Learning: <div id="display-vocab">(This should be replaced by a word)</div>
   </main>
 
+  <!-- Creates the modal window. Default hidden form view -->
+  <dialog id="settings-modal">
+    <h1>Settings</h1>
+    <label for="volume-slider">Volume</label>
+    <input type="range" id="volume-slider" min="0" max="100" value="50">
+    <br>
+    <label for="sound-effects-toggle">Sound Effects</label>
+    <input type="checkbox" id="sound-effects-toggle" checked>
+    <br>
+    <button id="close-settings">Close</button>
+  </dialog>
+
   <footer>
     <small>Created as part of the "Software Engineering and Project Management" course 2025</small>
   </footer>
+
+  <!-- <script type="module" src="index.js"></script> -->
 </body>
 
 </html>

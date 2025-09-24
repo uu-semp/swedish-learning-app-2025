@@ -97,3 +97,13 @@ export function db_get_audio_of_ids(ids) {
 export function db_get_vocabs(ids) {
   return ids.map((id) => get_vocab(db, id));
 }
+
+/**
+ * Retrieves the state of sound effect from local storage.
+ * @returns {boolean}
+ */
+ export function local_get_sound_effects() {
+  let data = get("team8");
+
+  return data.sound_effects_enabled || false 
+}

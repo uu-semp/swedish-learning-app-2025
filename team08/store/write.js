@@ -45,3 +45,13 @@ export function local_get_categories(categories) {
 
   data.category = categories;
 }
+
+/**
+ * Saves state of sound effect to local storage.
+ * @param {boolean} enabled
+ */
+ export function local_set_sound_effects(enabled) {
+  let data = get("team8");
+  data.sound_effects_enabled = enabled;
+  set("team8", data);
+}
