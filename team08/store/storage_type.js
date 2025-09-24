@@ -9,6 +9,7 @@
  * @property {Number} volume
  * @property {String[]} category
  * @property {Guess[]} guesses
+ * @property {Number} sound_effects_enabled
  */
 
 export const Types = {};

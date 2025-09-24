@@ -100,15 +100,17 @@ export function db_get_vocabs(ids) {
 }
 
 /**
-<<<<<<< HEAD
  * Retrieves the state of sound effect from local storage.
  * @returns {boolean}
  */
- export function local_get_sound_effects() {
+export function local_get_sound_effects() {
   let data = get("team8");
 
-  return data.sound_effects_enabled || false 
-=======
+  return data.sound_effects_enabled || false;
+}
+
+/**
+ *
  * @returns {Types.Guess[]} guesses
  */
 export function local_get_guesses() {
@@ -134,5 +136,4 @@ export function local_get_guesses_with_vocab() {
       vocab: get_vocab(db, guess.id),
     };
   });
->>>>>>> team08/feat/selection
 }
