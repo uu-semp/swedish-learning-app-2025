@@ -1,8 +1,427 @@
 {
-  "use": {
-    "en": "google sheets",
-    "sv": "development",
-    "article": "during",
-    "literal": "this"
+  "292c5778": {
+    "en": "window",
+    "sv": "fönster",
+    "article": "ett"
+  },
+  "1b2d5670": {
+    "en": "door",
+    "sv": "dörr",
+    "article": "en"
+  },
+  "196a2e09": {
+    "en": "blackboard",
+    "sv": "tavla",
+    "article": "en"
+  },
+  "7e6c5812": {
+    "en": "table",
+    "sv": "bord",
+    "article": "ett"
+  },
+  "031e117b": {
+    "en": "chair",
+    "sv": "stol",
+    "article": "en",
+    "img": "/assets/furniture/chair.png",
+    "img_copyright": "\"Standard chair modern\" by <a href=\"https://commons.wikimedia.org/wiki/user:Pk0001\">Pk0001</a> licensed under <a href=\"https://creativecommons.org/licenses/by-sa/4.0\">CC BY-SA 4.0</a>"
+  },
+  "6d375947": {
+    "en": "zero",
+    "sv": "noll",
+    "literal": "0"
+  },
+  "29162632": {
+    "en": "one",
+    "sv": "ett",
+    "literal": "1"
+  },
+  "73202703": {
+    "en": "two",
+    "sv": "två",
+    "literal": "2"
+  },
+  "7d4e666c": {
+    "en": "three",
+    "sv": "tre",
+    "literal": "3"
+  },
+  "36211275": {
+    "en": "first",
+    "sv": "första",
+    "literal": "1."
+  },
+  "51085e77": {
+    "en": "second",
+    "sv": "andra",
+    "literal": "2."
+  },
+  "1e055517": {
+    "en": "third",
+    "sv": "tredje",
+    "literal": "3."
+  },
+  "1775693f": {
+    "en": "fourth",
+    "sv": "fjärde",
+    "literal": "4."
+  },
+  "1f780c21": {
+    "en": "fifth",
+    "sv": "femte",
+    "literal": "5."
+  },
+  "101c5e1d": {
+    "en": "sixth",
+    "sv": "sjätte",
+    "literal": "6."
+  },
+  "1431537c": {
+    "en": "seventh",
+    "sv": "sjunde",
+    "literal": "7."
+  },
+  "773e7806": {
+    "en": "eighth",
+    "sv": "åttonde",
+    "literal": "8.",
+    "img_copyright": "031e117b"
+  },
+  "5d210e41": {
+    "en": "ninth",
+    "sv": "nionde",
+    "literal": "9."
+  },
+  "79152e28": {
+    "en": "tenth",
+    "sv": "tionde",
+    "literal": "10."
+  },
+  "5608397a": {
+    "en": "eleventh",
+    "sv": "elfte",
+    "literal": "11."
+  },
+  "30291c0b": {
+    "en": "twelfth",
+    "sv": "tolfte",
+    "literal": "12."
+  },
+  "5344105d": {
+    "en": "five minutes past",
+    "sv": "Fem över"
+  },
+  "4f192d3c": {
+    "en": "ten minutes past",
+    "sv": "Tio over"
+  },
+  "41331c49": {
+    "en": "quarter past",
+    "sv": "Kvart över"
+  },
+  "3b6c3160": {
+    "en": "it rains",
+    "sv": "det regnar"
+  },
+  "4043786f": {
+    "en": "it snows",
+    "sv": "det snöar"
+  },
+  "14707508": {
+    "en": "it is windy",
+    "sv": "det blåser"
+  },
+  "3501691b": {
+    "en": "it is sunny",
+    "sv": "det är soligt"
+  },
+  "27657a44": {
+    "en": "it is cloudy",
+    "sv": "det är molnigt"
+  },
+  "761f5c6a": {
+    "en": "Monday",
+    "sv": "måndag"
+  },
+  "1d7e2e33": {
+    "en": "Tuesday",
+    "sv": "tisdag"
+  },
+  "2331362b": {
+    "en": "Wednesday",
+    "sv": "onsdag"
+  },
+  "01301227": {
+    "en": "January",
+    "sv": "januari"
+  },
+  "4a0a7202": {
+    "en": "February",
+    "sv": "februari"
+  },
+  "3d50140b": {
+    "en": "March",
+    "sv": "march"
+  },
+  "31034e02": {
+    "en": "T-Shirt",
+    "sv": "t-shirt",
+    "article": "en"
+  },
+  "0c1b5a68": {
+    "en": "sweater",
+    "sv": "tröja",
+    "article": "en"
+  },
+  "0c613e21": {
+    "en": "a pair of jeans",
+    "sv": "par jeans",
+    "article": "ett"
+  },
+  "657d5907": {
+    "en": "white",
+    "sv": "vit"
+  },
+  "52145c35": {
+    "en": "yellow",
+    "sv": "gul"
+  },
+  "6e45235f": {
+    "en": "red",
+    "sv": "röd"
+  },
+  "5e6e267b": {
+    "en": "apple",
+    "sv": "Äpple",
+    "article": "ett",
+    "img": "/assets/fruit/apple.png"
+  },
+  "7f32327d": {
+    "en": "banana",
+    "sv": "Banan",
+    "article": "en",
+    "img": "/assets/fruit/banana.png"
+  },
+  "39644b5f": {
+    "en": "berries",
+    "sv": "Bär",
+    "article": "ett",
+    "img": "/assets/fruit/berries.png"
+  },
+  "44791c4d": {
+    "en": "beer",
+    "sv": "öl",
+    "article": "en",
+    "img": "/assets/food/beer"
+  },
+  "287f4866": {
+    "en": "bread",
+    "sv": "bröd",
+    "article": "ett",
+    "img": "/assets/food/bread.png"
+  },
+  "37425c6e": {
+    "en": "butter",
+    "sv": "smör",
+    "article": "en",
+    "img": "/assets/food/butter"
+  },
+  "084e120f": {
+    "en": "candy",
+    "sv": "godis",
+    "article": "en",
+    "img": "/assets/food/candy"
+  },
+  "78674a5b": {
+    "en": "carrot",
+    "sv": "morot",
+    "article": "en",
+    "img": "/assets/food/carrot"
+  },
+  "56476a34": {
+    "en": "cereal",
+    "sv": "flingor",
+    "article": "en",
+    "img": "/assets/food/cereal"
+  },
+  "6441264f": {
+    "en": "cheese",
+    "sv": "ost",
+    "article": "en",
+    "img": "/assets/food/cheese"
+  },
+  "4858471d": {
+    "en": "chips",
+    "sv": "chips",
+    "article": "ett",
+    "img": "/assets/food/bread.png"
+  },
+  "7069221a": {
+    "en": "cinnamon roll",
+    "sv": "kanelbulle",
+    "article": "en",
+    "img": "/assets/food/cinnamonroll"
+  },
+  "32647751": {
+    "en": "coffee",
+    "sv": "kaffe",
+    "article": "en",
+    "img": "/assets/food/coffee"
+  },
+  "01125003": {
+    "en": "cream",
+    "sv": "grädde",
+    "article": "en",
+    "img": "/assets/food/cream"
+  },
+  "79107e7e": {
+    "en": "cucumber",
+    "sv": "gurka",
+    "article": "en",
+    "img": "/assets/food/cucumber"
+  },
+  "6176335d": {
+    "en": "egg",
+    "sv": "ägg",
+    "article": "ett",
+    "img": "/assets/food/egg.png"
+  },
+  "2c451f1b": {
+    "en": "fish",
+    "sv": "fisk",
+    "article": "en",
+    "img": "/assets/food/fish"
+  },
+  "265a1433": {
+    "en": "garlic",
+    "sv": "vitlök",
+    "article": "en",
+    "img": "/assets/food/garlic"
+  },
+  "1164100d": {
+    "en": "ham",
+    "sv": "skinka",
+    "article": "en",
+    "img": "/assets/food/ham"
+  },
+  "6d7e2c64": {
+    "en": "lettuce",
+    "sv": "sallad",
+    "article": "en",
+    "img": "/assets/food/lettuce"
+  },
+  "5618161b": {
+    "en": "meat",
+    "sv": "kött",
+    "article": "ett",
+    "img": "/assets/food/meat"
+  },
+  "526d5751": {
+    "en": "milk",
+    "sv": "mjölk",
+    "article": "en",
+    "img": "/assets/food/milk"
+  },
+  "46684757": {
+    "en": "mushroom",
+    "sv": "svampar",
+    "article": "en",
+    "img": "/assets/food/mushroom"
+  },
+  "3605051d": {
+    "en": "noodles",
+    "sv": "nudlar",
+    "article": "en",
+    "img": "/assets/food/noodles"
+  },
+  "6e706637": {
+    "en": "onion",
+    "sv": "lök",
+    "article": "en",
+    "img": "/assets/food/onion"
+  },
+  "5f36063b": {
+    "en": "pasta",
+    "sv": "pasta",
+    "article": "en",
+    "img": "/assets/food/pasta"
+  },
+  "004f3429": {
+    "en": "pepper",
+    "sv": "paprika",
+    "article": "en",
+    "img": "/assets/food/pepper"
+  },
+  "273a0041": {
+    "en": "porridge",
+    "sv": "gröt",
+    "article": "en",
+    "img": "/assets/food/porridge"
+  },
+  "5c1d1451": {
+    "en": "potato",
+    "sv": "potatis",
+    "article": "en",
+    "img": "/assets/food/potato"
+  },
+  "3d437067": {
+    "en": "rice",
+    "sv": "ris",
+    "article": "en",
+    "img": "/assets/food/rice"
+  },
+  "39076467": {
+    "en": "salt",
+    "sv": "salt",
+    "article": "en",
+    "img": "/assets/food/salt"
+  },
+  "2a264365": {
+    "en": "sandwich",
+    "sv": "smörgås",
+    "article": "en",
+    "img": "/assets/food/sandwich"
+  },
+  "7a061429": {
+    "en": "sausage",
+    "sv": "korv",
+    "article": "en",
+    "img": "/assets/food/sausage"
+  },
+  "35223116": {
+    "en": "shrimps",
+    "sv": "räkor",
+    "article": "en",
+    "img": "/assets/food/shrimps"
+  },
+  "2a674d2c": {
+    "en": "soda",
+    "sv": "läsk",
+    "article": "en",
+    "img": "/assets/food/soda"
+  },
+  "5c093c5e": {
+    "en": "sugar",
+    "sv": "socker",
+    "article": "en",
+    "img": "/assets/food/sugar"
+  },
+  "26606a07": {
+    "en": "tomato",
+    "sv": "tomat",
+    "article": "en",
+    "img": "/assets/food/tomato"
+  },
+  "76097910": {
+    "en": "wine",
+    "sv": "vin",
+    "article": "en",
+    "img": "/assets/food/wine"
+  },
+  "1466305d": {
+    "en": "yoghurt",
+    "sv": "yoghurt",
+    "article": "en",
+    "img": "/assets/food/yoghurt"
   }
 }

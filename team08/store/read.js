@@ -2,6 +2,7 @@ import { get } from "./alternative_backend/save.js";
 import * as Types from "./storage_type.js";
 import * as DB from "./alternative_backend/database_type.js";
 import { get_vocab, loaddb } from "./alternative_backend/vocabulary_await.js";
+import { TEAM, CATEGORIES } from "./store_config.js";
 
 /** @type {DB.Database} */
 let db = null;
@@ -16,7 +17,7 @@ export async function init_db() {
  */
 export function local_get_volume() {
   /** @type {Types.Team8Storage} */
-  let data = get("team8");
+  let data = get(TEAM);
   if (data.volume === undefined) {
     return null;
   }
@@ -29,13 +30,13 @@ export function local_get_volume() {
  */
 export function local_get_categories() {
   /** @type {Types.Team8Storage} */
-  let data = get("team8");
+  let data = get(TEAM);
 
   if (data.category === undefined) {
     return null;
   }
 
-  return get("team8").category;
+  return get(TEAM).category;
 }
 
 /**
@@ -55,7 +56,7 @@ export function db_get_categories(categories) {
  */
 export function db_get_n_random_words(ids, n) {
   const result = [];
-  if (result.length < n) {
+  if (ids.length < n) {
     console.error("Not enough words");
     return [];
   }
@@ -99,6 +100,7 @@ export function db_get_vocabs(ids) {
 }
 
 /**
+<<<<<<< HEAD
  * Retrieves the state of sound effect from local storage.
  * @returns {boolean}
  */
@@ -106,4 +108,31 @@ export function db_get_vocabs(ids) {
   let data = get("team8");
 
   return data.sound_effects_enabled || false 
+=======
+ * @returns {Types.Guess[]} guesses
+ */
+export function local_get_guesses() {
+  /** @type {Types.Team8Storage} */
+  let data = get(TEAM);
+  return data.guesses;
+}
+
+/**
+ * @typedef CleanGuesses
+ * @property {String} guessed_correct
+ * @property {DB.VocabEntry} vocab
+ */
+
+/**
+ *
+ * @returns {CleanGuesses[]}
+ */
+export function local_get_guesses_with_vocab() {
+  return local_get_guesses().map((guess) => {
+    return {
+      guessed_correct: guess.guessed_correct,
+      vocab: get_vocab(db, guess.id),
+    };
+  });
+>>>>>>> team08/feat/selection
 }
