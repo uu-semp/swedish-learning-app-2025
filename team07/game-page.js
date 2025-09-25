@@ -39,7 +39,7 @@ function game_start(category) {
     }
 
     // Add a highscore object to the end of the array for tracking the score
-    const highscore = {
+    var highscore = {
         round1: 0,
         round2: 0,
         round3: 0,
