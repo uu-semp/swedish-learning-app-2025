@@ -28,10 +28,8 @@ export function local_set_volume(percentage) {
  */
 export function local_set_categories(categories) {
   if (
-    categories.length > 3 ||
-    !categories.every((item) =>
-      ["food", "clothing", "furniture"].includes(item)
-    )
+    categories.length > Object.keys(CATEGORIES).length ||
+    !categories.every((item) => Object.values(CATEGORIES).includes(item))
   ) {
     console.error("Categories are invalid");
     return 1;
