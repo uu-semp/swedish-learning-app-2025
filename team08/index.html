@@ -12,6 +12,10 @@ Owned by Team 08
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Basic Static Site</title>
+
+  <!-- Redirect immediately to the welcome page -->
+   <meta http-equiv="refresh" content="0; url=welcome/index.html">
+
   <link rel="stylesheet" href="../style.css" />
 
 
@@ -35,21 +39,17 @@ Owned by Team 08
 
   </header>
 
-  <!-- TODO: Remove this div and it's content -->
-  <div>
-    <hr>
-    <h2>A basic section to make sure that everything works for everyone</h2>
-
-    <p>Font awesome is working: <i class="fa-solid fa-check"></i> (A checkmark should be visible)</p>
-
-    <button id="check-jquery">Check if Javascript and JQuery is working</button> (Clicking the button should show an
-    alert)
-
-    <button id="check-saving">Click this button to see if saving works</button>
-    <hr>
-  </div>
+  <!-- Fallback for users without JS: direct link to welcome page -->
+  <noscript>
+    <p>JavaScript is disabled. <a href="welcome/index.html">Click here to open the Welcome page</a></p>
+  </noscript>
 
   <main class="game-frame">
+    <!-- Landing: link to the new welcome page -->
+    <section id="landing" class="landing" aria-labelledby="landing-title">
+      <h2 id="landing-title">Welcome</h2>
+      <p class="landing__intro">The welcome screen has been moved to its own page for clarity.</p>
+      <p><a href="welcome/index.html">Open the Welcome page</a></p>
     <section id="welcome" class="welcome" aria-labelledby="welcome-title">
       <h1 id="welcome-title" class="welcome__title">Say what?</h1>
       <p class="welcome__subtitle">A game of matching picture to audio</p>
