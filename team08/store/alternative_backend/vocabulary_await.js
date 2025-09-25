@@ -69,7 +69,7 @@ export async function loaddb() {
     categories: catToIds,
     rows: rows,
     vocabLength: Object.keys(idToMeta).length,
-    categoriesLength: Object.keys(catToIds).length,
+    categoryLength: Object.keys(catToIds).length,
   };
 }
 
