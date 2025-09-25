@@ -23,6 +23,14 @@ function init() {
     set(TEAM, data);
   }
 }
+function safe_get() {
+  let data = get(TEAM);
+  if (data == null) {
+    set(TEAM, DEFAULT);
+    return DEFAULT;
+  }
+  return data;
+}
 
 export async function init_db() {
   db = await loaddb();
@@ -47,13 +55,13 @@ export function local_get_volume() {
  */
 export function local_get_categories() {
   /** @type {Types.Team8Storage} */
-  let data = get(TEAM);
+  let data = safe_get(TEAM);
 
   if (data.category === undefined) {
     return null;
   }
 
-  return get(TEAM).category;
+  return data.category;
 }
 
 /**
@@ -92,7 +100,8 @@ export function db_get_n_random_words(ids, n) {
  */
 export function db_get_images_of_ids(ids) {
   return ids.map((id) => {
-    return get_vocab(db, id).img;
+    const V = get_vocab(db, id);
+    return V ? V.img : null;
   });
 }
 
@@ -103,7 +112,8 @@ export function db_get_images_of_ids(ids) {
  */
 export function db_get_audio_of_ids(ids) {
   return ids.map((id) => {
-    return get_vocab(db, id).audio;
+    const V = get_vocab(db, id);
+    return V ? V.audio : null;
   });
 }
 
@@ -121,7 +131,7 @@ export function db_get_vocabs(ids) {
  * @returns {boolean}
  */
 export function local_get_sound_effects() {
-  let data = get(TEAM);
+  let data = safe_get(TEAM);
   if (data.sound_effects_enabled == undefined) {
     local_set_sound_effects(false);
   }
@@ -135,7 +145,7 @@ export function local_get_sound_effects() {
  */
 export function local_get_guesses() {
   /** @type {Types.Team8Storage} */
-  let data = get(TEAM);
+  let data = safe_get(TEAM);
   return data.guesses;
 }
 
