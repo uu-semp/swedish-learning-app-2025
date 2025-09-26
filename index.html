@@ -5,7 +5,7 @@
 Owned by the Menu Team
 =================================================
 -->
-
+<!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="utf-8" />
@@ -85,10 +85,18 @@ Owned by the Menu Team
             </section>
         </main>
         <footer>
-            <small id="footer-text">
-                Created as part of the "Software Engineering and Project
-                Management" course 2025
-            </small>
+            <small id="footer-text"></small>
         </footer>
+
+        <script>
+            fetch('assets/main_menu/menu_text/sv.json')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('footer-text').textContent=data.footer
+                })
+            .catch(error => {
+                console.error('JSON loading error: ', error);
+            });
+        </script>
     </body>
 </html>

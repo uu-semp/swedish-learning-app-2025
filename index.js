@@ -30,11 +30,23 @@ backBtn.addEventListener("click", () => {
 //// Language toggle ////
  
 function toggleEnglish() {
-  let footer = document.getElementById("footer-text")
-  footer.innerHTML = "Created as part of the 'Software Engineering and Project Management' course 2025"
+  fetch('assets/main_menu/menu_text/en.json')
+    .then(response => response.json())
+    .then(data => {
+      document.getElementById('footer-text').textContent=data.footer
+    })
+  .catch(error => {
+      console.error('JSON loading error: ', error);
+  });
 }
 
 function toggleSwedish() {
-  let footer = document.getElementById("footer-text")
-  footer.innerHTML = "Skapad som en del av kursen 'Metoder och projektledning för mjukvaruutveckling' år 2025"
+  fetch('assets/main_menu/menu_text/sv.json')
+      .then(response => response.json())
+      .then(data => {
+          document.getElementById('footer-text').textContent=data.footer
+      })
+  .catch(error => {
+      console.error('JSON loading error: ', error);
+  });
 }
