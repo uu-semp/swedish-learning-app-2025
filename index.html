@@ -35,8 +35,20 @@ Owned by the Menu Team
             <img src="assets/main_menu/images/UU_logo.png" alt="Uppsala University Logo">
             <div>
                 <!-- TODO: switch english/svenska to flags -->
-                <button class="header-btn" id="lng_toggle" onclick="toggleEnglish()">English</button>
-                <button class="header-btn" id="lng_toggle" onclick="toggleSwedish()">Svenska</button>
+                <button 
+                    class="language-btn" 
+                    id="lng_toggle" 
+                    onclick="toggleEnglish()"
+                    type="image"
+                ><img src="assets/main_menu/images/flag-gb-svgrepo-com.png" alt="English">
+                </button>
+                <button 
+                    class="language-btn" 
+                    id="lng_toggle" 
+                    onclick="toggleSwedish()"
+                    type="image"
+                ><img src="assets/main_menu/images/flag-se-svgrepo-com.png" alt="Svenska">
+                </button>
                 <button class="header-btn">About</button>
                 <button class="header-btn">Settings</button>
             </div>
