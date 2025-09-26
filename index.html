@@ -49,8 +49,8 @@ Owned by the Menu Team
                     type="image"
                 ><img src="assets/main_menu/images/flag-se-svgrepo-com.png" alt="Svenska">
                 </button>
-                <button class="header-btn">About</button>
-                <button class="header-btn">Settings</button>
+                <button class="header-btn" id="about-btn"></button>
+                <button class="header-btn" id="settings-btn"></button>
             </div>
         </header>
         <main>
@@ -79,7 +79,7 @@ Owned by the Menu Team
              <section id="game-stage" hidden>
                 <div class="stage-header">
                     <h1>Game Title</h1>
-                    <button id="back-btn">⬅ Back to menu</button>
+                    <button id="back-btn"></button>
                 </div>
                 <iframe id="game-frame" class="game-frame" src="" title="Selected game" scrolling="no"></iframe>
             </section>
@@ -93,6 +93,9 @@ Owned by the Menu Team
                 .then(response => response.json())
                 .then(data => {
                     document.getElementById('footer-text').textContent=data.footer
+                    document.getElementById('back-btn').textContent=data.backbtn
+                    document.getElementById('about-btn').textContent=data.about
+                    document.getElementById('settings-btn').textContent=data.settings
                 })
             .catch(error => {
                 console.error('JSON loading error: ', error);

@@ -1,5 +1,8 @@
 {
    
-    "footer": "Skapad som en del av kursen 'Metoder och projektledning för mjukvaruutveckling' år 2025"
+    "footer": "Skapad som en del av kursen 'Metoder och projektledning för mjukvaruutveckling' år 2025",
+    "backbtn": "⬅ Tillbaka till menyn",
+    "about": "Om sidan",
+    "settings": "Inställningar"
 
 }

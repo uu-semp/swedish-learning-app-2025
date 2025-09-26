@@ -27,13 +27,17 @@ backBtn.addEventListener("click", () => {
 });
 
 
-//// Language toggle ////
- 
+//// Language toggle buttons////
+
+// Fetches the correct strings from en.json and sv.json
 function toggleEnglish() {
   fetch('assets/main_menu/menu_text/en.json')
     .then(response => response.json())
     .then(data => {
       document.getElementById('footer-text').textContent=data.footer
+      document.getElementById('back-btn').textContent=data.backbtn
+      document.getElementById('about-btn').textContent=data.about
+      document.getElementById('settings-btn').textContent=data.settings
     })
   .catch(error => {
       console.error('JSON loading error: ', error);
@@ -44,7 +48,10 @@ function toggleSwedish() {
   fetch('assets/main_menu/menu_text/sv.json')
       .then(response => response.json())
       .then(data => {
-          document.getElementById('footer-text').textContent=data.footer
+        document.getElementById('footer-text').textContent=data.footer
+        document.getElementById('back-btn').textContent=data.backbtn
+        document.getElementById('about-btn').textContent=data.about
+        document.getElementById('settings-btn').textContent=data.settings
       })
   .catch(error => {
       console.error('JSON loading error: ', error);
