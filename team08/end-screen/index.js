@@ -14,11 +14,8 @@ class EndScreen {
       completionBar: document.getElementById('completionBar'),
       categoryName: document.getElementById('categoryName'),
       showWordsBtn: document.getElementById('showWordsBtn'),
-      wordsDetail: document.getElementById('wordsDetail'),
-      wordsGrid: document.getElementById('wordsGrid'),
       playAgainBtn: document.getElementById('playAgainBtn'),
-      exitBtn: document.getElementById('exitBtn'),
-      settingsBtn: document.getElementById('settingsBtn')
+      exitBtn: document.getElementById('exitBtn')
     };
   }
 
@@ -29,9 +26,9 @@ class EndScreen {
   }
 
   attachEventListeners() {
-    // Show/Hide words detail
+    // Navigate to words detail page
     this.elements.showWordsBtn?.addEventListener('click', () => {
-      this.toggleWordsDetail();
+      this.handleViewWordsDetail();
     });
 
     // Play again button
@@ -42,11 +39,6 @@ class EndScreen {
     // Exit button
     this.elements.exitBtn?.addEventListener('click', () => {
       this.handleExit();
-    });
-
-    // Settings button
-    this.elements.settingsBtn?.addEventListener('click', () => {
-      this.handleSettings();
     });
   }
 
@@ -107,35 +99,11 @@ class EndScreen {
     if (this.elements.categoryName) {
       this.elements.categoryName.textContent = data.category;
     }
-
-    // Populate words grid
-    if (this.elements.wordsGrid && data.words) {
-      this.elements.wordsGrid.innerHTML = data.words.map(item => this.createWordItem(item)).join('');
-    }
   }
 
-  createWordItem(item) {
-    const iconClass = item.correct ? 'word-item__icon--correct' : 'word-item__icon--incorrect';
-    const icon = item.correct ? '✓' : '✗';
-    
-    return `
-      <div class="word-item">
-        <span class="word-item__icon ${iconClass}">${icon}</span>
-        <span class="word-item__text">${item.word} (${item.translation})</span>
-      </div>
-    `;
-  }
-
-  toggleWordsDetail() {
-    this.wordsVisible = !this.wordsVisible;
-    
-    if (this.elements.wordsDetail) {
-      this.elements.wordsDetail.style.display = this.wordsVisible ? 'block' : 'none';
-    }
-    
-    if (this.elements.showWordsBtn) {
-      this.elements.showWordsBtn.textContent = this.wordsVisible ? 'Hide Words' : 'Show Words';
-    }
+  handleViewWordsDetail() {
+    // Navigate to the words detail page
+    window.location.href = 'words-detail.html';
   }
 
   animateProgressBars() {
@@ -157,18 +125,14 @@ class EndScreen {
   handlePlayAgain() {
     // REQ-USER19: Return to start screen to play again
     console.log('Returning to game setup...');
-    // In production:
-    // window.location.href = '/setup';
     
-    // For demonstration
-    if (confirm('Start a new game?')) {
-      window.location.reload();
-    }
+    window.location.href = '/';
+    
   }
 
   handleExit() {
     // REQ-USER15: Exit to main menu
-    console.log('Exiting to main menu...');
+    console.log('Exiting to main menu... rest');
     // In production:
     // window.location.href = '/';
     
@@ -178,15 +142,6 @@ class EndScreen {
     }
   }
 
-  handleSettings() {
-    // REQ-USER5: Open settings modal
-    console.log('Opening settings...');
-    // In production, this would open a settings modal
-    // this.openSettingsModal();
-    
-    // For demonstration
-    alert('Settings: Volume control and sound effects options would appear here');
-  }
 
   // Method to update results from external source (for integration)
   updateResults(newData) {
