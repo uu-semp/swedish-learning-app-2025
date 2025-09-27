@@ -3,8 +3,11 @@ import {
   db_get_images_of_ids,
   db_get_vocabs,
   init_db,
+  local_get_categories,
+  local_get_volume,
 } from "./read.js";
-import { CATEGORIES } from "./write.js";
+import { CATEGORIES } from "./store_config.js";
+import { local_set_categories, local_set_volume } from "./write.js";
 await init_db();
 
 function test_get_categories() {
@@ -34,3 +37,15 @@ function test_get_categories_images() {
 }
 
 test_get_categories_images();
+
+function test_locals() {
+  local_set_categories([CATEGORIES.CLOTHING, CATEGORIES.FOOD]);
+  local_set_volume(50);
+  console.log("volume test: ", local_get_volume() == 50);
+  console.log(
+    "local category test: ",
+    JSON.stringify(local_get_categories()) ==
+      JSON.stringify([CATEGORIES.CLOTHING, CATEGORIES.FOOD])
+  );
+}
+test_locals();

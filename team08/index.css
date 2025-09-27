@@ -5,8 +5,94 @@ Owned by Team 08
 */
 
 body {
-    font-family: Arial, sans-serif;
-    width: 1000px;
-    margin-left: auto;
-    margin-right: auto;
+  font-family: Arial, sans-serif;
+  width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* OPEN AND CLOSE BUTTONS */
+#close-settings,
+#open-settings-button {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin-top: 0.25rem;
+  margin-right: 0.25rem;
+}
+
+#close-settings {
+  margin-right: 0.8rem;
+  background: none;
+  border: none;
+  font-size: 30px;
+  cursor: pointer;
+  color: rgb(0, 0, 0);
+}
+
+/* MODAL */
+
+#settings-modal div {
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+}
+#settings-modal h2 {
+  text-transform: uppercase;
+}
+
+dialog {
+  border: none;
+  border-radius: 30px;
+  padding: 2em;
+  width: 450px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+/* INPUTS */
+
+dialog label {
+  text-transform: uppercase;
+}
+
+#volume-slider {
+  width: 300px;
+  margin-left: auto;
+}
+
+/* INPUTS | SOUND EFFECTS */
+.switch {
+  --false: #e81b1b;
+  --true: #009068;
+}
+
+input[type="checkbox"] {
+  appearance: none;
+  height: 16px;
+  width: 30px;
+  background-color: #fff;
+  border: 2px solid black;
+  position: relative;
+  border-radius: 0.2em;
+  cursor: pointer;
+  margin-left: auto;
+}
+
+input[type="checkbox"]::before {
+  content: "";
+  display: block;
+  height: 13.4px;
+  width: 50%;
+  top: 6px;
+  left: 7px;
+  transform: translate(-50%, -50%);
+  position: absolute;
+  background-color: var(--false);
+  border-radius: 2px;
+  transition: 0.3s ease;
+}
+
+input[type="checkbox"]:checked::before {
+  background-color: var(--true);
+  left: 20px;
 }

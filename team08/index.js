@@ -1,3 +1,4 @@
+import "./settings.js";
 import { loaddb } from "./store/alternative_backend/vocabulary_await.js";
 // ==============================================
 // Owned by Team 08
