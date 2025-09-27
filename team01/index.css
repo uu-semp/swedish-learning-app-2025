@@ -22,7 +22,7 @@ header h1 {
 .game-frame {
     background-color: #ffffffcc;
     /* slightly transparent white */
-    padding: 20px;
+    /*padding: 20px;*/
     border-radius: 15px;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
 }

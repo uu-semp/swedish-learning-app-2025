@@ -2,6 +2,8 @@
 // Owned by Team 01
 // ==============================================
 
+let numPairs = 8; // number of pairs of cards
+
 "use strict";
 
 $(function () {
@@ -41,6 +43,8 @@ $(function () {
   showScreen("menu-screen");
 
   // Game logic
+  mapCards();
+
 
   function resetFlipState() {  // when no pair is found, card flips back
     flippedCards[0]?.removeClass("flipped");
@@ -96,3 +100,61 @@ $(function () {
 
 
 });
+  
+
+function mapCards() {
+  const data = fetch('sepm25_data_scema_sheet1(1).json')
+    .then(response => response.json())
+    .then(data => {
+      const furnitureOnly = data.filter(item => item.category === 'furniture' && item.image_url !== null);
+      const pairs = getRandomPairs(furnitureOnly, numPairs);
+      const cards = prepareGridItems(pairs);
+      console.log(cards);
+      renderGrid(cards);
+    });
+    
+}
+
+
+function getRandomPairs(data, numPairs) {
+  console.log(data);
+  const shuffled = [...data].sort(() => 0.5 - Math.random());
+  return shuffled.slice(0, numPairs);
+}
+
+function prepareGridItems(pairs) {
+  const cards = [];
+
+  pairs.forEach((pair, index) => {
+    const id = `pair-${index}`;
+    cards.push({ id, type: 'description', content: pair.swedish });
+    cards.push({ id, type: 'image', content: pair.image_url });
+  });
+
+  // Shuffle the final cards
+  return cards.sort(() => 0.5 - Math.random());
+}
+
+function renderGrid(cards) {
+  const gameBoard = document.getElementById('game-board');
+  gameBoard.innerHTML = ''; // Rensa befintliga kort
+  
+  cards.forEach((card, index) => {
+    const cardElement = document.createElement('div');
+    cardElement.className = 'card';
+    cardElement.setAttribute('data-index', index + 1);
+    cardElement.setAttribute('data-content', card.content);
+    cardElement.setAttribute('data-type', card.type);
+    cardElement.setAttribute('data-pair-id', card.id);
+    
+    cardElement.innerHTML = `
+      <div class="card-inner">
+        <div class="card-face card-front">${index + 1}</div>
+        <div class="card-face card-back">${card.content}</div>
+      </div>
+    `;
+    
+    gameBoard.appendChild(cardElement);
+  });
+}
+ 
