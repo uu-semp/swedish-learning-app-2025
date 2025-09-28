@@ -9,14 +9,9 @@ body {
     width: 1000px;
     margin-left: auto;
     margin-right: auto;
-    background-color: lightblue; 
-    /* Added the background color here to see where the gameframe is...  */
-      background-color: lightblue; 
-    /* Added the background color here to see where the gameframe is...  */
   }
 
 .game-frame {
-    background-image: url(assets/Background.png);
   position: relative;     
 
 }
