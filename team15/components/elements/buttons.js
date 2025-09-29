@@ -24,3 +24,17 @@ export const InfoButton = {
   <button class = "info-button">?</button>
   `,
 };
+
+
+export const LevelButton = {
+  name: "level-button",
+  props:{
+    label: {
+      type: String,
+      required: true
+    }
+  },
+  template:`
+  <button class=big-buttons>{{ label }}</button>
+  `,
+}
