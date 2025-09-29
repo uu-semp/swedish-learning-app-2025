@@ -12,6 +12,7 @@ body {
     background-color: lightblue; 
     /* Added the background color here to see where the gameframe is...  */
   }
+<<<<<<< HEAD
 
 <<<<<<< HEAD
 .game-frame {
@@ -125,50 +126,49 @@ body {
     height: 50px;
     content: url(assets/ShoppingCart.png)
 }
+=======
+>>>>>>> 0184100 (pictures in the right places)
 
 .game-frame {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    padding: 20px;
-  }
-  
-  .left-side {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    height: 100%;
-  }
-  
-  .paper {
-    width: 250px;
-    margin-bottom: 20px;
-  }
-  
-  .bottom-left {
-    display: flex;
-    align-items: flex-end;
-    gap: 20px;
-  }
-  
-  .character {
-    width: 250px;
-  }
-  
-  .cart {
-    width: 250px;
-  }
-  
-  .right-side {
-    flex-grow: 1;
-    display: flex;
-    justify-content: flex-end;
-  }
-  
-  .shelf {
-    width: 500px;
-    max-height: 90vh;
-  }
+  position: relative;     
+
+}
+
+.paper {
+  position: absolute;
+  top: 2px;
+  left: 25px;
+  width: 350px;
+  height: 400px;
+}
+
+.character {
+  position: absolute;
+  top: 300px; 
+  left: 5px;
+  width: 300px;
+  height: auto;
+}
+
+.cart {
+  position: absolute;
+  top: 320px;  
+  left: 160px; 
+  width: 250px;
+  height: auto;
+}
+
+
+.shelf {
+  position: absolute;
+  top: 75px;
+  right: 2px;
+  left: 320px;
+  width: auto;  
+  height: 1000px; 
+  object-fit: cover;
+}
+
   
 >>>>>>> 00d92d9 (added pictures)
 
