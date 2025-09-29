@@ -4,14 +4,25 @@
 
 "use strict";
 
-$(function() {window.vocabulary.when_ready(function () {
+$(function() {
+  window.vocabulary.when_ready(function () {
 
-  // These are only dummy functions and can be removed.
+  const numbers = window.vocabulary.get_category("number");
+
+  //const number = window.vocabulary.get_vocab(ids[0]);
+
+  //const english = vocab.en;
+
   $("#check-jquery").on("click", () => {
     alert("JavaScript and jQuery are working.");
   });
+  function irandom_range(min, max) {
+    min = Math.ceil(min); 
+    max = Math.floor(max);  
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
 
-  $("#display-vocab").text(JSON.stringify(window.vocabulary.get_random()));
+  $("#display-number").text(JSON.stringify(window.vocabulary.get_vocab(ids[irandom_range(0,numbers.length)]).en));
 
   $("#check-saving").on("click", () => {
     var data = window.save.get("team13");
@@ -22,5 +33,6 @@ $(function() {window.vocabulary.when_ready(function () {
   });
 
 })});
+
 
 
