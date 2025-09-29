@@ -1,3 +1,5 @@
+import { init_db, local_get_guesses_with_vocab } from "../store/read.js";
+
 class WordsDetail {
   constructor() {
     this.currentTab = 'all';
@@ -25,8 +27,8 @@ class WordsDetail {
     };
   }
 
-  init() {
-    this.loadGameResults();
+  async init() {
+    await this.loadGameResults();
     this.attachEventListeners();
     this.updateTabLabels();
     this.displayWords();
@@ -78,95 +80,23 @@ class WordsDetail {
     });
   }
 
-  loadGameResults() {
-    // In production, this would load from the store or URL parameters
-    // this.gameData = store.getGameResults();
-    
-    // For demonstration, using example data
-    this.gameData = this.getExampleGameData();
+  async loadGameResults() {
+    await init_db();
+    const guesses = local_get_guesses_with_vocab();
+    this.gameData = {
+      words: guesses.map(({ guessed_correct, vocab }) => ({
+        word: vocab?.sv ?? "",
+        translation: vocab?.en ?? "",
+        correct: !!guessed_correct,
+        userAnswer: undefined,
+        feedback: guessed_correct ? "Correct" : "Try again next time",
+      })),
+    };
   }
 
+  // Example placeholder retained but not used after integration
   getExampleGameData() {
-    return {
-      correct: 7,
-      incorrect: 3,
-      total: 10,
-      currentLevel: 1,
-      totalLevels: 3,
-      category: 'Food',
-      words: [
-        { 
-          word: 'Ost', 
-          translation: 'Cheese', 
-          correct: true,
-          userAnswer: 'Cheese',
-          feedback: 'Great job! You got this one right.'
-        },
-        { 
-          word: 'Mjölk', 
-          translation: 'Milk', 
-          correct: true,
-          userAnswer: 'Milk',
-          feedback: 'Perfect! You know this word well.'
-        },
-        { 
-          word: 'Bröd', 
-          translation: 'Bread', 
-          correct: false,
-          userAnswer: 'Cake',
-          feedback: 'Not quite! Bröd means bread, not cake. Try to remember: bröd sounds like "bread".'
-        },
-        { 
-          word: 'Smör', 
-          translation: 'Butter', 
-          correct: true,
-          userAnswer: 'Butter',
-          feedback: 'Excellent! Smör is indeed butter.'
-        },
-        { 
-          word: 'Ägg', 
-          translation: 'Egg', 
-          correct: true,
-          userAnswer: 'Egg',
-          feedback: 'Well done! Ägg is a common word you should remember.'
-        },
-        { 
-          word: 'Kött', 
-          translation: 'Meat', 
-          correct: false,
-          userAnswer: 'Fish',
-          feedback: 'Close, but not quite! Kött means meat. Fish would be "fisk".'
-        },
-        { 
-          word: 'Fisk', 
-          translation: 'Fish', 
-          correct: true,
-          userAnswer: 'Fish',
-          feedback: 'Correct! Fisk is fish - you got this one right.'
-        },
-        { 
-          word: 'Sallad', 
-          translation: 'Lettuce', 
-          correct: true,
-          userAnswer: 'Lettuce',
-          feedback: 'Perfect! Sallad is lettuce or salad.'
-        },
-        { 
-          word: 'Tomat', 
-          translation: 'Tomato', 
-          correct: false,
-          userAnswer: 'Potato',
-          feedback: 'Not quite! Tomat means tomato. Potato would be "potatis". Remember: tomat sounds like "tomato".'
-        },
-        { 
-          word: 'Gurka', 
-          translation: 'Cucumber', 
-          correct: true,
-          userAnswer: 'Cucumber',
-          feedback: 'Excellent! Gurka is cucumber - a healthy vegetable!'
-        }
-      ]
-    };
+    return { words: [] };
   }
 
   updateTabLabels() {
@@ -242,24 +172,7 @@ class WordsDetail {
   }
 
   getImagePath(word) {
-    // Map Swedish words to image filenames
-    const imageMap = {
-      'Ost': 'cheese.png',
-      'Mjölk': 'milk.png',
-      'Bröd': 'bread.png',
-      'Smör': 'butter.png',
-      'Ägg': 'eggs.png',
-      'Kött': 'meat.png',
-      'Fisk': 'fish.png',
-      'Sallad': 'salad.png',
-      'Tomat': 'tomato.png',
-      'Gurka': 'cucumber.png'
-    };
-    
-    const imageName = imageMap[word.word];
-    if (imageName) {
-      return `../../assets/images/food/${imageName}`;
-    }
+    // Assets are remote in Team 8 DB; words-detail shows local images only if mapping exists.
     return null;
   }
 

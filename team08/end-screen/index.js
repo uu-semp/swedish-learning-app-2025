@@ -1,3 +1,5 @@
+import { init_db, local_get_guesses_with_vocab, local_get_categories } from "../store/read.js";
+
 class EndScreen {
   constructor() {
     this.wordsVisible = false;
@@ -19,8 +21,8 @@ class EndScreen {
     };
   }
 
-  init() {
-    this.loadGameResults();
+  async init() {
+    await this.loadGameResults();
     this.attachEventListeners();
     this.animateProgressBars();
   }
@@ -42,35 +44,45 @@ class EndScreen {
     });
   }
 
-  loadGameResults() {
-    // In production, this would load from the store
-    // this.gameData = store.getGameResults();
-    
-    // For demonstration, using example data
-    this.gameData = this.getExampleGameData();
+  async loadGameResults() {
+    // Initialize DB and read guesses/categories from Team 8 store
+    await init_db();
+
+    const guesses = local_get_guesses_with_vocab();
+    const categories = local_get_categories() || [];
+
+    const total = guesses.length;
+    const correct = guesses.filter(g => !!g.guessed_correct).length;
+    const incorrect = total - correct;
+
+    // Build UI data model
+    this.gameData = {
+      correct,
+      incorrect,
+      total,
+      currentLevel: 1,
+      totalLevels: 1,
+      category: categories.length ? categories.join(", ") : "—",
+      words: guesses.map(({ guessed_correct, vocab }) => ({
+        word: vocab?.sv ?? "",
+        translation: vocab?.en ?? "",
+        correct: !!guessed_correct,
+      })),
+    };
+
     this.displayResults(this.gameData);
   }
 
+  // Example data kept for reference but unused after integration
   getExampleGameData() {
     return {
-      correct: 7,
-      incorrect: 3,
-      total: 10,
+      correct: 0,
+      incorrect: 0,
+      total: 0,
       currentLevel: 1,
-      totalLevels: 3,
-      category: 'Food',
-      words: [
-        { word: 'Ost', translation: 'Cheese', correct: true },
-        { word: 'Mjölk', translation: 'Milk', correct: true },
-        { word: 'Bröd', translation: 'Bread', correct: false },
-        { word: 'Smör', translation: 'Butter', correct: true },
-        { word: 'Ägg', translation: 'Egg', correct: true },
-        { word: 'Kött', translation: 'Meat', correct: false },
-        { word: 'Fisk', translation: 'Fish', correct: true },
-        { word: 'Sallad', translation: 'Lettuce', correct: true },
-        { word: 'Tomat', translation: 'Tomato', correct: false },
-        { word: 'Gurka', translation: 'Cucumber', correct: true }
-      ]
+      totalLevels: 1,
+      category: '',
+      words: []
     };
   }
 
