@@ -5,7 +5,59 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Ica Väst</title>
   <style>
+<<<<<<< HEAD
     /* Only keep chatbubble/toast/modal styles */
+=======
+    :root{
+      --bg:#0f172a;
+      --text:#e5e7eb;
+      --muted:#94a3b8;
+      --brand:#38bdf8;
+    }
+    html, body { height:100%; }
+    body{
+      margin:0;
+      font-family:system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+      color:var(--text);
+      background:var(--bg);
+      display:flex;
+      align-items:flex-start;
+      justify-content:center;
+      padding:24px;
+      gap:16px;
+    }
+
+    /* Status bar with pills */
+    .status{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+      align-items:center;
+      background:rgba(255,255,255,.04);
+      border:1px solid #233046;
+      border-radius:12px;
+      padding:10px 12px;
+    }
+    .pill{
+      padding:6px 10px;
+      border-radius:999px;
+      background:#0a1a33;
+      border:1px solid #22304a;
+      color:#bfdbfe;
+      font-weight:700;
+    }
+
+    /* Demo controls (remove later) */
+    .controls{ margin-top:10px; display:flex; gap:10px; flex-wrap:wrap; }
+    .controls button{
+      background:#1e293b; color:#e5e7eb;
+      border:1px solid #334155; border-radius:8px;
+      padding:8px 12px; cursor:pointer;
+    }
+    .controls button:hover{ filter:brightness(1.05); }
+
+    /* Toast container */
+>>>>>>> 2572a7f (chatbubble endgame (not perect))
     .toasts {
       position: fixed;
       right: 16px;
@@ -15,6 +67,11 @@
       gap: 14px;
       z-index: 50;
     }
+<<<<<<< HEAD
+=======
+
+    /* Shared chat bubble (toast + modal) */
+>>>>>>> 2572a7f (chatbubble endgame (not perect))
     .bubble {
       position: relative;
       width: clamp(280px, 32vw, 380px);
@@ -35,9 +92,19 @@
       white-space: normal;
       word-wrap: break-word;
     }
+<<<<<<< HEAD
     .toast { transition: opacity .25s ease, transform .25s ease; }
     .toast.is-hiding { opacity:0; transform: translateY(6px); }
     .toast strong { font-weight:700; }
+=======
+
+    /* Toast animation */
+    .toast { transition: opacity .25s ease, transform .25s ease; }
+    .toast.is-hiding { opacity:0; transform: translateY(6px); }
+    .toast strong { font-weight:700; }
+
+    /* Close buttons */
+>>>>>>> 2572a7f (chatbubble endgame (not perect))
     .toast .x,
     .bubble .x {
       position: absolute;
@@ -52,6 +119,7 @@
       padding: 2px;
       border-radius: 50%;
     }
+<<<<<<< HEAD
 <<<<<<< HEAD
     .toast .x:hover,
     .bubble .x:hover { background: rgba(0,0,0,0.05); }
@@ -107,10 +175,15 @@
       100% { transform: scale(1); }
 =======
     .toast .x:hover { background: rgba(0,0,0,0.05); }
+=======
+    .toast .x:hover,
+    .bubble .x:hover { background: rgba(0,0,0,0.05); }
+>>>>>>> 2572a7f (chatbubble endgame (not perect))
 
-    /* Endgame modal*/
+    /* Modal overlay */
     .modal{position:fixed; inset:0; background:rgba(0,0,0,.6); display:none; align-items:center; justify-content:center; z-index:60}
     .modal.open{display:flex}
+<<<<<<< HEAD
     .modal .box{
       width:min(520px, 92vw);
       background:linear-gradient(180deg,#0d1a34,#0a1327);
@@ -118,21 +191,92 @@
       border-radius:18px;
       padding:18px
 >>>>>>> 4cb031e (endgame functionalities (not done))
+=======
+    .modal .box{ border:none; padding:0; } /* no background override! */
+
+    /* Endgame modal bubble */
+    .endgame-box {
+      width: clamp(360px, 42vw, 500px);
+      min-height: 160px;
+      padding: 24px 48px 28px 32px; /* a bit more breathing room */
+    }
+    .endgame-title {
+      font-size: 1.5rem; /* bigger title */
+    }
+    .endgame-msg {
+      font-size: 1.1rem;
+    }
+    .endgame-actions {
+      display:flex;
+      gap:10px;
+      justify-content:center;
+      width:100%;
+      margin-top: 6px;
+    }
+    .endgame-btn {
+      background:#0f172a;
+      color:#fff;
+      font-weight:700;
+      border:none;
+      border-radius:999px;
+      padding:8px 16px;
+      font-size: 14px;
+      cursor:pointer;
+      transition: opacity .15s ease;
+    }
+    .endgame-btn:hover { opacity:.9; }
+
+    .endgame-icon { margin-bottom: 6px; animation: pop-in .5s cubic-bezier(.5,1.8,.5,1) 1; }
+    @keyframes pop-in {
+      0% { transform: scale(0.6); opacity: 0; }
+      80% { transform: scale(1.1); opacity: 1; }
+      100% { transform: scale(1); }
+>>>>>>> 2572a7f (chatbubble endgame (not perect))
     }
   </style>
 </head>
 <body>
+<<<<<<< HEAD
   
   <div></div>
+=======
+
+  <div>
+    <div class="status" id="statusBar">
+      <span class="pill" id="progressPill">0 / 10 klara</span>
+      <span class="pill" id="firstTryPill">Rätt: 0</span>
+      <span class="pill" id="mistakesPill">Misstag: 0</span>
+      <span class="pill" id="targetPill">Tröskel: 8 / 10</span>
+    </div>
+
+    <!-- Demo controls -->
+    <div class="controls">
+      <button id="demoCorrect">Simulera Rätt</button>
+      <button id="demoWrong">Simulera Fel</button>
+      <button id="demoReset">Reset</button>
+    </div>
+  </div>
+
+>>>>>>> 2572a7f (chatbubble endgame (not perect))
   <!-- Toasts -->
   <div class="toasts" id="toasts"></div>
   <!-- Endgame modal -->
   <div class="modal" id="endModal" role="dialog" aria-modal="true" aria-labelledby="endTitle">
     <div class="box bubble endgame-box">
       <button class="x" id="endClose" type="button" aria-label="Stäng resultat">×</button>
+<<<<<<< HEAD
       <div class="endgame-inner">
         <div class="endgame-icon" aria-hidden="true">
           <svg id="endIcon" width="48" height="48" viewBox="0 0 48 48" fill="none"></svg>
+=======
+
+      <div class="endgame-inner">
+        <div class="endgame-icon" aria-hidden="true">
+          <svg id="endIcon" width="48" height="48" viewBox="0 0 48 48" fill="none">
+            <circle cx="24" cy="24" r="22" fill="#38bdf8" stroke="#0f172a" stroke-width="4"/>
+            <path d="M16 24l6 6 10-12" stroke="#fff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+>>>>>>> 2572a7f (chatbubble endgame (not perect))
         </div>
         <h3 id="endTitle" class="endgame-title">Klart!</h3>
         <p id="endMsg" class="endgame-msg">&nbsp;</p>
@@ -160,11 +304,19 @@
 
     let game = null;
 
+<<<<<<< HEAD
+=======
+    const progressPill=document.getElementById('progressPill');
+    const firstTryPill=document.getElementById('firstTryPill');
+    const mistakesPill=document.getElementById('mistakesPill');
+    const targetPill=document.getElementById('targetPill');
+>>>>>>> 2572a7f (chatbubble endgame (not perect))
     const toastsEl=document.getElementById('toasts');
     const endModal=document.getElementById('endModal');
     const endMsg=document.getElementById('endMsg');
     const endClose=document.getElementById('endClose');
 
+<<<<<<< HEAD
 <<<<<<< HEAD
     // Track active toast
     let currentToast = null;
@@ -176,69 +328,57 @@
           endModal.classList.remove('open');
           newGame(true);
         });
+=======
+    function pickRandom(arr,n){const c=[...arr];const o=[];while(n-- >0&&c.length){o.push(c.splice(Math.floor(Math.random()*c.length),1)[0]);}return o;}
+    function renderStatus(){progressPill.textContent=`${game.completed} / ${game.total} klara`;firstTryPill.textContent=`Rätt: ${game.firstTryCorrectCount}`;mistakesPill.textContent=`Misstag: ${game.mistakes}`;targetPill.textContent=`Tröskel: ${game.winThreshold} / ${game.total}`;}
+>>>>>>> 2572a7f (chatbubble endgame (not perect))
 
-      // --- Utilities ---
-      function pickRandom(arr, n){
-        const copy = [...arr];
-        const out = [];
-        while(n-- > 0 && copy.length){
-          out.push(copy.splice(Math.floor(Math.random()*copy.length),1)[0]);
-        }
-        return out;
+    function toast(html,type='success',duration=4000){
+      const el=document.createElement('div');
+      el.className='toast bubble '+(type==='error'?'error':'success');
+      el.innerHTML=`<div class="content">${html}</div><button class="x" type="button" aria-label="Stäng">×</button>`;
+      toastsEl.appendChild(el);
+      const x=el.querySelector('.x'); let t=setTimeout(close,duration);
+      function close(){el.classList.add('is-hiding');el.addEventListener('transitionend',()=>el.remove(),{once:true});}
+      x.onclick=()=>{clearTimeout(t);close();};
+    }
+
+    function setEndIcon(win){
+      const icon=document.getElementById('endIcon');
+      while(icon.firstChild) icon.removeChild(icon.firstChild);
+      if(win){
+        icon.insertAdjacentHTML('beforeend',`<circle cx="24" cy="24" r="22" fill="#38bdf8" stroke="#0f172a" stroke-width="4"/><path d="M16 24l6 6 10-12" stroke="#fff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>`);
+      }else{
+        icon.insertAdjacentHTML('beforeend',`<circle cx="24" cy="24" r="22" fill="#e5e7eb" stroke="#0f172a" stroke-width="4"/><path d="M16 32 L32 16" stroke="#0f172a" stroke-width="4" stroke-linecap="round"/><path d="M16 16 L32 32" stroke="#0f172a" stroke-width="4" stroke-linecap="round"/>`);
       }
-      function renderStatus(){
-        progressPill.textContent = `${game.completed} / ${game.total} klara`;
-        firstTryPill.textContent = `Rätt: ${game.firstTryCorrectCount}`;
-        mistakesPill.textContent = `Misstag: ${game.mistakes}`;
-        targetPill.textContent   = `Tröskel: ${game.winThreshold} / ${game.total}`;
-      }
-// ---------------------------------------------
-   // GAME LOGIC
-   // ---------------------------------------------
-   function onPick(pickedId){
-     const ix = game.orderIndex;
-     const current = game.words[ix];
-     const st = game.perItemState[ix];
-     const correct = pickedId === current.id;
+    }
 
+    function openEndModal(title,message){
+      document.getElementById('endTitle').textContent=title;
+      endMsg.innerHTML=message;
+      endModal.classList.add('open');
+      document.getElementById('btnPlayAgain').focus();
+      endClose.onclick=closeEndModal;
+      document.addEventListener('keydown',esc);
+      function esc(e){if(e.key==='Escape')closeEndModal();}
+      endModal._esc=esc;
+    }
+    function closeEndModal(){endModal.classList.remove('open');if(endModal._esc){document.removeEventListener('keydown',endModal._esc);endModal._esc=null;}}
 
-     if(correct){
-       toast(`Bra jobbat, du hittade <strong>${current.sv}</strong>`, 'success');
-       if(st.firstTry) game.firstTryCorrectCount += 1;
-       st.done = true;
-       game.completed += 1;
-       nextItem();
-     } else {
-       toast('Försök igen!', 'error');
-       if(st.firstTry){
-         st.firstTry = false; // no longer eligible for first-try credit
-         game.mistakes += 1;
-         renderStatus();
-       } else {
-         game.mistakes += 1; renderStatus();
-       }
-     }
-     renderList();
-   }
+    function start(){const picked=pickRandom(FOOD_BANK,TARGET_TOTAL);game={words:picked,total:TARGET_TOTAL,winThreshold:WIN_THRESHOLD,orderIndex:0,perItemState:picked.map(w=>({id:w.id,firstTry:true,done:false})),firstTryCorrectCount:0,mistakes:0,completed:0};renderStatus();}
+    function pick(id){const ix=game.orderIndex,cur=game.words[ix],st=game.perItemState[ix],ok=id===cur.id;if(ok){toast(`Bra jobbat, du hittade <strong>${cur.sv}</strong>`);if(st.firstTry)game.firstTryCorrectCount++;st.done=true;game.completed++;nextItem();}else{toast('Försök igen!','error');if(st.firstTry){st.firstTry=false;game.mistakes++;}else game.mistakes++;}renderStatus();}
+    function nextItem(){if(game.completed>=game.total){const win=game.firstTryCorrectCount>=game.winThreshold;setEndIcon(win);openEndModal(win?'Bra jobbat, du vann!':'Bra försök! Spela igen för att öva mer.',`Rätt: <strong>${game.firstTryCorrectCount}</strong> av ${game.total}.`);return;}let n=game.orderIndex+1;while(n<game.total&&game.perItemState[n].done)n++;if(n>=game.total)n=game.perItemState.findIndex(s=>!s.done);game.orderIndex=n;}
+    function reset(){start();}
 
+    window.Game={start,pick,reset,toast,state:()=>game};
+    start();
 
-   function nextItem(){
-     if(game.completed >= TARGET_TOTAL){
-       endGame();
-       return;
-     }
-     // advance to next not-done index
-     let next = game.orderIndex + 1;
-     while(next < TARGET_TOTAL && game.perItemState[next].done){ next++; }
-     // if we wrapped past end, find first remaining
-     if(next >= TARGET_TOTAL){
-       next = game.perItemState.findIndex(s => !s.done);
-     }
-     game.orderIndex = next;
-     renderShelf();
-     renderStatus();
-   }
+    // Demo buttons
+    document.getElementById('demoCorrect').onclick=()=>{Game.pick(Game.state().words[Game.state().orderIndex].id);}
+    document.getElementById('demoWrong').onclick=()=>{Game.toast('Försök igen!','error');const st=Game.state().perItemState[Game.state().orderIndex];if(st.firstTry){st.firstTry=false;Game.state().mistakes++;}else Game.state().mistakes++;renderStatus();}
+    document.getElementById('demoReset').onclick=()=>Game.reset();
 
+<<<<<<< HEAD
 
    function endGame(){
      const win = game.firstTryCorrectCount >= WIN_THRESHOLD;
@@ -412,6 +552,11 @@ function nextItem(){
    // Boot
    newGame(true);
 >>>>>>> 4cb031e (endgame functionalities (not done))
+=======
+    document.getElementById('btnPlayAgain').onclick=()=>{closeEndModal();Game.reset();}
+    document.getElementById('btnMainMenu').onclick=()=>{closeEndModal();window.location.href='../index.html';};
+  })();
+>>>>>>> 2572a7f (chatbubble endgame (not perect))
   </script>
 </body>
 </html>
