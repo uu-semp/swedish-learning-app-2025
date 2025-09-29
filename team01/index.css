@@ -234,12 +234,12 @@ footer {
     /* position relative to #game-screen */
     top: 290px;
     /* distance from top of game scene */
-    right: 20px;
+    right: 40px;
     /* distance from right of game scene */
     display: flex;
     flex-direction: column;
     /* stack vertically */
-    gap: 240px;
+    gap: 190px;
     /* space between buttons */
 }
 
