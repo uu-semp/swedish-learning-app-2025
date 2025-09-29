@@ -117,6 +117,118 @@ function renderGrid(games) {
   });
 }
 
+//// Settings Feature ////
+ // Creates a settings overlay with the following features:
+ // (1) a slider for the global volume control
+ // (2) a button to the 'add vocabulary' form, managed by team03
+ // (3) a 'clear saved data' button
+(() => {
+  const settingsBtn = document.getElementById('settings-btn');
+  if (!settingsBtn) return;
+
+  //Creates the settings overlay UI
+  function createSettingsOverlay() {
+    const overlay = document.createElement('div');
+    overlay.id = 'settings-overlay';
+
+    const box = document.createElement('div');
+    box.id = 'settings-box';
+
+    box.innerHTML = `
+      <div class="settings-header">
+        <h2 class="settings-title">Settings</h2>
+        <button id="_close_settings" class="settings-btn close">Close</button>
+      </div>
+      <div class="settings-volume">
+        <label>Global volume: <span id="_vol_val">100</span>%</label>
+        <input id="_vol_slider" type="range" min="0" max="100" value="100" 
+          oninput="this.style.background = 'linear-gradient(to right, var(--primary-color) ' + this.value + '%, #ddd ' + this.value + '%)'">
+      </div>
+      <div class="settings-actions">
+        <button id="_open_add" class="settings-btn primary">Add vocabulary</button>
+        <button id="_clear_save" class="settings-btn secondary">Clear data</button>
+      </div>
+    `;
+    overlay.appendChild(box);
+      // Close overlay when clicking outside the box
+      overlay.addEventListener('mousedown', (e) => {
+        if (e.target === overlay) overlay.remove();
+      });
+
+    // Settings overlay event handlers
+    overlay.querySelector('#_close_settings').addEventListener('click', () => overlay.remove());
+
+    const volSlider = overlay.querySelector('#_vol_slider');
+    const volVal = overlay.querySelector('#_vol_val');
+  
+    // Init from localStorage
+    const saved = localStorage.getItem('globalVolume') || '100';
+    volSlider.value = saved;
+    volVal.textContent = saved;
+
+    // Apply volume to existing audio elements
+    function applyVolume(v) {
+      document.querySelectorAll('audio').forEach(a => { try { a.volume = v/100; } catch(e){} });
+    }
+    applyVolume(Number(saved));
+
+    volSlider.addEventListener('input', (e) => {
+      const v = e.target.value;
+      volVal.textContent = v;
+      localStorage.setItem('globalVolume', String(v));
+      applyVolume(Number(v));
+    });
+
+    // Clear saved data button
+    overlay.querySelector('#_clear_save').addEventListener('click', () => {
+      const confirmBox = document.createElement('div');
+      confirmBox.className = 'confirm-box';
+      confirmBox.innerHTML = `
+        <h3>Clear Game Data?</h3>
+        <p>This will reset all saved progress and cannot be undone.</p>
+        <div class="confirm-box-actions">
+          <button class="settings-btn confirm-box-btn cancel" 
+            onclick="this.parentElement.parentElement.remove()">Cancel</button>
+          <button class="settings-btn confirm-box-btn confirm" 
+            id="_confirm_clear">Clear Data</button>
+        </div>
+      `;
+      
+      box.appendChild(confirmBox);
+      
+      confirmBox.querySelector('#_confirm_clear').onclick = () => {
+        // Clear data for all teams
+        for (let i = 1; i <= 16; i++) {
+          const teamName = `team${String(i).padStart(2, '0')}`;
+          window.save.clear(teamName);
+        }
+        confirmBox.remove();
+        
+        // Show success message
+        const msg = document.createElement('div');
+        msg.className = 'success-message';
+        msg.textContent = 'Game data cleared successfully';
+        box.appendChild(msg);
+        setTimeout(() => msg.remove(), 3000);
+      };
+    });  // Add vocabulary button - will open the form once present, for now opens a new tab to team03
+  overlay.querySelector('#_open_add').addEventListener('click', () => {
+      const candidate = './team03/index.html';
+      fetch(candidate, { method: 'HEAD' }).then(res => {
+        if (res.ok) window.open(candidate, '_blank');
+        else window.open('about:blank', '_blank');
+      }).catch(() => window.open('about:blank', '_blank'));
+    });
+
+    return overlay;
+  }
+
+  settingsBtn.addEventListener('click', () => {
+    const existing = document.getElementById('settings-overlay');
+    if (existing) return; // already open
+    document.body.appendChild(createSettingsOverlay());
+  });
+})();
 
 //// Navigation ////
 // Open game in iframe
