@@ -1,6 +1,9 @@
-# a lot here is chatGPT because i didnt have the basics of OUR game
-# so these functions / functionalities will ahve to be implemented into OUR game
-
+<!--
+=================================================
+a lot here is chatGPT because i didnt have the basics of OUR game
+so these functions / functionalities will ahve to be implemented into OUR game
+=================================================
+-->
 <!DOCTYPE html>
 <html lang="sv">
 <head>
@@ -146,6 +149,7 @@
       <p id="endMsg">&nbsp;</p>
       <div class="actions">
         <button id="btnPlayAgain">Spela igen</button>
+        <button id="btnMainMenu">Till huvudmenyn</button>
       </div>
     </div>
   </div>
@@ -197,9 +201,7 @@
 
       document.getElementById('btnPlayAgain').addEventListener('click', () => { endModal.classList.remove('open'); newGame(true); });
       document.getElementById('btnMainMenu').addEventListener('click', () => {
-          alert('Tillbaka till huvudmenyn (placeholder).');
-          endModal.classList.remove('open');
-          newGame(true);
+          window.location.href = '../index.html'; // Adjust path if needed
         });
 
       // --- Utilities ---
