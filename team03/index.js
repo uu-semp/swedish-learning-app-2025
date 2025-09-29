@@ -53,6 +53,18 @@ class VocabularyManager {
     return [...this.words];
   }
 
+  clearAllWords() {
+    const count = this.words.length;
+    const result = window.save.clear(this.STORAGE_KEY);
+    if (result) {
+      this.words = [];
+      console.log(`Cleared ${count} words`);
+      return { success: true, count: count };
+    } else {
+      console.log('Failed to clear words');
+      return { success: false, error: 'Failed to clear storage' };
+    }
+  }
 }
 
 let vocabManager;
@@ -66,6 +78,8 @@ $(function() {window.vocabulary.when_ready(function () {
 
   $("form").on("submit", handleAddWord);
   $(".submit-btn").on("click", handleAddWord);
+  
+  $("#clear-all").on("click", handleClearAll);
   
   displayWords();
   
@@ -110,7 +124,7 @@ function displayWords() {
     return;
   }
 
-  let html = '<h3>Your Custom Words:</h3><ul>';
+  let html = '';
   words.forEach(word => {
     html += `<li>
       <strong>${word.swedish}</strong> = ${word.english}
@@ -124,6 +138,23 @@ function displayWords() {
   
   display.html(html);
   console.log(`Displayed ${words.length} words`);
+}
+
+function handleClearAll() {
+  if (vocabManager.getAllWords().length === 0) {
+    console.log('No words to clear');
+    return;
+  } 
+
+  if (confirm('Are you sure you want to clear all custom words? This cannot be undone.')) {
+    const result = vocabManager.clearAllWords();
+    if (result.success) {
+      displayWords();
+      console.log(`Cleared ${result.count} words`);
+    } else {
+      console.error('Failed to clear words:', result.error);
+    }
+  }
 }
 
 
