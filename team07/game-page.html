@@ -7,6 +7,7 @@ Owned by Team 07
 -->
 
 <html lang="en">
+
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
@@ -19,7 +20,7 @@ Owned by Team 07
   <!-- You are allowed to use JQuery and Vue.js but don't have to. They just make a
   lot of things easier
   -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css"> 
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css">
   <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
   <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 
@@ -27,31 +28,33 @@ Owned by Team 07
   <link rel="stylesheet" href="index.css" />
   <link rel="stylesheet" href="game-page.css" />
   <script src="index.js" defer></script>
-  
+  <script src="game-page.js" defer></script>
+
 </head>
+
 <body>
   <header>
     <h1>Team 07</h1>
   </header>
 
   <main class="game-frame">
-    <i id="back-button" class="fa-solid fa-arrow-left"></i> 
+    <i id="back-button" class="fa-solid fa-arrow-left"></i>
 
 
     <!-- Ljudspelare -->
     <audio id="word-audio">
-        <source src="" type="audio/mpeg">
-        Your browser does not support the audio element.
+      <source id="audio-src" src="" type="audio/mpeg">
+      Your browser does not support the audio element.
     </audio>
 
     <h2>Match the image to the sound</h2>
     <!-- Container för bilder -->
     <div class="image-container">
 
-        <img id="img-1" src="" alt="Bild 1"> 
-        <img id="img-2" src="" alt="Bild 2"> 
-        <img id="img-3" src="" alt="Bild 3"> 
-        <img id="img-4" src="" alt="Bild 4"> 
+      <img id="img-1" src="" alt="Bild 1">
+      <img id="img-2" src="" alt="Bild 2">
+      <img id="img-3" src="" alt="Bild 3">
+      <img id="img-4" src="" alt="Bild 4">
 
     </div>
 
@@ -61,7 +64,7 @@ Owned by Team 07
 
     <!-- Nästa knapp -->
     <button id="next-button">Next</button>
-    
+
   </main>
 
   <footer>
@@ -70,10 +73,31 @@ Owned by Team 07
 </body>
 
 <script>
-    // Funktionalitet av tillbaka knapp till startsidan
-    document.getElementById('back-button').addEventListener('click', function() {
-        window.location.href = 'index.html'; 
-    });
+  // Funktionalitet av tillbaka knapp till startsidan
+  document.getElementById('back-button').addEventListener('click', function () {
+    window.location.href = 'index.html';
+  });
+
+  // Retrieves the words from localstorage
+  const words = JSON.parse(localStorage.getItem('game_words'));
+  console.log(words);
+
+  // Add the pictures from the words to the image elements
+  // Commented out for now since we don't have images yet
+  /*
+  for (let i = 0; i < 4; i++) {
+    document.getElementById('img-' + (i + 1)).src = words[i].img;
+  }
+  */
+
+  // Add the audio source from the correct word to the audio element
+  // Commented out for now since we don't have audio yet
+  /*
+  for (let i = 0; i < 4; i++) {
+    if (words[i].answer == 'true')
+      document.getElementById('audio-src').src = words[i].audio;
+  }*/
+
 </script>
 
 </html>
