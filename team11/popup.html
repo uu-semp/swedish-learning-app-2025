@@ -102,7 +102,7 @@
     }
     .toast .x:hover { background: rgba(0,0,0,0.05); }
 
-    /* Endgame modal (kept minimal) */
+    /* Endgame modal*/
     .modal{position:fixed; inset:0; background:rgba(0,0,0,.6); display:none; align-items:center; justify-content:center; z-index:60}
     .modal.open{display:flex}
     .modal .box{
@@ -195,6 +195,13 @@
       const endModal     = document.getElementById('endModal');
       const endMsg       = document.getElementById('endMsg');
 
+      document.getElementById('btnPlayAgain').addEventListener('click', () => { endModal.classList.remove('open'); newGame(true); });
+      document.getElementById('btnMainMenu').addEventListener('click', () => {
+          alert('Tillbaka till huvudmenyn (placeholder).');
+          endModal.classList.remove('open');
+          newGame(true);
+        });
+
       // --- Utilities ---
       function pickRandom(arr, n){
         const copy = [...arr];
@@ -210,6 +217,60 @@
         mistakesPill.textContent = `Misstag: ${game.mistakes}`;
         targetPill.textContent   = `Tröskel: ${game.winThreshold} / ${game.total}`;
       }
+// ---------------------------------------------
+   // GAME LOGIC
+   // ---------------------------------------------
+   function onPick(pickedId){
+     const ix = game.orderIndex;
+     const current = game.words[ix];
+     const st = game.perItemState[ix];
+     const correct = pickedId === current.id;
+
+
+     if(correct){
+       toast(`Bra jobbat, du hittade <strong>${current.sv}</strong>`, 'success');
+       if(st.firstTry) game.firstTryCorrectCount += 1;
+       st.done = true;
+       game.completed += 1;
+       nextItem();
+     } else {
+       toast('Försök igen!', 'error');
+       if(st.firstTry){
+         st.firstTry = false; // no longer eligible for first-try credit
+         game.mistakes += 1;
+         renderStatus();
+       } else {
+         game.mistakes += 1; renderStatus();
+       }
+     }
+     renderList();
+   }
+
+
+   function nextItem(){
+     if(game.completed >= TARGET_TOTAL){
+       endGame();
+       return;
+     }
+     // advance to next not-done index
+     let next = game.orderIndex + 1;
+     while(next < TARGET_TOTAL && game.perItemState[next].done){ next++; }
+     // if we wrapped past end, find first remaining
+     if(next >= TARGET_TOTAL){
+       next = game.perItemState.findIndex(s => !s.done);
+     }
+     game.orderIndex = next;
+     renderShelf();
+     renderStatus();
+   }
+
+
+   function endGame(){
+     const win = game.firstTryCorrectCount >= WIN_THRESHOLD;
+     const title = win ? 'Bra jobbat, du vann!' : 'Bra försök! Spela igen för att öva mer.';
+     const msg = `Rätt: <strong>${game.firstTryCorrectCount}</strong> av ${TARGET_TOTAL}.`;
+     openEndModal(title, msg, win);
+   }
 
       // ---------------------------------------------
       // POPUPS (toasts + modal)
@@ -388,6 +449,17 @@
       });
       document.getElementById('demoReset').addEventListener('click', () => Game.reset());
     })();
+
+
+   // ---------------------------------------------
+   // WIRES
+   // ---------------------------------------------
+   document.getElementById('btnReset').addEventListener('click', () => newGame(false));
+   document.getElementById('btnNewList').addEventListener('click', () => newGame(true));
+
+
+   // Boot
+   newGame(true);
   </script>
 </body>
 </html>
