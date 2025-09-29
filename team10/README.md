@@ -71,6 +71,8 @@ The project have use the next AI generative tools:
 
 ## Update word list
 
+Note: Next commands works in Linux but not in MAC / Windows
+
 ```bash
 # Disable external fetching in the vocabulary script
 sed -i 's/const FETCH_EXTERNAL = true;/const FETCH_EXTERNAL = false;/' scripts/vocabulary.js
