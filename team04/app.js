@@ -26,7 +26,7 @@ const app = Vue.createApp({
     }
   },
   mounted() {
-    setClock(23, 30);
+    setClock(24, 60);
   },
   template: `
   <header-component></header-component>
