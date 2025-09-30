@@ -5,6 +5,5 @@ export default {
       <div class='clock-hand' id='hour-hand'></div>
       <div class='clock-hand' id='minute-hand'></div>
     </div>
-      
     `
 };

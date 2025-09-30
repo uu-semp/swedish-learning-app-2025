@@ -6,6 +6,7 @@ import statistics from "./components/statistics.js";
 import finishView from "./components/finishView.js";
 import headerComponent from "./components/header.js";
 import footerComponent from "./components/footer.js";
+import setClock from "./utils/setClock.js";
 
 const app = Vue.createApp({
 
@@ -23,6 +24,9 @@ const app = Vue.createApp({
         default: return 'game-view'; // fallback
       }
     }
+  },
+  mounted() {
+    setClock(23, 30);
   },
   template: `
   <header-component></header-component>
