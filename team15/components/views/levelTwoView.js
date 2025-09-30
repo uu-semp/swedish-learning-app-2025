@@ -10,5 +10,3 @@ export const LevelTwoView = {
         </div>
       `,
   };
-
-  console.log("hej från levelTwoView")

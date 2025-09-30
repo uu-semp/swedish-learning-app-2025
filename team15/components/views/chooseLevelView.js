@@ -13,5 +13,3 @@ export const ChooseLevelView = {
       </div>
     `,
 };
-
-console.log("hej från chooselevel<!!!")
