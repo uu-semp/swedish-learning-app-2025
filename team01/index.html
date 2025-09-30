@@ -7,6 +7,7 @@ Owned by Team 01
 -->
 
 <html lang="en">
+
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
@@ -19,7 +20,7 @@ Owned by Team 01
   <!-- You are allowed to use JQuery and Vue.js but don't have to. They just make a
   lot of things easier
   -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css"> 
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css">
   <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
   <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 
@@ -27,33 +28,162 @@ Owned by Team 01
   <link rel="stylesheet" href="index.css" />
   <script src="index.js" defer></script>
 </head>
+
 <body>
   <header>
     <h1>Team 01</h1>
   </header>
 
-  <!-- TODO: Remove this div and it's content -->
-  <div>
-      <hr>
-      <h2>A basic section to make sure that everything works for everyone</h2>
-
-      <p>Font awesome is working: <i class="fa-solid fa-check"></i> (A checkmark should be visible)</p>
-
-      <button id="check-jquery">Check if Javascript and JQuery is working</button> (Clicking the button should show an alert)
-
-      <button id="check-saving">Click this button to see if saving works</button>
-      <hr>
-  </div>
-
   <main class="game-frame">
-    Implement your game inside this tag.
 
-    <hr>
-    Learning: <div id="display-vocab">(This should be replaced by a word)</div>
+    <!-- Menu Screen -->
+    <section id="menu-screen">
+      <h2>FURNITURE MEMORY</h2>
+      <div id="info-box">
+        <h3>How to Play</h3>
+        <ol>
+          <li>Click on a card to reveal its image or text.</li>
+          <li>Then, click on another card.</li>
+          <li>If image and description match, the pair is removed from the game board.</li>
+        </ol>
+
+        <p>Once all pairs are removed, the game is won.</p>
+      </div>
+
+      <button id="start-game">Start Game</button>
+    </section>
+
+
+
+    <!-- Game Screen -->
+    <section id="game-screen" style="display: none;">
+      <h2>Match the image to the description to clear the board</h2>
+      <div id="game-board">
+        <!-- 16 example cards -->
+        <div class="card" data-index="1">
+          <div class="card-inner">
+            <div class="card-face card-front">1</div>
+            <div class="card-face card-back"></div>
+          </div>
+        </div>
+        <div class="card" data-index="2">
+          <div class="card-inner">
+            <div class="card-face card-front">2</div>
+            <div class="card-face card-back"></div>
+          </div>
+        </div>
+        <div class="card" data-index="3">
+          <div class="card-inner">
+            <div class="card-face card-front">3</div>
+            <div class="card-face card-back"></div>
+          </div>
+        </div>
+        <div class="card" data-index="4">
+          <div class="card-inner">
+            <div class="card-face card-front">4</div>
+            <div class="card-face card-back"></div>
+          </div>
+        </div>
+        <div class="card" data-index="5">
+          <div class="card-inner">
+            <div class="card-face card-front">5</div>
+            <div class="card-face card-back"></div>
+          </div>
+        </div>
+        <div class="card" data-index="6">
+          <div class="card-inner">
+            <div class="card-face card-front">6</div>
+            <div class="card-face card-back"></div>
+          </div>
+        </div>
+        <div class="card" data-index="7">
+          <div class="card-inner">
+            <div class="card-face card-front">7</div>
+            <div class="card-face card-back"></div>
+          </div>
+        </div>
+        <div class="card" data-index="8">
+          <div class="card-inner">
+            <div class="card-face card-front">8</div>
+            <div class="card-face card-back"></div>
+          </div>
+        </div>
+        <div class="card" data-index="9">
+          <div class="card-inner">
+            <div class="card-face card-front">9</div>
+            <div class="card-face card-back"></div>
+          </div>
+        </div>
+        <div class="card" data-index="10">
+          <div class="card-inner">
+            <div class="card-face card-front">10</div>
+            <div class="card-face card-back"></div>
+          </div>
+        </div>
+        <div class="card" data-index="11">
+          <div class="card-inner">
+            <div class="card-face card-front">11</div>
+            <div class="card-face card-back"></div>
+          </div>
+        </div>
+        <div class="card" data-index="12">
+          <div class="card-inner">
+            <div class="card-face card-front">12</div>
+            <div class="card-face card-back"></div>
+          </div>
+        </div>
+        <div class="card" data-index="13">
+          <div class="card-inner">
+            <div class="card-face card-front">13</div>
+            <div class="card-face card-back"></div>
+          </div>
+        </div>
+        <div class="card" data-index="14">
+          <div class="card-inner">
+            <div class="card-face card-front">14</div>
+            <div class="card-face card-back"></div>
+          </div>
+        </div>
+        <div class="card" data-index="15">
+          <div class="card-inner">
+            <div class="card-face card-front">15</div>
+            <div class="card-face card-back"></div>
+          </div>
+        </div>
+        <div class="card" data-index="16">
+          <div class="card-inner">
+            <div class="card-face card-front">16</div>
+            <div class="card-face card-back"></div>
+          </div>
+        </div>
+      </div>
+      <!-- Hint Modal -->
+      <div id="hint-modal" class="hint-modal" style="display: none;">
+        <div class="hint-content">
+          <span id="close-hint" class="close">&times;</span>
+          <p id="hint-text">This is a hint!</p>
+        </div>
+      </div>
+
+      <div id="game-controls">
+        <button id="hint-button">Help</button>
+        <button id="end-game">Quit</button>
+      </div>
+
+    </section>
+
+    <!-- End Screen -->
+    <section id="end-screen" style="display: none;">
+      <h2>Game Over</h2>
+      <p>Your score: <span id="score">0</span></p>
+      <button id="restart-game">Play Again</button>
+    </section>
+
   </main>
 
   <footer>
     <small>Created as part of the "Software Engineering and Project Management" course 2025</small>
   </footer>
 </body>
+
 </html>
