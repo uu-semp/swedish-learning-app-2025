@@ -6,12 +6,8 @@
 
 $(function() {
   window.vocabulary.when_ready(function () {
-
+    // Get all vocabulary belonging to the category numbers
   const numbers = window.vocabulary.get_category("number");
-
-  //const number = window.vocabulary.get_vocab(ids[0]);
-
-  //const english = vocab.en;
 
   $("#check-jquery").on("click", () => {
     alert("JavaScript and jQuery are working.");
@@ -21,8 +17,19 @@ $(function() {
     max = Math.floor(max);  
     return Math.floor(Math.random() * (max - min + 1)) + min;
   }
+  const randomNo =  irandom_range(0,numbers.length)
+  print(randomNo)
+  print(window.vocabulary.get_vocab(ids[randomNo]).en)
+  // Load the metadata for the first ID
+  const vocab = window.vocabulary.get_vocab(numbers[0]);
+  // Access the `en` field
+  const english = vocab.en;
+  const test = JSON.stringify(vocab.en)
+  $("#zero").text(test);
+  $("#randomNo").text(JSON.stringify(window.vocabulary.get_vocab(ids[randomNo]).en));
+  $("#display-number").text(JSON.stringify(window.vocabulary.get_vocab(numbers[randomNo]).en));
+  // Get all vocabulary belonging to the category `furniture`
 
-  $("#display-number").text(JSON.stringify(window.vocabulary.get_vocab(ids[irandom_range(0,numbers.length)]).en));
 
   $("#check-saving").on("click", () => {
     var data = window.save.get("team13");
@@ -33,6 +40,6 @@ $(function() {
   });
 
 })});
-
+ 
 
 
