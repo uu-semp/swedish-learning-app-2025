@@ -32,12 +32,11 @@ body {
   margin: 0;
 
   /* Typography */
-  font-family: var(--font-sans);
+    font-family: var(--font-sans), serif;
 
   /* Visual */
   background: #eaf6ff;
   color: var(--color-text);
-  font-smoothing: antialiased;
 }
 
 /* Main welcome container centered vertically and horizontally */
