@@ -3,7 +3,11 @@
 // ==============================================
 
 "use strict";
-
+function irandom_range(min, max) {
+    min = Math.ceil(min); 
+    max = Math.floor(max);  
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
 $(function() {
   window.vocabulary.when_ready(function () {
     // Get all vocabulary belonging to the category numbers
@@ -12,11 +16,7 @@ $(function() {
   $("#check-jquery").on("click", () => {
     alert("JavaScript and jQuery are working.");
   });
-  function irandom_range(min, max) {
-    min = Math.ceil(min); 
-    max = Math.floor(max);  
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-  }
+  
   const randomNo =  irandom_range(0,numbers.length)
   console.log(randomNo)
   console.log(window.vocabulary.get_vocab(numbers[randomNo]).en)
