@@ -10,6 +10,7 @@ import {
   GoBackButton,
   LevelButton
 } from "./elements/buttons.js";
+import { WardrobeContainer } from "./elements/wardrobeContainer.js";
 
 
 export default {
@@ -22,5 +23,6 @@ export default {
   HowToPlayButton,
   GoBackButton,
   InfoButton,
-  LevelButton
+  LevelButton,
+  WardrobeContainer
 };

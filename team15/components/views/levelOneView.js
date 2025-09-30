@@ -3,10 +3,14 @@ export const LevelOneView = {
     props: ["switchTo"],
     template: `
         <div>
-        <h1 class = "main-text">THIS IS THE LEVEL 1 VIEW</h1>    
+        <h1 class = "main-text">THIS IS THE LEVEL 1 VIEW</h1>
+        <wardrobe-container></wardrobe-container>    
         <div class = button-container> 
           <go-back-button @click="switchTo('ChooseLevelView')"></go-back-button>
         </div>
         </div>
       `,
   };
+  
+  
+  
