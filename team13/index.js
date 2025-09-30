@@ -18,15 +18,15 @@ $(function() {
     return Math.floor(Math.random() * (max - min + 1)) + min;
   }
   const randomNo =  irandom_range(0,numbers.length)
-  print(randomNo)
-  print(window.vocabulary.get_vocab(ids[randomNo]).en)
+  console.log(randomNo)
+  console.log(window.vocabulary.get_vocab(numbers[randomNo]).en)
   // Load the metadata for the first ID
   const vocab = window.vocabulary.get_vocab(numbers[0]);
   // Access the `en` field
   const english = vocab.en;
   const test = JSON.stringify(vocab.en)
   $("#zero").text(test);
-  $("#randomNo").text(JSON.stringify(window.vocabulary.get_vocab(ids[randomNo]).en));
+  $("#randomNo").text(JSON.stringify(window.vocabulary.get_vocab(numbers[randomNo]).en));
   $("#display-number").text(JSON.stringify(window.vocabulary.get_vocab(numbers[randomNo]).en));
   // Get all vocabulary belonging to the category `furniture`
 
