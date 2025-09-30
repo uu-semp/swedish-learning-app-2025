@@ -124,6 +124,9 @@ function openIframe(src) {
   frame.src = src;
   menu.hidden = true;
   stage.hidden = false;
+
+  // Save current game to sessionStorage
+  sessionStorage.setItem("currentGameSrc", src);
 }
 
 // Back to menu
@@ -131,7 +134,24 @@ backBtn.addEventListener("click", () => {
   frame.src = ""; // Stop the game
   stage.hidden = true;
   menu.hidden = false;
+
+  // Remove current game to sessionStorage
+  sessionStorage.removeItem("currentGameSrc");
 });
+
+window.addEventListener("DOMContentLoaded", () => {
+  // Restore current game from sessionStorage
+  const savedSrc = sessionStorage.getItem("currentGameSrc");
+
+  if (savedSrc) {
+    // Reopen the game directly
+    openIframe(savedSrc);
+  } else {
+    // Make sure we’re on the menu
+    backBtn.click();
+  }
+});
+
 
 //// Init ////
 loadGames();
