@@ -25,47 +25,45 @@ export const InfoButton = {
   `,
 };
 
-
 export const LevelButton = {
   name: "level-button",
-  props:{
+  props: {
     label: {
       type: String,
-      required: true
-    }
+      required: true,
+    },
   },
-  template:`
+  template: `
   <button class=big-buttons>{{ label }}</button>
   `,
-}
+};
 
 export const ClothingItemButton = {
-  name: "clothing-item-button", 
-  props:{
+  name: "clothing-item-button",
+  props: {
     label: {
       type: String,
-      required: true
-    }
+      required: true,
+    },
   },
-  template:`
+  template: `
     <button class=clothing-button>
       <img :src="label"  style="width: 50px;"></img>
     </button>
   `,
-}
-
+};
 
 export const CategoryClothingButton = {
-  name: "category-clothing-button", 
-  props:{
+  name: "category-clothing-button",
+  props: {
     label: {
       type: String,
-      required: true
-    }
+      required: true,
+    },
   },
-  template:`
+  template: `
     <button class=round-button>
       <img :src="label"  style="width: 40px;"></img>
     </button>
   `,
-}
+};

@@ -14,7 +14,6 @@ import {
 } from "./elements/buttons.js";
 import { WardrobeContainer } from "./elements/wardrobeContainer.js";
 
-
 export default {
   StartView,
   HelpView,
@@ -28,5 +27,5 @@ export default {
   LevelButton,
   WardrobeContainer,
   CategoryClothingButton,
-  ClothingItemButton
+  ClothingItemButton,
 };
