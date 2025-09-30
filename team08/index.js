@@ -1,13 +1,27 @@
-import "./settings.js";
-import { loaddb } from "./store/alternative_backend/vocabulary_await.js";
 // ==============================================
 // Owned by Team 08
 // ==============================================
-const db = await loaddb();
 
-function get_vocabulary_word() {
-  const randomIndex = Math.floor(Math.random() * db.rows.length);
-  return db.rows[randomIndex].Swedish;
-}
+import "./options/settings.js";
 
-document.querySelector("#display-vocab").textContent = get_vocabulary_word();
+const init = () => {
+  const startBtn = document.getElementById("start-btn");
+  const tutorialBtn = document.querySelector(".welcome__tutorial-btn");
+
+  if (startBtn) {
+    startBtn.addEventListener("click", () => {
+      // Navigate to main game page
+      window.location.href = "./index.html";
+    });
+  }
+
+  if (tutorialBtn) {
+    tutorialBtn.addEventListener("click", () => {
+      // Navigate to tutorial page
+      window.location.href = "./index.html";
+    });
+  }
+};
+
+// Initialize when DOM is ready
+document.addEventListener("DOMContentLoaded", init);
