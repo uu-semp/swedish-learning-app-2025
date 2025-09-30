@@ -11,7 +11,6 @@ function irandom_range(min, max) {
 $(function() {
   window.vocabulary.when_ready(function () {
     // Get all vocabulary belonging to the category numbers
-  const state = 
   const numbers = window.vocabulary.get_category("number");
 
   $("#check-jquery").on("click", () => {
