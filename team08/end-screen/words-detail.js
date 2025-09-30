@@ -3,7 +3,7 @@ import { init_db, local_get_guesses_with_vocab } from "../store/read.js";
 class WordsDetail {
   constructor() {
     this.currentTab = 'all';
-    this.showImages = false;
+    this.showImages = true;
     this.gameData = null;
     this.elements = this.cacheElements();
     this.init();
@@ -18,7 +18,6 @@ class WordsDetail {
       toggleImagesText: document.getElementById('toggleImagesText'),
       wordsList: document.getElementById('wordsList'),
       playAgainBtn: document.getElementById('playAgainBtn'),
-      exitBtn: document.getElementById('exitBtn'),
       imageModal: document.getElementById('imageModal'),
       imageModalOverlay: document.getElementById('imageModalOverlay'),
       imageModalClose: document.getElementById('imageModalClose'),
@@ -31,6 +30,7 @@ class WordsDetail {
     await this.loadGameResults();
     this.attachEventListeners();
     this.updateTabLabels();
+    this.updateImagesToggleUI();
     this.displayWords();
   }
 
@@ -59,9 +59,7 @@ class WordsDetail {
       this.handlePlayAgain();
     });
 
-    this.elements.exitBtn?.addEventListener('click', () => {
-      this.handleExit();
-    });
+    
 
     // Image modal events
     this.elements.imageModalOverlay?.addEventListener('click', () => {
@@ -88,6 +86,7 @@ class WordsDetail {
         word: vocab?.sv ?? "",
         translation: vocab?.en ?? "",
         correct: !!guessed_correct,
+        imageUrl: vocab?.img ?? null,
         userAnswer: undefined,
         feedback: guessed_correct ? "Correct" : "Try again next time",
       })),
@@ -126,12 +125,16 @@ class WordsDetail {
 
   toggleImages() {
     this.showImages = !this.showImages;
-    
-    // Update button appearance
-    this.elements.toggleImagesBtn?.classList.toggle('active', this.showImages);
-    this.elements.toggleImagesText.textContent = this.showImages ? 'Hide Images' : 'Show Images';
-    
+    this.updateImagesToggleUI();
     this.displayWords();
+  }
+
+  updateImagesToggleUI() {
+    // Update button appearance and label to reflect current state
+    this.elements.toggleImagesBtn?.classList.toggle('active', this.showImages);
+    if (this.elements.toggleImagesText) {
+      this.elements.toggleImagesText.textContent = this.showImages ? 'Hide Images' : 'Show Images';
+    }
   }
 
   displayWords() {
@@ -152,9 +155,12 @@ class WordsDetail {
     const icon = word.correct ? '✓' : '✗';
     const feedbackClass = word.correct ? 'word-feedback--correct' : 'word-feedback--incorrect';
     
-    const imagePath = this.getImagePath(word);
-    const imageHtml = this.showImages && imagePath ? 
-      `<img src="${imagePath}" alt="${word.translation}" class="word-image" onerror="this.style.display='none'" onclick="window.sayWhatWordsDetail.openImageModal('${imagePath}', '${word.word} - ${word.translation}')">` : 
+    const candidates = this.getImageCandidates(word);
+    const firstImage = candidates[0] || '';
+    const restCandidates = candidates.slice(1);
+    const dataAttr = encodeURIComponent(JSON.stringify(restCandidates));
+    const imageHtml = this.showImages && firstImage ? 
+      `<img src="${firstImage}" data-candidates="${dataAttr}" alt="${word.translation}" class="word-image" onerror="window.sayWhatWordsDetail.tryNextImage(this)" onclick="window.sayWhatWordsDetail.openImageModal(this.src, '${word.word} - ${word.translation}')">` : 
       '';
     
     return `
@@ -172,8 +178,58 @@ class WordsDetail {
   }
 
   getImagePath(word) {
-    // Assets are remote in Team 8 DB; words-detail shows local images only if mapping exists.
-    return null;
+    // Prefer remote image URL provided by vocab data when available
+    return word?.imageUrl || null;
+  }
+
+  getImageCandidates(word) {
+    const candidates = [];
+    const remote = this.getImagePath(word);
+    if (remote) candidates.push(remote);
+
+    const english = (word?.translation || '').toLowerCase().trim();
+    if (!english) return candidates;
+
+    const variants = Array.from(new Set([
+      english,
+      english.replace(/\s+/g, '_'),
+      english.replace(/\s+/g, ''),
+      english.replace(/[\s-]+/g, ''),
+    ]));
+
+    const categories = ['food', 'furniture', 'clothes', 'colors'];
+    for (const cat of categories) {
+      for (const v of variants) {
+        candidates.push(`/assets/images/${cat}/${v}.png`);
+      }
+    }
+
+    return candidates;
+  }
+
+  tryNextImage(imgEl) {
+    if (!imgEl) return;
+    const encoded = imgEl.getAttribute('data-candidates');
+    if (!encoded) {
+      imgEl.style.display = 'none';
+      return;
+    }
+    let remaining = [];
+    try {
+      remaining = JSON.parse(decodeURIComponent(encoded));
+    } catch (_) {
+      imgEl.style.display = 'none';
+      return;
+    }
+
+    if (remaining.length === 0) {
+      imgEl.style.display = 'none';
+      return;
+    }
+
+    const next = remaining.shift();
+    imgEl.setAttribute('data-candidates', encodeURIComponent(JSON.stringify(remaining)));
+    imgEl.src = next;
   }
 
   handleBack() {

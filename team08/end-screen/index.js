@@ -138,7 +138,7 @@ class EndScreen {
     // REQ-USER19: Return to start screen to play again
     console.log('Returning to game setup...');
     
-    window.location.href = '/';
+    window.location.href = '../index.html';
     
   }
 
