@@ -1,3 +1,19 @@
-.clock {
+.clock-group {
+    width: 300px;
+    height: 300px;
+    background-image: url("../assets/images/clock-no-hands.png");
+    background-size:contain;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.clock-background {
     width: 50%;
+    position: absolute;
+}
+
+.clock-hand {
+    background-color: black;
+    width: 200px;
+    height: 10px;
 }

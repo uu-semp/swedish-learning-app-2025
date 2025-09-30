@@ -1,6 +1,10 @@
 export default {
     name: "Clock",
     template: `
-      <img class='clock' src='./assets/images/clock.jpg' alt='Image of a clock'>
+    <div class='clock-group'>
+      <div class='clock-hand' id='hour-hand'></div>
+      <div class='clock-hand' id='minute-hand'></div>
+    </div>
+      
     `
 };
