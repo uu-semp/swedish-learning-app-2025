@@ -8,11 +8,13 @@ import {
   HowToPlayButton,
   InfoButton,
   GoBackButton,
-  LevelButton
+  LevelButton,
+  CategoryClothingButton,
+  ClothingItemButton,
 } from "./elements/buttons.js";
 import { CorrectAnswerFeedback } from "./elements/correctAnswerFeedback.js";
 import { IncorrectAnswerFeedback } from "./elements/incorrectAnswerFeedback.js";
-
+import { WardrobeContainer } from "./elements/wardrobeContainer.js";
 
 export default {
   StartView,
@@ -26,5 +28,8 @@ export default {
   InfoButton,
   LevelButton,
   CorrectAnswerFeedback,
-  IncorrectAnswerFeedback
+  IncorrectAnswerFeedback,
+  WardrobeContainer,
+  CategoryClothingButton,
+  ClothingItemButton,
 };
