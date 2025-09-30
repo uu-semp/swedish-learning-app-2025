@@ -5,55 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Ica Väst</title>
   <style>
-    :root{
-      --bg:#0f172a;
-      --text:#e5e7eb;
-      --muted:#94a3b8;
-      --brand:#38bdf8;
-    }
-    html, body { height:100%; }
-    body{
-      margin:0;
-      font-family:system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
-      color:var(--text);
-      background:var(--bg);
-      display:flex;
-      align-items:flex-start;
-      justify-content:center;
-      padding:24px;
-      gap:16px;
-    }
-
-    /* Status bar with pills */
-    .status{
-      display:flex;
-      gap:12px;
-      flex-wrap:wrap;
-      align-items:center;
-      background:rgba(255,255,255,.04);
-      border:1px solid #233046;
-      border-radius:12px;
-      padding:10px 12px;
-    }
-    .pill{
-      padding:6px 10px;
-      border-radius:999px;
-      background:#0a1a33;
-      border:1px solid #22304a;
-      color:#bfdbfe;
-      font-weight:700;
-    }
-
-    /* Demo controls (remove later) */
-    .controls{ margin-top:10px; display:flex; gap:10px; flex-wrap:wrap; }
-    .controls button{
-      background:#1e293b; color:#e5e7eb;
-      border:1px solid #334155; border-radius:8px;
-      padding:8px 12px; cursor:pointer;
-    }
-    .controls button:hover{ filter:brightness(1.05); }
-
-    /* Toast container */
+    /* Only keep chatbubble/toast/modal styles */
     .toasts {
       position: fixed;
       right: 16px;
@@ -63,25 +15,19 @@
       gap: 14px;
       z-index: 50;
     }
-
-    /* Shared chat bubble (toast + modal) */
     .bubble {
       position: relative;
       width: clamp(280px, 32vw, 380px);
       min-height: 110px;
-
       background: url('./assets/chatbubble.png') no-repeat 0 0 / 100% 100%;
       border: none;
       box-shadow: none;
-
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       text-align: center;
-
       padding: 16px 44px 22px 24px;
-
       color: #000;
       font-weight: 600;
       font-size: 14px;
@@ -89,13 +35,9 @@
       white-space: normal;
       word-wrap: break-word;
     }
-
-    /* Toast animation */
     .toast { transition: opacity .25s ease, transform .25s ease; }
     .toast.is-hiding { opacity:0; transform: translateY(6px); }
     .toast strong { font-weight:700; }
-
-    /* Close buttons */
     .toast .x,
     .bubble .x {
       position: absolute;
@@ -112,24 +54,16 @@
     }
     .toast .x:hover,
     .bubble .x:hover { background: rgba(0,0,0,0.05); }
-
-    /* Modal overlay */
     .modal{position:fixed; inset:0; background:rgba(0,0,0,.6); display:none; align-items:center; justify-content:center; z-index:60}
     .modal.open{display:flex}
-    .modal .box{ border:none; padding:0; } /* no background override! */
-
-    /* Endgame modal bubble */
+    .modal .box{ border:none; padding:0; }
     .endgame-box {
       width: clamp(360px, 42vw, 500px);
       min-height: 160px;
-      padding: 24px 48px 28px 32px; /* a bit more breathing room */
+      padding: 24px 48px 28px 32px;
     }
-    .endgame-title {
-      font-size: 1.5rem; /* bigger title */
-    }
-    .endgame-msg {
-      font-size: 1.1rem;
-    }
+    .endgame-title { font-size: 1.5rem; }
+    .endgame-msg { font-size: 1.1rem; }
     .endgame-actions {
       display:flex;
       gap:10px;
@@ -149,7 +83,6 @@
       transition: opacity .15s ease;
     }
     .endgame-btn:hover { opacity:.9; }
-
     .endgame-icon { margin-bottom: 6px; animation: pop-in .5s cubic-bezier(.5,1.8,.5,1) 1; }
     @keyframes pop-in {
       0% { transform: scale(0.6); opacity: 0; }
@@ -159,31 +92,27 @@
   </style>
 </head>
 <body>
-
   <div>
-    <div class="status" id="statusBar">
-      <span class="pill" id="progressPill">0 / 10 klara</span>
-      <span class="pill" id="firstTryPill">Rätt: 0</span>
-      <span class="pill" id="mistakesPill">Misstag: 0</span>
-      <span class="pill" id="targetPill">Tröskel: 8 / 10</span>
+    <!-- Simple status text -->
+    <div id="statusBar">
+      <span id="progressPill">0 / 10 klara</span> |
+      <span id="firstTryPill">Rätt: 0</span> |
+      <span id="mistakesPill">Misstag: 0</span> |
+      <span id="targetPill">Tröskel: 8 / 10</span>
     </div>
-
-    <!-- Demo controls -->
-    <div class="controls">
+    <!-- Simple controls -->
+    <div>
       <button id="demoCorrect">Simulera Rätt</button>
       <button id="demoWrong">Simulera Fel</button>
       <button id="demoReset">Reset</button>
     </div>
   </div>
-
   <!-- Toasts -->
   <div class="toasts" id="toasts"></div>
-
   <!-- Endgame modal -->
   <div class="modal" id="endModal" role="dialog" aria-modal="true" aria-labelledby="endTitle">
     <div class="box bubble endgame-box">
       <button class="x" id="endClose" type="button" aria-label="Stäng resultat">×</button>
-
       <div class="endgame-inner">
         <div class="endgame-icon" aria-hidden="true">
           <svg id="endIcon" width="48" height="48" viewBox="0 0 48 48" fill="none">
@@ -200,7 +129,6 @@
       </div>
     </div>
   </div>
-
   <script>
   (function(){
     const TARGET_TOTAL = 10;
