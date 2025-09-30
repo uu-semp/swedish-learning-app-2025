@@ -10,6 +10,8 @@ import {
   GoBackButton,
   LevelButton
 } from "./elements/buttons.js";
+import { CorrectAnswerFeedback } from "./elements/correctAnswerFeedback.js";
+import { IncorrectAnswerFeedback } from "./elements/incorrectAnswerFeedback.js";
 
 
 export default {
@@ -22,5 +24,7 @@ export default {
   HowToPlayButton,
   GoBackButton,
   InfoButton,
-  LevelButton
+  LevelButton,
+  CorrectAnswerFeedback,
+  IncorrectAnswerFeedback
 };
