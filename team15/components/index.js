@@ -8,7 +8,9 @@ import {
   HowToPlayButton,
   InfoButton,
   GoBackButton,
-  LevelButton
+  LevelButton,
+  CategoryClothingButton,
+  ClothingItemButton,
 } from "./elements/buttons.js";
 import { WardrobeContainer } from "./elements/wardrobeContainer.js";
 
@@ -24,5 +26,7 @@ export default {
   GoBackButton,
   InfoButton,
   LevelButton,
-  WardrobeContainer
+  WardrobeContainer,
+  CategoryClothingButton,
+  ClothingItemButton
 };

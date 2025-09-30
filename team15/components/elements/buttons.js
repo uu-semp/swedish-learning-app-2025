@@ -38,3 +38,34 @@ export const LevelButton = {
   <button class=big-buttons>{{ label }}</button>
   `,
 }
+
+export const ClothingItemButton = {
+  name: "clothing-item-button", 
+  props:{
+    label: {
+      type: String,
+      required: true
+    }
+  },
+  template:`
+    <button class=clothing-button>
+      <img :src="label"  style="width: 50px;"></img>
+    </button>
+  `,
+}
+
+
+export const CategoryClothingButton = {
+  name: "category-clothing-button", 
+  props:{
+    label: {
+      type: String,
+      required: true
+    }
+  },
+  template:`
+    <button class=round-button>
+      <img :src="label"  style="width: 40px;"></img>
+    </button>
+  `,
+}

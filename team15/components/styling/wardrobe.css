@@ -6,8 +6,10 @@
   border-width: 10px;
   border-radius: 30px;
   border-color: #02b823;
-  height: 350px;
-  width: 400px;
+  height: 300px;
+  width: 350px;
+  float: right;
+  margin:20px;
 }
 
 .container {
@@ -17,18 +19,40 @@
   grid-template-rows: repeat(3, 1fr)
 }
 
-.button-image {
-  border: 2px dotted #02b823;
+.clothing-button {
+  border: 1px dotted #02b823;
   font-size: 30px;
   background-color: #ceffd7;
   text-align: center;
+  border-radius: 30px;
 }
 
-.button-image:hover {
-  transform: scale(1.05);
+.clothing-button:hover,.round-button:hover {
+  transform: scale(1.02);
   cursor: grab;
 }
 
-.button-image:active {
-  box-shadow: 0 0 10px #2d2d2d;
+.clothing-button:active, .round-button:active {
+  box-shadow: 0 0 2px #676767;
 } 
+
+
+.round-button{
+  width: 80px;
+  height:80px;
+  background-color: #ceffd7;
+  border:solid;
+  border-color:#02b823;
+  border-width:8px;
+  border-radius: 100%;
+}
+
+.category-container{
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}
+
+
+#go-back-button{
+  margin-top:20px;
+}
