@@ -148,21 +148,20 @@ header img {
 }
 
 #game-stage {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center; 
-}
-
-#game-stage[hidden] {
-  display: none !important;
+    padding: 0 3%;
 }
 
 .stage-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: var(--frame-width);
+    width: min(100%, var(--frame-width));
+    margin: 0 auto;
+}
+
+.game-container {
+    overflow-x: auto;
+    text-align: center; 
 }
 
 #back-btn {
