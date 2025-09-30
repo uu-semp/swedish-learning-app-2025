@@ -4,8 +4,6 @@ import { loaddb } from "./store/alternative_backend/vocabulary_await.js";
 // Owned by Team 08
 // ==============================================
 
-"use strict";
-
 const init = () => {
   const startBtn = document.getElementById('start-btn');
   const tutorialBtn = document.querySelector('.welcome__tutorial-btn');
