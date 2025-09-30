@@ -11,6 +11,7 @@ function irandom_range(min, max) {
 $(function() {
   window.vocabulary.when_ready(function () {
     // Get all vocabulary belonging to the category numbers
+  const state = 
   const numbers = window.vocabulary.get_category("number");
 
   $("#check-jquery").on("click", () => {
@@ -19,13 +20,8 @@ $(function() {
   
   const randomNo =  irandom_range(0,numbers.length)
   console.log(randomNo)
-  console.log(window.vocabulary.get_vocab(numbers[randomNo]).en)
   // Load the metadata for the first ID
-  const vocab = window.vocabulary.get_vocab(numbers[0]);
-  // Access the `en` field
-  const english = vocab.en;
-  const test = JSON.stringify(vocab.en)
-  $("#zero").text(test);
+  $("#zero").text(window.vocabulary.get_vocab(numbers[0]).en);
   $("#randomNo").text(JSON.stringify(window.vocabulary.get_vocab(numbers[randomNo]).en));
   $("#display-number").text(JSON.stringify(window.vocabulary.get_vocab(numbers[randomNo]).en));
   // Get all vocabulary belonging to the category `furniture`
