@@ -1,5 +1,5 @@
 // Returns an array with all ids for this teams items.
-function getItemsIds() {
+export function getItemsIds() {
   const Ids = [];
   const foods = window.vocabulary.get_category("food");
   const fruits = window.vocabulary.get_category("fruit");
@@ -22,3 +22,4 @@ export function getItems() {
   return items;
 
 }
+
