@@ -1,8 +1,8 @@
-import "./settings.js";
-import { loaddb } from "./store/alternative_backend/vocabulary_await.js";
 // ==============================================
 // Owned by Team 08
 // ==============================================
+
+import "./settings.js";
 
 const init = () => {
   const startBtn = document.getElementById('start-btn');
