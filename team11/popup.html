@@ -198,14 +198,10 @@
     .endgame-box {
       width: clamp(360px, 42vw, 500px);
       min-height: 160px;
-      padding: 24px 48px 28px 32px; /* a bit more breathing room */
+      padding: 24px 48px 28px 32px;
     }
-    .endgame-title {
-      font-size: 1.5rem; /* bigger title */
-    }
-    .endgame-msg {
-      font-size: 1.1rem;
-    }
+    .endgame-title { font-size: 1.5rem; }
+    .endgame-msg { font-size: 1.1rem; }
     .endgame-actions {
       display:flex;
       gap:10px;
@@ -225,7 +221,6 @@
       transition: opacity .15s ease;
     }
     .endgame-btn:hover { opacity:.9; }
-
     .endgame-icon { margin-bottom: 6px; animation: pop-in .5s cubic-bezier(.5,1.8,.5,1) 1; }
     @keyframes pop-in {
       0% { transform: scale(0.6); opacity: 0; }
@@ -242,15 +237,15 @@
 =======
 
   <div>
-    <div class="status" id="statusBar">
-      <span class="pill" id="progressPill">0 / 10 klara</span>
-      <span class="pill" id="firstTryPill">Rätt: 0</span>
-      <span class="pill" id="mistakesPill">Misstag: 0</span>
-      <span class="pill" id="targetPill">Tröskel: 8 / 10</span>
+    <!-- Simple status text -->
+    <div id="statusBar">
+      <span id="progressPill">0 / 10 klara</span> |
+      <span id="firstTryPill">Rätt: 0</span> |
+      <span id="mistakesPill">Misstag: 0</span> |
+      <span id="targetPill">Tröskel: 8 / 10</span>
     </div>
-
-    <!-- Demo controls -->
-    <div class="controls">
+    <!-- Simple controls -->
+    <div>
       <button id="demoCorrect">Simulera Rätt</button>
       <button id="demoWrong">Simulera Fel</button>
       <button id="demoReset">Reset</button>
