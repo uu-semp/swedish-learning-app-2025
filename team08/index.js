@@ -13,14 +13,14 @@ const init = () => {
   if (startBtn) {
     startBtn.addEventListener('click', () => {
       // Navigate to main game page
-      window.location.href = './game.html';
+      window.location.href = './index.html';
     });
   }
 
   if (tutorialBtn) {
     tutorialBtn.addEventListener('click', () => {
       // Navigate to tutorial page
-      window.location.href = './tutorial.html';
+      window.location.href = './index.html';
     });
   }
 };
