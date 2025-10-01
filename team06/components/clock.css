@@ -3,17 +3,22 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background: #ffffff;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     margin: 0;
+    font-family: 'Arial', sans-serif;
 }
 .clock {
     width: 300px;
     height: 300px;
-    border: 8px solid black;
+    border: 8px solid #2c3e50;
     border-radius: 50%;
     position: relative;
     padding: 20px;
-    background: white;
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+    box-shadow: 
+        0 20px 40px rgba(0, 0, 0, 0.3),
+        inset 0 2px 4px rgba(255, 255, 255, 0.8),
+        inset 0 -2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .clock-face {
@@ -23,35 +28,56 @@ body {
     transform: translateY(-3px);
 }
 
+/* Add center dot */
+.clock-face::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 16px;
+    height: 16px;
+    background: #2c3e50;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    z-index: 10;
+}
+
 .hand {
-    background: black;
+    background: linear-gradient(90deg, #2c3e50 0%, #34495e 100%);
     position: absolute;
     top: 50%;
     transform-origin: 100% 50%;
     transform: rotate(90deg);
-    transition: all 0.05;
+    transition: all 0.05s;
     transition-timing-function: cubic-bezier(0.1, 2.7, 0.58, 1);
+    border-radius: 2px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .hour-hand { 
     --hour-hand-width: 32%;
-    height: 6px;
+    height: 8px;
     width: var(--hour-hand-width);
     left: calc(50% - var(--hour-hand-width));
+    background: linear-gradient(90deg, #e74c3c 0%, #c0392b 100%);
+    z-index: 2;
 }
 
 .minute-hand { 
     --minute-hand-width: 42%;
-    height: 4px;
+    height: 6px;
     width: var(--minute-hand-width);
     left: calc(50% - var(--minute-hand-width));
+    background: linear-gradient(90deg, #3498db 0%, #2980b9 100%);
+    z-index: 3;
 }
 
 .number {
     position: absolute;
-    font-size: 1.5em;
-    color: black;
-    font-family: Arial, sans-serif;
+    font-size: 1.6em;
+    color: #2c3e50;
+    font-family: 'Georgia', serif;
     font-weight: bold;
     width: 30px;
     height: 30px;
@@ -61,17 +87,19 @@ body {
     top: 50%;
     left: 50%;
     transform-origin: 0 0;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 
-.number1  { transform: translate(-15px, -15px) rotate(30deg) translate(0, -140px) rotate(-30deg); }
-.number2  { transform: translate(-15px, -15px) rotate(60deg) translate(0, -140px) rotate(-60deg); }
-.number3  { transform: translate(-15px, -15px) rotate(90deg) translate(0, -140px) rotate(-90deg); }
-.number4  { transform: translate(-15px, -15px) rotate(120deg) translate(0, -140px) rotate(-120deg); }
-.number5  { transform: translate(-15px, -15px) rotate(150deg) translate(0, -140px) rotate(-150deg); }
-.number6  { transform: translate(-15px, -15px) rotate(180deg) translate(0, -140px) rotate(-180deg); }
-.number7  { transform: translate(-15px, -15px) rotate(210deg) translate(0, -140px) rotate(-210deg); }
-.number8  { transform: translate(-15px, -15px) rotate(240deg) translate(0, -140px) rotate(-240deg); }
-.number9  { transform: translate(-15px, -15px) rotate(270deg) translate(0, -140px) rotate(-270deg); }
-.number10 { transform: translate(-15px, -15px) rotate(300deg) translate(0, -140px) rotate(-300deg); }
-.number11 { transform: translate(-15px, -15px) rotate(330deg) translate(0, -140px) rotate(-330deg); }
-.number12 { transform: translate(-15px, -15px) rotate(0deg) translate(0, -140px) rotate(0deg); }
+/* Position each number using rotation around the center */
+.number1  { --rotation: 30deg; transform: translate(-15px, -15px) rotate(30deg) translate(0, -140px) rotate(-30deg); }
+.number2  { --rotation: 60deg; transform: translate(-15px, -15px) rotate(60deg) translate(0, -140px) rotate(-60deg); }
+.number3  { --rotation: 90deg; transform: translate(-15px, -15px) rotate(90deg) translate(0, -140px) rotate(-90deg); }
+.number4  { --rotation: 120deg; transform: translate(-15px, -15px) rotate(120deg) translate(0, -140px) rotate(-120deg); }
+.number5  { --rotation: 150deg; transform: translate(-15px, -15px) rotate(150deg) translate(0, -140px) rotate(-150deg); }
+.number6  { --rotation: 180deg; transform: translate(-15px, -15px) rotate(180deg) translate(0, -140px) rotate(-180deg); }
+.number7  { --rotation: 210deg; transform: translate(-15px, -15px) rotate(210deg) translate(0, -140px) rotate(-210deg); }
+.number8  { --rotation: 240deg; transform: translate(-15px, -15px) rotate(240deg) translate(0, -140px) rotate(-240deg); }
+.number9  { --rotation: 270deg; transform: translate(-15px, -15px) rotate(270deg) translate(0, -140px) rotate(-270deg); }
+.number10 { --rotation: 300deg; transform: translate(-15px, -15px) rotate(300deg) translate(0, -140px) rotate(-300deg); }
+.number11 { --rotation: 330deg; transform: translate(-15px, -15px) rotate(330deg) translate(0, -140px) rotate(-330deg); }
+.number12 { --rotation: 0deg; transform: translate(-15px, -15px) rotate(0deg) translate(0, -140px) rotate(0deg); }
