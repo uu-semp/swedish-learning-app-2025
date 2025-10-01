@@ -10,6 +10,8 @@ const BUTTON_THREE = document.querySelector("#button3");
 const REMAINING_TURNS = document.querySelector("#remaining_turns");
 const PROGRESS_BAR = document.querySelector("#progress_bar");
 
+const EXIT_BUTTON = document.querySelector("#exit_button");
+
 const MAX_TURNS = 10;
 let turns = MAX_TURNS;
 
@@ -30,6 +32,10 @@ BUTTON_TWO.addEventListener("click", () => {
 
 BUTTON_THREE.addEventListener("click", () => {
   button_update_selection(2);
+});
+
+EXIT_BUTTON.addEventListener("click", () => {
+  window.location.href = "../index.html";
 });
 
 /**
