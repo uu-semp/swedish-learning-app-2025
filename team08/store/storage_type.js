@@ -1,6 +1,6 @@
 /**
  * @typedef Guess
- * @property {string} id
+ * @property {String} id
  * @property {Boolean} guessed_correct
  */
 

@@ -66,7 +66,7 @@ export function local_get_categories() {
 
 /**
  *
- * @param {string[]} categories
+ * @param {String[]} categories
  */
 export function db_get_categories(categories) {
   /** @type {String[]} */
@@ -75,9 +75,9 @@ export function db_get_categories(categories) {
 
 /**
  *
- * @param {string[]} ids
+ * @param {String[]} ids
  * @param {Number} n
- * @return {string[]} n ids taken randomly from ids
+ * @return {String[]} n ids taken randomly from ids
  */
 export function db_get_n_random_words(ids, n) {
   const result = [];
@@ -128,7 +128,7 @@ export function db_get_vocabs(ids) {
 
 /**
  * Retrieves the state of sound effect from local storage.
- * @returns {boolean}
+ * @returns {Boolean}
  */
 export function local_get_sound_effects() {
   let data = safe_get(TEAM);
@@ -151,7 +151,7 @@ export function local_get_guesses() {
 
 /**
  * @typedef CleanGuesses
- * @property {String} guessed_correct
+ * @property {Boolean} guessed_correct
  * @property {DB.VocabEntry} vocab
  */
 
