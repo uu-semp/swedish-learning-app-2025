@@ -140,3 +140,62 @@ body {
   height:100%;
   position:relative;
 }
+
+/* Drop Zone Styling */
+.drop-zone {
+  position: absolute;
+  left: 20px;
+  top: 50%;
+  width: 200px;
+  height: 200px;
+  border: 4px dashed #02b823;
+  border-radius: 15px;
+  background-color: rgba(206, 255, 215, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 18px;
+  color: #02b823;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.drop-zone:hover {
+  background-color: rgba(206, 255, 215, 0.8);
+  border-color: #4CAF50;
+  border-width: 6px;
+}
+
+.drop-zone.drag-over {
+  background-color: rgba(206, 255, 215, 0.9);
+  border-color: #4CAF50;
+  border-width: 6px;
+  transform: scale(1.05);
+}
+
+/* Make clothing buttons draggable */
+.clothing-button[draggable="true"] {
+  cursor: grab;
+}
+
+.clothing-button[draggable="true"]:active {
+  cursor: grabbing;
+}
+
+/* Prevent category buttons from being draggable */
+.round-button {
+  -webkit-user-drag: none;
+  -khtml-user-drag: none;
+  -moz-user-drag: none;
+  -o-user-drag: none;
+  user-select: none;
+}
+
+.round-button img {
+  -webkit-user-drag: none;
+  -khtml-user-drag: none;
+  -moz-user-drag: none;
+  -o-user-drag: none;
+  pointer-events: none;
+}
