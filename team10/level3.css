@@ -12,3 +12,9 @@ Owned by Team 10
     margin-top: 10px;
     text-align: center;
 }
+
+.display-instructions {
+    font-size: medium;
+    color: gray;
+    text-align: center
+}
