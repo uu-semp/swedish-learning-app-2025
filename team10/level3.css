@@ -4,13 +4,21 @@ Owned by Team 10
 =================================================
 */
 
+.game-frame {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
 .display-level{
     font-size: xx-large;
     color: darkgreen;
     font-weight: bold;
     text-transform: uppercase;
-    margin-top: 10px;
     text-align: center;
+    margin-top: 0px;
+    margin-bottom: 10px;
 }
 
 .display-instructions {
@@ -23,8 +31,51 @@ Owned by Team 10
     display: block;
     margin-left: auto;
     margin-right: auto;
-    width: 50%;
+    width: 40%;
     border: 2px solid black;
     border-radius: 10px;
     margin-top: 20px;
+}
+
+.answer-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    gap: 20px;
+}
+
+.answer-box {
+    border: 2px solid black;
+    align-items: center;
+    border-radius: 10px;
+    padding: 20px;
+    width: 250px;
+    height: 30px;
+    text-align: center;
+    cursor: pointer;
+    background-color: lightgray;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.answer-box:hover {
+    background-color: gray;
+    transform: scale(1.05);
+}
+
+.submit-button {
+    display: block;
+    margin: 30px auto;
+    padding: 10px 20px;
+    font-size: large;
+    background-color: darkgreen;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.submit-button:hover {
+    background-color: green;
 }

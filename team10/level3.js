@@ -37,12 +37,33 @@ const DispayImage = {
     }
 }
 
+const AnswerContainer = {
+    template: `
+    <form @submit.prevent="submitAnswer" class="answer-container">
+        <input type="text" v-model="answer" placeholder="Type the Swedish word" class="answer-box">
+        <button type="submit" class="submit-button">Submit</button>
+    </form>
+    `,
+    methods: {
+        submitAnswer() {
+            console.log('submitAnswer called, answer=', this.answer)
+            alert('Your answer: ' + this.answer)
+            this.answer = ''
+        }
+    },
+    data() {
+        return { answer: ''}
+    }
+}
+
+
+
 const app = createApp({})
 
 app.component('display-level', DisplayLevel)
 app.component('display-instructions', DisplayInstructions)
 app.component('display-image', DispayImage)
-
+app.component('answer-container', AnswerContainer)
 
 
 app.mount('#app')
