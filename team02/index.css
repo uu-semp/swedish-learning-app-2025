@@ -10,3 +10,55 @@ body {
     margin-left: auto;
     margin-right: auto;
 }
+
+.button-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+    max-width: 300px;
+    margin: 0 auto;
+}
+
+button {
+    padding: 15px 30px;
+    font-size: 16px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 200px;
+}
+
+#button1 {
+    background-color: #4CAF50;
+    color: white;
+}
+
+#button2 {
+    background-color: #2196F3;
+    color: white;
+}
+
+#button3 {
+    background-color: #ff9800;
+    color: white;
+}
+
+button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+button:active {
+    transform: translateY(0);
+}
+
+#output {
+    margin-top: 30px;
+    padding: 20px;
+    background-color: white;
+    border-radius: 8px;
+    min-height: 50px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
