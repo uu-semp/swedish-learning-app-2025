@@ -5,8 +5,6 @@ import navigation from "./components/navigation.js";
 import statistics from "./components/statistics.js";
 import finishView from "./components/finishView.js";
 import startView from "./components/startView.js";
-import headerComponent from "./components/header.js";
-import footerComponent from "./components/footer.js";
 
 const app = Vue.createApp({
 
