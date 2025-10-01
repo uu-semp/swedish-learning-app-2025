@@ -27,8 +27,7 @@ function game_start(category) {
     //Loop through once for each round
     for (let i = 0; i < rounds; i++) {
         // Generate a random number between 1 and 4, this will be the answer for that round
-        const answer = Math.floor(Math.random() * 4) + 1;
-        console.log("Answer for round " + (i + 1) + " is word number " + answer);
+        const correct_answer = Math.floor(Math.random() * 4) + 1;
 
         // Pick four random words from the ids array
         for (let j = 0; j < 4; j++) {
@@ -37,7 +36,7 @@ function game_start(category) {
             const generated_word = window.vocabulary.get_vocab(ids[rand]);
 
             // If this word matches the random answer number, mark it as the answer, else mark it as false
-            if (j == answer - 1)
+            if (j == correct_answer - 1)
                 generated_word["answer"] = true;
             else
                 generated_word["answer"] = false;
