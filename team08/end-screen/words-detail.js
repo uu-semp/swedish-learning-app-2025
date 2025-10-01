@@ -243,14 +243,6 @@ class WordsDetail {
     window.location.href = '..';
   }
 
-  handleExit() {
-    // Exit to main menu
-    console.log('Exiting to main menu...');
-    if (confirm('Exit to main menu?')) {
-      window.location.href = '/';
-    }
-  }
-
   openImageModal(imagePath, caption) {
     if (this.elements.imageModalImage && this.elements.imageModalCaption && this.elements.imageModal) {
       this.elements.imageModalImage.src = imagePath;
