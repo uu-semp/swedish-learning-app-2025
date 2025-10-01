@@ -35,7 +35,7 @@ function fetchDescription() {
 // apply clothes function
 function applyClothes(id) {
   // fetch clothes from vocabulary and apply to the character
-    document.getElementById(id).src // ... 
+  //  document.getElementById(id).src
 }
 
 // Check clothes function
