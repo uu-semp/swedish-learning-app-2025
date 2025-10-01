@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Quiz Game</title>
+
+ 
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+
+  <link rel="stylesheet" href="levelview.css">
+</head>
+<body>
+  <div id="app">
+    <img :src="question.img" alt="quiz image">
+
+    <div class="options">
+      <button class="option-btn" 
+              v-for="(opt, i) in question.options" 
+              :key="i" 
+              @click="checkAnswer(opt)"
+              :class="buttonClass(opt)">
+        {{ opt }}
+      </button>
+    </div>
+
+    <div class="progress">
+      <div class="progress-bar" :style="{width: progress + '%'}"></div>
+    </div>
+  </div>
+
+  
+  <script src="levelview.js"></script>
+</body>
+</html>
