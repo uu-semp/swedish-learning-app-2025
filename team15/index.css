@@ -25,6 +25,7 @@ body {
   border-width: 20px;
   border-style: solid;
   box-sizing: border-box;
+  position: relative; /* for flag controls */
 }
 
 .main-text {
@@ -185,4 +186,92 @@ body {
   -moz-user-drag: none;
   -o-user-drag: none;
   pointer-events: none;
+}
+
+
+.flag-button {
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.flag-button:hover {
+  background-color: #b6f4c1;  
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);  
+  transition: 0.3s ease;  
+}
+
+.flag-button img {
+  display: block;
+  object-fit: cover;
+  border: 2px solid transparent;  
+  transition: border-color 0.2s ease;
+}
+
+.flag-button.selected img {
+  border-color: #22c55e;  /* change to green */
+}
+
+
+/* Help View */
+.help-content {
+  max-width: 85%;
+  margin: 0 auto;
+  padding: 5px 15px;
+  text-align: left;
+  line-height: 1.2;
+}
+
+.help-content h2 {
+  color: #02b823;
+  font-size: 16px;
+  margin-top: 12px;
+  margin-bottom: 6px;
+  border-bottom: 1px solid #02b823;
+  padding-bottom: 2px;
+}
+
+.help-content h3 {
+  color: #02b823;
+  font-size: 14px;
+  margin-top: 10px;
+  margin-bottom: 4px;
+}
+
+.help-content p {
+  margin-bottom: 6px;
+  font-size: 12px;
+}
+
+.help-content ul {
+  margin-left: 12px;
+  margin-bottom: 6px;
+}
+
+.help-content li {
+  margin-bottom: 3px;
+  font-size: 12px;
+}
+
+.level-info {
+  background-color: rgba(206, 255, 215, 0.3);
+  padding: 6px;
+  border-radius: 4px;
+  margin: 6px 0;
+  border-left: 2px solid #02b823;
+}
+
+/* adjust the spacing of the help view title */
+.help-view .main-text {
+  margin-top: 15px;
+  margin-bottom: 15px;
+  font-size: 180%;
+}
+
+/* make sure the button is at the bottom of the help view */
+.help-view .button-container {
+  margin-top: 15px;
+  margin-bottom: 15px;
 }

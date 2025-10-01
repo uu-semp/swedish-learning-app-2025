@@ -11,6 +11,7 @@ import {
   LevelButton,
   CategoryClothingButton,
   ClothingItemButton,
+  LanguageFlagButton,
 } from "./elements/buttons.js";
 import { CorrectAnswerFeedback } from "./elements/correctAnswerFeedback.js";
 import { IncorrectAnswerFeedback } from "./elements/incorrectAnswerFeedback.js";
@@ -32,4 +33,5 @@ export default {
   WardrobeContainer,
   CategoryClothingButton,
   ClothingItemButton,
+  LanguageFlagButton,
 };
