@@ -26,18 +26,20 @@ Owned by Team 07
     aspect-ratio: 1 / 1; 
     object-fit: cover;
     display: block;
-    border: 2px solid #000000;
+    border: 6px solid #000000;
+    border-radius: 6px;
     cursor: pointer;
-    transition: border-color 0.15s;
+    transition: border-color 0.15s, box-shadow 0.15s, opacity 0.15s;
 }
 
 .game-frame .image-container img.correct {
-    border: 3px solid #2e7d32;
-    box-shadow: 0 0 4px #2e7d32;
+    border-color: green;
+    box-shadow: 0 0 4px darkgreen;
 }
 .game-frame .image-container img.incorrect {
-    border: 3px solid #c62828;
-    opacity: .75;
+    border-color: red;
+    box-shadow: 0 0 0 4px darkred;
+    opacity: .65;
 }
 
 .game-frame .fa-volume-high {
@@ -59,6 +61,12 @@ Owned by Team 07
     position: absolute;
     right: 20px;
     bottom: 20px;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+.game-frame #start-button {
+    padding: 10px 20px;
     font-size: 1.5rem;
     cursor: pointer;
 }
