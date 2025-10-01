@@ -1,0 +1,66 @@
+body {
+  background: #2e3d2e;
+  color: white;
+  font-family: Arial, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+}
+
+#app {
+  text-align: center;
+  width: 600px;
+}
+
+img {
+  width: 250px;
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 30px;
+}
+
+.options {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.option-btn {
+  background: #9bb77c;
+  border: none;
+  border-radius: 20px;
+  padding: 15px;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  color: white;
+  transition: 0.2s;
+}
+
+/* 正确答案绿色 */
+.correct {
+  background: #4CAF50 !important;
+}
+
+/* 错误答案红色 */
+.wrong {
+  background: #E74C3C !important;
+}
+
+.progress {
+  width: 100%;
+  height: 20px;
+  background: #eee;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, #5a5ad6, #77aaff);
+  width: 40%; /* 初始进度百分比 */
+}
