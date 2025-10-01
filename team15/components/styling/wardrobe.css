@@ -20,20 +20,27 @@
 }
 
 .clothing-button {
-  border: 1px dotted #02b823;
-  font-size: 30px;
+  border-radius: 45px;;
   background-color: #ceffd7;
-  text-align: center;
-  border-radius: 40px;
+  border-width: 0px;
 }
 
-.clothing-button:hover,
-.round-button:hover {
-  transform: scale(1.02);
+.clothing-button:hover img{
+  transform: scale(1.2);
+  transition: all 0.8s ease;
   cursor: grab;
 }
 
-.clothing-button:active,
+
+.clothing-button:active img{
+  filter: brightness(1.1);
+  cursor:grabbing;
+}
+
+.round-button:hover {
+  cursor: grab;
+}
+
 .round-button:active {
   box-shadow: 0 0 2px #676767;
 }
@@ -52,4 +59,10 @@
   margin-top: -15px;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
+}
+
+.selectedCategoryButton{
+  background-color:#a8feb8;
+  width:85px;
+  height: 85px;;
 }

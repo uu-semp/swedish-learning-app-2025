@@ -51,13 +51,17 @@ export const ClothingItemButton = {
       // Set drag data (you can customize this later)
       event.dataTransfer.setData('text/plain', this.label);
       event.dataTransfer.effectAllowed = 'move';
+      
     }
   },
   template: `
-    <button class="clothing-button" 
-            draggable="true" 
-            @dragstart="handleDragStart">
-      <img :src="label" style="width: 50px; pointer-events: none;" draggable="false" />
+    <button class="clothing-button">
+      <img :src="label" 
+      style="width: 80px;"
+      draggable="true"
+      @dragstart="handleDragStart"
+      @dragend="isDragging = false"
+       />
     </button>
   `,
 };
@@ -72,7 +76,7 @@ export const CategoryClothingButton = {
   },
   template: `
     <button class="round-button" draggable="false">
-      <img :src="label" style="width: 40px;" draggable="false" />
+      <img :src="label" style="width: 55px;" draggable="false" />
     </button>
   `,
 };
