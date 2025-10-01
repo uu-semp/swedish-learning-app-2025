@@ -115,7 +115,7 @@
       }
     }
   ],
-  
+
   "Parkvägen": [
     {
       "coords": "???",
@@ -125,17 +125,10 @@
         "ordinal": "36211275"
       }
     },
+
     {
       "coords": "???",
       "color": "1a30203c",
-      "number": {
-        "cardinal": "16743b18",
-        "ordinal": "51085e77"
-      }
-    },
-    {
-      "coords": "???",
-      "color": "6a743833",
       "number": {
         "cardinal": "34447f1c",
         "ordinal": "1e055517"
@@ -145,14 +138,6 @@
       "coords": "???",
       "color": "38610d43",
       "number": {
-        "cardinal": "656d363e",
-        "ordinal": "1775693f"
-      }
-    },
-    {
-      "coords": "???",
-      "color": "6e45235f",
-      "number": {
         "cardinal": "04795e49",
         "ordinal": "1f780c21"
       }
@@ -161,29 +146,14 @@
       "coords": "???",
       "color": "52145c35",
       "number": {
-        "cardinal": "53552143",
-        "ordinal": "1431537c"
-      }
-    },
-    {
-      "coords": "???",
-      "color": "What color?",
-      "number": {
         "cardinal": "78151153",
         "ordinal": "773e7806"
       }
     },
+
     {
       "coords": "???",
-      "color": "What color?",
-      "number": {
-        "cardinal": "1d37044c",
-        "ordinal": "5d210e41"
-      }
-    },
-    {
-      "coords": "???",
-      "color": "What color?",
+      "color": "6e45235f",
       "number": {
         "cardinal": "044a446a",
         "ordinal": "79152e28"
@@ -191,7 +161,7 @@
     },
     {
       "coords": "???",
-      "color": "What color?",
+      "color": "52145c35",
       "number": {
         "cardinal": "412b1b04",
         "ordinal": "5608397a"
@@ -199,15 +169,7 @@
     },
     {
       "coords": "???",
-      "color": "What color?",
-      "number": {
-        "cardinal": "230c655a",
-        "ordinal": "30291c0b"
-      }
-    },
-    {
-      "coords": "???",
-      "color": "What color?",
+      "color": "4702640f",
       "number": {
         "cardinal": "616a2c42",
         "ordinal": "47795e54"
