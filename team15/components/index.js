@@ -12,6 +12,8 @@ import {
   CategoryClothingButton,
   ClothingItemButton,
 } from "./elements/buttons.js";
+import { CorrectAnswerFeedback } from "./elements/correctAnswerFeedback.js";
+import { IncorrectAnswerFeedback } from "./elements/incorrectAnswerFeedback.js";
 import { WardrobeContainer } from "./elements/wardrobeContainer.js";
 
 export default {
@@ -25,6 +27,8 @@ export default {
   GoBackButton,
   InfoButton,
   LevelButton,
+  CorrectAnswerFeedback,
+  IncorrectAnswerFeedback,
   WardrobeContainer,
   CategoryClothingButton,
   ClothingItemButton,
