@@ -6,7 +6,12 @@ const DISPLAY_GUESSES = document.querySelector("#display_guesses");
 const BUTTON_ONE = document.querySelector("#button1");
 const BUTTON_TWO = document.querySelector("#button2");
 const BUTTON_THREE = document.querySelector("#button3");
-let turns = 10;
+
+const REMAINING_TURNS = document.querySelector("#remaining_turns");
+const PROGRESS_BAR = document.querySelector("#progress_bar");
+
+const MAX_TURNS = 10;
+let turns = MAX_TURNS;
 
 /**
  * @type {import("./selection.js").FrontVocab[]}
@@ -44,6 +49,10 @@ function game_update() {
   if (turns == 0) {
     finish_game();
     DISPLAY_CORRECT.remove();
+
+    REMAINING_TURNS.style.display = 'none';
+    PROGRESS_BAR.parentElement.style.display = 'none';
+
     DISPLAY_GUESSES.innerHTML = "";
     let guesses = local_get_guesses_with_vocab();
     guesses.forEach((guess) => {
@@ -53,6 +62,16 @@ function game_update() {
     });
     return;
   }
+
+  turns = turns - 1;
+
+  const words_left = MAX_TURNS - turns;
+  REMAINING_TURNS.textContent = "Words Left: " + words_left + "/" + MAX_TURNS;
+
+  const progressPercentage = (words_left / MAX_TURNS) * 100;
+  PROGRESS_BAR.style.width = progressPercentage + '%';
+  PROGRESS_BAR.textContent = words_left + ' of ' + MAX_TURNS;
+  
   console.log(turns);
   const DATA = get_next_words();
   current_words = DATA.words;
@@ -61,7 +80,9 @@ function game_update() {
   BUTTON_TWO.textContent = current_words[1].en;
   BUTTON_THREE.textContent = current_words[2].en;
   DISPLAY_CORRECT.textContent = current_words[correct].sv;
-  turns = turns - 1;
+
+  // turns = turns - 1; 
 }
 
+turns = MAX_TURNS;
 game_update();
