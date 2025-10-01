@@ -1,60 +1,59 @@
 export const StartGameButton = {
-  name: "start-game-button",
-  template: `
+    name: 'start-game-button',
+    template: `
     <button class = "big-buttons" id="start-game-button">START GAME</button>
   `,
 };
 
 export const HowToPlayButton = {
-  name: "how-to-play-button",
-  template: `
+    name: 'how-to-play-button',
+    template: `
    <button class = "big-buttons" id="how-to-play-button">HOW TO PLAY</button>
   `,
 };
 export const GoBackButton = {
-  name: "go-back-button",
-  template: `
+    name: 'go-back-button',
+    template: `
   <button class = "big-buttons" id="go-back-button">GO BACK</button>
   `,
 };
 
 export const InfoButton = {
-  name: "info-button",
-  template: `
+    name: 'info-button',
+    template: `
   <button class = "info-button">?</button>
   `,
 };
 
 export const LevelButton = {
-  name: "level-button",
-  props: {
-    label: {
-      type: String,
-      required: true,
+    name: 'level-button',
+    props: {
+        label: {
+            type: String,
+            required: true,
+        },
     },
-  },
-  template: `
+    template: `
   <button class=big-buttons>{{ label }}</button>
   `,
 };
 
 export const ClothingItemButton = {
-  name: "clothing-item-button",
-  props: {
-    label: {
-      type: String,
-      required: true,
+    name: 'clothing-item-button',
+    props: {
+        label: {
+            type: String,
+            required: true,
+        },
     },
-  },
-  methods: {
-    handleDragStart(event) {
-      // Set drag data (you can customize this later)
-      event.dataTransfer.setData('text/plain', this.label);
-      event.dataTransfer.effectAllowed = 'move';
-      
-    }
-  },
-  template: `
+    methods: {
+        handleDragStart(event) {
+            // Set drag data (you can customize this later)
+            event.dataTransfer.setData('text/plain', this.label);
+            event.dataTransfer.effectAllowed = 'move';
+        },
+    },
+    template: `
     <button class="clothing-button">
       <img :src="label" 
       style="width: 80px;"
@@ -67,16 +66,22 @@ export const ClothingItemButton = {
 };
 
 export const CategoryClothingButton = {
-  name: "category-clothing-button",
-  props: {
-    label: {
-      type: String,
-      required: true,
+    name: 'category-clothing-button',
+    props: {
+        label: {
+            type: String,
+            required: true,
+        },
     },
-  },
-  template: `
+    template: `
     <button class="round-button" draggable="false">
       <img :src="label" style="width: 55px;" draggable="false" />
     </button>
+  `,
+};
+
+export const ExitGameButton = {
+    template: `
+    <button class = "big-buttons" id="exit-game-button">Exit Game?</button>
   `,
 };
