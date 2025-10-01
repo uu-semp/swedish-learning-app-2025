@@ -1,0 +1,55 @@
+/* Wardrobe specific styling */
+
+.wardrobe {
+  background-color: #ceffd7;
+  border: solid;
+  border-width: 10px;
+  border-radius: 30px;
+  border-color: #02b823;
+  height: 300px;
+  width: 350px;
+  float: right;
+  margin: 20px;
+}
+
+.container {
+  height: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+}
+
+.clothing-button {
+  border: 1px dotted #02b823;
+  font-size: 30px;
+  background-color: #ceffd7;
+  text-align: center;
+  border-radius: 40px;
+}
+
+.clothing-button:hover,
+.round-button:hover {
+  transform: scale(1.02);
+  cursor: grab;
+}
+
+.clothing-button:active,
+.round-button:active {
+  box-shadow: 0 0 2px #676767;
+}
+
+.round-button {
+  width: 80px;
+  height: 80px;
+  background-color: #ceffd7;
+  border: solid;
+  border-color: #02b823;
+  border-width: 8px;
+  border-radius: 100%;
+}
+
+.category-container {
+  margin-top: -15px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}
