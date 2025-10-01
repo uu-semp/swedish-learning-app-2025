@@ -5,8 +5,6 @@ import navigation from "./components/navigation.js";
 import statistics from "./components/statistics.js";
 import finishView from "./components/finishView.js";
 import startView from "./components/startView.js";
-import headerComponent from "./components/header.js";
-import footerComponent from "./components/footer.js";
 
 const app = Vue.createApp({
 
@@ -27,9 +25,8 @@ const app = Vue.createApp({
     }
   },
   template: `
-  <header-component></header-component>
   <component :is="currentComponent"></component>
-  <footer-component></footer-component>`
+  `
 });
 
 app.component("game-view", gameView);
@@ -39,7 +36,5 @@ app.component("cards", cards);
 app.component("navigation", navigation);
 app.component("statistics", statistics);
 app.component("finish-view", finishView);
-app.component("header-component", headerComponent);
-app.component("footer-component", footerComponent);
 
 app.mount("#app");
