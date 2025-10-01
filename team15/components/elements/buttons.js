@@ -48,7 +48,7 @@ export const ClothingItemButton = {
   },
   template: `
     <button class=clothing-button>
-      <img :src="label"  style="width: 50px;"></img>
+      <img :src="label"  style="width: 80px;"></img>
     </button>
   `,
 };
@@ -63,7 +63,7 @@ export const CategoryClothingButton = {
   },
   template: `
     <button class=round-button>
-      <img :src="label"  style="width: 40px;"></img>
+      <img :src="label"  style="width: 55px;"></img>
     </button>
   `,
 };
