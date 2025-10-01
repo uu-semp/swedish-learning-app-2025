@@ -111,6 +111,7 @@ function gameplay() {
     }
 
     function clearSelection() {
+        document.getElementById('instruction').textContent = "Match the image to the sound";
         imageElements.forEach(image => {
             image.classList.remove('correct', 'incorrect');
         });
@@ -156,7 +157,10 @@ function gameplay() {
                 markIncorrectAnswer(image);
             }
             if (image === clickedImage && image === correctImage) {
+                document.getElementById('instruction').textContent = "Correct answer!";
                 // TODO: Update high score
+            } else if (image === clickedImage && image !== correctImage) {
+                document.getElementById('instruction').textContent = "Wrong answer!";
             }
         });
     }
