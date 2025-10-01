@@ -39,39 +39,32 @@ Owned by Team 07
 
   <main class="game-frame">
 
-    <div id="start-game-ui">
-      <button id="start-button">Start Game</button>
+    <i id="back-button" class="fa-solid fa-arrow-left"></i>
+
+    <!-- Ljudspelare -->
+    <audio id="word-audio">
+      <source id="audio-src" src="" type="audio/mpeg">
+      Your browser does not support the audio element.
+    </audio>
+
+    <h2>Match the image to the sound</h2>
+    <!-- Container för bilder -->
+    <div class="image-container">
+
+      <img id="img-1" src="" alt="Bild 1">
+      <img id="img-2" src="" alt="Bild 2">
+      <img id="img-3" src="" alt="Bild 3">
+      <img id="img-4" src="" alt="Bild 4">
+
     </div>
 
-    <div id="game-ui" style="display: none;">
+    <h5>Click sound icon to hear the word again</h5>
+    <!-- Ljudikon -->
+    <i id="sound-icon" class="fa-solid fa-volume-high"></i>
 
-      <i id="back-button" class="fa-solid fa-arrow-left"></i>
-
-      <!-- Ljudspelare -->
-      <audio id="word-audio">
-        <source id="audio-src" src="" type="audio/mpeg">
-        Your browser does not support the audio element.
-      </audio>
-
-      <h2>Match the image to the sound</h2>
-      <!-- Container för bilder -->
-      <div class="image-container">
-
-        <img id="img-1" src="" alt="Bild 1">
-        <img id="img-2" src="" alt="Bild 2">
-        <img id="img-3" src="" alt="Bild 3">
-        <img id="img-4" src="" alt="Bild 4">
-
-      </div>
-
-      <h5>Click sound icon to hear the word again</h5>
-      <!-- Ljudikon -->
-      <i id="sound-icon" class="fa-solid fa-volume-high"></i>
-
-      <!-- Nästa knapp -->
-      <button id="next-button">Next</button>
-    </div>
-
+    <!-- Nästa knapp -->
+    <button id="next-button">Next</button>
+    
   </main>
 
   <footer>
@@ -80,6 +73,7 @@ Owned by Team 07
 </body>
 
 <script>
+ 
   // Funktionalitet av tillbaka knapp till startsidan
   document.getElementById('back-button').addEventListener('click', function () {
     window.location.href = 'index.html';
@@ -89,13 +83,6 @@ Owned by Team 07
   const words = JSON.parse(localStorage.getItem('game_words'));
   console.log(words);
 
-  // Add the pictures from the words to the image elements
-  // Commented out for now since we don't have images yet
-  
-  for (let i = 0; i < 4; i++) {
-    document.getElementById('img-' + (i + 1)).src = "../" + words[i].img;
-  }
-
   // Add the audio source from the correct word to the audio element
   // Commented out for now since we don't have audio yet
   /*
@@ -103,7 +90,6 @@ Owned by Team 07
     if (words[i].answer == 'true')
       document.getElementById('audio-src').src = words[i].audio;
   }*/
-
 </script>
 
 </html>
