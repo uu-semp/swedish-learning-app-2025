@@ -28,10 +28,21 @@ const DisplayInstructions = {
     }
 }
 
+const DispayImage = {
+    template: `
+    <img :src="imgSrc" alt="Alternative image text" class=display-image>
+    `,
+    data() { 
+        return {imgSrc: "../assets/images/food/food.png"}
+    }
+}
+
 const app = createApp({})
 
 app.component('display-level', DisplayLevel)
 app.component('display-instructions', DisplayInstructions)
+app.component('display-image', DispayImage)
+
 
 
 app.mount('#app')
