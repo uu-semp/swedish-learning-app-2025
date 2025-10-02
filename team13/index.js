@@ -8,25 +8,18 @@ function irandom_range(min, max) {
     max = Math.floor(max);  
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
-
+const gameStates = {
+    menu : 0,
+    inGame : 1,
+  };
+let state = gameStates.inGame
 $(function() {
   window.vocabulary.when_ready(function () {
   // Get all vocabulary belonging to the category numbers
   
-  const gameStates = {
-    menu : 0,
-    inGame : 1,
-  };
-  const state = gameStates.inGame
-  switch(state){
-    case gameStates.menu: {
-        menu_logic()
-    }
-    case gameStates.inGame: {
-        inGame_logic()
-    }
-  }
-   
+  
+  
+   runGameStateLogic()
   
 
   $("#check-jquery").on("click", () => {
@@ -49,16 +42,19 @@ $(function() {
 })});
  
 function menu_logic(){
-    // Load the metadata for the first ID
-    const numbers = window.vocabulary.get_category("number");
+  console.log("menu_logic")
+  //todo: get const numbers defined once covering whole script scope. Doesnt work rn for some reason
+  const numbers = window.vocabulary.get_category("number");
+  const randomNo =  irandom_range(0,numbers.length-1)
   $("#zero").text(window.vocabulary.get_vocab(numbers[0]).en);
   generateRandom()
   $("#display-number").text(JSON.stringify(window.vocabulary.get_vocab(numbers[randomNo]).en));
 }
 
 function inGame_logic(){
+  console.log("inGame_logic")
   const numbers = window.vocabulary.get_category("number");
-  const randomNo =  irandom_range(0,numbers.length)
+  const randomNo =  irandom_range(0,numbers.length-1)
   
   generateRandom()
     // Load the metadata for the first ID
@@ -68,10 +64,32 @@ function inGame_logic(){
 
 function generateRandom() {
   const numbers = window.vocabulary.get_category("number");
-  const randomNo =  irandom_range(0,numbers.length)
+  const randomNo =  irandom_range(0,numbers.length-1)
   
   // Update the display
   $("#display-number").text(
     JSON.stringify(window.vocabulary.get_vocab(numbers[randomNo]).en)
   );
+}
+
+function nextGameState() {
+  const totalStates = Object.keys(gameStates).length;
+  //increment gameState
+  state = (state + 1) % totalStates;
+  console.log(state)
+  runGameStateLogic()
+}
+
+function runGameStateLogic(){
+  switch(state){
+    case gameStates.menu: {
+        menu_logic()
+    } break;
+    case gameStates.inGame: {
+        inGame_logic()
+    } break;
+  }
+}
+function getKeyName(states,index){
+  return Object.keys(states).find(key => states[key] === index);
 }
