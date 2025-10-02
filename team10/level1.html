@@ -1,0 +1,86 @@
+<!doctype html>
+
+<!--
+=================================================
+Owned by Team 10
+=================================================
+-->
+
+
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Basic Static Site</title>
+  <link rel="stylesheet" href="../style.css" />
+
+  <script src="../scripts/vocabulary.js"></script>
+  <script src="../scripts/save.js"></script>
+
+  <!-- You are allowed to use JQuery and Vue.js but don't have to. They just make a
+  lot of things easier
+  -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css"> 
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+  <!-- Site specific scripts and styles -->
+  <link rel="stylesheet" href="level1.css" />
+  <script src="level1.js" defer></script>
+</head>
+<body>
+  <header>
+    <h1>Team 10</h1>
+  </header>
+
+  <!-- TODO: Remove this div and it's content -->
+  <div>
+      <hr>
+      <h2>A basic section to make sure that everything works for everyone</h2>
+
+      <p>Font awesome is working: <i class="fa-solid fa-check"></i> (A checkmark should be visible)</p>
+
+      <button id="check-jquery">Check if Javascript and JQuery is working</button> (Clicking the button should show an alert)
+
+      <button id="check-saving">Click this button to see if saving works</button>
+      <hr>
+  </div>
+
+  <main class="game-frame">
+    <h2>Level 1 - True or False</h2>
+
+    <div class="image-word-divide">
+        <div class="image-half">
+
+            <!-- Add functionality here that displays an image randomly -->
+            <img id="item" src="get_image_src()" alt="image of item">
+        </div>
+        <div class="word-half">
+            <!-- Add functionality here that displays a random word from the vocabulary.
+             What can be added here is that there is a certain probability that the word
+             will be true, such as it can be a 75% probability of then word and image
+             match each other. 
+            -->
+            This is where the words will be displayed
+        </div>
+    </div>
+
+
+
+    <div id="true-false-placement">
+        <button id="true-button"> True </button>
+        <button id="false-button"> False </button>
+    </div>
+
+
+
+
+    <hr>
+    Learning: <div id="display-vocab">(This should be replaced by a word)</div>
+  </main>
+
+  <footer>
+    <small>Created as part of the "Software Engineering and Project Management" course 2025</small>
+  </footer>
+</body>
+</html>
