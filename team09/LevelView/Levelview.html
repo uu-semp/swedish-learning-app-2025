@@ -2,35 +2,51 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Quiz Game</title>
-
-  
-  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-
-  
-  <link rel="stylesheet" href="levelview.css">
+  <title>Clothing Quiz</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="./levelview.css" />
 </head>
 <body>
-  <div id="app">
-    <img :src="question.img" alt="quiz image">
+  <main class="quiz">
+    
+  <button id="helpBtn" class="help-btn">?</button>
 
-    <div class="options">
-      <button class="option-btn" 
-              v-for="(opt, i) in question.options" 
-              :key="i" 
-              @click="checkAnswer(opt)"
-              :class="buttonClass(opt)">
-        {{ opt }}
-      </button>
-    </div>
+  <div id="resultPopup" class="result-Popup hidden">
+  <button id="closeResult" class="close-btn">✕</button>
+  <h2>Congratulations!</h2>
+  <div class="stars">⭐ ⭐ ⭐</div>
+  <p id="mistakeInfo"></p>
+  <div class="popup-actions">
+    <button id="playAgainBtn" class="btn red">Play again</button>
+    <button id="homeBtn" class="btn brown">🏠</button>
+    <button id="nextLevelBtn" class="btn green">Next level</button>
+  </div>
+</div>
 
-    <div class="progress">
-      <div class="progress-bar" :style="{width: progress + '%'}"></div>
-    </div>
+      
+  <div id="helpPopup" class="help-popup hidden">
+    <button id="closeHelp" class="close-btn">✕</button>
+    <p>Click the right clothing item matching with the image!</p>
   </div>
 
- 
-  <script src="levelview.js"></script>
+
+    <section class="image-area">
+      <img id="vocabImg" alt="vocab image" />
+    </section>
+   
+    <section id="options" class="options"></section>
+  
+    <section class="bottom">
+      <div class="progress-wrap">
+        <div id="progress" class="progress"></div>
+      </div>
+      <button id="nextBtn" class="next hidden">➡</button>
+    </section>
+  </main>
+  
+  
+
+  <script src="/scripts/vocabulary.js"></script>
+  <script src="./levelview.js"></script>
 </body>
 </html>
