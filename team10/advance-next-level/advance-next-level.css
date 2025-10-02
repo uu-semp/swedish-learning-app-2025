@@ -1,0 +1,87 @@
+/*
+=================================================
+Owned by Team 10
+=================================================
+*/
+
+/* --- Style Guide Implementation --- */
+@import url('https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+
+:root {
+    --frame-width: 800px;
+    --frame-height: 600px;
+    --primary-color: #9d0000;
+}
+
+/* --- Basic Page Setup --- */
+body {
+    font-family: 'Work Sans', sans-serif;
+    background-color: rgb(161, 187, 212); /* Fallback background, should not be visible in iframe */
+    margin: 0;
+    
+    /* Center the game frame on the page */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+header, footer {
+    display: none; /* Hides the default header and footer as per style guide */
+}
+
+/* --- Game Frame Layout --- */
+.game-frame {
+    width: var(--frame-width);
+    height: var(--frame-height);
+    background-color: #fff;
+    box-sizing: border-box; /* Ensures padding and borders don't increase the size */
+    
+    /* Center the content *inside* the frame */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 2rem;
+    gap: 2.5rem; /* Creates space between the title and the button */
+}
+
+/* --- Content Styling --- */
+.level-title {
+    font-size: 2.25rem; /* Large, clear heading */
+    font-weight: 600;
+    color: #000;
+    margin: 0;
+    line-height: 1.3;
+}
+
+.next-button {
+    /* Font and Appearance */
+    font-family: 'Work Sans', sans-serif;
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: #333;
+    background-color: #f0f0f0;
+    
+    /* Sizing and Spacing */
+    padding: 12px 25px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    
+    /* Interactivity */
+    cursor: pointer;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+    /* Flexbox for aligning text and future icon */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.next-button:hover {
+    background-color: #e0e0e0;
+    border-color: #bbb;
+}
