@@ -15,7 +15,10 @@ $(function () {
   let misses = 0;
 
   let flippedCards = []; // array of currently flipped cards
-
+  let elapsedTime = 0;
+  // timer variables
+  let startTime = null;
+  let timerInterval = null;
 
   // Function to show only one screen at a time
   function showScreen(screenId) {
@@ -26,12 +29,34 @@ $(function () {
   // Button handlers
   $("#start-game").on("click", function () {
     showScreen("game-screen");
+    startTimer();
   });
 
   $("#end-game").on("click", function () {
     resetGame();
+    stopTimer();
     showScreen("end-screen");
   });
+  // --- Timer Functions ---
+  function startTimer() {
+    startTime = Date.now();
+    timerInterval = setInterval(updateTimerDisplay, 1000);
+  }
+
+  function stopTimer() {
+    clearInterval(timerInterval);
+    timerInterval = null;
+  }
+
+  function resetTimer() {
+    stopTimer();
+    $("#elapsed-time").text("Time: 0s");
+  }
+
+  function updateTimerDisplay() {
+    elapsedTime = Math.floor((Date.now() - startTime) / 1000);
+    $("#elapsed-time").text(`Time: ${elapsedTime}s`);
+  }
 
   $("#restart-game").on("click", function () {
     showScreen("menu-screen");
@@ -52,6 +77,7 @@ $(function () {
     corrects = 0;
     misses = 0;
     resetFlipState();
+    resetTimer();
   }
 
   function foundMatch() {
@@ -60,7 +86,16 @@ $(function () {
     flippedCards[1].addClass("matched");
     alert
     if (corrects >= corrects_needed) {
+      stopTimer();
+      // Display stats on end screen
+      const elapsedSeconds = Math.floor((Date.now() - startTime) / 1000);
       alert("Congratulations! You've won the game!");
+      $("#end-screen #time").text(`${elapsedTime} seconds`);
+      $("#end-screen").html(`
+        <p>Total Time: ${elapsedSeconds} seconds</p>
+        <p>Total Misses: ${misses}</p>
+        <button id="restart-game">Restart</button>
+      `);
       resetGame();
       showScreen("end-screen");
     }
@@ -70,7 +105,16 @@ $(function () {
   function notMatch() {
     misses++;
     if (misses >= misses_max) {
+      stopTimer();
       alert("Game Over! You've exceeded the maximum number of misses.");
+      // Display game over screen
+      const elapsedSeconds = Math.floor((Date.now() - startTime) / 1000);
+      $("#end-screen").html(`
+        <h2>💀 Game Over!</h2>
+        <p>Total Time: ${elapsedSeconds} seconds</p>
+        <p>Total Misses: ${misses}</p>
+        <button id="restart-game">Restart</button>
+      `);
       resetGame();
       showScreen("end-screen");
     }
