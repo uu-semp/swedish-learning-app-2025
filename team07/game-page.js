@@ -180,8 +180,7 @@ function gameplay() {
             startNewRound(currentRound);
         } else {
             // Game finished
-            nextBtn.disabled = true;
-            updateNextButtonText('Done');
+            window.location.href = 'results-page.html';
         }
     });
 
