@@ -59,3 +59,142 @@ function game_start(category) {
     // Put the chosen words in local storage
     localStorage.setItem('game_words', JSON.stringify(game_words));
 };
+
+document.addEventListener('DOMContentLoaded', () => {
+  if (document.getElementById('img-1') && document.getElementById('img-2') 
+      && document.getElementById('img-3') && document.getElementById('img-4')) {
+
+    startGame();
+  } else {
+    console.error("Game images missing");
+  }
+});
+
+function startGame() {
+    gameplay();
+}
+
+function gameplay() {
+    const imageElements = [
+        document.getElementById('img-1'),
+        document.getElementById('img-2'),
+        document.getElementById('img-3'),
+        document.getElementById('img-4')
+    ];
+
+    const nextBtn = document.getElementById('next-button');
+    const soundIcon = document.getElementById('sound-icon');
+    const audio = document.getElementById('word-audio');
+    const audioSrc = document.getElementById('audio-src');
+
+    let words = JSON.parse(localStorage.getItem('game_words') || '[]');
+    if (!words.length) {
+        console.error("No words");
+        return;
+    }
+
+    let correctImage = null;
+    let currentRound = 0;
+    let selectionLock = false; // Lock selection if user has clicked image
+
+    function currentRoundWords(roundNumber) {
+        const start = roundNumber * 4;
+        return words.slice(start, start + 4);
+    }
+
+    function markCorrectAnswer(image) {
+        image.classList.add('correct');
+    }
+
+    function markIncorrectAnswer(image) {
+        image.classList.add('incorrect');
+    }
+
+    function clearSelection() {
+        document.getElementById('instruction').textContent = "Match the image to the sound";
+        imageElements.forEach(image => {
+            image.classList.remove('correct', 'incorrect');
+        });
+        selectionLock = false;
+    }
+
+    function updateNextButtonText(text) {
+        nextBtn.textContent = text;
+    }
+
+    function startNewRound(roundNumber) {
+        clearSelection();
+        const wordSet = currentRoundWords(roundNumber);
+
+        wordSet.forEach((word, index) => {
+            const image = imageElements[index];
+            image.src = "../" + word.img;
+            if(word.answer) {
+                correctImage = image;
+            }
+        });
+
+        // Update Next button text if current round number is same as total amount of rounds
+        if (roundNumber === rounds - 1) {
+            updateNextButtonText('Finish');
+        } else {
+            updateNextButtonText('Next');
+        }
+    }
+    
+    function revealAnswer(clickedImage) {
+        // If locked, do nothing
+        if (selectionLock) {
+            return;
+        }
+
+        selectionLock = true;
+
+        imageElements.forEach((image) => {
+            if (image === correctImage) {
+                markCorrectAnswer(image);
+            } else {
+                markIncorrectAnswer(image);
+            }
+            if (image === clickedImage && image === correctImage) {
+                document.getElementById('instruction').textContent = "Correct answer!";
+                // TODO: Update high score
+            } else if (image === clickedImage && image !== correctImage) {
+                document.getElementById('instruction').textContent = "Wrong answer!";
+            }
+        });
+    }
+
+    imageElements.forEach(image => {
+        image.addEventListener('click', () => {
+            revealAnswer(image);
+        });
+    });
+
+    nextBtn.addEventListener('click', () => {
+        if (!selectionLock) {
+            return;
+        }
+        if (currentRound < rounds - 1) {
+            currentRound++;
+            startNewRound(currentRound);
+        } else {
+            // Game finished
+            nextBtn.disabled = true;
+            updateNextButtonText('Done');
+        }
+    });
+
+    soundIcon.addEventListener('click', () => {
+        // TODO: Does not work yet, there is no sound played when clicking
+        const wordSet = currentRoundWords(currentRound);
+        const correctAnswer = wordSet.find(word => word.answer === true);
+        audioSrc.src = "../" + correctAnswer.audio;
+        audio.load();
+        audio.play();
+    });
+
+    // First round
+    startNewRound(currentRound);
+}
+
