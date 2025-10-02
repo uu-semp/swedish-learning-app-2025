@@ -85,3 +85,34 @@ export const ExitGameButton = {
     <button class = "big-buttons" id="exit-game-button">Exit Game?</button>
   `,
 };
+export const LanguageFlagButton = {
+  name: "language-flag-button",
+  props: {
+    src: { type: String, required: true },
+    alt: { type: String, default: "" },
+    value: { type: String, required: true },
+    selected: { type: Boolean, default: false },
+    width: { type: String, default: "56px" },
+    height: { type: String, default: "36px" },
+  },
+  emits: ["select"],
+  methods: {
+    handleClick() {
+      this.$emit("select", this.value);
+      alert(`Language selected: ${this.value}`);
+    },
+  },
+  template: `
+    <button
+      class="flag-button"
+      :class="{ selected: selected }"
+      @click="handleClick"
+    >
+      <img
+        :src="src"
+        :alt="alt"
+        :style="'width: ' + width + '; height: ' + height + ';'"
+      />
+    </button>
+  `,
+};
