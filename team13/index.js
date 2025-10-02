@@ -8,6 +8,7 @@ function irandom_range(min, max) {
     max = Math.floor(max);  
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
+
 $(function() {
   window.vocabulary.when_ready(function () {
   // Get all vocabulary belonging to the category numbers
@@ -48,21 +49,29 @@ $(function() {
 })});
  
 function menu_logic(){
-  const numbers = window.vocabulary.get_category("number");
-  const randomNo =  irandom_range(0,numbers.length)
-  console.log(randomNo)
     // Load the metadata for the first ID
+    const numbers = window.vocabulary.get_category("number");
   $("#zero").text(window.vocabulary.get_vocab(numbers[0]).en);
-  $("#randomNo").text(JSON.stringify(window.vocabulary.get_vocab(numbers[randomNo]).en));
+  generateRandom()
   $("#display-number").text(JSON.stringify(window.vocabulary.get_vocab(numbers[randomNo]).en));
 }
 
 function inGame_logic(){
   const numbers = window.vocabulary.get_category("number");
   const randomNo =  irandom_range(0,numbers.length)
-  console.log(randomNo)
+  
+  generateRandom()
     // Load the metadata for the first ID
   $("#zero").text(window.vocabulary.get_vocab(numbers[1]).en);
-  $("#randomNo").text(JSON.stringify(window.vocabulary.get_vocab(numbers[randomNo]).en));
   $("#display-number").text(JSON.stringify(window.vocabulary.get_vocab(numbers[randomNo]).en));
+}
+
+function generateRandom() {
+  const numbers = window.vocabulary.get_category("number");
+  const randomNo =  irandom_range(0,numbers.length)
+  
+  // Update the display
+  $("#display-number").text(
+    JSON.stringify(window.vocabulary.get_vocab(numbers[randomNo]).en)
+  );
 }
