@@ -13,10 +13,10 @@ const gameStates = {
     inGame : 1,
   };
 let state = gameStates.inGame
+
 $(function() {
   window.vocabulary.when_ready(function () {
   // Get all vocabulary belonging to the category numbers
-  
   
   
    runGameStateLogic()
@@ -44,9 +44,11 @@ $(function() {
 function menu_logic(){
   console.log("menu_logic")
   //todo: get const numbers defined once covering whole script scope. Doesnt work rn for some reason
+  //I understand why now, window.vocabulary is not defined outside of when_ready
+  //to fix: put all functions into when_ready
   const numbers = window.vocabulary.get_category("number");
   const randomNo =  irandom_range(0,numbers.length-1)
-  $("#zero").text(window.vocabulary.get_vocab(numbers[0]).en);
+  
   generateRandom()
   $("#display-number").text(JSON.stringify(window.vocabulary.get_vocab(numbers[randomNo]).en));
 }
@@ -57,8 +59,6 @@ function inGame_logic(){
   const randomNo =  irandom_range(0,numbers.length-1)
   
   generateRandom()
-    // Load the metadata for the first ID
-  $("#zero").text(window.vocabulary.get_vocab(numbers[1]).en);
   $("#display-number").text(JSON.stringify(window.vocabulary.get_vocab(numbers[randomNo]).en));
 }
 
@@ -68,7 +68,7 @@ function generateRandom() {
   
   // Update the display
   $("#display-number").text(
-    JSON.stringify(window.vocabulary.get_vocab(numbers[randomNo]).en)
+    JSON.stringify(window.vocabulary.get_vocab(numbers[randomNo]).sv)
   );
 }
 
@@ -81,6 +81,8 @@ function nextGameState() {
 }
 
 function runGameStateLogic(){
+  const numbers = window.vocabulary.get_category("number");
+   $("#gamestate").text(window.vocabulary.get_vocab(numbers[state]).en);
   switch(state){
     case gameStates.menu: {
         menu_logic()
