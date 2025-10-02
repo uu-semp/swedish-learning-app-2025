@@ -10,19 +10,30 @@ function irandom_range(min, max) {
 }
 $(function() {
   window.vocabulary.when_ready(function () {
-    // Get all vocabulary belonging to the category numbers
-  const numbers = window.vocabulary.get_category("number");
+  // Get all vocabulary belonging to the category numbers
+  
+  const gameStates = {
+    menu : 0,
+    inGame : 1,
+  };
+  const state = gameStates.inGame
+  switch(state){
+    case gameStates.menu: {
+        menu_logic()
+    }
+    case gameStates.inGame: {
+        inGame_logic()
+    }
+  }
+   
+  
 
   $("#check-jquery").on("click", () => {
     alert("JavaScript and jQuery are working.");
   });
   
-  const randomNo =  irandom_range(0,numbers.length)
-  console.log(randomNo)
-  // Load the metadata for the first ID
-  $("#zero").text(window.vocabulary.get_vocab(numbers[0]).en);
-  $("#randomNo").text(JSON.stringify(window.vocabulary.get_vocab(numbers[randomNo]).en));
-  $("#display-number").text(JSON.stringify(window.vocabulary.get_vocab(numbers[randomNo]).en));
+  
+
   // Get all vocabulary belonging to the category `furniture`
 
 
@@ -36,5 +47,22 @@ $(function() {
 
 })});
  
+function menu_logic(){
+  const numbers = window.vocabulary.get_category("number");
+  const randomNo =  irandom_range(0,numbers.length)
+  console.log(randomNo)
+    // Load the metadata for the first ID
+  $("#zero").text(window.vocabulary.get_vocab(numbers[0]).en);
+  $("#randomNo").text(JSON.stringify(window.vocabulary.get_vocab(numbers[randomNo]).en));
+  $("#display-number").text(JSON.stringify(window.vocabulary.get_vocab(numbers[randomNo]).en));
+}
 
-
+function inGame_logic(){
+  const numbers = window.vocabulary.get_category("number");
+  const randomNo =  irandom_range(0,numbers.length)
+  console.log(randomNo)
+    // Load the metadata for the first ID
+  $("#zero").text(window.vocabulary.get_vocab(numbers[1]).en);
+  $("#randomNo").text(JSON.stringify(window.vocabulary.get_vocab(numbers[randomNo]).en));
+  $("#display-number").text(JSON.stringify(window.vocabulary.get_vocab(numbers[randomNo]).en));
+}
