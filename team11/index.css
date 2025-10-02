@@ -52,19 +52,18 @@ body {
   height: 1000px; 
   object-fit: cover;
 }
-
-  
 .popup-frame-wrap {
-  position: absolute;
-  right: 2%;
-  bottom: 2%;
+  position: fixed;           /* fäster elementet mot viewporten */
+  top: 20%;                  /* placerar vertikalt */
+  left: 40%;                 /* placerar horisontellt */
+  transform: translate(-50%, -50%); /* centrerar exakt */
   width: min(420px, 40%);
-  height: min(60%, 380px);
+  height: min(60%, 580px);
   border: 0;
-  border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 8px 30px rgba(0,0,0,0.35);
+  z-index: 9999;             /* mycket högt så att den hamnar över allt */
 }
+
 
 .popup-frame {
   width: 100%;
@@ -72,6 +71,38 @@ body {
   border: none;
   display: block;
   background: transparent;
+}
+
+.top-right-controls {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.5rem;
+  z-index: 20;
+}
+
+.status-bar {
+  background: rgba(255,255,255,0.85);
+  border-radius: 8px;
+  padding: 4px 12px;
+  font-size: 1rem;
+  margin-bottom: 0.2rem;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+}
+
+.demo-buttons {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  left: auto;
+  width: auto;
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  z-index: 10;
 }
 
 

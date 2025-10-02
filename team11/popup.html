@@ -54,14 +54,36 @@
     }
     .toast .x:hover,
     .bubble .x:hover { background: rgba(0,0,0,0.05); }
-    .modal{position:fixed; inset:0; background:rgba(0,0,0,.6); display:none; align-items:center; justify-content:center; z-index:60}
-    .modal.open{display:flex}
-    .modal .box{ border:none; padding:0; }
-    .endgame-box {
-      width: clamp(360px, 42vw, 500px);
-      min-height: 160px;
-      padding: 24px 48px 28px 32px;
+    .modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.6);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 60;
     }
+
+.modal.open {
+  display: flex;
+}
+
+.modal .box {
+  border: none;
+  padding: 0;
+  margin: 0 auto;     /* centrera horisontellt */
+}
+
+.endgame-box {
+  width: clamp(360px, 42vw, 500px);
+  min-height: 160px;
+  padding: 24px 48px 28px 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;   /* se till att innehållet också är centrerat */
+  text-align: center;
+}
+
     .endgame-title { font-size: 1.5rem; }
     .endgame-msg { font-size: 1.1rem; }
     .endgame-actions {
@@ -93,19 +115,10 @@
 </head>
 <body>
   <div>
-    <!-- Simple status text -->
-    <div id="statusBar">
-      <span id="progressPill">0 / 10 klara</span> |
-      <span id="firstTryPill">Rätt: 0</span> |
-      <span id="mistakesPill">Misstag: 0</span> |
-      <span id="targetPill">Tröskel: 8 / 10</span>
-    </div>
-    <!-- Simple controls -->
-    <div>
-      <button id="demoCorrect">Simulera Rätt</button>
-      <button id="demoWrong">Simulera Fel</button>
-      <button id="demoReset">Reset</button>
-    </div>
+    <!-- Status bar removed from here -->
+    <!-- <div id="statusBar"> ... </div> -->
+    <!-- Demo buttons moved to separate file -->
+    <!-- <div class="demo-buttons"> ... </div> -->
   </div>
   <!-- Toasts -->
   <div class="toasts" id="toasts"></div>
@@ -146,17 +159,26 @@
 
     let game = null;
 
-    const progressPill=document.getElementById('progressPill');
-    const firstTryPill=document.getElementById('firstTryPill');
-    const mistakesPill=document.getElementById('mistakesPill');
-    const targetPill=document.getElementById('targetPill');
     const toastsEl=document.getElementById('toasts');
     const endModal=document.getElementById('endModal');
     const endMsg=document.getElementById('endMsg');
     const endClose=document.getElementById('endClose');
 
     function pickRandom(arr,n){const c=[...arr];const o=[];while(n-- >0&&c.length){o.push(c.splice(Math.floor(Math.random()*c.length),1)[0]);}return o;}
-    function renderStatus(){progressPill.textContent=`${game.completed} / ${game.total} klara`;firstTryPill.textContent=`Rätt: ${game.firstTryCorrectCount}`;mistakesPill.textContent=`Misstag: ${game.mistakes}`;targetPill.textContent=`Tröskel: ${game.winThreshold} / ${game.total}`;}
+    function renderStatus(){
+      // Send status update to parent
+      if (window.parent && window.parent !== window) {
+        window.parent.postMessage({
+          type: 'statusUpdate',
+          status: {
+            progress: `${game.completed} / ${game.total} klara`,
+            firstTry: `Rätt: ${game.firstTryCorrectCount}`,
+            mistakes: `Misstag: ${game.mistakes}`,
+            target: `Tröskel: ${game.winThreshold} / ${game.total}`
+          }
+        }, '*');
+      }
+    }
 
     function toast(html,type='success',duration=4000){
       const el=document.createElement('div');
@@ -198,13 +220,30 @@
     window.Game={start,pick,reset,toast,state:()=>game};
     start();
 
-    // Demo buttons
-    document.getElementById('demoCorrect').onclick=()=>{Game.pick(Game.state().words[Game.state().orderIndex].id);}
-    document.getElementById('demoWrong').onclick=()=>{Game.toast('Försök igen!','error');const st=Game.state().perItemState[Game.state().orderIndex];if(st.firstTry){st.firstTry=false;Game.state().mistakes++;}else Game.state().mistakes++;renderStatus();}
-    document.getElementById('demoReset').onclick=()=>Game.reset();
+    // Only add demo button handlers if buttons exist (for legacy/testing)
+    if (document.getElementById('demoCorrect')) {
+      document.getElementById('demoCorrect').onclick=()=>{Game.pick(Game.state().words[Game.state().orderIndex].id);}
+      document.getElementById('demoWrong').onclick=()=>{Game.toast('Försök igen!','error');const st=Game.state().perItemState[Game.state().orderIndex];if(st.firstTry){st.firstTry=false;Game.state().mistakes++;}else Game.state().mistakes++;renderStatus();}
+      document.getElementById('demoReset').onclick=()=>Game.reset();
+    }
 
     document.getElementById('btnPlayAgain').onclick=()=>{closeEndModal();Game.reset();}
     document.getElementById('btnMainMenu').onclick=()=>{closeEndModal();window.location.href='../index.html';};
+
+    // Listen for demo button events from parent
+    window.addEventListener('message', function(event) {
+      if (!event.data || !event.data.type) return;
+      if (event.data.type === 'demoCorrect') {
+        Game.pick(Game.state().words[Game.state().orderIndex].id);
+      } else if (event.data.type === 'demoWrong') {
+        Game.toast('Försök igen!','error');
+        const st=Game.state().perItemState[Game.state().orderIndex];
+        if(st.firstTry){st.firstTry=false;Game.state().mistakes++;}else Game.state().mistakes++;
+        renderStatus();
+      } else if (event.data.type === 'demoReset') {
+        Game.reset();
+      }
+    });
   })();
   </script>
 </body>

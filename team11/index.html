@@ -52,20 +52,61 @@ Owned by Team 11
     <img src="../team11/assets/character.png" alt="Character" class="character">
     <img src="../team11/assets/ShoppingCart.png" alt="Shopping Cart" class="cart">
     <img src="../team11/assets/shelf.png" alt="Shelf" class="shelf">
-  <section class="popup-frame-wrap">
-    <iframe
-      src="./popup.html"
-      title="Popup UI"
-      class="popup-frame"
-      loading="lazy"
-      referrerpolicy="no-referrer">
-    </iframe>
-  </section>
-</main>
+    <section class="popup-frame-wrap">
+      <iframe
+        src="./popup.html"
+        title="Popup UI"
+        class="popup-frame"
+        loading="lazy"
+        referrerpolicy="no-referrer"
+        id="popupFrame">
+      </iframe>
+    </section>
+    <div class="top-right-controls">
+      <div class="status-bar" id="statusBar">
+        <span id="progressPill">0 / 10 klara</span> |
+        <span id="firstTryPill">Rätt: 0</span> |
+        <span id="mistakesPill">Misstag: 0</span> |
+        <span id="targetPill">Tröskel: 8 / 10</span>
+      </div>
+      <div class="demo-buttons">
+        <button id="demoCorrect">Simulera Rätt</button>
+        <button id="demoWrong">Simulera Fel</button>
+        <button id="demoReset">Reset</button>
+      </div>
+    </div>
+    <div class="chatbubble-toasts">
+      <!-- Chatbubble toasts go here -->
+    </div>
+  </main>
   
 
   <footer>
     <small>Created as part of the "Software Engineering and Project Management" course 2025</small>
   </footer>
+
+  <script>
+  // Wait for DOM and iframe to be ready
+  window.addEventListener('DOMContentLoaded', function() {
+    const frame = document.getElementById('popupFrame');
+    function postToPopup(type) {
+      frame.contentWindow.postMessage({ type }, '*');
+    }
+    document.getElementById('demoCorrect').onclick = function() { postToPopup('demoCorrect'); };
+    document.getElementById('demoWrong').onclick = function() { postToPopup('demoWrong'); };
+    document.getElementById('demoReset').onclick = function() { postToPopup('demoReset'); };
+
+    // Listen for status updates from popup
+    window.addEventListener('message', function(event) {
+      if (!event.data || event.data.type !== 'statusUpdate') return;
+      const s = event.data.status;
+      if (!s) return;
+      document.getElementById('progressPill').textContent = s.progress;
+      document.getElementById('firstTryPill').textContent = s.firstTry;
+      document.getElementById('mistakesPill').textContent = s.mistakes;
+      document.getElementById('targetPill').textContent = s.target;
+    });
+  });
+  </script>
 </body>
 </html>
