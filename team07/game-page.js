@@ -42,7 +42,7 @@ function game_start(category) {
                 generated_word["answer"] = false;
 
             game_words.push(generated_word);
-            ids.pop(rand);
+            ids.splice(rand, 1);
         }
     }
 
@@ -61,13 +61,13 @@ function game_start(category) {
 };
 
 document.addEventListener('DOMContentLoaded', () => {
-  if (document.getElementById('img-1') && document.getElementById('img-2') 
-      && document.getElementById('img-3') && document.getElementById('img-4')) {
+    if (document.getElementById('img-1') && document.getElementById('img-2')
+        && document.getElementById('img-3') && document.getElementById('img-4')) {
 
-    startGame();
-  } else {
-    console.error("Game images missing");
-  }
+        startGame();
+    } else {
+        console.error("Game images missing");
+    }
 });
 
 function startGame() {
@@ -129,7 +129,7 @@ function gameplay() {
         wordSet.forEach((word, index) => {
             const image = imageElements[index];
             image.src = "../" + word.img;
-            if(word.answer) {
+            if (word.answer) {
                 correctImage = image;
             }
         });
@@ -141,7 +141,7 @@ function gameplay() {
             updateNextButtonText('Next');
         }
     }
-    
+
     function revealAnswer(clickedImage) {
         // If locked, do nothing
         if (selectionLock) {
