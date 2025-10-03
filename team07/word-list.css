@@ -23,18 +23,19 @@
 
 
 .fa-solid.fa-arrow-left {
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    font-size: 24px;
+    font-size: 2rem;
     color: #333;
     cursor: pointer;
-    transition: color 0.3s ease;
+    top: 20px;
+    left: 20px;
+    margin-top: 20px;
+    margin-left: 20px;
 }
 
 .word-list-header {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-bottom: 20px;
+    margin-top: auto;
+    
 }
