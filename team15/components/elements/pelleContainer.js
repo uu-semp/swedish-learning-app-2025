@@ -17,15 +17,12 @@ export const PelleContainer = {
             const isCorrect = Math.random() > 0.5;
             this.$emit('item-dropped', { isCorrect: isCorrect });
 
-            // Use currentTarget to remove the class from the div
             event.currentTarget.classList.remove('drag-over');
         },
         handleDragOver(event) {
-            // Use currentTarget to add the class to the div
             event.currentTarget.classList.add('drag-over');
         },
         handleDragLeave(event) {
-            // Use currentTarget to remove the class from the div
             event.currentTarget.classList.remove('drag-over');
         }
     }
