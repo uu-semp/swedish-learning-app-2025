@@ -1,0 +1,41 @@
+<!doctype html>
+
+<!--
+=================================================
+Owned by Team 10
+=================================================
+-->
+
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Basic Static Site</title>
+  <link rel="stylesheet" href="../../style.css" />
+
+  <script src="../../scripts/vocabulary.js"></script>
+  <script src="../../scripts/save.js"></script>
+
+  <!-- You are allowed to use JQuery and Vue.js but don't have to. They just make a
+  lot of things easier
+  -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css"> 
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+  <!-- Site specific scripts and styles -->
+  <link rel="stylesheet" href="game_page.css" />
+  <script src="game_page.js" defer></script>
+</head>
+<body>
+  <main id="app"class="game-frame">
+    <div class="back-btn-container">
+      <back-to-menu></back-to-menu>
+    </div>
+    <div class="image-container">
+      <display-image></display-image>
+    </div>
+    <answer-container></answer-container>
+  </main>
+</body>
+</html>

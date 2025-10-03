@@ -31,7 +31,7 @@ Owned by Team 10
     display: block;
     margin-left: auto;
     margin-right: auto;
-    width: 40%;
+    width: 60%;
     border: 2px solid black;
     border-radius: 10px;
     margin-top: 20px;
@@ -79,3 +79,23 @@ Owned by Team 10
 .submit-button:hover {
     background-color: green;
 }
+
+.back-btn i {
+  margin-right: 5px;
+}
+.back-btn {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  padding: 10px 15px;
+  font-size: 16px;
+  background-color: darkgreen;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+.back-btn:hover {
+  background-color: green;
+}   

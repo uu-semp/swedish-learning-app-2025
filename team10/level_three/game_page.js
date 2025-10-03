@@ -33,7 +33,7 @@ const DispayImage = {
     <img :src="imgSrc" alt="Alternative image text" class=display-image>
     `,
     data() { 
-        return {imgSrc: "../assets/images/food/food.png"}
+        return {imgSrc: "../../assets/images/food/food.png"}
     }
 }
 
@@ -56,6 +56,18 @@ const AnswerContainer = {
     }
 }
 
+const BackToMenu = {
+    template: `
+    <button @click="goBack" class="back-btn">
+        <i class="fa-solid fa-arrow-left"></i> Back
+    </button>
+    `,
+    methods: {
+        goBack() {
+            window.location.href = 'level_three.html'
+        }
+    }
+}
 
 
 const app = createApp({})
@@ -64,6 +76,6 @@ app.component('display-level', DisplayLevel)
 app.component('display-instructions', DisplayInstructions)
 app.component('display-image', DispayImage)
 app.component('answer-container', AnswerContainer)
-
+app.component('back-to-menu', BackToMenu)
 
 app.mount('#app')
