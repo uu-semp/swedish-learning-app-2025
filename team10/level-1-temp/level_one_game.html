@@ -1,0 +1,62 @@
+<!doctype html>
+
+<!--
+=================================================
+Owned by Team 10
+=================================================
+-->
+
+
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Basic Static Site</title>
+  <link rel="stylesheet" href="../../style.css" />
+
+  <script src="../scripts/vocabulary.js"></script>
+  <script src="../scripts/save.js"></script>
+
+  <!-- You are allowed to use JQuery and Vue.js but don't have to. They just make a
+  lot of things easier
+  -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css"> 
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+  <!-- Site specific scripts and styles -->
+  <link rel="stylesheet" href="level_one_game.css" />
+  <script src="level1.js" defer></script>
+</head>
+<body>
+  <header>
+    <h1>Team 10</h1>
+  </header>
+
+  <main class="game-frame"><head>
+    <div class="container">
+      <h1 class="level-title">True or False</h1>
+        <div class="image-word-row">
+         <div class="image-display">
+            <img class="item-image" src="temp-food.png" alt="Image of item to identify">
+          </div>
+          <p class="item-word">Word</p> 
+        </div>
+        
+      <div class="answer-btn-row">
+        <button class="answer-btn true-btn">TRUE</button>
+        <button class="answer-btn false-btn">FALSE</button>
+      </div>
+    
+      <a href="menu.html" class="back-link">Back to Menu</a>
+    </div>
+
+    <hr>
+    Learning: <div id="display-vocab">(This should be replaced by a word)</div>
+  </main>
+
+  <footer>
+    <small>Created as part of the "Software Engineering and Project Management" course 2025</small>
+  </footer>
+</body>
+</html>

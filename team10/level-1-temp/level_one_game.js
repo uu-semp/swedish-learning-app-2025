@@ -22,16 +22,3 @@ $(function() {window.vocabulary.when_ready(function () {
   });
 
 })});
-
-function get_instruction(button) {
-    button.onclick = function() {
-        const p = document.createElement("p");
-        p.textContent = "Add the instructions of the game here, they're to be displayed if the user needs them";
-        button.after(p);
-    };
-}
-
-
-function get_image_src() {
-  // Function that fincs the src of an image, such that it can be used in the HTML file.
-}
