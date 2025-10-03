@@ -20,3 +20,21 @@
     margin-bottom: 15px;
     text-align: justify;
 }
+
+
+.fa-solid.fa-arrow-left {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    font-size: 24px;
+    color: #333;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.word-list-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+}

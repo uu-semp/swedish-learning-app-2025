@@ -26,8 +26,8 @@ Owned by Team 07
 
   <!-- Site specific scripts and styles -->
   <link rel="stylesheet" href="index.css" />
+  <link rel="stylesheet" href="word-list.css" />
   <script src="index.js" defer></script>
-  <script src="game-page.js" defer></script>
   <script src="word-list.js" defer></script>
 
 </head>
@@ -38,8 +38,12 @@ Owned by Team 07
   </header>
 
   <main class="game-frame" style="overflow:auto;">
-    <h1>Word list</h1>
-
+    <i id="back-button" class="fa-solid fa-arrow-left"></i>
+    
+    <div class="word-list-header">
+      <h1>Word list</h1>
+    </div>
+    
     <div class="list-item" id="list">
         <p class="paragraph" id="paragraph"></p>
     </div>
@@ -51,7 +55,10 @@ Owned by Team 07
   </footer>
 
   <script>
-    
+    document.getElementById('back-button').addEventListener('click', function () {
+      window.location.href = 'index.html';
+    })
+
   </script>
 </body>
 
