@@ -66,3 +66,23 @@
   width:85px;
   height: 85px;;
 }
+
+.score-counter {
+  position: fixed;         /* przyklejenie w jednym miejscu */
+  top: 20px;               /* odstęp od góry */
+  right: 20px;             /* odstęp od prawej */
+  background-color: #c8f5ae;   /* jasna zieleń */
+  border: 5px solid #02b823;   /* zielona ramka */
+  border-radius: 15px;     /* zaokrąglone rogi */
+  padding: 8px 15px;       /* wewnętrzne marginesy */
+  font-size: 24px;         /* większy tekst */
+  font-weight: bold;
+  display: flex;           /* ikona + tekst w jednej linii */
+  align-items: center;
+  gap: 5px;                /* odstęp między tekstem a ikoną */
+}
+
+.coin-icon {
+  width: 28px;
+  height: 28px;
+}
