@@ -17,7 +17,6 @@ class EndScreen {
       categoryName: document.getElementById('categoryName'),
       showWordsBtn: document.getElementById('showWordsBtn'),
       playAgainBtn: document.getElementById('playAgainBtn'),
-      exitBtn: document.getElementById('exitBtn')
     };
   }
 
@@ -36,11 +35,6 @@ class EndScreen {
     // Play again button
     this.elements.playAgainBtn?.addEventListener('click', () => {
       this.handlePlayAgain();
-    });
-
-    // Exit button
-    this.elements.exitBtn?.addEventListener('click', () => {
-      this.handleExit();
     });
   }
 

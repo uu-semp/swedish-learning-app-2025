@@ -59,7 +59,25 @@ class WordsDetail {
       this.handlePlayAgain();
     });
 
-    
+    // Open image modal on image click (delegated for dynamic content)
+    this.elements.wordsList?.addEventListener('click', (event) => {
+      const target = event.target;
+      if (!target) return;
+      // Support clicking directly on the image
+      if (target.classList && target.classList.contains('word-image')) {
+        const src = target.getAttribute('src') || '';
+        const caption = target.getAttribute('data-translation') || target.getAttribute('alt') || '';
+        if (src) this.openImageModal(src, caption);
+        return;
+      }
+      // Or any nested element inside the image (future-proofing)
+      const img = target.closest && target.closest('.word-image');
+      if (img) {
+        const src = img.getAttribute('src') || '';
+        const caption = img.getAttribute('data-translation') || img.getAttribute('alt') || '';
+        if (src) this.openImageModal(src, caption);
+      }
+    });
 
     // Image modal events
     this.elements.imageModalOverlay?.addEventListener('click', () => {
@@ -91,11 +109,6 @@ class WordsDetail {
         feedback: guessed_correct ? "Correct" : "Try again next time",
       })),
     };
-  }
-
-  // Example placeholder retained but not used after integration
-  getExampleGameData() {
-    return { words: [] };
   }
 
   updateTabLabels() {
@@ -149,6 +162,12 @@ class WordsDetail {
     this.elements.wordsList.innerHTML = wordsToShow.map(word => this.createWordCard(word)).join('');
   }
 
+  escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+  }
+
   createWordCard(word) {
     const cardClass = word.correct ? 'word-card--correct' : 'word-card--incorrect';
     const iconClass = word.correct ? 'word-icon--correct' : 'word-icon--incorrect';
@@ -159,9 +178,9 @@ class WordsDetail {
     const firstImage = candidates[0] || '';
     const restCandidates = candidates.slice(1);
     const dataAttr = encodeURIComponent(JSON.stringify(restCandidates));
-    const imageHtml = this.showImages && firstImage ? 
-      `<img src="${firstImage}" data-candidates="${dataAttr}" alt="${word.translation}" class="word-image" onerror="window.sayWhatWordsDetail.tryNextImage(this)" onclick="window.sayWhatWordsDetail.openImageModal(this.src, '${word.word} - ${word.translation}')">` : 
-      '';
+    const imageHtml = this.showImages && firstImage ?
+        `<img src="${firstImage}" data-candidates="${dataAttr}" alt="${this.escapeHtml(word.translation)}" class="word-image" data-word="${this.escapeHtml(word.word)}" data-translation="${this.escapeHtml(word.translation)}" onerror="window.sayWhatWordsDetail.tryNextImage(this)">` :
+        '';
     
     return `
       <div class="word-card ${cardClass}">
@@ -233,8 +252,8 @@ class WordsDetail {
   }
 
   handleBack() {
-    // Return to the end screen
-    window.history.back();
+    // Return to the end screen index page
+    window.location.href = './index.html';
   }
 
   handlePlayAgain() {
@@ -258,13 +277,6 @@ class WordsDetail {
       this.elements.imageModal.classList.remove('show');
       document.body.style.overflow = ''; // Restore scrolling
     }
-  }
-
-  // Method to update data from external source (for integration)
-  updateData(newData) {
-    this.gameData = newData;
-    this.updateTabLabels();
-    this.displayWords();
   }
 }
 
