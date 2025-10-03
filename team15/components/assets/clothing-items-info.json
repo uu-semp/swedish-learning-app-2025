@@ -1,0 +1,354 @@
+{ 
+  "imagesDate": [
+  {
+    "ID": "7c0e5f61",
+    "English": "beanie",
+    "Article": "en",
+    "Swedish": "mössa",
+    "Swedish_plural": "mössor",
+    "Category": "clothing",
+    "Image_url": "assets/images/clothes/beanie.png"
+  },
+  {
+    "ID": "0a58114e",
+    "English": "belt",
+    "Article": "ett",
+    "Swedish": "bälte",
+    "Swedish_plural": "bälten",
+    "Category": "clothing",
+    "Image_url": "assets/images/clothes/belt.png"
+  },
+  {
+    "ID": "425b7771",
+    "English": "blazer",
+    "Article": "en",
+    "Swedish": "kavaj",
+    "Swedish_plural": "kavajer",
+    "Category": "clothing",
+    "Image_url": "assets/images/clothes/blazer.png"
+  },
+  {
+    "ID": "02451775",
+    "English": "blouse",
+    "Article": "en",
+    "Swedish": "blus",
+    "Swedish_plural": "blusar",
+    "Category": "clothing",
+    "Image_url": "assets/images/clothes/blouse.png"
+  },
+  {
+    "ID": "4c14560c",
+    "English": "boots",
+    "Article": "ett",
+    "Swedish": "stövlar",
+    "Swedish_plural": "",
+    "Category": "clothing",
+    "Image_url": "assets/images/clothes/boots.png"
+  },
+  {
+    "ID": "56771b18",
+    "English": "boxers",
+    "Article": "ett",
+    "Swedish": "kalsonger",
+    "Swedish_plural": "",
+    "Category": "clothing",
+    "Image_url": "assets/images/clothes/boxers.png"
+  },
+  {
+    "ID": "712c522f",
+    "English": "bra",
+    "Article": "en",
+    "Swedish": "bh",
+    "Swedish_plural": "",
+    "Category": "clothing",
+    "Image_url": "assets/images/clothes/bra.png"
+  },
+  {
+    "ID": "443c3e06",
+    "English": "bracelet",
+    "Article": "ett",
+    "Swedish": "armband",
+    "Swedish_plural": "",
+    "Category": "clothing",
+    "Image_url": "assets/images/clothes/bracelet.png"
+  },
+  {
+    "ID": "257c1433",
+    "English": "cap",
+    "Article": "en",
+    "Swedish": "keps",
+    "Swedish_plural": "kepsar",
+    "Category": "clothing",
+    "Image_url": "assets/images/clothes/cap.png"
+  },
+  {
+    "ID": "272a4f6b",
+    "English": "cardigan",
+    "Article": "en",
+    "Swedish": "kofta",
+    "Swedish_plural": "koftor",
+    "Category": "clothing",
+    "Image_url": "assets/images/clothes/cardigan.png"
+  },
+  {
+    "ID": "1e505206",
+    "English": "clothes",
+    "Article": "",
+    "Swedish": "kläder",
+    "Swedish_plural": "",
+    "Category": "clothing",
+    "Image_url": "assets/images/clothes/clothes.png"
+  },
+  {
+    "ID": "107b044c",
+    "English": "coat",
+    "Article": "en",
+    "Swedish": "rock",
+    "Swedish_plural": "rockar",
+    "Category": "clothing",
+    "Image_url": "assets/images/clothes/coat.png"
+  },
+  {
+    "ID": "050a744c",
+    "English": "dress",
+    "Article": "en",
+    "Swedish": "klänning",
+    "Swedish_plural": "klänningar",
+    "Category": "clothing",
+    "Image_url": "assets/images/clothes/dress.png"
+  },
+  {
+    "ID": "516a6514",
+    "English": "earrings",
+    "Article": "ett",
+    "Swedish": "örhängen",
+    "Swedish_plural": "",
+    "Category": "clothing",
+    "Image_url": "assets/images/clothes/earrings.png"
+  },
+  {
+    "ID": "5778071a",
+    "English": "necklace",
+    "Article": "ett",
+    "Swedish": "halsband",
+    "Swedish_plural": "",
+    "Category": "clothing",
+    "Image_url": "assets/images/clothes/necklace.png"
+  },
+  {
+    "ID": "02690115",
+    "English": "panties",
+    "Article": "ett",
+    "Swedish": "trosor",
+    "Swedish_plural": "",
+    "Category": "clothing",
+    "Image_url": "assets/images/clothes/panties.png"
+  },
+  {
+    "ID": "5649461a",
+    "English": "pants",
+    "Article": "ett",
+    "Swedish": "byxor",
+    "Swedish_plural": "",
+    "Category": "clothing",
+    "Image_url": "assets/images/clothes/pants.png"
+  },
+  {
+    "ID": "36025b22",
+    "English": "pantyhose",
+    "Article": "ett",
+    "Swedish": "strumpbyxor",
+    "Swedish_plural": "",
+    "Category": "clothing",
+    "Image_url": "assets/images/clothes/pantyhose.png"
+  },
+  {
+    "ID": "755f005b",
+    "English": "ring",
+    "Article": "en",
+    "Swedish": "ring",
+    "Swedish_plural": "ringar",
+    "Category": "clothing",
+    "Image_url": "assets/images/clothes/ring.png"
+  },
+  {
+    "ID": "2b136f4d",
+    "English": "robe",
+    "Article": "en",
+    "Swedish": "morgonrock",
+    "Swedish_plural": "morgonrockar",
+    "Category": "clothing",
+    "Image_url": "assets/images/clothes/robe.png"
+  },
+  {
+    "ID": "475e4c53",
+    "English": "sandals",
+    "Article": "ett",
+    "Swedish": "sandaler",
+    "Swedish_plural": "",
+    "Category": "clothing",
+    "Image_url": "assets/images/clothes/sandals.png"
+  },
+  {
+    "ID": "227f6b24",
+    "English": "scarf",
+    "Article": "en",
+    "Swedish": "halsduk",
+    "Swedish_plural": "halsdukar",
+    "Category": "clothing",
+    "Image_url": "assets/images/clothes/scarf.png"
+  },
+  {
+    "ID": "150d1b5f",
+    "English": "shoes",
+    "Article": "",
+    "Swedish": "skor",
+    "Swedish_plural": "",
+    "Category": "clothing",
+    "Image_url": "assets/images/clothes/shoes.png"
+  },
+  {
+    "ID": "10635963",
+    "English": "shorts",
+    "Article": "ett",
+    "Swedish": "shorts",
+    "Swedish_plural": "",
+    "Category": "clothing",
+    "Image_url": "assets/images/clothes/shorts.png"
+  },
+  {
+    "ID": "4f3a511d",
+    "English": "shirt",
+    "Article": "en",
+    "Swedish": "skjorta",
+    "Swedish_plural": "skjortor",
+    "Category": "clothing",
+    "Image_url": "assets/images/clothes/shirt.png"
+  },
+  {
+    "ID": "57133a02",
+    "English": "skirt",
+    "Article": "en",
+    "Swedish": "kjol",
+    "Swedish_plural": "kjolar",
+    "Category": "clothing",
+    "Image_url": "assets/images/clothes/skirt.png"
+  },
+  {
+    "ID": "4c06737e",
+    "English": "sneakers",
+    "Article": "ett",
+    "Swedish": "sneakers",
+    "Swedish_plural": "",
+    "Category": "clothing",
+    "Image_url": "assets/images/clothes/sneakers.png"
+  },
+  {
+    "ID": "34776103",
+    "English": "socks",
+    "Article": "ett",
+    "Swedish": "strumpor",
+    "Swedish_plural": "",
+    "Category": "clothing",
+    "Image_url": "assets/images/clothes/socks.png"
+  },
+  {
+    "ID": "21725b36",
+    "English": "suit",
+    "Article": "en",
+    "Swedish": "kostym",
+    "Swedish_plural": "",
+    "Category": "clothing",
+    "Image_url": "assets/images/clothes/suit.png"
+  },
+  {
+    "ID": "26133720",
+    "English": "sunglasses",
+    "Article": "",
+    "Swedish": "solglasögon",
+    "Swedish_plural": "",
+    "Category": "clothing",
+    "Image_url": "assets/images/clothes/sunglasses.png"
+  },
+  {
+    "ID": "0c1b5a68",
+    "English": "sweater",
+    "Article": "en",
+    "Swedish": "tröja",
+    "Swedish_plural": "tröjor",
+    "Category": "clothing",
+    "Image_url": "assets/images/clothes/sweater.png"
+  },
+  {
+    "ID": "505e685e",
+    "English": "sweatpants",
+    "Article": "",
+    "Swedish": "mjukisbyxor",
+    "Swedish_plural": "",
+    "Category": "clothing",
+    "Image_url": "assets/images/clothes/sweatpants.png"
+  },
+  {
+    "ID": "7003491a",
+    "English": "swimsuit",
+    "Article": "en",
+    "Swedish": "baddräkt",
+    "Swedish_plural": "baddräkter",
+    "Category": "clothing",
+    "Image_url": "assets/images/clothes/swimsuit.png"
+  },
+  {
+    "ID": "482e1b58",
+    "English": "t-shirt",
+    "Article": "en",
+    "Swedish": "t-shirt",
+    "Swedish_plural": "",
+    "Category": "clothing",
+    "Image_url": "assets/images/clothes/t-shirt.png"
+  },
+  {
+    "ID": "2f535d4d",
+    "English": "tie",
+    "Article": "en",
+    "Swedish": "slips",
+    "Swedish_plural": "",
+    "Category": "clothing",
+    "Image_url": "assets/images/clothes/tie.png"
+  },
+  {
+    "ID": "434a4235",
+    "English": "top",
+    "Article": "en",
+    "Swedish": "topp",
+    "Swedish_plural": "toppar",
+    "Category": "clothing",
+    "Image_url": "assets/images/clothes/top.png"
+  },
+  {
+    "ID": "7c556f61",
+    "English": "training clothes",
+    "Article": "",
+    "Swedish": "träningskläder",
+    "Swedish_plural": "",
+    "Category": "clothing",
+    "Image_url": "assets/images/clothes/training_clothes.png"
+  },
+  {
+    "ID": "414d510b",
+    "English": "underwear",
+    "Article": "",
+    "Swedish": "underkläder",
+    "Swedish_plural": "",
+    "Category": "clothing",
+    "Image_url": "assets/images/clothes/underwear.png"
+  },
+  {
+    "ID": "6662316f",
+    "English": "veil",
+    "Article": "en",
+    "Swedish": "slöja",
+    "Swedish_plural": "slöjor",
+    "Category": "clothing",
+    "Image_url": "assets/images/clothes/veil.png"
+  }
+]}
