@@ -3,6 +3,8 @@
     "footer": "Skapad som en del av kursen 'Metoder och projektledning för mjukvaruutveckling' år 2025",
     "backbtn": "⬅ Tillbaka till menyn",
     "about": "Om sidan",
-    "settings": "Inställningar"
+    "settings": "Inställningar",
+    "title": "Välkommen till <strong>UU-Games</strong>! ",
+    "desc": "Här kan du öva på enkel svenska från kurserna <a href=\"https://www.uu.se/en/study/course?query=5PU028\"target=\"_blank\">Basic Swedish 1</a>/<a href=\"https://www.uu.se/en/staff/employment/continuing-professional-development/courses-for-employees/swedish-for-academics-1-75-hp\" target=\"_blank\">Swedish for Academics 1</a> på Uppsala Universitet. Varje spel matchar ett eller flera kapitel i kursboken. Använd filter-knapparna nedanför för att välja ett kapitel att öva på. Ha så kul!"
 
 }

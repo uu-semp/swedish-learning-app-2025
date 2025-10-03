@@ -14,6 +14,7 @@ const backBtn = document.getElementById("back-btn");
 const filterBar = document.getElementById("filter-bar");
 
 let allGames = [];
+let language = 'sv'
 
 //// Data ////
 // Load games from JSON
@@ -37,7 +38,7 @@ async function loadGames() {
     setActiveFilter("all"); // default
 
     // Render game grid
-    renderGrid(allGames);
+    renderGrid(allGames, language);
   } catch (err) {
     console.error("Error loading games:", err);
     grid.innerHTML = "<p>Could not load games.</p>";
@@ -76,9 +77,9 @@ filterBar.addEventListener("click", (e)=>{
   if(!btn) return;
   const value = btn.dataset.chapter;
   setActiveFilter(value);
-  if(value === "all") return renderGrid(allGames);
+  if(value === "all") return renderGrid(allGames, language);
   const chNum = Number(value);
-  renderGrid(allGames.filter(g => g.supported_chapters.includes(chNum)));
+  renderGrid(allGames.filter(g => g.supported_chapters.includes(chNum)), language);
 });
 
 function setActiveFilter(value){
@@ -86,8 +87,10 @@ function setActiveFilter(value){
 }
 
 // Render grid of game cards
-function renderGrid(games) {
+function renderGrid(games, lang) {
+  console.log("renderGrid, language. ", lang)
   grid.innerHTML = "";
+
   games.forEach((g) => {
     const card = document.createElement("article");
     card.className = "card";
@@ -100,7 +103,21 @@ function renderGrid(games) {
       : "";
 
     // Build game card HTML
-    card.innerHTML = `
+    if(lang == 'sv') {
+      console.log('svenska')
+      card.innerHTML = `
+      <img src="assets/main_menu/images/games/${g.id}.png" 
+           alt="${g.sv_title}"
+           onerror="this.onerror=null; this.src='assets/main_menu/images/games/default_image.png';">
+      <div class="card-body">
+        <h3>${g.sv_title}</h3>
+        <p>${g.sv_desc}</p>
+        ${tagsHtml}
+      </div>
+      `;
+    } else if (lang == 'en') {
+      console.log('english')
+      card.innerHTML = `
       <img src="assets/main_menu/images/games/${g.id}.png" 
            alt="${g.eng_title}"
            onerror="this.onerror=null; this.src='assets/main_menu/images/games/default_image.png';">
@@ -109,7 +126,8 @@ function renderGrid(games) {
         <p>${g.eng_desc}</p>
         ${tagsHtml}
       </div>
-    `;
+      `;
+    }
 
     // Add click event to open game
     card.addEventListener("click", () => openIframe(`./${g.id}/index.html`));
@@ -158,31 +176,43 @@ loadGames();
 
 //// Language toggle buttons////
 
-// Fetches the correct strings from en.json and sv.json
-function toggleEnglish() {
-  fetch('assets/main_menu/menu_text/en.json')
-    .then(response => response.json())
-    .then(data => {
-      document.getElementById('footer-text').textContent=data.footer
-      document.getElementById('back-btn').textContent=data.backbtn
-      document.getElementById('about-btn').textContent=data.about
-      document.getElementById('settings-btn').textContent=data.settings
-    })
-  .catch(error => {
-      console.error('JSON loading error: ', error);
-  });
-}
+/**
+ * Executes when one of the language toggle buttons are pressed. Fetches text from
+ * either sv.json or en.json for all menu elements that require text.
+ * @param new_lang 'sv' or 'en' depending on which button was pressed
+ */
+function toggleLanguage(new_lang) {
+  renderGrid(allGames, new_lang)
 
-function toggleSwedish() {
-  fetch('assets/main_menu/menu_text/sv.json')
+  if (new_lang == 'en'){
+    fetch('assets/main_menu/menu_text/en.json')
       .then(response => response.json())
       .then(data => {
         document.getElementById('footer-text').textContent=data.footer
         document.getElementById('back-btn').textContent=data.backbtn
         document.getElementById('about-btn').textContent=data.about
         document.getElementById('settings-btn').textContent=data.settings
+        document.getElementById('intro-title').innerHTML=data.title
+        document.getElementById('intro-desc').innerHTML=data.desc
       })
-  .catch(error => {
-      console.error('JSON loading error: ', error);
-  });
+    .catch(error => {
+        console.error('JSON loading error: ', error);
+    });
+  } else if (new_lang == 'sv'){
+    fetch('assets/main_menu/menu_text/sv.json')
+        .then(response => response.json())
+        .then(data => {
+          document.getElementById('footer-text').textContent=data.footer
+          document.getElementById('back-btn').textContent=data.backbtn
+          document.getElementById('about-btn').textContent=data.about
+          document.getElementById('settings-btn').textContent=data.settings
+          document.getElementById('intro-title').innerHTML=data.title
+          document.getElementById('intro-desc').innerHTML=data.desc
+        })
+    .catch(error => {
+        console.error('JSON loading error: ', error);
+    });
+  }
+
+  
 }
