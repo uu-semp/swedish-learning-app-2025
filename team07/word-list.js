@@ -23,7 +23,9 @@ document.addEventListener("DOMContentLoaded", function () {
         const new_paragraph = document.createElement("p");
         new_paragraph.className = "paragraph";
         new_paragraph.innerHTML = word.en + " = " + word.sv;
+        const line_break = document.createElement("hr");
         list.appendChild(new_paragraph);
+        list.appendChild(line_break);
     }
 
   });
