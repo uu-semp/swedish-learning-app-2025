@@ -3,6 +3,7 @@ import { HelpView } from './views/helpView.js';
 import { ChooseLevelView } from './views/chooseLevelView.js';
 import { LevelOneView } from './views/levelOneView.js';
 import { LevelTwoView } from './views/levelTwoView.js';
+import { ImagesView } from './views/imageView.js';
 import {
   StartGameButton,
   HowToPlayButton,
@@ -12,7 +13,8 @@ import {
   CategoryClothingButton,
   ClothingItemButton,
   LanguageFlagButton,
-  ExitGameButton
+  ExitGameButton,
+  ImagesButton,
 } from "./elements/buttons.js";
 import { CorrectAnswerFeedback } from "./elements/correctAnswerFeedback.js";
 import { IncorrectAnswerFeedback } from "./elements/incorrectAnswerFeedback.js";
@@ -38,4 +40,6 @@ export default {
   LanguageFlagButton,
   ExitGameButton,
   PelleContainer,
+  ImagesButton,
+  ImagesView,
 };
