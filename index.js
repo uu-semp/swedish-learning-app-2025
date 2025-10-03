@@ -34,7 +34,7 @@ async function loadGames() {
 
     // Filter games by chapter
     const chapters = [...new Set(allGames.flatMap(g => g.supported_chapters))].sort((a, b) => a - b);
-    buildFilter(chapters);
+    buildFilter(chapters, language);
     setActiveFilter("all"); // default
 
     // Render game grid
@@ -48,19 +48,30 @@ async function loadGames() {
 
 //// UI ////
 // Build filter button
-function buildFilter(chapters){
+function buildFilter(chapters, lang){
   filterBar.innerHTML = ""; // clear
 
   // Add instruction text
   const label = document.createElement("span");
-  label.textContent = "Filter by chapter:";
+
+  if (lang == 'sv') {
+    label.textContent = "Filtrera efter kapitel:";
+  } else if (lang == 'en') {
+    label.textContent = "Filter by chapter:";
+  }
+
   label.className = "filter-label";
   filterBar.appendChild(label);
 
   // "All" first
   filterBar.appendChild(makeFilterBtn("All","all"));
   // then one per chapter
-  chapters.forEach(ch => filterBar.appendChild(makeFilterBtn(`Chapter ${ch}`, String(ch))));
+  if (lang == 'en') {
+    chapters.forEach(ch => filterBar.appendChild(makeFilterBtn(`Chapter ${ch}`, String(ch))));
+  } else {
+    chapters.forEach(ch => filterBar.appendChild(makeFilterBtn(`Kapitel ${ch}`, String(ch))));
+  }
+  
 }
 
 function makeFilterBtn(label, value){
@@ -98,7 +109,7 @@ function renderGrid(games, lang) {
     // Build game tags HTML
     const tagsHtml = (Array.isArray(g.supported_chapters) && g.supported_chapters.length)
       ? `<div class="card-tags">
-           ${g.supported_chapters.map(ch => `<span class="tag">Chapter ${ch}</span>`).join("")}
+           ${g.supported_chapters.map(ch => `<span class="tag">Kapitel ${ch}</span>`).join("")}
          </div>`
       : "";
 
@@ -182,6 +193,9 @@ loadGames();
  * @param new_lang 'sv' or 'en' depending on which button was pressed
  */
 function toggleLanguage(new_lang) {
+  const chapters = [...new Set(allGames.flatMap(g => g.supported_chapters))].sort((a, b) => a - b);
+  buildFilter(chapters, new_lang)
+  setActiveFilter("all");
   renderGrid(allGames, new_lang)
 
   if (new_lang == 'en'){
