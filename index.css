@@ -38,6 +38,22 @@ header img {
     color: rgb(255, 255, 255);
 }
 
+.language-btn {
+    background: transparent; 
+    border: 1px solid #ccc; 
+    padding: 0.25rem 0.9rem 0.15rem;
+    border-radius: 20px; 
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s, border-color 0.2s;
+    color: rgb(255, 255, 255);
+}
+
+.language-btn img{
+    height: 1.7rem;
+}
+
 .header-btn:hover {
     background: white;
     color: rgb(55, 54, 54);
