@@ -16,19 +16,11 @@ let state = gameStates.inGame
 
 $(function() {
   window.vocabulary.when_ready(function () {
-  // Get all vocabulary belonging to the category numbers
-  
-  
    runGameStateLogic()
-  
 
   $("#check-jquery").on("click", () => {
     alert("JavaScript and jQuery are working.");
   });
-  
-  
-
-  // Get all vocabulary belonging to the category `furniture`
 
 
   $("#check-saving").on("click", () => {
@@ -43,10 +35,8 @@ $(function() {
  
 function menu_logic(){
   console.log("menu_logic")
-  //todo: get const numbers defined once covering whole script scope. Doesnt work rn for some reason
-  //I understand why now, window.vocabulary is not defined outside of when_ready
-  //to fix: put all functions into when_ready
-  //idk if this works
+  //I would like to have const numbers be a global variable which works for all functions,
+  //however due to the fact that it has to be within when_ready, that can't happen
   generateRandom()
 }
 
@@ -58,10 +48,10 @@ function inGame_logic(){
 
 function generateRandom() {
   const numbers = window.vocabulary.get_category("number");
-  //vocabulary is NOT in order. randomNo != literal
+  //vocabulary is NOT guaranteed to be in order. dont assume randomNo == literal
   const randomNo = irandom_range(1,numbers.length-1)
   console.log("generateRandom: " + window.vocabulary.get_vocab(numbers[randomNo]).literal)
-  // Update the display
+
   $("#number-english").text(
     JSON.stringify(window.vocabulary.get_vocab(numbers[randomNo]).en)
   );
@@ -76,16 +66,18 @@ function generateRandom() {
 }
 
 function generateRandomHouses(houseNumber, houseCount, highestNumber){
+  houseNumber = 30
   const doubleHouses = irandom_range(0,1)
-  const maxPos = Math.floor(houseNumber/(1+doubleHouses)-1)
-  const minPos = Math.ceil(4-(highestNumber-houseNumber))
-  console.log("maxPos")
-  console.log(maxPos)
-  console.log(houseNumber)
-  const relativeHousePosition = irandom_range(0,Math.min(houseCount-1,maxPos))
-  const houseArray = []
+  const maxPos = Math.min(Math.floor((houseNumber - 1) / (1 + doubleHouses)), houseCount -1)
+  const minPos = Math.min(
+    Math.max(Math.ceil((houseCount - 1) - (highestNumber - houseNumber) / (1 + doubleHouses)), 0),
+    houseCount - 1
+  );
 
-  for (let i = 0; i < houseCount-1; i++) {
+  const relativeHousePosition = irandom_range(Math.max(0,minPos),maxPos)
+  const houseArray = []
+  console.log(relativeHousePosition)
+  for (let i = 0; i < houseCount; i++) {
     houseArray.push(houseNumber-(relativeHousePosition-i)*(1+doubleHouses))
   }
   return houseArray

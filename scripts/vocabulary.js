@@ -8,7 +8,7 @@
 
 // Indicates if the vocabulary data should be fetched from the repository
 // or from an external source.
-const FETCH_EXTERNAL = true;
+const FETCH_EXTERNAL = false;
 
 window._vocabulary = {
     vocab: null,
