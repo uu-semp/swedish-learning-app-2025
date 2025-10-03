@@ -1,0 +1,4 @@
+
+HTMl + JS team:
+- decide to avoid drag and drop thing and doing just a click and appear
+thing to be upgraded later on and have a minimum working software
