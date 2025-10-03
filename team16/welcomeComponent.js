@@ -1,11 +1,11 @@
-// Game progress data that would usually come from the actual student data
+// Game progress data - this would normally come from your save system
 let gameProgress = {
     level1: { 
         completed: 7, 
         total: 10, 
         unlocked: true, 
         attempts: 12,
-        timeSpent: 25, // im guessing minutes or something
+        timeSpent: 25, // minutes
         lastPlayed: '2025-09-15'
     },
     level2: { 
@@ -27,7 +27,7 @@ let gameProgress = {
 };
 
 function updateLevelProgress() {
-    //To see if levels should be unlocked
+    // Check if levels should be unlocked
     if (gameProgress.level1.completed === gameProgress.level1.total) {
         gameProgress.level2.unlocked = true;
     }
@@ -58,7 +58,7 @@ function createLevelButton(levelNum, progress) {
     if (progress.unlocked) {
         button.onclick = () => startLevel(levelNum);
     } else {
-        button.onclick = () => alert('Du måste klara föregående nivå först!');
+        button.onclick = () => alert('Du måste först slutföra föregående nivå!');
     }
     
     return button;
@@ -74,13 +74,40 @@ function renderLevels() {
     container.appendChild(createLevelButton(3, gameProgress.level3));
 }
 
+function startLevel(level) {
 
-function initWelcomeComponent() {
+    console.log('Starting level:', level);
+    // Store the selected level in localStorage for the game to use
+    localStorage.setItem('selectedLevel', level);
+    
+    // Redirect to the level page
+    window.location.href = '/team16/level.html';
+}
+
+// Simulate completing some progress (for testing)
+function completeQuestion() {
+    gameProgress.level1.completed = Math.min(gameProgress.level1.completed + 1, gameProgress.level1.total);
     renderLevels();
 }
 
-document.addEventListener('DOMContentLoaded', initWelcomeComponent);
+// Initialize the welcome component
+function initWelcomeComponent() {
+    // Check if the levelButtons element exists before trying to render
+    const levelButtonsContainer = document.getElementById('levelButtons');
+    if (levelButtonsContainer) {
+        renderLevels();
+    }
+}
 
+// Auto-initialize when DOM is loaded
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initWelcomeComponent);
+} else {
+    // DOM already loaded
+    initWelcomeComponent();
+}
+
+// Summary functions
 function showSummary() {
     const modal = document.getElementById('summaryModal');
     const content = document.getElementById('summaryContent');
@@ -132,6 +159,7 @@ function generateSummaryContent() {
         `;
     });
     
+    // Add overall summary
     const totalCompleted = Object.values(gameProgress).reduce((sum, level) => sum + level.completed, 0);
     const totalQuestions = Object.values(gameProgress).reduce((sum, level) => sum + level.total, 0);
     const totalAttempts = Object.values(gameProgress).reduce((sum, level) => sum + level.attempts, 0);
