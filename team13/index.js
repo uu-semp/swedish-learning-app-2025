@@ -46,30 +46,49 @@ function menu_logic(){
   //todo: get const numbers defined once covering whole script scope. Doesnt work rn for some reason
   //I understand why now, window.vocabulary is not defined outside of when_ready
   //to fix: put all functions into when_ready
-  const numbers = window.vocabulary.get_category("number");
-  const randomNo =  irandom_range(0,numbers.length-1)
-  
+  //idk if this works
   generateRandom()
-  $("#display-number").text(JSON.stringify(window.vocabulary.get_vocab(numbers[randomNo]).en));
 }
 
 function inGame_logic(){
   console.log("inGame_logic")
-  const numbers = window.vocabulary.get_category("number");
-  const randomNo =  irandom_range(0,numbers.length-1)
   
   generateRandom()
-  $("#display-number").text(JSON.stringify(window.vocabulary.get_vocab(numbers[randomNo]).en));
 }
 
 function generateRandom() {
   const numbers = window.vocabulary.get_category("number");
-  const randomNo =  irandom_range(0,numbers.length-1)
-  
+  //vocabulary is NOT in order. randomNo != literal
+  const randomNo = irandom_range(1,numbers.length-1)
+  console.log("generateRandom: " + window.vocabulary.get_vocab(numbers[randomNo]).literal)
   // Update the display
-  $("#display-number").text(
+  $("#number-english").text(
+    JSON.stringify(window.vocabulary.get_vocab(numbers[randomNo]).en)
+  );
+  $("#number-swedish").text(
     JSON.stringify(window.vocabulary.get_vocab(numbers[randomNo]).sv)
   );
+  $("#number-literal").text(
+    JSON.stringify(window.vocabulary.get_vocab(numbers[randomNo]).literal)
+  );
+  console.log(generateRandomHouses(window.vocabulary.get_vocab(numbers[randomNo]).literal,5, numbers.length-1));
+
+}
+
+function generateRandomHouses(houseNumber, houseCount, highestNumber){
+  const doubleHouses = irandom_range(0,1)
+  const maxPos = Math.floor(houseNumber/(1+doubleHouses)-1)
+  const minPos = Math.ceil(4-(highestNumber-houseNumber))
+  console.log("maxPos")
+  console.log(maxPos)
+  console.log(houseNumber)
+  const relativeHousePosition = irandom_range(0,Math.min(houseCount-1,maxPos))
+  const houseArray = []
+
+  for (let i = 0; i < houseCount-1; i++) {
+    houseArray.push(houseNumber-(relativeHousePosition-i)*(1+doubleHouses))
+  }
+  return houseArray
 }
 
 function nextGameState() {
