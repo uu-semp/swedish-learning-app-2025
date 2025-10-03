@@ -348,6 +348,8 @@ body {
     color: red;
 }
 
+
+/* displaying image in image container within image view */
 .image-container {
   display: flex;
   justify-content: center;
@@ -369,4 +371,17 @@ body {
   width: auto;
   object-fit: contain; /* Keeps aspect ratio without cropping; use 'cover' if you want to fill but crop */
   border-radius: 4px;
+}
+
+
+
+.image-item {
+  flex: 0 0 100px;       /* each item width */
+  text-align: center;
+}
+
+.displayed-image {
+  width: 80px;
+  height: auto;
+  object-fit: contain;
 }
