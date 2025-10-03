@@ -39,4 +39,38 @@ window.save = {
             return false;
         }
     },
+
+    stats: {
+        set(team_name, wins, completion) {
+            if (typeof wins !== 'number' || typeof completion !== 'number') {
+                console.error('Stats API: wins and completion must be numbers');
+                return false;
+            }
+
+            return window.save.set(team_name, 'stats', {
+                wins: Math.max(0, Math.floor(wins)),
+                completion: Math.max(0, Math.min(100, Math.floor(completion)))
+            });
+        },
+
+        get(team_name) {
+            const stats = window.save.get(team_name, 'stats');
+            return stats || { wins: 0, completion: 0 };
+        },
+
+        incrementWin(team_name) {
+            const current = this.get(team_name);
+            return this.set(team_name, current.wins + 1, current.completion);
+        },
+
+        setCompletion(team_name, completion) {
+            const current = this.get(team_name);
+            let clamped_completion = Math.max(0, Math.min(100, Math.floor(completion)))
+            return this.set(team_name, current.wins, clamped_completion);
+        },
+
+        clear(team_name) {
+            return this.set(team_name, 0, 0);
+        }
+    }
 };
