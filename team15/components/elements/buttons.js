@@ -116,3 +116,9 @@ export const LanguageFlagButton = {
     </button>
   `,
 };
+export const ImagesButton = {
+    name: 'images-button',
+    template: `
+    <button class="big-buttons" id="images-button">IMAGES BUTTON</button>
+  `,
+};
