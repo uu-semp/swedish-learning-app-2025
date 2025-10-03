@@ -24,7 +24,7 @@ Owned by Team 10
   <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 
   <!-- Site specific scripts and styles -->
-  <link rel="stylesheet" href="../main_menu.css" />
+  <link rel="stylesheet" href="../index.css" />
   <script src="index.js" defer></script>
 </head>
 <body>
@@ -33,25 +33,19 @@ Owned by Team 10
   </header>
 
   <main class="game-frame">
-        <div class="container">
-        <h1 class="title">EatAndLearn</h1>
-        
-        <div class="button-container">
-            <button class="learning-mode-btn">Menu</button>
-            <button class="start-btn">Start</button>
-        </div>
-        <p class="instructions">This is the instruction manual for level two</p>
-        <div class="progress-container">
-            <div class="progress-icon">
-                <div class="progress-bar">
-                    <div class="progress"></div>
-                </div>
-            </div>
-        </div>
-    </div>
+    <div class="container">
+      <h1 class="title">EatAndLearn</h1>
+      <h2 style="text-align:center;margin-top:4rem;">Level 2 – Matching English to Swedish Words</h2>
 
-    <hr>
-    Learning: <div id="display-vocab">(This should be replaced by a word)</div>
+      <div class="button-container">
+        <button onclick="window.location.href='../index.html'" class="learning-mode-btn">Menu</button>
+        <button onclick="window.location.href='game_page.html'" class="start-btn">Start</button>
+      </div>
+
+      <p class="instructions">
+        Click “Start” to begin the Level 2 matching game. Match English food names with their Swedish equivalents!
+      </p>
+    </div>
   </main>
 
   <footer>

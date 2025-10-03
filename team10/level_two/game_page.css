@@ -1,0 +1,55 @@
+.match-stage {
+  position: relative;
+  display: flex;
+  justify-content: space-around;
+  margin-top: 6rem;
+}
+
+.col {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.word-btn {
+  padding: 0.75rem 1.2rem;
+  border: 2px solid #007acc;
+  background-color: #fff;
+  cursor: pointer;
+  border-radius: 6px;
+}
+
+.word-btn.selected {
+  background-color: #007acc;
+  color: #fff;
+}
+
+.word-btn.disabled {
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+.word-btn.paired {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.wires {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.submit-btn {
+  margin-top: 2rem;
+  padding: 1rem 2rem;
+  font-size: 1.2rem;
+  background-color: #4CAF50;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
