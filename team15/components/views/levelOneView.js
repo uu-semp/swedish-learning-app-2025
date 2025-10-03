@@ -27,13 +27,11 @@ export const LevelOneView = {
         },
       handleDropResult({ isCorrect }) {
             if (isCorrect) {
-                this.showIncorrectFeedback = false;
                 this.showCorrectFeedback = true;
                 setTimeout(() => {
                     this.showCorrectFeedback = false;
                 }, 3000);
             } else {
-                this.showCorrectFeedback = false;
                 this.showIncorrectFeedback = true;
                 setTimeout(() => {
                     this.showIncorrectFeedback = false;
