@@ -17,6 +17,7 @@ import {
 import { CorrectAnswerFeedback } from "./elements/correctAnswerFeedback.js";
 import { IncorrectAnswerFeedback } from "./elements/incorrectAnswerFeedback.js";
 import { WardrobeContainer } from "./elements/wardrobeContainer.js";
+import { PelleContainer } from "./elements/pelleContainer.js";
 
 export default {
   StartView,
@@ -35,5 +36,6 @@ export default {
   CategoryClothingButton,
   ClothingItemButton,
   LanguageFlagButton,
-  ExitGameButton
+  ExitGameButton,
+  PelleContainer,
 };
