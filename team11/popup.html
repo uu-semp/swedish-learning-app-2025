@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Ica Väst</title>
+  <style>
+    /* Only keep chatbubble/toast/modal styles */
+    .toasts {
+      position: fixed;
+      right: 16px;
+      bottom: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      z-index: 50;
+    }
+    .bubble {
+      position: relative;
+      width: clamp(280px, 32vw, 380px);
+      min-height: 110px;
+      background: url('./assets/chatbubble.png') no-repeat 0 0 / 100% 100%;
+      border: none;
+      box-shadow: none;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 16px 44px 22px 24px;
+      color: #000;
+      font-weight: 600;
+      font-size: 14px;
+      line-height: 1.35;
+      white-space: normal;
+      word-wrap: break-word;
+    }
+    .toast { transition: opacity .25s ease, transform .25s ease; }
+    .toast.is-hiding { opacity:0; transform: translateY(6px); }
+    .toast strong { font-weight:700; }
+    .toast .x,
+    .bubble .x {
+      position: absolute;
+      top: 25%;
+      right: 30%;
+      background: transparent;
+      border: none;
+      color: #000;
+      font-size: 14px;
+      line-height: 1;
+      cursor: pointer;
+      padding: 2px;
+      border-radius: 50%;
+    }
+    .toast .x:hover,
+    .bubble .x:hover { background: rgba(0,0,0,0.05); }
+    .modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.6);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 60;
+    }
+
+.modal.open {
+  display: flex;
+}
+
+.modal .box {
+  border: none;
+  padding: 0;
+  margin: 0 auto;     /* centrera horisontellt */
+}
+
+.endgame-box {
+  width: clamp(360px, 42vw, 500px);
+  min-height: 160px;
+  padding: 24px 48px 28px 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;   /* se till att innehållet också är centrerat */
+  text-align: center;
+}
+
+    .endgame-title { font-size: 1.5rem; }
+    .endgame-msg { font-size: 1.1rem; }
+    .endgame-actions {
+      display:flex;
+      gap:10px;
+      justify-content:center;
+      width:100%;
+      margin-top: 6px;
+    }
+    .endgame-btn {
+      background:#0f172a;
+      color:#fff;
+      font-weight:700;
+      border:none;
+      border-radius:999px;
+      padding:8px 16px;
+      font-size: 14px;
+      cursor:pointer;
+      transition: opacity .15s ease;
+    }
+    .endgame-btn:hover { opacity:.9; }
+    .endgame-icon { margin-bottom: 6px; animation: pop-in .5s cubic-bezier(.5,1.8,.5,1) 1; }
+    @keyframes pop-in {
+      0% { transform: scale(0.6); opacity: 0; }
+      80% { transform: scale(1.1); opacity: 1; }
+      100% { transform: scale(1); }
+    }
+  </style>
+</head>
+<body>
+  <div>
+    <!-- Status bar removed from here -->
+    <!-- <div id="statusBar"> ... </div> -->
+    <!-- Demo buttons moved to separate file -->
+    <!-- <div class="demo-buttons"> ... </div> -->
+  </div>
+  <!-- Toasts -->
+  <div class="toasts" id="toasts"></div>
+  <!-- Endgame modal -->
+  <div class="modal" id="endModal" role="dialog" aria-modal="true" aria-labelledby="endTitle">
+    <div class="box bubble endgame-box">
+      <button class="x" id="endClose" type="button" aria-label="Stäng resultat">×</button>
+      <div class="endgame-inner">
+        <div class="endgame-icon" aria-hidden="true">
+          <svg id="endIcon" width="48" height="48" viewBox="0 0 48 48" fill="none">
+            <circle cx="24" cy="24" r="22" fill="#38bdf8" stroke="#0f172a" stroke-width="4"/>
+            <path d="M16 24l6 6 10-12" stroke="#fff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <h3 id="endTitle" class="endgame-title">Klart!</h3>
+        <p id="endMsg" class="endgame-msg">&nbsp;</p>
+        <div class="actions endgame-actions">
+          <button id="btnPlayAgain" class="endgame-btn">Spela igen</button>
+          <button id="btnMainMenu" class="endgame-btn">Till huvudmenyn</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+  (function(){
+    const TARGET_TOTAL = 10;
+    const WIN_THRESHOLD = Math.ceil(TARGET_TOTAL * 0.8);
+
+    const FOOD_BANK = [
+      {id:'apple',sv:'äpple'}, {id:'banana',sv:'banan'}, {id:'bread',sv:'bröd'},
+      {id:'milk',sv:'mjölk'}, {id:'flour',sv:'mjöl'}, {id:'cheese',sv:'ost'},
+      {id:'coffee',sv:'kaffe'}, {id:'candy',sv:'godis'}, {id:'yoghurt',sv:'yoghurt'},
+      {id:'egg',sv:'ägg'}, {id:'orange',sv:'apelsin'}, {id:'pear',sv:'päron'},
+      {id:'tomato',sv:'tomat'}, {id:'cucumber',sv:'gurka'}, {id:'water',sv:'vatten'},
+      {id:'tea',sv:'te'}, {id:'chocolate',sv:'choklad'}, {id:'meat',sv:'kött'},
+      {id:'fish',sv:'fisk'}, {id:'rice',sv:'ris'}
+    ];
+
+    let game = null;
+
+    const toastsEl=document.getElementById('toasts');
+    const endModal=document.getElementById('endModal');
+    const endMsg=document.getElementById('endMsg');
+    const endClose=document.getElementById('endClose');
+
+    function pickRandom(arr,n){const c=[...arr];const o=[];while(n-- >0&&c.length){o.push(c.splice(Math.floor(Math.random()*c.length),1)[0]);}return o;}
+    function renderStatus(){
+      // Send status update to parent
+      if (window.parent && window.parent !== window) {
+        window.parent.postMessage({
+          type: 'statusUpdate',
+          status: {
+            progress: `${game.completed} / ${game.total} klara`,
+            firstTry: `Rätt: ${game.firstTryCorrectCount}`,
+            mistakes: `Misstag: ${game.mistakes}`,
+            target: `Tröskel: ${game.winThreshold} / ${game.total}`
+          }
+        }, '*');
+      }
+    }
+
+    function toast(html,type='success',duration=4000){
+      const el=document.createElement('div');
+      el.className='toast bubble '+(type==='error'?'error':'success');
+      el.innerHTML=`<div class="content">${html}</div><button class="x" type="button" aria-label="Stäng">×</button>`;
+      toastsEl.appendChild(el);
+      const x=el.querySelector('.x'); let t=setTimeout(close,duration);
+      function close(){el.classList.add('is-hiding');el.addEventListener('transitionend',()=>el.remove(),{once:true});}
+      x.onclick=()=>{clearTimeout(t);close();};
+    }
+
+    function setEndIcon(win){
+      const icon=document.getElementById('endIcon');
+      while(icon.firstChild) icon.removeChild(icon.firstChild);
+      if(win){
+        icon.insertAdjacentHTML('beforeend',`<circle cx="24" cy="24" r="22" fill="#38bdf8" stroke="#0f172a" stroke-width="4"/><path d="M16 24l6 6 10-12" stroke="#fff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>`);
+      }else{
+        icon.insertAdjacentHTML('beforeend',`<circle cx="24" cy="24" r="22" fill="#e5e7eb" stroke="#0f172a" stroke-width="4"/><path d="M16 32 L32 16" stroke="#0f172a" stroke-width="4" stroke-linecap="round"/><path d="M16 16 L32 32" stroke="#0f172a" stroke-width="4" stroke-linecap="round"/>`);
+      }
+    }
+
+    function openEndModal(title,message){
+      document.getElementById('endTitle').textContent=title;
+      endMsg.innerHTML=message;
+      endModal.classList.add('open');
+      document.getElementById('btnPlayAgain').focus();
+      endClose.onclick=closeEndModal;
+      document.addEventListener('keydown',esc);
+      function esc(e){if(e.key==='Escape')closeEndModal();}
+      endModal._esc=esc;
+    }
+    function closeEndModal(){endModal.classList.remove('open');if(endModal._esc){document.removeEventListener('keydown',endModal._esc);endModal._esc=null;}}
+
+    function start(){const picked=pickRandom(FOOD_BANK,TARGET_TOTAL);game={words:picked,total:TARGET_TOTAL,winThreshold:WIN_THRESHOLD,orderIndex:0,perItemState:picked.map(w=>({id:w.id,firstTry:true,done:false})),firstTryCorrectCount:0,mistakes:0,completed:0};renderStatus();}
+    function pick(id){const ix=game.orderIndex,cur=game.words[ix],st=game.perItemState[ix],ok=id===cur.id;if(ok){toast(`Bra jobbat, du hittade <strong>${cur.sv}</strong>`);if(st.firstTry)game.firstTryCorrectCount++;st.done=true;game.completed++;nextItem();}else{toast('Försök igen!','error');if(st.firstTry){st.firstTry=false;game.mistakes++;}else game.mistakes++;}renderStatus();}
+    function nextItem(){if(game.completed>=game.total){const win=game.firstTryCorrectCount>=game.winThreshold;setEndIcon(win);openEndModal(win?'Bra jobbat, du vann!':'Bra försök! Spela igen för att öva mer.',`Rätt: <strong>${game.firstTryCorrectCount}</strong> av ${game.total}.`);return;}let n=game.orderIndex+1;while(n<game.total&&game.perItemState[n].done)n++;if(n>=game.total)n=game.perItemState.findIndex(s=>!s.done);game.orderIndex=n;}
+    function reset(){start();}
+
+    window.Game={start,pick,reset,toast,state:()=>game};
+    start();
+
+    // Only add demo button handlers if buttons exist (for legacy/testing)
+    if (document.getElementById('demoCorrect')) {
+      document.getElementById('demoCorrect').onclick=()=>{Game.pick(Game.state().words[Game.state().orderIndex].id);}
+      document.getElementById('demoWrong').onclick=()=>{Game.toast('Försök igen!','error');const st=Game.state().perItemState[Game.state().orderIndex];if(st.firstTry){st.firstTry=false;Game.state().mistakes++;}else Game.state().mistakes++;renderStatus();}
+      document.getElementById('demoReset').onclick=()=>Game.reset();
+    }
+
+    document.getElementById('btnPlayAgain').onclick=()=>{closeEndModal();Game.reset();}
+    document.getElementById('btnMainMenu').onclick=()=>{closeEndModal();window.location.href='../index.html';};
+
+    // Listen for demo button events from parent
+    window.addEventListener('message', function(event) {
+      if (!event.data || !event.data.type) return;
+      if (event.data.type === 'demoCorrect') {
+        Game.pick(Game.state().words[Game.state().orderIndex].id);
+      } else if (event.data.type === 'demoWrong') {
+        Game.toast('Försök igen!','error');
+        const st=Game.state().perItemState[Game.state().orderIndex];
+        if(st.firstTry){st.firstTry=false;Game.state().mistakes++;}else Game.state().mistakes++;
+        renderStatus();
+      } else if (event.data.type === 'demoReset') {
+        Game.reset();
+      }
+    });
+  })();
+  </script>
+</body>
+</html>
