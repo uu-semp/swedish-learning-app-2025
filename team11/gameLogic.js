@@ -1,4 +1,5 @@
 
+// import data
 import { getItemsIds } from './data.js';
 
 // Generates an array with size number_of_items with random words
@@ -66,3 +67,31 @@ export function generateShelf(shoppingList, allItems, distractorCount = DISTRACT
   return generateList(shelfItems.length, shelfItems);
 
 }
+
+function evaluateChoice(state, chosenWord) {
+  const target = state.shoppingList[state.currentIndex];
+  if (!state.mistakes[target]) state.mistakes[target] = 0;
+
+    if (chosenWord === target) {
+      const firstTry = state.mistakes[target] === 0;
+      state.correctFirstTry.push(firstTry);
+
+      state.currentIndex++;
+      if (state.currentIndex >= state.shoppingList.length) {
+        state.finished = true;
+      }
+      return {correct: true, firstTry};
+    } else {
+      state.mistakes[target] ++;
+      return {correct: false};
+    }
+  }
+
+
+function calculateResult(state) {
+  const correctOnFirst = state.correctFirstTry.filter(v => v).length;
+  const win = correctOnFirst >= Math.ceil(ROUND_SIZE * 0.8);
+  return { win, correctOnFirst };
+}
+
+export { evaluateChoice, calculateResult };
