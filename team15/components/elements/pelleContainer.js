@@ -2,7 +2,7 @@ export const PelleContainer = {
     name: 'pelle-container',
     emits: ['item-dropped'], 
     template: `
-        <div class="drop-zone" 
+        <div class="pelle-container" 
              @drop="handleItemDrop" 
              @dragover.prevent="handleDragOver"
              @dragleave.prevent="handleDragLeave">

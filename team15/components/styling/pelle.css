@@ -1,0 +1,31 @@
+/* Styling for Pelle component */
+
+.pelle-container {
+    height: 300px;
+    width: 300px;
+    margin: 20px;
+    border: 4px dashed #02b823;
+    border-radius: 15px;
+    background-color: rgba(206, 255, 215, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 18px;
+    color: #02b823;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.pelle-container:hover {
+    background-color: rgba(206, 255, 215, 0.8);
+    border-color: #4caf50;
+    border-width: 6px;
+}
+
+.pelle-container.drag-over {
+    background-color: rgba(206, 255, 215, 0.9);
+    border-color: #4caf50;
+    border-width: 6px;
+    transform: scale(1.05);
+}

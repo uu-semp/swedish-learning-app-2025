@@ -43,26 +43,35 @@ export const LevelOneView = {
     },
 
     template: `
-        <div class=level-one-view>
-          <h1>THIS IS THE LEVEL 1 VIEW</h1>
-          <correct-answer-feedback v-if="showCorrectFeedback"></correct-answer-feedback>
-          <incorrect-answer-feedback v-if="showIncorrectFeedback"></incorrect-answer-feedback>
-          <pelle-container @item-dropped="handleDropResult"></pelle-container>
-          <wardrobe-container></wardrobe-container>    
-          <div class = button-container> 
-            <exit-game-button @click="openModal"></exit-game-button>
-          </div>
-
-          <!-- Modal Overlay -->
-          <div v-if="showModal" class="modal-overlay" @click="handleOverlayClick">
-            <div class="modal-content" @click.stop>
-              <h2>Are you sure you want to quit level 1?</h2>
-              <div class="modal-buttons">
-                <button class="big-buttons" @click="confirmExit">Yes</button>
-                <button class="big-buttons" @click="closeModal">No</button>
-              </div>
+      <div class="level-one-view">
+            <div class="level-header">
+                <h1>Level One</h1>
+                <exit-game-button @click="openModal"></exit-game-button>
             </div>
-          </div>
+
+            <div class="feedback-area">
+                <correct-answer-feedback v-if="showCorrectFeedback"></correct-answer-feedback>
+                <incorrect-answer-feedback v-if="showIncorrectFeedback"></incorrect-answer-feedback>
+            </div>
+
+            <div class="main-content-area">
+                <div class="pelle-wrapper">
+                    <pelle-container @item-dropped="handleDropResult"></pelle-container>
+                </div>
+                <div class="wardrobe-wrapper">
+                    <wardrobe-container></wardrobe-container>
+                </div>
+            </div>
+
+            <div v-if="showModal" class="modal-overlay" @click="handleOverlayClick">
+                <div class="modal-content" @click.stop>
+                    <h2>Are you sure you want to quit level 1?</h2>
+                    <div class="modal-buttons">
+                        <button class="big-buttons" @click="confirmExit">Yes</button>
+                        <button class="big-buttons" @click="closeModal">No</button>
+                    </div>
+                </div>
+            </div>
         </div>
       `,
 };
