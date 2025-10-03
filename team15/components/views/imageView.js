@@ -38,6 +38,7 @@ export const ImagesView = {
         <p><strong>Swedish word:</strong> {{ currentItem.Swedish }}</p>
         <p><strong>Swedish plural:</strong> {{ currentItem.Swedish_plural || 'N/A' }}</p>
         <p><strong>Category:</strong> {{ currentItem.Category }}</p>
+        <p><strong>Subcategory:</strong> {{ currentItem.Subcategory || 'N/A' }}</p>
         <p><strong>Image URL:</strong> {{ currentItem.Image_url }}</p>
       </div>
 
