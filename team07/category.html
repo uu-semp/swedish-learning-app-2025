@@ -25,7 +25,7 @@ Owned by Team 07
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 
     <!-- Site specific scripts and styles -->
-    <link rel="stylesheet" href="index.css" />
+    <link rel="stylesheet" href="category.css" />
     <script src="index.js" defer></script>
     <script src="game-page.js" defer></script>
 
@@ -37,16 +37,21 @@ Owned by Team 07
     </header>
 
     <main class="game-frame">
-        Implement your game inside this tag.
+        <div class="categorybox">
 
-        <hr>
-        <h1>Choose a category</h1>
+            <h1>Choose a category!</h1>
 
-        <button onclick="game_start('clothing'); window.location.href='game-page.html'">Clothing</button>
-        <button onclick="game_start('food'); window.location.href='game-page.html'">Food</button>
-        <button onclick="game_start('furniture'); window.location.href='game-page.html'">Furniture</button>
-        <button onclick="game_start('mixed'); window.location.href='game-page.html'">Mixed</button>
-
+            <div>
+                <button class="category_button"
+                    onclick="game_start('clothing'); window.location.href='game-page.html'">Clothing</button>
+                <button class="category_button"
+                    onclick="game_start('food'); window.location.href='game-page.html'">Food</button>
+                <button class="category_button"
+                    onclick="game_start('furniture'); window.location.href='game-page.html'">Furniture</button>
+                <button class="category_button"
+                    onclick="game_start('mixed'); window.location.href='game-page.html'">Mixed</button>
+            </div>
+        </div>
 
     </main>
 
