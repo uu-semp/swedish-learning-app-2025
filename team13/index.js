@@ -66,7 +66,6 @@ function generateRandom() {
 }
 
 function generateRandomHouses(houseNumber, houseCount, highestNumber){
-  houseNumber = 30
   const doubleHouses = irandom_range(0,1)
   const maxPos = Math.min(Math.floor((houseNumber - 1) / (1 + doubleHouses)), houseCount -1)
   const minPos = Math.min(
