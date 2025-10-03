@@ -16,8 +16,12 @@ let state = gameStates.inGame
 
 $(function() {
   window.vocabulary.when_ready(function () {
-   runGameStateLogic()
-
+  
+  let houseInfo = runGameStateLogic()
+  console.log(houseInfo)
+  let correctHouse = houseInfo.correctHouse
+  let houseArray = houseInfo
+  
   $("#check-jquery").on("click", () => {
     alert("JavaScript and jQuery are working.");
   });
@@ -37,13 +41,13 @@ function menu_logic(){
   console.log("menu_logic")
   //I would like to have const numbers be a global variable which works for all functions,
   //however due to the fact that it has to be within when_ready, that can't happen
-  generateRandom()
+  return generateRandom()
 }
 
 function inGame_logic(){
   console.log("inGame_logic")
   
-  generateRandom()
+  return generateRandom()
 }
 
 function generateRandom() {
@@ -61,7 +65,7 @@ function generateRandom() {
   $("#number-literal").text(
     JSON.stringify(window.vocabulary.get_vocab(numbers[randomNo]).literal)
   );
-  console.log(generateRandomHouses(window.vocabulary.get_vocab(numbers[randomNo]).literal,5, numbers.length-1));
+  return generateRandomHouses(window.vocabulary.get_vocab(numbers[randomNo]).literal,5, numbers.length-1)
 
 }
 
@@ -79,7 +83,7 @@ function generateRandomHouses(houseNumber, houseCount, highestNumber){
   for (let i = 0; i < houseCount; i++) {
     houseArray.push(houseNumber-(relativeHousePosition-i)*(1+doubleHouses))
   }
-  return houseArray
+  return {houseArray : houseArray, correctHouse : relativeHousePosition}
 }
 
 function nextGameState() {
@@ -89,17 +93,25 @@ function nextGameState() {
   console.log(state)
   runGameStateLogic()
 }
-
+function clickHouse(num) {
+  alert("Clicked house: " + num);
+    /*if (num == correctHouse){
+      alert("Clicked correct house: " + num);
+    }else{
+      alert("Clicked correct house: " + num);
+    }*/
+    
+}
 function runGameStateLogic(){
   const numbers = window.vocabulary.get_category("number");
    $("#gamestate").text(window.vocabulary.get_vocab(numbers[state]).en);
   switch(state){
     case gameStates.menu: {
-        menu_logic()
-    } break;
+        return menu_logic()
+    }
     case gameStates.inGame: {
-        inGame_logic()
-    } break;
+        return inGame_logic()
+    }
   }
 }
 function getKeyName(states,index){
