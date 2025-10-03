@@ -1,0 +1,104 @@
+/*
+=================================================
+Owned by Team 09
+=================================================
+*/
+
+body {
+    font-family: Arial, sans-serif;
+    width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
+    flex-direction: column;
+    background-color: #1e6338;    
+    /* background-image: url('img/background.jpg'); */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+}
+
+main.game-frame {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+main{
+    color: white;
+}
+
+.top-bar {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    justify-content: flex-start;       
+    margin-bottom: 40px;
+    align-self: flex-start
+     
+}
+
+.top-bar h2 {
+    margin: 0;
+    color:white;
+    font-size: 36px;
+    padding-left: 70px;
+}
+
+#back-btn {
+    padding: 20px 40px;
+    font-size: 20px;
+    cursor: pointer;
+    width: 140px;
+    border-radius: 10px;
+    border: none;
+    color: white;
+    transition: transform 0.2s, background-color 0.3s;
+}
+
+.level-buttons {
+    display: grid;
+    grid-template-columns: repeat(2, 200px); 
+    gap: 60px 150px;                        
+    justify-items: center;                  
+}
+
+.level-buttons button {
+    padding: 20px 60px;          
+    font-size: 22px;              
+    width: 200px;                 
+    border: none;
+    border-radius: 10px;     
+    color: #fff; 
+    cursor: pointer;
+    transition: transform 0.2s, filter 0.2s, background-color 0.3s;
+}
+
+.level-buttons button:hover,
+#back-btn:hover {
+    transform: scale(1.05);
+    filter: brightness(1.2);
+}
+
+#level1-btn { background-color: #52d929; }  
+#level2-btn { background-color: #1d75d9; }  
+#level3-btn { background-color: #b11d1d; }  
+#level4-btn { background-color: #26bee0; }  
+#level5-btn { background-color: #844ab4; }  
+#level6-btn { background-color: #b26b0e; }  
+
+
+#back-btn { background-color: #e5a525; }
+#back-btn:hover { background-color: #5fade6; }
+
+hr {
+    margin-top: 50px;   
+    margin-bottom: 20px;
+    border-color: white; 
+}
+
+footer {
+    color: white;
+}

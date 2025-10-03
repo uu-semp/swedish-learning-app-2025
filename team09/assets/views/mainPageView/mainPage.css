@@ -1,0 +1,73 @@
+/*
+=================================================
+Owned by Team 09
+=================================================
+*/
+
+body {
+    font-family: Arial, sans-serif;
+    width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
+    flex-direction: column;
+    background-color: #1e6338;    
+    /* background-image: url('img/background.jpg'); */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+}
+
+main {
+    color: white;
+}
+
+.main-frame {
+    text-align: center;
+}
+
+.top-bar h2 {
+    margin: 0 0 20px 0;
+    color: white;
+    font-size: 36px;
+}
+
+.logo-box {
+    margin-bottom: 300px;
+}
+
+.logo {
+    width: 300px;  
+}
+
+.menu-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.menu-buttons button {
+    width: 200px;
+    padding: 15px;
+    font-size: 18px;
+    color: #222;
+    background-color: #FECB00;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.3s;
+    margin: 0 auto;
+}
+
+.menu-buttons button:hover {
+    transform: scale(1.05);
+    filter: brightness(1.2);
+}
+
+#start-btn { background-color: #e19962; }  
+#info-btn { background-color: #ce4c6c; }  
+#dict-btn { background-color: #4A90E2; } 
+
+footer {
+    color: white;
+}
