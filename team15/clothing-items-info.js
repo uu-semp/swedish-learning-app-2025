@@ -6,6 +6,8 @@ export default [
         Swedish: 'mössa',
         Swedish_plural: 'mössor',
         Category: 'clothing',
+        Subcategory: 'Headwear',
+
         Image_url: 'assets/images/clothes/beanie.png',
     },
     {
@@ -15,6 +17,8 @@ export default [
         Swedish: 'bälte',
         Swedish_plural: 'bälten',
         Category: 'clothing',
+                Subcategory: 'Accessories',
+
         Image_url: 'assets/images/clothes/belt.png',
     },
     {
@@ -24,6 +28,7 @@ export default [
         Swedish: 'kavaj',
         Swedish_plural: 'kavajer',
         Category: 'clothing',
+        Subcategory: 'Upper Body',
         Image_url: 'assets/images/clothes/blazer.png',
     },
     {
@@ -33,6 +38,7 @@ export default [
         Swedish: 'blus',
         Swedish_plural: 'blusar',
         Category: 'clothing',
+        Subcategory: 'Upper Body',
         Image_url: 'assets/images/clothes/blouse.png',
     },
     {
@@ -42,6 +48,7 @@ export default [
         Swedish: 'stövlar',
         Swedish_plural: '',
         Category: 'clothing',
+        Subcategory: 'Footwear',
         Image_url: 'assets/images/clothes/boots.png',
     },
     {
@@ -51,6 +58,7 @@ export default [
         Swedish: 'kalsonger',
         Swedish_plural: '',
         Category: 'clothing',
+        Subcategory: 'Underwear',
         Image_url: 'assets/images/clothes/boxers.png',
     },
     {
@@ -60,6 +68,8 @@ export default [
         Swedish: 'bh',
         Swedish_plural: '',
         Category: 'clothing',
+        Subcategory: 'Upper Body',
+
         Image_url: 'assets/images/clothes/bra.png',
     },
     {
@@ -69,6 +79,7 @@ export default [
         Swedish: 'armband',
         Swedish_plural: '',
         Category: 'clothing',
+        Subcategory: 'Jewellery',
         Image_url: 'assets/images/clothes/bracelet.png',
     },
     {
@@ -78,6 +89,7 @@ export default [
         Swedish: 'keps',
         Swedish_plural: 'kepsar',
         Category: 'clothing',
+        Subcategory: 'Headwear',
         Image_url: 'assets/images/clothes/cap.png',
     },
     {
@@ -87,6 +99,7 @@ export default [
         Swedish: 'kofta',
         Swedish_plural: 'koftor',
         Category: 'clothing',
+        Subcategory: 'Upper Body',
         Image_url: 'assets/images/clothes/cardigan.png',
     },
     {
@@ -96,6 +109,7 @@ export default [
         Swedish: 'kläder',
         Swedish_plural: '',
         Category: 'clothing',
+        Subcategory: 'Miscellaneous',
         Image_url: 'assets/images/clothes/clothes.png',
     },
     {
@@ -105,6 +119,7 @@ export default [
         Swedish: 'rock',
         Swedish_plural: 'rockar',
         Category: 'clothing',
+        Subcategory: 'Outerwear',
         Image_url: 'assets/images/clothes/coat.png',
     },
     {
@@ -114,6 +129,7 @@ export default [
         Swedish: 'klänning',
         Swedish_plural: 'klänningar',
         Category: 'clothing',
+        Subcategory: 'Upper Body',
         Image_url: 'assets/images/clothes/dress.png',
     },
     {
@@ -123,6 +139,7 @@ export default [
         Swedish: 'örhängen',
         Swedish_plural: '',
         Category: 'clothing',
+        Subcategory: 'Jewellery',
         Image_url: 'assets/images/clothes/earrings.png',
     },
     {
@@ -132,6 +149,7 @@ export default [
         Swedish: 'glasögon',
         Swedish_plural: '',
         Category: 'clothing',
+        Subcategory: 'Accessories',
         Image_url: 'assets/images/clothes/glasses.png',
     },
     {
@@ -141,6 +159,7 @@ export default [
         Swedish: 'handskar',
         Swedish_plural: '',
         Category: 'clothing',
+        Subcategory: 'Accessories',
         Image_url: 'assets/images/clothes/gloves.png',
     },
     {
@@ -150,6 +169,7 @@ export default [
         Swedish: 'hatt',
         Swedish_plural: 'hattar',
         Category: 'clothing',
+        Subcategory: 'Headwear',
         Image_url: 'assets/images/clothes/hat.png',
     },
     {
@@ -159,6 +179,7 @@ export default [
         Swedish: 'huvtröja',
         Swedish_plural: 'hubtröjor',
         Category: 'clothing',
+        Subcategory: 'Upper Body',
         Image_url: 'assets/images/clothes/hoodie.png',
     },
     {
@@ -168,6 +189,7 @@ export default [
         Swedish: 'jacka',
         Swedish_plural: 'jackor',
         Category: 'clothing',
+        Subcategory: 'Outerwear',
         Image_url: 'assets/images/clothes/jacket.png',
     },
     {
@@ -177,6 +199,7 @@ export default [
         Swedish: 'jeans',
         Swedish_plural: '',
         Category: 'clothing',
+        Subcategory: 'Lower Body',
         Image_url: 'assets/images/clothes/jeans.png',
     },
     {
@@ -186,6 +209,7 @@ export default [
         Swedish: 'smycken',
         Swedish_plural: '',
         Category: 'clothing',
+        Subcategory: 'Jewellery',
         Image_url: 'assets/images/clothes/jewellery.png',
     },
     {
@@ -195,6 +219,7 @@ export default [
         Swedish: 'stickad tröja',
         Swedish_plural: 'stickade tröjor',
         Category: 'clothing',
+        Subcategory: 'Upper Body',
         Image_url: 'assets/images/clothes/knitted_sweater.png',
     },
     {
@@ -204,6 +229,7 @@ export default [
         Swedish: 'leggings',
         Swedish_plural: '',
         Category: 'clothing',
+        Subcategory: 'Lower Body',
         Image_url: 'assets/images/clothes/leggings.png',
     },
     {
@@ -213,6 +239,7 @@ export default [
         Swedish: 'vantar',
         Swedish_plural: '',
         Category: 'clothing',
+        Subcategory: 'Accessories',
         Image_url: 'assets/images/clothes/mittens.png',
     },
     {
@@ -222,6 +249,7 @@ export default [
         Swedish: 'halsband',
         Swedish_plural: '',
         Category: 'clothing',
+        Subcategory: 'Jewellery',
         Image_url: 'assets/images/clothes/necklace.png',
     },
     {
@@ -231,6 +259,7 @@ export default [
         Swedish: 'trosor',
         Swedish_plural: '',
         Category: 'clothing',
+        Subcategory: 'Underwear',
         Image_url: 'assets/images/clothes/panties.png',
     },
     {
@@ -240,6 +269,7 @@ export default [
         Swedish: 'byxor',
         Swedish_plural: '',
         Category: 'clothing',
+        Subcategory: 'Lower Body',
         Image_url: 'assets/images/clothes/pants.png',
     },
     {
@@ -249,6 +279,7 @@ export default [
         Swedish: 'strumpbyxor',
         Swedish_plural: '',
         Category: 'clothing',
+        Subcategory: 'Lower Body',
         Image_url: 'assets/images/clothes/pantyhose.png',
     },
     {
@@ -258,6 +289,7 @@ export default [
         Swedish: 'ring',
         Swedish_plural: 'ringar',
         Category: 'clothing',
+        Subcategory: 'Jewellery',
         Image_url: 'assets/images/clothes/ring.png',
     },
     {
@@ -267,6 +299,7 @@ export default [
         Swedish: 'morgonrock',
         Swedish_plural: 'morgonrockar',
         Category: 'clothing',
+        Subcategory: 'Outerwear',
         Image_url: 'assets/images/clothes/robe.png',
     },
     {
@@ -276,6 +309,7 @@ export default [
         Swedish: 'sandaler',
         Swedish_plural: '',
         Category: 'clothing',
+        Subcategory: 'Footwear',
         Image_url: 'assets/images/clothes/sandals.png',
     },
     {
@@ -285,6 +319,7 @@ export default [
         Swedish: 'halsduk',
         Swedish_plural: 'halsdukar',
         Category: 'clothing',
+        Subcategory: 'Accessories',
         Image_url: 'assets/images/clothes/scarf.png',
     },
     {
@@ -294,6 +329,7 @@ export default [
         Swedish: 'skor',
         Swedish_plural: '',
         Category: 'clothing',
+        Subcategory: 'Footwear',
         Image_url: 'assets/images/clothes/shoes.png',
     },
     {
@@ -303,6 +339,7 @@ export default [
         Swedish: 'shorts',
         Swedish_plural: '',
         Category: 'clothing',
+        Subcategory: 'Lower Body',
         Image_url: 'assets/images/clothes/shorts.png',
     },
     {
@@ -312,6 +349,7 @@ export default [
         Swedish: 'skjorta',
         Swedish_plural: 'skjortor',
         Category: 'clothing',
+        Subcategory: 'Upper Body',
         Image_url: 'assets/images/clothes/shirt.png',
     },
     {
@@ -321,6 +359,7 @@ export default [
         Swedish: 'kjol',
         Swedish_plural: 'kjolar',
         Category: 'clothing',
+        Subcategory: 'Lower Body',
         Image_url: 'assets/images/clothes/skirt.png',
     },
     {
@@ -330,6 +369,7 @@ export default [
         Swedish: 'sneakers',
         Swedish_plural: '',
         Category: 'clothing',
+        Subcategory: 'Footwear',
         Image_url: 'assets/images/clothes/sneakers.png',
     },
     {
@@ -339,6 +379,7 @@ export default [
         Swedish: 'strumpor',
         Swedish_plural: '',
         Category: 'clothing',
+        Subcategory: 'Footwear',
         Image_url: 'assets/images/clothes/socks.png',
     },
     {
@@ -348,6 +389,7 @@ export default [
         Swedish: 'kostym',
         Swedish_plural: '',
         Category: 'clothing',
+        Subcategory: 'Outerwear',
         Image_url: 'assets/images/clothes/suit.png',
     },
     {
@@ -357,6 +399,7 @@ export default [
         Swedish: 'solglasögon',
         Swedish_plural: '',
         Category: 'clothing',
+        Subcategory: 'Accessories',
         Image_url: 'assets/images/clothes/sunglasses.png',
     },
     {
@@ -366,6 +409,7 @@ export default [
         Swedish: 'tröja',
         Swedish_plural: 'tröjor',
         Category: 'clothing',
+        Subcategory: 'Upper Body',
         Image_url: 'assets/images/clothes/sweater.png',
     },
     {
@@ -375,6 +419,7 @@ export default [
         Swedish: 'mjukisbyxor',
         Swedish_plural: '',
         Category: 'clothing',
+        Subcategory: 'Lower Body',
         Image_url: 'assets/images/clothes/sweatpants.png',
     },
     {
@@ -384,6 +429,7 @@ export default [
         Swedish: 'baddräkt',
         Swedish_plural: 'baddräkter',
         Category: 'clothing',
+        Subcategory: 'Upper Body',
         Image_url: 'assets/images/clothes/swimsuit.png',
     },
     {
@@ -393,6 +439,7 @@ export default [
         Swedish: 't-shirt',
         Swedish_plural: '',
         Category: 'clothing',
+        Subcategory: 'Upper Body',
         Image_url: 'assets/images/clothes/t-shirt.png',
     },
     {
@@ -402,6 +449,7 @@ export default [
         Swedish: 'slips',
         Swedish_plural: '',
         Category: 'clothing',
+        Subcategory: 'Accessories',
         Image_url: 'assets/images/clothes/tie.png',
     },
     {
@@ -411,6 +459,7 @@ export default [
         Swedish: 'topp',
         Swedish_plural: 'toppar',
         Category: 'clothing',
+        Subcategory: 'Upper Body',
         Image_url: 'assets/images/clothes/top.png',
     },
     {
@@ -420,6 +469,7 @@ export default [
         Swedish: 'träningskläder',
         Swedish_plural: '',
         Category: 'clothing',
+        Subcategory: 'Accessories',
         Image_url: 'assets/images/clothes/training_clothes.png',
     },
     {
@@ -429,6 +479,7 @@ export default [
         Swedish: 'underkläder',
         Swedish_plural: '',
         Category: 'clothing',
+        Subcategory: 'Underwear',
         Image_url: 'assets/images/clothes/underwear.png',
     },
     {
@@ -438,6 +489,7 @@ export default [
         Swedish: 'slöja',
         Swedish_plural: 'slöjor',
         Category: 'clothing',
+        Subcategory: 'Headwear',
         Image_url: 'assets/images/clothes/veil.png',
     },
 ];
