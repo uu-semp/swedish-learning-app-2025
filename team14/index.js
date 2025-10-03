@@ -4,26 +4,6 @@
 
 "use strict";
 
-$(function() {window.vocabulary.when_ready(function () {
-
-  // These are only dummy functions and can be removed.
-  $("#check-jquery").on("click", () => {
-    alert("JavaScript and jQuery are working.");
-  });
-
-  $("#display-vocab").text(JSON.stringify(window.vocabulary.get_random()));
-
-  $("#check-saving").on("click", () => {
-    var data = window.save.get("team14");
-    data.counter = data.counter ?? 0;
-    data.counter += 1;
-    $("#check-saving").text(`This button has been pressed ${data.counter} times`);
-    window.save.set("team14", data);
-  });
-
-})});
-
-
 // ==============================================
 
 // Helper function to get random item from array
@@ -31,7 +11,9 @@ function getRandomItem(array) {
     return array[Math.floor(Math.random() * array.length)];
 }
 
-// Description generator class
+
+// Swedish clothing generator - creates random outfit descriptions and checks player answers
+  // Usage: clothingGenerator.generateOutfit() returns {swedish: "text", correctAnswer: {files}}
 class SwedishClothingDescriptionGenerator {
     constructor() {
 
@@ -101,54 +83,36 @@ class SwedishClothingDescriptionGenerator {
             }
         };
     }
-    
-    // Check if player selected correct clothes
-    checkAnswer(playerSelection, correctAnswer) {
-        return (
-            playerSelection.hatFile === correctAnswer.hatFile &&
-            playerSelection.shirtFile === correctAnswer.shirtFile &&
-            playerSelection.pantsFile === correctAnswer.pantsFile
-        );
-    }
 }
+
 // Description generator class global instance
 window.clothingGenerator = new SwedishClothingDescriptionGenerator(); 
 
-// Swedish clothing generator - creates random outfit descriptions and checks player answers
-// Usage: clothingGenerator.generateOutfit() returns {swedish: "text", correctAnswer: {files}}
-
-
-
-
-
-
-// fetch description and 'right' clothes to apply
-function fetchDescription() {
-}
 
 // apply clothes function
 function applyClothes(id) {
-  // fetch clothes from vocabulary and apply to the character
-  //  document.getElementById(id).src
 }
 
 // Check clothes function
-function checkClothes() {
-  // fetch applied clothes and check if user applied the correct clothes
-  // just check if 2 sets of clothes id are the same
+function checkClothes(correctClothesIds, appliedClothesIds) {
+  // Simple comparison of two arrays of clothes IDs
+  if (!Array.isArray(correctClothesIds) || !Array.isArray(appliedClothesIds)) {
+    return false;
+  }
 
-  // fetch applied clothes ids 
-  
-  // fetch correct clothes ids from description
+  // Sort both arrays to ignore order
+  const sortedCorrect = [...correctClothesIds].sort();
+  const sortedApplied = [...appliedClothesIds].sort();
 
-  // compare the 2 sets of clothes ids
+  // Example: sort(['RödMössa.png', 'BlåaJeans.png', 'GråOchBeigeTröja.png']) 
+  // becomes ['BlåaJeans.png', 'GråOchBeigeTröja.png', 'RödMössa.png']
+  // in this way we can compare arrays without caring the area of the body
 
-  // if correct, update score
-  // if wrong, give feedback
+  // Check if arrays match
+  const isCorrect = sortedCorrect.length === sortedApplied.length && 
+                   sortedCorrect.every((id, index) => id === sortedApplied[index]);
 
-
-
-  // can also update the progress ?
+  return isCorrect;
 }
 
 // undress area on pelle (and the cloth is going back to the pool)
@@ -161,23 +125,9 @@ function undress(id) {
 
 
 /*
-
-Questions for Jacob:
-- Descriptions list (json or text or csv)
--> understand the data format for descriptions and actual clothes applied to pelle 
-
-Questions for everyone:
-- Who is doing the descriptions database?
-  Data format example:
-    | -------- | ---------------- | ---------------- |
-    | descr_ID | description_text | correct_clothes  | -> should be a list of clothes IDs and be linked to actual images
-    | -------- | ---------------- | ---------------- |
-
   Alternative: 
   just have a images linked to id database and generate a random description and correct clothes algorithmically
 
   X thsirt and Y trousers 
-
-
 
 */
