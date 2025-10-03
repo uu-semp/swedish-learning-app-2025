@@ -1,0 +1,44 @@
+.list-item {
+    border: 2px solid #000000;
+    margin-bottom: 5px;
+    margin-left: 10px;
+    margin-right: 10px;
+    background-color: #f9f9f9;
+    color: gray;
+    transition: background-color 0.3s ease;
+    border-radius: 10px;
+}
+
+
+.paragraph {
+    font-size: 15px;
+    font-family: Arial, sans-serif;
+    font-weight: bold;
+    line-height: 1.6;
+    color: black;
+    margin-bottom: 15px;
+    text-align: justify;
+    margin-left: 2px;
+}
+
+.list-item hr {
+    margin: 4px 0 10px;      
+    color: black;                  
+}
+
+.fa-solid.fa-arrow-left {
+    font-size: 2rem;
+    color: #333;
+    cursor: pointer;
+    top: 20px;
+    left: 20px;
+    margin-top: 20px;
+    margin-left: 20px;
+}
+
+.word-list-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: auto;
+}
