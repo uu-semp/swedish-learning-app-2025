@@ -6,31 +6,27 @@ export const PelleContainer = {
              @drop="handleItemDrop" 
              @dragover.prevent="handleDragOver"
              @dragleave.prevent="handleDragLeave">
-          'Drop Item Here'
+          <img src="./components/assets/pelle.png">
         </div>
     `,
     methods: {
         handleItemDrop(event) {
-            // Get the dragged data
             const droppedItem = event.dataTransfer.getData('text/plain');
             console.log('Dropped item in component:', droppedItem);
-
-            // Determine the result (in a real game, this would be your logic)
+            
             const isCorrect = Math.random() > 0.5;
-
-            // Emit an event to the parent with the result
             this.$emit('item-dropped', { isCorrect: isCorrect });
 
-            // Clean up visual feedback
-            event.target.classList.remove('drag-over');
+            // Use currentTarget to remove the class from the div
+            event.currentTarget.classList.remove('drag-over');
         },
         handleDragOver(event) {
-            // Add visual feedback
-            event.target.classList.add('drag-over');
+            // Use currentTarget to add the class to the div
+            event.currentTarget.classList.add('drag-over');
         },
         handleDragLeave(event) {
-            // Remove visual feedback
-            event.target.classList.remove('drag-over');
+            // Use currentTarget to remove the class from the div
+            event.currentTarget.classList.remove('drag-over');
         }
     }
 };
