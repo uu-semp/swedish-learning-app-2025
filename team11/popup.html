@@ -319,14 +319,33 @@
     function renderStatus(){progressPill.textContent=`${game.completed} / ${game.total} klara`;firstTryPill.textContent=`Rätt: ${game.firstTryCorrectCount}`;mistakesPill.textContent=`Misstag: ${game.mistakes}`;targetPill.textContent=`Tröskel: ${game.winThreshold} / ${game.total}`;}
 >>>>>>> 2572a7f (chatbubble endgame (not perect))
 
+    // ✅ Only one toast at a time
     function toast(html,type='success',duration=4000){
+      if (currentToast) {
+        try { currentToast.classList.add('is-hiding'); } catch(e){}
+        try { currentToast.remove(); } catch(e){}
+        if (currentToastTimer) clearTimeout(currentToastTimer);
+        currentToast = null;
+        currentToastTimer = null;
+      }
+
       const el=document.createElement('div');
       el.className='toast bubble '+(type==='error'?'error':'success');
       el.innerHTML=`<div class="content">${html}</div><button class="x" type="button" aria-label="Stäng">×</button>`;
-      toastsEl.appendChild(el);
-      const x=el.querySelector('.x'); let t=setTimeout(close,duration);
-      function close(){el.classList.add('is-hiding');el.addEventListener('transitionend',()=>el.remove(),{once:true});}
-      x.onclick=()=>{clearTimeout(t);close();};
+      toastsEl.replaceChildren(el);
+
+      currentToast = el;
+
+      const x=el.querySelector('.x');
+      const close=()=>{
+        if (!el.isConnected) return;
+        el.classList.add('is-hiding');
+        el.addEventListener('transitionend',()=>{try{el.remove();}catch(e){}},{once:true});
+        if (currentToast===el){currentToast=null;currentToastTimer=null;}
+      };
+
+      currentToastTimer=setTimeout(close,duration);
+      x.onclick=()=>{if(currentToastTimer)clearTimeout(currentToastTimer);close();};
     }
 
     function setEndIcon(win){
