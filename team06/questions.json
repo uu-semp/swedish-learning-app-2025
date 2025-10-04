@@ -1,0 +1,25 @@
+{
+    "name": "clock-game",
+    "qs": [
+        {
+            "diff": "easy",
+            "questions": 
+            [
+                {
+                    "id": "recog-1",
+                    "en": "What is the time?",
+                    "sv": "Vad är klockan?",
+                    "hour" : 2,
+                    "minute" : 30,
+                    "answer": "halv tre",
+                    "alternatives": ["halv två", "halv fyra", "halv ett"]
+                },
+                {
+                    "en": "Where is my cat?",
+                    "sv": "Var är min katt",
+                    "answer": "..."
+                }
+            ]
+        }
+    ]
+}
