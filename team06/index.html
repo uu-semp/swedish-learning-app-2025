@@ -25,7 +25,7 @@ Owned by Team 06
 
   <!-- Site specific scripts and styles -->
   <link rel="stylesheet" href="index.css" />
-  <script src="index.js" defer></script>
+  <script type="module" src="index.js"></script>
 </head>
 <body>
   <header>
@@ -46,7 +46,7 @@ Owned by Team 06
   </div>
 
   <main class="game-frame">
-    <object type="text/html" data="./components/clock.html" height="80%" width="80%"></object>
+    <object id="clock-frame" type="text/html" data="./components/clock.html" width="100%" height="400"></object>
     <p>Question:</p>
     <p id="question">something</p>
     <button id="test-fetch">Click to test fetching of data</button>

@@ -19,7 +19,7 @@
 
     <!-- Site specific scripts and styles -->
     <link rel="stylesheet" href="clock.css" />
-    <script src="index.js" defer></script>
+    <script src="./clock.js" defer></script>
 </head>
 
 <body>
@@ -41,7 +41,7 @@
             <div class="hand minute-hand" id="minute-hand"></div>
             <script type="module">
                 import { setAnalogTime } from "./clock.js";
-                setAnalogTime(3, 45);
+                window.setAnalogTime = setAnalogTime;
             </script>
         </div>
     </div>
