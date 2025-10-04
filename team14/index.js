@@ -93,7 +93,6 @@ function createHtmlObjects(imgArray) {
 
         const htmlImgObject = document.createElement("img");
 
-        // Set attributes
         htmlImgObject.src = path;
         htmlImgObject.alt = description;
         htmlImgObject.width = 100; // TODO: Update to intended size
