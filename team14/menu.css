@@ -1,0 +1,59 @@
+/* Center the screen */
+body {
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #eceff1;
+  font-family: Arial, sans-serif;
+}
+
+/* Fixed-sized screen */
+.screen {
+  width: 800px;
+  height: 600px;
+  background: white;
+  border: 3px solid #333;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Title */
+.menu-title {
+  margin: 0 0 50px;
+  font-size: 48px;
+  color: #333;
+}
+
+/* Buttons row */
+.menu-buttons {
+  display: flex;
+  gap: 40px;
+}
+
+/* Buttons */
+.btn {
+  padding: 16px 40px;
+  text-decoration: none;
+  background-color: #1976d2;
+  color: white;
+  font-size: 20px;
+  font-weight: bold;
+  border-radius: 8px;
+  transition: background 0.2s ease;
+}
+
+.btn:hover {
+  background-color: #0d47a1;
+}
+
+.menu-image {
+  max-height: 250px; 
+  margin-bottom: 40px; 
+}

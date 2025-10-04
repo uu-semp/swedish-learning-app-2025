@@ -1,0 +1,21 @@
+/* Center the screen */
+body {
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #eceff1;
+}
+
+/* Fixed-size screen */
+.screen {
+  width: 800px;
+  height: 600px;
+  background: white;
+  border: 3px solid #333;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+
+  
+}
