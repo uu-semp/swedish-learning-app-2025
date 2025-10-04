@@ -25,8 +25,67 @@ $(function() {window.vocabulary.when_ready(function () {
 
 
 // ==============================================
-// 
+//
 
+const imgIds = [
+  "14img001",
+  "14img002",
+  "14img003",
+  "14img004",
+  "14img005",
+  "14img006",
+  "14img007",
+  "14img008",
+  "14img009",
+  "14img010",
+  "14img011",
+  "14img012",
+  "14img013",
+  "14img014",
+  "14img015",
+  "14img016",
+  "14img017",
+  "14img018",
+  "14img019"
+];
+
+class imgObject {
+
+  #imgId;
+  #imgPath;
+  #category;
+
+  constructor(imgId, imgPath, category) {
+    this.#imgId = imgId;
+    this.#imgPath = imgPath;
+    this.#category = category;
+  }
+
+  getImdId() {
+    return this.#imgId;
+  }
+
+  getImgPath() {
+    return this.#imgPath;
+  }
+
+  getCategory() {
+    return this.#category;
+  }
+
+}
+
+// Loads the clothes of that are going to be used in this current round
+function loadClothes() {
+
+  const fetchImgArray = () => {
+    let imgArray = imgObject[imgIds.length];
+    for (let i = 0; i < imgIds.length; i++) {
+
+    }
+  }
+
+}
 
 // fetch description and 'right' clothes to apply
 function fetchDescription() {
