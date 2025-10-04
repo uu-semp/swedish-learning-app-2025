@@ -17,15 +17,15 @@ export default {
         <button @click="$root.currentView = 'game'" 
                 style="padding: 12px; border: none; border-radius: 8px; background: #5de9acc8; color: white; font-size: 18px; cursor: pointer;">
           Level 1
-        <tton>
+        </button>
         <button @click="$root.currentView = 'game'" 
                 style="padding: 12px; border: none; border-radius: 8px; background: #3786ed86; color: white; font-size: 18px; cursor: pointer;">
           Level 2
-        <tton>
+        </button>
         <button @click="$root.currentView = 'game'" 
                 style="padding: 12px; border: none; border-radius: 8px; background: #ef4a5ab3; color: white; font-size: 18px; cursor: pointer;">
           Level 3
-        <tton>
+        </button>
       </div>
     </div>
   `,
