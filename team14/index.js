@@ -4,26 +4,6 @@
 
 "use strict";
 
-$(function() {window.vocabulary.when_ready(function () {
-
-  // These are only dummy functions and can be removed.
-  $("#check-jquery").on("click", () => {
-    alert("JavaScript and jQuery are working.");
-  });
-
-  $("#display-vocab").text(JSON.stringify(window.vocabulary.get_random()));
-
-  $("#check-saving").on("click", () => {
-    var data = window.save.get("team14");
-    data.counter = data.counter ?? 0;
-    data.counter += 1;
-    $("#check-saving").text(`This button has been pressed ${data.counter} times`);
-    window.save.set("team14", data);
-  });
-
-})});
-
-
 // ==============================================
 //
 
@@ -49,19 +29,19 @@ const imgIds = [
   "14img019"
 ];
 
-class imgObject {
+class ImgObject {
 
   #imgId;
   #imgPath;
-  #category;
+  #imgDescription;
 
-  constructor(imgId, imgPath, category) {
+  constructor(imgId, imgPath, imgDescription) {
     this.#imgId = imgId;
     this.#imgPath = imgPath;
-    this.#category = category;
+    this.#imgDescription = imgDescription;
   }
 
-  getImdId() {
+  getImgId() {
     return this.#imgId;
   }
 
@@ -69,23 +49,74 @@ class imgObject {
     return this.#imgPath;
   }
 
-  getCategory() {
-    return this.#category;
+  getImgDescription() {
+    return this.#imgDescription;
   }
 
 }
 
 // Loads the clothes of that are going to be used in this current round
+// Tested and works as intended (imgArray is filled with the data for all images we have made this far)
 function loadClothes() {
 
-  const fetchImgArray = () => {
-    let imgArray = imgObject[imgIds.length];
-    for (let i = 0; i < imgIds.length; i++) {
+    let imgArray = [];
 
+    window.vocabulary.load_team_data(14);
+
+    window.vocabulary.when_ready(() => {
+
+        for (let i = 0; i < imgIds.length; i++) {
+
+            const currentImgPath = window.vocabulary.get_team_data(imgIds[i]);
+            const currentImgDescription = window.vocabulary.get_vocab(imgIds[i]);
+            let newImgObject = new ImgObject(imgIds[i], currentImgPath, currentImgDescription.sv);
+
+            imgArray.push(newImgObject);
+
+        }
+
+    });
+
+    let htmlObjects = createHtmlObjects(imgArray);
+
+    injectHtmlObjects(htmlObjects);
+}
+
+// Creates a list of html img objects from array of ImgObjects
+function createHtmlObjects(imgArray) {
+
+    let htmlObjects = [];
+
+    const createHtmlImgObject = (imgObject) => {
+        let path = imgObject.getImgPath();
+        let description = imgObject.getImgDescription();
+
+        const htmlImgObject = document.createElement("img");
+
+        // Set attributes
+        htmlImgObject.src = path;
+        htmlImgObject.alt = description;
+        htmlImgObject.width = 100; // TODO: Update to intended size
+        htmlImgObject.height = 100; // TODO: Update to intended size
+
+        return htmlImgObject;
     }
-  }
+
+    for (let i = 0; i < imgArray.length; i++) {
+        htmlObjects.push(createHtmlImgObject(imgArray[i]));
+    }
+
+    return htmlObjects;
 
 }
+
+// Injects html objects into the spot where they are intended to be
+// TODO: Find out where to insert the objects and update function
+function injectHtmlObjects(htmlObjects) {
+    // const container = document.getElementById("image-container");
+    // container.appendChild(htmlObjects[0]);
+}
+
 
 // fetch description and 'right' clothes to apply
 function fetchDescription() {
@@ -120,10 +151,6 @@ function checkClothes() {
 function undress(id) {
   document.getElementById(id).style.display = "none";
 }
-
-
-
-
 
 /*
 
