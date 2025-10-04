@@ -1,3 +1,40 @@
-.clock {
+.clock-group {
+    --clock-group-width: 300px;
+    --clock-group-height: 300px;
+    background-image: url("../assets/images/clock-no-hands.png");
+    background-size:contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: var(--clock-group-width);
+    height: var(--clock-group-height);
+}
+
+.clock-background {
     width: 50%;
+    position: absolute;
+}
+
+.clock-hand {
+    left: calc(var(--clock-group-width) / 2);
+    position: relative;
+    background-color: black;
+    height: 7px;
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+}
+
+#minute-hand {
+    background-color: red;
+    top: calc(var(--clock-group-height) / 2 - 14px);
+    transform: rotate(0deg);
+    transform-origin: left;
+    width: calc(var(--clock-group-height) / 2 - 10px);
+}
+
+#hour-hand {
+    height: 10px;
+    top: calc(var(--clock-group-height) / 2 - 4px);
+    transform: rotate(0deg);
+    transform-origin: left;
+    width: calc(var(--clock-group-height) / 2 - 40px);
 }

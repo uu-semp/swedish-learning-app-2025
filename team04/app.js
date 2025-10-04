@@ -4,6 +4,9 @@ import cards from "./components/cards.js";
 import navigation from "./components/navigation.js";
 import statistics from "./components/statistics.js";
 import finishView from "./components/finishView.js";
+import headerComponent from "./components/header.js";
+import footerComponent from "./components/footer.js";
+import setClock from "./utils/setClock.js";
 import startView from "./components/startView.js";
 
 const app = Vue.createApp({
@@ -23,6 +26,9 @@ const app = Vue.createApp({
         default: return 'start-view'; // fallback
       }
     }
+  },
+  mounted() {
+    setClock(24, 60);
   },
   template: `
   <component :is="currentComponent"></component>
