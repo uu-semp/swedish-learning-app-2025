@@ -6,6 +6,7 @@ export const LevelOneView = {
             showModal: false, // Controls the visibility of the modal
             showCorrectFeedback: false,
             showIncorrectFeedback: false,
+            score: 0 // Initial  player's score
         };
     },
 
@@ -44,6 +45,12 @@ export const LevelOneView = {
       <div class="level-one-view">
             <div class="level-header">
                 <h1>Level One</h1>
+
+                <div class="score-counter">
+                    <span>{{ score }}</span> P
+                    <img src="./components/assets/coin.png" alt="coin" class="coin-icon" />
+                </div>
+                
                 <exit-game-button @click="openModal"></exit-game-button>
             </div>
 
