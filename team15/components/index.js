@@ -3,6 +3,7 @@ import { HelpView } from './views/helpView.js';
 import { ChooseLevelView } from './views/chooseLevelView.js';
 import { LevelOneView } from './views/levelOneView.js';
 import { LevelTwoView } from './views/levelTwoView.js';
+import { LevelThreeView } from './views/levelThreeView.js';
 import {
   StartGameButton,
   HowToPlayButton,
@@ -25,6 +26,7 @@ export default {
   ChooseLevelView,
   LevelOneView,
   LevelTwoView,
+  LevelThreeView,
   StartGameButton,
   HowToPlayButton,
   GoBackButton,
