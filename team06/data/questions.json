@@ -1,0 +1,48 @@
+{
+	"name": "clock-game",
+	"modules": [
+		{
+			"difficulty": "easy",
+			"questions": [
+				{
+					"type": "clock",
+					"id": "clock-001",
+					"question": "Vad är klockan?",
+					"hour": 2,
+					"minute": 30,
+					"answer": "halv tre",
+					"alternatives": ["halv två", "halv fyra", "halv ett"],
+					"hint": "Titta på minutvisaren.",
+					"feedback": "Minutvisaren på 6 = 30 min."
+				},
+				{
+					"type": "regular",
+					"id": "reg-001",
+					"question": "How much wood could a woodchuck chuck?",
+					"answer": "5",
+					"alternatives": ["1", "2", "3"],
+					"hint": "Think tongue twisters.",
+					"feedback": "Classic trick question."
+				}
+			]
+		},
+		{
+			"difficulty": "medium",
+			"questions": [
+				{
+					"type": "clock",
+					"id": "clock-002",
+					"question": "Vad är klockan?",
+					"hour": 11,
+					"minute": 55,
+					"answer": "fem i tolv",
+					"alternatives": [
+						"fem över elva",
+						"fem i elva",
+						"fem över tolv"
+					]
+				}
+			]
+		}
+	]
+}
