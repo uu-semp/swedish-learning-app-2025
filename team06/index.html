@@ -25,6 +25,11 @@ Owned by Team 06
 
   <!-- Site specific scripts and styles -->
   <link rel="stylesheet" href="index.css" />
+  <link rel="stylesheet" href="styles/intro.css" />
+  <link rel="stylesheet" href="styles/level.css" />
+  <link rel="stylesheet" href="components/clock.css" />
+  <link rel="stylesheet" href="styles/game.css" />
+  <script type="module" src="components/clock.js"></script>
   <script src="index.js" defer></script>
 </head>
 <body>
@@ -33,7 +38,7 @@ Owned by Team 06
   </header>
 
   <!-- TODO: Remove this div and it's content -->
-  <div>
+  <div style="display: none;">
       <hr>
       <h2>A basic section to make sure that everything works for everyone</h2>
 
@@ -46,10 +51,153 @@ Owned by Team 06
   </div>
 
   <main class="game-frame">
+    
+    <!-- INTRO VIEW -->
+    <div id="intro-view" class="view">
+      <div class="intro-container">
+        <div class="game-icon">
+          <i class="fa-solid fa-clock"></i>
+        </div>
+        
+        <h1 class="game-title">Tick-Tock Time</h1>
+        <h2 class="game-title-sv">Klockkul</h2>
+        
+        <div class="chapter-badge">
+          <i class="fa-solid fa-book"></i>
+          Chapter 1.10 - Time to play!
+        </div>
+        
+        <p class="game-description">
+          Ready to race the clock? Practice Swedish time expressions while clicking, typing, and laughing at your mistakes. You'll master time step by step — and fast!
+        </p>
+        
+        <button class="start-btn" onclick="showLevelSelection()">
+          <i class="fa-solid fa-play"></i> Start Playing
+        </button>
+      </div>
+    </div>
+
+    <!-- LEVEL VIEW -->
+    <div id="level-view" class="view" style="display: none;">
+      <div class="level-container">
+        <h1 class="level-title">Choose Your Level</h1>
+        
+        <div class="level-cards">
+          <!-- Beginner Card -->
+          <div class="level-card">
+            <div class="level-icon">
+              <i class="fa-solid fa-clock"></i>
+            </div>
+            <h3 class="level-name">Beginner</h3>
+            <p class="level-description">Start with basic hours and half hours</p>
+            <button class="level-btn" onclick="startGame('easy')">Play Now</button>
+          </div>
+          
+          <!-- Intermediate Card -->
+          <div class="level-card">
+            <div class="level-icon">
+              <i class="fa-solid fa-clock"></i>
+            </div>
+            <h3 class="level-name">Intermediate</h3>
+            <p class="level-description">Practice quarters and complex times</p>
+            <button class="level-btn" onclick="startGame('medium')">Play Now</button>
+          </div>
+          
+          <!-- Advanced Card -->
+          <div class="level-card">
+            <div class="level-icon">
+              <i class="fa-solid fa-clock"></i>
+            </div>
+            <h3 class="level-name">Advanced</h3>
+            <p class="level-description">Master tricky and writing expressions</p>
+            <button class="level-btn" onclick="startGame('hard')">Play Now</button>
+          </div>
+        </div>
+        
+        <button class="back-btn" onclick="showIntro()">
+          <i class="fa-solid fa-arrow-left"></i> Back
+        </button>
+      </div>
+    </div>
+
+    <!-- GAME VIEW -->
+    <div id="game-view" class="view" style="display: none;">
+      <div class="game-container">
+        
+        <!-- Game Header with Score -->
+        <div class="game-header">
+          <div class="progress-info">
+            <span id="question-counter">Question 1/6</span>
+          </div>
+          <div class="score-display">
+            <i class="fa-solid fa-star"></i>
+            <span>Score: </span><span id="score-value">0</span>
+          </div>
+        </div>
+
+        <!-- Clock Component -->
+        <div class="clock-container">
+          <div class="clock">
+            <div class="clock-face">
+              <div class="number number1">1</div>
+              <div class="number number2">2</div>
+              <div class="number number3">3</div>
+              <div class="number number4">4</div>
+              <div class="number number5">5</div>
+              <div class="number number6">6</div>
+              <div class="number number7">7</div>
+              <div class="number number8">8</div>
+              <div class="number number9">9</div>
+              <div class="number number10">10</div>
+              <div class="number number11">11</div>
+              <div class="number number12">12</div>
+              <div class="hand hour-hand" id="hour-hand"></div>
+              <div class="hand minute-hand" id="minute-hand"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Question Display -->
+        <div class="question-section">
+          <p class="question-label">Question:</p>
+          <p id="question" class="question-text">Vad är klockan?</p>
+        </div>
+
+        <!-- Answer Buttons -->
+        <div class="answers-container" id="answers-container">
+          <!-- Answer buttons will be populated by JavaScript -->
+        </div>
+
+        <!-- Submit Button -->
+        <button id="submit-btn" class="submit-btn" onclick="submitAnswer()">
+          Submit Answer
+        </button>
+
+        <!-- Feedback Message -->
+        <div id="feedback-message" class="feedback-message" style="display: none;"></div>
+
+        <!-- Test Button -->
+        <button id="test-fetch" class="test-btn" style="display: none;">Test Fetch Data</button>
+        
+      </div>
+    </div>
+
+    <!-- FINISH VIEW -->
+    <div id="finish-view" class="view" style="display: none;">
+      <h2>Finish View - Coming Soon</h2>
+    </div>
+
+    <!-- 
+    ===================================================
+    OLD GAME-FRAME CONTENT (KEPT AS REFERENCE)
+    ===================================================
     <object type="text/html" data="./components/clock.html" height="80%" width="80%"></object>
     <p>Question:</p>
     <p id="question">something</p>
     <button id="test-fetch">Click to test fetching of data</button>
+    ===================================================
+    -->
+    
   </main>
 
   <footer>

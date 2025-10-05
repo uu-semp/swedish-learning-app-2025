@@ -1,0 +1,270 @@
+/*
+=================================================
+Game View Styles - Team 06
+=================================================
+*/
+
+.game-container {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 20px;
+    max-width: 750px;
+    margin: 15px auto;
+    padding: 20px 30px;
+    text-align: center;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    color: white;
+}
+
+/* Game Header */
+.game-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    padding: 0 5px;
+}
+
+.progress-info {
+    font-size: 14px;
+    font-weight: 500;
+    color: white;
+}
+
+.score-display {
+    font-size: 16px;
+    font-weight: 600;
+    color: white;
+}
+
+.score-display i {
+    color: #ffd700;
+    margin-right: 5px;
+}
+
+/* Clock Container - Override clock.css body styles */
+.clock-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 12px auto;
+}
+
+/* Adjust clock size for game view */
+#game-view .clock {
+    width: 200px;
+    height: 200px;
+    border: 5px solid #2c3e50;
+    padding: 12px;
+}
+
+#game-view .clock-face {
+    transform: translateY(-2px);
+}
+
+#game-view .number {
+    font-size: 1.2em;
+}
+
+/* Adjust number positions for smaller clock */
+#game-view .number1  { transform: translate(-15px, -15px) rotate(30deg) translate(0, -90px) rotate(-30deg); }
+#game-view .number2  { transform: translate(-15px, -15px) rotate(60deg) translate(0, -90px) rotate(-60deg); }
+#game-view .number3  { transform: translate(-15px, -15px) rotate(90deg) translate(0, -90px) rotate(-90deg); }
+#game-view .number4  { transform: translate(-15px, -15px) rotate(120deg) translate(0, -90px) rotate(-120deg); }
+#game-view .number5  { transform: translate(-15px, -15px) rotate(150deg) translate(0, -90px) rotate(-150deg); }
+#game-view .number6  { transform: translate(-15px, -15px) rotate(180deg) translate(0, -90px) rotate(-180deg); }
+#game-view .number7  { transform: translate(-15px, -15px) rotate(210deg) translate(0, -90px) rotate(-210deg); }
+#game-view .number8  { transform: translate(-15px, -15px) rotate(240deg) translate(0, -90px) rotate(-240deg); }
+#game-view .number9  { transform: translate(-15px, -15px) rotate(270deg) translate(0, -90px) rotate(-270deg); }
+#game-view .number10 { transform: translate(-15px, -15px) rotate(300deg) translate(0, -90px) rotate(-300deg); }
+#game-view .number11 { transform: translate(-15px, -15px) rotate(330deg) translate(0, -90px) rotate(-330deg); }
+#game-view .number12 { transform: translate(-15px, -15px) rotate(0deg) translate(0, -90px) rotate(0deg); }
+
+/* Question Section */
+.question-section {
+    margin: 12px 0 15px 0;
+}
+
+.question-label {
+    font-size: 14px;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.9);
+    margin: 0 0 5px 0;
+}
+
+.question-text {
+    font-size: 20px;
+    font-weight: 600;
+    color: white;
+    margin: 0;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+/* Answer Buttons */
+.answers-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin: 15px auto 10px;
+    max-width: 550px;
+}
+
+.answer-btn {
+    background: white;
+    color: #2c3e50;
+    border: none;
+    padding: 12px 18px;
+    font-size: 15px;
+    font-weight: 500;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+}
+
+.answer-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.25);
+    background: #f0f0f0;
+}
+
+.answer-btn:active {
+    transform: translateY(-1px);
+}
+
+.answer-btn.correct {
+    background: #4CAF50;
+    color: white;
+}
+
+.answer-btn.wrong {
+    background: #f44336;
+    color: white;
+}
+
+.answer-btn:disabled {
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+/* Submit Button */
+.submit-btn {
+    background: white;
+    color: #667eea;
+    border: 2px solid white;
+    padding: 12px 40px;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin: 15px auto 10px;
+    display: block;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.submit-btn:hover {
+    background: rgba(255, 255, 255, 0.95);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+}
+
+.submit-btn:active {
+    transform: translateY(0);
+}
+
+.submit-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background: rgba(255, 255, 255, 0.6);
+}
+
+/* Feedback Message */
+.feedback-message {
+    font-size: 16px;
+    font-weight: 600;
+    margin: 10px 0;
+    padding: 10px;
+    border-radius: 8px;
+    animation: fadeIn 0.3s ease-in;
+}
+
+.feedback-message.correct {
+    background: rgba(76, 175, 80, 0.9);
+    color: white;
+}
+
+.feedback-message.wrong {
+    background: rgba(244, 67, 54, 0.9);
+    color: white;
+}
+
+/* Test Button (hidden by default) */
+.test-btn {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    padding: 10px 25px;
+    font-size: 14px;
+    border-radius: 25px;
+    cursor: pointer;
+    margin-top: 15px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .game-container {
+        padding: 18px 20px;
+        margin: 10px;
+    }
+    
+    #game-view .clock {
+        width: 180px;
+        height: 180px;
+        padding: 10px;
+    }
+    
+    #game-view .number {
+        font-size: 1.1em;
+    }
+    
+    #game-view .number1,
+    #game-view .number2,
+    #game-view .number3,
+    #game-view .number4,
+    #game-view .number5,
+    #game-view .number6,
+    #game-view .number7,
+    #game-view .number8,
+    #game-view .number9,
+    #game-view .number10,
+    #game-view .number11,
+    #game-view .number12 {
+        transform: translate(-15px, -15px) rotate(var(--rotation)) translate(0, -80px) rotate(calc(-1 * var(--rotation)));
+    }
+    
+    .answers-container {
+        grid-template-columns: 1fr;
+        gap: 8px;
+    }
+    
+    .question-text {
+        font-size: 18px;
+    }
+    
+    .game-header {
+        flex-direction: column;
+        gap: 8px;
+        margin-bottom: 12px;
+    }
+    
+    .answer-btn {
+        padding: 10px 15px;
+        font-size: 14px;
+    }
+    
+    .submit-btn {
+        padding: 10px 35px;
+        font-size: 15px;
+        margin: 12px auto 8px;
+    }
+}
