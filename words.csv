@@ -1,7 +1,2 @@
-id,en,sv,sv_pl,article,literal,category,image_path,image_copyright,audio_url,team
-"25769c6c","chair","stol","","furniture","assets/furniture/chair.png",""
-"70d1a832","table","bord","","furniture","",""
-"3959537c","clock","klocka","","time","team04/assets/images/clock.jpg","4"
-"d3b3c3b4","blue","blå","","color","team03/blue-hoogie.png","3"
-"a3b3c3b4","red","röd","","color","team03/red-hoogie.png"
-,"3"
+ID,English,Article,Swedish,Literal,Category,Image-url,Audio-url,Team01,Team02,Team03,Team04,Team05,Team06,Team07,Team08,Team09,Team10,Team11,Team13,Team14,Team15,Team16
+use,google sheets,during,development,this,is,for,later,,,,,,,,,,,,,,
