@@ -1,0 +1,27 @@
+body {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  margin: 0;
+}
+
+header {
+  padding: 16px;
+  background-color: var(--panel);
+  border-bottom: 1px solid var(--border);
+  text-align: center;
+}
+
+main {
+  padding: 12px;
+  background-color: var(--bg);
+  border-bottom: 1px solid var(--border);
+}
+
+footer,
+nav.actions {
+  padding: 12px;
+  background-color: var(--panel);
+  border-top: 1px solid var(--border);
+  text-align: center;
+}

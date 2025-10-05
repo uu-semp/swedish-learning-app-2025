@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
@@ -7,25 +8,31 @@
 
     <!-- Shared + page-specific styles -->
     <link rel="stylesheet" href="../styles/style.css" />
-    <link rel="stylesheet" href="level1.css" />
+    <link rel="stylesheet" href="./styles/level1.css" />
+    <link rel="stylesheet" href="./styles/dragAndDrop.css" />
 </head>
+
 <body>
-<header>
-    <h1>Welcome to Level 1</h1>
-</header>
+    <header>
+        <h1>Welcome to Level 1</h1>
+    </header>
 
-<main>
-    <p>Here’s your image for Level 1:</p>
-</main>
+    <div id="content-row">
+        <div id="workspace"></div>
+        <div id="sidebar">
+            <h2>Images</h2>
+        </div>
+    </div>
 
+    <!-- Summary link -->
+    <nav class="actions">
+        <a class="btn" href="./summary.html">View Summary</a>
+    </nav>
 
-<!-- Summary link -->
-<nav class="actions">
-	<a class="btn" href="./summary.html">View Summary</a>
-</nav>
-
-<footer>
-    <a href="index.html">⬅ Back to menu</a>
-</footer>
+    <footer>
+        <a href="index.html">⬅ Back to menu</a>
+    </footer>
+    <script src="./scripts/dragAndDrop.js"></script>
 </body>
+
 </html>
