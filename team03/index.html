@@ -21,21 +21,24 @@ Owned by Team 03
 
       <form>
         <div class="form-group">
-          <label for="english">English</label>
-          <input type="text" id="english" name="english">
+          <label for="english">English <span class="required">*</span></label>
+          <input type="text" id="english" name="english" required>
+          <div class="error-message" id="english-error"></div>
         </div>
 
         <div class="form-group">
-          <label for="swedish">Swedish</label>
-          <input type="text" id="swedish" name="swedish">
+          <label for="swedish">Swedish <span class="required">*</span></label>
+          <input type="text" id="swedish" name="swedish" required>
+          <div class="error-message" id="swedish-error"></div>
         </div>
 
         <div class="form-group">
-          <label>Article</label>
+          <label>Article <span class="required">*</span></label>
           <div class="article-options">
             <label><input type="radio" name="article" value="en"> en</label>
             <label><input type="radio" name="article" value="ett"> ett</label>
           </div>
+          <div class="error-message" id="article-error"></div>
         </div>
 
         <div class="form-group">
@@ -44,14 +47,15 @@ Owned by Team 03
         </div>
 
         <div class="form-group">
-          <label for="category">Category</label>
-          <select id="category" name="category">
+          <label for="category">Category <span class="required">*</span></label>
+          <select id="category" name="category" required>
             <option value="">Select a category</option>
             <option value="noun">Noun</option>
             <option value="verb">Verb</option>
             <option value="adjective">Adjective</option>
             <option value="number">Number</option>
           </select>
+          <div class="error-message" id="category-error"></div>
         </div>
 
         <div class="form-group">
