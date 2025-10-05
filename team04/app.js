@@ -4,8 +4,6 @@ import cards from "./components/cards.js";
 import navigation from "./components/navigation.js";
 import statistics from "./components/statistics.js";
 import finishView from "./components/finishView.js";
-import headerComponent from "./components/header.js";
-import footerComponent from "./components/footer.js";
 import setClock from "./utils/setClock.js";
 import startView from "./components/startView.js";
 
