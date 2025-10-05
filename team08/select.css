@@ -17,8 +17,6 @@ html {
   height: 600px;
 }
 main {
-  padding: 0;
-  margin: 0;
   height: 100%;
   background-color: var(--color-light-blue);
 }
@@ -27,11 +25,12 @@ h1 {
   display: flex;
   justify-content: center;
   align-items: center;
-  color: var(--color-primary);
-  border-bottom: 2px solid black;
   width: 100%;
   margin: 0;
   height: 100px;
+
+  color: var(--color-primary);
+  border-bottom: 2px solid black;
 }
 
 h2 {
@@ -97,19 +96,21 @@ input[type="checkbox"]:focus {
   text-decoration: none;
   width: 140px;
   height: 40px;
-  border: 4px solid black;
-  border-radius: 20px;
   padding: 10px 20px;
-  color: white;
   margin: 0 auto;
   margin-top: 40px;
+
+  border-radius: 20px;
+  border: 4px solid black;
+  color: white;
   background-color: var(--color-cta);
 }
 
 .error-message {
-  color: red;
   text-align: center;
   display: none;
+
+  color: red;
 }
 
 .animate {

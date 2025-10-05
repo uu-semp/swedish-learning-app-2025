@@ -9,8 +9,6 @@ const FURNITURE = document.querySelector("#Furniture");
 /** @type {HTMLElement} */
 const ERROR = document.querySelector(".error-message");
 
-CATEGORIES;
-
 CONTINUE_BTN.addEventListener("click", (e) => {
   e.preventDefault();
   const selected_categories = [];
