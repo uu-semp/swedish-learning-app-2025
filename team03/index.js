@@ -81,6 +81,8 @@ $(function() {window.vocabulary.when_ready(function () {
   
   $("#clear-all").on("click", handleClearAll);
   
+  populateCategoryDropdown();
+  
   displayWords();
   
   console.log("Current words count:", vocabManager.getAllWords().length);
@@ -204,6 +206,37 @@ function showArticleValidationError(fieldId, message) {
   const errorElement = $(`#${fieldId}-error`);
   $('.article-options').addClass('error');
   errorElement.text(message);
+}
+
+function populateCategoryDropdown() {
+
+  const categorySelect = $("#category");
+  
+  const categories = Object.keys(window._vocabulary.categories || {});
+  
+  categorySelect.find('option:not(:first)').remove();
+  
+  if (categories.length === 0) {
+    console.warn('No categories found in vocabulary data');
+
+    //fallback
+    const option = $('<option></option>')
+      .attr('value', 'general')
+      .text('General');
+    categorySelect.append(option);
+    return;
+  }
+  
+  //add to dropdown
+  categories.sort().forEach(category => {
+    const option = $('<option></option>')
+      .attr('value', category)
+      .text(category.charAt(0).toUpperCase() + category.slice(1));
+    
+    categorySelect.append(option);
+  });
+  
+  console.log(`Loaded ${categories.length} categories from Google datasheet:`, categories);
 }
 
 
