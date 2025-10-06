@@ -71,16 +71,7 @@ Owned by Team 10
         <div id="vue-check">
           <button @click="checkVue">Check if Vue.js is working</button>
         </div>
-        <script>
-          const vueCheckApp = Vue.createApp({
-            methods: {
-              checkVue() {
-                alert('Vue.js is working!');
-              }
-            }
-          });
-          vueCheckApp.mount('#vue-check');
-        </script>
+        <!-- Vue.js logic moved to learning_mode.js -->
 
       <hr>
   </div>
@@ -99,48 +90,8 @@ Owned by Team 10
       </div>
     </div>
     <!-- Vue app script moved below so #flashcard-app exists before mounting -->
-  <script>
-    const flashcardApp = Vue.createApp({
-      data() {
-        return {
-          cards: [
-            { front: 'Hej', back: 'Hello' },
-            { front: 'Tack', back: 'Thank you' },
-            { front: 'Ja', back: 'Yes' },
-            { front: 'Nej', back: 'No' }
-          ],
-          currentIndex: 0,
-          isFlipped: false
-        };
-      },
-      computed: {
-        currentCard() {
-          return this.cards[this.currentIndex];
-        }
-      },
-      methods: {
-        flipCard() {
-          this.isFlipped = !this.isFlipped;
-        },
-        nextCard() {
-          this.isFlipped = false;
-          this.currentIndex = (this.currentIndex + 1) % this.cards.length;
-        },
-        prevCard() {
-          this.isFlipped = false;
-          this.currentIndex = (this.currentIndex - 1 + this.cards.length) % this.cards.length;
-        }
-      },
-      mounted() {
-        console.log('Flashcard Vue app is running!');
-        const debugDiv = document.createElement('div');
-        debugDiv.style.color = 'green';
-        debugDiv.textContent = 'Flashcard Vue app is running!';
-        document.getElementById('flashcard-app').prepend(debugDiv);
-      }
-    });
-    flashcardApp.mount('#flashcard-app');
-  </script>
+  <!-- Vue.js logic moved to learning_mode.js -->
+  <script src="learning_mode.js"></script>
 
     <hr>
     Learning: <div id="display-vocab">(This should be replaced by a word)</div>
