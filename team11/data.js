@@ -1,8 +1,8 @@
 // Returns an array with all ids for this teams items.
 export function getItemsIds() {
   const Ids = [];
-  const foods = window.vocabulary.get_category("food");
-  const fruits = window.vocabulary.get_category("fruit");
+  const foods = window.vocabulary.get_category("food") || [];
+  const fruits = window.vocabulary.get_category("fruit") || [];
   foods.map(id => {
     Ids.push(id);
   })
