@@ -5,17 +5,29 @@ Owned by Team 10
 */
 
 body {
-		font-family: Arial, sans-serif;
-		width: 1000px;
-		margin-left: auto;
-		margin-right: auto;
+	font-family: Arial, sans-serif;
+	max-width: 1000px;
+	width: 100%;
+	margin-left: auto;
+	margin-right: auto;
+	padding: 1rem;
+}
+
+main, .main {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
 }
 
 /* Flashcard styles */
 .flashcard {
-	width: 300px;
-	height: 200px;
-	margin: 20px auto;
+	width: 90vw;
+	max-width: 400px;
+	min-width: 200px;
+	height: 40vw;
+	max-height: 250px;
+	min-height: 120px;
+	margin: 20px 0;
 	perspective: 1000px;
 	cursor: pointer;
 }
@@ -46,6 +58,27 @@ body {
 	border-radius: 10px;
 	background-color: #fff;
 	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+	padding: 1rem;
+	box-sizing: border-box;
+}
+
+@media (max-width: 600px) {
+	body {
+		padding: 0.5rem;
+	}
+	.flashcard {
+		width: 98vw;
+		max-width: 98vw;
+		min-width: 120px;
+		height: 55vw;
+		max-height: 200px;
+		min-height: 80px;
+	}
+	.flashcard .front,
+	.flashcard .back {
+		font-size: 1rem;
+		padding: 0.5rem;
+	}
 }
 
 .flashcard .back {
