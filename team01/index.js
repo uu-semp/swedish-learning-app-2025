@@ -113,7 +113,6 @@ function mapCards() {
       console.log(cards);
       renderGrid(cards);
     });
-    
 }
 
 
