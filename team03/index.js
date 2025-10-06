@@ -41,7 +41,14 @@ class VocabularyManager {
       category: wordData.category,
       image: wordData.image
     };
-    
+    //Duplicate prevention
+    for(let i = 0; i<this.words.length; i++) {
+      if (this.words[i].english.localeCompare(newWord.english) == 0) {
+        alert(`The word "${newWord.english}" already exists!`);
+        console.log('Word already exists: ', newWord.english)
+        return {success: false, error: 'Word already exists'}
+      }
+    }
 
     this.words.push(newWord);
     this.saveWords();
