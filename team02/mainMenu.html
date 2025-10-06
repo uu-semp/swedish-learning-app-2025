@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Swedish Learning App - Menu</title>
+    <link rel="stylesheet" href="styles/mainMenu.css">
+</head>
+<body>
+    <h1>Game Title</h1>
+    <button class="menu-btn" onclick="window.location.href='levelSelection.html'">Level Selection</button>
+    <button class="menu-btn" onclick="document.getElementById('howToPlayModal').style.display='flex'">How to Play?</button>
+
+    <div id="howToPlayModal" class="modal" onclick="if(event.target===this)this.style.display='none'">
+        <div class="modal-content">
+            <h2>How to Play?</h2>
+            <p>
+                Choose a difficulty level and drag Swedish words onto the correct images.<br>
+                Each level brings new challenges and vocabulary!<br>
+                Good luck!
+            </p>
+            <button class="close-btn" onclick="document.getElementById('howToPlayModal').style.display='none'">Close</button>
+        </div>
+    </div>
+
+</body>
+</html>
