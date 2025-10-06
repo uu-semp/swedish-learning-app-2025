@@ -1,0 +1,128 @@
+body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f0f0f0;
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.title {
+    position: absolute;
+    top: 8%;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 3rem;
+    color: #333;
+}
+
+.instructions {
+    position: absolute;
+    top: 35%; /* Position it between the title and the start button */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%; /* Prevent text from going to the edges */
+    text-align: center;
+    font-size: 1.2rem;
+    color: #555;
+}
+
+.start-btn, .learning-mode-btn {
+    position: absolute;
+    padding: 1rem 2rem;
+    font-size: 1.5rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.start-btn {
+    background-color: #4CAF50;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+}
+
+.learning-mode-btn {
+    background-color: #2196F3;
+    color: white;
+    top: 50%;
+    left: 50px;
+    transform: translateY(-50%);
+}
+
+.progress-container {
+    position: absolute;
+    bottom: 2rem;
+    right: 2rem;
+}
+
+.progress-icon {
+    width: 60px;
+    height: 60px;
+    background-color: #fff;
+    border-radius: 50%;
+    padding: 10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.progress-bar {
+    width: 80%;
+    height: 8px;
+    background-color: #ddd;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.progress {
+    width: 70%; /* Adjust this value to show different progress levels */
+    height: 100%;
+    background-color: #4CAF50;
+    border-radius: 4px;
+}
+
+
+/* Menu page */
+/* Styles for the new menu page */
+.menu-page-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    gap: 1.5rem; /* Adds space between buttons */
+}
+
+.menu-page-btn {
+    padding: 1rem 2rem;
+    font-size: 1.5rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #2196F3;
+    color: white;
+    width: 250px; /* Gives buttons a uniform width */
+}
+
+.back-link {
+    margin-top: 2rem;
+    font-size: 1.2rem;
+    color: #333;
+    text-decoration: none;
+}
+
+.back-link:hover {
+    text-decoration: underline;
+}
