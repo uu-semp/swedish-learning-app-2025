@@ -28,14 +28,18 @@ h1 {
   width: 100%;
   margin: 0;
   height: 100px;
-
+  font-weight: bold;
+  font-size: xx-large;
   color: var(--color-primary);
   border-bottom: 2px solid black;
 }
 
 h2 {
+  font-size: larger;
   text-align: center;
+  font-weight: bold;
   color: #555;
+  margin-top: 20px;
 }
 
 #categories {
@@ -107,6 +111,7 @@ input[type="checkbox"]:focus {
 }
 
 .error-message {
+  margin-top: 10px;
   text-align: center;
   display: none;
 
