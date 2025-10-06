@@ -91,7 +91,7 @@ body {
 
 .popup-frame-wrap {
   position: fixed;           /* fäster elementet mot viewporten */
-  top: 20%;                  /* placerar vertikalt */
+  top: 40%;                  /* placerar vertikalt */
   left: 40%;                 /* placerar horisontellt */
   transform: translate(-50%, -50%); /* centrerar exakt */
   width: min(420px, 40%);
