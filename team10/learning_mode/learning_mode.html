@@ -58,26 +58,7 @@ Owned by Team 10
         }
       });
     </script>
-    
-      <div>
-      <hr>
-      <h2>Troubleshooting section.</h2>
-
-      <p>Font awesome is working: <i class="fa-solid fa-check"></i> (A checkmark should be visible)</p>
-
-      <button id="check-jquery">Check if Javascript and JQuery is working in Learning Mode</button> (Clicking the button should show an alert)
-
-      <button id="check-saving">Click this button to see if saving works in Learning Mode</button>
-        <div id="vue-check">
-          <button @click="checkVue">Check if Vue.js is working</button>
-        </div>
-        <!-- Vue.js logic moved to learning_mode.js -->
-
-      <hr>
-  </div>
-    Learning Mode
-
-    <div id="flashcard-app">
+    <div id="flashcard-app" data-show-debug="false">
       <div class="flashcard" @click="flipCard">
         <div class="flashcard-content" :class="{ flipped: isFlipped }">
           <div class="front">{{ currentCard.front }}</div>
@@ -93,8 +74,8 @@ Owned by Team 10
   <!-- Vue.js logic moved to learning_mode.js -->
   <script src="learning_mode.js"></script>
 
-    <hr>
-    Learning: <div id="display-vocab">(This should be replaced by a word)</div>
+    <!-- <hr> -->
+    <!-- Learning: <div id="display-vocab">(This should be replaced by a word)</div> -->
 
 
   </main>
