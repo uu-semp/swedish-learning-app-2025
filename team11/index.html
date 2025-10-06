@@ -11,29 +11,29 @@ Owned by Team 11
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Grocery shopping!</title>
+
+  <!-- course-provided libs -->
   <link rel="stylesheet" href="../style.css" />
   <link rel="icon" type="image/png" href="../team11/assets/favicon.png">
-<!-- trying to add the shopping cart as a favicon, but you can't really see it -->
-
 
   <script src="../scripts/vocabulary.js"></script>
   <script src="../scripts/save.js"></script>
 
-  <!-- You are allowed to use JQuery and Vue.js but don't have to. They just make a
-  lot of things easier
-  -->
+  <!-- optional libs -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css"> 
   <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
   <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 
-  <!-- Site specific scripts and styles -->
+  <!-- site-specific -->
   <link rel="stylesheet" href="index.css" />
+
+  <!-- load team vocab -->
   <script>window.vocabulary.load_team_data(11);</script>
+
+  <!-- modules -->
   <script type="module" src="data.js" defer></script>
   <script type="module" src="main.js" defer></script>
   <script type="module" src="ui.js" defer></script>
-
-  
 </head>
 <body>
   <header>
@@ -46,8 +46,11 @@ Owned by Team 11
     <img src="../team11/assets/character.png" alt="Character" class="character">
     <img src="../team11/assets/ShoppingCart.png" alt="Shopping Cart" class="cart">
     <img src="../team11/assets/shelf.png" alt="Shelf" class="shelf">
+
     <div class="shelf_items"></div>
     <div class="shopping_list"></div>
+
+    <!-- Popup / toast iframe (click-through by CSS) -->
     <section class="popup-frame-wrap">
       <iframe
         src="./popup.html"
@@ -58,6 +61,7 @@ Owned by Team 11
         id="popupFrame">
       </iframe>
     </section>
+
     <div class="top-right-controls">
       <div class="status-bar" id="statusBar">
         <span id="progressPill">0 / 10 klara</span> |
@@ -65,117 +69,116 @@ Owned by Team 11
         <span id="mistakesPill">Misstag: 0</span> |
         <span id="targetPill">Tröskel: 8 / 10</span>
       </div>
-      
     </div>
-    <div class="chatbubble-toasts">
-      <!-- Chatbubble toasts go here -->
-    </div>
+
+    <div class="chatbubble-toasts"><!-- toasts go here --></div>
   </main>
-  
 
   <footer>
     <small>Created as part of the "Software Engineering and Project Management" course 2025</small>
   </footer>
-<script>
-  const popupFrame = document.getElementById('popupFrame');
 
-  // --- helpers ---
-  const keyFromImgPath = (p) => {
-    if (!p) return undefined;
-    const base = p.split('/').pop() || '';
-    return base.split('.')[0].toLowerCase();      // ".../food/beer.png" -> "beer"
-  };
+  <!-- Parent/iframe handshake + status handling -->
+  <script>
+    const popupFrame = document.getElementById('popupFrame');
 
-  // Build [{id, sv}] in the SAME id-key the clicks use (filename basename)
-  function mapWordsFromState(gs) {
-    const raw = Array.isArray(gs?.shoppingList) ? gs.shoppingList : [];
-    const words = raw.map(item => {
-      const idKey =
-        keyFromImgPath(item?.img) ||
-        (item?.id != null ? String(item.id).toLowerCase() : undefined) ||
-        (item?.en ? String(item.en).toLowerCase() : undefined) ||
-        (item?.sv ? String(item.sv).toLowerCase() : undefined);
+    // --- helpers ---
+    const keyFromImgPath = (p) => {
+      if (!p) return undefined;
+      const base = p.split('/').pop() || '';
+      return base.split('.')[0].toLowerCase();      // ".../food/beer.png" -> "beer"
+    };
 
-      const svLabel = item?.sv ?? item?.en ?? '';
-      return { id: idKey, sv: svLabel };
-    }).filter(w => !!w.id);
-    return words;
-  }
+    // Build [{id, sv}] in the SAME id-key the clicks use (filename basename)
+    function mapWordsFromState(gs) {
+      const raw = Array.isArray(gs?.shoppingList) ? gs.shoppingList : [];
+      const words = raw.map(item => {
+        const idKey =
+          keyFromImgPath(item?.img) ||
+          (item?.id != null ? String(item.id).toLowerCase() : undefined) ||
+          (item?.en ? String(item.en).toLowerCase() : undefined) ||
+          (item?.sv ? String(item.sv).toLowerCase() : undefined);
 
-  // ui.js calls this when an image is clicked
-  window.sendPickToPopup = function(idKey) {
-    if (!popupFrame || !popupFrame.contentWindow) return;
-    console.log('[parent] sending pick (key):', idKey);
-    popupFrame.contentWindow.postMessage({ type: 'pick', id: String(idKey) }, '*');
-  };
-
-  // --- handshake / gating ---
-  let popupIsReady = false;
-  let initSent = false;
-
-  function haveShoppingList() {
-    const gs = window.__team11GameState;
-    return !!(gs && Array.isArray(gs.shoppingList) && gs.shoppingList.length > 0);
-  }
-
-  function tryInitPopupOnce() {
-    if (initSent || !popupIsReady || !haveShoppingList()) return false;
-
-    const gs = window.__team11GameState;
-    console.log('[parent] raw shoppingList length:', gs.shoppingList.length);
-    console.log('[parent] sample item:', gs.shoppingList[0]);
-
-    const words = mapWordsFromState(gs);
-    if (!words.length) {
-      console.warn('[parent] mapped words are empty; will keep waiting…');
-      return false;
+        const svLabel = item?.sv ?? item?.en ?? '';
+        return { id: idKey, sv: svLabel };
+      }).filter(w => !!w.id);
+      return words;
     }
 
-    console.log('[parent] initWords -> popup:', words.map(w => w.id));
-    popupFrame?.contentWindow?.postMessage({ type: 'initWords', words }, '*');
-    initSent = true;
-    return true;
-  }
+    // ui.js calls this when an image is clicked
+    window.sendPickToPopup = function(idKey) {
+      if (!popupFrame || !popupFrame.contentWindow) return;
+      console.log('[parent] sending pick (key):', idKey);
+      popupFrame.contentWindow.postMessage({ type: 'pick', id: String(idKey) }, '*');
+    };
 
-  // 1) Message listener (status + popupReady)
-  window.addEventListener('message', (event) => {
-    const data = event.data || {};
-    if (data.type === 'statusUpdate') {
-      const s = data.status; if (!s) return;
-      document.getElementById('progressPill').textContent = s.progress;
-      document.getElementById('firstTryPill').textContent = s.firstTry;
-      document.getElementById('mistakesPill').textContent = s.mistakes;
-      document.getElementById('targetPill').textContent = s.target;
-    } else if (data.type === 'popupReady') {
-      console.log('[parent] popupReady received');
-      popupIsReady = true;
-      tryInitPopupOnce();
+    // --- handshake / gating ---
+    let popupIsReady = false;
+    let initSent = false;
+
+    function haveShoppingList() {
+      const gs = window.__team11GameState;
+      return !!(gs && Array.isArray(gs.shoppingList) && gs.shoppingList.length > 0);
     }
-  });
 
-  // 2) Also listen for our custom “team11:ready” (from main.js), but only use it as a nudge
-  window.addEventListener('team11:ready', () => {
-    console.log('[parent] team11:ready received');
-    tryInitPopupOnce();
-  });
+    function tryInitPopupOnce() {
+      if (initSent || !popupIsReady || !haveShoppingList()) return false;
 
-  // 3) Final safety: poll briefly until both conditions are met
-  window.addEventListener('DOMContentLoaded', () => {
-    popupFrame?.addEventListener('load', () => tryInitPopupOnce());
-    let attempts = 0;
-    const timer = setInterval(() => {
-      if (tryInitPopupOnce()) { clearInterval(timer); }
-      else if (++attempts > 100) {  // ~10s max
-        clearInterval(timer);
-        console.warn('[parent] Gave up waiting for shoppingList/popup readiness.');
+      const gs = window.__team11GameState;
+      console.log('[parent] raw shoppingList length:', gs.shoppingList.length);
+      console.log('[parent] sample item:', gs.shoppingList[0]);
+
+      const words = mapWordsFromState(gs);
+      if (!words.length) {
+        console.warn('[parent] mapped words are empty; will keep waiting…');
+        return false;
       }
-    }, 100);
-  });
-</script>
 
+      console.log('[parent] initWords -> popup:', words.map(w => w.id));
+      popupFrame?.contentWindow?.postMessage({ type: 'initWords', words }, '*');
+      initSent = true;
+      return true;
+    }
 
+    // 1) Message listener (status + popupReady)
+    window.addEventListener('message', (event) => {
+      const data = event.data || {};
+      if (data.type === 'statusUpdate') {
+        const s = data.status; if (!s) return;
+        document.getElementById('progressPill').textContent = s.progress;
+        document.getElementById('firstTryPill').textContent = s.firstTry;
+        document.getElementById('mistakesPill').textContent = s.mistakes;
+        document.getElementById('targetPill').textContent = s.target;
 
+        // 👇 move the highlight to the current target in the list
+        if (typeof s.index === 'number' || typeof s.index === 'string') {
+          window.Team11UI?.highlightListIndex?.(s.index);
+        }
+      } else if (data.type === 'popupReady') {
+        console.log('[parent] popupReady received');
+        popupIsReady = true;
+        tryInitPopupOnce();
+      }
+    });
 
+    // 2) “team11:ready” (from main.js) nudges init when game state is built
+    window.addEventListener('team11:ready', () => {
+      console.log('[parent] team11:ready received');
+      tryInitPopupOnce();
+    });
 
+    // 3) Final safety: poll briefly until both conditions are met
+    window.addEventListener('DOMContentLoaded', () => {
+      popupFrame?.addEventListener('load', () => tryInitPopupOnce());
+      let attempts = 0;
+      const timer = setInterval(() => {
+        if (tryInitPopupOnce()) { clearInterval(timer); }
+        else if (++attempts > 100) {  // ~10s max
+          clearInterval(timer);
+          console.warn('[parent] Gave up waiting for shoppingList/popup readiness.');
+        }
+      }, 100);
+    });
+  </script>
 </body>
 </html>

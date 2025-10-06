@@ -160,19 +160,24 @@
   let currentToast = null;
   let currentToastTimer = null;
 
-  function renderStatus(){
-    if (window.parent && window.parent !== window && game) {
-      window.parent.postMessage({
-        type: 'statusUpdate',
-        status: {
-          progress: `${game.completed} / ${game.total} klara`,
-          firstTry: `Rätt: ${game.firstTryCorrectCount}`,
-          mistakes: `Misstag: ${game.mistakes}`,
-          target: `Tröskel: ${game.winThreshold} / ${game.total}`
-        }
-      }, '*');
-    }
+ function renderStatus(){
+  if (window.parent && window.parent !== window && game) {
+    const cur = game.words[game.orderIndex] || null;
+    window.parent.postMessage({
+      type: 'statusUpdate',
+      status: {
+        progress: `${game.completed} / ${game.total} klara`,
+        firstTry: `Rätt: ${game.firstTryCorrectCount}`,
+        mistakes: `Misstag: ${game.mistakes}`,
+        target: `Tröskel: ${game.winThreshold} / ${game.total}`,
+        index: game.orderIndex,                // 👈 NEW
+        currentId: cur ? String(cur.id) : null, // optional
+        currentSv: cur ? cur.sv : null          // optional
+      }
+    }, '*');
   }
+}
+
 
   // ✅ Only one toast at a time
   function toast(html,type='success',duration=4000){

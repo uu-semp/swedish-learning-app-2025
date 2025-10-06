@@ -1,57 +1,94 @@
-const shelf_items = document.querySelector('.shelf_items');
-const shopping_list = document.querySelector('.shopping_list');
-
 // ui.js
+// Renders shelf + shopping list and exposes a highlighter the parent can call.
+
 function keyFromImgPath(p) {
   if (!p) return undefined;
   const base = p.split('/').pop() || '';
-  return base.split('.')[0].toLowerCase();  // e.g. "banana"
+  return base.split('.')[0].toLowerCase(); // ".../food/beer.png" -> "beer"
 }
 
-export function displayShelf(shelf) {
-  const shelf_items = document.querySelector('.shelf_items');
-  if (!shelf_items) { console.error('[ui] .shelf_items not found'); return; }
+let _listEls = []; // references to <li> nodes for highlighting
 
-  shelf_items.textContent = '';
+export function displayShelf(shelf) {
+  const shelfContainer = document.querySelector('.shelf_items');
+  if (!shelfContainer) {
+    console.error('[ui] .shelf_items not found in DOM');
+    return;
+  }
+
+  // Clear and render
+  shelfContainer.textContent = '';
 
   shelf.forEach(item => {
     const img = document.createElement('img');
     img.src = "../" + item.img;
-    img.alt = item.sv || '';
-    const key = keyFromImgPath(item.img) || String(item.id || '');
+    img.alt = item.sv || item.en || '';
+    const key = keyFromImgPath(item.img) || String(item.id || '').toLowerCase();
 
     const sendPick = () => {
-      console.log('[ui] clicked product (key):', key);
-      window.sendPickToPopup?.(key);
+      // parent (index.html) exposes this
+      if (typeof window.sendPickToPopup === 'function') {
+        window.sendPickToPopup(key);
+      } else {
+        console.warn('[ui] sendPickToPopup not available');
+      }
     };
 
     img.tabIndex = 0;
     img.addEventListener('click', sendPick);
-    img.addEventListener('keydown', e => {
+    img.addEventListener('keydown', (e) => {
       if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); sendPick(); }
     });
 
-    shelf_items.appendChild(img);
+    shelfContainer.appendChild(img);
   });
 
   console.log('[ui] Displaying shelf; items:', shelf.length);
 }
 
 export function displayShoppingList(list) {
-  const shopping_list = document.querySelector('.shopping_list');
-  if (!shopping_list) { console.error('[ui] .shopping_list not found'); return; }
+  const listWrap = document.querySelector('.shopping_list');
+  if (!listWrap) {
+    console.error('[ui] .shopping_list not found in DOM');
+    return;
+  }
 
-  shopping_list.textContent = '';
+  listWrap.textContent = '';
   const ul = document.createElement('ul');
   ul.className = 'shopping-list';
 
-  list.forEach((item, ix) => {
+  _listEls = list.map(item => {
     const li = document.createElement('li');
-    li.textContent = item.sv;
-    if (ix === 0) { li.style.fontWeight = '700'; li.style.textDecoration = 'underline'; }
+    li.textContent = item.sv || item.en || '';
     ul.appendChild(li);
+    return li;
   });
 
-  shopping_list.appendChild(ul);
+  listWrap.appendChild(ul);
+
+  // Default highlight first row
+  highlightListIndex(0);
+
+  // Expose highlighter for parent (index.html) to call on status updates
+  window.Team11UI = window.Team11UI || {};
+  window.Team11UI.highlightListIndex = highlightListIndex;
+
   console.log('[ui] Displaying shopping list');
+}
+
+function highlightListIndex(idx) {
+  if (!_listEls || !_listEls.length) return;
+  const n = Number(idx);
+
+  _listEls.forEach((li, i) => {
+    if (i === n) {
+      li.style.fontWeight = '700';
+      li.style.textDecoration = 'underline';
+      li.style.opacity = '1';
+    } else {
+      li.style.fontWeight = '400';
+      li.style.textDecoration = 'none';
+      li.style.opacity = '0.75';
+    }
+  });
 }
