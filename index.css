@@ -211,17 +211,6 @@ header img {
     font: 600 1.1rem 'Work Sans',sans-serif;
 }
 
-.settings-volume {
-    margin-bottom: 16px;
-}
-
-.settings-volume label {
-    display: block;
-    margin-bottom: 6px;
-    font: 400 0.95rem/1.375 'Work Sans',sans-serif;
-    color: #555;
-}
-
 .settings-actions {
     display: flex;
     flex-direction: column;
@@ -249,46 +238,15 @@ header img {
 }
 
 .settings-btn.primary {
-    background: var(--primary-color);
+    background: #5d1212;
     color: white;
     border: none;
 }
 
 .settings-btn.secondary {
     background: white;
-    color: var(--primary-color);
-    border: 1px solid var(--primary-color);
-}
-
-#_vol_slider {
-    width: 100%;
-    height: 6px;
-    -webkit-appearance: none;
-    appearance: none;
-    border-radius: 3px;
-    outline: none;
-    opacity: 0.7;
-    transition: opacity .2s;
-    background: linear-gradient(to right, var(--primary-color) 100%, #ddd 100%);
-}
-
-#_vol_slider::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 16px;
-    height: 16px;
-    border-radius: 50%;
-    background: #000;
-    cursor: pointer;
-}
-
-#_vol_slider::-moz-range-thumb {
-    width: 16px;
-    height: 16px;
-    border-radius: 50%;
-    background: #000;
-    cursor: pointer;
-    border: none;
+    color: #5d1212;
+    border: 1px solid #5d1212;
 }
 
 /* Clear Data Confirmation Dialog */
@@ -332,7 +290,7 @@ header img {
 }
 
 .confirm-box-btn.confirm {
-    background: var(--primary-color);
+    background: #5d1212;
     color: white;
     border: none;
 }

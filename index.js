@@ -139,11 +139,6 @@ function renderGrid(games) {
         <h2 class="settings-title">Settings</h2>
         <button id="_close_settings" class="settings-btn close">Close</button>
       </div>
-      <div class="settings-volume">
-        <label>Global volume: <span id="_vol_val">100</span>%</label>
-        <input id="_vol_slider" type="range" min="0" max="100" value="100" 
-          oninput="this.style.background = 'linear-gradient(to right, var(--primary-color) ' + this.value + '%, #ddd ' + this.value + '%)'">
-      </div>
       <div class="settings-actions">
         <button id="_open_add" class="settings-btn primary">Add vocabulary</button>
         <button id="_clear_save" class="settings-btn secondary">Clear data</button>
@@ -157,27 +152,6 @@ function renderGrid(games) {
 
     // Settings overlay event handlers
     overlay.querySelector('#_close_settings').addEventListener('click', () => overlay.remove());
-
-    const volSlider = overlay.querySelector('#_vol_slider');
-    const volVal = overlay.querySelector('#_vol_val');
-  
-    // Init from localStorage
-    const saved = localStorage.getItem('globalVolume') || '100';
-    volSlider.value = saved;
-    volVal.textContent = saved;
-
-    // Apply volume to existing audio elements
-    function applyVolume(v) {
-      document.querySelectorAll('audio').forEach(a => { try { a.volume = v/100; } catch(e){} });
-    }
-    applyVolume(Number(saved));
-
-    volSlider.addEventListener('input', (e) => {
-      const v = e.target.value;
-      volVal.textContent = v;
-      localStorage.setItem('globalVolume', String(v));
-      applyVolume(Number(v));
-    });
 
     // Clear saved data button
     overlay.querySelector('#_clear_save').addEventListener('click', () => {
