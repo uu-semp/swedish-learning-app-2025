@@ -1,0 +1,150 @@
+/*
+=================================================
+Level Selection View Styles - Team 06
+=================================================
+*/
+
+.level-container {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 20px;
+    max-width: 850px;
+    margin: 20px auto;
+    padding: 35px 30px;
+    text-align: center;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+
+.level-title {
+    font-size: 32px;
+    font-weight: 600;
+    color: white;
+    margin: 0 0 30px 0;
+    text-align: center;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.level-cards {
+    display: flex;
+    justify-content: center;
+    gap: 18px;
+    margin-bottom: 25px;
+    flex-wrap: nowrap;
+}
+
+.level-card {
+    background: white;
+    border: none;
+    border-radius: 12px;
+    padding: 25px 18px;
+    flex: 1;
+    max-width: 240px;
+    text-align: center;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.level-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+}
+
+.level-icon {
+    font-size: 55px;
+    color: #667eea;
+    margin-bottom: 15px;
+}
+
+.level-name {
+    font-size: 20px;
+    font-weight: 600;
+    color: #2c3e50;
+    margin: 12px 0 10px 0;
+}
+
+.level-description {
+    font-size: 13px;
+    color: #6c757d;
+    line-height: 1.4;
+    margin: 10px 0 18px 0;
+    min-height: 36px;
+}
+
+.level-btn {
+    background: #5a6268;
+    color: white;
+    border: none;
+    padding: 11px 30px;
+    font-size: 15px;
+    font-weight: 500;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 100%;
+}
+
+.level-btn:hover {
+    background: #4a525a;
+    transform: scale(1.02);
+}
+
+.level-btn:active {
+    transform: scale(0.98);
+}
+
+.back-btn {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    padding: 10px 25px;
+    font-size: 15px;
+    font-weight: 500;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 10px;
+    backdrop-filter: blur(10px);
+}
+
+.back-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+    border-color: white;
+    transform: translateY(-2px);
+}
+
+.back-btn i {
+    margin-right: 8px;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .level-cards {
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+    }
+    
+    .level-card {
+        width: 100%;
+        max-width: 300px;
+        padding: 25px 20px;
+    }
+    
+    .level-title {
+        font-size: 26px;
+        margin: 15px 0 20px 0;
+    }
+    
+    .level-icon {
+        font-size: 50px;
+        margin-bottom: 15px;
+    }
+    
+    .level-name {
+        font-size: 20px;
+    }
+    
+    .level-description {
+        font-size: 13px;
+        min-height: auto;
+    }
+}
