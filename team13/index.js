@@ -20,6 +20,7 @@ let state = gameStates.inGame;
 
 let houseArray = [];
 let correctHouse = null;
+let houseCount = 4
 
 $(function () {
   window.vocabulary.when_ready(function () {
@@ -63,17 +64,28 @@ function generateRandom() {
   const vocab = window.vocabulary.get_vocab(numbers[randomNo]);
   console.log("generateRandom:", vocab.literal);
 
-  $("#number-english").text(JSON.stringify(vocab.en));
-  $("#number-swedish").text(JSON.stringify(vocab.sv));
-  $("#number-literal").text(JSON.stringify(vocab.literal));
+  $("#number-english").text((vocab.en));
+  $("#number-swedish").text((vocab.sv));
+  $("#number-literal").text((vocab.literal));
 
-  const result = generateRandomHouses(vocab.literal, 5, numbers.length - 1);
+  const result = generateRandomHouses(vocab.literal, houseCount, numbers.length - 1);
 
   houseArray = result.houseArray;
   correctHouse = result.correctHouse;
   updateHouseButtons();
+  renderHouseButtons();
 
   return result;
+}
+function renderHouseButtons() {
+  const container = $("#house-buttons");
+  container.empty(); // clear previous buttons
+
+  houseArray.forEach((houseNum, index) => {
+    const btn = $(`<button>House ${houseNum}</button>`);
+    btn.on("click", () => clickHouse(index));
+    container.append(btn);
+  });
 }
 
 function generateRandomHouses(houseNumber, houseCount, highestNumber) {
