@@ -17,6 +17,8 @@
         <h1>Welcome to Level 1</h1>
     </header>
 
+    <div id="questions-container"></div>
+
     <div id="content-row">
         <div id="workspace"></div>
         <div id="sidebar">
@@ -29,10 +31,48 @@
         <a class="btn" href="./summary.html">View Summary</a>
     </nav>
 
+    <script src="./scripts/level1Questions.js"></script>
+    <script src="./scripts/dragAndDrop.js"></script>
+    <script>
+      let remainingQuestions = [];
+      let currentQuestion = null;
+
+      function showRandomQuestion() {
+        const questionsContainer = document.getElementById('questions-container');
+        questionsContainer.innerHTML = '';
+        if (remainingQuestions.length === 0) {
+          // Redirect to summary page when done
+          window.location.href = "./summary.html";
+          return;
+        }
+
+        const next_question = Math.floor(Math.random() * remainingQuestions.length);
+        currentQuestion = remainingQuestions.splice(next_question, 1)[0];
+        const div = document.createElement('div');
+        div.className = 'question-block';
+        div.innerHTML = `<p>${currentQuestion.question}</p>`;
+        questionsContainer.appendChild(div);
+      }
+
+      // Wait for DOM and questions to be loaded
+      document.addEventListener('DOMContentLoaded', function() {
+        if (typeof level1Questions !== "undefined") {
+          remainingQuestions = [...level1Questions];
+          showRandomQuestion();
+        }
+
+        // Listen for drop events in workspace
+        const workspace = document.getElementById('workspace');
+        workspace.addEventListener('drop', function(e) {
+          // After a drop, show the next question
+          setTimeout(showRandomQuestion, 300); // here we should check if the answer is correct. can be done when we're sure about how the game works.
+        });
+      });
+    </script>
+
     <footer>
         <a href="levelSelection.html">⬅ Back to menu</a>
     </footer>
-    <script src="./scripts/dragAndDrop.js"></script>
 </body>
 
 </html>
