@@ -108,6 +108,7 @@
   </style>
 </head>
 <body>
+  
   <div></div>
   <!-- Toasts -->
   <div class="toasts" id="toasts"></div>
@@ -222,7 +223,35 @@
 
     function start(){const picked=pickRandom(FOOD_BANK,TARGET_TOTAL);game={words:picked,total:TARGET_TOTAL,winThreshold:WIN_THRESHOLD,orderIndex:0,perItemState:picked.map(w=>({id:w.id,firstTry:true,done:false})),firstTryCorrectCount:0,mistakes:0,completed:0};renderStatus();}
     function pick(id){const ix=game.orderIndex,cur=game.words[ix],st=game.perItemState[ix],ok=id===cur.id;if(ok){toast(`Bra jobbat, du hittade <strong>${cur.sv}</strong>`);if(st.firstTry)game.firstTryCorrectCount++;st.done=true;game.completed++;nextItem();}else{toast('Försök igen!','error');if(st.firstTry){st.firstTry=false;game.mistakes++;}else game.mistakes++;}renderStatus();}
-    function nextItem(){if(game.completed>=game.total){const win=game.firstTryCorrectCount>=game.winThreshold;setEndIcon(win);openEndModal(win?'Bra jobbat, du vann!':'Bra försök! Spela igen för att öva mer.',`Rätt: <strong>${game.firstTryCorrectCount}</strong> av ${game.total}.`);return;}let n=game.orderIndex+1;while(n<game.total&&game.perItemState[n].done)n++;if(n>=game.total)n=game.perItemState.findIndex(s=>!s.done);game.orderIndex=n;}
+function nextItem(){
+  if (game.completed >= game.total) {
+    const win = game.firstTryCorrectCount >= game.winThreshold;
+
+    // Save results for the end screen
+    const payload = {
+      total: game.total,
+      correct: game.firstTryCorrectCount,
+      mistakes: game.mistakes,
+      threshold: game.winThreshold,
+      won: win,
+      timestamp: Date.now()
+    };
+    try {
+      sessionStorage.setItem('team11_end_stats', JSON.stringify(payload));
+    } catch (_) {}
+
+    // Navigate the whole app (not just the iframe) to the end screen
+    if (window.top) {
+      window.top.location.href = './endGame.html';
+    } 
+    return;
+  }
+
+  let n = game.orderIndex + 1;
+  while (n < game.total && game.perItemState[n].done) n++;
+  if (n >= game.total) n = game.perItemState.findIndex(s => !s.done);
+  game.orderIndex = n;
+}
     function reset(){start();}
 
     window.Game={start,pick,reset,toast,state:()=>game};

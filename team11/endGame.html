@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="sv">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Resultat – Ica Väst</title>
+  <link rel="stylesheet" href="../style.css" />
+  <style>
+    :root { --ink:#0f172a; --muted:#475569; --tile:#f1f5f9; }
+
+    html, body {
+      height: 100%;
+      margin: 0;
+      background: #f8fafc;
+      color: var(--ink);
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    }
+
+    /* Center everything on the screen */
+.stage {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;  /* horizontal center */
+  align-items: center;      /* vertical center */
+}
+
+/* Character + bubble side by side */
+.scene {
+  display: flex;
+  align-items: center;
+  gap: -50px;
+}
+
+/* Character next to the bubble */
+.character {
+      margin-right: -60px; /* overlap slightly toward the bubble */
+
+    padding-top: 120px;       /* small extra space from top if needed */
+    top: 600px; 
+    width: 600px;
+    height: auto;
+    }
+
+
+    /* Bubble frame sized to image proportions and responsive */
+    .bubble {
+      position: relative;
+      width: min(700px, 70vw);
+      aspect-ratio: 1440 / 900; /* approximate of your bubble PNG */
+      background: url('../team11/assets/chatbubble.png') no-repeat center / 100% 100%;
+      filter: drop-shadow(0 14px 36px rgba(2,8,23,.12));
+      display: block;
+    }
+
+    /* SAFETY INSETS so content never hits the outline.
+       Tuned for your bubble: top 18%, sides 12%, bottom 28% (leave room for tail) */
+    .bubble-inner {
+    padding-top: 20px;       /* small extra space from top if needed */
+      position: absolute;
+      inset: 20% 14% 30% 14%;
+      display: grid;
+      grid-template-rows: auto auto auto auto;
+      align-content: start;
+      justify-items: center;
+      text-align: center;
+      overflow: auto; /* if it ever grows, it scrolls inside the bubble */
+      -webkit-overflow-scrolling: touch;
+    }
+
+    h1 {
+      margin: 0 0 .35em;
+      font-size: clamp(1.1rem, 2vw, 1.5rem);   /* slightly smaller */
+      line-height: 1.2;
+      letter-spacing: 0.2px;
+    }
+
+    p.lead {
+      margin: 0 0 0.9rem;
+      color: var(--muted);
+      font-size: clamp(.9rem, 1.5vw, 1rem);
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: clamp(6px, 1.4vw, 12px);
+      width: 50%;
+      margin: 0 0 0.8rem;
+    }
+
+    .stat {
+      background: var(--tile);
+      border-radius: 12px;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.6);
+    }
+    .stat span { display:block; font-size:.8rem; color:#64748b; }
+    .stat b { display:block; font-size: clamp(1rem, 1.6vw, 1.2rem); margin-top: 2px; }
+
+    .actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .btn {
+      background:#0f172a; color:#fff; border:none; border-radius:999px;
+      font-weight: 700;
+      font-size: clamp(.9rem, 1.4vw, .95rem);
+      cursor:pointer; transition: opacity .15s ease;
+    }
+    .btn:hover { opacity:.9; }
+    .btn.secondary { background:#1e293b; }
+
+    /* Small screens: stack vertically, keep content inside bubble */
+    @media (max-width: 640px) {
+      .scene { grid-template-columns: 1fr; }
+      .character { justify-self: center; order: 2; }
+      .bubble { order: 1; width: min(560px, 92vw); }
+      /* slight inset tweak for narrow screens */
+      .bubble-inner { inset: 16% 10% 30% 10%; }
+    }
+  </style>
+</head>
+<body>
+  <div class="stage">
+    <section class="scene" aria-label="Resultatskärm">
+      <img src="../team11/assets/character.png" alt="Karaktär" class="character" />
+
+      <!-- Chat bubble; everything stays INSIDE .bubble-inner -->
+      <main class="bubble" role="group" aria-labelledby="headline">
+    <div class="bubble-inner">
+      <h1 id="headline">Bra jobbat!</h1>
+      <p class="lead" id="subline">Du klarade 8 av 10 ord.</p>
+
+      <div class="stats" aria-label="Statistik">
+        <div class="stat"><span>Rätt</span><b id="correct">–</b></div>
+        <div class="stat"><span>Totalt</span><b id="total">–</b></div>
+        <div class="stat"><span>Misstag</span><b id="mistakes">–</b></div>
+      </div>
+
+      <div class="actions">
+        <button class="btn" id="playAgain">Spela igen</button>
+        <button class="btn secondary" id="mainMenu">Till huvudmenyn</button>
+      </div>
+    </div>
+  </main>
+    </section>
+  </div>
+
+  <script>
+    // Pull saved results
+    let stats = null;
+    try { stats = JSON.parse(sessionStorage.getItem('team11_end_stats') || 'null'); } catch(e){}
+
+    const $ = id => document.getElementById(id);
+    if (stats) {
+      const { total, correct, mistakes, threshold, won } = stats;
+      $('correct').textContent  = String(correct);
+      $('total').textContent    = String(total);
+      $('mistakes').textContent = String(mistakes);
+      $('headline').textContent = won ? 'Bra jobbat, du vann!' : 'Bra försök!';
+      $('subline').textContent  = `Målet var ${threshold} av ${total} rätt på första försöket.`;
+    } else {
+      $('headline').textContent = 'Ingen data';
+      $('subline').textContent  = 'Starta en ny omgång från menyn.';
+      $('correct').textContent = $('total').textContent = $('mistakes').textContent = '0';
+    }
+
+    // Buttons
+    $('playAgain').onclick = () => { window.location.href = './index.html'; };
+    $('mainMenu').onclick  = () => { window.location.href = '../index.html'; };
+  </script>
+</body>
+</html>
