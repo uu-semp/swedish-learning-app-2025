@@ -1,8 +1,1433 @@
 {
-  "use": {
-    "en": "google sheets",
-    "sv": "development",
-    "article": "during",
-    "literal": "this"
+  "6d375947": {
+    "en": "zero",
+    "sv": "noll",
+    "literal": "0"
+  },
+  "29162632": {
+    "en": "one",
+    "sv": "ett",
+    "literal": "1"
+  },
+  "73202703": {
+    "en": "two",
+    "sv": "två",
+    "literal": "2"
+  },
+  "7d4e666c": {
+    "en": "three",
+    "sv": "tre",
+    "literal": "3"
+  },
+  "36211275": {
+    "en": "first",
+    "sv": "första",
+    "literal": "1."
+  },
+  "51085e77": {
+    "en": "second",
+    "sv": "andra",
+    "literal": "2."
+  },
+  "1e055517": {
+    "en": "third",
+    "sv": "tredje",
+    "literal": "3."
+  },
+  "1775693f": {
+    "en": "fourth",
+    "sv": "fjärde",
+    "literal": "4."
+  },
+  "1f780c21": {
+    "en": "fifth",
+    "sv": "femte",
+    "literal": "5."
+  },
+  "101c5e1d": {
+    "en": "sixth",
+    "sv": "sjätte",
+    "literal": "6."
+  },
+  "1431537c": {
+    "en": "seventh",
+    "sv": "sjunde",
+    "literal": "7."
+  },
+  "773e7806": {
+    "en": "eighth",
+    "sv": "åttonde",
+    "literal": "8."
+  },
+  "5d210e41": {
+    "en": "ninth",
+    "sv": "nionde",
+    "literal": "9."
+  },
+  "79152e28": {
+    "en": "tenth",
+    "sv": "tionde",
+    "literal": "10."
+  },
+  "5608397a": {
+    "en": "eleventh",
+    "sv": "elfte",
+    "literal": "11."
+  },
+  "30291c0b": {
+    "en": "twelfth",
+    "sv": "tolfte",
+    "literal": "12."
+  },
+  "5344105d": {
+    "en": "five minutes past",
+    "sv": "Fem över"
+  },
+  "4f192d3c": {
+    "en": "ten minutes past",
+    "sv": "Tio over"
+  },
+  "41331c49": {
+    "en": "quarter past",
+    "sv": "Kvart över"
+  },
+  "3b6c3160": {
+    "en": "it rains",
+    "sv": "det regnar"
+  },
+  "4043786f": {
+    "en": "it snows",
+    "sv": "det snöar"
+  },
+  "14707508": {
+    "en": "it is windy",
+    "sv": "det blåser"
+  },
+  "3501691b": {
+    "en": "it is sunny",
+    "sv": "det är soligt"
+  },
+  "27657a44": {
+    "en": "it is cloudy",
+    "sv": "det är molnigt"
+  },
+  "761f5c6a": {
+    "en": "Monday",
+    "sv": "måndag"
+  },
+  "1d7e2e33": {
+    "en": "Tuesday",
+    "sv": "tisdag"
+  },
+  "2331362b": {
+    "en": "Wednesday",
+    "sv": "onsdag"
+  },
+  "01301227": {
+    "en": "January",
+    "sv": "januari"
+  },
+  "4a0a7202": {
+    "en": "February",
+    "sv": "februari"
+  },
+  "4e1d346d": {
+    "en": "March",
+    "sv": "mars"
+  },
+  "7c0e5f61": {
+    "en": "beanie",
+    "sv": "mössa",
+    "sv_pl": "mössor",
+    "article": "en",
+    "img": "assets/images/clothes/beanie.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "0a58114e": {
+    "en": "belt",
+    "sv": "bälte",
+    "sv_pl": "bälten",
+    "article": "ett",
+    "img": "assets/images/clothes/belt.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "425b7771": {
+    "en": "blazer",
+    "sv": "kavaj",
+    "sv_pl": "kavajer",
+    "article": "en",
+    "img": "assets/images/clothes/blazer.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "02451775": {
+    "en": "blouse",
+    "sv": "blus",
+    "sv_pl": "blusar",
+    "article": "en",
+    "img": "assets/images/clothes/blouse.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "4c14560c": {
+    "en": "boots",
+    "sv": "stövlar",
+    "article": "ett",
+    "img": "assets/images/clothes/boots.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "56771b18": {
+    "en": "boxers",
+    "sv": "kalsonger",
+    "article": "ett",
+    "img": "assets/images/clothes/boxers.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "712c522f": {
+    "en": "bra",
+    "sv": "bh",
+    "article": "en",
+    "img": "assets/images/clothes/bra.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "443c3e06": {
+    "en": "bracelet",
+    "sv": "armband",
+    "article": "ett",
+    "img": "assets/images/clothes/bracelet.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "257c1433": {
+    "en": "cap",
+    "sv": "keps",
+    "sv_pl": "kepsar",
+    "article": "en",
+    "img": "assets/images/clothes/cap.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "272a4f6b": {
+    "en": "cardigan",
+    "sv": "kofta",
+    "sv_pl": "koftor",
+    "article": "en",
+    "img": "assets/images/clothes/cardigan.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "1e505206": {
+    "en": "clothes",
+    "sv": "kläder",
+    "img": "assets/images/clothes/clothes.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "107b044c": {
+    "en": "coat",
+    "sv": "rock",
+    "sv_pl": "rockar",
+    "article": "en",
+    "img": "assets/images/clothes/coat.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "050a744c": {
+    "en": "dress",
+    "sv": "klänning",
+    "sv_pl": "klänningar",
+    "article": "en",
+    "img": "assets/images/clothes/dress.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "516a6514": {
+    "en": "earrings",
+    "sv": "örhängen",
+    "article": "ett",
+    "img": "assets/images/clothes/earrings.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "7d095b1f": {
+    "en": "glasses",
+    "sv": "glasögon",
+    "img": "assets/images/clothes/glasses.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "1a67457c": {
+    "en": "gloves",
+    "sv": "handskar",
+    "img": "assets/images/clothes/gloves.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "052c7e4d": {
+    "en": "hat",
+    "sv": "hatt",
+    "sv_pl": "hattar",
+    "article": "en",
+    "img": "assets/images/clothes/hat.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "5a371a54": {
+    "en": "hoodie",
+    "sv": "huvtröja",
+    "sv_pl": "hubtröjor",
+    "article": "en",
+    "img": "assets/images/clothes/hoodie.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "31617f5d": {
+    "en": "jacket",
+    "sv": "jacka",
+    "sv_pl": "jackor",
+    "article": "en",
+    "img": "assets/images/clothes/jacket.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "7b5a0a65": {
+    "en": "jeans",
+    "sv": "jeans",
+    "article": "ett",
+    "img": "assets/images/clothes/jeans.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "6b73735b": {
+    "en": "jewellery",
+    "sv": "smycken",
+    "article": "ett",
+    "img": "assets/images/clothes/jewellery.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "6251111c": {
+    "en": "knitted sweater",
+    "sv": "stickad tröja",
+    "sv_pl": "stickade tröjor",
+    "article": "en",
+    "img": "assets/images/clothes/knitted_sweater.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "427c3b46": {
+    "en": "leggings",
+    "sv": "leggings",
+    "article": "ett",
+    "img": "assets/images/clothes/leggings.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "424c1352": {
+    "en": "mittens",
+    "sv": "vantar",
+    "img": "assets/images/clothes/mittens.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "5778071a": {
+    "en": "necklace",
+    "sv": "halsband",
+    "article": "ett",
+    "img": "assets/images/clothes/necklace.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "02690115": {
+    "en": "panties",
+    "sv": "trosor",
+    "article": "ett",
+    "img": "assets/images/clothes/panties.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "5649461a": {
+    "en": "pants",
+    "sv": "byxor",
+    "article": "ett",
+    "img": "assets/images/clothes/pants.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "36025b22": {
+    "en": "pantyhose",
+    "sv": "strumpbyxor",
+    "article": "ett",
+    "img": "assets/images/clothes/pantyhose.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "755f005b": {
+    "en": "ring",
+    "sv": "ring",
+    "sv_pl": "ringar",
+    "article": "en",
+    "img": "assets/images/clothes/ring.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "2b136f4d": {
+    "en": "robe",
+    "sv": "morgonrock",
+    "sv_pl": "morgonrockar",
+    "article": "en",
+    "img": "assets/images/clothes/robe.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "475e4c53": {
+    "en": "sandals",
+    "sv": "sandaler",
+    "article": "ett",
+    "img": "assets/images/clothes/sandals.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "227f6b24": {
+    "en": "scarf",
+    "sv": "halsduk",
+    "sv_pl": "halsdukar",
+    "article": "en",
+    "img": "assets/images/clothes/scarf.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "150d1b5f": {
+    "en": "shoes",
+    "sv": "skor",
+    "img": "assets/images/clothes/shoes.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "10635963": {
+    "en": "shorts",
+    "sv": "shorts",
+    "article": "ett",
+    "img": "assets/images/clothes/shorts.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "4f3a511d": {
+    "en": "shirt",
+    "sv": "skjorta",
+    "sv_pl": "skjortor",
+    "article": "en",
+    "img": "assets/images/clothes/shirt.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "57133a02": {
+    "en": "skirt",
+    "sv": "kjol",
+    "sv_pl": "kjolar",
+    "article": "en",
+    "img": "assets/images/clothes/skirt.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "4c06737e": {
+    "en": "sneakers",
+    "sv": "sneakers",
+    "article": "ett",
+    "img": "assets/images/clothes/sneakers.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "34776103": {
+    "en": "socks",
+    "sv": "strumpor",
+    "article": "ett",
+    "img": "assets/images/clothes/socks.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "21725b36": {
+    "en": "suit",
+    "sv": "kostym",
+    "article": "en",
+    "img": "assets/images/clothes/suit.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "26133720": {
+    "en": "sunglasses",
+    "sv": "solglasögon",
+    "img": "assets/images/clothes/sunglasses.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "0c1b5a68": {
+    "en": "sweater",
+    "sv": "tröja",
+    "sv_pl": "tröjor",
+    "article": "en",
+    "img": "assets/images/clothes/sweater.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "505e685e": {
+    "en": "sweatpants",
+    "sv": "mjukisbyxor",
+    "img": "assets/images/clothes/sweatpants.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "7003491a": {
+    "en": "swimsuit",
+    "sv": "baddräkt",
+    "sv_pl": "baddräkter",
+    "article": "en",
+    "img": "assets/images/clothes/swimsuit.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "482e1b58": {
+    "en": "t-shirt",
+    "sv": "t-shirt",
+    "article": "en",
+    "img": "assets/images/clothes/t-shirt.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "2f535d4d": {
+    "en": "tie",
+    "sv": "slips",
+    "article": "en",
+    "img": "assets/images/clothes/tie.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "434a4235": {
+    "en": "top",
+    "sv": "topp",
+    "sv_pl": "toppar",
+    "article": "en",
+    "img": "assets/images/clothes/top.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "7c556f61": {
+    "en": "training clothes",
+    "sv": "träningskläder",
+    "img": "assets/images/clothes/training_clothes.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "414d510b": {
+    "en": "underwear",
+    "sv": "underkläder",
+    "img": "assets/images/clothes/underwear.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "6662316f": {
+    "en": "veil",
+    "sv": "slöja",
+    "sv_pl": "slöjor",
+    "article": "en",
+    "img": "assets/images/clothes/veil.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "4702640f": {
+    "en": "black",
+    "sv": "svart",
+    "img": "assets/images/colors/black.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "1a30203c": {
+    "en": "blue",
+    "sv": "blå",
+    "img": "assets/images/colors/blue.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "545e3a69": {
+    "en": "brown",
+    "sv": "brun",
+    "img": "assets/images/colors/brown.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "6a743833": {
+    "en": "green",
+    "sv": "grön",
+    "img": "assets/images/colors/green.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "6b260a0d": {
+    "en": "orange",
+    "sv": "orange",
+    "img": "assets/images/colors/orange.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "38610d43": {
+    "en": "pink",
+    "sv": "rosa",
+    "img": "assets/images/colors/pink.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "17371d10": {
+    "en": "purple",
+    "sv": "lila",
+    "img": "assets/images/colors/purple.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "6e45235f": {
+    "en": "red",
+    "sv": "röd",
+    "img": "assets/images/colors/red.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "657d5907": {
+    "en": "white",
+    "sv": "vit",
+    "img": "assets/images/colors/white.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "52145c35": {
+    "en": "yellow",
+    "sv": "gul",
+    "img": "assets/images/colors/yellow.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "5e6e267b": {
+    "en": "apple",
+    "sv": "äpple",
+    "sv_pl": "äpplen",
+    "article": "ett",
+    "img": "assets/images/food/apple.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "7278652f": {
+    "en": "banana",
+    "sv": "banan",
+    "sv_pl": "bananer",
+    "article": "en",
+    "img": "assets/images/food/banana.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "5767023a": {
+    "en": "bean",
+    "sv": "böna",
+    "sv_pl": "bönor",
+    "article": "en",
+    "img": "assets/images/food/bean.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "44791c4d": {
+    "en": "beer",
+    "sv": "öl",
+    "article": "en",
+    "img": "assets/images/food/beer.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "056b575e": {
+    "en": "berries",
+    "sv": "bär",
+    "article": "ett",
+    "img": "assets/images/food/berries.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "287f4866": {
+    "en": "bread",
+    "sv": "bröd",
+    "article": "ett",
+    "img": "assets/images/food/bread.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "567f323c": {
+    "en": "breakfast",
+    "sv": "frukost",
+    "article": "en",
+    "img": "assets/images/food/breakfast.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "3d10642f": {
+    "en": "butter",
+    "sv": "smör",
+    "img": "assets/images/food/butter.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "5946181f": {
+    "en": "cake",
+    "sv": "tårta",
+    "sv_pl": "tårtor",
+    "article": "en",
+    "img": "assets/images/food/cake.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "084e120f": {
+    "en": "candy",
+    "sv": "godis",
+    "article": "en",
+    "img": "assets/images/food/candy.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "78674a5b": {
+    "en": "carrot",
+    "sv": "morot",
+    "sv_pl": "morötter",
+    "article": "en",
+    "img": "assets/images/food/carrot.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "76785d5c": {
+    "en": "cereal",
+    "sv": "flingor",
+    "img": "assets/images/food/cereal.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "6441264f": {
+    "en": "cheese",
+    "sv": "ost",
+    "sv_pl": "ostar",
+    "article": "en",
+    "img": "assets/images/food/cheese.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "6a033b51": {
+    "en": "chicken",
+    "sv": "kyckling",
+    "sv_pl": "kycklingar",
+    "article": "en",
+    "img": "assets/images/food/chicken.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "11757421": {
+    "en": "chips",
+    "sv": "chips",
+    "img": "assets/images/food/chips.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "7069221a": {
+    "en": "cinnamon roll",
+    "sv": "kanelbulle",
+    "sv_pl": "kanelbullar",
+    "article": "en",
+    "img": "assets/images/food/cinnamon_roll.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "32647751": {
+    "en": "coffee",
+    "sv": "kaffe",
+    "article": "en",
+    "img": "assets/images/food/coffee.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "01125003": {
+    "en": "cream",
+    "sv": "grädde",
+    "article": "en",
+    "img": "assets/images/food/cream.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "6f4a753e": {
+    "en": "crispbread",
+    "sv": "knäckebröd",
+    "article": "ett",
+    "img": "assets/images/food/crispbread.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "79107e7e": {
+    "en": "cucumber",
+    "sv": "gurka",
+    "sv_pl": "gurkor",
+    "article": "en",
+    "img": "assets/images/food/cucumber.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "2f373051": {
+    "en": "dinner",
+    "sv": "middag",
+    "sv_pl": "middagar",
+    "article": "en",
+    "img": "assets/images/food/dinner.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "5a326050": {
+    "en": "eggs",
+    "sv": "ägg",
+    "article": "ett",
+    "img": "assets/images/food/eggs.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "2c451f1b": {
+    "en": "fish",
+    "sv": "fisk",
+    "sv_pl": "fiskar",
+    "article": "en",
+    "img": "assets/images/food/fish.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "32191560": {
+    "en": "food",
+    "sv": "mat",
+    "img": "assets/images/food/food.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "440d3157": {
+    "en": "fruit",
+    "sv": "frukt",
+    "sv_pl": "fukter",
+    "article": "en",
+    "img": "assets/images/food/fruit.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "265a1433": {
+    "en": "garlic",
+    "sv": "vitlök",
+    "sv_pl": "vitlökar",
+    "article": "en",
+    "img": "assets/images/food/garlic.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "0d3f2077": {
+    "en": "grape",
+    "sv": "druva",
+    "sv_pl": "druvor",
+    "article": "en",
+    "img": "assets/images/food/grape.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "1164100d": {
+    "en": "ham",
+    "sv": "skinka",
+    "sv_pl": "skinkor",
+    "article": "en",
+    "img": "assets/images/food/ham.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "0426284f": {
+    "en": "ice cream",
+    "sv": "glass",
+    "article": "en",
+    "img": "assets/images/food/ice_cream.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "332e102d": {
+    "en": "cookie",
+    "sv": "kaka",
+    "sv_pl": "kakor",
+    "article": "en",
+    "img": "assets/images/food/cookies.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "4b642b00": {
+    "en": "lemon",
+    "sv": "citron",
+    "sv_pl": "citronoer",
+    "article": "en",
+    "img": "assets/images/food/lemon.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "3d680e3e": {
+    "en": "lentil",
+    "sv": "lins",
+    "sv_pl": "linser",
+    "article": "en",
+    "img": "assets/images/food/lentil.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "75387a51": {
+    "en": "lunch",
+    "sv": "lunch",
+    "sv_pl": "luncher",
+    "article": "en",
+    "img": "assets/images/food/lunch.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "5618161b": {
+    "en": "meat",
+    "sv": "kött",
+    "article": "ett",
+    "img": "assets/images/food/meat.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "526d5751": {
+    "en": "milk",
+    "sv": "mjölk",
+    "article": "en",
+    "img": "assets/images/food/milk.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "0b302309": {
+    "en": "minced meat sauce",
+    "sv": "köttfärssås",
+    "article": "en",
+    "img": "assets/images/food/minced_meat_sauce.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "133f0b13": {
+    "en": "mushrooms",
+    "sv": "svamp",
+    "sv_pl": "svampar",
+    "article": "en",
+    "img": "assets/images/food/mushrooms.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "697c7215": {
+    "en": "noodles",
+    "sv": "nudlar",
+    "img": "assets/images/food/noodles.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "6e706637": {
+    "en": "onion",
+    "sv": "lök",
+    "sv_pl": "lökar",
+    "article": "en",
+    "img": "assets/images/food/onion.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "3e314b40": {
+    "en": "orange",
+    "sv": "apelsin",
+    "sv_pl": "apelsiner",
+    "article": "en",
+    "img": "assets/images/food/orange.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "7269063e": {
+    "en": "pasta",
+    "sv": "pasta",
+    "img": "assets/images/food/pasta.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "21005955": {
+    "en": "pea",
+    "sv": "ärta",
+    "sv_pl": "ärtor",
+    "article": "en",
+    "img": "assets/images/food/pea.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "023f3b3b": {
+    "en": "pear",
+    "sv": "päron",
+    "article": "ett",
+    "img": "assets/images/food/pear.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "3152070a": {
+    "en": "pepper",
+    "sv": "peppar",
+    "img": "assets/images/food/pepper.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "64674801": {
+    "en": "porridge",
+    "sv": "gröt",
+    "img": "assets/images/food/porridge.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "5c1d1451": {
+    "en": "potato",
+    "sv": "potatis",
+    "sv_pl": "potatisar",
+    "article": "en",
+    "img": "assets/images/food/potato.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "04134e3e": {
+    "en": "rice",
+    "sv": "ris",
+    "img": "assets/images/food/rice.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "0323001c": {
+    "en": "salad",
+    "sv": "sallat",
+    "article": "en",
+    "img": "assets/images/food/salad.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "79116562": {
+    "en": "salmon",
+    "sv": "lax",
+    "article": "en",
+    "img": "assets/images/food/salmon.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "4f3b260d": {
+    "en": "salt",
+    "sv": "salt",
+    "img": "assets/images/food/salt.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "2a264365": {
+    "en": "sandwich",
+    "sv": "smörgås",
+    "sv_pl": "smörgåsar",
+    "article": "en",
+    "img": "assets/images/food/sandwich.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "7a061429": {
+    "en": "sausage",
+    "sv": "korv",
+    "sv_pl": "korvar",
+    "article": "en",
+    "img": "assets/images/food/sausage.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "7b1f347c": {
+    "en": "shrimp",
+    "sv": "räka",
+    "sv_pl": "räkor",
+    "article": "en",
+    "img": "assets/images/food/shrimp.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "15454845": {
+    "en": "skim milk",
+    "sv": "lättmjölk",
+    "article": "en",
+    "img": "assets/images/food/skim_milk.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "2a674d2c": {
+    "en": "soda",
+    "sv": "läsk",
+    "article": "en",
+    "img": "assets/images/food/soda.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "1256242f": {
+    "en": "soup",
+    "sv": "soppa",
+    "sv_pl": "soppor",
+    "article": "en",
+    "img": "assets/images/food/soup.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "66010677": {
+    "en": "sub",
+    "sv": "macka",
+    "sv_pl": "mackor",
+    "article": "en",
+    "img": "assets/images/food/sub.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "2b676157": {
+    "en": "sugar",
+    "sv": "socker",
+    "img": "assets/images/food/sugar.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "721b306e": {
+    "en": "tea",
+    "sv": "te",
+    "img": "assets/images/food/tea.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "26606a07": {
+    "en": "tomato",
+    "sv": "tomat",
+    "sv_pl": "tomater",
+    "article": "en",
+    "img": "assets/images/food/tomato.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "19263071": {
+    "en": "vegan",
+    "sv": "vegansk",
+    "img": "assets/images/food/vegan.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "50795a66": {
+    "en": "vegetable",
+    "sv": "grönsak",
+    "sv_pl": "grönsaker",
+    "article": "en",
+    "img": "assets/images/food/vegetables.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "6a701276": {
+    "en": "vegetarian",
+    "sv": "vegetarisk",
+    "img": "assets/images/food/vegetarian.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "3e3d5903": {
+    "en": "wine",
+    "sv": "vin",
+    "img": "assets/images/food/wine.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "2f31531f": {
+    "en": "yogurt",
+    "sv": "yoghurt",
+    "article": "en",
+    "img": "assets/images/food/yogurt.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "27347417": {
+    "en": "balcony",
+    "sv": "balkong",
+    "sv_pl": "balkonger",
+    "article": "en",
+    "img": "assets/images/furniture/balcony.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "362a441c": {
+    "en": "apartment",
+    "sv": "lägenhet",
+    "sv_pl": "lägenheter",
+    "article": "en",
+    "img": "assets/images/furniture/apartment.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "383b2052": {
+    "en": "armchair",
+    "sv": "fåtölj",
+    "sv_pl": "fåtöljer",
+    "article": "en",
+    "img": "assets/images/furniture/armchair.png"
+  },
+  "4917200a": {
+    "en": "bathroom",
+    "sv": "badrum",
+    "article": "ett",
+    "img": "assets/images/furniture/bathroom.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "766d2079": {
+    "en": "bed",
+    "sv": "säng",
+    "sv_pl": "sängar",
+    "article": "en",
+    "img": "assets/images/furniture/bed.png"
+  },
+  "23665c03": {
+    "en": "bedroom",
+    "sv": "sovrum",
+    "article": "ett",
+    "img": "assets/images/furniture/bedroom.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "4c5a6774": {
+    "en": "bookshelf",
+    "sv": "bokhylla",
+    "sv_pl": "bokylllor",
+    "article": "en",
+    "img": "assets/images/furniture/bookshelf.png"
+  },
+  "61733c03": {
+    "en": "carpet",
+    "sv": "matta",
+    "sv_pl": "mattor",
+    "article": "en",
+    "img": "assets/images/furniture/carpet.png"
+  },
+  "2b074971": {
+    "en": "ceiling",
+    "sv": "tak",
+    "article": "ett",
+    "img": "assets/images/furniture/ceiling.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "031e117b": {
+    "en": "chair",
+    "sv": "stol",
+    "sv_pl": "solar",
+    "article": "en",
+    "img": "assets/images/furniture/chair.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "09372435": {
+    "en": "computer",
+    "sv": "dator",
+    "sv_pl": "datorer",
+    "article": "en",
+    "img": "assets/images/furniture/computer.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "6e246264": {
+    "en": "corridor",
+    "sv": "korridor",
+    "sv_pl": "korridorer",
+    "article": "en",
+    "img": "assets/images/furniture/corridor.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "3820141d": {
+    "en": "couch",
+    "sv": "soffa",
+    "sv_pl": "soffor",
+    "article": "en",
+    "img": "assets/images/furniture/couch.png"
+  },
+  "2f7d0650": {
+    "en": "cupboard",
+    "sv": "skåp",
+    "article": "ett",
+    "img": "assets/images/furniture/cupboard.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "79113169": {
+    "en": "curtains",
+    "sv": "gardiner",
+    "img": "assets/images/furniture/curtains.png"
+  },
+  "7a0a7964": {
+    "en": "desk",
+    "sv": "skrivbord",
+    "article": "ett",
+    "img": "assets/images/furniture/desk.png"
+  },
+  "1b2d5670": {
+    "en": "door",
+    "sv": "dörr",
+    "sv_pl": "dörrar",
+    "article": "en",
+    "img": "assets/images/furniture/door.png"
+  },
+  "54016a6f": {
+    "en": "drawer",
+    "sv": "låda",
+    "sv_pl": "lådor",
+    "article": "en",
+    "img": "assets/images/furniture/drawer.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "53336533": {
+    "en": "floor",
+    "sv": "golv",
+    "article": "ett",
+    "img": "assets/images/furniture/floor.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "310d5d0b": {
+    "en": "flower",
+    "sv": "blomma",
+    "sv_pl": "blommor",
+    "article": "en",
+    "img": "assets/images/furniture/flower.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "350b6c43": {
+    "en": "furniture",
+    "sv": "möbler",
+    "article": "en",
+    "img": "assets/images/furniture/furniture.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "6d6d0f41": {
+    "en": "hall",
+    "sv": "hall",
+    "sv_pl": "hallar",
+    "article": "en",
+    "img": "assets/images/furniture/hall.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "55340505": {
+    "en": "house",
+    "sv": "hus",
+    "article": "ett",
+    "img": "assets/images/furniture/house.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "7a05017a": {
+    "en": "kitchen",
+    "sv": "kök",
+    "article": "ett",
+    "img": "assets/images/furniture/kitchen.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "4a53342c": {
+    "en": "lamp",
+    "sv": "lampa",
+    "sv_pl": "lampor",
+    "article": "en",
+    "img": "assets/images/furniture/lamp.png"
+  },
+  "6d6d432b": {
+    "en": "livingroom",
+    "sv": "vardagsrum",
+    "article": "ett",
+    "img": "assets/images/furniture/livingroom.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "13641648": {
+    "en": "mirror",
+    "sv": "spegel",
+    "sv_pl": "speglar",
+    "article": "en",
+    "img": "assets/images/furniture/mirror.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "086c3d40": {
+    "en": "painting",
+    "sv": "målning",
+    "sv_pl": "målningar",
+    "article": "en",
+    "img": "assets/images/furniture/painting.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "5424324c": {
+    "en": "pillow",
+    "sv": "kudde",
+    "sv_pl": "kuddar",
+    "article": "en",
+    "img": "assets/images/furniture/pillow.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "200b1479": {
+    "en": "radio",
+    "sv": "radio",
+    "article": "en",
+    "img": "assets/images/furniture/radio.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "061c5566": {
+    "en": "refrigerator",
+    "sv": "kylskåp",
+    "article": "ett",
+    "img": "assets/images/furniture/refrigerator.png"
+  },
+  "43447a04": {
+    "en": "room",
+    "sv": "rum",
+    "article": "ett",
+    "img": "assets/images/furniture/room.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "2715491b": {
+    "en": "shower",
+    "sv": "dusch",
+    "sv_pl": "duschar",
+    "article": "en",
+    "img": "assets/images/furniture/shower.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "3e662477": {
+    "en": "stove",
+    "sv": "spis",
+    "sv_pl": "spisar",
+    "article": "en",
+    "img": "assets/images/furniture/stove.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "7e6c5812": {
+    "en": "table",
+    "sv": "bord",
+    "article": "ett",
+    "img": "assets/images/furniture/table.png"
+  },
+  "2d757412": {
+    "en": "toilet",
+    "sv": "toalett",
+    "sv_pl": "toaletter",
+    "article": "en",
+    "img": "assets/images/furniture/toilet.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "623f2e2b": {
+    "en": "towel",
+    "sv": "handduk",
+    "sv_pl": "handdukar",
+    "article": "en",
+    "img": "assets/images/furniture/towel.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "65434d7c": {
+    "en": "tv",
+    "sv": "tv",
+    "article": "en",
+    "img": "assets/images/furniture/tv.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "75610459": {
+    "en": "wall",
+    "sv": "vägg",
+    "sv_pl": "väggar",
+    "article": "en",
+    "img": "assets/images/furniture/wall.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "515a1a35": {
+    "en": "wardrobe",
+    "sv": "garderob",
+    "sv_pl": "garderober",
+    "article": "en",
+    "img": "assets/images/furniture/wardrobe.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "292c5778": {
+    "en": "window",
+    "sv": "fönster",
+    "article": "ett",
+    "img": "assets/images/furniture/window.png",
+    "img_copyright": "Image: Papunets bildbank, <a href=\"papunet.net\">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href=\"https://creativecommons.org/licenses/by-nc-sa/3.0/deed\">CC BY-NC-SA 3.0</a>"
+  },
+  "4a362f4f": {
+    "en": "four",
+    "sv": "fyra",
+    "literal": "4"
+  },
+  "266b7372": {
+    "en": "five",
+    "sv": "fem",
+    "literal": "5"
+  },
+  "0c4b6854": {
+    "en": "six",
+    "sv": "sex",
+    "literal": "6"
+  },
+  "02615934": {
+    "en": "seven",
+    "sv": "sju",
+    "literal": "7"
+  },
+  "73553001": {
+    "en": "eleven",
+    "sv": "elva",
+    "literal": "11"
+  },
+  "1b202807": {
+    "en": "twelve",
+    "sv": "tolv",
+    "literal": "12"
+  },
+  "214b3447": {
+    "en": "thirteen",
+    "sv": "tretton",
+    "literal": "13"
+  },
+  "3b633a78": {
+    "en": "fourteen",
+    "sv": "fjorton",
+    "literal": "14"
+  },
+  "1f76293f": {
+    "en": "fifteen",
+    "sv": "femton",
+    "literal": "15"
+  },
+  "62477821": {
+    "en": "twenty",
+    "sv": "tjugo",
+    "literal": "20"
+  },
+  "16743b18": {
+    "en": "twentyone",
+    "sv": "tjugoett",
+    "literal": "21"
+  },
+  "34447f1c": {
+    "en": "twentytwo",
+    "sv": "tjugotvå",
+    "literal": "22"
+  },
+  "656d363e": {
+    "en": "twentythree",
+    "sv": "tjugotre",
+    "literal": "23"
+  },
+  "04795e49": {
+    "en": "twentyfour",
+    "sv": "tjugofyra",
+    "literal": "24"
+  },
+  "53552143": {
+    "en": "twentyfive",
+    "sv": "tjugofem",
+    "literal": "25"
+  },
+  "78151153": {
+    "en": "twentysix",
+    "sv": "tjugosex",
+    "literal": "26"
+  },
+  "1d37044c": {
+    "en": "twentyseven",
+    "sv": "tjugosju",
+    "literal": "27"
+  },
+  "044a446a": {
+    "en": "twentyeight",
+    "sv": "tjugoåtta",
+    "literal": "28"
+  },
+  "412b1b04": {
+    "en": "twentynine",
+    "sv": "tjugonio",
+    "literal": "29"
+  },
+  "230c655a": {
+    "en": "thirty",
+    "sv": "trettio",
+    "literal": "30"
+  },
+  "616a2c42": {
+    "en": "thirtyone",
+    "sv": "trettioett",
+    "literal": "31"
+  },
+  "47795e54": {
+    "en": "thirteenth",
+    "sv": "trettonde",
+    "literal": "13."
   }
 }
