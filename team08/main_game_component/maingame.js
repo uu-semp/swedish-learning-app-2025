@@ -126,9 +126,9 @@ function game_update() {
   const DATA = get_next_words();
   current_words = DATA.words;
   correct = DATA.correct_index;
-  IMG_ONE.src = "../../" + current_words[0].img;
-  IMG_TWO.src = "../../" + current_words[1].img;
-  IMG_THREE.src = "../../" + current_words[2].img;
+  IMG_ONE.src = "/"+current_words[0].img;
+  IMG_TWO.src = "/"+current_words[1].img;
+  IMG_THREE.src ="/"+current_words[2].img;
   turns = turns - 1;
 }
 
