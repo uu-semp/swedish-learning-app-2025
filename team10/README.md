@@ -111,6 +111,8 @@ python3 -m http.server 8000
 ### Unit tests
 
 http://127.0.0.1:8000/team10/index.html
+http://127.0.0.1:8000/team10/learning_mode/learning_mode.html
+
 
 ## Run Static Website in GitHub Pages
 
