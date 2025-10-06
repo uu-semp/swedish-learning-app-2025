@@ -197,14 +197,18 @@ class WordsDetail {
   }
 
   getImagePath(word) {
-    // Prefer remote image URL provided by vocab data when available
-    return word?.imageUrl || null;
+    return word?.imageUrl;
   }
 
   getImageCandidates(word) {
     const candidates = [];
-    const remote = this.getImagePath(word);
-    if (remote) candidates.push(remote);
+    const imagePath = this.getImagePath(word);
+    if (imagePath) {
+      candidates.push('../../' + imagePath);
+      return candidates;
+    } else {
+      console.warn('No image URL found for word:', word);
+    }
 
     const english = (word?.translation || '').toLowerCase().trim();
     if (!english) return candidates;
