@@ -1,4 +1,4 @@
-import { generateShelf } from "./gameLogic";
+import { generateShelf, generateShoppingList } from "./gameLogic.js";
 
 // initialize a new game state
 function initGameState(vocabulary) {
