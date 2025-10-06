@@ -13,12 +13,17 @@ export function getItemsIds() {
 }
 
 // Returns an array of Items.
+// Returns an array of Items.
 export function getItems() {
-  const items = []
+  const items = [];
   const ids = getItemsIds();
-  ids.map(id => {
-    items.push(window.vocabulary.get_vocab(id))
-  })
+  ids.forEach(id => {
+    const v = window.vocabulary.get_vocab(id);
+    if (v) {
+      // Attach the id so downstream UI/logic can use it
+      items.push({ id, ...v });
+    }
+  });
   return items;
 
 }

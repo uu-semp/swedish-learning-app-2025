@@ -32,6 +32,8 @@ Owned by Team 11
   <script type="module" src="data.js" defer></script>
   <script type="module" src="main.js" defer></script>
   <script type="module" src="ui.js" defer></script>
+
+  
 </head>
 <body>
   <header>
@@ -63,11 +65,7 @@ Owned by Team 11
         <span id="mistakesPill">Misstag: 0</span> |
         <span id="targetPill">Tröskel: 8 / 10</span>
       </div>
-      <div class="demo-buttons">
-        <button id="demoCorrect">Simulera Rätt</button>
-        <button id="demoWrong">Simulera Fel</button>
-        <button id="demoReset">Reset</button>
-      </div>
+      
     </div>
     <div class="chatbubble-toasts">
       <!-- Chatbubble toasts go here -->
@@ -78,29 +76,106 @@ Owned by Team 11
   <footer>
     <small>Created as part of the "Software Engineering and Project Management" course 2025</small>
   </footer>
+<script>
+  const popupFrame = document.getElementById('popupFrame');
 
-  <script>
-  // Wait for DOM and iframe to be ready
-  window.addEventListener('DOMContentLoaded', function() {
-    const frame = document.getElementById('popupFrame');
-    function postToPopup(type) {
-      frame.contentWindow.postMessage({ type }, '*');
+  // --- helpers ---
+  const keyFromImgPath = (p) => {
+    if (!p) return undefined;
+    const base = p.split('/').pop() || '';
+    return base.split('.')[0].toLowerCase();      // ".../food/beer.png" -> "beer"
+  };
+
+  // Build [{id, sv}] in the SAME id-key the clicks use (filename basename)
+  function mapWordsFromState(gs) {
+    const raw = Array.isArray(gs?.shoppingList) ? gs.shoppingList : [];
+    const words = raw.map(item => {
+      const idKey =
+        keyFromImgPath(item?.img) ||
+        (item?.id != null ? String(item.id).toLowerCase() : undefined) ||
+        (item?.en ? String(item.en).toLowerCase() : undefined) ||
+        (item?.sv ? String(item.sv).toLowerCase() : undefined);
+
+      const svLabel = item?.sv ?? item?.en ?? '';
+      return { id: idKey, sv: svLabel };
+    }).filter(w => !!w.id);
+    return words;
+  }
+
+  // ui.js calls this when an image is clicked
+  window.sendPickToPopup = function(idKey) {
+    if (!popupFrame || !popupFrame.contentWindow) return;
+    console.log('[parent] sending pick (key):', idKey);
+    popupFrame.contentWindow.postMessage({ type: 'pick', id: String(idKey) }, '*');
+  };
+
+  // --- handshake / gating ---
+  let popupIsReady = false;
+  let initSent = false;
+
+  function haveShoppingList() {
+    const gs = window.__team11GameState;
+    return !!(gs && Array.isArray(gs.shoppingList) && gs.shoppingList.length > 0);
+  }
+
+  function tryInitPopupOnce() {
+    if (initSent || !popupIsReady || !haveShoppingList()) return false;
+
+    const gs = window.__team11GameState;
+    console.log('[parent] raw shoppingList length:', gs.shoppingList.length);
+    console.log('[parent] sample item:', gs.shoppingList[0]);
+
+    const words = mapWordsFromState(gs);
+    if (!words.length) {
+      console.warn('[parent] mapped words are empty; will keep waiting…');
+      return false;
     }
-    document.getElementById('demoCorrect').onclick = function() { postToPopup('demoCorrect'); };
-    document.getElementById('demoWrong').onclick = function() { postToPopup('demoWrong'); };
-    document.getElementById('demoReset').onclick = function() { postToPopup('demoReset'); };
 
-    // Listen for status updates from popup
-    window.addEventListener('message', function(event) {
-      if (!event.data || event.data.type !== 'statusUpdate') return;
-      const s = event.data.status;
-      if (!s) return;
+    console.log('[parent] initWords -> popup:', words.map(w => w.id));
+    popupFrame?.contentWindow?.postMessage({ type: 'initWords', words }, '*');
+    initSent = true;
+    return true;
+  }
+
+  // 1) Message listener (status + popupReady)
+  window.addEventListener('message', (event) => {
+    const data = event.data || {};
+    if (data.type === 'statusUpdate') {
+      const s = data.status; if (!s) return;
       document.getElementById('progressPill').textContent = s.progress;
       document.getElementById('firstTryPill').textContent = s.firstTry;
       document.getElementById('mistakesPill').textContent = s.mistakes;
       document.getElementById('targetPill').textContent = s.target;
-    });
+    } else if (data.type === 'popupReady') {
+      console.log('[parent] popupReady received');
+      popupIsReady = true;
+      tryInitPopupOnce();
+    }
   });
-  </script>
+
+  // 2) Also listen for our custom “team11:ready” (from main.js), but only use it as a nudge
+  window.addEventListener('team11:ready', () => {
+    console.log('[parent] team11:ready received');
+    tryInitPopupOnce();
+  });
+
+  // 3) Final safety: poll briefly until both conditions are met
+  window.addEventListener('DOMContentLoaded', () => {
+    popupFrame?.addEventListener('load', () => tryInitPopupOnce());
+    let attempts = 0;
+    const timer = setInterval(() => {
+      if (tryInitPopupOnce()) { clearInterval(timer); }
+      else if (++attempts > 100) {  // ~10s max
+        clearInterval(timer);
+        console.warn('[parent] Gave up waiting for shoppingList/popup readiness.');
+      }
+    }, 100);
+  });
+</script>
+
+
+
+
+
 </body>
 </html>
