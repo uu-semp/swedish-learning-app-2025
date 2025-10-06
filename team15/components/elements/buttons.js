@@ -48,9 +48,17 @@ export const ClothingItemButton = {
             required: true,
         },
     },
+
+    data(){
+      return{
+        isDragged: false,
+      }
+    },
+
     methods: {
         handleDragStart(event) {
             // Set drag data (you can customize this later)
+            this.isDragged = true;
             event.dataTransfer.setData('text/plain', this.label);
             event.dataTransfer.effectAllowed = 'move';
         },
@@ -61,7 +69,7 @@ export const ClothingItemButton = {
       style="width: 80px;"
       draggable="true"
       @dragstart="handleDragStart"
-      @dragend="isDragging = false"
+      @dragend="isDragged = false"
        />
     </button>
   `,
