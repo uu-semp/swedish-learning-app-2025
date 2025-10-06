@@ -5,7 +5,7 @@ export const IncorrectAnswerFeedback = {
   name: "incorrect-answer-feedback",
   template: `
     <div class="feedback-container incorrect-feedback">
-      <h2 class="feedback-text">FEL, FÖRSÖK IGEN!</h2>
+      <h2 class="feedback-text">{{$language.translate('wrong-answer')}}</h2>
     </div>
   `,
 };
