@@ -25,7 +25,7 @@ Owned by Team 10
 
   <!-- Site specific scripts and styles -->
   <link rel="stylesheet" href="index.css" />
-  <script src="learning_mode.js"></script>
+  <!-- <script src="index.js"></script> -->
 </head>
 <body>
   <header>
@@ -34,17 +34,28 @@ Owned by Team 10
 
   <main class="game-frame">
     <script>
-      // Ensure jQuery and other scripts run after the DOM is fully loaded
-      document.addEventListener('DOMContentLoaded', () => {
-        // jQuery check
-        $('#check-jquery').on('click', () => {
-          alert('jQuery is working!');
-        });
+      // Wait for DOM and vocabulary to be ready
+      $(function() {
+        if (window.vocabulary && window.vocabulary.when_ready) {
+          window.vocabulary.when_ready(function () {
+            // jQuery check
+            $("#check-jquery").on("click", () => {
+              alert("JavaScript and jQuery are working in Learning Mode.");
+            });
 
-        // Saving check
-        $('#check-saving').on('click', () => {
-          alert('Saving functionality is working!');
-        });
+            // Display a random vocab word
+            $("#display-vocab").text(JSON.stringify(window.vocabulary.get_random()));
+
+            // Saving check
+            $("#check-saving").on("click", () => {
+              var data = window.save.get("team10");
+              data.counter = data.counter ?? 0;
+              data.counter += 1;
+              $("#check-saving").text(`This button has been pressed ${data.counter} times`);
+              window.save.set("team10", data);
+            });
+          });
+        }
       });
     </script>
     
@@ -70,7 +81,6 @@ Owned by Team 10
           });
           vueCheckApp.mount('#vue-check');
         </script>
-  </main>
 
       <hr>
   </div>
@@ -88,46 +98,55 @@ Owned by Team 10
         <button @click="nextCard">Next</button>
       </div>
     </div>
-    <script>
-      const flashcardApp = Vue.createApp({
-        data() {
-          return {
-            cards: [
-              { front: 'Hej', back: 'Hello' },
-              { front: 'Tack', back: 'Thank you' },
-              { front: 'Snälla', back: 'Please' }
-            ],
-            currentIndex: 0,
-            isFlipped: false
-          };
-        },
-        computed: {
-          currentCard() {
-            return this.cards[this.currentIndex];
-          }
-        },
-        methods: {
-          flipCard() {
-            this.isFlipped = !this.isFlipped;
-          },
-          nextCard() {
-            this.isFlipped = false;
-            this.currentIndex = (this.currentIndex + 1) % this.cards.length;
-          },
-          prevCard() {
-            this.isFlipped = false;
-            this.currentIndex = (this.currentIndex - 1 + this.cards.length) % this.cards.length;
-          }
+    <!-- Vue app script moved below so #flashcard-app exists before mounting -->
+  <script>
+    const flashcardApp = Vue.createApp({
+      data() {
+        return {
+          cards: [
+            { front: 'Hej', back: 'Hello' },
+            { front: 'Tack', back: 'Thank you' },
+            { front: 'Ja', back: 'Yes' },
+            { front: 'Nej', back: 'No' }
+          ],
+          currentIndex: 0,
+          isFlipped: false
+        };
+      },
+      computed: {
+        currentCard() {
+          return this.cards[this.currentIndex];
         }
-      });
-      flashcardApp.mount('#flashcard-app');
-    </script>
+      },
+      methods: {
+        flipCard() {
+          this.isFlipped = !this.isFlipped;
+        },
+        nextCard() {
+          this.isFlipped = false;
+          this.currentIndex = (this.currentIndex + 1) % this.cards.length;
+        },
+        prevCard() {
+          this.isFlipped = false;
+          this.currentIndex = (this.currentIndex - 1 + this.cards.length) % this.cards.length;
+        }
+      },
+      mounted() {
+        console.log('Flashcard Vue app is running!');
+        const debugDiv = document.createElement('div');
+        debugDiv.style.color = 'green';
+        debugDiv.textContent = 'Flashcard Vue app is running!';
+        document.getElementById('flashcard-app').prepend(debugDiv);
+      }
+    });
+    flashcardApp.mount('#flashcard-app');
+  </script>
 
     <hr>
     Learning: <div id="display-vocab">(This should be replaced by a word)</div>
 
 
-
+  </main>
   <footer>
     <small>Created as part of the "Software Engineering and Project Management" course 2025</small>
   </footer>

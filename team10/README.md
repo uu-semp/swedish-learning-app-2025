@@ -108,6 +108,10 @@ wc -l assets/vocabulary.json
 python3 -m http.server 8000
 ```
 
+### Unit tests
+
+http://127.0.0.1:8000/team10/index.html
+
 ## Run Static Website in GitHub Pages
 
 Fork the repo, enable GitHub pages.
