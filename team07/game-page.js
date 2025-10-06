@@ -158,9 +158,20 @@ function gameplay() {
             }
             if (image === clickedImage && image === correctImage) {
                 document.getElementById('instruction').textContent = "Correct answer!";
-                // TODO: Update high score
+                // Update high score  
+                let words = JSON.parse(localStorage.getItem('game_words') || '[]');
+                let highscore = words[words.length - 1]; // last element is the highscore object
+
+                highscore["round" + (currentRound + 1)] += 1;
+                highscore["total"] += 1;
+
+                // Save it back in local storage
+                words[words.length - 1] = highscore;
+                localStorage.setItem('game_words', JSON.stringify(words));
+
             } else if (image === clickedImage && image !== correctImage) {
                 document.getElementById('instruction').textContent = "Wrong answer!";
+
             }
         });
     }
