@@ -63,27 +63,21 @@
       justify-content: center;
       z-index: 60;
     }
-
-.modal.open {
-  display: flex;
-}
-
-.modal .box {
-  border: none;
-  padding: 0;
-  margin: 0 auto;     /* centrera horisontellt */
-}
-
-.endgame-box {
-  width: clamp(360px, 42vw, 500px);
-  min-height: 160px;
-  padding: 24px 48px 28px 32px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;   /* se till att innehållet också är centrerat */
-  text-align: center;
-}
-
+    .modal.open { display: flex; }
+    .modal .box {
+      border: none;
+      padding: 0;
+      margin: 0 auto;
+    }
+    .endgame-box {
+      width: clamp(360px, 42vw, 500px);
+      min-height: 160px;
+      padding: 24px 48px 28px 32px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
     .endgame-title { font-size: 1.5rem; }
     .endgame-msg { font-size: 1.1rem; }
     .endgame-actions {
@@ -114,12 +108,8 @@
   </style>
 </head>
 <body>
-  <div>
-    <!-- Status bar removed from here -->
-    <!-- <div id="statusBar"> ... </div> -->
-    <!-- Demo buttons moved to separate file -->
-    <!-- <div class="demo-buttons"> ... </div> -->
-  </div>
+  
+  <div></div>
   <!-- Toasts -->
   <div class="toasts" id="toasts"></div>
   <!-- Endgame modal -->
@@ -128,10 +118,7 @@
       <button class="x" id="endClose" type="button" aria-label="Stäng resultat">×</button>
       <div class="endgame-inner">
         <div class="endgame-icon" aria-hidden="true">
-          <svg id="endIcon" width="48" height="48" viewBox="0 0 48 48" fill="none">
-            <circle cx="24" cy="24" r="22" fill="#38bdf8" stroke="#0f172a" stroke-width="4"/>
-            <path d="M16 24l6 6 10-12" stroke="#fff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
+          <svg id="endIcon" width="48" height="48" viewBox="0 0 48 48" fill="none"></svg>
         </div>
         <h3 id="endTitle" class="endgame-title">Klart!</h3>
         <p id="endMsg" class="endgame-msg">&nbsp;</p>
@@ -164,9 +151,12 @@
     const endMsg=document.getElementById('endMsg');
     const endClose=document.getElementById('endClose');
 
+    // Track active toast
+    let currentToast = null;
+    let currentToastTimer = null;
+
     function pickRandom(arr,n){const c=[...arr];const o=[];while(n-- >0&&c.length){o.push(c.splice(Math.floor(Math.random()*c.length),1)[0]);}return o;}
     function renderStatus(){
-      // Send status update to parent
       if (window.parent && window.parent !== window) {
         window.parent.postMessage({
           type: 'statusUpdate',
@@ -180,14 +170,33 @@
       }
     }
 
+    // ✅ Only one toast at a time
     function toast(html,type='success',duration=4000){
+      if (currentToast) {
+        try { currentToast.classList.add('is-hiding'); } catch(e){}
+        try { currentToast.remove(); } catch(e){}
+        if (currentToastTimer) clearTimeout(currentToastTimer);
+        currentToast = null;
+        currentToastTimer = null;
+      }
+
       const el=document.createElement('div');
       el.className='toast bubble '+(type==='error'?'error':'success');
       el.innerHTML=`<div class="content">${html}</div><button class="x" type="button" aria-label="Stäng">×</button>`;
-      toastsEl.appendChild(el);
-      const x=el.querySelector('.x'); let t=setTimeout(close,duration);
-      function close(){el.classList.add('is-hiding');el.addEventListener('transitionend',()=>el.remove(),{once:true});}
-      x.onclick=()=>{clearTimeout(t);close();};
+      toastsEl.replaceChildren(el);
+
+      currentToast = el;
+
+      const x=el.querySelector('.x');
+      const close=()=>{
+        if (!el.isConnected) return;
+        el.classList.add('is-hiding');
+        el.addEventListener('transitionend',()=>{try{el.remove();}catch(e){}},{once:true});
+        if (currentToast===el){currentToast=null;currentToastTimer=null;}
+      };
+
+      currentToastTimer=setTimeout(close,duration);
+      x.onclick=()=>{if(currentToastTimer)clearTimeout(currentToastTimer);close();};
     }
 
     function setEndIcon(win){
@@ -214,13 +223,40 @@
 
     function start(){const picked=pickRandom(FOOD_BANK,TARGET_TOTAL);game={words:picked,total:TARGET_TOTAL,winThreshold:WIN_THRESHOLD,orderIndex:0,perItemState:picked.map(w=>({id:w.id,firstTry:true,done:false})),firstTryCorrectCount:0,mistakes:0,completed:0};renderStatus();}
     function pick(id){const ix=game.orderIndex,cur=game.words[ix],st=game.perItemState[ix],ok=id===cur.id;if(ok){toast(`Bra jobbat, du hittade <strong>${cur.sv}</strong>`);if(st.firstTry)game.firstTryCorrectCount++;st.done=true;game.completed++;nextItem();}else{toast('Försök igen!','error');if(st.firstTry){st.firstTry=false;game.mistakes++;}else game.mistakes++;}renderStatus();}
-    function nextItem(){if(game.completed>=game.total){const win=game.firstTryCorrectCount>=game.winThreshold;setEndIcon(win);openEndModal(win?'Bra jobbat, du vann!':'Bra försök! Spela igen för att öva mer.',`Rätt: <strong>${game.firstTryCorrectCount}</strong> av ${game.total}.`);return;}let n=game.orderIndex+1;while(n<game.total&&game.perItemState[n].done)n++;if(n>=game.total)n=game.perItemState.findIndex(s=>!s.done);game.orderIndex=n;}
+function nextItem(){
+  if (game.completed >= game.total) {
+    const win = game.firstTryCorrectCount >= game.winThreshold;
+
+    // Save results for the end screen
+    const payload = {
+      total: game.total,
+      correct: game.firstTryCorrectCount,
+      mistakes: game.mistakes,
+      threshold: game.winThreshold,
+      won: win,
+      timestamp: Date.now()
+    };
+    try {
+      sessionStorage.setItem('team11_end_stats', JSON.stringify(payload));
+    } catch (_) {}
+
+    // Navigate the whole app (not just the iframe) to the end screen
+    if (window.top) {
+      window.top.location.href = './endGame.html';
+    } 
+    return;
+  }
+
+  let n = game.orderIndex + 1;
+  while (n < game.total && game.perItemState[n].done) n++;
+  if (n >= game.total) n = game.perItemState.findIndex(s => !s.done);
+  game.orderIndex = n;
+}
     function reset(){start();}
 
     window.Game={start,pick,reset,toast,state:()=>game};
     start();
 
-    // Only add demo button handlers if buttons exist (for legacy/testing)
     if (document.getElementById('demoCorrect')) {
       document.getElementById('demoCorrect').onclick=()=>{Game.pick(Game.state().words[Game.state().orderIndex].id);}
       document.getElementById('demoWrong').onclick=()=>{Game.toast('Försök igen!','error');const st=Game.state().perItemState[Game.state().orderIndex];if(st.firstTry){st.firstTry=false;Game.state().mistakes++;}else Game.state().mistakes++;renderStatus();}
@@ -230,7 +266,6 @@
     document.getElementById('btnPlayAgain').onclick=()=>{closeEndModal();Game.reset();}
     document.getElementById('btnMainMenu').onclick=()=>{closeEndModal();window.location.href='../index.html';};
 
-    // Listen for demo button events from parent
     window.addEventListener('message', function(event) {
       if (!event.data || !event.data.type) return;
       if (event.data.type === 'demoCorrect') {
