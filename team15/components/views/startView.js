@@ -49,6 +49,9 @@ export const StartView = {
           <how-to-play-button @click="switchTo('HelpView')"></how-to-play-button>
         </div>
         </div>
+        <div class="button-container"> 
+          <images-button @click="switchTo('ImagesView')"></images-button>
+        </div>
         <info-button></info-button>
       </div>
     `,
