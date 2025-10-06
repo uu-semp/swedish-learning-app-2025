@@ -1,9 +1,14 @@
 import { initGameState } from "./state.js";
+import { displayShelf, displayShoppingList } from "./ui.js";
 
 let gameState = {};
 
 $(function() {
-    console.log("main.js körs");
+  window.vocabulary.when_ready(function() {
+    console.log("main.js is running");
     gameState = initGameState();
-    console.log("What in the world its working!")
-})
+    console.log(gameState.shelf);
+    displayShelf(gameState.shelf);
+    displayShoppingList(gameState.shoppingList);
+  });
+});

@@ -6,7 +6,7 @@ function initGameState() {
   vocabulary = getItems()
 
   const shoppingList = generateShoppingList(vocabulary);
-    const shelf = generateShelf(shoppingList, vocabulary);
+  const shelf = generateShelf(shoppingList, vocabulary);
 
     return {
         shoppingList,
