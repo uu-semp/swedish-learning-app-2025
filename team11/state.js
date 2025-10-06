@@ -1,11 +1,8 @@
-import { generateShelf, generateShoppingList } from "./gameLogic.js";
-import { getItems } from "./data.js"
+import { generateShelf } from "./gameLogic";
 
 // initialize a new game state
-function initGameState() {
-  vocabulary = getItems()
-
-  const shoppingList = generateShoppingList(vocabulary);
+function initGameState(vocabulary) {
+    const shoppingList = generateShoppingList(vocabulary);
     const shelf = generateShelf(shoppingList, vocabulary);
 
     return {
