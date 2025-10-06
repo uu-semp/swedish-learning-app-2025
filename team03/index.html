@@ -8,52 +8,79 @@ Owned by Team 03
 
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Basic Static Site</title>
-  <link rel="stylesheet" href="../style.css" />
-
-  <script src="../scripts/vocabulary.js"></script>
-  <script src="../scripts/save.js"></script>
-
-  <!-- You are allowed to use JQuery and Vue.js but don't have to. They just make a
-  lot of things easier
-  -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css"> 
-  <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
-  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-
-  <!-- Site specific scripts and styles -->
-  <link rel="stylesheet" href="index.css" />
-  <script src="index.js" defer></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Custom Words</title>
+  <link rel="stylesheet" href="index.css">
 </head>
 <body>
-  <header>
-    <h1>Team 01</h1>
-  </header>
+  <div class="container">
+    <div class="form-container">
+      <h2>Custom Words</h2>
+      <button class="info-btn">i</button>
 
-  <!-- TODO: Remove this div and it's content -->
-  <div>
-      <hr>
-      <h2>A basic section to make sure that everything works for everyone</h2>
+      <form>
+        <div class="form-group">
+          <label for="english">English <span class="required">*</span></label>
+          <input type="text" id="english" name="english" required>
+          <div class="error-message" id="english-error"></div>
+        </div>
 
-      <p>Font awesome is working: <i class="fa-solid fa-check"></i> (A checkmark should be visible)</p>
+        <div class="form-group">
+          <label for="swedish">Swedish <span class="required">*</span></label>
+          <input type="text" id="swedish" name="swedish" required>
+          <div class="error-message" id="swedish-error"></div>
+        </div>
 
-      <button id="check-jquery">Check if Javascript and JQuery is working</button> (Clicking the button should show an alert)
+        <div class="form-group">
+          <label>Article <span class="required">*</span></label>
+          <div class="article-options">
+            <label><input type="radio" name="article" value="en"> en</label>
+            <label><input type="radio" name="article" value="ett"> ett</label>
+          </div>
+          <div class="error-message" id="article-error"></div>
+        </div>
 
-      <button id="check-saving">Click this button to see if saving works</button>
-      <hr>
+        <div class="form-group">
+          <label for="literal">Literal</label>
+          <input type="text" id="literal" name="literal">
+        </div>
+
+        <div class="form-group">
+          <label for="category">Category <span class="required">*</span></label>
+          <select id="category" name="category" required>
+            <option value="">Select a category</option>
+          </select>
+          <div class="error-message" id="category-error"></div>
+        </div>
+
+        <div class="form-group">
+          <label>Image</label>
+          <div class="image-upload">
+            + Upload Image
+          </div>
+        </div>
+
+        <button type="submit" class="submit-btn">Add Word</button>
+      </form>
+    </div>
+
+    <div class="display-container">
+      <div class="display-header">
+        <h3>Your Custom Words</h3>
+        <button id="clear-all" class="clear-btn">Clear All</button>
+      </div>
+      <div id="words-display">
+        <p>No custom words yet. Add some using the form!</p>
+      </div>
+      <div id="display-vocab"></div>
+    </div>
   </div>
 
-  <main class="game-frame">
-    Implement the GUI to add a new word here
-
-    <hr>
-    Learning: <div id="display-vocab">(This should be replaced by a word)</div>
-  </main>
-
-  <footer>
-    <small>Created as part of the "Software Engineering and Project Management" course 2025</small>
-  </footer>
+  <!-- Include required scripts -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="../scripts/save.js"></script>
+  <script src="../scripts/vocabulary.js"></script>
+  <script src="index.js"></script>
 </body>
 </html>

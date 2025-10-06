@@ -11,6 +11,8 @@ body {
     margin-right: auto;
     background-color: lightblue; 
     /* Added the background color here to see where the gameframe is...  */
+      background-color: lightblue; 
+    /* Added the background color here to see where the gameframe is...  */
   }
 
 .game-frame {
@@ -24,6 +26,18 @@ body {
   left: 25px;
   width: 350px;
   height: 400px;
+}
+
+.shopping_list {
+  position: absolute;
+  top: 45px;
+  left: 90px;
+  width: 150px;
+  height: 200px;
+}
+
+.shopping-list li {
+  font-size: 0.9em;
 }
 
 .character {
@@ -52,6 +66,31 @@ body {
   height: 1000px; 
   object-fit: cover;
 }
+
+.shelf_items {
+  position: absolute;
+  top: 155px;
+  left: 435px;
+  width: 280px;
+  height: 420px;
+  align-items: start;
+  display: grid;
+  grid-template-columns: 50px 50px;
+  padding-top: 10;      /* Reduce or set to 0 if not needed */
+  padding-left: 50px; /* Keep if you want to move grid right */
+  row-gap: 0px;       /* Small gap between rows */
+  column-gap: 100px;    /* Adjust as needed */
+  border: 2px solid #654321;
+}
+
+.shelf_items img {
+  width: 50px;    /* or any size you want */
+  height: 50px;
+  object-fit: contain; /* or 'cover' if you want to crop */
+  display: block;
+}
+
+
 .popup-frame-wrap {
   position: fixed;           /* fäster elementet mot viewporten */
   top: 20%;                  /* placerar vertikalt */

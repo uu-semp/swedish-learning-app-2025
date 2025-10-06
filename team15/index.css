@@ -9,4 +9,341 @@ body {
     width: 1000px;
     margin-left: auto;
     margin-right: auto;
+    background-color: #ceffd7;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.game-frame {
+  background: #9effb0;
+  border-color: #02b823;
+  border-width: 20px;
+  border-style: solid;
+  box-sizing: border-box;
+  position: relative; /* for flag controls */
+}
+
+.main-text {
+    font-weight: bolder;
+    color: black;
+    font-size: 300%;
+    text-align: center;
+    margin-bottom: 100px;
+    margin-top: 100px;
+}
+
+.big-buttons {
+    font-weight: bold;
+    background-color: #ceffd7;
+    border: solid;
+    border-width: 10px;
+    border-radius: 30px;
+    border-color: #02b823;
+    padding: 25px;
+    text-align: center;
+    font-size: 30px;
+    /* margin: 0px 15px 100px 15px;  top right bottom left */
+}
+
+.big-buttons:hover {
+    background-color: #b6f4c1;
+    cursor: grab;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    transition: 0.3s ease;
+}
+.button-grid {
+    display: grid;
+    grid-template-columns: 50% 50%;
+}
+
+.button-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.info-button {
+    height: 50px;
+    width: 50px;
+    background-color: #ceffd7;
+    border: solid;
+    border-color: #02b823;
+    border-width: 5px;
+    font-size: 30px;
+    border-radius: 50%;
+    margin: 20px;
+    margin-top: 50px;
+    float: right;
+}
+
+.info-button:hover {
+    background-color: #b6f4c1;
+    cursor: grab;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    transition: 0.3s ease;
+}
+
+/* Make clothing buttons draggable */
+.clothing-button[draggable='true'] {
+    cursor: grab;
+}
+
+.clothing-button[draggable='true']:active {
+    cursor: grabbing;
+}
+
+/* Prevent category buttons from being draggable */
+.round-button {
+    -webkit-user-drag: none;
+    -khtml-user-drag: none;
+    -moz-user-drag: none;
+    -o-user-drag: none;
+    user-select: none;
+}
+
+.round-button img {
+    -webkit-user-drag: none;
+    -khtml-user-drag: none;
+    -moz-user-drag: none;
+    -o-user-drag: none;
+    pointer-events: none;
+}
+
+/* Modal Styles */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; /* On top of everything */
+}
+
+.modal-content {
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    max-width: 400px;
+    width: 80%;
+}
+
+.modal-content h2 {
+    margin-bottom: 20px;
+    color: #333;
+    font-size: 24px;
+}
+
+.modal-buttons {
+    display: flex;
+    justify-content: space-around;
+    gap: 10px;
+}
+
+.modal-buttons .big-buttons {
+    flex: 1;
+    margin: 0 5px;
+}
+
+/* Blur background when modal is open */
+.level-one-view.blurred {
+    filter: blur(5px);
+    pointer-events: none; /* Blocks all interactions on blurred content */
+}
+
+/* Ensure wardrobe/drop zones don't interfere */
+.level-one-view.blurred * {
+    pointer-events: none;
+}
+
+
+.flag-button {
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.flag-button:hover {
+  background-color: #b6f4c1;  
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);  
+  transition: 0.3s ease;  
+}
+
+.flag-button img {
+  display: block;
+  object-fit: cover;
+  border: 2px solid transparent;  
+  transition: border-color 0.2s ease;
+}
+
+.flag-button.selected img {
+  border-color: #22c55e;  /* change to green */
+}
+
+
+/* Help View */
+.help-content {
+  max-width: 85%;
+  margin: 0 auto;
+  padding: 5px 15px;
+  text-align: left;
+  line-height: 1.2;
+}
+
+.help-content h2 {
+  color: #02b823;
+  font-size: 16px;
+  margin-top: 12px;
+  margin-bottom: 6px;
+  border-bottom: 1px solid #02b823;
+  padding-bottom: 2px;
+}
+
+.help-content h3 {
+  color: #02b823;
+  font-size: 14px;
+  margin-top: 10px;
+  margin-bottom: 4px;
+}
+
+.help-content p {
+  margin-bottom: 6px;
+  font-size: 12px;
+}
+
+.help-content ul {
+  margin-left: 12px;
+  margin-bottom: 6px;
+}
+
+.help-content li {
+  margin-bottom: 3px;
+  font-size: 12px;
+}
+
+.level-info {
+  background-color: rgba(206, 255, 215, 0.3);
+  padding: 6px;
+  border-radius: 4px;
+  margin: 6px 0;
+  border-left: 2px solid #02b823;
+}
+
+/* adjust the spacing of the help view title */
+.help-view .main-text {
+  margin-top: 15px;
+  margin-bottom: 15px;
+  font-size: 180%;
+}
+
+/* make sure the button is at the bottom of the help view */
+.help-view .button-container {
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+.level-one-view {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.level-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    box-sizing: border-box;
+}
+
+.level-header h1 {
+    margin: 0;
+    font-size: 2.5em;
+    color: #333;
+}
+
+/* Style override for the exit button inside the header */
+.level-header .big-buttons {
+    background-color: #D32F2F; /* Red */
+    border-color: #B71C1C; /* Darker Red */
+    color: white;
+
+    /* Sizing to be smaller */
+    padding: 8px 16px;
+    font-size: 16px;
+    border-width: 4px;
+    border-radius: 15px;
+    margin: 0; /* Remove any inherited margin */
+}
+
+.level-header .big-buttons:hover {
+    background-color: #E57373; /* Lighter red on hover */
+    border-color: #D32F2F;
+}
+
+.feedback-area {
+    padding: 0 20px 10px;
+    min-height: 50px; /* Reserve space to prevent layout shifting when feedback appears */
+}
+
+.main-content-area {
+    display: flex;
+    flex-grow: 1; /* Allows this area to fill the remaining vertical space */
+}
+
+.pelle-wrapper, .wardrobe-wrapper {
+    width: 50%;
+    padding: 10px;
+    box-sizing: border-box;
+    position: relative; /* Useful if child components use absolute positioning */
+}
+
+/* Simple feedback text colors */
+.feedback-container {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 100;
+    padding: 10px 20px;
+    border-radius: 5px;
+    border: 2px solid;
+}
+
+.feedback-text {
+    font-weight: bold;
+    margin: 0;
+}
+
+/* Correct Answer Feedback - Green Theme */
+.correct-feedback {
+    background-color: #e8f5e8;
+    border-color: green;
+}
+
+.correct-feedback .feedback-text {
+    color: green;
+}
+
+/* Incorrect Answer Feedback - Red Theme */
+.incorrect-feedback {
+    background-color: #ffe8e8;
+    border-color: red;
+}
+
+.incorrect-feedback .feedback-text {
+    color: red;
 }
