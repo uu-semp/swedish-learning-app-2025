@@ -1,0 +1,30 @@
+{
+    "start-message": "VÄLKOMMEN TILL KLÄ PÅ PELLE SPELET!",
+    "how-to": "HUR DU SPELAR",
+    "start-game": "STARTA SPEL",
+    "choose-level":"VÄLJ NIVÅ",
+    "level1": "NIVÅ 1",
+    "level2": "NIVÅ 2",
+    "level3": "NIVÅ 3",
+    "go-back": "GÅ TILLBAKA",
+    "exit":"AVSLUTA SPELET",
+    "exit-confirmation":"ÄR DU SÄKER ATT DU VILL AVSLUTA SPELET?",
+    "correct-answer": "RÄTT SVAR! BRA JOBBAT!",
+    "wrong-answer": "FEL SVAR, FÖRSÖK IGEN :)",
+    "yes": "JA!",
+    "no": "NEJ",
+    "about":"OM SPELET",
+    "goal":"MÅLET MED SPELET",
+    "purpose":  "Syftet med Klä på Pelle spelet är att hjälpa spelare att lära sig svenska ord för kläder och öva på grammatik såsom adjektiv, färger och användningen av \"en\"/\"ett\" samt pluralformer",
+    "hows-to-play":"On each level, you will see a description of an item of clothing (for example: \"a red sweater\" or \"blue shoes\").  Your task is to find the correct item and place it on Pelle. If your choice is correct, you continue; otherwise, you can try again.",
+    "how-to-play": "På varje nivå visas en beskrivning av ett klädesplagg (till exempel: \"en röd tröja\" eller \"blå skor\").  Din uppgift är att hitta rätt plagg och placera det på Pelle. Om ditt val är rätt fortsätter du, annars kan du försöka igen.",
+    "levels":"NIVÅER",
+    "l1-description":"\"Drag-and-drop\" igenkänning av enskilda klädesplagg",
+    "l2-description":"Välja klädesplagg kombinerat med adjektiv (färg, storlek, mm.)",
+    "l3-description":"Mer avancerad grammatik, plural och korrekta ändelser",
+    "extra": "EXTRA INFO",
+    "additional-info": "Om du är osäker på orden kan du alltid spela om en nivå eller kolla ordlistan i det medföljande materialet. Spelet är utformat för att vara roligt samtidigt som det förstärker inlärningen av svenska."
+
+    
+
+}

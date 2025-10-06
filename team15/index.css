@@ -175,9 +175,9 @@ body {
   transition: all 0.2s ease;
 }
 
-.flag-button:hover {
+.flag-button:hover img {
   background-color: #b6f4c1;  
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);  
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);  
   transition: 0.3s ease;  
 }
 
@@ -186,10 +186,12 @@ body {
   object-fit: cover;
   border: 2px solid transparent;  
   transition: border-color 0.2s ease;
+  border-radius: 15%;
 }
 
 .flag-button.selected img {
   border-color: #22c55e;  /* change to green */
+  border-width:5px;
 }
 
 

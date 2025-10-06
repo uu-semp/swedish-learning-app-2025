@@ -1,0 +1,29 @@
+{
+    "start-message": "WELCOME TO THE DRESSING PELLE GAME!",
+    "how-to": "HOW TO PLAY",
+    "start-game": "START GAME",
+    "choose-level":"CHOOSE LEVEL",
+    "level1": "LEVEL 1",
+    "level2": "LEVEL 2",
+    "level3": "LEVEL 3",
+    "go-back": "GO BACK",
+    "exit": "EXIT GAME",
+    "exit-confirmation":"ARE YOU SURE YOU WANT TO QUIT THIS GAME?",
+    "correct-answer": "CORRECT! GOOD JOB!",
+    "wrong-answer": "WRONG ANSWER, PLEASE TRY AGAIN",
+    "yes": "YES!",
+    "no": "NO",
+    "about":"ABOUT THE GAME",
+    "goal":"GOAL OF THE GAME",
+    "purpose": "The purpose of the Dressing Pelle Game is to help players learn Swedish vocabulary for clothing and practice grammar such as adjectives, colors, and the use of \"en\"/\"ett\" and plural forms.",
+    "how-to-play":"On each level, you will see a description of an item of clothing (for example: \"a red sweater\" or \"blue shoes\").  Your task is to find the correct item and place it on Pelle. If your choice is correct, you continue; otherwise, you can try again.",
+    "levels":"LEVELS",
+    "l1-description":"Drag-and-drop recognition of single clothing items.",
+    "l2-description":"Choose items with adjectives (color, size, etc.).",
+    "l3-description":"More advanced grammar, including plural forms and correct adjective endings.",
+    "extra": "EXTRA NOTES",
+    "additional-info": "If you are unsure about the vocabulary, you can always replay a level or check the word list in the provided material. The game is designed to be fun while reinforcing Swedish language learning."
+
+    
+    
+}

@@ -43,7 +43,7 @@ export const LevelOneView = {
     template: `
       <div class="level-one-view">
             <div class="level-header">
-                <h1>Level One</h1>
+                <h1>{{$language.translate('level1')}}</h1>
                 <exit-game-button @click="openModal"></exit-game-button>
             </div>
 
@@ -63,10 +63,10 @@ export const LevelOneView = {
 
             <div v-if="showModal" class="modal-overlay" @click="handleOverlayClick">
                 <div class="modal-content" @click.stop>
-                    <h2>Are you sure you want to quit level 1?</h2>
+                    <h2>{{$language.translate('exit-confirmation')}}</h2>
                     <div class="modal-buttons">
-                        <button class="big-buttons" @click="confirmExit">Yes</button>
-                        <button class="big-buttons" @click="closeModal">No</button>
+                        <button class="big-buttons" @click="confirmExit">{{$language.translate('yes')}}</button>
+                        <button class="big-buttons" @click="closeModal">{{$language.translate('no')}}</button>
                     </div>
                 </div>
             </div>
