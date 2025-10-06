@@ -11,7 +11,7 @@ const init = () => {
   if (startBtn) {
     startBtn.addEventListener("click", () => {
       // Navigate to main game page
-      window.location.href = "./index.html";
+      window.location.href = "./main_game/main_game_component.html";
     });
   }
 

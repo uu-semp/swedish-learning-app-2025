@@ -14,26 +14,30 @@
 </head>
 
 <body>
-  <h1 id="gameTitle">Say What?</h1>
-  <!-- Exit to Home Button -->
-
-  <div id="gameContainer">
+  <!-- TOP BANNER -->
+  <div id="top-banner">
+    <!-- Exit to Home Button -->
     <button id="homeBtn" class="corner-btn " title="Exit to Home" onclick="window.location='../index.html';">
-      <i class="fas fa-house fa-bounce fa-2x"></i>
+      <i class="fas fa-house fa-2x"></i>
     </button>
+
+    <h2 id="gameTitle">Select the picture that matches the sound</h1>
 
     <!-- Settings Button -->
     <button id="settingsBtn" class="corner-btn " title="Sound Settings">
-      <i class="fas fa-gear fa-spin fa-2x"></i>
+       <i class="fas fa-gear fa-2x"></i>
     </button>
+  </div>
+
+  <!-- MAIN GAME AREA -->
+  <div id="game-content">
 
     <h3 id="round">Round 1 / 10</h3>
-
 
     <!-- Audio -->
     <div>
       <button id="playAudio" class="btn" title="Replay Audio">
-        <i class="fas fa-volume-up fa-beat fa-3x"></i>
+        <i class="fas fa-volume-up fa fa-3x"></i>
       </button>
       <audio id="audioPlayer"></audio>
     </div>
@@ -63,7 +67,7 @@
     <!-- Confirm -->
     <div>
       <button id="confirmBtn" class="btn" disabled>
-        <i class="fas fa-check fa-fade"></i> Confirm
+        <i class="fas fa-check fa"></i> Confirm
       </button>
     </div>
 
@@ -85,10 +89,13 @@
         <i class="fas fa-redo fa-spin"></i> Play Again
       </button>
     </div>
-
-    <!-- Import selection.js -->
-    <script type="module" src="main_game_script.js"></script>
   </div>
+  <!-- BOTTOM BANNER -->
+  <div id="bottom-banner">
+    <p>Good luck! Learn and have fun 🎉</p>
+  </div>
+  <!-- Import selection.js -->
+  <script type="module" src="main_game_script.js"></script>
 </body>
 
 </html>
