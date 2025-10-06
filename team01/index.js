@@ -54,7 +54,7 @@ $(function () {
     resetFlipState();
   }
 
-  function foundMatch() { 
+  function foundMatch() {
     corrects++;
     flippedCards[0].addClass("matched");
     flippedCards[1].addClass("matched");
@@ -76,23 +76,66 @@ $(function () {
     }
     resetFlipState();
   }
-    
-  $(".card").on("click", clickCard); 
+
+  $(".card").on("click", clickCard);
+
+  // keep this at the top
+  let allowFlipBack = false;
+  let isChecking = false;
+
 
   function clickCard() {
-    if (flippedCards.length < 2 && !$(this).hasClass("flipped")) {  // flips clicked card
-      $(this).addClass("flipped");
-      flippedCards.push($(this));
-      //add logic to check for match
+    const card = this; // store DOM element directly
+
+    if (isChecking) return;
+
+    // Flip back if two cards are already flipped and this card is one of them
+    if (allowFlipBack && flippedCards.includes(card)) {
+      resetFlipState();
+      allowFlipBack = false;
+      return;
     }
-    // if (flippedCards.length === 2) { // temp match test
-    //   foundMatch();
-    if (flippedCards.length === 2) { // temp reset test
+
+    // Flip the clicked card
+    if (flippedCards.length < 2 && !$(card).hasClass("flipped")) {
+      $(card).addClass("flipped");
+      flippedCards.push(card);
+    }
+
+    // After flipping 2 cards, allow flip back after 0.5s
+    if (flippedCards.length === 2 && !allowFlipBack) {
+      isChecking = true;
       setTimeout(() => {
-        resetFlipState();
-      }, time_delay);
-     }
+        allowFlipBack = true;
+        isChecking = false;
+      }, 500);
+    }
   }
+
+  function resetFlipState() {
+    flippedCards.forEach(card => $(card).removeClass("flipped"));
+    flippedCards = [];
+    allowFlipBack = false;
+  }
+
+  // Hint button click
+  $("#hint-button").on("click", function () {
+    // For now, random text
+    $("#hint-text").text("One or two translations here...");
+    $("#hint-modal").fadeIn();
+  });
+
+  // Close modal when clicking the "x"
+  $("#close-hint").on("click", function () {
+    $("#hint-modal").fadeOut();
+  });
+
+  // Optional: close modal when clicking outside the hint box
+  $("#hint-modal").on("click", function (e) {
+    if (e.target.id === "hint-modal") {
+      $(this).fadeOut();
+    }
+  });
 
 
 });

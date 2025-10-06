@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Say What?</title>
+
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <!-- FontAwesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="main_game_style.css">
+
+</head>
+
+<body>
+  <h1 id="gameTitle">Say What?</h1>
+  <!-- Exit to Home Button -->
+
+  <div id="gameContainer">
+    <button id="homeBtn" class="corner-btn " title="Exit to Home" onclick="window.location='../index.html';">
+      <i class="fas fa-house fa-bounce fa-2x"></i>
+    </button>
+
+    <!-- Settings Button -->
+    <button id="settingsBtn" class="corner-btn " title="Sound Settings">
+      <i class="fas fa-gear fa-spin fa-2x"></i>
+    </button>
+
+    <h3 id="round">Round 1 / 10</h3>
+
+
+    <!-- Audio -->
+    <div>
+      <button id="playAudio" class="btn" title="Replay Audio">
+        <i class="fas fa-volume-up fa-beat fa-3x"></i>
+      </button>
+      <audio id="audioPlayer"></audio>
+    </div>
+
+    <!-- Sound Settings Modal -->
+    <div id="soundModal" class="modal">
+      <div class="modal-content">
+        <h3><i class="fas fa-volume-high"></i> Sound Settings</h3>
+
+        <label for="volumeControl">Volume:</label>
+        <input type="range" id="volumeControl" min="0" max="1" step="0.05" value="1">
+
+        <div style="margin-top:1rem;">
+          <label>Sound Effects:</label>
+          <button id="toggleEffects" class="btn"><i class="fas fa-music"></i> ON</button>
+        </div>
+
+        <button id="closeModal" class="btn" style="margin-top:1rem;">
+          <i class="fas fa-times"></i> Close
+        </button>
+      </div>
+    </div>
+
+    <!-- Images -->
+    <div class="image-options" id="imageOptions"></div>
+
+    <!-- Confirm -->
+    <div>
+      <button id="confirmBtn" class="btn" disabled>
+        <i class="fas fa-check fa-fade"></i> Confirm
+      </button>
+    </div>
+
+    <!-- Feedback -->
+    <div id="feedback" class="feedback"></div>
+
+    <!-- Next -->
+    <div>
+      <button id="nextBtn" class="btn" style="display:none;">
+        <i class="fas fa-forward fa-shake"></i> Next
+      </button>
+    </div>
+
+    <!-- End Screen -->
+    <div id="endScreen" class="end-screen" style="display:none;">
+      <h2><i class="fas fa-flag-checkered fa-bounce"></i> Game Over!</h2>
+      <p id="finalScore"></p>
+      <button id="restartBtn" class="btn">
+        <i class="fas fa-redo fa-spin"></i> Play Again
+      </button>
+    </div>
+
+    <!-- Import selection.js -->
+    <script type="module" src="main_game_script.js"></script>
+  </div>
+</body>
+
+</html>
