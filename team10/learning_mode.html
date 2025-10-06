@@ -1,0 +1,114 @@
+<!doctype html>
+
+<!--
+=================================================
+Owned by Team 10
+=================================================
+-->
+
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Basic Static Site</title>
+  <link rel="stylesheet" href="../style.css" />
+
+  <script src="../scripts/vocabulary.js"></script>
+  <script src="../scripts/save.js"></script>
+
+  <!-- You are allowed to use JQuery and Vue.js but don't have to. They just make a
+  lot of things easier
+  -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css"> 
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+  <!-- Site specific scripts and styles -->
+  <link rel="stylesheet" href="index.css" />
+  <script src="learning_mode.js"></script>
+</head>
+<body>
+  <header>
+    <h1>Team 10</h1>
+  </header>
+
+  <main class="game-frame">
+    <script>
+      // Ensure jQuery and other scripts run after the DOM is fully loaded
+      document.addEventListener('DOMContentLoaded', () => {
+        // jQuery check
+        $('#check-jquery').on('click', () => {
+          alert('jQuery is working!');
+        });
+
+        // Saving check
+        $('#check-saving').on('click', () => {
+          alert('Saving functionality is working!');
+        });
+
+        // Initialize Vue.js app
+        const app = Vue.createApp({
+          methods: {
+            checkVue() {
+              alert('Vue.js is working!');
+            }
+          }
+        });
+
+        app.mount('#vue-check');
+      });
+    </script>
+    
+      <div>
+      <hr>
+      <h2>A basic section to make sure that everything works for everyone</h2>
+
+      <p>Font awesome is working: <i class="fa-solid fa-check"></i> (A checkmark should be visible)</p>
+
+      <button id="check-jquery">Check if Javascript and JQuery is working in Learning Mode</button> (Clicking the button should show an alert)
+
+      <button id="check-saving">Click this button to see if saving works in Learning Mode</button>
+          <div id="vue-check">
+      <button @click="checkVue">Check if Vue.js is working</button>
+    </div>
+
+    <script>
+      const app = Vue.createApp({
+        methods: {
+          checkVue() {
+            alert('Vue.js is working!');
+          }
+        }
+      });
+
+      app.mount('#vue-check');
+    </script>
+  </main>
+
+      <hr>
+  </div>
+    Learning Mode
+
+    <div id="flashcard-app">
+      <div class="flashcard" @click="flipCard">
+        <div class="flashcard-content" :class="{ flipped: isFlipped }">
+          <div class="front">{{ currentCard.front }}</div>
+          <div class="back">{{ currentCard.back }}</div>
+        </div>
+      </div>
+      <div class="controls">
+        <button @click="prevCard">Previous</button>
+        <button @click="nextCard">Next</button>
+      </div>
+    </div>
+
+    <hr>
+    Learning: <div id="display-vocab">(This should be replaced by a word)</div>
+
+
+
+  <footer>
+    <small>Created as part of the "Software Engineering and Project Management" course 2025</small>
+  </footer>
+</body>
+</html>

@@ -46,6 +46,11 @@ All changes to the source code must have a ticket created in Jira. For example:
 4. **Commit your changes:**
 
    ```bash
+   # Add the file you want to commit.
+   git add file_name.js
+   ```
+
+   ```bash
    git commit -m "Add README.md with development workflow"
    ```
 
