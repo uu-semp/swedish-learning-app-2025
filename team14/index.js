@@ -111,10 +111,18 @@ function createHtmlObjects(imgArray) {
 }
 
 // Injects html objects into the spot where they are intended to be
-// TODO: Find out where to insert the objects and update function
+// TODO: 1. Add styling to the div objects and make it a set size which is scrollable.
+// TODO: 2. Make images clickable so they can switch place.
 function injectHtmlObjects(htmlObjects) {
-    // const container = document.getElementById("image-container");
-    // container.appendChild(htmlObjects[0]);
+    const htmlImgMenu = document.createElement("div");
+
+    for (let i = 0; i < htmlObjects.length; i++) {
+        const htmlImgContainer = document.createElement("div");
+        htmlImgContainer.appendChild(htmlObjects[i]);
+        htmlImgMenu.appendChild(htmlImgContainer);
+    }
+
+    // TODO: Find where on the page to insert the htmlImgMenu
 }
 
 
