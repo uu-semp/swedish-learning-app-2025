@@ -31,10 +31,88 @@ function startGame(level) {
   hideAllViews();
   document.getElementById('game-view').style.display = 'block';
   
+  // Configure game UI based on difficulty level
+  setupGameForLevel(level);
+  
   // Initialize game with selected level (to be implemented in game.js)
   if (typeof initializeGame === 'function') {
     initializeGame(level);
   }
+}
+
+// ==============================================
+// GAME UI CONFIGURATION BY LEVEL
+// ==============================================
+
+// Configure game interface based on difficulty
+function setupGameForLevel(level) {
+  const clockSection = document.getElementById('clock-section');
+  const answersContainer = document.getElementById('answers-container');
+  const textInputSection = document.getElementById('text-input-section');
+  const answerInput = document.getElementById('answer-input');
+  
+  // Reset input
+  if (answerInput) answerInput.value = '';
+  
+  switch(level) {
+    case 'easy':
+      // Easy: Show clock + multiple choice buttons
+      if (clockSection) clockSection.style.display = 'flex';
+      if (answersContainer) answersContainer.style.display = 'grid';
+      if (textInputSection) textInputSection.style.display = 'none';
+      break;
+      
+    case 'medium':
+      // Medium: Show clock + text input
+      if (clockSection) clockSection.style.display = 'flex';
+      if (answersContainer) answersContainer.style.display = 'none';
+      if (textInputSection) textInputSection.style.display = 'block';
+      break;
+      
+    case 'hard':
+      // Hard: No clock + text input (dialogue mode)
+      if (clockSection) clockSection.style.display = 'none';
+      if (answersContainer) answersContainer.style.display = 'none';
+      if (textInputSection) textInputSection.style.display = 'block';
+      break;
+      
+    default:
+      console.warn('Unknown difficulty level:', level);
+  }
+}
+
+// Helper to show/hide hint
+function toggleHint(show, hintText = '') {
+  const hintSection = document.getElementById('hint-section');
+  const hintTextElement = document.getElementById('hint-text');
+  
+  if (hintSection) {
+    hintSection.style.display = show ? 'block' : 'none';
+  }
+  if (hintTextElement && show) {
+    hintTextElement.textContent = hintText;
+  }
+}
+
+// Insert Swedish special character into text input
+function insertLetter(letter) {
+  const input = document.getElementById('answer-input');
+  if (!input) return;
+  
+  // Get current cursor position
+  const start = input.selectionStart;
+  const end = input.selectionEnd;
+  const currentValue = input.value;
+  
+  // Insert letter at cursor position
+  input.value = currentValue.substring(0, start) + letter + currentValue.substring(end);
+  
+  // Move cursor after inserted letter
+  const newPosition = start + letter.length;
+  input.setSelectionRange(newPosition, newPosition);
+  
+  // Focus back on input
+  input.focus();
 }
 // ==============================================
 //  Summary / Finish View (Updated)
@@ -92,6 +170,9 @@ window.showIntro = showIntro;
 window.submitAnswer = submitAnswer;
 window.restartGame = restartGame;
 window.showFinish = showFinish;
+window.setupGameForLevel = setupGameForLevel;
+window.toggleHint = toggleHint;
+window.insertLetter = insertLetter;
 
 // ==============================================
 // INITIALIZATION
