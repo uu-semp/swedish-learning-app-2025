@@ -79,6 +79,7 @@ body {
   row-gap: 0px;       /* Small gap between rows */
   column-gap: 100px;    /* Adjust as needed */
   border: 2px solid #654321;
+  overflow: visible;    /* <-- allow glows to extend beyond grid cells */
 }
 
 .shelf_items img {
@@ -142,4 +143,40 @@ body {
   z-index: 10;
 }
 
+/* --- Food image hover / focus / current-target --- */
+.shelf_items img {
+  transition: transform .18s ease, filter .18s ease;
+  cursor: pointer;
+}
 
+/* Hover: just zoom and brighten — no outer shadow */
+.shelf_items img:hover {
+  transform: scale(1.08);
+  filter: brightness(1.1) saturate(1.15);
+}
+
+/* Keyboard focus ring (tab-friendly, tight glow instead of box) */
+.shelf_items img:focus-visible {
+  outline: none;
+  filter: brightness(1.15) drop-shadow(0 0 4px #38bdf8);
+}
+
+/* Current target: soft pulsing glow (no square box-shadow) */
+.shelf_items img.is-current {
+  transform: scale(1.06);
+  filter: brightness(1.2) drop-shadow(0 0 6px #38bdf8);
+  animation: pulse-glow 1.4s ease-in-out infinite;
+}
+
+/* Optional: already picked/disabled */
+.shelf_items img.is-disabled {
+  filter: grayscale(.7) opacity(.55);
+  pointer-events: none;
+  transform: none;
+}
+
+/* gentle breathing glow for current target */
+@keyframes pulse-glow {
+  0%, 100% { filter: brightness(1.15) drop-shadow(0 0 4px #38bdf8); }
+  50%      { filter: brightness(1.25) drop-shadow(0 0 10px #7dd3fc); }
+}
