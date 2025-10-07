@@ -1,4 +1,8 @@
-import { get_next_words, update_selection, finish_game } from "../selection/selection.js";
+import {
+  get_next_words,
+  update_selection,
+  finish_game,
+} from "../selection/selection.js";
 
 let totalRounds = 5;
 let currentRound = 1;
@@ -12,7 +16,9 @@ function loadRound() {
   selectedIndex = null;
   firstAttempt = true;
 
-  document.getElementById("round").textContent = `Round ${currentRound} / ${totalRounds}`;
+  document.getElementById(
+    "round"
+  ).textContent = `Round ${currentRound} / ${totalRounds}`;
   document.getElementById("feedback").innerHTML = "";
   document.getElementById("confirmBtn").disabled = true;
   document.getElementById("nextBtn").style.display = "none";
@@ -22,7 +28,8 @@ function loadRound() {
   document.getElementById("confirmBtn").style.display = "inline-block";
 
   // set audio
-  document.getElementById("audioPlayer").src = "/" + currentData.words[currentData.correct_index].audio;
+  document.getElementById("audioPlayer").src =
+    "/" + currentData.words[currentData.correct_index].audio;
 
   // Auto-play the audio for the new round
   const audio = document.getElementById("audioPlayer");
@@ -43,7 +50,9 @@ function loadRound() {
     card.innerHTML = `<img src="${"/" + w.img}" alt="${w.en}">`;
     // <div class="image-label">${w.en}</div>
     card.addEventListener("click", () => {
-      document.querySelectorAll(".image-card").forEach(c => c.classList.remove("selected"));
+      document
+        .querySelectorAll(".image-card")
+        .forEach((c) => c.classList.remove("selected"));
       card.classList.add("selected");
       selectedIndex = i;
       document.getElementById("confirmBtn").disabled = false;
@@ -59,17 +68,19 @@ document.getElementById("confirmBtn").addEventListener("click", () => {
   const feedbackEl = document.getElementById("feedback");
   const correctIndex = currentData.correct_index;
   const chosen = currentData.words[selectedIndex];
-  const isCorrect = (selectedIndex === correctIndex);
+  const isCorrect = selectedIndex === correctIndex;
 
   update_selection({ id: chosen.id, guessed_correct: isCorrect }); // store result
 
   // Disable clicking while evaluating
-  document.querySelectorAll(".image-card").forEach(card => {
+  document.querySelectorAll(".image-card").forEach((card) => {
     card.style.pointerEvents = "none";
   });
 
   if (effectsEnabled) {
-    const fx = new Audio(isCorrect ? "soundEffects/right.mp3" : "soundEffects/wrong.mp3");
+    const fx = new Audio(
+      isCorrect ? "soundEffects/right.mp3" : "soundEffects/wrong.mp3"
+    );
     fx.volume = volumeControl.value;
     fx.play();
   }
@@ -78,24 +89,26 @@ document.getElementById("confirmBtn").addEventListener("click", () => {
     // Correct Answer
     if (firstAttempt) score++;
 
-    const correctCard = document.querySelector(`.image-card[data-index='${correctIndex}']`);
+    const correctCard = document.querySelector(
+      `.image-card[data-index='${correctIndex}']`
+    );
     correctCard.style.borderColor = "green";
     correctCard.style.background = "#e6ffe6";
 
     feedbackEl.innerHTML = `<span style="color:green;"><i class="fas fa-check-circle"></i> Correct!</span>`;
     confirmBtn.style.display = "none";
     nextBtn.style.display = "inline-block";
-
   } else {
     // Wrong Answer
-    const wrongCard = document.querySelector(`.image-card[data-index='${selectedIndex}']`);
+    const wrongCard = document.querySelector(
+      `.image-card[data-index='${selectedIndex}']`
+    );
     wrongCard.style.borderColor = "red";
     wrongCard.style.background = "#ffe6e6";
 
     const correctWord = currentData.words[correctIndex].en;
     const hintLetter = correctWord.charAt(0).toUpperCase();
-    feedbackEl.innerHTML =
-      `<span style="color:red;"><i class="fas fa-times-circle"></i> Wrong!</span> You chose <b>${chosen.en}</b>. Hint: starts with <b>${hintLetter}</b>...`;
+    feedbackEl.innerHTML = `<span style="color:red;"><i class="fas fa-times-circle"></i> Wrong!</span> You chose <b>${chosen.en}</b>. Hint: starts with <b>${hintLetter}</b>...`;
 
     confirmBtn.style.display = "none";
 
@@ -115,7 +128,7 @@ document.getElementById("confirmBtn").addEventListener("click", () => {
     firstAttempt = false;
 
     // Allow retry: re-enable clicking on images
-    document.querySelectorAll(".image-card").forEach(card => {
+    document.querySelectorAll(".image-card").forEach((card) => {
       card.style.pointerEvents = "auto";
       card.style.cursor = "pointer";
     });
@@ -128,7 +141,7 @@ document.getElementById("confirmBtn").addEventListener("click", () => {
       confirmBtn.disabled = true;
 
       //  Reset all card visuals completely
-      document.querySelectorAll(".image-card").forEach(card => {
+      document.querySelectorAll(".image-card").forEach((card) => {
         card.classList.remove("selected");
         card.style.borderColor = "transparent";
         card.style.background = "white";
@@ -139,10 +152,10 @@ document.getElementById("confirmBtn").addEventListener("click", () => {
       selectedIndex = null;
 
       //  Rebind click events for fresh selection
-      document.querySelectorAll(".image-card").forEach(card => {
+      document.querySelectorAll(".image-card").forEach((card) => {
         card.onclick = () => {
           // Clear all other selections
-          document.querySelectorAll(".image-card").forEach(c => {
+          document.querySelectorAll(".image-card").forEach((c) => {
             c.classList.remove("selected");
             c.style.borderColor = "transparent";
             c.style.background = "white";
@@ -161,7 +174,6 @@ document.getElementById("confirmBtn").addEventListener("click", () => {
   }
 });
 
-
 // Next Round
 document.getElementById("nextBtn").addEventListener("click", () => {
   if (currentRound < totalRounds) {
@@ -170,6 +182,7 @@ document.getElementById("nextBtn").addEventListener("click", () => {
     loadRound();
   } else {
     finish_game();
+    window.location.href = "../end-screen/index.html";
     document.getElementById("round").style.display = "none";
     document.getElementById("playAudio").style.display = "none";
     document.getElementById("imageOptions").style.display = "none";
@@ -177,7 +190,9 @@ document.getElementById("nextBtn").addEventListener("click", () => {
     document.getElementById("feedback").style.display = "none";
     document.getElementById("nextBtn").style.display = "none";
     document.getElementById("endScreen").style.display = "block";
-    document.getElementById("finalScore").textContent = `Your Score: ${score} / ${totalRounds}`;
+    document.getElementById(
+      "finalScore"
+    ).textContent = `Your Score: ${score} / ${totalRounds}`;
   }
 });
 
