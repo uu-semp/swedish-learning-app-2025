@@ -44,7 +44,7 @@ export const ChooseLevelView = {
           </div>
 
           <div class="go-back-wrapper"> 
-              <go-back-button class="go-back-button-style" @click="switchTo('StartView')"></go-back-button>
+              <go-back-button @click="switchTo('StartView')"></go-back-button>
           </div>
       </div>
     `,
