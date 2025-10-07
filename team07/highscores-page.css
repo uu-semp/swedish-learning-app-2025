@@ -1,0 +1,24 @@
+/*
+=================================================
+Owned by Team 07
+=================================================
+*/
+
+.game-frame {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.game-frame h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    text-align: center;
+    font-family: 'Times New Roman', Times, serif;
+    margin-top: 5rem;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+}
