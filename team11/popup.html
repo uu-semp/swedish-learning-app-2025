@@ -274,24 +274,28 @@
 }
 
   function nextItem(){
-    if (game.completed >= game.total) {
-      const win = game.firstTryCorrectCount >= game.winThreshold;
+  if (game.completed >= game.total) {
+    const win = game.firstTryCorrectCount >= game.winThreshold;
 
-      // Save results for the end screen
-      const payload = {
-        total: game.total,
-        correct: game.firstTryCorrectCount,
-        mistakes: game.mistakes,
-        threshold: game.winThreshold,
-        won: win,
-        timestamp: Date.now()
-      };
-      try { sessionStorage.setItem('team11_end_stats', JSON.stringify(payload)); } catch (_) {}
+    // Save results for the end screen (endgame.html already reads this)
+    const payload = {
+      total: game.total,
+      correct: game.firstTryCorrectCount,
+      mistakes: game.mistakes,
+      threshold: game.winThreshold,
+      won: win,
+      timestamp: Date.now()
+    };
+    try { sessionStorage.setItem('team11_end_stats', JSON.stringify(payload)); } catch (_) {}
 
-      // Navigate the whole app (not just the iframe) to the end screen
-      if (window.top) window.top.location.href = './endGame.html';
-      return;
-    }
+    // Tell parent to make the iframe clickable while end screen is shown
+    try { window.parent.postMessage({ type: 'endgameOpen' }, '*'); } catch (_) {}
+
+    // ✅ Navigate **inside this iframe** to the end screen (NO full-page redirect)
+    window.location.href = './endgame.html';   // NOTE: filename is lower-case here
+
+    return;
+  }
 
     let n = game.orderIndex + 1;
     while (n < game.total && game.perItemState[n].done) n++;

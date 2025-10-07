@@ -80,6 +80,14 @@ Owned by Team 11
 
   <!-- Parent/iframe handshake + status handling -->
   <script>
+    function setIframeInteractive(on) {
+  const wrap  = document.querySelector('.popup-frame-wrap');
+  const frame = document.querySelector('.popup-frame');
+  if (!wrap || !frame) return;
+  wrap.style.pointerEvents  = on ? 'auto' : 'none';
+  frame.style.pointerEvents = on ? 'auto' : 'none';
+}
+
     const popupFrame = document.getElementById('popupFrame');
 
     // --- helpers ---
@@ -159,6 +167,23 @@ Owned by Team 11
         popupIsReady = true;
         tryInitPopupOnce();
       }
+      // Endgame lifecycle coming from the iframe
+if (data.type === 'endgameOpen') {
+  // Enable clicks so endgame buttons are usable
+  setIframeInteractive(true);
+  return;
+}
+if (data.type === 'endgameClose') {
+  // Disable clicks again so gameplay clicks go to the shelf, not the iframe
+  setIframeInteractive(false);
+  return;
+}
+if (data.type === 'gotoMainMenu') {
+  // Navigate the OUTER page to your main menu
+  window.location.href = '../index.html';
+  return;
+}
+
     });
 
     // 2) “team11:ready” (from main.js) nudges init when game state is built
