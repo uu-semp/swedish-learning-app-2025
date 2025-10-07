@@ -22,6 +22,7 @@ import { IncorrectAnswerFeedback } from "./elements/incorrectAnswerFeedback.js";
 import { WardrobeContainer } from "./elements/wardrobeContainer.js";
 import { PelleContainer } from "./elements/pelleContainer.js";
 import { DressPellePrompt } from "./elements/dressPellePrompt.js";
+import { ScoreCounter } from "./elements/scoreCounter.js";
 
 
 export default {
@@ -47,4 +48,5 @@ export default {
   ImagesButton,
   ImagesView,
   DressPellePrompt,
+  ScoreCounter
 };

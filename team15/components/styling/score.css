@@ -7,15 +7,12 @@
   background-color: #ceffd7;
   border: 5px solid #02b823;
   border-radius: 15px;
-  padding: 8px 15px;
   font-size: 24px;
   font-weight: bold;
-  display: flex;
-  align-items: center;
-  gap: 5px;
 }
 
-.coin-icon {
-  width: 28px;
-  height: 28px;
+.score-counter img {
+    width: 100%;   
+    height: 100%;  
+    object-fit: contain; 
 }

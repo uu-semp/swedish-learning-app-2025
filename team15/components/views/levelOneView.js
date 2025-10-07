@@ -8,7 +8,7 @@ export const LevelOneView = {
             showModal: false, // Controls the visibility of the modal
             showCorrectFeedback: false,
             showIncorrectFeedback: false,
-            score: 0, // Initial  player's score
+            currentScore: 0, // Initial  player's score
             currentItem: null, 
             availableItems: clothingItems,
             currentIndex: 0,
@@ -61,6 +61,7 @@ export const LevelOneView = {
                 this.showCorrectFeedback = true;
                 setTimeout(() => {
                     this.showCorrectFeedback = false;
+                    this.currentScore++;
                     this.loadNextItem();
                 }, 1500);
             } else {

@@ -1,28 +1,12 @@
 export const ScoreCounter = {
     name: 'score-counter',
     props: {
-        initialScore: {
-            type: Number,
-            default: 0
-        }
-    },
-    data() {
-        return {
-            score: this.initialScore
-        };
+        score: 0 
     },
     template: `
         <div class="score-counter">
             <span>{{ score }}</span> P
-            <img src="./components/assets/coin.png" alt="coin" class="coin-icon" />
+            <img src="./components/assets/coin.png" alt="coin"/>
         </div>
-    `,
-    methods: {
-        addPoints(points) {
-            this.score += points;
-        },
-        resetScore() {
-            this.score = this.initialScore;
-        }
-    }
+    `
 };
