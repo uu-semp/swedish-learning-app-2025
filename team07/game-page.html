@@ -1,0 +1,95 @@
+<!doctype html>
+
+<!--
+=================================================
+Owned by Team 07
+=================================================
+-->
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Basic Static Site</title>
+  <link rel="stylesheet" href="../style.css" />
+
+  <script src="../scripts/vocabulary.js"></script>
+  <script src="../scripts/save.js"></script>
+
+  <!-- You are allowed to use JQuery and Vue.js but don't have to. They just make a
+  lot of things easier
+  -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+  <!-- Site specific scripts and styles -->
+  <link rel="stylesheet" href="index.css" />
+  <link rel="stylesheet" href="game-page.css" />
+  <script src="index.js" defer></script>
+  <script src="game-page.js" defer></script>
+
+</head>
+
+<body>
+  <header>
+    <h1>Team 07</h1>
+  </header>
+
+  <main class="game-frame">
+
+    <i id="back-button" class="fa-solid fa-arrow-left"></i>
+
+    <!-- Ljudspelare -->
+    <audio id="word-audio">
+      <source id="audio-src" src="" type="audio/mpeg">
+      Your browser does not support the audio element.
+    </audio>
+
+    <h2 id="instruction">Match the image to the sound</h2>
+    <!-- Container för bilder -->
+    <div class="image-container">
+
+      <img id="img-1" src="" alt="Bild 1">
+      <img id="img-2" src="" alt="Bild 2">
+      <img id="img-3" src="" alt="Bild 3">
+      <img id="img-4" src="" alt="Bild 4">
+
+    </div>
+
+    <h5>Click sound icon to hear the word again</h5>
+    <!-- Ljudikon -->
+    <i id="sound-icon" class="fa-solid fa-volume-high"></i>
+
+    <!-- Nästa knapp -->
+    <button id="next-button">Next</button>
+    
+  </main>
+
+  <footer>
+    <small>Created as part of the "Software Engineering and Project Management" course 2025</small>
+  </footer>
+</body>
+
+<script>
+ 
+  // Funktionalitet av tillbaka knapp till startsidan
+  document.getElementById('back-button').addEventListener('click', function () {
+    window.location.href = 'index.html';
+  });
+
+  // Retrieves the words from localstorage
+  const words = JSON.parse(localStorage.getItem('game_words'));
+  console.log(words);
+
+  // Add the audio source from the correct word to the audio element
+  // Commented out for now since we don't have audio yet
+  /*
+  for (let i = 0; i < 4; i++) {
+    if (words[i].answer == 'true')
+      document.getElementById('audio-src').src = words[i].audio;
+  }*/
+</script>
+
+</html>
