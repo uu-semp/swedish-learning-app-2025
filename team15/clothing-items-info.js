@@ -8,7 +8,6 @@ export default [
         is_pair: false,
         Category: 'clothing',
         Subcategory: 'accessories',
-
         Image_url: 'assets/images/clothes/beanie.png',
     },
     {
@@ -158,7 +157,7 @@ export default [
     {
         ID: 'cddcaa3f',
         English: 'glasses',
-        Article: '',
+        Article: 'ett',
         Swedish: 'glasögon',
         Swedish_plural: '',
         is_pair: true,
@@ -169,7 +168,7 @@ export default [
     {
         ID: 'ffb7fcf2',
         English: 'gloves',
-        Article: '',
+        Article: 'ett',
         Swedish: 'handskar',
         Swedish_plural: '',
         is_pair: true,
@@ -257,7 +256,7 @@ export default [
     {
         ID: 'a6d1ef22',
         English: 'mittens',
-        Article: '',
+        Article: 'ett',
         Swedish: 'vantar',
         Swedish_plural: '',
         is_pair: true,
@@ -356,7 +355,7 @@ export default [
     {
         ID: '150d1b5f',
         English: 'shoes',
-        Article: '',
+        Article: 'ett',
         Swedish: 'skor',
         Swedish_plural: '',
         is_pair: true,
@@ -433,10 +432,10 @@ export default [
     {
         ID: '26133720',
         English: 'sunglasses',
-        Article: '',
+        Article: 'ett',
         Swedish: 'solglasögon',
         Swedish_plural: '',
-        is_pair: false, // can be a pair but treated as singular in Swedish
+        is_pair: true, // can be a pair but treated as singular in Swedish
         Category: 'clothing',
         Subcategory: 'accessories',
         Image_url: 'assets/images/clothes/sunglasses.png',
@@ -455,7 +454,7 @@ export default [
     {
         ID: '505e685e',
         English: 'sweatpants',
-        Article: '',
+        Article: 'ett',
         Swedish: 'mjukisbyxor',
         Swedish_plural: '',
         is_pair: true,
