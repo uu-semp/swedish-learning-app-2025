@@ -1,3 +1,5 @@
+import clothingItems from "/team15/clothing-items-info.js";
+
 export const LevelOneView = {
     name: 'level-one-view',
     props: ['switchTo'],
@@ -6,11 +8,35 @@ export const LevelOneView = {
             showModal: false, // Controls the visibility of the modal
             showCorrectFeedback: false,
             showIncorrectFeedback: false,
-            score: 0 // Initial  player's score
+            score: 0, // Initial  player's score
+            currentItem: null, 
+            availableItems: clothingItems,
+            currentIndex: 0,
         };
     },
 
+    mounted() {
+        this.startLevel();
+    },
+
     methods: {
+            startLevel() {
+            if (this.availableItems && this.availableItems.length > 0) {
+                this.currentItem = this.availableItems[this.currentIndex];
+            } else {
+                console.error("No clothing items found to start the level.");
+            }
+        },
+
+        loadNextItem() {
+            this.currentIndex++; 
+            if (this.currentIndex < this.availableItems.length) {
+                this.currentItem = this.availableItems[this.currentIndex];
+            } else {
+                console.log("Level Complete!");
+            }
+        },
+
         openModal() {
             this.showModal = true;
         },
@@ -31,12 +57,13 @@ export const LevelOneView = {
                 this.showCorrectFeedback = true;
                 setTimeout(() => {
                     this.showCorrectFeedback = false;
-                }, 3000);
+                    this.loadNextItem();
+                }, 1500);
             } else {
                 this.showIncorrectFeedback = true;
                 setTimeout(() => {
                     this.showIncorrectFeedback = false;
-                }, 3000);
+                }, 1500);
             }
         },
     },
@@ -44,14 +71,13 @@ export const LevelOneView = {
     template: `
       <div class="level-one-view">
             <div class="level-header">
-                <h1>{{$language.translate('level1')}}</h1>
+                <dress-pelle-prompt :item="currentItem">
 
                 <div class="score-counter">
                     <span>{{ score }}</span> P
                     <img src="./components/assets/coin.png" alt="coin" class="coin-icon" />
                 </div>
 
-                <exit-game-button @click="openModal"></exit-game-button>
             </div>
 
             <div class="feedback-area">
@@ -67,6 +93,9 @@ export const LevelOneView = {
                     <wardrobe-container></wardrobe-container>
                 </div>
             </div>
+
+            <exit-game-button @click="openModal"></exit-game-button>
+
 
             <div v-if="showModal" class="modal-overlay" @click="handleOverlayClick">
                 <div class="modal-content" @click.stop>
