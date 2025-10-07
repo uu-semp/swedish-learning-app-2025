@@ -5,14 +5,13 @@ export const StartGameButton = {
   `,
 };
 
-
-
 export const HowToPlayButton = {
     name: 'how-to-play-button',
     template: `
    <button class = "big-buttons" id="how-to-play-button">{{$language.translate('how-to')}}</button>
   `,
 };
+
 export const GoBackButton = {
     name: 'go-back-button',
     template: `
@@ -121,11 +120,5 @@ export const LanguageFlagButton = {
         :style="'width: ' + width + '; height: ' + height + ';'"
       />
     </button>
-  `,
-};
-export const ImagesButton = {
-    name: 'images-button',
-    template: `
-    <button class="big-buttons" id="images-button">IMAGES BUTTON</button>
   `,
 };

@@ -4,7 +4,6 @@ import { ChooseLevelView } from './views/chooseLevelView.js';
 import { LevelOneView } from './views/levelOneView.js';
 import { LevelTwoView } from './views/levelTwoView.js';
 import { LevelThreeView } from './views/levelThreeView.js';
-import { ImagesView } from './views/imageView.js';
 import {
   StartGameButton,
   HowToPlayButton,
@@ -15,7 +14,6 @@ import {
   ClothingItemButton,
   LanguageFlagButton,
   ExitGameButton,
-  ImagesButton,
 } from "./elements/buttons.js";
 import { CorrectAnswerFeedback } from "./elements/correctAnswerFeedback.js";
 import { IncorrectAnswerFeedback } from "./elements/incorrectAnswerFeedback.js";
@@ -45,8 +43,6 @@ export default {
   LanguageFlagButton,
   ExitGameButton,
   PelleContainer,
-  ImagesButton,
-  ImagesView,
   DressPellePrompt,
   ScoreCounter
 };
