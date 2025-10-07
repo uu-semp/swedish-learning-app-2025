@@ -37,7 +37,6 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 1rem;
   }
 
   .result-box h1 {
@@ -91,7 +90,6 @@
       </div>
       <div class="actions">
         <button id="playAgain">Spela igen</button>
-        <button id="mainMenu">Till huvudmenyn</button>
       </div>
     </div>
   </div>
@@ -122,11 +120,6 @@
     // Close interactive mode in parent and reload gameplay UI in the iframe
     try { window.parent.postMessage({ type: 'endgameClose' }, '*'); } catch (_) {}
     window.location.href = './popup.html';  // ✅ restart the game INSIDE the iframe
-  };
-
-  document.getElementById('mainMenu').onclick = () => {
-    // Ask parent (outer page) to go to menu (keeps global layout)
-    try { window.parent.postMessage({ type: 'gotoMainMenu' }, '*'); } catch (_) {}
   };
   </script>
 </body>

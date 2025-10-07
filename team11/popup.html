@@ -124,7 +124,6 @@
         <p id="endMsg" class="endgame-msg">&nbsp;</p>
         <div class="actions endgame-actions">
           <button id="btnPlayAgain" class="endgame-btn">Spela igen</button>
-          <button id="btnMainMenu" class="endgame-btn">Till huvudmenyn</button>
         </div>
       </div>
     </div>
@@ -317,7 +316,6 @@
 
   // Buttons inside modal
   document.getElementById('btnPlayAgain').onclick=()=>{closeEndModal();reset();};
-  document.getElementById('btnMainMenu').onclick=()=>{closeEndModal();window.location.href='../index.html';};
 
   // ⬇️ Message bridge with parent
   window.addEventListener('message', function(event) {
