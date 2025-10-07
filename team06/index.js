@@ -36,11 +36,42 @@ function startGame(level) {
     initializeGame(level);
   }
 }
+// ==============================================
+//  Summary / Finish View (Updated)
+// ==============================================
 
+// Show Summary View (after all questions are done)
+function showSummary(finalScore) {
+  hideAllViews();
+  document.getElementById('summary-view').style.display = 'block';
+
+  // If score element exists, update text
+  const scoreElement = document.getElementById("final-score");
+  if (scoreElement) scoreElement.textContent = finalScore ?? 0;
+
+  // Optional: dynamic feedback text
+  const summarySubtitle = document.querySelector(".summary-subtitle");
+  if (summarySubtitle) {
+    if (finalScore >= 90) summarySubtitle.textContent = "🥇 Excellent! You mastered this topic perfectly!";
+    else if (finalScore >= 60) summarySubtitle.textContent = "🥈 Great job! Keep practicing!";
+    else summarySubtitle.textContent = "🥉 Good effort! Try again to improve!";
+  }
+}
+
+// Restart Game
+function restartGame() {
+  // Reset game-related variables (if declared globally)
+  if (typeof resetGame === 'function') {
+    resetGame();
+  }
+
+  hideAllViews();
+  document.getElementById('game-view').style.display = 'block';
+}
 // Show Finish View
 function showFinish() {
   hideAllViews();
-  document.getElementById('finish-view').style.display = 'block';
+  document.getElementById('summary-view').style.display = 'block';
   
   // Display final results (to be implemented in game.js)
   if (typeof displayResults === 'function') {
@@ -53,6 +84,14 @@ function submitAnswer() {
   console.log("Submit answer clicked - to be implemented by backend team");
   // TODO: Backend team - implement answer checking logic here
 }
+// Expose functions globally (for HTML onclick & console testing)
+window.showSummary = showSummary;
+window.startGame = startGame;
+window.showLevelSelection = showLevelSelection;
+window.showIntro = showIntro;
+window.submitAnswer = submitAnswer;
+window.restartGame = restartGame;
+window.showFinish = showFinish;
 
 // ==============================================
 // INITIALIZATION

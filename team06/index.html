@@ -29,8 +29,10 @@ Owned by Team 06
   <link rel="stylesheet" href="styles/level.css" />
   <link rel="stylesheet" href="components/clock.css" />
   <link rel="stylesheet" href="styles/game.css" />
+  <link rel="stylesheet" href="styles/summary.css" />
   <script type="module" src="components/clock.js"></script>
-  <script src="index.js" defer></script>
+  <!-- <script src="index.js" defer></script> -->
+  <script type="module" src="index.js"></script>
 </head>
 <body>
   <header>
@@ -182,9 +184,22 @@ Owned by Team 06
       </div>
     </div>
 
-    <!-- FINISH VIEW -->
-    <div id="finish-view" class="view" style="display: none;">
-      <h2>Finish View - Coming Soon</h2>
+   <!-- SUMMARY VIEW -->
+    <div id="summary-view" class="view" style="display: none;">
+      <div class="summary-container">
+        <h1 class="summary-title">🎉 Well Done!</h1>
+        <p class="summary-text">You've completed the challenge!</p>
+
+        <div class="summary-score-box">
+          <p class="summary-label">Final Score</p>
+          <h2 id="final-score">0</h2>
+        </div>
+
+        <div class="summary-buttons">
+          <button class="summary-btn" onclick="restartGame()">🔁 Play Again</button>
+          <button class="summary-btn" onclick="showLevelSelection()">⬅ Back to Levels</button>
+        </div>
+      </div>
     </div>
 
     <!-- 
