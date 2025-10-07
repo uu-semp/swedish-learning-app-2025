@@ -1,0 +1,146 @@
+:root {
+  --color-primary: #d2132a; /* heading red */
+  --color-text: #010101;
+  --color-card: #d9d8d9; /* tutorial card */
+  --color-cta: #0168aa; /* start button blue */
+  --color-light-blue: #e6f2ff;
+  --outline: #222222;
+  --font-sans: "Work Sans", system-ui, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  width: 800px;
+  height: 600px;
+}
+main {
+  height: 100%;
+  background-color: var(--color-light-blue);
+}
+
+h1 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin: 0;
+  height: 100px;
+  font-weight: bold;
+  font-size: xx-large;
+  color: var(--color-primary);
+  border-bottom: 2px solid black;
+}
+
+h2 {
+  font-size: larger;
+  text-align: center;
+  font-weight: bold;
+  color: #555;
+  margin-top: 20px;
+}
+
+#categories {
+  margin-top: 60px;
+  margin-left: 150px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.category-container {
+  display: flex;
+  align-items: center;
+  font-size: larger;
+  height: 70px;
+}
+
+.category-container img {
+  margin-left: 40px;
+  width: 70px;
+}
+.category-container label {
+  margin-left: 10px;
+}
+
+input[type="checkbox"] {
+  box-sizing: border-box;
+  width: 20px;
+  height: 20px;
+  margin: 6px;
+  padding: 0;
+  border: 2px solid black;
+  appearance: none;
+  background-color: transparent;
+  outline: none;
+  transition: outline 0.1s;
+}
+
+input[type="checkbox"]:checked {
+  background-size: cover;
+  padding: 2px;
+}
+
+input[type="checkbox"]:not(:disabled):checked {
+  border-color: black;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="20" height="20" viewBox="0 0 32 32" xml:space="preserve"><path style="fill: %23274c77" d="M11.941,28.877l-11.941-11.942l5.695-5.696l6.246,6.246l14.364-14.364L32,8.818"/></svg>');
+}
+
+input[type="checkbox"]:focus {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 4px;
+}
+
+#start-game {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  width: 140px;
+  height: 40px;
+  padding: 10px 20px;
+  margin: 0 auto;
+  margin-top: 40px;
+
+  border-radius: 20px;
+  border: 4px solid black;
+  color: white;
+  background-color: var(--color-cta);
+}
+
+.error-message {
+  margin-top: 10px;
+  text-align: center;
+  display: none;
+
+  color: red;
+}
+
+.animate {
+  animation: shake 0.5s forwards;
+  border-color: red !important;
+}
+
+@keyframes shake {
+  0% {
+    transform: skewX(-10deg);
+  }
+
+  25% {
+    transform: skewX(10deg);
+  }
+
+  50% {
+    transform: skewX(-10deg);
+  }
+
+  75% {
+    transform: skewX(10deg);
+  }
+
+  100% {
+    transform: skewX(-10deg);
+  }
+}
