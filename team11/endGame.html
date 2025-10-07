@@ -14,11 +14,11 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background: transparent; /* match outer game bg */
+    background: transparent;
   }
 
-  /* The outer stage inside iframe */
   .stage {
+    background: url('./assets/chatbubble.png') no-repeat center / 150% auto;
     width: 100%;
     height: 100%;
     display: flex;
@@ -26,40 +26,38 @@
     justify-content: center;
   }
 
-  /* The result box – scale down to fit inside the smaller frame */
   .result-box {
-    background: #fff;
-    border-radius: 20px;
-    box-shadow: 0 0 16px rgba(0,0,0,0.15);
-    padding: clamp(16px, 3vw, 32px);
-    width: clamp(280px, 80%, 520px);
+    width: clamp(360px, 90%, 700px);
+    padding: clamp(16px, 3vw, 28px); /* tighter */
     text-align: center;
     display: flex;
     flex-direction: column;
     align-items: center;
+    gap: 0.4rem; /* small consistent spacing */
   }
 
   .result-box h1 {
-    font-size: clamp(1.2rem, 2.5vw, 2rem);
-    margin-bottom: .25em;
+    font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+    margin: 0.2em 0 0.1em 0; /* reduced spacing */
   }
 
   .result-box p {
-    font-size: clamp(.9rem, 2vw, 1.1rem);
-    margin: 0;
+    font-size: clamp(.85rem, 1.8vw, 1rem);
+    margin: 0.1em 0;
   }
 
   .stats {
-    margin-top: .5em;
-    font-size: clamp(.8rem, 1.8vw, 1rem);
+    font-size: clamp(.8rem, 1.5vw, .95rem);
+    line-height: 1; /* tighter line spacing */
+    margin: 0.2em 0;
   }
 
   .actions {
-    margin-top: 1em;
+    margin-top: 0.4em; /* smaller gap above button */
     display: flex;
-    gap: 12px;
     flex-wrap: wrap;
     justify-content: center;
+    gap: 6px; /* tighter button spacing if more buttons later */
   }
 
   .actions button {
@@ -67,7 +65,8 @@
     color: #fff;
     border: none;
     border-radius: 999px;
-    padding: 8px 16px;
+    padding: 6px 14px; /* smaller button */
+    font-size: 0.9rem;
     font-weight: 600;
     cursor: pointer;
     transition: opacity 0.2s ease;
@@ -83,7 +82,6 @@
   <div class="stage">
     <div class="result-box">
       <h1 id="headline">Resultat</h1>
-      <p id="subline">Du klarade spelet!</p>
       <div class="stats">
         <p><strong>Rätt:</strong> <span id="correct">0</span> / <span id="total">0</span></p>
         <p><strong>Misstag:</strong> <span id="mistakes">0</span></p>
@@ -92,9 +90,6 @@
         <button id="playAgain">Spela igen</button>
       </div>
     </div>
-  </div>
-  </main>
-    </section>
   </div>
 
   <script>
@@ -109,18 +104,16 @@
       $('total').textContent    = String(total);
       $('mistakes').textContent = String(mistakes);
       $('headline').textContent = won ? 'Bra jobbat, du vann!' : 'Bra försök!';
-      $('subline').textContent  = `Målet var ${threshold} av ${total} rätt på första försöket.`;
     } else {
       $('headline').textContent = 'Ingen data';
-      $('subline').textContent  = 'Starta en ny omgång från menyn.';
       $('correct').textContent = $('total').textContent = $('mistakes').textContent = '0';
     }
-// Buttons
-  document.getElementById('playAgain').onclick = () => {
-    // Close interactive mode in parent and reload gameplay UI in the iframe
-    try { window.parent.postMessage({ type: 'endgameClose' }, '*'); } catch (_) {}
-    window.location.href = './popup.html';  // ✅ restart the game INSIDE the iframe
-  };
+
+    // Button
+    document.getElementById('playAgain').onclick = () => {
+      try { window.parent.postMessage({ type: 'endgameClose' }, '*'); } catch (_) {}
+      window.location.href = './popup.html';
+    };
   </script>
 </body>
 </html>
