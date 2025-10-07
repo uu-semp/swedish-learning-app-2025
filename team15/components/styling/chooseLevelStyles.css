@@ -7,6 +7,7 @@ This CSS file contains styles specific to the "Choose Level" view of the app.
 
 */
 .choose-level-view {
+    
     /* Ensure it takes up the full available space in the .game-frame */
     height: 100%;
     width: 100%;
