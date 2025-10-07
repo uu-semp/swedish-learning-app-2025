@@ -1,7 +1,13 @@
 {
   "Ringgatan": [
     {
-      "coords": "???",
+      "coords": {
+        "x": 0.49,
+        "y": 0.763,
+        "width": 0.12,
+        "height": 0.16,
+        "position": 1
+      },
       "color": {
         "id": "52145c35",
         "sv": "gul",
@@ -24,7 +30,13 @@
       }
     },
     {
-      "coords": "???",
+      "coords": {
+        "x": 0.313,
+        "y": 0.82,
+        "width": 0.13,
+        "height": 0.18,
+        "position": 2
+      },
       "color": {
         "id": "1a30203c",
         "sv": "blå",
@@ -47,7 +59,13 @@
       }
     },
     {
-      "coords": "???",
+      "coords": {
+        "x": 0.4,
+        "y": 0.699,
+        "width": 0.115,
+        "height": 0.177,
+        "position": 3
+      },
       "color": {
         "id": "38610d43",
         "sv": "rosa",
@@ -70,7 +88,13 @@
       }
     },
     {
-      "coords": "???",
+      "coords": {
+        "x": 0.179,
+        "y": 0.725,
+        "width": 0.13,
+        "height": 0.18,
+        "position": 4
+      },
       "color": {
         "id": "657d5907",
         "sv": "vit",
@@ -93,7 +117,13 @@
       }
     },
     {
-      "coords": "???",
+      "coords": {
+        "x": 0.21,
+        "y": 0.57,
+        "width": 0.11,
+        "height": 0.16,
+        "position": 5
+      },
       "color": {
         "id": "6a743833",
         "sv": "grön",
@@ -116,7 +146,13 @@
       }
     },
     {
-      "coords": "???",
+      "coords": {
+        "x": 0.145,
+        "y": 0.5,
+        "width": 0.109,
+        "height": 0.155,
+        "position": 6
+      },
       "color": {
         "id": "17371d10",
         "sv": "lila",
@@ -139,7 +175,13 @@
       }
     },
     {
-      "coords": "???",
+      "coords": {
+        "x": 0.077,
+        "y": 0.447,
+        "width": 0.11,
+        "height": 0.158,
+        "position": 7
+      },
       "color": {
         "id": "6e45235f",
         "sv": "röd",
@@ -164,7 +206,13 @@
   ],
   "Skolgatan": [
     {
-      "coords": "???",
+      "coords": {
+        "x": 0.68,
+        "y": 0.635,
+        "width": 0.11,
+        "height": 0.16,
+        "position": 1
+      },
       "color": {
         "id": "6a743833",
         "sv": "grön",
@@ -187,7 +235,13 @@
       }
     },
     {
-      "coords": "???",
+      "coords": {
+        "x": 0.558,
+        "y": 0.53,
+        "width": 0.112,
+        "height": 0.16,
+        "position": 2
+      },
       "color": {
         "id": "17371d10",
         "sv": "lila",
@@ -210,7 +264,13 @@
       }
     },
     {
-      "coords": "???",
+      "coords": {
+        "x": 0.425,
+        "y": 0.425,
+        "width": 0.145,
+        "height": 0.177,
+        "position": 3
+      },
       "color": {
         "id": "6b260a0d",
         "sv": "orange",
@@ -233,7 +293,13 @@
       }
     },
     {
-      "coords": "???",
+      "coords": {
+        "x": 0.304,
+        "y": 0.35,
+        "width": 0.12,
+        "height": 0.18,
+        "position": 4
+      },
       "color": {
         "id": "1a30203c",
         "sv": "blå",
@@ -256,7 +322,13 @@
       }
     },
     {
-      "coords": "???",
+      "coords": {
+        "x": 0.215,
+        "y": 0.28,
+        "width": 0.11,
+        "height": 0.14,
+        "position": 5
+      },
       "color": {
         "id": "52145c35",
         "sv": "gul",
@@ -279,7 +351,13 @@
       }
     },
     {
-      "coords": "???",
+      "coords": {
+        "x": 0.065,
+        "y": 0.235,
+        "width": 0.12,
+        "height": 0.18,
+        "position": 6
+      },
       "color": {
         "id": "4702640f",
         "sv": "svart",
@@ -304,7 +382,13 @@
   ],
   "Parkvägen": [
     {
-      "coords": "???",
+      "coords": {
+        "x": 0.815,
+        "y": 0.455,
+        "width": 0.121,
+        "height": 0.15,
+        "position": 1
+      },
       "color": {
         "id": "17371d10",
         "sv": "lila",
@@ -327,35 +411,18 @@
       }
     },
     {
-      "coords": "???",
+      "coords": {
+        "x": 0.705,
+        "y": 0.38,
+        "width": 0.13,
+        "height": 0.146,
+        "position": 2
+      },
       "color": {
         "id": "1a30203c",
         "sv": "blå",
         "en": "blue",
         "img": "assets/images/colors/blue.png"
-      },
-      "number": {
-        "cardinal": {
-          "id": "16743b18",
-          "sv": "tjugoett",
-          "en": "twentyone",
-          "literal": "21"
-        },
-        "ordinal": {
-          "id": "51085e77",
-          "sv": "andra",
-          "en": "second",
-          "literal": "2."
-        }
-      }
-    },
-    {
-      "coords": "???",
-      "color": {
-        "id": "6a743833",
-        "sv": "grön",
-        "en": "green",
-        "img": "assets/images/colors/green.png"
       },
       "number": {
         "cardinal": {
@@ -373,35 +440,18 @@
       }
     },
     {
-      "coords": "???",
+      "coords": {
+        "x": 0.62,
+        "y": 0.31,
+        "width": 0.112,
+        "height": 0.157,
+        "position": 3
+      },
       "color": {
         "id": "38610d43",
         "sv": "rosa",
         "en": "pink",
         "img": "assets/images/colors/pink.png"
-      },
-      "number": {
-        "cardinal": {
-          "id": "656d363e",
-          "sv": "tjugotre",
-          "en": "twentythree",
-          "literal": "23"
-        },
-        "ordinal": {
-          "id": "1775693f",
-          "sv": "fjärde",
-          "en": "fourth",
-          "literal": "4."
-        }
-      }
-    },
-    {
-      "coords": "???",
-      "color": {
-        "id": "6e45235f",
-        "sv": "röd",
-        "en": "red",
-        "img": "assets/images/colors/red.png"
       },
       "number": {
         "cardinal": {
@@ -419,31 +469,19 @@
       }
     },
     {
-      "coords": "???",
+      "coords": {
+        "x": 0.555,
+        "y": 0.25,
+        "width": 0.119,
+        "height": 0.16,
+        "position": 4
+      },
       "color": {
         "id": "52145c35",
         "sv": "gul",
         "en": "yellow",
         "img": "assets/images/colors/yellow.png"
       },
-      "number": {
-        "cardinal": {
-          "id": "53552143",
-          "sv": "tjugofem",
-          "en": "twentyfive",
-          "literal": "25"
-        },
-        "ordinal": {
-          "id": "1431537c",
-          "sv": "sjunde",
-          "en": "seventh",
-          "literal": "7."
-        }
-      }
-    },
-    {
-      "coords": "???",
-      "color": "What color?",
       "number": {
         "cardinal": {
           "id": "78151153",
@@ -460,26 +498,19 @@
       }
     },
     {
-      "coords": "???",
-      "color": "What color?",
-      "number": {
-        "cardinal": {
-          "id": "1d37044c",
-          "sv": "tjugosju",
-          "en": "twentyseven",
-          "literal": "27"
-        },
-        "ordinal": {
-          "id": "5d210e41",
-          "sv": "nionde",
-          "en": "ninth",
-          "literal": "9."
-        }
-      }
-    },
-    {
-      "coords": "???",
-      "color": "What color?",
+      "coords": {
+        "x": 0.47,
+        "y": 0.184,
+        "width": 0.1,
+        "height": 0.16,
+        "position": 5
+      },
+      "color": {
+        "id": "6e45235f",
+        "sv": "röd",
+        "en": "red",
+        "img": "assets/images/colors/red.png"
+      },
       "number": {
         "cardinal": {
           "id": "044a446a",
@@ -496,8 +527,19 @@
       }
     },
     {
-      "coords": "???",
-      "color": "What color?",
+      "coords": {
+        "x": 0.398,
+        "y": 0.12,
+        "width": 0.119,
+        "height": 0.168,
+        "position": 6
+      },
+      "color": {
+        "id": "52145c35",
+        "sv": "gul",
+        "en": "yellow",
+        "img": "assets/images/colors/yellow.png"
+      },
       "number": {
         "cardinal": {
           "id": "412b1b04",
@@ -514,26 +556,19 @@
       }
     },
     {
-      "coords": "???",
-      "color": "What color?",
-      "number": {
-        "cardinal": {
-          "id": "230c655a",
-          "sv": "trettio",
-          "en": "thirty",
-          "literal": "30"
-        },
-        "ordinal": {
-          "id": "30291c0b",
-          "sv": "tolfte",
-          "en": "twelfth",
-          "literal": "12."
-        }
-      }
-    },
-    {
-      "coords": "???",
-      "color": "What color?",
+      "coords": {
+        "x": 0.24,
+        "y": 0.11,
+        "width": 0.12,
+        "height": 0.185,
+        "position": 7
+      },
+      "color": {
+        "id": "4702640f",
+        "sv": "svart",
+        "en": "black",
+        "img": "assets/images/colors/black.png"
+      },
       "number": {
         "cardinal": {
           "id": "616a2c42",
