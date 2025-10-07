@@ -35,7 +35,12 @@ const DisplayImage = {
 const AnswerContainer = {
     template: `
     <form @submit.prevent="submitAnswer" class="answer-container">
-        <input type="text" v-model="answer" placeholder="Type the Swedish word" class="answer-box">
+        <input 
+            type="text" 
+            v-model="answer" 
+            placeholder="Type the Swedish word" 
+            class="answer-box"
+            ref="answerInput">
         <button type="submit" class="submit-button">Submit</button>
     </form>
     `,
@@ -48,6 +53,31 @@ const AnswerContainer = {
             console.log('submitAnswer called, answer=', this.answer)
             this.$emit('submit', this.answer)
             this.answer = ''
+        },
+        focusInput() {
+            this.$refs.answerInput.focus();
+        }
+    }
+};
+
+const ModalPopup = {
+    props: ['show', 'message', 'type'],
+    template: `
+    <div v-if="show" class="modal-overlay">
+        <div class="modal-content" :class="type">
+            <p>{{ message }}</p>
+            <button 
+                @click="$emit('close')" 
+                class="modal-btn">
+                    Close
+            </button>
+        </div>
+    </div>
+    `,
+    emits: ['close'],
+    methods: {
+        handleEnter() {
+            this.$emit('close')
         }
     }
 };
@@ -58,19 +88,32 @@ const GamePage = {
         <back-button @back="goBack"></back-button>
         <display-level></display-level>
         <display-image :imgSrc="currentImg"></display-image>
-        <p class="english-word">What is the Swedish word for: <strong>{{ currentWord?.en || 'Loading...' }}</strong>?</p>
-        <answer-container @submit="handleSubmit"></answer-container>
+        <p class="english-word">
+            What is the Swedish word for: <strong>{{ currentWord?.en || 'Loading...' }}</strong>?
+        </p>
+        <answer-container 
+            ref="answerContainer" 
+            @submit="handleSubmit"
+        </answer-container>
+
+        <modal-popup 
+            :show="showModal" 
+            :message="modalMessage" 
+            :type="modalType" 
+            @close="closeModal">
+        </modal-popup>
     </div>
     `,
-    components: { DisplayLevel, DisplayImage, AnswerContainer, BackButton },
+    components: { DisplayLevel, DisplayImage, AnswerContainer, BackButton, ModalPopup},
     data() {
         return {
             words: [], 
-            currentIndex: 0, 
+            currentIndex: 0,
+            correctCount: 0, 
             defaultImg: "assets/images/food/food.png",
-            score: 0, 
-            questionsAnswered: 0, 
-            isGameOver: false
+            showModal: false,
+            modalMessage: '',
+            modalType: '', 
         };
     },
     computed: {
@@ -86,41 +129,50 @@ const GamePage = {
             console.error("game_logic is not loaded");
             return;
         }
-        this.words = await window.game_logic.getRandomWordSet();
-        console.log('Words loaded:', this.words);
+        this.words = await window.game_logic.getRandomWordSet(3);
+
+        this.$nextTick(() => {
+                this.focusAnswerInput();
+            });
     },
     methods: {
+        focusAnswerInput() {
+            const answerComponent = this.$refs.answerContainer;
+            if (answerComponent) answerComponent.focusInput();
+        },
         handleSubmit(answer) {
-            if (this.isGameOver) return;
-
-            const correctAnswer = this.currentWord.sv;
-            
-            // Compare the user's answer (case-insensitive and trimmed)
-            if (answer.trim().toLowerCase() === correctAnswer.toLowerCase()) {
-                this.score++;
-                // Optional: Visual feedback for correct answer
-                document.body.style.backgroundColor = '#d4edda';
+            if (this.showModal) return;
+            console.log('handleSubmit called with answer:', answer);
+            if (this.currentWord && answer.toLowerCase() === this.currentWord.sv.toLowerCase()) {
+                this.correctCount++;
+                this.showFeedback(true);
             } else {
-                // Optional: Visual feedback for incorrect answer
-                document.body.style.backgroundColor = '#f8d7da';
+                this.showFeedback(false);
             }
-
-            // Reset background color after a moment
-            setTimeout(() => {
-                document.body.style.backgroundColor = '';
-            }, 300);
-
-            this.questionsAnswered++;
             
-            if (this.questionsAnswered >= this.words.length) {
-                this.endGame();
-            } else {
-                this.nextWord();
-            }
         },
         nextWord() {
+            if (this.currentIndex == (this.words.length - 1)) {
+                this.$emit('game-over', { score: this.correctCount, total: this.words.length });
+            }
             this.currentIndex++;
-            console.log('nextWord called, next index:', this.currentIndex);
+        },
+        showFeedback(isCorrect) {
+            const input = document.querySelector('.answer-box');
+            if (input) input.blur();
+
+            this.modalMessage = isCorrect ? 'Correct!' : 'Incorrect, Try again!';
+            this.modalType = isCorrect ? 'correct' : 'incorrect';
+            this.showModal = true;
+
+            if (isCorrect){
+                setTimeout(() => this.closeModal(), 1500);
+            }
+        },
+        closeModal() {
+            this.showModal = false;
+            this.nextWord();
+            this.focusAnswerInput();
         },
         endGame() {
             this.isGameOver = true;
@@ -149,16 +201,53 @@ const GamePage = {
             }, 1000);
         },
         goBack() {
-            // This should switch the view back to the menu component
-            this.$root.currentView = 'menu';
+            this.$emit('back');
         }
     }
 };
 
+const GameOverPage = {
+    props: ['score', 'total'],
+    template: `
+    <div class="game-over">
+        <h2>Game finished!</h2>
+        <p>You got {{ score }} out of {{ total }} words correct!</p>
+        <button @click="$emit('back-to-menu')">Back to Menu</button>
+    </div>
+    `
+};
 
 const app = createApp({
-    components: { GamePage, BackButton},
+    components: { MenuPage, GamePage, GameOverPage },
+    data() {
+        return { 
+            currentView: 'menu', 
+            finalScore: 0,
+            totalWords: 0 
+        };
+    },
     template: `
-    <game-page v-else></game-page>
+    <menu-page 
+        v-if="currentView === 'menu'" 
+        @start="currentView='game'"
+    ></menu-page>
+    <game-page 
+        v-else-if="currentView === 'game'" 
+        @back="currentView='menu'"
+        @game-over="handleGameOver"
+    ></game-page>
+    <game-over-page 
+        v-else-if="currentView === 'gameOver'"
+        :score="finalScore"
+        :total="totalWords"
+        @back-to-menu="currentView = 'menu'"
+    ></game-over-page>
     `,
+    methods: {
+        handleGameOver({ score, total }) {
+            this.finalScore = score;
+            this.totalWords = total;
+            this.currentView = 'gameOver';
+        }
+    }
 }).mount('#app');
