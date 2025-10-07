@@ -22,3 +22,11 @@ Owned by Team 07
     left: 0;
     width: 100%;
 }
+
+.game-frame .fa-solid.fa-arrow-left {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    font-size: 2rem;
+    cursor: pointer;
+}

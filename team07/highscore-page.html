@@ -40,7 +40,11 @@ Owned by Team 07
 
   <main class="game-frame">
 
+    <i id="back-button" class="fa-solid fa-arrow-left"></i>
+
     <h1>High Scores</h1>
+
+
     
   </main>
 
@@ -48,5 +52,12 @@ Owned by Team 07
     <small>Created as part of the "Software Engineering and Project Management" course 2025</small>
   </footer>
 </body>
+
+<script>
+  // Funktionalitet av tillbaka knapp till startsidan
+  document.getElementById('back-button').addEventListener('click', function () {
+    window.location.href = 'index.html';
+  });
+</script>
 
 </html>
