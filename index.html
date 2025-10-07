@@ -37,19 +37,19 @@ Owned by the Menu Team
                 <button 
                     class="language-btn" 
                     id="lng_toggle" 
-                    onclick="toggleLanguage('en')"
+                    onclick="setLanguage('en')"
                     type="image"
                 ><img src="assets/main_menu/images/flag-gb-svgrepo-com.png" alt="English">
                 </button>
                 <button 
                     class="language-btn" 
                     id="lng_toggle" 
-                    onclick="toggleLanguage('sv')"
+                    onclick="setLanguage('sv')"
                     type="image"
                 ><img src="assets/main_menu/images/flag-se-svgrepo-com.png" alt="Svenska">
                 </button>
-                <button class="header-btn" id="about-btn"></button>
-                <button class="header-btn" id="settings-btn"></button>
+                <button class="header-btn translate" id="about-btn"></button>
+                <button class="header-btn translate" id="settings-btn"></button>
             </div>
         </header>
         <main>
@@ -57,8 +57,8 @@ Owned by the Menu Team
             <section id="game-menu" hidden>
                 <div class="menu-bar">
                     <div id="intro-text">
-                        <h1 id="intro-title"></h1>
-                        <p id="intro-desc"></p>
+                        <h1 class="translate" id="intro-title"></h1>
+                        <p class="translate" id="intro-desc"></p>
                     </div>
                     <div id="filter-bar" class="filter-bar">
                     </div>
@@ -78,7 +78,7 @@ Owned by the Menu Team
             </section>
         </main>
         <footer>
-            <small id="footer-text"></small>
+            <small class="translate" id="footer-text"></small>
         </footer>
 
         <script>

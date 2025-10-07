@@ -14,12 +14,14 @@ const backBtn = document.getElementById("back-btn");
 const filterBar = document.getElementById("filter-bar");
 
 let allGames = [];
-let language = 'sv'
+let currentLanguage = 'sv';
+let translations = {};
 
 //// Data ////
 // Load games from JSON
 async function loadGames() {
   try {
+    setLanguage(currentLanguage)
     // Load game data
     const res = await fetch("assets/main_menu/games.json", { cache: "no-store" });
     if (!res.ok) throw new Error("Failed to load games.json");
@@ -34,11 +36,11 @@ async function loadGames() {
 
     // Filter games by chapter
     const chapters = [...new Set(allGames.flatMap(g => g.supported_chapters))].sort((a, b) => a - b);
-    buildFilter(chapters, language);
+    buildFilter(chapters);
     setActiveFilter("all"); // default
 
     // Render game grid
-    renderGrid(allGames, language);
+    renderGrid(allGames);
   } catch (err) {
     console.error("Error loading games:", err);
     grid.innerHTML = "<p>Could not load games.</p>";
@@ -98,8 +100,7 @@ function setActiveFilter(value){
 }
 
 // Render grid of game cards
-function renderGrid(games, lang) {
-  console.log("renderGrid, language. ", lang)
+function renderGrid(games) {
   grid.innerHTML = "";
 
   games.forEach((g) => {
@@ -114,8 +115,7 @@ function renderGrid(games, lang) {
       : "";
 
     // Build game card HTML
-    if(lang == 'sv') {
-      console.log('svenska')
+    if(currentLanguage == 'sv') {
       card.innerHTML = `
       <img src="assets/main_menu/images/games/${g.id}.png" 
            alt="${g.sv_title}"
@@ -126,8 +126,7 @@ function renderGrid(games, lang) {
         ${tagsHtml}
       </div>
       `;
-    } else if (lang == 'en') {
-      console.log('english')
+    } else if (currentLanguage == 'en') {
       card.innerHTML = `
       <img src="assets/main_menu/images/games/${g.id}.png" 
            alt="${g.eng_title}"
@@ -163,7 +162,7 @@ function renderGrid(games, lang) {
     const box = document.createElement('div');
     box.id = 'settings-box';
 
-    box.innerHTML = `
+      box.innerHTML = `
       <div class="settings-header">
         <h2 class="settings-title">Settings</h2>
         <button id="_close_settings" class="settings-btn close">Close</button>
@@ -173,6 +172,7 @@ function renderGrid(games, lang) {
         <button id="_clear_save" class="settings-btn secondary">Clear data</button>
       </div>
     `;
+    
     overlay.appendChild(box);
       // Close overlay when clicking outside the box
       overlay.addEventListener('mousedown', (e) => {
@@ -271,7 +271,26 @@ window.addEventListener("DOMContentLoaded", () => {
 //// Init ////
 loadGames();
 
-//// Language toggle buttons////
+//// Language toggle ////
+
+async function setLanguage(lang) {
+  console.log('setLanguage')
+  const data = await fetch('assets/main_menu/menu_translations.json');
+  if (!data.ok) throw new Error("Failed to menu_translations.json");
+  translations = await data.json()
+
+  console.log(translations)
+
+  currentLanguage = lang
+  const elements = document.querySelectorAll('.translate');
+
+  elements.forEach(el => {
+    const id = el.getAttribute('id');
+    el.innerHTML = translations[id][lang]
+  })
+
+  renderGrid(allGames)
+}
 
 /**
  * Executes when one of the language toggle buttons are pressed. Fetches text from
@@ -282,37 +301,6 @@ function toggleLanguage(new_lang) {
   const chapters = [...new Set(allGames.flatMap(g => g.supported_chapters))].sort((a, b) => a - b);
   buildFilter(chapters, new_lang)
   setActiveFilter("all");
-  renderGrid(allGames, new_lang)
-
-  if (new_lang == 'en'){
-    fetch('assets/main_menu/menu_text/en.json')
-      .then(response => response.json())
-      .then(data => {
-        document.getElementById('footer-text').textContent=data.footer
-        document.getElementById('back-btn').textContent=data.backbtn
-        document.getElementById('about-btn').textContent=data.about
-        document.getElementById('settings-btn').textContent=data.settings
-        document.getElementById('intro-title').innerHTML=data.title
-        document.getElementById('intro-desc').innerHTML=data.desc
-      })
-    .catch(error => {
-        console.error('JSON loading error: ', error);
-    });
-  } else if (new_lang == 'sv'){
-    fetch('assets/main_menu/menu_text/sv.json')
-        .then(response => response.json())
-        .then(data => {
-          document.getElementById('footer-text').textContent=data.footer
-          document.getElementById('back-btn').textContent=data.backbtn
-          document.getElementById('about-btn').textContent=data.about
-          document.getElementById('settings-btn').textContent=data.settings
-          document.getElementById('intro-title').innerHTML=data.title
-          document.getElementById('intro-desc').innerHTML=data.desc
-        })
-    .catch(error => {
-        console.error('JSON loading error: ', error);
-    });
-  }
 
   
 }
