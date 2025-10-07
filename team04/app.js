@@ -8,10 +8,16 @@ import setClock from "./utils/setClock.js";
 import startView from "./components/startView.js";
 
 const app = Vue.createApp({
-
+  template: `
+  <component :is="currentComponent"
+              :selected-level="selectedLevel"
+               @level-selected="handleLevelSelected"></component>
+  `,
   data() {
     return {
-      currentView: 'start' // can be 'start', 'game', 'finish', or 'review'
+      currentView: 'start', // can be 'start', 'game', 'finish', or 'review'
+      vocabReady: false,
+      selectedLevel: null // will hold the level selected by the user
     };
   },
   computed: {
@@ -25,12 +31,19 @@ const app = Vue.createApp({
       }
     }
   },
+  created() {
+    //load data for Team04 (team ID = 4)
+    window.vocabulary.load_team_data(4);
+  },
   mounted() {
     setClock(24, 60);
   },
-  template: `
-  <component :is="currentComponent"></component>
-  `
+  methods: {
+    handleLevelSelected(levelNum) {
+      this.selectedLevel = levelNum;
+      this.currentView = 'game'; // Switch to game view after level selection
+    }
+  }
 });
 
 app.component("game-view", gameView);
