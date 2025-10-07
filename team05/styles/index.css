@@ -1,149 +1,94 @@
-/*
-=================================================
+/* =============================================
 Owned by Team 05
-=================================================
-*/
+================================================ */
 body {
-    font-family: Arial, sans-serif;
-    width: 1000px;
-    margin-left: auto;
-    margin-right: auto;
-    
+  font-family: Arial, sans-serif;
+  width: 1000px;
+  margin: 0 auto;
 }
-/* force hidden (avoid conflicts) */
 .hidden { display: none !important; }
-/* Game Area styles (fresh / cool color scheme) */
+.mt-2 { margin-top: 20px; }
+
+/* Main Menu */
 .start-screen {
   text-align: center;
   padding: 80px 20px;
-  background: linear-gradient(90deg, #ff6b35, #f7931e, #ffcd3c);
+  background: linear-gradient(90deg,#ff6b35,#f7931e,#ffcd3c);
   color: #fff;
   border-radius: 16px;
-  box-shadow: 0 8px 30px rgba(255,107,53,0.3);
+  box-shadow: 0 8px 30px rgba(255,107,53,.3);
 }
-.game-title {
-  font-size: 48px;
-  margin-bottom: 34px;
-  color: #fff;
-  text-shadow: 0 6px 20px rgba(0,0,0,0.3);
-  letter-spacing: 1px;
-}
-.menu {
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
-  max-width: 360px;
-  margin: 0 auto;
-}
+.menu { display:flex;flex-direction:column;gap:18px;max-width:360px;margin:0 auto; }
 .menu-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-  padding: 14px 18px;
-  font-size: 18px;
-  border-radius: 12px;
-  border: none;
-  cursor: pointer;
-  color: #fff;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  box-shadow: 0 6px 18px rgba(118,75,162,0.3);
-  transition: transform .18s ease, box-shadow .18s ease;
+  display:flex;align-items:center;justify-content:center;gap:12px;
+  padding:14px 18px;font-size:18px;border-radius:12px;border:none;cursor:pointer;color:#fff;
+  background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);
+  box-shadow:0 6px 18px rgba(118,75,162,.3);
 }
-.menu-btn:hover { transform: translateY(-4px); box-shadow: 0 12px 24px rgba(118,75,162,0.4); }
-/* Game area */
-#game-content {
-  text-align: center;
-  padding: 36px;
-  background: linear-gradient(180deg, #4facfe 0%, #00f2fe 100%);
-  color: #fff;
-  border-radius: 12px;
-  box-shadow: 0 10px 30px rgba(79,172,254,0.3);
+.menu-btn:hover { transform:translateY(-4px); }
+
+/* Level Select */
+.levels-grid {
+  display:grid;grid-template-columns:repeat(3,1fr);gap:12px;max-width:520px;margin:auto;
 }
-/* word */
-#word-display {
-  font-size: 34px;
-  margin: 18px 0 22px;
-  color: #fff;
-  text-shadow: 0 6px 28px rgba(0,0,0,0.2);
+.level-btn {
+  padding:18px;border-radius:12px;border:none;color:#fff;cursor:pointer;
+  background:#4e54c8;box-shadow:0 6px 18px rgba(78,84,200,.3);
 }
-/* answer row */
-.answer-row {
-  display: flex;
-  gap: 10px;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 12px;
-}
-#answer-input {
-  width: 60%;
-  max-width: 520px;
-  min-width: 200px;
-  padding: 12px 14px;
-  border-radius: 10px;
-  border: 1px solid rgba(255,255,255,0.3);
-  font-size: 16px;
-  outline: none;
-  background: #fff;
-}
-#answer-input:focus {
-  box-shadow: 0 6px 22px rgba(255,255,255,0.4);
-}
-/* check button */
-.primary-btn {
-  padding: 12px 18px;
-  font-size: 16px;
-  border-radius: 10px;
-  border: none;
-  background: linear-gradient(180deg, #11998e 0%, #38ef7d 100%);
-  color: #fff;
-  cursor: pointer;
-  box-shadow: 0 6px 18px rgba(17,153,142,0.3);
-}
-.primary-btn:hover { transform: translateY(-3px); }
-/* feedback */
-#feedback {
-  margin-top: 12px;
-  font-size: 18px;
-  min-height: 24px;
-}
-/* back button - only visible inside game-content */
+.level-btn.completed { background:#109e68; }
 .back-btn {
-  margin-top: 22px;
-  padding: 10px 18px;
-  font-size: 16px;
-  border-radius: 10px;
-  border: none;
-  background: linear-gradient(180deg, #667eea 0%, #764ba2 100%);
-  color: #fff;
-  cursor: pointer;
+  padding:10px 18px;border:none;border-radius:10px;background:#667eea;color:#fff;cursor:pointer;
 }
-.back-btn:hover { transform: translateY(-3px); }
-/* modal */
-.modal {
-  position: fixed;
-  inset: 0;
+
+/* Medium screen */
+.screen-header {
   display: flex;
   align-items: center;
-  justify-content: center;
-  background: rgba(0,0,0,0.6);
-  z-index: 2000;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 8px;
 }
-.modal-content {
-  background: linear-gradient(180deg, #74b9ff 0%, #0984e3 100%);
-  color: #fff;
-  padding: 20px 26px;
-  border-radius: 12px;
-  width: min(88%, 540px);
-  text-align: center;
-  box-shadow: 0 14px 60px rgba(252,70,107,0.3);
-}
-.close-btn {
-  margin-top: 14px;
-  padding: 10px 14px;
+.help-btn {
+  padding: 8px 12px;
+  font-size: 14px;
   border-radius: 8px;
   border: none;
-  background: linear-gradient(180deg, #ffecd2 0%, #fcb69f 100%);
-  color: #333;
+  background: linear-gradient(135deg,#74b9ff,#0984e3);
+  color: #fff;
   cursor: pointer;
+}
+.help-btn:hover { transform: translateY(-2px); }
+
+.image-wrap { display:flex;align-items:center;justify-content:center;min-height:240px; }
+.image-wrap img { max-width:420px;max-height:260px;border-radius:10px;box-shadow:0 6px 20px rgba(0,0,0,.25);background:#fff; }
+.word-fallback {
+  font-size:38px;padding:30px 36px;border-radius:12px;background:#fff;color:#222;
+  box-shadow:0 6px 22px rgba(0,0,0,.25);
+}
+.answer-row { display:flex;gap:10px;justify-content:center;margin-top:16px; }
+#medium-answer { width:60%;max-width:520px;padding:12px 14px;border-radius:10px;border:1px solid #ccc;font-size:16px; }
+.primary-btn {
+  padding:12px 18px;border:none;border-radius:10px;
+  background:linear-gradient(180deg,#11998e 0%,#38ef7d 100%);color:#fff;cursor:pointer;
+}
+#medium-feedback { margin-top:12px;font-size:18px;min-height:24px; }
+
+/* Win screen */
+#win-screen { display:flex;align-items:center;justify-content:center; }
+.win-card {
+  text-align:center;padding:24px;border-radius:12px;
+  background:linear-gradient(180deg,#74b9ff 0%,#0984e3 100%);color:#fff;width:min(92%,520px);
+  box-shadow:0 14px 60px rgba(0,0,0,.25);
+}
+.win-actions { display:flex;gap:12px;justify-content:center;margin-top:14px; }
+
+/* Modal */
+.modal { position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.6); }
+.modal-content {
+  background:linear-gradient(180deg,#74b9ff 0%,#0984e3 100%);
+  color:#fff;padding:20px 26px;border-radius:12px;width:min(88%,540px);text-align:center;
+}
+.close-btn {
+  margin-top:14px;padding:10px 14px;border:none;border-radius:8px;
+  background:linear-gradient(180deg,#ffecd2 0%,#fcb69f 100%);color:#333;cursor:pointer;
 }

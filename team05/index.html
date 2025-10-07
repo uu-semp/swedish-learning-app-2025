@@ -1,100 +1,97 @@
 <!doctype html>
-
-<!--
-=================================================
-Owned by Team 05
-=================================================
--->
-
+<!-- =============================================
+Owned by Team 05 — Red Room (Levels 4–6 only)
+================================================= -->
 <html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Basic Static Site</title>
-  <link rel="stylesheet" href="../style.css" />
+  <title>Red Room – Team 05</title>
 
+  <!-- course-shared libs -->
+  <link rel="stylesheet" href="../style.css" />
   <script src="../scripts/vocabulary.js"></script>
   <script src="../scripts/save.js"></script>
 
-  <!-- You are allowed to use JQuery and Vue.js but don't have to. They just make a
-  lot of things easier
-  -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css"> 
+  <!-- allowed libs -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css">
   <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
-  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 
-  <!-- Site specific scripts and styles -->
+  <!-- team-specific -->
   <link rel="stylesheet" href="styles/index.css" />
   <script src="js/index.js" defer></script>
 </head>
 <body>
-  <header>
-    <h1>Team 05</h1>
-  </header>
-
-  <!-- TODO: Remove this div and it's content -->
-  <div>
-      <hr>
-      <h2>A basic section to make sure that everything works for everyone</h2>
-
-      <p>Font awesome is working: <i class="fa-solid fa-check"></i> (A checkmark should be visible)</p>
-
-      <button id="check-jquery">Check if Javascript and JQuery is working</button> (Clicking the button should show an alert)
-
-      <button id="check-saving">Click this button to see if saving works</button>
-      <hr>
-  </div>
+<header><h1>Team 05 – Red Room</h1></header>
 
 <main class="game-frame">
-  <!-- Start Screen -->
-  <div id="start-screen" class="start-screen">
+  <!-- Screen 1 – Main Menu -->
+  <section id="start-screen" class="start-screen">
     <h2 class="game-title">Red Room</h2>
     <div class="menu">
       <button class="menu-btn" id="btn-start"><i class="fa-solid fa-play"></i> Start Game</button>
       <button class="menu-btn" id="btn-continue"><i class="fa-solid fa-forward"></i> Continue</button>
-      <button class="menu-btn" id="btn-intro"><i class="fa-solid fa-info-circle"></i> Introduction</button>
-      <button class="menu-btn" id="btn-help"><i class="fa-solid fa-question-circle"></i> Help</button>
+      <button class="menu-btn" id="btn-intro"><i class="fa-solid fa-info-circle"></i> Instructions</button>
     </div>
-  </div>
+  </section>
 
-  <!-- Game Area (hidden by default) -->
-  <div id="game-content" class="hidden">
-    <h3>Learning</h3>
+  <!-- Screen 2 – Level Selection -->
+  <section id="level-select" class="hidden level-select">
+    <h3>Select a Level (4 – 6)</h3>
+    <div class="levels-grid">
+      <button class="level-btn" data-level="4">4 <br><small>Medium</small></button>
+      <button class="level-btn" data-level="5">5 <br><small>Medium</small></button>
+      <button class="level-btn" data-level="6">6 <br><small>Medium</small></button>
+    </div>
+    <p id="overall-progress" class="mt-2"></p>
+    <button id="btn-back-from-levels" class="back-btn"><i class="fa-solid fa-arrow-left"></i> Main Menu</button>
+  </section>
 
-    <!-- word display -->
-    <p id="word-display">(Word will appear here)</p>
-
-    <!-- answer input + check button on the same line -->
-    <div class="answer-row">
-      <input type="text" id="answer-input" placeholder="Enter Swedish translation" autocomplete="off" />
-      <button id="check-answer" class="primary-btn">Check Answer</button>
+  <!-- Screen 3 – Medium (Picture → Word Typing) -->
+  <section id="medium-screen" class="hidden">
+    <div class="screen-header">
+      <button class="back-btn" id="medium-back"><i class="fa-solid fa-arrow-left"></i> Levels</button>
+      <div class="crumb">Level <span id="medium-level-number">4</span> • <span id="medium-progress">0 / 0</span></div>
+      <!-- Changed it here -->
+      <button id="btn-level-instruction" class="help-btn"><i class="fa-solid fa-circle-info"></i> How to Play</button>
     </div>
 
-    <p id="feedback" aria-live="polite"></p>
+    <div class="card">
+      <div id="medium-image-wrap" class="image-wrap"></div>
+      <div class="answer-row">
+        <input type="text" id="medium-answer" placeholder="Write the Swedish word" autocomplete="off" />
+        <button id="medium-check" class="primary-btn">Check</button>
+      </div>
+      <p id="medium-feedback" aria-live="polite"></p>
+    </div>
+  </section>
 
-    <!-- back button only shown inside game area -->
-    <button id="btn-back" class="back-btn"><i class="fa-solid fa-arrow-left"></i> Back to Menu</button>
-  </div>
+  <!-- Screen 4 – Win -->
+  <section id="win-screen" class="hidden">
+    <div class="win-card">
+      <h2 id="win-title">You completed Level X!</h2>
+      <p id="win-progress-text"></p>
+      <div class="win-actions">
+        <button id="win-next" class="primary-btn">Next Level</button>
+        <button id="win-menu" class="back-btn">Main Menu</button>
+      </div>
+    </div>
+  </section>
 
-  <!-- Introduction Modal -->
-  <div id="intro-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="intro-title">
+  <!-- Instruction modal -->
+  <div id="intro-modal" class="modal hidden" role="dialog" aria-modal="true">
     <div class="modal-content">
-      <h3 id="intro-title">About Red Room</h3>
+      <h3>How to Play</h3>
       <p>
-        Red Room is a simple and fun vocabulary game.<br>
-        Use basic English words to learn their Swedish translations.<br>
-        Enjoy your learning journey!
+        Look at the picture shown.<br>
+        Type the Swedish translation of the object in the input box.<br>
+        Press “Check” or Enter.<br>
+        Correct answers unlock the next image.<br>
+        Complete all items to finish the level!
       </p>
       <button id="close-intro" class="close-btn"><i class="fa-solid fa-xmark"></i> Close</button>
     </div>
   </div>
 </main>
-
-
-
-
-  <footer>
-    <small>Created as part of the "Software Engineering and Project Management" course 2025</small>
-  </footer>
 </body>
 </html>

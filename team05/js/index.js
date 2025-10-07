@@ -1,174 +1,200 @@
 // ==============================================
-// Owned by Team 05
+// Owned by Team 05 — Medium Levels (4–6)
 // ==============================================
-
 "use strict";
 
-$(function() {window.vocabulary.when_ready(function () {
+const SAVE_KEY = "team05";
+const $id = (s) => document.getElementById(s);
+const show = (sel) => $(sel).removeClass("hidden");
+const hide = (sel) => $(sel).addClass("hidden");
 
-  // These are only dummy functions and can be removed.
-  $("#check-jquery").on("click", () => {
-    alert("JavaScript and jQuery are working.");
+function shuffle(arr){const a=arr.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function chunk(arr,n){const o=[];for(let i=0;i<arr.length;i+=n)o.push(arr.slice(i,i+n));return o;}
+function normalizeSv(s){return (s||"").trim().toLowerCase().replace(/^(en|ett)\s+/,"");}
+
+// ---------------- save/load ----------------
+function getSaved(){
+  const bag=window.save.get(SAVE_KEY)||{};
+  return bag.progress||{unlocked:4,completed:[],medium:{levelIdx:0,itemIdx:0}};
+}
+function putSaved(p){const bag=window.save.get(SAVE_KEY)||{};bag.progress=p;window.save.set(SAVE_KEY,bag);}
+
+// ---------------- vocabulary data ----------------
+function loadFurnitureItems(){
+  const ids=(window.vocabulary.get_category&&window.vocabulary.get_category("furniture"))||[];
+  const out=[];
+  for(const id of ids){
+    const v=window.vocabulary.get_vocab(id)||{};
+    out.push({id,en:v.en||"",sv:v.sv||"",sv_pl:v.sv_pl||"",img:v.img||"",article:v.article||""});
+  }
+  return out.filter(x=>x.en||x.img);
+}
+function buildMediumLevels(all,perLevel=5){
+  const usable=all.filter(x=>x.sv);
+  const shuffled=shuffle(usable);
+  const groups=chunk(shuffled,perLevel).slice(0,3); // levels 4–6
+  return groups;
+}
+
+// Changed it here
+function imageCandidates(raw) {
+  // Accept many shapes and try several fallbacks
+  const r = String(raw || "").trim();
+
+  // absolute URL → just use it
+  if (/^https?:\/\//i.test(r)) return [r];
+
+  // strip leading "./" or "/" so we can build relative paths
+  const s = r.replace(/^\.?\//, "").replace(/^\/+/, "");
+
+  const c = new Set();
+
+  // as-is (in case CSV already gives a good relative path)
+  if (s) c.add(s);
+
+  // If it already starts with "assets/", fix it relative to team05/
+  if (s.startsWith("assets/")) c.add(`../${s}`);
+
+  // If it starts with "images/" or "furniture/", prepend the known base
+  if (s.startsWith("images/")) c.add(`../assets/${s}`);
+  if (s.startsWith("furniture/")) c.add(`../assets/images/${s}`);
+
+  // Common fallbacks when CSV only has a filename or subpath
+  c.add(`../assets/images/${s}`);                 // e.g., bed.png or furniture/bed.png
+  c.add(`../assets/images/furniture/${s}`);       // e.g., bed.png
+
+  return Array.from(c);
+}
+
+
+// ---------------- ui state ----------------
+const Medium={levels:[],items:[],idx:0,levelNumber:4};
+
+// ---------------- core flow ----------------
+function go(sel){["#start-screen","#level-select","#medium-screen","#win-screen","#intro-modal"].forEach(hide);show(sel);}
+
+function updateProgressUI(p){
+  const done=p.completed.length,total=3;
+  $("#overall-progress").text(`Progress ${done}/${total} levels`);
+  $(".level-btn").each(function(){
+    const n=Number($(this).data("level"));
+    $(this).removeClass("completed");
+    if(p.completed.includes(n))$(this).addClass("completed");
   });
-// ==============================================
-// Owned by Team 05
-// ==============================================
+}
 
-"use strict";
-// menu + game logic (wait for vocabulary to be ready)
-$(function () {
-  // If vocabulary offers when_ready, wait for it; otherwise run immediately.
-  const runWhenReady = (fn) => {
-    if (window.vocabulary && typeof window.vocabulary.when_ready === "function") {
-      window.vocabulary.when_ready(fn);
-    } else {
-      // small delay to allow script load
-      setTimeout(fn, 100);
+function mediumStart(level,p){
+  Medium.levelNumber=level;
+  const idx=level-4;
+  Medium.items=Medium.levels[idx]||[];
+  Medium.idx=0;
+  $("#medium-level-number").text(level);
+  $("#medium-progress").text(`0/${Medium.items.length}`);
+  renderWord();
+  go("#medium-screen");
+}
+
+function renderWord() {
+  const slot = $("#medium-image-wrap").empty();
+  $("#medium-feedback").text("");
+  const cur = Medium.items[Medium.idx];
+  if (!cur) return;
+
+  // Changed it here — robust multi-candidate image loading
+  const candidates = imageCandidates(cur.img);
+  const alt = cur.en || "object";
+  const placeholder = `https://via.placeholder.com/300x200?text=${encodeURIComponent(alt || "No Image")}`;
+
+  const $img = $("<img>").attr({ alt });
+
+  let i = 0;
+  const tryNext = () => {
+    if (i >= candidates.length) {
+      console.warn("Image not found. Using placeholder:", placeholder, "for", cur);
+      $img.attr("src", placeholder);
+      return;
     }
+    const src = candidates[i++];
+    // tiny guard to avoid looping forever if placeholder errors (unlikely)
+    if (src === placeholder) { $img.attr("src", placeholder); return; }
+    $img.attr("src", src);
   };
 
-  runWhenReady(function () {
-    let currentWord = null; // normalized: {english: "...", swedish: "..."}
-
-    // Robust normalizer for various get_random return shapes
-    function normalizeRandom(raw) {
-      if (!raw && raw !== 0) return null;
-      if (typeof raw === "string") return { english: raw, swedish: "" };
-      if (Array.isArray(raw)) return normalizeRandom(raw[0]);
-      if (typeof raw === "object") {
-        // try common keys
-        const english = raw.english || raw.word || raw.text || raw.en || raw.label || "";
-        const swedish = raw.swedish || raw.sv || raw.translation || raw.trans || raw.answer || raw.correct || "";
-        // sometimes translations are arrays
-        const sw = Array.isArray(swedish) ? (swedish[0] || "") : swedish;
-        return { english: String(english || "").trim(), swedish: String(sw || "").trim() };
-      }
-      return null;
-    }
-
-    function loadWord() {
-      let raw = null;
-      try {
-        raw = window.vocabulary && typeof window.vocabulary.get_random === "function"
-          ? window.vocabulary.get_random()
-          : null;
-      } catch (e) {
-        console.warn("vocabulary.get_random() error:", e);
-        raw = null;
-      }
-
-      currentWord = normalizeRandom(raw);
-
-      if (!currentWord || !currentWord.english) {
-        $("#word-display").text("(No word available)").css("color", "#ffcc66");
-        $("#feedback").text("Couldn't load a word.").css("color", "crimson");
-        return;
-      }
-
-      $("#word-display").text(currentWord.english).css("color", "");
-      $("#answer-input").val("").focus();
-      $("#feedback").text("");
-    }
-
-    // UI handlers
-    $("#btn-start").off("click").on("click", function () {
-      $("#start-screen").hide();
-      $("#game-content").removeClass("hidden");
-      loadWord();
-    });
-
-    $("#btn-continue").off("click").on("click", function () {
-      // placeholder for saved progress check
-      $("#start-screen").hide();
-      $("#game-content").removeClass("hidden");
-      // you can integrate window.save here to pick saved word/index
-      loadWord();
-    });
-
-    // Check answer (click)
-    $("#check-answer").off("click").on("click", function () {
-      if (!currentWord) return;
-      const user = $("#answer-input").val().trim().toLowerCase();
-      const correct = (currentWord.swedish || "").toLowerCase();
-
-      if (!user) {
-        $("#feedback").text("Please type your answer.").css("color", "#ffd97a");
-        return;
-      }
-
-      if (correct && user === correct) {
-        $("#feedback").text("✅ Correct!").css("color", "limegreen");
-        setTimeout(loadWord, 1000);
-      } else if (!correct) {
-        // no reference translation available
-        $("#feedback").text("No reference translation available for this word.").css("color", "#ffd97a");
-      } else {
-        $("#feedback").text("❌ Try again").css("color", "crimson");
-      }
-    });
-
-    // Submit with Enter key when focus is in input
-    $(document).off("keydown.answer").on("keydown.answer", function (e) {
-      if (e.key === "Enter" && $("#answer-input").is(":focus")) {
-        e.preventDefault();
-        $("#check-answer").trigger("click");
-      }
-    });
-
-    // Back to menu
-    $("#btn-back").off("click").on("click", function () {
-      $("#game-content").addClass("hidden");
-      $("#start-screen").show();
-    });
-
-    // Introduction modal handlers
-    $("#btn-intro").off("click").on("click", function () {
-      $("#intro-modal").removeClass("hidden");
-    });
-    $("#close-intro").off("click").on("click", function () {
-      $("#intro-modal").addClass("hidden");
-    });
-
-    // Help
-    $("#btn-help").off("click").on("click", function () {
-      alert("Help:\n1. Start → begin practice.\n2. Type Swedish translation and press Check Answer.\n3. Correct = auto next word; Back to Menu returns to main screen.\nGood luck!");
-    });
-
-    // initial state (menu visible)
-    $("#start-screen").show();
-    $("#game-content").addClass("hidden");
-    $("#intro-modal").addClass("hidden");
-  });
-});
-
-
-// 测试按钮功能（在runWhenReady函数内部的最后添加）
-$("#check-jquery").off("click").on("click", function () {
-  alert("JavaScript and jQuery are working.");
-});
-
-$("#check-saving").off("click").on("click", function () {
-  var data = window.save.get("team05");
-  data.counter = data.counter ?? 0;
-  data.counter += 1;
-  $("#check-saving").text(`This button has been pressed ${data.counter} times`);
-  window.save.set("team05", data);
-});
-
-// 显示词汇
-$("#display-vocab").text(JSON.stringify(window.vocabulary.get_random()));
-
-
-  $("#display-vocab").text(JSON.stringify(window.vocabulary.get_random()));
-
-  $("#check-saving").on("click", () => {
-    var data = window.save.get("team05");
-    data.counter = data.counter ?? 0;
-    data.counter += 1;
-    $("#check-saving").text(`This button has been pressed ${data.counter} times`);
-    window.save.set("team05", data);
+  $img.on("error", () => {
+    console.warn("Failed to load image, trying next candidate:", $img.attr("src"));
+    tryNext();
   });
 
-})});
+  tryNext(); // kick off the first candidate
+  slot.append($img);
+
+  $("#medium-progress").text(`${Medium.idx}/${Medium.items.length}`);
+  $id("medium-answer").value = "";
+  $id("medium-answer").focus();
+}
 
 
+function checkAnswer(p){
+  const cur=Medium.items[Medium.idx];if(!cur)return;
+  const user=normalizeSv($id("medium-answer").value);
+  if(!user){$("#medium-feedback").text("Type an answer.");return;}
+  const answers=[normalizeSv(cur.sv),normalizeSv(cur.sv_pl)];
+  if(answers.includes(user)){
+    $("#medium-feedback").text("✅ Correct!");
+    Medium.idx++;
+    if(Medium.idx>=Medium.items.length) levelComplete(Medium.levelNumber,p);
+    else renderWord();
+  }else{
+    $("#medium-feedback").text("❌ Try again");
+  }
+}
+
+function levelComplete(level,p){
+  if(!p.completed.includes(level))p.completed.push(level);
+  p.unlocked=Math.max(p.unlocked,level+1);
+  putSaved(p);
+  $("#win-title").text(`You completed Level ${level}!`);
+  $("#win-progress-text").text(`Progress: ${p.completed.length}/3`);
+  $("#win-next").off("click").on("click",()=>{const n=level+1;if(n<=6)mediumStart(n,p);else go("#level-select");});
+  $("#win-menu").off("click").on("click",()=>go("#level-select"));
+  go("#win-screen");
+}
+
+// ---------------- init ----------------
+$(function(){
+  const run=()=>{
+    const items=loadFurnitureItems();
+    Medium.levels=buildMediumLevels(items,5);
+    const p=getSaved();
+    updateProgressUI(p);
+
+    $("#btn-start").on("click",()=>{updateProgressUI(getSaved());go("#level-select");});
+    $("#btn-continue").on("click",()=>{
+      const ps=getSaved();const next=[4,5,6].find(n=>!ps.completed.includes(n))||4;
+      mediumStart(next,ps);
+    });
+
+    // Changed it here: Level screen instruction modal trigger
+    $("#btn-level-instruction").on("click",()=>$("#intro-modal").removeClass("hidden"));
+    $("#btn-intro").on("click",()=>$("#intro-modal").removeClass("hidden"));
+    $("#close-intro").on("click",()=>$("#intro-modal").addClass("hidden"));
+
+    $(".level-btn").on("click",function(){
+      const lvl=Number($(this).data("level"));mediumStart(lvl,getSaved());
+    });
+    $("#btn-back-from-levels").on("click",()=>go("#start-screen"));
+    $("#medium-back").on("click",()=>{updateProgressUI(getSaved());go("#level-select");});
+    $("#medium-check").on("click",()=>checkAnswer(getSaved()));
+    $(document).on("keydown",e=>{
+      if(e.key==="Enter"&&$("#medium-screen:visible").length&&$("#medium-answer").is(":focus")){
+        e.preventDefault();$("#medium-check").trigger("click");
+      }
+    });
+    $("#win-menu").on("click",()=>go("#level-select"));
+    go("#start-screen");
+  };
+
+  if(window.vocabulary&&typeof window.vocabulary.when_ready==="function")
+    window.vocabulary.when_ready(run);
+  else setTimeout(run,200);
+});
