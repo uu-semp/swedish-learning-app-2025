@@ -1,0 +1,85 @@
+/*
+=================================================
+Owned by Team 09
+=================================================
+*/
+
+.top-bar {
+    display: flex;
+    align-items: center;
+    gap: 150px;
+    justify-content: flex-start;
+    margin-bottom: 40px;
+    align-self: flex-start;
+    width: 100%;             
+    max-width: 1200px;   
+    padding-left: 10px    
+}
+
+.top-bar h2 {
+    margin: 0;
+    color: white;
+    font-size: 60px;  
+    padding-left: 20px;
+    font-family: "Comic Sans MS", cursive; 
+}
+
+#back-btn {
+    width: 100%;             
+    max-width: 200px;        
+    padding: 30px;           
+    font-size: 25px;        
+    font-weight: bold;       
+    border-radius: 35px;     
+    border: none;            
+    color: white;            
+    background-color:#b08968;
+    cursor: pointer;
+    transition: transform 0.2s ease, background 0.3s ease;
+}
+
+#back-btn:hover {
+    transform: scale(1.05);
+}
+
+.menu {
+    display: grid;
+    grid-template-columns: repeat(2, 400px);
+    gap: 50px 200px; 
+    justify-items: center;
+    margin-top: 20px;
+}
+
+.menu-btn.level {
+    width: 100%;
+    padding: 35px;
+    border: none;
+    border-radius: 35px;
+    color: white;
+    font-weight: bold;
+    font-size: 25px;
+    cursor: pointer;
+    transition: transform 0.2s ease, background 0.3s ease;
+}
+
+
+.menu-btn.level:hover {
+    transform: scale(1.05);
+}
+
+#level1-btn { background-color: #5aa05a; }  
+#level2-btn { background-color: #3f7fbf; }  
+#level3-btn { background-color: #a64d4d; }  
+#level4-btn { background-color: #3fa0a0; }  
+#level5-btn { background-color: #7d5fa0; }  
+#level6-btn { background-color: #d08c3f; }  
+
+ 
+
+
+
+
+
+
+
+  
