@@ -21,10 +21,18 @@ let state = gameStates.inGame;
 let houseArray = [];
 let correctHouse = null;
 let houseCount = 4
+let currentSwedishText = [];
+let currentEnglishText = [];
+let currentPrompt = [];
+
 
 $(function () {
   window.vocabulary.when_ready(function () {
-    const houseInfo = runGameStateLogic();
+
+    const gameStateInfo = runGameStateLogic()
+    const houseInfo = gameStateInfo.houseInfo;
+    currentSwedishText = gameStateInfo.swedishTextArray;
+    currentEnglishText = gameStateInfo.englishTextArray;
 
     houseArray = houseInfo.houseArray;
     correctHouse = houseInfo.correctHouse;
@@ -48,13 +56,50 @@ $(function () {
 
 function menu_logic() {
   console.log("menu_logic");
-  return generateRandom();
+  return {houseInfo: generateRandom()}
 }
 
+
 function inGame_logic() {
+  var swedishTextArray = ["Jag", "bor", "på", "exempelgatan", "int"]
+  const prompt = []
+  for (var i = 0; i < swedishTextArray.length; i++){
+    prompt[i] = swedishTextArray[i]
+  }
+  currentPrompt = prompt;
   console.log("inGame_logic");
-  return generateRandom();
+  return { 
+    houseInfo : generateRandom(),
+    swedishTextArray: swedishTextArray, 
+    englishTextArray : ["I", "live", "on", "-", "int"],
+  }
 }
+function inGame_logic_start(){}
+
+function menu_logic_start(){}
+
+function translateWord(wordIndex, englishText, swedishText, prompt, translatedWords){
+  if (!translatedWords.contains(wordIndex)){
+    let newWord = ""
+    let englishWord = englishText[wordIndex];
+    switch(englishWord){
+      case ("-"): newWord = swedishText[wordIndex]; break;
+      case("int"): newWord = prompt[wordIndex]; break;
+      default: newWord = englishWord; break;
+    }
+    prompt[wordIndex] = newWord
+  }
+}
+function updatePrompt(wordIndex) {
+  translateWord(wordIndex, currentEnglishText,currentSwedishText,currentPrompt)
+  for (let i = 0; i < houseArray.length; i++) {
+    const button = document.getElementById(`word-btn-${i}`);
+    if (button) {
+      button.textContent = `${currentPrompt[i]}`;
+    }
+  }
+}
+
 
 function generateRandom() {
   const numbers = window.vocabulary.get_category("number");
@@ -74,9 +119,22 @@ function generateRandom() {
   correctHouse = result.correctHouse;
   updateHouseButtons();
   renderHouseButtons();
+  renderPrompt();
 
   return result;
 }
+function renderPrompt(){
+  const container = $("#prompt-words")
+  container.empty();
+  console.log("Length of currentPrompt:")
+  console.log(currentPrompt.length)
+  currentPrompt.forEach((promptIndex) => {
+    const btn = $(`<button>${promptIndex}</button>`);
+    btn.on("click", () => updateWord(promptIndex));
+    container.append(btn);
+  });
+}
+
 function renderHouseButtons() {
   const container = $("#house-buttons");
   container.empty(); // clear previous buttons
