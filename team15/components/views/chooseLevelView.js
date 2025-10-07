@@ -1,16 +1,51 @@
 export const ChooseLevelView = {
   name: "choose-level-view",
   props: ["switchTo"],
+  data() {
+    return {
+      selectedLanguage: this.$language.selectedLanguage, // 'sv' or 'en' 
+    };
+  },
+  methods: {
+    languageSwitch(Language) {
+      this.$language.load(Language);
+      this.selectedLanguage = this.$language.selectedLanguage;
+    },
+  },
   template: `
-      <div>
-      <h1 class = "main-text">CHOOSE LEVEL</h1>    
-        <level-button label="LEVEL 1" @click="switchTo('LevelOneView')"></level-button>
-        <level-button label="LEVEL 2" @click="switchTo('LevelTwoView')"></level-button>
-        <level-button label="LEVEL 3" @click="switchTo('LevelThreeView')"></level-button>
+      <div class="choose-level-view">
+          <!-- Language selection -->
+          <div class="language-selection">
+              <language-flag-button
+                src="./components/assets/team15FlagSE.png"
+                alt="Swedish"
+                value="sv"
+                :selected="selectedLanguage === 'sv'"
+                @click="languageSwitch('sv')"
+                @select="selectedLanguage = $event"
+              ></language-flag-button>
 
-      <div class = button-container> 
-        <go-back-button @click="switchTo('StartView')"></go-back-button>
-      </div>
+              <language-flag-button
+                src="./components/assets/team15FlagEN.png"
+                alt="English"
+                value="en"
+                :selected="selectedLanguage === 'en'"
+                @click="languageSwitch('en')"
+                @select="selectedLanguage = $event"
+              ></language-flag-button>
+          </div>
+
+          <h1 class="main-text">{{$language.translate('choose-level')}}</h1>    
+          
+          <div class="level-buttons-container">
+              <level-button :label="$language.translate('level1')" class="big-buttons" @click="switchTo('LevelOneView')"></level-button>
+              <level-button :label="$language.translate('level2')" class="big-buttons" @click="switchTo('LevelTwoView')"></level-button>
+              <level-button :label="$language.translate('level3')" class="big-buttons" @click="switchTo('LevelThreeView')"></level-button>
+          </div>
+
+          <div class="go-back-wrapper"> 
+              <go-back-button @click="switchTo('StartView')"></go-back-button>
+          </div>
       </div>
     `,
 };
