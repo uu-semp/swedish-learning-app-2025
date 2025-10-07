@@ -11,7 +11,7 @@ let gameProgress = {
     level2: { 
         completed: 0, 
         total: 10, 
-        unlocked: false, 
+        unlocked: true, 
         attempts: 0,
         timeSpent: 0,
         lastPlayed: null
@@ -19,7 +19,7 @@ let gameProgress = {
     level3: { 
         completed: 0, 
         total: 10, 
-        unlocked: false, 
+        unlocked: true, 
         attempts: 0,
         timeSpent: 0,
         lastPlayed: null
