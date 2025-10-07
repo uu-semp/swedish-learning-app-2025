@@ -21,6 +21,8 @@ import { CorrectAnswerFeedback } from "./elements/correctAnswerFeedback.js";
 import { IncorrectAnswerFeedback } from "./elements/incorrectAnswerFeedback.js";
 import { WardrobeContainer } from "./elements/wardrobeContainer.js";
 import { PelleContainer } from "./elements/pelleContainer.js";
+import { DressPellePrompt } from "./elements/dressPellePrompt.js";
+
 
 export default {
   StartView,
@@ -44,4 +46,5 @@ export default {
   PelleContainer,
   ImagesButton,
   ImagesView,
+  DressPellePrompt,
 };
