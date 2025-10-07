@@ -8,6 +8,9 @@ This CSS file contains styles specific to the "Choose Level" view of the app.
 */
 .choose-level-view {
     
+    /*  */
+    position: relative;
+
     /* Ensure it takes up the full available space in the .game-frame */
     height: 100%;
     width: 100%;
@@ -21,6 +24,15 @@ This CSS file contains styles specific to the "Choose Level" view of the app.
     padding-top: 50px; 
     box-sizing: border-box;
     position: relative; /* Essential for positioning the flags and go-back button */
+}
+
+/* Language selection container */
+.choose-level-view .language-selection {
+    position: absolute;
+    top: 25px;
+    right: 20px;
+    display: flex;
+    gap: 8px;
 }
 
 /* Override .main-text positioning for this view */

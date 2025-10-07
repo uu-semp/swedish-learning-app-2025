@@ -13,9 +13,9 @@ export const ChooseLevelView = {
     },
   },
   template: `
-      <div class="choose-level-view" style="position: relative;">
+      <div class="choose-level-view">
           <!-- Language selection -->
-          <div style="position: absolute; top: 25px; right: 20px; display: flex; gap: 8px;">
+          <div class="language-selection">
               <language-flag-button
                 src="./components/assets/team15FlagSE.png"
                 alt="Swedish"
