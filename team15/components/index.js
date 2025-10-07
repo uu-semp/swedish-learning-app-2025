@@ -18,6 +18,7 @@ import {
 } from "./elements/buttons.js";
 import { CorrectAnswerFeedback } from "./elements/correctAnswerFeedback.js";
 import { IncorrectAnswerFeedback } from "./elements/incorrectAnswerFeedback.js";
+import { TriesManager } from "./elements/triesManager.js";
 import { WardrobeContainer } from "./elements/wardrobeContainer.js";
 import { PelleContainer } from "./elements/pelleContainer.js";
 
@@ -34,6 +35,7 @@ export default {
   LevelButton,
   CorrectAnswerFeedback,
   IncorrectAnswerFeedback,
+  TriesManager,
   WardrobeContainer,
   CategoryClothingButton,
   ClothingItemButton,

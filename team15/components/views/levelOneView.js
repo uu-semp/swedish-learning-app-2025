@@ -4,8 +4,8 @@ export const LevelOneView = {
     data() {
         return {
             showModal: false, // Controls the visibility of the modal
-            showCorrectFeedback: false,
-            showIncorrectFeedback: false,
+            currentQuestion: 1,
+            totalQuestions: 10
         };
     },
 
@@ -25,19 +25,26 @@ export const LevelOneView = {
                 this.closeModal();
             }
         },
-      handleDropResult({ isCorrect }) {
-            if (isCorrect) {
-                this.showCorrectFeedback = true;
-                setTimeout(() => {
-                    this.showCorrectFeedback = false;
-                }, 3000);
-            } else {
-                this.showIncorrectFeedback = true;
-                setTimeout(() => {
-                    this.showIncorrectFeedback = false;
-                }, 3000);
-            }
+        handleDropResult({ isCorrect }) {
+            // Use the actual result from the pelle container component
+            // Pass the result to the tries manager
+            this.$refs.triesManager.handleAttempt(isCorrect);
         },
+        
+        onQuestionCompleted(result) {
+            console.log('Question completed:', result);
+            // Handle question completion (success or failure after max tries)
+        },
+        
+        onReadyForNextQuestion() {
+            this.moveToNextQuestion();
+        },
+        
+        moveToNextQuestion() {
+            console.log(`Moving from question ${this.currentQuestion} to ${this.currentQuestion + 1}`);
+            this.currentQuestion++;
+            console.log(`Now on question ${this.currentQuestion} of ${this.totalQuestions}`);
+        }
     },
 
     template: `
@@ -47,19 +54,21 @@ export const LevelOneView = {
                 <exit-game-button @click="openModal"></exit-game-button>
             </div>
 
-            <div class="feedback-area">
-                <correct-answer-feedback v-if="showCorrectFeedback"></correct-answer-feedback>
-                <incorrect-answer-feedback v-if="showIncorrectFeedback"></incorrect-answer-feedback>
-            </div>
-
-            <div class="main-content-area">
-                <div class="pelle-wrapper">
-                    <pelle-container @item-dropped="handleDropResult"></pelle-container>
+            <tries-manager 
+                ref="triesManager"
+                @question-completed="onQuestionCompleted"
+                @ready-for-next-question="onReadyForNextQuestion">
+                
+                <div class="main-content-area">
+                    <div class="pelle-wrapper">
+                        <pelle-container @item-dropped="handleDropResult"></pelle-container>
+                    </div>
+                    <div class="wardrobe-wrapper">
+                        <wardrobe-container></wardrobe-container>
+                    </div>
                 </div>
-                <div class="wardrobe-wrapper">
-                    <wardrobe-container></wardrobe-container>
-                </div>
-            </div>
+                
+            </tries-manager>
 
             <div v-if="showModal" class="modal-overlay" @click="handleOverlayClick">
                 <div class="modal-content" @click.stop>

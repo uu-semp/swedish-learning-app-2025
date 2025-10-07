@@ -14,7 +14,7 @@ export const PelleContainer = {
             const droppedItem = event.dataTransfer.getData('text/plain');
             console.log('Dropped item in component:', droppedItem);
             
-            const isCorrect = Math.random() > 0.5;
+            const isCorrect = Math.random() > 0.66;
             this.$emit('item-dropped', { isCorrect: isCorrect });
 
             event.currentTarget.classList.remove('drag-over');

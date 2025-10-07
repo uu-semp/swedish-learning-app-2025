@@ -23,7 +23,12 @@
     "l2-description":"Välja klädesplagg kombinerat med adjektiv (färg, storlek, mm.)",
     "l3-description":"Mer avancerad grammatik, plural och korrekta ändelser",
     "extra": "EXTRA INFO",
-    "additional-info": "Om du är osäker på orden kan du alltid spela om en nivå eller kolla ordlistan i det medföljande materialet. Spelet är utformat för att vara roligt samtidigt som det förstärker inlärningen av svenska."
+    "additional-info": "Om du är osäker på orden kan du alltid spela om en nivå eller kolla ordlistan i det medföljande materialet. Spelet är utformat för att vara roligt samtidigt som det förstärker inlärningen av svenska.",
+    "second-attempt": "FEL SVAR! Ett försök kvar.",
+    "max-attempts-reached": "FEL SVAR! Maximalt antal försök uppnått.",
+    "moving-to-next-question": "Går vidare till nästa fråga...",
+    "question-progress": "Fråga",
+    "attempt": "Försök"
 
     
 
