@@ -57,7 +57,6 @@ export const LevelOneView = {
         },
 
       handleDropResult({ isCorrect }) {
-            console.log(isCorrect)
             if (isCorrect) {
                 this.showCorrectFeedback = true;
                 setTimeout(() => {
@@ -85,11 +84,9 @@ export const LevelOneView = {
                 <dress-pelle-prompt :item="currentItem"></dress-pelle-prompt>
     
             </div>
-    
             
             <correct-answer-feedback v-if="showCorrectFeedback"></correct-answer-feedback>
-            <incorrect-answer-feedback v-if="showIncorrectFeedback"></incorrect-answer-feedback>
-            
+            <incorrect-answer-feedback v-if="showIncorrectFeedback"></incorrect-answer-feedback>         
 
             <div class="main-content-area">
                 <div class="pelle-wrapper">
@@ -102,15 +99,14 @@ export const LevelOneView = {
 
             <exit-game-button @click="openModal"></exit-game-button>
     
-    
             <div v-if="showModal" class="modal-overlay" @click="handleOverlayClick">
-                    <div class="modal-content" @click.stop>
-                        <h2>{{$language.translate('exit-confirmation')}}</h2>
-                        <div class="modal-buttons">
-                            <button class="big-buttons" @click="confirmExit">{{$language.translate('yes')}}</button>
-                            <button class="big-buttons" @click="closeModal">{{$language.translate('no')}}</button>
-                        </div>
+                <div class="modal-content" @click.stop>
+                    <h2>{{$language.translate('exit-confirmation')}}</h2>
+                    <div class="modal-buttons">
+                        <button class="big-buttons" @click="confirmExit">{{$language.translate('yes')}}</button>
+                        <button class="big-buttons" @click="closeModal">{{$language.translate('no')}}</button>
                     </div>
+                </div>
             </div>
         </div>
       `,
