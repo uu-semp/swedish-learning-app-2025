@@ -69,17 +69,17 @@ function buildFilter(chapters, lang){
   filterBar.appendChild(makeFilterBtn("All","all"));
   // then one per chapter
   if (lang == 'en') {
-    chapters.forEach(ch => filterBar.appendChild(makeFilterBtn(`Chapter ${ch}`, String(ch))));
+    chapters.forEach(ch => filterBar.appendChild(makeFilterBtn(ch, String(ch))));
   } else {
     chapters.forEach(ch => filterBar.appendChild(makeFilterBtn(`Kapitel ${ch}`, String(ch))));
   }
   
 }
 
-function makeFilterBtn(label, value){
+function makeFilterBtn(index, value){
   const btn = document.createElement("button");
   btn.className = "filter-btn";
-  btn.textContent = label;
+  btn.textContent = "";
   btn.dataset.chapter = value;
   return btn;
 }
@@ -267,17 +267,27 @@ window.addEventListener("DOMContentLoaded", () => {
   }
 });
 
-
-//// Init ////
-loadGames();
-
 //// Language toggle ////
+async function loadTranslations() {
+  try {
+    console.log('init')
+    const data = await fetch('assets/main_menu/menu_translations.json');
+    if (!data.ok) throw new Error("Failed to menu_translations.json");
 
+    translations = await data.json()
+    console.log(translations)
+    console.log('init done')
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+/**
+ * Executes when one of the language toggle buttons are pressed or when the page is first loaded. 
+ * Fetches text from menu_translations.json for all menu elements that require text.
+ */
 async function setLanguage(lang) {
   console.log('setLanguage')
-  const data = await fetch('assets/main_menu/menu_translations.json');
-  if (!data.ok) throw new Error("Failed to menu_translations.json");
-  translations = await data.json()
 
   console.log(translations)
 
@@ -292,11 +302,7 @@ async function setLanguage(lang) {
   renderGrid(allGames)
 }
 
-/**
- * Executes when one of the language toggle buttons are pressed. Fetches text from
- * either sv.json or en.json for all menu elements that require text.
- * @param new_lang 'sv' or 'en' depending on which button was pressed
- */
+
 function toggleLanguage(new_lang) {
   const chapters = [...new Set(allGames.flatMap(g => g.supported_chapters))].sort((a, b) => a - b);
   buildFilter(chapters, new_lang)
@@ -304,3 +310,15 @@ function toggleLanguage(new_lang) {
 
   
 }
+
+//// Init ////
+
+async function init() {
+  console.log('init')
+  await loadTranslations()
+  loadGames();
+}
+
+init()
+
+console.log(translations)
