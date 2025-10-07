@@ -4,7 +4,6 @@ import cards from "./components/cards.js";
 import navigation from "./components/navigation.js";
 import statistics from "./components/statistics.js";
 import finishView from "./components/finishView.js";
-import setClock from "./utils/setClock.js";
 import startView from "./components/startView.js";
 
 const app = Vue.createApp({
@@ -34,9 +33,6 @@ const app = Vue.createApp({
   created() {
     //load data for Team04 (team ID = 4)
     window.vocabulary.load_team_data(4);
-  },
-  mounted() {
-    setClock(24, 60);
   },
   methods: {
     handleLevelSelected(levelNum) {
