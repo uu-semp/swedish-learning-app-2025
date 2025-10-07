@@ -38,8 +38,8 @@ Owned by Team 07
   </header>
 
   <main class="game-frame">
-    <i id="back-button" class="fa-solid fa-arrow-left"></i>
 
+    <i id="back-button" class="fa-solid fa-arrow-left"></i>
 
     <!-- Ljudspelare -->
     <audio id="word-audio">
@@ -47,7 +47,7 @@ Owned by Team 07
       Your browser does not support the audio element.
     </audio>
 
-    <h2>Match the image to the sound</h2>
+    <h2 id="instruction">Match the image to the sound</h2>
     <!-- Container för bilder -->
     <div class="image-container">
 
@@ -64,7 +64,7 @@ Owned by Team 07
 
     <!-- Nästa knapp -->
     <button id="next-button">Next</button>
-
+    
   </main>
 
   <footer>
@@ -73,6 +73,7 @@ Owned by Team 07
 </body>
 
 <script>
+ 
   // Funktionalitet av tillbaka knapp till startsidan
   document.getElementById('back-button').addEventListener('click', function () {
     window.location.href = 'index.html';
@@ -82,14 +83,6 @@ Owned by Team 07
   const words = JSON.parse(localStorage.getItem('game_words'));
   console.log(words);
 
-  // Add the pictures from the words to the image elements
-  // Commented out for now since we don't have images yet
-  /*
-  for (let i = 0; i < 4; i++) {
-    document.getElementById('img-' + (i + 1)).src = words[i].img;
-  }
-  */
-
   // Add the audio source from the correct word to the audio element
   // Commented out for now since we don't have audio yet
   /*
@@ -97,7 +90,6 @@ Owned by Team 07
     if (words[i].answer == 'true')
       document.getElementById('audio-src').src = words[i].audio;
   }*/
-
 </script>
 
 </html>

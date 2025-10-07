@@ -113,6 +113,8 @@ $(function() {window.vocabulary.when_ready(function () {
   
   $("#clear-all").on("click", handleClearAll);
   
+  populateCategoryDropdown();
+  
   displayWords();
   
   console.log("Current words count:", vocabManager.getAllWords().length);
@@ -123,18 +125,22 @@ function handleAddWord(event) {
   event.preventDefault();
   
   const wordData = {
-    swedish: $("#swedish").val(),
-    english: $("#english").val(),
+    swedish: $("#swedish").val().trim(),
+    english: $("#english").val().trim(),
     article: $("input[name='article']:checked").val() || '',
     literal: $("#literal").val(),
     category: $("#category").val(),
     image: '' //TODO
   };
 
+  //validate fields
+  if (!validateForm(wordData)) {
+    return;
+  }
+
   const result = vocabManager.addWord(wordData);
   
   if (result.success) {
-    // clear after submission
     $("#swedish").val('');
     $("#english").val('');
     $("#literal").val('');
@@ -189,6 +195,82 @@ function handleClearAll() {
       console.error('Failed to clear words:', result.error);
     }
   }
+}
+
+function validateForm(wordData) {
+  let isValid = true;
+  
+  $('.form-group input').removeClass('error');
+  $('.form-group select').removeClass('error');
+  $('.article-options').removeClass('error');
+  $('.error-message').text('');
+  
+  if (!wordData.english) {
+    showValidationError('english', 'English translation is required');
+    isValid = false;
+  }
+  
+  if (!wordData.swedish) {
+    showValidationError('swedish', 'Swedish word is required');
+    isValid = false;
+  }
+  
+  if (!wordData.article) {
+    showArticleValidationError('article', 'Please select an article (en or ett)');
+    isValid = false;
+  }
+  
+  if (!wordData.category) {
+    showValidationError('category', 'Please select a category');
+    isValid = false;
+  }
+  
+  return isValid;
+}
+
+function showValidationError(fieldId, message) {
+  const field = $(`#${fieldId}`);
+  const errorElement = $(`#${fieldId}-error`);
+  
+  field.addClass('error');
+  errorElement.text(message);
+}
+
+function showArticleValidationError(fieldId, message) {
+  const errorElement = $(`#${fieldId}-error`);
+  $('.article-options').addClass('error');
+  errorElement.text(message);
+}
+
+function populateCategoryDropdown() {
+
+  const categorySelect = $("#category");
+  
+  const categories = Object.keys(window._vocabulary.categories || {});
+  
+  categorySelect.find('option:not(:first)').remove();
+  
+  if (categories.length === 0) {
+    console.warn('No categories found in vocabulary data');
+
+    //fallback
+    const option = $('<option></option>')
+      .attr('value', 'general')
+      .text('General');
+    categorySelect.append(option);
+    return;
+  }
+  
+  //add to dropdown
+  categories.sort().forEach(category => {
+    const option = $('<option></option>')
+      .attr('value', category)
+      .text(category.charAt(0).toUpperCase() + category.slice(1));
+    
+    categorySelect.append(option);
+  });
+  
+  console.log(`Loaded ${categories.length} categories from Google datasheet:`, categories);
 }
 
 function handleClearWord(event) {
