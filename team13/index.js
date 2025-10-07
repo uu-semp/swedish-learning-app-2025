@@ -18,6 +18,7 @@ const gameStates = {
 
 let state = gameStates.inGame;
 
+let correctHouseNumber_swe = "noll";
 let houseArray = [];
 let correctHouse = null;
 let houseCount = 4
@@ -80,7 +81,7 @@ function inGame_logic_start(){}
 function menu_logic_start(){}
 
 function translateWord(wordIndex, englishText, swedishText, prompt, translatedWords){
-  if (!translatedWords.includes(wordIndex)){
+  if (!wordIsTranslated(wordIndex)){
     translatedWords[translatedWords.length] = wordIndex
     let newWord = ""
     let englishWord = englishText[wordIndex];
@@ -119,7 +120,7 @@ function generateRandom() {
   $("#number-english").text((vocab.en));
   $("#number-swedish").text((vocab.sv));
   $("#number-literal").text((vocab.literal));
-
+  correctHouseNumber_swe = vocab.sv
   const result = generateRandomHouses(vocab.literal, houseCount, numbers.length - 1);
 
   houseArray = result.houseArray;
@@ -136,7 +137,7 @@ function renderPrompt(){
   console.log("Length of currentPrompt:")
   console.log(currentPrompt.length)
   currentPrompt.forEach((promptValue,promptIndex) => {
-    const btn = $(`<button>${promptValue}</button>`);
+    const btn = $(`<button>${renderWord(promptValue,promptIndex)}</button>`);
     btn.on("click", () => updatePrompt(promptIndex));
     container.append(btn);
   });
@@ -151,6 +152,18 @@ function renderHouseButtons() {
     btn.on("click", () => clickHouse(index));
     container.append(btn);
   });
+}
+
+function renderWord(word, index){
+  switch (word){
+    case "-": if (wordIsTranslated(index)){
+      return currentEnglishText[index];
+    }else{
+      return currentSwedishText[index];
+    }
+    case "int": return correctHouseNumber_swe;
+    default: return word;
+  }
 }
 
 function generateRandomHouses(houseNumber, houseCount, highestNumber) {
@@ -213,4 +226,8 @@ function runGameStateLogic() {
 
 function getKeyName(states, index) {
   return Object.keys(states).find((key) => states[key] === index);
+}
+
+function wordIsTranslated(wordIndex){
+  return translatedIndexes.includes(wordIndex)
 }
