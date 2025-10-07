@@ -12,7 +12,7 @@ Owned by Team 07
 }
 
 .game-frame h1 {
-    font-size: 3rem;
+    font-size: 4.5rem;
     margin-bottom: 1rem;
     text-align: center;
     font-family: 'Times New Roman', Times, serif;
@@ -30,3 +30,24 @@ Owned by Team 07
     font-size: 2rem;
     cursor: pointer;
 }
+
+#highscore-table {
+    border-collapse: separate;        
+    border-spacing: 32px 10px;       
+    font-family: 'Times New Roman', Times, serif;
+    margin-top: 5rem;
+}
+
+#highscore-table th {
+    font-size: 2.5rem;               
+    font-weight: 600;
+    padding: 0;
+    position: relative;
+}
+
+#highscore-table td {
+    font-size: 2.5rem;
+    font-weight: 600;
+    padding: 0;
+}
+
