@@ -161,7 +161,7 @@ export default [
         Article: '',
         Swedish: 'glasögon',
         Swedish_plural: '',
-        is_pair: false,
+        is_pair: true,
         Category: 'clothing',
         Subcategory: 'accessories',
         Image_url: 'assets/images/clothes/glasses.png',
