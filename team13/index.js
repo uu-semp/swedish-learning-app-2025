@@ -84,12 +84,16 @@ function translateWord(wordIndex, englishText, swedishText, prompt, translatedWo
     translatedWords[translatedWords.length] = wordIndex
     let newWord = ""
     let englishWord = englishText[wordIndex];
+    console.log(englishText)
+    console.log(swedishText)
+    console.log(wordIndex)
     switch(englishWord){
       case ("-"): newWord = swedishText[wordIndex]; break;
       case("int"): newWord = prompt[wordIndex]; break;
       default: newWord = englishWord; break;
     }
     prompt[wordIndex] = newWord
+    console.log(currentPrompt)
     renderPrompt()
   }
 }
@@ -131,8 +135,8 @@ function renderPrompt(){
   container.empty();
   console.log("Length of currentPrompt:")
   console.log(currentPrompt.length)
-  currentPrompt.forEach((promptIndex) => {
-    const btn = $(`<button>${promptIndex}</button>`);
+  currentPrompt.forEach((promptValue,promptIndex) => {
+    const btn = $(`<button>${promptValue}</button>`);
     btn.on("click", () => updatePrompt(promptIndex));
     container.append(btn);
   });
