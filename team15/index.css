@@ -279,7 +279,7 @@ body {
 }
 
 /* Style override for the exit button inside the header */
-.level-header .big-buttons {
+#exit-game-button {
     background-color: #D32F2F; /* Red */
     border-color: #B71C1C; /* Darker Red */
     color: white;
@@ -289,7 +289,8 @@ body {
     font-size: 16px;
     border-width: 4px;
     border-radius: 15px;
-    margin: 0; /* Remove any inherited margin */
+    margin: 0% 0% 4% 4%;
+    width:15%;
 }
 
 .level-header .big-buttons:hover {
@@ -297,10 +298,6 @@ body {
     border-color: #D32F2F;
 }
 
-.feedback-area {
-    padding: 0 20px 10px;
-    min-height: 50px; /* Reserve space to prevent layout shifting when feedback appears */
-}
 
 .main-content-area {
     display: flex;
@@ -316,13 +313,15 @@ body {
 
 /* Simple feedback text colors */
 .feedback-container {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    z-index: 100;
-    padding: 10px 20px;
-    border-radius: 5px;
-    border: 2px solid;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  margin: auto;
+  z-index: 1001;
+  padding: 10px 20px;
+  border-radius: 5px;
+  border: 5px solid;
 }
 
 .feedback-text {
@@ -353,17 +352,17 @@ body {
 
 /* displaying image in image container within image view */
 .image-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  max-width: 400px; /* Adjust max-width as needed to fit your layout */
-  margin: 20px auto; /* Centers the container horizontally */
-  padding: 10px;
-  border: 2px solid #4CAF50; /* Optional: Matches the green border in your screenshot */
-  background-color: #E8F5E8; /* Optional: Light green background to match screenshot */
-  border-radius: 8px;
-  box-sizing: border-box; /* Ensures padding/border don't add to width */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    max-width: 400px; /* Adjust max-width as needed to fit your layout */
+    margin: 20px auto; /* Centers the container horizontally */
+    padding: 10px;
+    border: 2px solid #4CAF50; /* Optional: Matches the green border in your screenshot */
+    background-color: #E8F5E8; /* Optional: Light green background to match screenshot */
+    border-radius: 8px;
+    box-sizing: border-box; /* Ensures padding/border don't add to width */
 }
 
 .displayed-image {

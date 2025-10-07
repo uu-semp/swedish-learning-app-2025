@@ -12,7 +12,7 @@ export const PelleContainer = {
     methods: {
         handleItemDrop(event) {
             const droppedItem = event.dataTransfer.getData('text/plain');
-            console.log('Dropped item in component:', droppedItem);
+            console.log('Dropped item ID in component:', droppedItem);
             
             const isCorrect = Math.random() > 0.5;
             this.$emit('item-dropped', { isCorrect: isCorrect });

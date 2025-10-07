@@ -47,6 +47,10 @@ export const ClothingItemButton = {
             type: String,
             required: true,
         },
+        itemID: { 
+          type: String, 
+          required: true
+        },
     },
 
     data(){
@@ -59,7 +63,7 @@ export const ClothingItemButton = {
         handleDragStart(event) {
             // Set drag data (you can customize this later)
             this.isDragged = true;
-            event.dataTransfer.setData('text/plain', this.label);
+            event.dataTransfer.setData('text/plain', this.itemID); // We send the itemID of dropped item to check if true later
             event.dataTransfer.effectAllowed = 'move';
         },
     },
