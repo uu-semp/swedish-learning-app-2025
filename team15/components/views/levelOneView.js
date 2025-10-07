@@ -59,9 +59,9 @@ export const LevelOneView = {
       handleDropResult({ isCorrect }) {
             if (isCorrect) {
                 this.showCorrectFeedback = true;
+                this.currentScore++;
                 setTimeout(() => {
                     this.showCorrectFeedback = false;
-                    this.currentScore++;
                     this.loadNextItem();
                 }, 1500);
             } else {
@@ -78,8 +78,7 @@ export const LevelOneView = {
             <div class="level-header">
 
                 <div class="score-counter">
-                    <span>{{ score }}</span> P
-                    <img src="./components/assets/coin.png" alt="coin" class="coin-icon" />
+                    <score-counter :score="currentScore" :item-amount="availableItems.length"></score-counter>
                 </div>
                 
                 <dress-pelle-prompt :item="currentItem"></dress-pelle-prompt>
