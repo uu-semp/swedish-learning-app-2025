@@ -1,12 +1,82 @@
-/*
-=================================================
-Owned by Team 13
-=================================================
-*/
+/* =============================================
+   Owned by Team 13
+   ============================================= */
+
+.hidden { display: none; }
 
 body {
     font-family: Arial, sans-serif;
     width: 1000px;
-    margin-left: auto;
-    margin-right: auto;
+    margin: 0 auto;
+    padding: 2rem;
+    background: linear-gradient(to bottom, #e0f7fa, #fff);
 }
+
+/* Center the main game area */
+main.game-frame {
+    text-align: center;
+    padding: 2rem;
+}
+
+/* Container for house buttons */
+#house-buttons {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+/* Base house button styling */
+#house-buttons button {
+    position: relative;
+    width: 120px;
+    height: 120px;
+    background: #ffcc80; /* warm orange walls */
+    border: 3px solid #d17a22;
+    border-radius: 0 0 10px 10px;
+    cursor: pointer;
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #4a2c00;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+/* Little roof using a pseudo-element */
+#house-buttons button::before {
+    content: "";
+    position: absolute;
+    top: -40px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 60px solid transparent;
+    border-right: 60px solid transparent;
+    border-bottom: 40px solid #d17a22; /* roof color */
+}
+
+/* Hover effect for interactivity */
+#house-buttons button:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+    background: #ffe0b2;
+}
+
+/* Optional: pressed state */
+#house-buttons button:active {
+    transform: translateY(2px);
+}
+
+/* Optional: nice footer */
+footer {
+    text-align: center;
+    margin-top: 3rem;
+    color: #666;
+}
+
+/* Progress bar */
+.progress-wrap { max-width: 500px; margin: 1rem auto 2rem; text-align: left; }
+.progress-label { font-weight: bold; margin-bottom: 0.5rem; }
+.progress-bar { width: 100%; height: 18px; border: 2px solid #333; border-radius: 999px; background: #eee; overflow: hidden; }
+#progress-fill { height: 100%; width: 10%; background: linear-gradient(to right, #81c784, #4caf50); transition: width 180ms ease; }

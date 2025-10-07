@@ -34,17 +34,45 @@ Owned by Team 13
 
   <main class="game-frame">
     Implement your game inside this tag. test test test
+
+  <!-- MENU (gamestate 0) -->
+    <div id="menu-screen">
+      <h2>Welcome to Team 13's Swedish Game</h2>
+      <p>Practice Swedish house numbers by picking the correct house!</p>
+      <button id="start-game-btn">Start Game</button>
+    </div>   
+
+
+  <!-- GAME (gamestate 1) -->
+  <div id="game-screen" style="display:none">
+    <!-- Progress bar -->
+    <div class="progress-wrap" aria-label="Progress">
+      <div class="progress-label">
+        Progress: <span id="progress-count">1</span> / 10
+      </div>
+      <div class="progress-bar">
+        <div id="progress-fill"></div>
+      </div>
+    </div>
+    
+  <!-- Debug buttons (change gamestate -> back to menu) -->
     <button onclick="generateRandom()">Re-randomize</button>
-    <button onclick="nextGameState()">Change gameState</button>
+    <button onclick="nextGameState()">Back to Menu</button>
     <hr>
 
     <div id="house-buttons"></div>
 
     <hr>
     Jag bor på exempelvägen <span id="number-swedish"></span><br>
+    
+    <button id="toggle-translation-btn">Show translation</button>
+    <div id="english-line" class="hidden">
     I live on exempelvägen <span id="number-english"></span><br>
+    </div>
+
   <!-- Literal: <div id="number-literal"></div><br>-->
     Gamestate: <div id="gamestate"></div>
+    </div>
   </main>
 
   <footer>

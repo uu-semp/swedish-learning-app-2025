@@ -16,7 +16,53 @@ const gameStates = {
   inGame: 1,
 };
 
-let state = gameStates.inGame;
+let state = gameStates.menu;
+
+
+
+// new function to hide the correct screen
+function renderScreen() {
+  const isMenu = state === gameStates.menu;
+  $("#menu-screen").toggle(isMenu);
+  $("#game-screen").toggle(!isMenu)
+  $("#gamestate").text(isMenu ? "menu" : "InGame");
+
+    // Not completely sure about this part but it seems to keep translation hidden for a new round
+    if (isMenu) { 
+    $("#english-line").addClass("hidden");
+    $("#toggle-translation-btn").text("Show translation");
+  }
+
+}
+
+// Progress config (1-10) - Progression Bar
+
+const PROGRESS_MIN = 1;
+const PROGRESS_MAX = 10;
+let progress = PROGRESS_MIN;
+
+function renderProgress() 
+  {const pct = (progress / PROGRESS_MAX) * 100;
+  $("#progress-count").text(progress);
+  $("#progress-fill").css("width", `${pct}%`);}
+
+
+function applyProgress(wasCorrect) {
+  progress += wasCorrect ? 1 : -1;
+  if (progress < PROGRESS_MIN) progress = PROGRESS_MIN;
+  if (progress > PROGRESS_MAX) progress = PROGRESS_MAX;
+
+  renderProgress();
+
+  if (progress === PROGRESS_MAX) 
+    {alert("Congrats! You finished 10 rounds.");
+    state = gameStates.menu;
+    renderScreen();
+    progress = PROGRESS_MIN;  
+    renderProgress();}
+}
+
+
 
 let houseArray = [];
 let correctHouse = null;
@@ -24,13 +70,23 @@ let houseCount = 4
 
 $(function () {
   window.vocabulary.when_ready(function () {
-    const houseInfo = runGameStateLogic();
 
-    houseArray = houseInfo.houseArray;
-    correctHouse = houseInfo.correctHouse;
+    $("#start-game-btn").on("click", () => {
+      state = gameStates.inGame;
+      renderScreen();
+      const houseInfo = runGameStateLogic(); // Start first round
+      houseArray = houseInfo.houseArray;
+      correctHouse = houseInfo.correctHouse;
+    });
 
-    console.log("Generated houses:", houseArray);
-    console.log("correct house index:", correctHouse);
+    $("#toggle-translation-btn").on("click", function () {
+      $("#english-line").toggleClass("hidden");
+      const isHidden = $("#english-line").hasClass("hidden");
+      $(this).text(isHidden ? "Show translation" : "Hide translation");
+    });
+
+    renderProgress();
+    renderScreen();
 
     $("#check-jquery").on("click", () => {
       alert("JavaScript and jQuery are working.");
@@ -48,7 +104,7 @@ $(function () {
 
 function menu_logic() {
   console.log("menu_logic");
-  return generateRandom();
+  return { houseArray, correctHouse };
 }
 
 function inGame_logic() {
@@ -64,7 +120,7 @@ function generateRandom() {
   const vocab = window.vocabulary.get_vocab(numbers[randomNo]);
   console.log("generateRandom:", vocab.literal);
 
-  $("#number-english").text((vocab.en));
+  $("#number-english").text(`"${vocab.sv}"`);
   $("#number-swedish").text((vocab.sv));
   $("#number-literal").text((vocab.literal));
 
@@ -72,20 +128,10 @@ function generateRandom() {
 
   houseArray = result.houseArray;
   correctHouse = result.correctHouse;
-  updateHouseButtons();
+
   renderHouseButtons();
 
   return result;
-}
-function renderHouseButtons() {
-  const container = $("#house-buttons");
-  container.empty(); // clear previous buttons
-
-  houseArray.forEach((houseNum, index) => {
-    const btn = $(`<button>House ${houseNum}</button>`);
-    btn.on("click", () => clickHouse(index));
-    container.append(btn);
-  });
 }
 
 function generateRandomHouses(houseNumber, houseCount, highestNumber) {
@@ -110,6 +156,7 @@ function nextGameState() {
   const totalStates = Object.keys(gameStates).length;
   state = (state + 1) % totalStates;
   console.log("New state:", state);
+  renderScreen();
   runGameStateLogic();
 }
 
@@ -118,12 +165,23 @@ function clickHouse(num) {
   console.log("House array:", houseArray);
   console.log("Correct house index:", correctHouse);
 
+  const wasCorrect = (num === correctHouse);
+
   if (num === correctHouse) {
     alert("Correct!");
   } else {
     alert("Wrong house.");
   }
+
+  applyProgress(wasCorrect);
+
+  // start next round only if still in game
+  if (state === gameStates.inGame) {
+    generateRandom();
+  }
+
 }
+/* Is replaced with renderhousebutton function
 
 function updateHouseButtons() {
   for (let i = 0; i < houseArray.length; i++) {
@@ -133,10 +191,21 @@ function updateHouseButtons() {
     }
   }
 }
+*/
+
+function renderHouseButtons() {
+  const container = $("#house-buttons");
+  container.empty(); // clear previous buttons
+
+  houseArray.forEach((houseNum, index) => {
+    const btn = $(`<button>House ${houseNum}</button>`);
+    btn.on("click", () => clickHouse(index));
+    container.append(btn);
+  });
+}
+
 
 function runGameStateLogic() {
-  const numbers = window.vocabulary.get_category("number");
-  $("#gamestate").text(window.vocabulary.get_vocab(numbers[state]).en);
 
   switch (state) {
     case gameStates.menu:
@@ -149,3 +218,5 @@ function runGameStateLogic() {
 function getKeyName(states, index) {
   return Object.keys(states).find((key) => states[key] === index);
 }
+
+
