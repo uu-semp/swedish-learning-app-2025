@@ -1,5 +1,5 @@
 const CATEGORY = "clothing";
-const TOTAL_QUESTIONS = 10; 
+const TOTAL_QUESTIONS = 1; 
 
 const imgEl = document.getElementById("vocabImg");
 const optsEl = document.getElementById("options");
