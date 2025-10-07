@@ -520,7 +520,7 @@ export default [
     {
         ID: '414d510b',
         English: 'underwear',
-        Article: '',
+        Article: 'ett',
         Swedish: 'underkläder',
         Swedish_plural: '',
         is_pair: false,
