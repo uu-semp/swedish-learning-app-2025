@@ -1,0 +1,81 @@
+/*
+=================================================
+
+This CSS file contains styles specific to the "Choose Level" view of the app.
+
+=================================================
+
+*/
+.choose-level-view {
+    /* Ensure it takes up the full available space in the .game-frame */
+    height: 100%;
+    width: 100%;
+    
+    /* Use flexbox to vertically center the level buttons */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+    /* Add padding/margin at the top to position the main-text correctly */
+    padding-top: 50px; 
+    box-sizing: border-box;
+    position: relative; /* Essential for positioning the flags and go-back button */
+}
+
+/* Override .main-text positioning for this view */
+.choose-level-view .main-text {
+    margin-top: 0; /* Remove top margin for tighter layout */
+    margin-bottom: 20px; /* Adjust spacing between title and first button */
+}
+
+/*
+    The container for the three level buttons to control their spacing and width.
+    This ensures they are grouped and centered.
+*/
+.level-buttons-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 400px; /* Limit max width for a nicer look on wide screens */
+}
+
+/*
+    Style for the individual level buttons.
+    We'll use .big-buttons for most of the styling but override margin/padding.
+*/
+.level-buttons-container .big-buttons {
+    /* Remove horizontal margin and adjust vertical margin */
+    margin: 0 0 30px 0; /* Space below each button */
+    width: 100%; /* Take full width of its container (max-width: 400px) */
+    
+    /* Slightly adjust padding to make them tall and rounded */
+    padding: 15px 25px; 
+    font-size: 1.8em; /* Match text size from previous suggestion for "LEVEL X" */
+}
+
+/*
+    Styles for the 'GO BACK' button to be positioned in the bottom left corner.
+*/
+.choose-level-view .go-back-wrapper {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+}
+
+/* Styles for go back button go-back-button component's root element */
+.go-back-button-style { 
+    border: 8px solid #02b823;
+    border-radius: 15px;
+    padding: 10px 15px;
+    font-weight: 800; /* Bolder text */
+    font-size: 1.5em;
+    cursor: pointer;
+}
+
+/* Small box-shadow on hover, leveraging the existing hover effect base */
+.go-back-button-style:hover {
+    cursor: grab;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    transition: 0.3s ease;
+}
