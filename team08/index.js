@@ -3,7 +3,7 @@
 // ==============================================
 
 import "./options/settings.js";
-import {init_db} from "./store/read.js";
+import { init_db } from "./store/read.js";
 
 const init = async () => {
   await init_db();
@@ -13,8 +13,8 @@ const init = async () => {
 
   if (startBtn) {
     startBtn.addEventListener("click", () => {
-      // TODO Navigate to category selection page
-      window.location.href = "./index.html";
+      // Navigate to main game page
+      window.location.href = "./select.html";
     });
   }
 
