@@ -26,30 +26,41 @@ Owned by Team 07
 
   <!-- Site specific scripts and styles -->
   <link rel="stylesheet" href="index.css" />
+  <link rel="stylesheet" href="word-list.css" />
   <script src="index.js" defer></script>
-  <script src="game-page.js" defer></script>
+  <script src="word-list.js" defer></script>
 
 </head>
 
-<body>
+<body class="word-list-body" onload="display_word_list()">
   <header>
     <h1>Team 07</h1>
   </header>
 
-  <main class="game-frame">
-    Implement your game inside this tag.
-
-    <hr>
-    Learning: <div id="display-vocab">(This should be replaced by a word)</div>
-
-    <a href="category.html">Spelsida</a><br>
-    <button onclick="window.location.href = 'word-list.html'">Word List</button>
-
+  <main class="game-frame" style="overflow:auto;">
+    <i id="back-button" class="fa-solid fa-arrow-left"></i>
+    
+    <div class="word-list-header">
+      <h1>Word list</h1>
+    </div>
+    
+    <div class="list-item" id="list">
+        <p class="paragraph" id="paragraph"></p>
+    </div>
+    
   </main>
 
   <footer>
     <small>Created as part of the "Software Engineering and Project Management" course 2025</small>
   </footer>
+
+  <script>
+    document.getElementById('back-button').addEventListener('click', function () {
+      window.location.href = 'index.html';
+    })
+
+  </script>
 </body>
+
 
 </html>
