@@ -13,8 +13,6 @@ const language = reactive({
        // Fetch right JSON language file depending on the language
       const response = await fetch(`./language/${language === "sv" ? "swedish.json" : "english.json"}`);
       this.translations = await response.json();
-
-      console.log("Loaded language: ", language)   
     }
     catch (err){
       console.error("Failed to load language!", err)

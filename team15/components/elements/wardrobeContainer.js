@@ -57,7 +57,7 @@ export const WardrobeContainer = {
         <!-- All the displayed images within the wardrobe container -->
           <clothing-item-button 
           v-for="item in categoryItems"
-          :key="item.categoryId"
+          :itemID="item.ID"
           :label="\`../../../\${item.Image_url}\`"
           :title="item.label"
           ></clothing-item-button>

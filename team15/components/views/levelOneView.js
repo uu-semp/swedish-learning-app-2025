@@ -40,18 +40,22 @@ export const LevelOneView = {
         openModal() {
             this.showModal = true;
         },
+
         closeModal() {
             this.showModal = false;
         },
+        
         confirmExit() {
             this.switchTo('ChooseLevelView'); // Navigate to ChooseLevelView
             this.closeModal();
         },
+
         handleOverlayClick(event) {
             if (event.target.classList.contains('modal-overlay')) {
                 this.closeModal();
             }
         },
+
       handleDropResult({ isCorrect }) {
             if (isCorrect) {
                 this.showCorrectFeedback = true;
@@ -71,19 +75,18 @@ export const LevelOneView = {
     template: `
       <div class="level-one-view">
             <div class="level-header">
-                <dress-pelle-prompt :item="currentItem">
 
                 <div class="score-counter">
                     <span>{{ score }}</span> P
                     <img src="./components/assets/coin.png" alt="coin" class="coin-icon" />
                 </div>
-
+                
+                <dress-pelle-prompt :item="currentItem"></dress-pelle-prompt>
+    
             </div>
-
-            <div class="feedback-area">
-                <correct-answer-feedback v-if="showCorrectFeedback"></correct-answer-feedback>
-                <incorrect-answer-feedback v-if="showIncorrectFeedback"></incorrect-answer-feedback>
-            </div>
+            
+            <correct-answer-feedback v-if="showCorrectFeedback"></correct-answer-feedback>
+            <incorrect-answer-feedback v-if="showIncorrectFeedback"></incorrect-answer-feedback>         
 
             <div class="main-content-area">
                 <div class="pelle-wrapper">
@@ -95,8 +98,7 @@ export const LevelOneView = {
             </div>
 
             <exit-game-button @click="openModal"></exit-game-button>
-
-
+    
             <div v-if="showModal" class="modal-overlay" @click="handleOverlayClick">
                 <div class="modal-content" @click.stop>
                     <h2>{{$language.translate('exit-confirmation')}}</h2>
