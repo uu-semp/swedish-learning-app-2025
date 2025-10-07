@@ -4,7 +4,7 @@ Owned by Team 10
 =================================================
 */
 
-.game-frame {
+.game {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -12,26 +12,22 @@ Owned by Team 10
 }
 
 .display-level{
-    font-size: xx-large;
+    font-size: x-large;
     color: darkgreen;
     font-weight: bold;
     text-transform: uppercase;
     text-align: center;
-    margin-top: 0px;
+    margin-top: 20px;
     margin-bottom: 10px;
-}
-
-.display-instructions {
-    font-size: medium;
-    color: gray;
-    text-align: center
 }
 
 .display-image {
     display: block;
     margin-left: auto;
     margin-right: auto;
-    width: 60%;
+    width: 40%;
+    max-height: 50vh;
+    object-fit: contain;
     border: 2px solid black;
     border-radius: 10px;
     margin-top: 20px;
@@ -41,7 +37,7 @@ Owned by Team 10
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 20px;
+    margin-top: 10px;
     gap: 20px;
 }
 
@@ -51,7 +47,7 @@ Owned by Team 10
     border-radius: 10px;
     padding: 20px;
     width: 250px;
-    height: 30px;
+    height: 20px;
     text-align: center;
     cursor: pointer;
     background-color: lightgray;
