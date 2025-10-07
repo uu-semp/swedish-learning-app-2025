@@ -24,6 +24,7 @@ let houseCount = 4
 let currentSwedishText = [];
 let currentEnglishText = [];
 let currentPrompt = [];
+let translatedIndexes = [];
 
 
 $(function () {
@@ -79,7 +80,8 @@ function inGame_logic_start(){}
 function menu_logic_start(){}
 
 function translateWord(wordIndex, englishText, swedishText, prompt, translatedWords){
-  if (!translatedWords.contains(wordIndex)){
+  if (!translatedWords.includes(wordIndex)){
+    translatedWords[translatedWords.length] = wordIndex
     let newWord = ""
     let englishWord = englishText[wordIndex];
     switch(englishWord){
@@ -88,10 +90,11 @@ function translateWord(wordIndex, englishText, swedishText, prompt, translatedWo
       default: newWord = englishWord; break;
     }
     prompt[wordIndex] = newWord
+    renderPrompt()
   }
 }
 function updatePrompt(wordIndex) {
-  translateWord(wordIndex, currentEnglishText,currentSwedishText,currentPrompt)
+  translateWord(wordIndex, currentEnglishText,currentSwedishText,currentPrompt, translatedIndexes)
   for (let i = 0; i < houseArray.length; i++) {
     const button = document.getElementById(`word-btn-${i}`);
     if (button) {
@@ -130,7 +133,7 @@ function renderPrompt(){
   console.log(currentPrompt.length)
   currentPrompt.forEach((promptIndex) => {
     const btn = $(`<button>${promptIndex}</button>`);
-    btn.on("click", () => updateWord(promptIndex));
+    btn.on("click", () => updatePrompt(promptIndex));
     container.append(btn);
   });
 }
