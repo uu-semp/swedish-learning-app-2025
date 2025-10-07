@@ -1,0 +1,1409 @@
+[
+  {
+    "id": "292c5778",
+    "english": "window",
+    "swedish": "fönster",
+    "category": "furniture",
+    "image_url": null
+  },
+  {
+    "id": "1b2d5670",
+    "english": "door",
+    "swedish": "dörr",
+    "category": "furniture",
+    "image_url": null
+  },
+  {
+    "id": "196a2e09",
+    "english": "blackboard",
+    "swedish": "tavla",
+    "category": "furniture",
+    "image_url": null
+  },
+  {
+    "id": "7e6c5812",
+    "english": "table",
+    "swedish": "bord",
+    "category": "furniture",
+    "image_url": null
+  },
+  {
+    "id": "031e117b",
+    "english": "chair",
+    "swedish": "stol",
+    "category": "furniture",
+    "image_url": "/assets/images/furniture/chair.png"
+  },
+  {
+    "id": "6d375947",
+    "english": "zero",
+    "swedish": "noll",
+    "category": "number",
+    "image_url": null
+  },
+  {
+    "id": "29162632",
+    "english": "one",
+    "swedish": "ett",
+    "category": "number",
+    "image_url": null
+  },
+  {
+    "id": "73202703",
+    "english": "two",
+    "swedish": "två",
+    "category": "number",
+    "image_url": null
+  },
+  {
+    "id": "7d4e666c",
+    "english": "three",
+    "swedish": "tre",
+    "category": "number",
+    "image_url": null
+  },
+  {
+    "id": "36211275",
+    "english": "first",
+    "swedish": "första",
+    "category": "ordinal-number",
+    "image_url": null
+  },
+  {
+    "id": "51085e77",
+    "english": "second",
+    "swedish": "andra",
+    "category": "ordinal-number",
+    "image_url": null
+  },
+  {
+    "id": "1e055517",
+    "english": "third",
+    "swedish": "tredje",
+    "category": "ordinal-number",
+    "image_url": null
+  },
+  {
+    "id": "1775693f",
+    "english": "fourth",
+    "swedish": "fjärde",
+    "category": "ordinal-number",
+    "image_url": null
+  },
+  {
+    "id": "1f780c21",
+    "english": "fifth",
+    "swedish": "femte",
+    "category": "ordinal-number",
+    "image_url": null
+  },
+  {
+    "id": "101c5e1d",
+    "english": "sixth",
+    "swedish": "sjätte",
+    "category": "ordinal-number",
+    "image_url": null
+  },
+  {
+    "id": "1431537c",
+    "english": "seventh",
+    "swedish": "sjunde",
+    "category": "ordinal-number",
+    "image_url": null
+  },
+  {
+    "id": "773e7806",
+    "english": "eighth",
+    "swedish": "åttonde",
+    "category": "ordinal-number",
+    "image_url": null
+  },
+  {
+    "id": "5d210e41",
+    "english": "ninth",
+    "swedish": "nionde",
+    "category": "ordinal-number",
+    "image_url": null
+  },
+  {
+    "id": "79152e28",
+    "english": "tenth",
+    "swedish": "tionde",
+    "category": "ordinal-number",
+    "image_url": null
+  },
+  {
+    "id": "5608397a",
+    "english": "eleventh",
+    "swedish": "elfte",
+    "category": "ordinal-number",
+    "image_url": null
+  },
+  {
+    "id": "30291c0b",
+    "english": "twelfth",
+    "swedish": "tolfte",
+    "category": "ordinal-number",
+    "image_url": null
+  },
+  {
+    "id": "5344105d",
+    "english": "five minutes past",
+    "swedish": "Fem över",
+    "category": "time-text-minues",
+    "image_url": null
+  },
+  {
+    "id": "4f192d3c",
+    "english": "ten minutes past",
+    "swedish": "Tio over",
+    "category": "time-text-minues",
+    "image_url": null
+  },
+  {
+    "id": "41331c49",
+    "english": "quarter past",
+    "swedish": "Kvart över",
+    "category": "time-text-minues",
+    "image_url": null
+  },
+  {
+    "id": "3b6c3160",
+    "english": "it rains",
+    "swedish": "det regnar",
+    "category": "weather",
+    "image_url": null
+  },
+  {
+    "id": "4043786f",
+    "english": "it snows",
+    "swedish": "det snöar",
+    "category": "weather",
+    "image_url": null
+  },
+  {
+    "id": "14707508",
+    "english": "it is windy",
+    "swedish": "det blåser",
+    "category": "weather",
+    "image_url": null
+  },
+  {
+    "id": "3501691b",
+    "english": "it is sunny",
+    "swedish": "det är soligt",
+    "category": "weather",
+    "image_url": null
+  },
+  {
+    "id": "27657a44",
+    "english": "it is cloudy",
+    "swedish": "det är molnigt",
+    "category": "weather",
+    "image_url": null
+  },
+  {
+    "id": "761f5c6a",
+    "english": "Monday",
+    "swedish": "måndag",
+    "category": "day",
+    "image_url": null
+  },
+  {
+    "id": "1d7e2e33",
+    "english": "Tuesday",
+    "swedish": "tisdag",
+    "category": "day",
+    "image_url": null
+  },
+  {
+    "id": "2331362b",
+    "english": "Wednesday",
+    "swedish": "onsdag",
+    "category": "day",
+    "image_url": null
+  },
+  {
+    "id": "01301227",
+    "english": "January",
+    "swedish": "januari",
+    "category": "month",
+    "image_url": null
+  },
+  {
+    "id": "4a0a7202",
+    "english": "February",
+    "swedish": "februari",
+    "category": "month",
+    "image_url": null
+  },
+  {
+    "id": "3d50140b",
+    "english": "March",
+    "swedish": "march",
+    "category": "month",
+    "image_url": null
+  },
+  {
+    "id": "346a6479",
+    "english": "beanie",
+    "swedish": "mössa",
+    "category": "clothing",
+    "image_url": "assets/images/clothes/beanie.png"
+  },
+  {
+    "id": "31371a6d",
+    "english": "belt",
+    "swedish": "bälte",
+    "category": "clothing",
+    "image_url": "assets/images/clothes/belt.png"
+  },
+  {
+    "id": "55117302",
+    "english": "blazer",
+    "swedish": "kavaj",
+    "category": "clothing",
+    "image_url": "assets/images/clothes/blazer.png"
+  },
+  {
+    "id": "40090b3b",
+    "english": "blouse",
+    "swedish": "blus",
+    "category": "clothing",
+    "image_url": "assets/images/clothes/blouse.png"
+  },
+  {
+    "id": "5a4d0217",
+    "english": "boots",
+    "swedish": "stövlar",
+    "category": "clothing",
+    "image_url": "assets/images/clothes/boots.png"
+  },
+  {
+    "id": "7c61582d",
+    "english": "boxers",
+    "swedish": "kalsonger",
+    "category": "clothing",
+    "image_url": "assets/images/clothes/boxers.png"
+  },
+  {
+    "id": "7273131f",
+    "english": "bra",
+    "swedish": "bh",
+    "category": "clothing",
+    "image_url": "assets/images/clothes/bra.png"
+  },
+  {
+    "id": "5148523f",
+    "english": "bracelet",
+    "swedish": "armband",
+    "category": "clothing",
+    "image_url": "assets/images/clothes/bracelet.png"
+  },
+  {
+    "id": "66486a27",
+    "english": "cap",
+    "swedish": "keps",
+    "category": "clothing",
+    "image_url": "assets/images/clothes/cap.png"
+  },
+  {
+    "id": "48486a36",
+    "english": "cardigan",
+    "swedish": "kofta",
+    "category": "clothing",
+    "image_url": "assets/images/clothes/cardigan.png"
+  },
+  {
+    "id": "1e505206",
+    "english": "clothes",
+    "swedish": "kläder",
+    "category": "clothing",
+    "image_url": "assets/images/clothes/clothes.png"
+  },
+  {
+    "id": "2a066d13",
+    "english": "coat",
+    "swedish": "rock",
+    "category": "clothing",
+    "image_url": "assets/images/clothes/coat.png"
+  },
+  {
+    "id": "29647510",
+    "english": "dress",
+    "swedish": "klänning",
+    "category": "clothing",
+    "image_url": "assets/images/clothes/dress.png"
+  },
+  {
+    "id": "29776131",
+    "english": "earrings",
+    "swedish": "örhängen",
+    "category": "clothing",
+    "image_url": "assets/images/clothes/earrings.png"
+  },
+  {
+    "id": "7d095b1f",
+    "english": "glasses",
+    "swedish": "glasögon",
+    "category": "clothing",
+    "image_url": "assets/images/clothes/glasses.png"
+  },
+  {
+    "id": "1a67457c",
+    "english": "gloves",
+    "swedish": "handskar",
+    "category": "clothing",
+    "image_url": "assets/images/clothes/gloves.png"
+  },
+  {
+    "id": "63151f71",
+    "english": "hat",
+    "swedish": "hatt",
+    "category": "clothing",
+    "image_url": "assets/images/clothes/hat.png"
+  },
+  {
+    "id": "2f522139",
+    "english": "hoodie",
+    "swedish": "huvtröja",
+    "category": "clothing",
+    "image_url": "assets/images/clothes/hoodie.png"
+  },
+  {
+    "id": "4a2e3550",
+    "english": "jacket",
+    "swedish": "jacka",
+    "category": "clothing",
+    "image_url": "assets/images/clothes/jacket.png"
+  },
+  {
+    "id": "5c0a7646",
+    "english": "jeans",
+    "swedish": "jeans",
+    "category": "clothing",
+    "image_url": "assets/images/clothes/jeans.png"
+  },
+  {
+    "id": "0f473d04",
+    "english": "jewellery",
+    "swedish": "smycken",
+    "category": "clothing",
+    "image_url": "assets/images/clothes/jewellery.png"
+  },
+  {
+    "id": "6a761a1d",
+    "english": "knitted sweater",
+    "swedish": "stickad tröja",
+    "category": "clothing",
+    "image_url": "assets/images/clothes/knitted_sweater.png"
+  },
+  {
+    "id": "726e5628",
+    "english": "leggings",
+    "swedish": "leggings",
+    "category": "clothing",
+    "image_url": "assets/images/clothes/leggings.png"
+  },
+  {
+    "id": "424c1352",
+    "english": "mittens",
+    "swedish": "vantar",
+    "category": "clothing",
+    "image_url": "assets/images/clothes/mittens.png"
+  },
+  {
+    "id": "3174662f",
+    "english": "necklace",
+    "swedish": "halsband",
+    "category": "clothing",
+    "image_url": "assets/images/clothes/necklace.png"
+  },
+  {
+    "id": "63504a41",
+    "english": "panties",
+    "swedish": "trosor",
+    "category": "clothing",
+    "image_url": "assets/images/clothes/panties.png"
+  },
+  {
+    "id": "3f0f1669",
+    "english": "pants",
+    "swedish": "byxor",
+    "category": "clothing",
+    "image_url": "assets/images/clothes/pants.png"
+  },
+  {
+    "id": "6d711573",
+    "english": "pantyhose",
+    "swedish": "strumpbyxor",
+    "category": "clothing",
+    "image_url": "assets/images/clothes/pantyhose.png"
+  },
+  {
+    "id": "2b7b385f",
+    "english": "ring",
+    "swedish": "ring",
+    "category": "clothing",
+    "image_url": "assets/images/clothes/ring.png"
+  },
+  {
+    "id": "4c3e5f1b",
+    "english": "robe",
+    "swedish": "morgonrock",
+    "category": "clothing",
+    "image_url": "assets/images/clothes/robe.png"
+  },
+  {
+    "id": "7b305a74",
+    "english": "sandals",
+    "swedish": "sandaler",
+    "category": "clothing",
+    "image_url": "assets/images/clothes/sandals.png"
+  },
+  {
+    "id": "757f3252",
+    "english": "scarf",
+    "swedish": "halsduk",
+    "category": "clothing",
+    "image_url": "assets/images/clothes/scarf.png"
+  },
+  {
+    "id": "150d1b5f",
+    "english": "shoes",
+    "swedish": "skor",
+    "category": "clothing",
+    "image_url": "assets/images/clothes/shoes.png"
+  },
+  {
+    "id": "7e324371",
+    "english": "shorts",
+    "swedish": "shorts",
+    "category": "clothing",
+    "image_url": "assets/images/clothes/shorts.png"
+  },
+  {
+    "id": "5f1b432b",
+    "english": "shirt",
+    "swedish": "skjorta",
+    "category": "clothing",
+    "image_url": "assets/images/clothes/shirt.png"
+  },
+  {
+    "id": "2e5b2702",
+    "english": "skirt",
+    "swedish": "kjol",
+    "category": "clothing",
+    "image_url": "assets/images/clothes/skirt.png"
+  },
+  {
+    "id": "1e232d0a",
+    "english": "sneakers",
+    "swedish": "sneakers",
+    "category": "clothing",
+    "image_url": "assets/images/clothes/sneakers.png"
+  },
+  {
+    "id": "1044007d",
+    "english": "socks",
+    "swedish": "strumpor",
+    "category": "clothing",
+    "image_url": "assets/images/clothes/socks.png"
+  },
+  {
+    "id": "0b7a4464",
+    "english": "suit",
+    "swedish": "kostym",
+    "category": "clothing",
+    "image_url": "assets/images/clothes/suit.png"
+  },
+  {
+    "id": "26133720",
+    "english": "sunglasses",
+    "swedish": "solglasögon",
+    "category": "clothing",
+    "image_url": "assets/images/clothes/sunglasses.png"
+  },
+  {
+    "id": "7757011e",
+    "english": "sweater",
+    "swedish": "tröja",
+    "category": "clothing",
+    "image_url": "assets/images/clothes/sweater.png"
+  },
+  {
+    "id": "505e685e",
+    "english": "sweatpants",
+    "swedish": "mjukisbyxor",
+    "category": "clothing",
+    "image_url": "assets/images/clothes/sweatpants.png"
+  },
+  {
+    "id": "39183e65",
+    "english": "swimsuit",
+    "swedish": "baddräkt",
+    "category": "clothing",
+    "image_url": "assets/images/clothes/swimsuit.png"
+  },
+  {
+    "id": "464f095e",
+    "english": "t-shirt",
+    "swedish": "t-shirt",
+    "category": "clothing",
+    "image_url": "assets/images/clothes/t-shirt.png"
+  },
+  {
+    "id": "03421f5d",
+    "english": "tie",
+    "swedish": "slips",
+    "category": "clothing",
+    "image_url": "assets/images/clothes/tie.png"
+  },
+  {
+    "id": "2e5f060e",
+    "english": "top",
+    "swedish": "topp",
+    "category": "clothing",
+    "image_url": "assets/images/clothes/top.png"
+  },
+  {
+    "id": "7c556f61",
+    "english": "training clothes",
+    "swedish": "träningskläder",
+    "category": "clothing",
+    "image_url": "assets/images/clothes/training_clothes.png"
+  },
+  {
+    "id": "414d510b",
+    "english": "underwear",
+    "swedish": "underkläder",
+    "category": "clothing",
+    "image_url": "assets/images/clothes/underwear.png"
+  },
+  {
+    "id": "102a3257",
+    "english": "veil",
+    "swedish": "slöja",
+    "category": "clothing",
+    "image_url": "assets/images/clothes/veil.png"
+  },
+  {
+    "id": "4702640f",
+    "english": "black",
+    "swedish": "svart",
+    "category": "color",
+    "image_url": "assets/images/colors/black.png"
+  },
+  {
+    "id": "1a30203c",
+    "english": "blue",
+    "swedish": "blå",
+    "category": "color",
+    "image_url": "assets/images/colors/blue.png"
+  },
+  {
+    "id": "545e3a69",
+    "english": "brown",
+    "swedish": "brun",
+    "category": "color",
+    "image_url": "assets/images/colors/brown.png"
+  },
+  {
+    "id": "6a743833",
+    "english": "green",
+    "swedish": "grön",
+    "category": "color",
+    "image_url": "assets/images/colors/green.png"
+  },
+  {
+    "id": "6b260a0d",
+    "english": "orange",
+    "swedish": "orange",
+    "category": "color",
+    "image_url": "assets/images/colors/orange.png"
+  },
+  {
+    "id": "38610d43",
+    "english": "pink",
+    "swedish": "rosa",
+    "category": "color",
+    "image_url": "assets/images/colors/pink.png"
+  },
+  {
+    "id": "17371d10",
+    "english": "purple",
+    "swedish": "lila",
+    "category": "color",
+    "image_url": "assets/images/colors/purple.png"
+  },
+  {
+    "id": "6e45235f",
+    "english": "red",
+    "swedish": "röd",
+    "category": "color",
+    "image_url": "assets/images/colors/red.png"
+  },
+  {
+    "id": "657d5907",
+    "english": "white",
+    "swedish": "vit",
+    "category": "color",
+    "image_url": "assets/images/colors/white.png"
+  },
+  {
+    "id": "52145c35",
+    "english": "yellow",
+    "swedish": "gul",
+    "category": "color",
+    "image_url": "assets/images/colors/yellow.png"
+  },
+  {
+    "id": "113b4662",
+    "english": "apple",
+    "swedish": "äpple",
+    "category": "food",
+    "image_url": "assets/images/food/apple.png"
+  },
+  {
+    "id": "347c275d",
+    "english": "banana",
+    "swedish": "banan",
+    "category": "food",
+    "image_url": "assets/images/food/banana.png"
+  },
+  {
+    "id": "40210a77",
+    "english": "bean",
+    "swedish": "böna",
+    "category": "food",
+    "image_url": "assets/images/food/bean.png"
+  },
+  {
+    "id": "44791c4d",
+    "english": "beer",
+    "swedish": "öl",
+    "category": "food",
+    "image_url": "assets/images/food/beer.png"
+  },
+  {
+    "id": "056b575e",
+    "english": "berries",
+    "swedish": "bär",
+    "category": "food",
+    "image_url": "assets/images/food/berries.png"
+  },
+  {
+    "id": "287f4866",
+    "english": "bread",
+    "swedish": "bröd",
+    "category": "food",
+    "image_url": "assets/images/food/bread.png"
+  },
+  {
+    "id": "567f323c",
+    "english": "breakfast",
+    "swedish": "frukost",
+    "category": "food",
+    "image_url": "assets/images/food/breakfast.png"
+  },
+  {
+    "id": "3d10642f",
+    "english": "butter",
+    "swedish": "smör",
+    "category": "food",
+    "image_url": "assets/images/food/butter.png"
+  },
+  {
+    "id": "5946181f",
+    "english": "cake",
+    "swedish": "tårta",
+    "category": "food",
+    "image_url": "assets/images/food/cake.png"
+  },
+  {
+    "id": "084e120f",
+    "english": "candy",
+    "swedish": "godis",
+    "category": "food",
+    "image_url": "assets/images/food/candy.png"
+  },
+  {
+    "id": "78674a5b",
+    "english": "carrot",
+    "swedish": "morot",
+    "category": "food",
+    "image_url": "assets/images/food/carrot.png"
+  },
+  {
+    "id": "76785d5c",
+    "english": "cereal",
+    "swedish": "flingor",
+    "category": "food",
+    "image_url": "assets/images/food/cereal.png"
+  },
+  {
+    "id": "6441264f",
+    "english": "cheese",
+    "swedish": "ost",
+    "category": "food",
+    "image_url": "assets/images/food/cheese.png"
+  },
+  {
+    "id": "6a033b51",
+    "english": "chicken",
+    "swedish": "kyckling",
+    "category": "food",
+    "image_url": "assets/images/food/chicken.png"
+  },
+  {
+    "id": "11757421",
+    "english": "chips",
+    "swedish": "chips",
+    "category": "food",
+    "image_url": "assets/images/food/chips.png"
+  },
+  {
+    "id": "7069221a",
+    "english": "cinnamon roll",
+    "swedish": "kanelbulle",
+    "category": "food",
+    "image_url": "assets/images/food/cinnamon_roll.png"
+  },
+  {
+    "id": "32647751",
+    "english": "coffee",
+    "swedish": "kaffe",
+    "category": "food",
+    "image_url": "assets/images/food/coffee.png"
+  },
+  {
+    "id": "01125003",
+    "english": "cream",
+    "swedish": "grädde",
+    "category": "food",
+    "image_url": "assets/images/food/cream.png"
+  },
+  {
+    "id": "6f4a753e",
+    "english": "crispbread",
+    "swedish": "knäckebröd",
+    "category": "food",
+    "image_url": "assets/images/food/crispbread.png"
+  },
+  {
+    "id": "79107e7e",
+    "english": "cucumber",
+    "swedish": "gurka",
+    "category": "food",
+    "image_url": "assets/images/food/cucumber.png"
+  },
+  {
+    "id": "2f373051",
+    "english": "dinner",
+    "swedish": "middag",
+    "category": "food",
+    "image_url": "assets/images/food/dinner.png"
+  },
+  {
+    "id": "5a326050",
+    "english": "eggs",
+    "swedish": "ägg",
+    "category": "food",
+    "image_url": "assets/images/food/eggs.png"
+  },
+  {
+    "id": "2c451f1b",
+    "english": "fish",
+    "swedish": "fisk",
+    "category": "food",
+    "image_url": "assets/images/food/fish.png"
+  },
+  {
+    "id": "32191560",
+    "english": "food",
+    "swedish": "mat",
+    "category": "food",
+    "image_url": "assets/images/food/food.png"
+  },
+  {
+    "id": "440d3157",
+    "english": "fruit",
+    "swedish": "frukt",
+    "category": "food",
+    "image_url": "assets/images/food/fruit.png"
+  },
+  {
+    "id": "265a1433",
+    "english": "garlic",
+    "swedish": "vitlök",
+    "category": "food",
+    "image_url": "assets/images/food/garlic.png"
+  },
+  {
+    "id": "0d3f2077",
+    "english": "grape",
+    "swedish": "druva",
+    "category": "food",
+    "image_url": "assets/images/food/grape.png"
+  },
+  {
+    "id": "1164100d",
+    "english": "ham",
+    "swedish": "skinka",
+    "category": "food",
+    "image_url": "assets/images/food/ham.png"
+  },
+  {
+    "id": "0426284f",
+    "english": "ice cream",
+    "swedish": "glass",
+    "category": "food",
+    "image_url": "assets/images/food/ice_cream.png"
+  },
+  {
+    "id": "332e102d",
+    "english": "cookie",
+    "swedish": "kaka",
+    "category": "food",
+    "image_url": "assets/images/food/cookies.png"
+  },
+  {
+    "id": "4b642b00",
+    "english": "lemon",
+    "swedish": "citron",
+    "category": "food",
+    "image_url": "assets/images/food/lemon.png"
+  },
+  {
+    "id": "3d680e3e",
+    "english": "lentil",
+    "swedish": "lins",
+    "category": "food",
+    "image_url": "assets/images/food/lentil.png"
+  },
+  {
+    "id": "75387a51",
+    "english": "lunch",
+    "swedish": "lunch",
+    "category": "food",
+    "image_url": "assets/images/food/lunch.png"
+  },
+  {
+    "id": "5618161b",
+    "english": "meat",
+    "swedish": "kött",
+    "category": "food",
+    "image_url": "assets/images/food/meat.png"
+  },
+  {
+    "id": "526d5751",
+    "english": "milk",
+    "swedish": "mjölk",
+    "category": "food",
+    "image_url": "assets/images/food/milk.png"
+  },
+  {
+    "id": "0b302309",
+    "english": "minced meat sauce",
+    "swedish": "köttfärssås",
+    "category": "food",
+    "image_url": "assets/images/food/minced_meat_sauce.png"
+  },
+  {
+    "id": "133f0b13",
+    "english": "mushrooms",
+    "swedish": "svamp",
+    "category": "food",
+    "image_url": "assets/images/food/mushrooms.png"
+  },
+  {
+    "id": "697c7215",
+    "english": "noodles",
+    "swedish": "nudlar",
+    "category": "food",
+    "image_url": "assets/images/food/noodles.png"
+  },
+  {
+    "id": "6e706637",
+    "english": "onion",
+    "swedish": "lök",
+    "category": "food",
+    "image_url": "assets/images/food/onion.png"
+  },
+  {
+    "id": "2c431911",
+    "english": "orange",
+    "swedish": "orange",
+    "category": "food",
+    "image_url": "assets/images/food/orange.png"
+  },
+  {
+    "id": "7269063e",
+    "english": "pasta",
+    "swedish": "pasta",
+    "category": "food",
+    "image_url": "assets/images/food/pasta.png"
+  },
+  {
+    "id": "21005955",
+    "english": "pea",
+    "swedish": "ärta",
+    "category": "food",
+    "image_url": "assets/images/food/pea.png"
+  },
+  {
+    "id": "023f3b3b",
+    "english": "pear",
+    "swedish": "päron",
+    "category": "food",
+    "image_url": "assets/images/food/pear.png"
+  },
+  {
+    "id": "3152070a",
+    "english": "pepper",
+    "swedish": "peppar",
+    "category": "food",
+    "image_url": "assets/images/food/pepper.png"
+  },
+  {
+    "id": "64674801",
+    "english": "porridge",
+    "swedish": "gröt",
+    "category": "food",
+    "image_url": "assets/images/food/porridge.png"
+  },
+  {
+    "id": "5c1d1451",
+    "english": "potato",
+    "swedish": "potatis",
+    "category": "food",
+    "image_url": "assets/images/food/potato.png"
+  },
+  {
+    "id": "04134e3e",
+    "english": "rice",
+    "swedish": "ris",
+    "category": "food",
+    "image_url": "assets/images/food/rice.png"
+  },
+  {
+    "id": "00356f13",
+    "english": "salad",
+    "swedish": "sallad",
+    "category": "food",
+    "image_url": "assets/images/food/salad.png"
+  },
+  {
+    "id": "79116562",
+    "english": "salmon",
+    "swedish": "lax",
+    "category": "food",
+    "image_url": "assets/images/food/salmon.png"
+  },
+  {
+    "id": "4f3b260d",
+    "english": "salt",
+    "swedish": "salt",
+    "category": "food",
+    "image_url": "assets/images/food/salt.png"
+  },
+  {
+    "id": "2a264365",
+    "english": "sandwich",
+    "swedish": "smörgås",
+    "category": "food",
+    "image_url": "assets/images/food/sandwich.png"
+  },
+  {
+    "id": "7a061429",
+    "english": "sausage",
+    "swedish": "korv",
+    "category": "food",
+    "image_url": "assets/images/food/sausage.png"
+  },
+  {
+    "id": "7b1f347c",
+    "english": "shrimp",
+    "swedish": "räka",
+    "category": "food",
+    "image_url": "assets/images/food/shrimp.png"
+  },
+  {
+    "id": "15454845",
+    "english": "skim milk",
+    "swedish": "lättmjölk",
+    "category": "food",
+    "image_url": "assets/images/food/skim_milk.png"
+  },
+  {
+    "id": "2a674d2c",
+    "english": "soda",
+    "swedish": "läsk",
+    "category": "food",
+    "image_url": "assets/images/food/soda.png"
+  },
+  {
+    "id": "1256242f",
+    "english": "soup",
+    "swedish": "soppa",
+    "category": "food",
+    "image_url": "assets/images/food/soup.png"
+  },
+  {
+    "id": "66010677",
+    "english": "sub",
+    "swedish": "macka",
+    "category": "food",
+    "image_url": "assets/images/food/sub.png"
+  },
+  {
+    "id": "2b676157",
+    "english": "sugar",
+    "swedish": "socker",
+    "category": "food",
+    "image_url": "assets/images/food/sugar.png"
+  },
+  {
+    "id": "721b306e",
+    "english": "tea",
+    "swedish": "te",
+    "category": "food",
+    "image_url": "assets/images/food/tea.png"
+  },
+  {
+    "id": "26606a07",
+    "english": "tomato",
+    "swedish": "tomat",
+    "category": "food",
+    "image_url": "assets/images/food/tomato.png"
+  },
+  {
+    "id": "19263071",
+    "english": "vegan",
+    "swedish": "vegansk",
+    "category": "food",
+    "image_url": "assets/images/food/vegan.png"
+  },
+  {
+    "id": "50795a66",
+    "english": "vegetable",
+    "swedish": "grönsak",
+    "category": "food",
+    "image_url": "assets/images/food/vegetables.png"
+  },
+  {
+    "id": "6a701276",
+    "english": "vegetarian",
+    "swedish": "vegetarisk",
+    "category": "food",
+    "image_url": "assets/images/food/vegetarian.png"
+  },
+  {
+    "id": "3e3d5903",
+    "english": "wine",
+    "swedish": "vin",
+    "category": "food",
+    "image_url": "assets/images/food/wine.png"
+  },
+  {
+    "id": "2f31531f",
+    "english": "yogurt",
+    "swedish": "yoghurt",
+    "category": "food",
+    "image_url": "assets/images/food/yogurt.png"
+  },
+  {
+    "id": "2a604a1e",
+    "english": "balcony",
+    "swedish": "balkong",
+    "category": "furniture",
+    "image_url": "assets/images/furniture/balcony.png"
+  },
+  {
+    "id": "60484f7c",
+    "english": "apartment",
+    "swedish": "lägenhet",
+    "category": "furniture",
+    "image_url": "assets/images/furniture/apartment.png"
+  },
+  {
+    "id": "0e395828",
+    "english": "armchair",
+    "swedish": "fåtölj",
+    "category": "furniture",
+    "image_url": "assets/images/furniture/armchair.png"
+  },
+  {
+    "id": "227c0567",
+    "english": "bathroom",
+    "swedish": "badrum",
+    "category": "furniture",
+    "image_url": "assets/images/furniture/bathroom.png"
+  },
+  {
+    "id": "1c182b14",
+    "english": "bed",
+    "swedish": "säng",
+    "category": "furniture",
+    "image_url": "assets/images/furniture/bed.png"
+  },
+  {
+    "id": "64134776",
+    "english": "bedroom",
+    "swedish": "sovrum",
+    "category": "furniture",
+    "image_url": "assets/images/furniture/bedroom.png"
+  },
+  {
+    "id": "6e3e7f41",
+    "english": "bookshelf",
+    "swedish": "bokhylla",
+    "category": "furniture",
+    "image_url": "assets/images/furniture/bookshelf.png"
+  },
+  {
+    "id": "15694f0f",
+    "english": "cabinet",
+    "swedish": "skåp",
+    "category": "furniture",
+    "image_url": "assets/images/furniture/cabinet.png"
+  },
+  {
+    "id": "3a5a3f52",
+    "english": "carpet",
+    "swedish": "matta",
+    "category": "furniture",
+    "image_url": "assets/images/furniture/carpet.png"
+  },
+  {
+    "id": "610b7b74",
+    "english": "ceiling",
+    "swedish": "tak",
+    "category": "furniture",
+    "image_url": "assets/images/furniture/ceiling.png"
+  },
+  {
+    "id": "5a403647",
+    "english": "chair",
+    "swedish": "stol",
+    "category": "furniture",
+    "image_url": "assets/images/furniture/chair.png"
+  },
+  {
+    "id": "5a52645c",
+    "english": "computer",
+    "swedish": "dator",
+    "category": "furniture",
+    "image_url": "assets/images/furniture/computer.png"
+  },
+  {
+    "id": "7c31154a",
+    "english": "corridor",
+    "swedish": "korridor",
+    "category": "furniture",
+    "image_url": "assets/images/furniture/corridor.png"
+  },
+  {
+    "id": "0e530d5c",
+    "english": "couch",
+    "swedish": "soffa",
+    "category": "furniture",
+    "image_url": "assets/images/furniture/couch.png"
+  },
+  {
+    "id": "1f253839",
+    "english": "cupboard",
+    "swedish": "skåp",
+    "category": "furniture",
+    "image_url": "assets/images/furniture/cupboard.png"
+  },
+  {
+    "id": "79113169",
+    "english": "curtains",
+    "swedish": "gardiner",
+    "category": "furniture",
+    "image_url": "assets/images/furniture/curtains.png"
+  },
+  {
+    "id": "7f5d1217",
+    "english": "desk",
+    "swedish": "skrivbord",
+    "category": "furniture",
+    "image_url": "assets/images/furniture/desk.png"
+  },
+  {
+    "id": "227b7944",
+    "english": "door",
+    "swedish": "dörr",
+    "category": "furniture",
+    "image_url": "assets/images/furniture/door.png"
+  },
+  {
+    "id": "16610877",
+    "english": "drawer",
+    "swedish": "låda",
+    "category": "furniture",
+    "image_url": "assets/images/furniture/drawer.png"
+  },
+  {
+    "id": "6d3d515e",
+    "english": "floor",
+    "swedish": "golv",
+    "category": "furniture",
+    "image_url": "assets/images/furniture/floor.png"
+  },
+  {
+    "id": "756f467f",
+    "english": "flower",
+    "swedish": "blomma",
+    "category": "furniture",
+    "image_url": "assets/images/furniture/flower.png"
+  },
+  {
+    "id": "23185247",
+    "english": "furniture",
+    "swedish": "möbler",
+    "category": "furniture",
+    "image_url": "assets/images/furniture/furniture.png"
+  },
+  {
+    "id": "191f1e5a",
+    "english": "hall",
+    "swedish": "hall",
+    "category": "furniture",
+    "image_url": "assets/images/furniture/hall.png"
+  },
+  {
+    "id": "35291d54",
+    "english": "house",
+    "swedish": "hus",
+    "category": "furniture",
+    "image_url": "assets/images/furniture/house.png"
+  },
+  {
+    "id": "2f125639",
+    "english": "kitchen",
+    "swedish": "kök",
+    "category": "furniture",
+    "image_url": "assets/images/furniture/kitchen.png"
+  },
+  {
+    "id": "10091638",
+    "english": "lamp",
+    "swedish": "lampa",
+    "category": "furniture",
+    "image_url": "assets/images/furniture/lamp.png"
+  },
+  {
+    "id": "5c59006e",
+    "english": "livingroom",
+    "swedish": "vardagsrum",
+    "category": "furniture",
+    "image_url": "assets/images/furniture/livingroom.png"
+  },
+  {
+    "id": "4f2e3821",
+    "english": "mirror",
+    "swedish": "spegel",
+    "category": "furniture",
+    "image_url": "assets/images/furniture/mirror.png"
+  },
+  {
+    "id": "10636171",
+    "english": "painting",
+    "swedish": "målning",
+    "category": "furniture",
+    "image_url": "assets/images/furniture/painting.png"
+  },
+  {
+    "id": "187a017e",
+    "english": "pillow",
+    "swedish": "kudde",
+    "category": "furniture",
+    "image_url": "assets/images/furniture/pillow.png"
+  },
+  {
+    "id": "5063367e",
+    "english": "radio",
+    "swedish": "radio",
+    "category": "furniture",
+    "image_url": "assets/images/furniture/radio.png"
+  },
+  {
+    "id": "782d2a2e",
+    "english": "refrigerator",
+    "swedish": "kylskåp",
+    "category": "furniture",
+    "image_url": "assets/images/furniture/refrigerator.png"
+  },
+  {
+    "id": "28685704",
+    "english": "room",
+    "swedish": "rum",
+    "category": "furniture",
+    "image_url": "assets/images/furniture/room.png"
+  },
+  {
+    "id": "604c2b61",
+    "english": "shower",
+    "swedish": "dusch",
+    "category": "furniture",
+    "image_url": "assets/images/furniture/shower.png"
+  },
+  {
+    "id": "0c796942",
+    "english": "stove",
+    "swedish": "spis",
+    "category": "furniture",
+    "image_url": "assets/images/furniture/stove.png"
+  },
+  {
+    "id": "17124b22",
+    "english": "table",
+    "swedish": "bord",
+    "category": "furniture",
+    "image_url": "assets/images/furniture/table.png"
+  },
+  {
+    "id": "552b2f5c",
+    "english": "toilet",
+    "swedish": "toalett",
+    "category": "furniture",
+    "image_url": "assets/images/furniture/toilet.png"
+  },
+  {
+    "id": "4a5f0b4e",
+    "english": "towel",
+    "swedish": "handduk",
+    "category": "furniture",
+    "image_url": "assets/images/furniture/towel.png"
+  },
+  {
+    "id": "6e3f0b57",
+    "english": "tv",
+    "swedish": "tv",
+    "category": "furniture",
+    "image_url": "assets/images/furniture/tv.png"
+  },
+  {
+    "id": "0b272332",
+    "english": "wall",
+    "swedish": "vägg",
+    "category": "furniture",
+    "image_url": "assets/images/furniture/wall.png"
+  },
+  {
+    "id": "0222750f",
+    "english": "wardrobe",
+    "swedish": "garderob",
+    "category": "furniture",
+    "image_url": "assets/images/furniture/wardrobe.png"
+  },
+  {
+    "id": "7a2a0409",
+    "english": "window",
+    "swedish": "fönster",
+    "category": "furniture",
+    "image_url": "assets/images/furniture/window.png"
+  }
+]
