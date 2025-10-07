@@ -100,11 +100,6 @@ function updateQuestion(questionInfo) {
 
   if (questionInfo.type === "clock") {
     console.log("Setting clock time:", questionInfo.hour, questionInfo.minute);
-
-    const clockObject = document.getElementById("clock-object");
-    clockObject.style.display = "";
-    clockObject.style.visibility = "visible";
-
     withClockDoc((doc, win) => {
       if (typeof win.setAnalogTime === "function") {
         win.setAnalogTime(questionInfo.hour, questionInfo.minute);
@@ -112,6 +107,9 @@ function updateQuestion(questionInfo) {
         console.warn("No setAnalogTime function in clock.html");
       }
     });
+    const clockObject = document.getElementById("clock-object");
+    clockObject.style.display = "";
+    clockObject.style.visibility = "visible";
   } else {
     // Hide the clock for non-clock questions
     const clockObject = document.getElementById("clock-object");
