@@ -1,0 +1,12 @@
+.word-btn.correct {
+  border-color: green !important;
+}
+.word-btn.incorrect {
+  border-color: red !important;
+}
+line.correct {
+  stroke: green !important;
+}
+line.incorrect {
+  stroke: red !important;
+}
