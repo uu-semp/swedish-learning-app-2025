@@ -13,7 +13,7 @@ Owned by Team 10
 
 .display-level{
     font-size: x-large;
-    color: darkgreen;
+    color: black;
     font-weight: bold;
     text-transform: uppercase;
     text-align: center;
@@ -64,7 +64,7 @@ Owned by Team 10
     margin: 30px auto;
     padding: 10px 20px;
     font-size: large;
-    background-color: darkgreen;
+    background-color: var(--primary-color);
     color: white;
     border: none;
     border-radius: 5px;
@@ -73,7 +73,7 @@ Owned by Team 10
 }
 
 .submit-button:hover {
-    background-color: green;
+    background-color: var(--primary-color);
 }
 
 .back-btn i {
@@ -85,7 +85,7 @@ Owned by Team 10
   left: 20px;
   padding: 10px 15px;
   font-size: 16px;
-  background-color: darkgreen;
+  background-color: var(--primary-color);
   color: white;
   border: none;
   border-radius: 5px;
@@ -93,5 +93,5 @@ Owned by Team 10
   transition: background-color 0.3s;
 }
 .back-btn:hover {
-  background-color: green;
+  background-color: var(--primary-color);
 }   
