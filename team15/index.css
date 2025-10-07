@@ -349,39 +349,3 @@ body {
     color: red;
 }
 
-
-/* displaying image in image container within image view */
-.image-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  max-width: 400px; /* Adjust max-width as needed to fit your layout */
-  margin: 20px auto; /* Centers the container horizontally */
-  padding: 10px;
-  border: 2px solid #4CAF50; /* Optional: Matches the green border in your screenshot */
-  background-color: #E8F5E8; /* Optional: Light green background to match screenshot */
-  border-radius: 8px;
-  box-sizing: border-box; /* Ensures padding/border don't add to width */
-}
-
-.displayed-image {
-  max-width: 100%;
-  max-height: 100%;
-  height: auto;
-  width: auto;
-  object-fit: contain; /* Keeps aspect ratio without cropping; use 'cover' if you want to fill but crop */
-  border-radius: 4px;
-}
-
-
-.image-item {
-  flex: 0 0 100px;       /* each item width */
-  text-align: center;
-}
-
-.displayed-image {
-  width: 80px;
-  height: auto;
-  object-fit: contain;
-}
