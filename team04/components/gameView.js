@@ -1,4 +1,3 @@
-import setClock from "../utils/setClock.js";
 import shuffleQuestions from "../utils/shuffleQuestions.js";
 export default {
   name: "GameView",
@@ -7,7 +6,11 @@ export default {
       <statistics 
        :currentIndex="currentIndex"></statistics>
       <section class="center-section">
-        <clock></clock>
+        <clock
+          v-if="currentQuestion"
+          :hour="currentQuestion.hour"
+          :minute="currentQuestion.minute"> 
+        </clock>
         <cards 
           v-if="currentQuestion"
           :options="currentQuestion.options"
@@ -48,10 +51,6 @@ export default {
 
     console.log(`Loaded Level ${this.selectedLevel} data:`, this.questions);
   },
-  mounted() {
-    const firstQ = this.questions[0];
-    setClock(firstQ.hour, firstQ.minute); 
-  },
   computed: {
     currentQuestion() {
       return this.questions[this.currentIndex] || null;
@@ -69,9 +68,6 @@ export default {
       if (this.currentIndex < this.questions.length - 1) {
         this.currentIndex++;
         this.selectedOption = null;
-
-        const q = this.questions[this.currentIndex];
-        setClock(q.hour, q.minute);
       } else {
         this.$root.currentView = 'finish';
       }
@@ -80,9 +76,6 @@ export default {
       if (this.currentIndex > 0) {
         this.currentIndex--;
         this.selectedOption = null;
-
-        const q = this.questions[this.currentIndex];
-        setClock(q.hour, q.minute);
       }
     }
   }
