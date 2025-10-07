@@ -1,0 +1,553 @@
+{
+  "Ringgatan": [
+    {
+      "coords": "???",
+      "color": {
+        "id": "52145c35",
+        "sv": "gul",
+        "en": "yellow",
+        "img": "assets/images/colors/yellow.png"
+      },
+      "number": {
+        "cardinal": {
+          "id": "29162632",
+          "sv": "ett",
+          "en": "one",
+          "literal": "1"
+        },
+        "ordinal": {
+          "id": "36211275",
+          "sv": "första",
+          "en": "first",
+          "literal": "1."
+        }
+      }
+    },
+    {
+      "coords": "???",
+      "color": {
+        "id": "1a30203c",
+        "sv": "blå",
+        "en": "blue",
+        "img": "assets/images/colors/blue.png"
+      },
+      "number": {
+        "cardinal": {
+          "id": "73202703",
+          "sv": "två",
+          "en": "two",
+          "literal": "2"
+        },
+        "ordinal": {
+          "id": "51085e77",
+          "sv": "andra",
+          "en": "second",
+          "literal": "2."
+        }
+      }
+    },
+    {
+      "coords": "???",
+      "color": {
+        "id": "38610d43",
+        "sv": "rosa",
+        "en": "pink",
+        "img": "assets/images/colors/pink.png"
+      },
+      "number": {
+        "cardinal": {
+          "id": "7d4e666c",
+          "sv": "tre",
+          "en": "three",
+          "literal": "3"
+        },
+        "ordinal": {
+          "id": "1e055517",
+          "sv": "tredje",
+          "en": "third",
+          "literal": "3."
+        }
+      }
+    },
+    {
+      "coords": "???",
+      "color": {
+        "id": "657d5907",
+        "sv": "vit",
+        "en": "white",
+        "img": "assets/images/colors/white.png"
+      },
+      "number": {
+        "cardinal": {
+          "id": "4a362f4f",
+          "sv": "fyra",
+          "en": "four",
+          "literal": "4"
+        },
+        "ordinal": {
+          "id": "1775693f",
+          "sv": "fjärde",
+          "en": "fourth",
+          "literal": "4."
+        }
+      }
+    },
+    {
+      "coords": "???",
+      "color": {
+        "id": "6a743833",
+        "sv": "grön",
+        "en": "green",
+        "img": "assets/images/colors/green.png"
+      },
+      "number": {
+        "cardinal": {
+          "id": "266b7372",
+          "sv": "fem",
+          "en": "five",
+          "literal": "5"
+        },
+        "ordinal": {
+          "id": "1f780c21",
+          "sv": "femte",
+          "en": "fifth",
+          "literal": "5."
+        }
+      }
+    },
+    {
+      "coords": "???",
+      "color": {
+        "id": "17371d10",
+        "sv": "lila",
+        "en": "purple",
+        "img": "assets/images/colors/purple.png"
+      },
+      "number": {
+        "cardinal": {
+          "id": "0c4b6854",
+          "sv": "sex",
+          "en": "six",
+          "literal": "6"
+        },
+        "ordinal": {
+          "id": "101c5e1d",
+          "sv": "sjätte",
+          "en": "sixth",
+          "literal": "6."
+        }
+      }
+    },
+    {
+      "coords": "???",
+      "color": {
+        "id": "6e45235f",
+        "sv": "röd",
+        "en": "red",
+        "img": "assets/images/colors/red.png"
+      },
+      "number": {
+        "cardinal": {
+          "id": "02615934",
+          "sv": "sju",
+          "en": "seven",
+          "literal": "7"
+        },
+        "ordinal": {
+          "id": "1431537c",
+          "sv": "sjunde",
+          "en": "seventh",
+          "literal": "7."
+        }
+      }
+    }
+  ],
+  "Skolgatan": [
+    {
+      "coords": "???",
+      "color": {
+        "id": "6a743833",
+        "sv": "grön",
+        "en": "green",
+        "img": "assets/images/colors/green.png"
+      },
+      "number": {
+        "cardinal": {
+          "id": "73553001",
+          "sv": "elva",
+          "en": "eleven",
+          "literal": "11"
+        },
+        "ordinal": {
+          "id": "36211275",
+          "sv": "första",
+          "en": "first",
+          "literal": "1."
+        }
+      }
+    },
+    {
+      "coords": "???",
+      "color": {
+        "id": "17371d10",
+        "sv": "lila",
+        "en": "purple",
+        "img": "assets/images/colors/purple.png"
+      },
+      "number": {
+        "cardinal": {
+          "id": "1b202807",
+          "sv": "tolv",
+          "en": "twelve",
+          "literal": "12"
+        },
+        "ordinal": {
+          "id": "51085e77",
+          "sv": "andra",
+          "en": "second",
+          "literal": "2."
+        }
+      }
+    },
+    {
+      "coords": "???",
+      "color": {
+        "id": "6b260a0d",
+        "sv": "orange",
+        "en": "orange",
+        "img": "assets/images/colors/orange.png"
+      },
+      "number": {
+        "cardinal": {
+          "id": "214b3447",
+          "sv": "tretton",
+          "en": "thirteen",
+          "literal": "13"
+        },
+        "ordinal": {
+          "id": "1e055517",
+          "sv": "tredje",
+          "en": "third",
+          "literal": "3."
+        }
+      }
+    },
+    {
+      "coords": "???",
+      "color": {
+        "id": "1a30203c",
+        "sv": "blå",
+        "en": "blue",
+        "img": "assets/images/colors/blue.png"
+      },
+      "number": {
+        "cardinal": {
+          "id": "3b633a78",
+          "sv": "fjorton",
+          "en": "fourteen",
+          "literal": "14"
+        },
+        "ordinal": {
+          "id": "1775693f",
+          "sv": "fjärde",
+          "en": "fourth",
+          "literal": "4."
+        }
+      }
+    },
+    {
+      "coords": "???",
+      "color": {
+        "id": "52145c35",
+        "sv": "gul",
+        "en": "yellow",
+        "img": "assets/images/colors/yellow.png"
+      },
+      "number": {
+        "cardinal": {
+          "id": "1f76293f",
+          "sv": "femton",
+          "en": "fifteen",
+          "literal": "15"
+        },
+        "ordinal": {
+          "id": "1f780c21",
+          "sv": "femte",
+          "en": "fifth",
+          "literal": "5."
+        }
+      }
+    },
+    {
+      "coords": "???",
+      "color": {
+        "id": "4702640f",
+        "sv": "svart",
+        "en": "black",
+        "img": "assets/images/colors/black.png"
+      },
+      "number": {
+        "cardinal": {
+          "id": "62477821",
+          "sv": "tjugo",
+          "en": "twenty",
+          "literal": "20"
+        },
+        "ordinal": {
+          "id": "1431537c",
+          "sv": "sjunde",
+          "en": "seventh",
+          "literal": "7."
+        }
+      }
+    }
+  ],
+  "Parkvägen": [
+    {
+      "coords": "???",
+      "color": {
+        "id": "17371d10",
+        "sv": "lila",
+        "en": "purple",
+        "img": "assets/images/colors/purple.png"
+      },
+      "number": {
+        "cardinal": {
+          "id": "62477821",
+          "sv": "tjugo",
+          "en": "twenty",
+          "literal": "20"
+        },
+        "ordinal": {
+          "id": "36211275",
+          "sv": "första",
+          "en": "first",
+          "literal": "1."
+        }
+      }
+    },
+    {
+      "coords": "???",
+      "color": {
+        "id": "1a30203c",
+        "sv": "blå",
+        "en": "blue",
+        "img": "assets/images/colors/blue.png"
+      },
+      "number": {
+        "cardinal": {
+          "id": "16743b18",
+          "sv": "tjugoett",
+          "en": "twentyone",
+          "literal": "21"
+        },
+        "ordinal": {
+          "id": "51085e77",
+          "sv": "andra",
+          "en": "second",
+          "literal": "2."
+        }
+      }
+    },
+    {
+      "coords": "???",
+      "color": {
+        "id": "6a743833",
+        "sv": "grön",
+        "en": "green",
+        "img": "assets/images/colors/green.png"
+      },
+      "number": {
+        "cardinal": {
+          "id": "34447f1c",
+          "sv": "tjugotvå",
+          "en": "twentytwo",
+          "literal": "22"
+        },
+        "ordinal": {
+          "id": "1e055517",
+          "sv": "tredje",
+          "en": "third",
+          "literal": "3."
+        }
+      }
+    },
+    {
+      "coords": "???",
+      "color": {
+        "id": "38610d43",
+        "sv": "rosa",
+        "en": "pink",
+        "img": "assets/images/colors/pink.png"
+      },
+      "number": {
+        "cardinal": {
+          "id": "656d363e",
+          "sv": "tjugotre",
+          "en": "twentythree",
+          "literal": "23"
+        },
+        "ordinal": {
+          "id": "1775693f",
+          "sv": "fjärde",
+          "en": "fourth",
+          "literal": "4."
+        }
+      }
+    },
+    {
+      "coords": "???",
+      "color": {
+        "id": "6e45235f",
+        "sv": "röd",
+        "en": "red",
+        "img": "assets/images/colors/red.png"
+      },
+      "number": {
+        "cardinal": {
+          "id": "04795e49",
+          "sv": "tjugofyra",
+          "en": "twentyfour",
+          "literal": "24"
+        },
+        "ordinal": {
+          "id": "1f780c21",
+          "sv": "femte",
+          "en": "fifth",
+          "literal": "5."
+        }
+      }
+    },
+    {
+      "coords": "???",
+      "color": {
+        "id": "52145c35",
+        "sv": "gul",
+        "en": "yellow",
+        "img": "assets/images/colors/yellow.png"
+      },
+      "number": {
+        "cardinal": {
+          "id": "53552143",
+          "sv": "tjugofem",
+          "en": "twentyfive",
+          "literal": "25"
+        },
+        "ordinal": {
+          "id": "1431537c",
+          "sv": "sjunde",
+          "en": "seventh",
+          "literal": "7."
+        }
+      }
+    },
+    {
+      "coords": "???",
+      "color": "What color?",
+      "number": {
+        "cardinal": {
+          "id": "78151153",
+          "sv": "tjugosex",
+          "en": "twentysix",
+          "literal": "26"
+        },
+        "ordinal": {
+          "id": "773e7806",
+          "sv": "åttonde",
+          "en": "eighth",
+          "literal": "8."
+        }
+      }
+    },
+    {
+      "coords": "???",
+      "color": "What color?",
+      "number": {
+        "cardinal": {
+          "id": "1d37044c",
+          "sv": "tjugosju",
+          "en": "twentyseven",
+          "literal": "27"
+        },
+        "ordinal": {
+          "id": "5d210e41",
+          "sv": "nionde",
+          "en": "ninth",
+          "literal": "9."
+        }
+      }
+    },
+    {
+      "coords": "???",
+      "color": "What color?",
+      "number": {
+        "cardinal": {
+          "id": "044a446a",
+          "sv": "tjugoåtta",
+          "en": "twentyeight",
+          "literal": "28"
+        },
+        "ordinal": {
+          "id": "79152e28",
+          "sv": "tionde",
+          "en": "tenth",
+          "literal": "10."
+        }
+      }
+    },
+    {
+      "coords": "???",
+      "color": "What color?",
+      "number": {
+        "cardinal": {
+          "id": "412b1b04",
+          "sv": "tjugonio",
+          "en": "twentynine",
+          "literal": "29"
+        },
+        "ordinal": {
+          "id": "5608397a",
+          "sv": "elfte",
+          "en": "eleventh",
+          "literal": "11."
+        }
+      }
+    },
+    {
+      "coords": "???",
+      "color": "What color?",
+      "number": {
+        "cardinal": {
+          "id": "230c655a",
+          "sv": "trettio",
+          "en": "thirty",
+          "literal": "30"
+        },
+        "ordinal": {
+          "id": "30291c0b",
+          "sv": "tolfte",
+          "en": "twelfth",
+          "literal": "12."
+        }
+      }
+    },
+    {
+      "coords": "???",
+      "color": "What color?",
+      "number": {
+        "cardinal": {
+          "id": "616a2c42",
+          "sv": "trettioett",
+          "en": "thirtyone",
+          "literal": "31"
+        },
+        "ordinal": {
+          "id": "47795e54",
+          "sv": "trettonde",
+          "en": "thirteenth",
+          "literal": "13."
+        }
+      }
+    }
+  ]
+}
