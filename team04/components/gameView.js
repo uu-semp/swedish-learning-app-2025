@@ -24,8 +24,6 @@ export default {
        @next="nextQuestion" 
        @prev="prevQuestion">
       </navigation>
-
-      <button @click="$root.currentView = 'finish'">Switch to FinishView</button>
   </div>
   `,
   props: ["selectedLevel"],
