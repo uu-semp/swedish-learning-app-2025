@@ -1,3 +1,16 @@
+.backtoLevelSelect-btn {
+  position: absolute;
+  top: 30px;
+  left: 50px;
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  border: none;
+  background: #b08968;
+  color: white;
+  font-size: 40px;
+  cursor: pointer;
+}
 
 .help-btn {
   position: absolute;
