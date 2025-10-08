@@ -1,26 +1,42 @@
+/*
+=================================================
+Owned by Team 10 – Level 2 Game Page
+=================================================
+*/
+
 .match-stage {
   position: relative;
   display: flex;
   justify-content: space-around;
-  margin-top: 6rem;
+  margin-top: 2rem;
+  padding: 1rem;
 }
 
 .col {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 0.8rem;
 }
 
 .word-btn {
-  padding: 0.75rem 1.2rem;
-  border: 2px solid #007acc;
+  padding: 0.7rem 1rem;
+  border: 2px solid var(--primary-color);
   background-color: #fff;
+  color: #000;
   cursor: pointer;
-  border-radius: 6px;
+  border-radius: 999px;
+  font-size: 1rem;
+  transition: all 0.2s ease;
+}
+
+.word-btn:hover:not(.paired):not(.disabled) {
+  background-color: var(--primary-color);
+  color: #fff;
+  transform: scale(1.02);
 }
 
 .word-btn.selected {
-  background-color: #007acc;
+  background-color: var(--primary-color);
   color: #fff;
 }
 
@@ -45,11 +61,4 @@
 
 .submit-btn {
   margin-top: 2rem;
-  padding: 1rem 2rem;
-  font-size: 1.2rem;
-  background-color: #4CAF50;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
 }

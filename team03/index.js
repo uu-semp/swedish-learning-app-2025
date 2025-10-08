@@ -41,6 +41,14 @@ class VocabularyManager {
       category: wordData.category,
       image: wordData.image
     };
+    //Duplicate prevention
+    for(let i = 0; i<this.words.length; i++) {
+      if (this.words[i].english.localeCompare(newWord.english) == 0) {
+        alert(`The word "${newWord.english}" already exists!`);
+        console.log('Word already exists: ', newWord.english)
+        return {success: false, error: 'Word already exists'}
+      }
+    }
 
     this.words.push(newWord);
     this.saveWords();
@@ -63,6 +71,30 @@ class VocabularyManager {
     } else {
       console.log('Failed to clear words');
       return { success: false, error: 'Failed to clear storage' };
+    }
+  }
+
+  clearWord(id) {
+    let found = false;
+    let remove = null;
+    const newWords =[];
+    for(let i = 0; i < this.words.length; i++) {
+      if(this.words[i].id === id) {
+        found = true;
+        remove = this.words[i];
+      } else {
+        newWords.push(this.words[i]);
+      }
+    }
+
+    if (found) {
+      this.words = newWords;
+      this.saveWords();
+      console.log("Removed word with id:", id);
+      return{ success: true, word: remove};
+    } else {
+      console.log("Couldn't find word with ID;", id);
+      return {success: false, error :"Word not found"};
     }
   }
 }
@@ -138,11 +170,13 @@ function displayWords() {
       ${word.literal ? `<br><em>Literal: ${word.literal}</em>` : ''}
       ${word.category ? `<br>Category: ${word.category}` : ''}
       <br><small>ID: ${word.id}</small>
+      <button class="delete-word btn-delete" data-id="${word.id}">Delete Word</button>
     </li>`;
   });
   html += '</ul>';
   
   display.html(html);
+  $(".delete-word").on("click", handleClearWord);
   console.log(`Displayed ${words.length} words`);
 }
 
@@ -239,4 +273,17 @@ function populateCategoryDropdown() {
   console.log(`Loaded ${categories.length} categories from Google datasheet:`, categories);
 }
 
+function handleClearWord(event) {
+  const id = $(event.target).data("id");
+  
+  if (confirm("Are you sure you want to delete this word?")) {
+    const result = vocabManager.clearWord(id);
+    if (result.success) {
+      displayWords();
+      console.log("Deleted word:", result.word);
+    } else {
+      console.error("Failed to delete word:", result.error);
+    }
+  }
+}
 

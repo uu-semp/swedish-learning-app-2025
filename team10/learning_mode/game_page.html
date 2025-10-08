@@ -1,0 +1,93 @@
+<!doctype html>
+
+<!--
+=================================================
+Owned by Team 10
+=================================================
+-->
+
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Basic Static Site</title>
+  <link rel="stylesheet" href="../../style.css" />
+
+  <script src="../../scripts/vocabulary.js"></script>
+  <script src="../../scripts/save.js"></script>
+
+  <!-- You are allowed to use JQuery and Vue.js but don't have to. They just make a
+  lot of things easier
+  -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css"> 
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+  <!-- Site specific scripts and styles -->
+  <link rel="stylesheet" href="learning_mode.css" />
+  <link rel="stylesheet" href="../index.css" />
+
+</head>
+<body>
+  <header>
+    <h1>Team 10</h1>
+  </header>
+
+  <main class="game-frame">
+    <script>
+      // Wait for DOM and vocabulary to be ready
+      $(function() {
+        if (window.vocabulary && window.vocabulary.when_ready) {
+          window.vocabulary.when_ready(function () {
+            // jQuery check
+            $("#check-jquery").on("click", () => {
+              alert("JavaScript and jQuery are working in Learning Mode.");
+            });
+
+            // Display a random vocab word
+            $("#display-vocab").text(JSON.stringify(window.vocabulary.get_random()));
+
+            // Saving check
+            $("#check-saving").on("click", () => {
+              var data = window.save.get("team10");
+              data.counter = data.counter ?? 0;
+              data.counter += 1;
+              $("#check-saving").text(`This button has been pressed ${data.counter} times`);
+              window.save.set("team10", data);
+            });
+          });
+        }
+      });
+    </script>
+    <div id="flashcard-app" data-show-debug="false">
+      <div class="controls">
+        <div class="flashcard" @click="flipCard" v-if="!finished">
+          <div class="flashcard-content" :class="{ flipped: isFlipped }">
+            <div class="front" v-html="currentCard.front"></div>
+            <div class="back">{{ currentCard.back }}</div>
+          </div>
+        </div>
+        <div class="controls" v-if="isFlipped && !finished">
+          <button @click="repeat" class="learning-mode-btn">Repeat</button>
+          <button @click="gotIt" class="start-btn">I got it</button>
+        </div>
+        <div v-if="finished" class="completion-message" style="text-align:center;margin-top:2rem;">
+          <h2>Congratulations!</h2>
+          <p>You have learned all 10 words.</p>
+          <button onclick="window.location.href='../index.html'" class="start-btn">Go to Menu</button>
+        </div>
+    </div>
+    <!-- Vue app script moved below so #flashcard-app exists before mounting -->
+  <!-- Vue.js logic moved to learning_mode.js -->
+  <script src="learning_mode.js"></script>
+
+    <!-- <hr> -->
+    <!-- Learning: <div id="display-vocab">(This should be replaced by a word)</div> -->
+
+
+  </main>
+  <footer>
+    <small>Created as part of the "Software Engineering and Project Management" course 2025</small>
+  </footer>
+</body>
+</html>

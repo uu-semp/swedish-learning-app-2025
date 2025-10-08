@@ -111,7 +111,6 @@ Owned by Team 03
     display: block;
 }
 
-
 .article-options {
     display: flex;
     gap: 10px;
@@ -208,6 +207,22 @@ Owned by Team 03
     color: #fff;
 }
 
+.btn-delete {
+    background-color: #e74c3c; /* red */
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  font-size: 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.btn-delete:hover {
+  background-color: #c0392b; /* darker red on hover */
+}
+
+
 #words-display {
     height: 300px;
     overflow-y: scroll;
@@ -265,7 +280,7 @@ Owned by Team 03
 #display-vocab {
     margin-top: 15px;
     padding: 10px;
-
+    background: #f0f8ff;
     border-radius: 6px;
     font-size: 12px;
     color: #666;
