@@ -11,7 +11,7 @@ const instructionGroups = [
   
   // Group 2: Living room setup
   [
-    { question: "Dra 'soffa' mitten.", answer: "couch", swedish: "soffa" },
+    { question: "Dra 'soffa' längst till höger.", answer: "couch", swedish: "soffa" },
     { question: "Dra 'tv' höger om 'soffa'.", answer: "tv", swedish: "tv" },
     { question: "Dra 'bord' vänster om 'soffa'.", answer: "table", swedish: "bord" },
     { question: "Dra 'lampa' höger om 'tv'.", answer: "lamp", swedish: "lampa" },
@@ -20,7 +20,7 @@ const instructionGroups = [
   
   // Group 3: Bedroom setup
   [
-    { question: "Dra 'säng' mitten.", answer: "bed", swedish: "säng" },
+    { question: "Dra 'säng' längst till vänster.", answer: "bed", swedish: "säng" },
     { question: "Dra 'kudde' på 'säng'.", answer: "pillow", swedish: "kudde" },
     { question: "Dra 'bokhylla' vänster om 'säng'.", answer: "bookshelf", swedish: "bokhylla" },
     { question: "Dra 'lampa' höger om 'säng'.", answer: "lamp", swedish: "lampa" },
@@ -29,7 +29,7 @@ const instructionGroups = [
   
   // Group 4: Kitchen setup
   [
-    { question: "Dra 'kylskåp' vänster.", answer: "refrigerator", swedish: "kylskåp" },
+    { question: "Dra 'kylskåp' mitten.", answer: "refrigerator", swedish: "kylskåp" },
     { question: "Dra 'spis' höger om 'kylskåp'.", answer: "stove", swedish: "spis" },
     { question: "Dra 'bord' mitten.", answer: "table", swedish: "bord" },
     { question: "Dra 'stol' vänster om 'bord'.", answer: "chair", swedish: "stol" },
