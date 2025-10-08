@@ -23,7 +23,7 @@ class ImgObject {
     getImgId() { 
         return this.#imgId; 
     }
-    
+
     getImgPath() { 
         return this.#imgPath; 
     }
@@ -37,7 +37,8 @@ class ImgObject {
     }
 }
 
-// From ChatGPT when asked how to run a function when the file is loaded.
+// From ChatGPT when I asked how to run a function at the time the file is loaded
+// Runs the loadClothes function when the javascript file is loaded
 window.addEventListener("DOMContentLoaded", () => {
     if (window.vocabulary && typeof window.vocabulary.load_team_data === "function") {
         loadClothes();
@@ -46,6 +47,7 @@ window.addEventListener("DOMContentLoaded", () => {
     }
 });
 
+// Loads the clothing items from the dataset into html components and inserts them into the correct spot on the html page
 function loadClothes() {
     const CATEGORIES = ["hat", "shirt", "pants"];
     const imgArray = [];
@@ -72,8 +74,10 @@ function loadClothes() {
         injectHtmlObjects(htmlObjects);
     });
 }
-c
-// Creates a list of html img objects from array of ImgObjects
+
+// Creates a list of html img objects from array of ImgObject. Adds parameters to the objects:
+// category defines where the object can be placed on Pelle (hat on his head, pants on his legs etc.
+// id can be retrieved from an img object by calling: document.getElementById(id_of_parent_component).children.dataset.id (can be used to check whether correct clothing item is placed or not)
 function createHtmlObjects(imgArray) {
     const htmlObjects = [];
 
@@ -81,14 +85,18 @@ function createHtmlObjects(imgArray) {
         const path = imgObject.getImgPath();
         const id = imgObject.getImgId();
         const cat = imgObject.getCategory();
+        const description = imgObject.getImgDescription();
 
         const htmlImgObject = document.createElement("img");
+
+        // add more properties, like styling, if needed
         htmlImgObject.dataset.category = cat;
+        htmlImgObject.dataset.id = id;
         htmlImgObject.src = path;
-        htmlImgObject.alt = id;
+        htmlImgObject.alt = description;
         htmlImgObject.width = 100;
         htmlImgObject.height = 100;
-        htmlImgObject.className = "thumb";
+        htmlImgObject.className = "thumb"; // subject to change if you need a class for the img:s
         
         return htmlImgObject;
     };
@@ -109,20 +117,15 @@ function injectHtmlObjects(htmlObjects) {
         return;
     }
 
-    const slots = Array.from(document.querySelectorAll(".slot"));
-
-    // If HTML wasn't updated, set sensible defaults in JS
-    const defaultAccept = ["hat", "shirt", "pants"];
-    slots.forEach((s, i) => {
-        if (!s.dataset.accept) s.dataset.accept = defaultAccept[i] || "";
-    });
+    const slots = Array.from(document.querySelectorAll(".slot")); // Gets all the boxes that has the class slot. Change to match classes that the boxes on Pelle have.
 
     function wireImage(img) {
+        // Adds an event listener to each img so that it moves when clicked on
         img.addEventListener("click", () => {
             const parent = img.parentElement;
             if (!parent) return;
 
-            if (parent.classList.contains("menu-item")) {
+            if (parent.classList.contains("menu-item")) { // Checks where the img is currently located in order to know where to move
                 // Moving from menu -> must go to the slot that accepts this category
                 const cat = img.dataset.category || "";
                 const target = slots.find(
@@ -131,19 +134,16 @@ function injectHtmlObjects(htmlObjects) {
 
                 if (target) {
                     target.appendChild(img);
-                    parent.remove(); // remove empty menu-item to avoid gap
+                    parent.remove();
                 } else {
-                    // No empty matching slot (either wrong category or already filled)
-                    // Optional: quick visual hint on the correct slot
                     const correct = slots.find((s) => s.dataset.accept === cat);
                     if (correct) {
                         correct.classList.add("slot-hint");
                         setTimeout(() => correct.classList.remove("slot-hint"), 400);
                     }
-                    // Or just log:
                     console.warn(`[move blocked] Category "${cat}" must go to the "${cat}" slot.`);
                 }
-            } else if (parent.classList.contains("slot")) {
+            } else if (parent.classList.contains("slot")) { // Checks where the img is currently located in order to know where to move. Change "slot" to whatever class name the boxes on Pelle has.
                 // Moving from slot -> back to menu
                 const item = document.createElement("div");
                 item.className = "menu-item";
@@ -153,7 +153,7 @@ function injectHtmlObjects(htmlObjects) {
         });
     }
 
-    // Build menu
+    // Creates containers for each img before adding them to the scrollable menu.
     htmlObjects.forEach((img) => {
         wireImage(img);
         const item = document.createElement("div");
@@ -163,16 +163,9 @@ function injectHtmlObjects(htmlObjects) {
     });
 }
 
-
-
 // fetch description and 'right' clothes to apply
 function fetchDescription() {
-}
 
-// apply clothes function
-function applyClothes(id) {
-  // fetch clothes from vocabulary and apply to the character
-  //  document.getElementById(id).src
 }
 
 // Check clothes function
@@ -189,14 +182,7 @@ function checkClothes() {
   // if correct, update score
   // if wrong, give feedback
 
-
-
   // can also update the progress ?
-}
-
-// undress area on pelle (and the cloth is going back to the pool)
-function undress(id) {
-  document.getElementById(id).style.display = "none";
 }
 
 /*
