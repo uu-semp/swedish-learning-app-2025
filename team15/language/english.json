@@ -31,4 +31,6 @@
     "good-job":"GOOD JOB!",
     "num-tries":"TOTAL NUMBER OF TRIES: ",
     "num-right":"TOTAL NUMBER RIGHT: "
+    "information-message":"Drag the correct clothing item onto Pelle, and drop it there to give your answer!"  ,
+    "okay-continue":"OKAY! GO BACK"  
 }
