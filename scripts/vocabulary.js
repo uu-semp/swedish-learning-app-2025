@@ -107,87 +107,35 @@ if (FETCH_EXTERNAL) {
         console.log("Data: Loading team data complete");
     }
 } else {
-    window._vocabulary.pending += 1;
-    (async () => {
-        const papa_promise = new Promise((resolve, reject) => {
-            const script = document.createElement("script");
-            script.src = "https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js";
-            script.onload = resolve;
-            script.onerror = reject;
-            document.head.appendChild(script);
-        });
+    function fetch_json_file(file, field) {
+        window._vocabulary.pending += 1;
 
-        // The .. is relative from a team folder. This is needed to support localhost
-        // and GH pages
-        const url = `../words.csv`;
+        // This request is async
+        fetch(file)
+            .then(res => res.json())
+            .then(data => {
+                console.log(`Data: Successfully loaded \`${file}\``)
+                window._vocabulary[field] = data;
 
-        const resp = await fetch(url);
-        const text = await resp.text();
-        await papa_promise;
+                window._vocabulary.pending -= 1;
+                checkCallbacks();
+            })
+            .catch(err => console.error(`Data: Failed to load \`${file}\``, err));
+    }
 
-        console.log("Data: All data received")
-        const parsed = Papa.parse(text, { header: true, skipEmptyLines: true });
-        const rows = parsed.data;
-
-        const idToMeta = {};
-        const catToIds = {};
-
-        for (const row of rows) {
-            const id = row["id"]?.trim();
-            if (!id) continue;
-
-            // Metadata
-            const meta = { en: row["en"], sv: row["sv"] };
-            if (row["literal"]?.trim()) meta.literal = row["literal"];
-            if (row["image_path"]?.trim()) meta.img = row["image_path"];
-            idToMeta[id] = meta;
-
-            // Category
-            const cat = row["category"]?.trim();
-            if (cat) {
-                if (!catToIds[cat]) catToIds[cat] = [];
-                catToIds[cat].push(id);
-            }
-        }
-
-        window._vocabulary["rows"] = rows;
-        window._vocabulary["vocab"] = idToMeta;
-        window._vocabulary["categories"] = catToIds;
-
-        // Mark operation as done
-        console.log("Data: Parsing complete");
-
-        if (window._vocabulary.team) {
-            window._vocabulary.populate_team_data(window._vocabulary.team);
-        }
-
-        // Check callbacks
-        window._vocabulary.pending -= 1;
-        checkCallbacks();
-    })();
+    // The .. is relative from a team folder. This is needed to support localhost
+    // and GH pages
+    fetch_json_file("../assets/vocabulary.json", "vocab");
+    fetch_json_file("../assets/categories.json", "categories");
 
     window._vocabulary.populate_team_data = (team_id) => {
-        if (!("rows" in window._vocabulary)) {
-            window._vocabulary.team = team_id;
-            // This function will be called again, once the raw data is available
-            return;
-        }
-
         // Stringify incase this get a number
-        const team_id_str = String(team_id);
-        
-        const idToMeta = {};
-        for (const row of window._vocabulary.rows) {
-            if (row["team"] === team_id_str && row["id"]) {
-                const id = row["id"].trim();
-                // For now, we just use a boolean flag to indicate the team has data for this word.
-                // The prompt is a bit unclear on what should be stored.
-                idToMeta[id] = true; 
-            }
-        }
+        const team_id_str = String(team_id).padStart(2, "0");
+        const team_file = `../assets/team${team_id_str}/vocab_data.json`
 
-        window._vocabulary.team = idToMeta;
-        console.log("Data: Loading team data complete");
+        // Only one team should have access at a time. So it should be safe,
+        // to store it in a generic `team` field
+        fetch_json_file(team_file, "team");
     }
 }
 
