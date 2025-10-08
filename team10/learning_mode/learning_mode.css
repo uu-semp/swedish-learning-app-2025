@@ -27,9 +27,12 @@ main, .main {
 	height: 40vw;
 	max-height: 250px;
 	min-height: 120px;
-	margin: 20px 0;
+	margin: 20px auto;
 	perspective: 1000px;
 	cursor: pointer;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
 
 .flashcard-content {

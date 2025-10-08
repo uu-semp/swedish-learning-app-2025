@@ -21,7 +21,7 @@ function createFlashcardApp(options = { showDebug: true }) {
           { front: '<img src="../../assets/images/food/bread.png" alt="Bread" style="max-width:200px;max-height:200px;">', back: 'Bröd', gotIt: false },
           { front: '<img src="../../assets/images/food/cheese.png" alt="Cheese" style="max-width:200px;max-height:200px;">', back: 'Ost', gotIt: false },
           { front: '<img src="../../assets/images/food/milk.png" alt="Milk" style="max-width:200px;max-height:200px;">', back: 'Mjölk', gotIt: false },
-          { front: '<img src="../../assets/images/food/egg.png" alt="Egg" style="max-width:200px;max-height:200px;">', back: 'Ägg', gotIt: false },
+          { front: '<img src="../../assets/images/food/eggs.png" alt="Egg" style="max-width:200px;max-height:200px;">', back: 'Ägg', gotIt: false },
           { front: '<img src="../../assets/images/food/potato.png" alt="Potato" style="max-width:200px;max-height:200px;">', back: 'Potatis', gotIt: false },
           { front: '<img src="../../assets/images/food/carrot.png" alt="Carrot" style="max-width:200px;max-height:200px;">', back: 'Morot', gotIt: false },
           { front: '<img src="../../assets/images/food/tomato.png" alt="Tomato" style="max-width:200px;max-height:200px;">', back: 'Tomat', gotIt: false },
