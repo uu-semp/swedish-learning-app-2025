@@ -126,6 +126,19 @@ body {
     background: #f0f8ff;
 }
 
+.image-card:focus {
+    outline: 3px solid #4a90e2;
+    outline-offset: 3px;
+  }
+  .image-card.keyboard-focus {
+    border-color: #4a90e2;
+    box-shadow: 0 0 8px rgba(74, 144, 226, 0.6);
+  }
+  button:focus {
+    outline: 2px solid #ffd700;
+    outline-offset: 2px;
+  }
+  
 .btn {
     margin-top: 1rem;
     padding: 0.5rem 1rem;
