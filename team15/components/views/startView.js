@@ -49,7 +49,6 @@ export const StartView = {
           <how-to-play-button @click="switchTo('HelpView')"></how-to-play-button>
         </div>
         </div>
-        <info-button></info-button>
       </div>
     `,
 };

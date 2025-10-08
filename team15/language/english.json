@@ -26,8 +26,7 @@
     "l3-description":"More advanced grammar, including plural forms and correct adjective endings.",
     "extra": "EXTRA NOTES",
     "additional-info": "If you are unsure about the vocabulary, you can always replay a level or check the word list in the provided material. The game is designed to be fun while reinforcing Swedish language learning.",
-    "dress-pelle-prompt": "Dress Pelle with: "
-
-    
-    
+    "dress-pelle-prompt": "Dress Pelle with: ",
+    "information-message":"Drag the correct clothing item onto Pelle, and drop it there to give your answer!"  ,
+    "okay-continue":"OKAY! GO BACK"  
 }

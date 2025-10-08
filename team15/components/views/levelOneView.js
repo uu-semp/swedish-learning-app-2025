@@ -18,6 +18,7 @@ export const LevelOneView = {
             // Placeholder progress data
             totalTries: 0,
             correctAnswers: 0,
+            showInfo:false,
         };
     },
 
@@ -53,6 +54,7 @@ export const LevelOneView = {
 
         closeModal() {
             this.showModal = false;
+            this.showInfo=false;
         },
         
         confirmExit() {
@@ -85,7 +87,7 @@ export const LevelOneView = {
 
       handleDropResult({ isCorrect, droppedItem }) {
             console.log('Drop result received in LevelOneView:', { isCorrect, droppedItem, expected: this.currentItem ? this.currentItem.ID : null });
-
+            console.log(this.showInfo)
             // Record that the player made a try (placeholder for persistent storage)
             this.incrementTotalTries();
             if (isCorrect) {
@@ -158,14 +160,24 @@ export const LevelOneView = {
                 </div>
             </div>
 
-            <exit-game-button @click="openModal"></exit-game-button>
-    
+            <div>
+                <exit-game-button @click="openModal"></exit-game-button>
+                <info-button @click="this.showInfo=true"></info-button>
+            </div>
             <div v-if="showModal" class="modal-overlay" @click="handleOverlayClick">
                 <div class="modal-content" @click.stop>
                     <h2>{{$language.translate('exit-confirmation')}}</h2>
                     <div class="modal-buttons">
                         <button class="big-buttons" @click="confirmExit">{{$language.translate('yes')}}</button>
                         <button class="big-buttons" @click="closeModal">{{$language.translate('no')}}</button>
+                    </div>
+                </div>
+            </div>
+            <div v-if="this.showInfo" class="modal-overlay" @click="handleOverlayClick">
+                <div class="modal-content" @click="this.showInfo=false">
+                    <h2>{{$language.translate('information-message')}}</h2>
+                    <div class="modal-buttons">
+                        <button class="big-buttons" id="info-back-button" @click="this.showInfo=false">{{$language.translate('okay-continue')}}</button>
                     </div>
                 </div>
             </div>
