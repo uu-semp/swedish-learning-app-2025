@@ -62,7 +62,7 @@ Owned by Team 10
     <div id="flashcard-app" data-show-debug="false">
       <div class="flashcard" @click="flipCard">
         <div class="flashcard-content" :class="{ flipped: isFlipped }">
-          <div class="front">{{ currentCard.front }}</div>
+          <div class="front" v-html="currentCard.front"></div>
           <div class="back">{{ currentCard.back }}</div>
         </div>
       </div>

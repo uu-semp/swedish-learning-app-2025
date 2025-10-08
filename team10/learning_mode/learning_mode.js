@@ -16,10 +16,16 @@ function createFlashcardApp(options = { showDebug: true }) {
     data() {
       return {
         cards: [
-          { front: 'Hej', back: 'Hello' },
-          { front: 'Tack', back: 'Thank you' },
-          { front: 'Ja', back: 'Yes' },
-          { front: 'Nej', back: 'No' }
+          { front: '<img src="../../assets/images/food/apple.png" alt="Apple" style="max-width:200px;max-height:200px;">', back: 'Äpple' },
+          { front: '<img src="../../assets/images/food/banana.png" alt="Banana" style="max-width:200px;max-height:200px;">', back: 'Banan' },
+          { front: '<img src="../../assets/images/food/bread.png" alt="Bread" style="max-width:200px;max-height:200px;">', back: 'Bröd' },
+          { front: '<img src="../../assets/images/food/cheese.png" alt="Cheese" style="max-width:200px;max-height:200px;">', back: 'Ost' },
+          { front: '<img src="../../assets/images/food/milk.png" alt="Milk" style="max-width:200px;max-height:200px;">', back: 'Mjölk' },
+          { front: '<img src="../../assets/images/food/egg.png" alt="Egg" style="max-width:200px;max-height:200px;">', back: 'Ägg' },
+          { front: '<img src="../../assets/images/food/potato.png" alt="Potato" style="max-width:200px;max-height:200px;">', back: 'Potatis' },
+          { front: '<img src="../../assets/images/food/carrot.png" alt="Carrot" style="max-width:200px;max-height:200px;">', back: 'Morot' },
+          { front: '<img src="../../assets/images/food/tomato.png" alt="Tomato" style="max-width:200px;max-height:200px;">', back: 'Tomat' },
+          { front: '<img src="../../assets/images/food/pear.png" alt="Pear" style="max-width:200px;max-height:200px;">', back: 'Päron' }
         ],
         currentIndex: 0,
         isFlipped: false
