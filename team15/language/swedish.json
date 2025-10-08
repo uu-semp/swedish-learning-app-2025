@@ -31,10 +31,7 @@
     "play-again":"SPELA IGEN",
     "good-job":"BRA JOBBAT!",
     "num-tries":"TOTALT ANTAL FÖRSÖK: ",
-    "num-right":"TOTALT ANTAL RÄTT: "
-
-    
-
+    "num-right":"TOTALT ANTAL RÄTT: ",
     "information-message":"Dra klädesplagget på Pelle, och släpp det där för att ge ditt svar!",
     "okay-continue":"OKEJ! GÅ TILLBAKA"  
 }
