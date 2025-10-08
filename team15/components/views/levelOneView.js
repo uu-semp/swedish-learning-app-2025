@@ -10,7 +10,6 @@ export const LevelOneView = {
             showIncorrectFeedback: false,
             currentScore: 0, // Initial  player's score
             currentItem: null, 
-            currentIndex: 0,
             // Track attempts for the current item
             currentAttempts: 0,
             incorrectMessage: '',
@@ -21,6 +20,8 @@ export const LevelOneView = {
             showInfo:false,
             chosenClothingItems: [],
             numberOfQuestionsAsked: 10,
+            indexesAsked: []
+
         };
     },
 
@@ -31,25 +32,29 @@ export const LevelOneView = {
     methods: {
             startLevel() {
                 this.chosenClothingItems = this.generateSubCategories()
-                console.log(1)
             if (this.chosenClothingItems && this.chosenClothingItems.length > 0) {
-                this.currentItem = this.chosenClothingItems[this.currentIndex];
-                    this.currentAttempts = 0;
-                    this.incorrectMessage = '';
+                let randomIndex = this.getRandomIndex(this.chosenClothingItems)
+                this.currentItem = this.chosenClothingItems[randomIndex];
+                this.indexesAsked.push(randomIndex); // keep track of what indexes we´ve asked for!
+                this.currentAttempts = 0;
+                this.incorrectMessage = '';
             } else {
                 console.error("No clothing items found to start the level.");
             }
         },
 
         loadNextItem() {
-            this.currentIndex++; 
-            if (this.currentIndex < this.numberOfQuestionsAsked) {
-                this.currentItem = this.chosenClothingItems[this.currentIndex];
+            if (this.indexesAsked.length < this.numberOfQuestionsAsked) {  // Check if we have asked < than 10 indexes. 
+                let randomIndex = this.getRandomIndex(this.chosenClothingItems)
+                while (this.indexesAsked.includes(randomIndex)) {
+                    randomIndex = this.getRandomIndex(this.chosenClothingItems)
+                }
+                this.currentItem = this.chosenClothingItems[randomIndex];
                 this.currentAttempts = 0;
                 this.incorrectMessage = '';
+                this.indexesAsked.push(randomIndex)
             } else {
                 this.gameOver=true
-                console.log("Level Complete!");
             }
         },
 
@@ -58,8 +63,7 @@ export const LevelOneView = {
             const chosenClothingItems = []
             for (const subCategory  of categories){
                 const categoryItems =  clothingItems.filter(items => items.Subcategory === subCategory);
-                let chosenSubcategoryItems;
-                console.log(2)
+                let chosenSubcategoryItems= [];
                 if (categoryItems.length > 9){ // We only display 9 items, some don't have 9 items though!
                     chosenSubcategoryItems = this.subsetGenerator(categoryItems)
                 }
@@ -81,7 +85,6 @@ export const LevelOneView = {
         },
 
         getRandomIndex(subset){
-            console.log(3)
             return Math.floor(Math.random() * subset.length) //Gives a random index, 
         },
 
@@ -124,7 +127,6 @@ export const LevelOneView = {
 
       handleDropResult({ isCorrect, droppedItem }) {
             console.log('Drop result received in LevelOneView:', { isCorrect, droppedItem, expected: this.currentItem ? this.currentItem.ID : null });
-            console.log(this.showInfo)
             // Record that the player made a try (placeholder for persistent storage)
             this.incrementTotalTries();
             if (isCorrect) {
@@ -170,26 +172,27 @@ export const LevelOneView = {
         },
 
         restartGame(){
-            console.log("level restarted")
             this.resetGameState()
             this.startLevel()
         },
 
         resetGameState(){
-            showModal= false, 
-            showCorrectFeedback= false;
-            showIncorrectFeedback= false;
-            currentScore= 0;
-            currentItem= null;
-            currentIndex= 0;
-            currentAttempts= 0;
-            incorrectMessage= '';
-            totalTries= 0;
-            correctAnswers= 0;
-            gameOver=false;
-            showInfo=false;
-            chosenClothingItems= [];
-            numberOfQuestionsAsked= 10;
+            this.showModal= false, 
+            this.showCorrectFeedback= false;
+            this.showIncorrectFeedback= false;
+            this.currentScore= 0;
+            this.currentItem= null;
+            this.currentIndex= 0;
+            this.currentAttempts= 0;
+            this.incorrectMessage= '';
+            this.totalTries= 0;
+            this.correctAnswers= 0;
+            this.gameOver=false;
+            this.showInfo=false;
+            this.chosenClothingItems= [];
+            this.numberOfQuestionsAsked= 10;
+            this.indexesAsked= []
+
         },
 
     },
@@ -234,7 +237,7 @@ export const LevelOneView = {
                     </div>
                 </div>
             </div>
-            <statisticsPopUp v-if="gameOver" @playAgain="restartGame" @exit="confirmExit" :totalNumberTries="totalTries" :score="this.currentScore"></statisticsPopUp>
+            <statisticsPopUp v-if="gameOver" @playAgain="restartGame" @exit="confirmExit" :totalNumberTries="totalTries" :score="this.currentScore" :numQuestionsAsked="this.numberOfQuestionsAsked"></statisticsPopUp>
             <div v-if="this.showInfo" class="modal-overlay" @click="handleOverlayClick">
                 <div class="modal-content" @click="this.showInfo=false">
                     <h2>{{$language.translate('information-message')}}</h2>

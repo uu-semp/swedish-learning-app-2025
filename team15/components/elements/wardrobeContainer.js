@@ -42,7 +42,6 @@ export const WardrobeContainer = {
 
   computed: {
     categoryItems() {
-      console.log("Hello!!", this.clothes)
       const chosenItems = this.clothes.filter(items => items.Subcategory === this.selectedCategory);
       return chosenItems.slice(0,9);
     },
@@ -55,11 +54,7 @@ export const WardrobeContainer = {
     },
   },
   template: `
-    <div class = "wardrobe">
-        <!-- Feedback Components -->
-        <correct-answer-feedback v-if="showCorrectFeedback"></correct-answer-feedback>
-        <incorrect-answer-feedback v-if="showIncorrectFeedback"></incorrect-answer-feedback>
-    
+    <div class = "wardrobe">    
         <div class="container">
 
         <!-- All the displayed images within the wardrobe container -->
