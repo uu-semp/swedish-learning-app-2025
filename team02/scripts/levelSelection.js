@@ -4,7 +4,7 @@
 document.addEventListener("DOMContentLoaded", () => {
     const output = document.getElementById("output");
 
-    // Navigation logic (example: go to level pages)
+
     document.getElementById("button1").addEventListener("click", () => {
         window.location.href = "level1.html";
     });
