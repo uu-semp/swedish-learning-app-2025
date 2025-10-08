@@ -4,7 +4,7 @@
 const vueCheckApp = Vue.createApp({
   methods: {
     checkVue() {
-      alert('Vue.js is working!');
+      alert('Vue.js is working.');
     }
   }
 });
