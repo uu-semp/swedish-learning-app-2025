@@ -67,6 +67,16 @@ This CSS file contains styles specific to the "Choose Level" view of the app.
     font-size: 1.8em; /* Match text size from previous suggestion for "LEVEL X" */
 }
 
+.level-buttons-container-locked .big-buttons-locked {
+    /* Remove horizontal margin and adjust vertical margin */
+    margin: 0 0 20px 0; /* Space below each button */
+    width: 100%; /* Take full width of its container (max-width: 400px) */
+    
+    /* Slightly adjust padding to make them tall and rounded */
+    padding: 15px 25px; 
+    font-size: 1.8em; /* Match text size from previous suggestion for "LEVEL X" */
+}
+
 /*
     Styles for the 'GO BACK' button to be positioned in the bottom left corner.
 */
