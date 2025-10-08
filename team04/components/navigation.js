@@ -8,7 +8,7 @@ export default {
         </div>      
         <div class="navigation-btn-group">
             <button class="main-menu-btn">Main menu</button>
-            <button class="reset-btn">Reset level</button>
+            <button class="reset-btn" @click='$emit("reset")'>Reset level</button>
         </div>
       </nav>
 

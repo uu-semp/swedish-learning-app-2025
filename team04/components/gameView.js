@@ -19,7 +19,8 @@ export default {
 
       <navigation 
        @next="nextQuestion" 
-       @prev="prevQuestion">
+       @prev="prevQuestion"
+       @reset="resetQuestion">
       </navigation>
 
       <button @click="$root.currentView = 'finish'">Switch to FinishView</button>
@@ -81,6 +82,19 @@ export default {
         this.currentIndex--;
         this.selectedOption = null;
 
+        const q = this.questions[this.currentIndex];
+        setClock(q.hour, q.minute);
+      }
+    },
+    resetQuestion() {
+      if(this.currentIndex > 0) {
+        this.currentIndex = 0;
+        this.selectedOption = null;
+
+        const q = this.questions[this.currentIndex];
+        setClock(q.hour, q.minute);
+      } else {
+        this.selectedOption = null;
         const q = this.questions[this.currentIndex];
         setClock(q.hour, q.minute);
       }
