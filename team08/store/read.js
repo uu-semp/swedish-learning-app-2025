@@ -1,7 +1,5 @@
 import { get, set } from "./alternative_backend/save.js";
 import * as Types from "./storage_type.js";
-import * as DB from "./alternative_backend/database_type.js";
-import { get_vocab, loaddb } from "./alternative_backend/vocabulary_await.js";
 import { TEAM, CATEGORIES, DEFAULT } from "./store_config.js";
 import {
   local_set_categories,
@@ -9,6 +7,7 @@ import {
   local_set_volume,
 } from "./write.js";
 import {
+  loaddb,
   get_category,
   get_random,
   get_vocab,
@@ -111,7 +110,7 @@ export function local_get_guesses_with_vocab() {
   return local_get_guesses().map((guess) => {
     return {
       guessed_correct: guess.guessed_correct,
-      vocab: get_vocab(db, guess.id),
+      vocab: get_vocab(guess.id),
     };
   });
 }
@@ -171,7 +170,7 @@ export function db_get_vocabs(ids) {
 export function get_n_random_words(ids, n) {
   const result = [];
   if (ids.length < n) {
-    console.error("Not enough words");
+    console.error("Not enough words in: ", ids);
     return [];
   }
   for (let i = 0; i < n; i++) {
