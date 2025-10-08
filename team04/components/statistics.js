@@ -3,9 +3,8 @@ export default {
     template: `
       <section class="statistics">
         <span class="level-indicator">
-        {{currentIndex + 1}}/10
+        What time is it?
          </span>
       </section>
-    `,
-    props: ["currentIndex"] // receive current index from gameView
+    ` // receive current index from gameView
 };

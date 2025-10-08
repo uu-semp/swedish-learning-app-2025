@@ -3,8 +3,7 @@ export default {
   name: "GameView",
   template: `
     <div class="game-container">
-      <statistics 
-       :currentIndex="currentIndex"></statistics>
+      <statistics></statistics>
       <section class="center-section">
         <clock
           v-if="currentQuestion"
@@ -33,7 +32,7 @@ export default {
     return {
       level_1: "623a056b",
       level_2: "2c6d3f66",
-      level_3: "477662d57",
+      level_3: "47662d57",
       questions: [],
       currentIndex: 0,
       selectedOption: null,
@@ -44,12 +43,13 @@ export default {
     const levelKey = `level_${this.selectedLevel}`;
     const vocabId = this[levelKey];
     const rawData = window.vocabulary.get_team_data(vocabId);
+    console.log("rawData type:", typeof rawData);
+    console.log("rawData preview:", rawData);
+
     // shuffle questions and set current index to 0
     const parsed = JSON.parse(rawData);
     this.questions = shuffleQuestions(parsed);
     this.currentIndex = 0;
-
-    console.log(`Loaded Level ${this.selectedLevel} data:`, this.questions);
   },
   computed: {
     currentQuestion() {
