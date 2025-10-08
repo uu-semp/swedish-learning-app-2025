@@ -7,7 +7,6 @@ import {
   reset_selection,
 } from "./selection.js";
 
-await init_db();
 local_set_categories(["food"]);
 reset_selection();
 

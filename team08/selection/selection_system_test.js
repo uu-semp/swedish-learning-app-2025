@@ -8,7 +8,6 @@ import {
 } from "./selection.js";
 
 local_set_categories(["food", "clothing", "furniture"]);
-await init_db();
 reset_selection();
 
 function testFields() {

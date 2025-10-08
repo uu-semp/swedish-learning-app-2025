@@ -36,7 +36,6 @@ let words;
 reset_selection();
 
 export function reset_selection() {
-  console.log("local storage: ", get(TEAM));
   local_wipe_guesses();
   guesses = [];
   words = db_get_categories(local_get_categories());
