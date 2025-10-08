@@ -8,9 +8,12 @@ export default [
         is_pair: false,
         Category: 'clothing',
         Subcategory: 'accessories',
+        Adjective_sv: 'röd',
+        Adjective_en: 'red',
 
         Image_url: 'assets/images/clothes/beanie.png',
     },
+    // delete subcategory card "clothes" "shoes" "underwear"
     {
         ID: '0a58114e',
         English: 'belt',
@@ -20,6 +23,8 @@ export default [
         is_pair: false,
         Category: 'clothing',
         Subcategory: 'accessories',
+        Adjective_sv: 'brun',
+        Adjective_en: 'brown',
 
         Image_url: 'assets/images/clothes/belt.png',
     },
@@ -32,6 +37,8 @@ export default [
         is_pair: false,
         Category: 'clothing',
         Subcategory: 'shirts',
+        Adjective_sv: 'blå',
+        Adjective_en: 'blue',
         Image_url: 'assets/images/clothes/blazer.png',
     },
     {
@@ -43,6 +50,8 @@ export default [
         is_pair: false,
         Category: 'clothing',
         Subcategory: 'shirts',
+        Adjective_sv: 'rosa',
+        Adjective_en: 'pink',
         Image_url: 'assets/images/clothes/blouse.png',
     },
     {
@@ -54,6 +63,8 @@ export default [
         is_pair: true,
         Category: 'clothing',
         Subcategory: 'shoes',
+        Adjective_sv: 'grön',
+        Adjective_en: 'green',
         Image_url: 'assets/images/clothes/boots.png',
     },
     {
@@ -65,6 +76,8 @@ export default [
         is_pair: true,
         Category: 'clothing',
         Subcategory: 'pants',
+        Adjective_sv: 'vita och blå',
+        Adjective_en: 'white and blue',
         Image_url: 'assets/images/clothes/boxers.png',
     },
     {
@@ -76,6 +89,8 @@ export default [
         is_pair: false,
         Category: 'clothing',
         Subcategory: 'shirts',
+        Adjective_sv: 'rosa',
+        Adjective_en: 'pink',
         Image_url: 'assets/images/clothes/bra.png',
     },
     {
@@ -87,6 +102,8 @@ export default [
         is_pair: false,
         Category: 'clothing',
         Subcategory: 'accessories',
+        Adjective_sv: 'gul',
+        Adjective_en: 'yellow',
         Image_url: 'assets/images/clothes/bracelet.png',
     },
     {
@@ -98,6 +115,8 @@ export default [
         is_pair: false,
         Category: 'clothing',
         Subcategory: 'accessories',
+        Adjective_sv: 'röd',
+        Adjective_en: 'red',
         Image_url: 'assets/images/clothes/cap.png',
     },
     {
@@ -109,19 +128,11 @@ export default [
         is_pair: false,
         Category: 'clothing',
         Subcategory: 'shirts',
+        Adjective_sv: 'grön',
+        Adjective_en: 'green',
         Image_url: 'assets/images/clothes/cardigan.png',
     },
-    {
-        ID: '1e505206',
-        English: 'clothes',
-        Article: '',
-        Swedish: 'kläder',
-        Swedish_plural: '',
-        is_pair: false,
-        Category: 'clothing',
-        Subcategory: 'shirts',
-        Image_url: 'assets/images/clothes/clothes.png',
-    },
+    
     {
         ID: '107b044c',
         English: 'coat',
@@ -131,6 +142,8 @@ export default [
         is_pair: false,
         Category: 'clothing',
         Subcategory: 'shirts',
+        Adjective_sv: 'gul',
+        Adjective_en: 'yellow',
         Image_url: 'assets/images/clothes/coat.png',
     },
     {
@@ -142,6 +155,8 @@ export default [
         is_pair: false,
         Category: 'clothing',
         Subcategory: 'shirts',
+        Adjective_sv: 'rosa', 
+        Adjective_en: 'pink',
         Image_url: 'assets/images/clothes/dress.png',
     },
     {
@@ -153,6 +168,8 @@ export default [
         is_pair: true,
         Category: 'clothing',
         Subcategory: 'accessories',
+        Adjective_sv: 'röda och gröna',
+        Adjective_en: 'red and green',
         Image_url: 'assets/images/clothes/earrings.png',
     },
     {
@@ -164,6 +181,8 @@ export default [
         is_pair: true,
         Category: 'clothing',
         Subcategory: 'accessories',
+        Adjective_sv: 'röd',
+        Adjective_en: 'red',
         Image_url: 'assets/images/clothes/glasses.png',
     },
     {
@@ -175,6 +194,8 @@ export default [
         is_pair: true,
         Category: 'clothing',
         Subcategory: 'accessories',
+        Adjective_sv: 'blå',
+        Adjective_en: 'blue',
         Image_url: 'assets/images/clothes/gloves.png',
     },
     {
@@ -186,6 +207,8 @@ export default [
         is_pair: false,
         Category: 'clothing',
         Subcategory: 'accessories',
+        Adjective_sv: 'gul och röd',
+        Adjective_en: 'yellow and red',
         Image_url: 'assets/images/clothes/hat.png',
     },
     {
@@ -197,6 +220,8 @@ export default [
         is_pair: false,
         Category: 'clothing',
         Subcategory: 'shirts',
+        Adjective_sv: 'grön',
+        Adjective_en: 'green',
         Image_url: 'assets/images/clothes/hoodie.png',
     },
     {
@@ -208,6 +233,8 @@ export default [
         is_pair: false,
         Category: 'clothing',
         Subcategory: 'shirts',
+        Adjective_sv: 'grön och brun',
+        Adjective_en: 'green and brown',
         Image_url: 'assets/images/clothes/jacket.png',
     },
     {
@@ -219,6 +246,8 @@ export default [
         is_pair: true,
         Category: 'clothing',
         Subcategory: 'pants',
+        Adjective_sv: 'blå',
+        Adjective_en: 'blue',
         Image_url: 'assets/images/clothes/jeans.png',
     },
     {
@@ -230,6 +259,8 @@ export default [
         is_pair: false,
         Category: 'clothing',
         Subcategory: 'accessories',
+        Adjective_sv: 'fina',
+        Adjective_en: 'nice',
         Image_url: 'assets/images/clothes/jewellery.png',
     },
     {
@@ -241,6 +272,8 @@ export default [
         is_pair: false,
         Category: 'clothing',
         Subcategory: 'shirts',
+        Adjective_sv: 'rosa och gul',
+        Adjective_en: 'pink and yellow',
         Image_url: 'assets/images/clothes/knitted_sweater.png',
     },
     {
@@ -252,6 +285,8 @@ export default [
         is_pair: true,
         Category: 'clothing',
         Subcategory: 'pants',
+        Adjective_sv: 'grå',
+        Adjective_en: 'grey',
         Image_url: 'assets/images/clothes/leggings.png',
     },
     {
@@ -263,6 +298,8 @@ export default [
         is_pair: true,
         Category: 'clothing',
         Subcategory: 'accessories',
+        Adjective_sv: 'rosa',
+        Adjective_en: 'pink',
         Image_url: 'assets/images/clothes/mittens.png',
     },
     {
@@ -274,6 +311,8 @@ export default [
         is_pair: false,
         Category: 'clothing',
         Subcategory: 'accessories',
+        Adjective_sv: 'röd',
+        Adjective_en: 'red',
         Image_url: 'assets/images/clothes/necklace.png',
     },
     {
@@ -285,6 +324,8 @@ export default [
         is_pair: true,
         Category: 'clothing',
         Subcategory: 'pants',
+        Adjective_sv: 'orangea',
+        Adjective_en: 'orange',
         Image_url: 'assets/images/clothes/panties.png',
     },
     {
@@ -296,6 +337,8 @@ export default [
         is_pair: true,
         Category: 'clothing',
         Subcategory: 'pants',
+        Adjective_sv: 'bruna',
+        Adjective_en: 'brown',
         Image_url: 'assets/images/clothes/pants.png',
     },
     {
@@ -307,6 +350,8 @@ export default [
         is_pair: true,
         Category: 'clothing',
         Subcategory: 'pants',
+        Adjective_sv: 'vit',
+        Adjective_en: 'white',
         Image_url: 'assets/images/clothes/pantyhose.png',
     },
     {
@@ -318,6 +363,8 @@ export default [
         is_pair: false,
         Category: 'clothing',
         Subcategory: 'accessories',
+        Adjective_sv: 'fina',
+        Adjective_en: 'nice',
         Image_url: 'assets/images/clothes/ring.png',
     },
     {
@@ -329,6 +376,8 @@ export default [
         is_pair: false,
         Category: 'clothing',
         Subcategory: 'shirts',
+        Adjective_sv: 'röd och lila',
+        Adjective_en: 'red and purple',
         Image_url: 'assets/images/clothes/robe.png',
     },
     {
@@ -340,6 +389,8 @@ export default [
         is_pair: true,
         Category: 'clothing',
         Subcategory: 'shoes',
+        Adjective_sv: 'rosa och orangea',
+        Adjective_en: 'pink and orange',
         Image_url: 'assets/images/clothes/sandals.png',
     },
     {
@@ -351,19 +402,11 @@ export default [
         is_pair: false,
         Category: 'clothing',
         Subcategory: 'Accessories',
+        Adjective_sv: 'lila',
+        Adjective_en: 'purple',
         Image_url: 'assets/images/clothes/scarf.png',
     },
-    {
-        ID: '150d1b5f',
-        English: 'shoes',
-        Article: '',
-        Swedish: 'skor',
-        Swedish_plural: '',
-        is_pair: true,
-        Category: 'clothing',
-        Subcategory: 'shoes',
-        Image_url: 'assets/images/clothes/shoes.png',
-    },
+    
     {
         ID: '10635963',
         English: 'shorts',
@@ -373,6 +416,8 @@ export default [
         is_pair: true,
         Category: 'clothing',
         Subcategory: 'pants',
+        Adjective_sv: 'gröna',
+        Adjective_en: 'green',
         Image_url: 'assets/images/clothes/shorts.png',
     },
     {
@@ -384,6 +429,8 @@ export default [
         is_pair: false,
         Category: 'clothing',
         Subcategory: 'shirts',
+        Adjective_sv: 'vit',
+        Adjective_en: 'white',
         Image_url: 'assets/images/clothes/shirt.png',
     },
     {
@@ -395,6 +442,8 @@ export default [
         is_pair: false,
         Category: 'clothing',
         Subcategory: 'pants',
+        Adjective_sv: 'gul',
+        Adjective_en: 'yellow',
         Image_url: 'assets/images/clothes/skirt.png',
     },
     {
@@ -406,6 +455,8 @@ export default [
         is_pair: true,
         Category: 'clothing',
         Subcategory: 'shoes',
+        Adjective_sv: 'gröna och vita',
+        Adjective_en: 'green and white',
         Image_url: 'assets/images/clothes/sneakers.png',
     },
     {
@@ -417,6 +468,8 @@ export default [
         is_pair: true,
         Category: 'clothing',
         Subcategory: 'shoes',
+        Adjective_sv: 'gul och blå',
+        Adjective_en: 'yellow and green',
         Image_url: 'assets/images/clothes/socks.png',
     },
     {
@@ -428,6 +481,8 @@ export default [
         is_pair: false,
         Category: 'clothing',
         Subcategory: 'shirts',
+        Adjective_sv: 'ljusblå',
+        Adjective_en: 'light blue',
         Image_url: 'assets/images/clothes/suit.png',
     },
     {
@@ -439,6 +494,8 @@ export default [
         is_pair: false, // can be a pair but treated as singular in Swedish
         Category: 'clothing',
         Subcategory: 'accessories',
+        Adjective_sv: 'grön',
+        Adjective_en: 'green',
         Image_url: 'assets/images/clothes/sunglasses.png',
     },
     {
@@ -450,6 +507,8 @@ export default [
         is_pair: false,
         Category: 'clothing',
         Subcategory: 'shirts',
+        Adjective_sv: 'blå',
+        Adjective_en: 'blue',
         Image_url: 'assets/images/clothes/sweater.png',
     },
     {
@@ -461,6 +520,8 @@ export default [
         is_pair: true,
         Category: 'clothing',
         Subcategory: 'pants',
+        Adjective_sv: 'gula',
+        Adjective_en: 'yellow',
         Image_url: 'assets/images/clothes/sweatpants.png',
     },
     {
@@ -472,6 +533,8 @@ export default [
         is_pair: false,
         Category: 'clothing',
         Subcategory: 'shirts',
+        Adjective_sv: 'orange och vit',
+        Adjective_en: 'orange and white',
         Image_url: 'assets/images/clothes/swimsuit.png',
     },
     {
@@ -483,6 +546,8 @@ export default [
         is_pair: false,
         Category: 'clothing',
         Subcategory: 'Upper Body',
+        Adjective_sv: 'gul och blå',
+        Adjective_en: 'yellow and blue',
         Image_url: 'assets/images/clothes/t-shirt.png',
     },
     {
@@ -494,6 +559,8 @@ export default [
         is_pair: false,
         Category: 'clothing',
         Subcategory: 'accessories',
+        Adjective_sv: 'blå och vit',
+        Adjective_en: 'blue and white',
         Image_url: 'assets/images/clothes/tie.png',
     },
     {
@@ -505,6 +572,8 @@ export default [
         is_pair: false,
         Category: 'clothing',
         Subcategory: 'shirts',
+        Adjective_sv: 'röd',
+        Adjective_en: 'red',
         Image_url: 'assets/images/clothes/top.png',
     },
     {
@@ -516,19 +585,11 @@ export default [
         is_pair: false,
         Category: 'clothing',
         Subcategory: 'accessories',
+        Adjective_sv: 'blå och vita',
+        Adjective_en: 'blue and white',
         Image_url: 'assets/images/clothes/training_clothes.png',
     },
-    {
-        ID: '414d510b',
-        English: 'underwear',
-        Article: '',
-        Swedish: 'underkläder',
-        Swedish_plural: '',
-        is_pair: false,
-        Category: 'clothing',
-        Subcategory: 'accessories',
-        Image_url: 'assets/images/clothes/underwear.png',
-    },
+
     {
         ID: '6662316f',
         English: 'veil',
@@ -538,6 +599,8 @@ export default [
         is_pair: false,
         Category: 'clothing',
         Subcategory: 'accessories',
+        Adjective_sv: 'svart',
+        Adjective_en: 'black',
         Image_url: 'assets/images/clothes/veil.png',
     },
 ];
