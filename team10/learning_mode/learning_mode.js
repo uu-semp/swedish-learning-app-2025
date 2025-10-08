@@ -16,16 +16,16 @@ function createFlashcardApp(options = { showDebug: true }) {
     data() {
       return {
         cards: [
-          { front: '<img src="../../assets/images/food/apple.png" alt="Apple" style="max-width:200px;max-height:200px;">', back: 'Äpple', gotIt: false },
-          { front: '<img src="../../assets/images/food/banana.png" alt="Banana" style="max-width:200px;max-height:200px;">', back: 'Banan', gotIt: false },
-          { front: '<img src="../../assets/images/food/bread.png" alt="Bread" style="max-width:200px;max-height:200px;">', back: 'Bröd', gotIt: false },
-          { front: '<img src="../../assets/images/food/cheese.png" alt="Cheese" style="max-width:200px;max-height:200px;">', back: 'Ost', gotIt: false },
-          { front: '<img src="../../assets/images/food/milk.png" alt="Milk" style="max-width:200px;max-height:200px;">', back: 'Mjölk', gotIt: false },
-          { front: '<img src="../../assets/images/food/eggs.png" alt="Egg" style="max-width:200px;max-height:200px;">', back: 'Ägg', gotIt: false },
-          { front: '<img src="../../assets/images/food/potato.png" alt="Potato" style="max-width:200px;max-height:200px;">', back: 'Potatis', gotIt: false },
-          { front: '<img src="../../assets/images/food/carrot.png" alt="Carrot" style="max-width:200px;max-height:200px;">', back: 'Morot', gotIt: false },
-          { front: '<img src="../../assets/images/food/tomato.png" alt="Tomato" style="max-width:200px;max-height:200px;">', back: 'Tomat', gotIt: false },
-          { front: '<img src="../../assets/images/food/pear.png" alt="Pear" style="max-width:200px;max-height:200px;">', back: 'Päron', gotIt: false }
+          { front: '<img src="../../assets/images/food/apple.png" alt="Apple" style="max-width:200px;max-height:200px;">', back: 'Äpple', gotIt: false, audio: '../../assets/audio/food/apple.mp3' },
+          { front: '<img src="../../assets/images/food/banana.png" alt="Banana" style="max-width:200px;max-height:200px;">', back: 'Banan', gotIt: false, audio: '../../assets/audio/food/banana.mp3' },
+          { front: '<img src="../../assets/images/food/bread.png" alt="Bread" style="max-width:200px;max-height:200px;">', back: 'Bröd', gotIt: false, audio: '../../assets/audio/food/bread.mp3' },
+          { front: '<img src="../../assets/images/food/cheese.png" alt="Cheese" style="max-width:200px;max-height:200px;">', back: 'Ost', gotIt: false, audio: '../../assets/audio/food/cheese.mp3' },
+          { front: '<img src="../../assets/images/food/milk.png" alt="Milk" style="max-width:200px;max-height:200px;">', back: 'Mjölk', gotIt: false, audio: '../../assets/audio/food/milk.mp3' },
+          { front: '<img src="../../assets/images/food/eggs.png" alt="Egg" style="max-width:200px;max-height:200px;">', back: 'Ägg', gotIt: false, audio: '../../assets/audio/food/eggs.mp3' },
+          { front: '<img src="../../assets/images/food/potato.png" alt="Potato" style="max-width:200px;max-height:200px;">', back: 'Potatis', gotIt: false, audio: '../../assets/audio/food/potato.mp3' },
+          { front: '<img src="../../assets/images/food/carrot.png" alt="Carrot" style="max-width:200px;max-height:200px;">', back: 'Morot', gotIt: false, audio: '../../assets/audio/food/carrot.mp3' },
+          { front: '<img src="../../assets/images/food/tomato.png" alt="Tomato" style="max-width:200px;max-height:200px;">', back: 'Tomat', gotIt: false, audio: '../../assets/audio/food/tomato.mp3' },
+          { front: '<img src="../../assets/images/food/pear.png" alt="Pear" style="max-width:200px;max-height:200px;">', back: 'Päron', gotIt: false, audio: '../../assets/audio/food/pear.mp3' }
         ],
         currentIndex: 0,
         isFlipped: false,
@@ -40,6 +40,13 @@ function createFlashcardApp(options = { showDebug: true }) {
     methods: {
       flipCard() {
         this.isFlipped = !this.isFlipped;
+        if (this.isFlipped) {
+          const audioSrc = this.cards[this.currentIndex].audio;
+          if (audioSrc) {
+            const audio = new Audio(audioSrc);
+            audio.play();
+          }
+        }
       },
       gotIt() {
         this.cards[this.currentIndex].gotIt = true;
