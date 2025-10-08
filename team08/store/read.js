@@ -8,9 +8,11 @@ import {
   local_set_sound_effects,
   local_set_volume,
 } from "./write.js";
-
-/** @type {DB.Database} */
-let db = null;
+import {
+  get_category,
+  get_random,
+  get_vocab,
+} from "../../scripts/alternative_backend/vocabulary_await.js";
 
 init();
 
@@ -38,7 +40,7 @@ function safe_get() {
 }
 
 export async function init_db() {
-  db = await loaddb();
+  await loaddb();
 }
 
 /**
@@ -69,68 +71,6 @@ export function local_get_categories() {
   }
 
   return data.category;
-}
-
-/**
- *
- * @param {String[]} categories
- */
-export function db_get_categories(categories) {
-  /** @type {String[]} */
-  return categories.map((category) => db.categories[category]).flat();
-}
-
-/**
- *
- * @param {String[]} ids
- * @param {Number} n
- * @return {String[]} n ids taken randomly from ids
- */
-export function db_get_n_random_words(ids, n) {
-  const result = [];
-  if (ids.length < n) {
-    console.error("Not enough words");
-    return [];
-  }
-  for (let i = 0; i < n; i++) {
-    const randomIndex = Math.floor(Math.random() * ids.length);
-    result.push(ids[randomIndex]);
-    ids.splice(randomIndex, 1);
-  }
-  return result;
-}
-
-/**
- *
- * @param {String[]} ids
- * @returns {String[]} list of urls
- */
-export function db_get_images_of_ids(ids) {
-  return ids.map((id) => {
-    const V = get_vocab(db, id);
-    return V ? V.img : null;
-  });
-}
-
-/**
- *
- * @param {String[]} ids
- * @returns {String[]} list of urls
- */
-export function db_get_audio_of_ids(ids) {
-  return ids.map((id) => {
-    const V = get_vocab(db, id);
-    return V ? V.audio : null;
-  });
-}
-
-/**
- *
- * @param {String[]} ids
- * @returns {DB.VocabEntry[]}
- */
-export function db_get_vocabs(ids) {
-  return ids.map((id) => get_vocab(db, id));
 }
 
 /**
@@ -174,4 +114,70 @@ export function local_get_guesses_with_vocab() {
       vocab: get_vocab(db, guess.id),
     };
   });
+}
+
+/** DB METHODS */
+
+/**
+ *
+ * @param {String[]} categories
+ */
+export function db_get_categories(categories) {
+  /** @type {String[]} */
+  return categories.map((category) => get_category(category)).flat();
+}
+
+/**
+ *
+ * @param {String[]} ids
+ * @returns {String[]} list of urls
+ */
+export function db_get_images_of_ids(ids) {
+  return ids.map((id) => {
+    const V = get_vocab(id);
+    return V ? V.img : null;
+  });
+}
+
+/**
+ *
+ * @param {String[]} ids
+ * @returns {String[]} list of urls
+ */
+export function db_get_audio_of_ids(ids) {
+  return ids.map((id) => {
+    const V = get_vocab(id);
+    return V ? V.audio : null;
+  });
+}
+
+/**
+ *
+ * @param {String[]} ids
+ * @returns {DB.VocabEntry[]}
+ */
+export function db_get_vocabs(ids) {
+  return ids.map((id) => get_vocab(id));
+}
+
+/** Utility */
+
+/**
+ * This method only manipulates ids
+ * @param {String[]} ids
+ * @param {Number} n
+ * @return {String[]} n ids taken randomly from ids
+ */
+export function get_n_random_words(ids, n) {
+  const result = [];
+  if (ids.length < n) {
+    console.error("Not enough words");
+    return [];
+  }
+  for (let i = 0; i < n; i++) {
+    const randomIndex = Math.floor(Math.random() * ids.length);
+    result.push(ids[randomIndex]);
+    ids.splice(randomIndex, 1);
+  }
+  return result;
 }

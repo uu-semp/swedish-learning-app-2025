@@ -2,8 +2,8 @@ import {
   db_get_audio_of_ids,
   db_get_categories,
   db_get_images_of_ids,
-  db_get_n_random_words,
   db_get_vocabs,
+  get_n_random_words,
   init_db,
   local_get_categories,
   local_get_volume,
@@ -59,7 +59,7 @@ function uniform_probability() {
     result.set(i, 0);
   }
   for (let i = 0; i < 100000; i++) {
-    db_get_n_random_words([1, 2, 3, 4], 3).forEach((item) => {
+    get_n_random_words([1, 2, 3, 4], 3).forEach((item) => {
       result.set(item, result.get(item) + 1);
     });
   }

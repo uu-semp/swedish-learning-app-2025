@@ -1,7 +1,7 @@
 import {
   db_get_categories,
-  db_get_n_random_words,
   db_get_vocabs,
+  get_n_random_words,
   init_db,
   local_get_categories,
 } from "../store/read.js";
@@ -45,7 +45,7 @@ export function reset_selection() {
  * @returns {WordSelect}
  */
 export function get_next_words() {
-  const IDS = db_get_n_random_words(words, 3);
+  const IDS = get_n_random_words(words, 3);
   /**
    * @type {DB.Vocabulary[]}
    */
