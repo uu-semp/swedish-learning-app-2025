@@ -1,0 +1,73 @@
+/*
+=================================================
+Owned by Team 09
+=================================================
+*/
+.quiz-info{
+  min-height: 100vh;          
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start; 
+  gap: 70px;
+  width: 90%;         
+  max-width: 1500px;  
+  height: 1000px;      
+  background-color: aqua;
+}
+
+.top-bar {
+    display: flex;
+    align-items: center;
+    gap: 150px;
+    justify-content: flex-start;
+    margin-bottom: 10px;
+    align-self: flex-start;
+    width: 100%;             
+    max-width: 1200px;   
+    padding-left: 10px    
+}
+
+.top-bar h2 {
+    margin: 0;
+    color: white;
+    font-size: 60px;  
+    padding-left: 20px;
+    font-family: "Comic Sans MS", cursive; 
+}
+
+#back-btn {
+    width: 100%;             
+    max-width: 200px;        
+    padding: 30px;           
+    font-size: 25px;        
+    font-weight: bold;       
+    border-radius: 35px;     
+    border: none;            
+    color: white;            
+    background-color:#b08968;
+    cursor: pointer;
+    transition: transform 0.2s ease, background 0.3s ease;
+}
+
+#back-btn:hover {
+    transform: scale(1.05);
+}
+
+.content {
+  max-width: 800px;
+  margin: 0 auto;
+  font-family: "Comic Sans MS", cursive; 
+  color: white;                           
+  font-size: 20px;                        
+  line-height: 1.5;
+}
+
+.page-bottom {
+  text-align: center;
+  padding: 10px 0;
+  width: 100%;
+  color: white;
+}
+
