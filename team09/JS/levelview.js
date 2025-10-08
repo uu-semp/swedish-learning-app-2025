@@ -1,5 +1,5 @@
 const CATEGORY = "clothing";
-const TOTAL_QUESTIONS = 1; 
+const TOTAL_QUESTIONS = 5; 
 
 const imgEl = document.getElementById("vocabImg");
 const optsEl = document.getElementById("options");
@@ -27,7 +27,7 @@ closeHelp.addEventListener("click", () => {
 
 function goBacktoLevelSelectpage() {
     
-  window.location.href = "../LevelSelectPage/levelSelect.html";
+  window.location.href = "../Views/levelSelect.html";
 }
 
 function shuffled(arr) {
@@ -139,7 +139,10 @@ function showResult() {
   };
 }
 
-
+function goBacktomainpage() {
+    
+  window.location.href = "../index.html";
+}
 function start() {
   progress = 0;
   totalMistakes = 0;

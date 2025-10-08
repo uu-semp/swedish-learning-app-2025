@@ -1,23 +1,29 @@
 
-.backtomainpage-btn {
+  .backtomainpage-btn {
     position: absolute;
-    top: 30px;
-    left: 50px;
-    width: 70px;
-    height: 70px;
+    top: 20px;
+    left: 20px;
+    width: 50px;
+    height: 50px;
     border-radius: 50%;
     border: none;
     background: #b08968;
     color: white;
-    font-size: 40px;
+    font-size: 30px;
+    font-weight: bold;
     cursor: pointer;
+    transition: transform 0.2s ease, background 0.3s ease;
   }
-  
+
+  .backtomainpage-btn:hover {
+    transform: scale(1.05);
+}
   .level-title {
-    font-size: 80px;
+    font-size: 50px;
     font-weight: bold;
     color: white;
     margin-bottom: 30px;
+    font-family: "Comic Sans MS", cursive;
   }
   
   .level-grid {
@@ -27,16 +33,16 @@
   }
   
   .level-btn {
-    width: 300px;
-    padding: 30px;
+    width: 200px;
+    padding: 20px;
     border-radius: 35px;
     border: none;
     color: white;
     font-size: 24px;
     font-weight: bold;
-    
     cursor: pointer;
     transition: transform 0.2s ease, background 0.3s ease;
+    font-family: "Comic Sans MS", cursive;
   }
   
   .level1 { background: #9bbf92; }
