@@ -5,7 +5,6 @@
 "use strict";
 
 // ==============================================
-//
 
 class ImgObject {
     #imgId;
@@ -27,11 +26,11 @@ class ImgObject {
     getImgPath() { 
         return this.#imgPath; 
     }
-    
+
     getImgDescription() { 
         return this.#imgDescription;
     }
-    
+
     getCategory() { 
         return this.#category; 
     }
@@ -75,9 +74,11 @@ function loadClothes() {
     });
 }
 
-// Creates a list of html img objects from array of ImgObject. Adds parameters to the objects:
-// category defines where the object can be placed on Pelle (hat on his head, pants on his legs etc.
-// id can be retrieved from an img object by calling: document.getElementById(id_of_parent_component).children.dataset.id (can be used to check whether correct clothing item is placed or not)
+// Creates a list of html img components from an array of ImgObject:s. The following fields are especially important:
+// 1. category defines where the object can be placed on Pelle (hat on his head, pants on his legs etc.)
+// 2. id (the img id in the database) can be retrieved from an img object by calling:
+// document.getElementById(id_of_parent_component).children[0].children[0].dataset.id (can be used to check whether correct clothing item is placed or not)
+// The above line has not been tested, only given as an example from memory. Might need some fixing.
 function createHtmlObjects(imgArray) {
     const htmlObjects = [];
 
@@ -96,7 +97,7 @@ function createHtmlObjects(imgArray) {
         htmlImgObject.alt = description;
         htmlImgObject.width = 100;
         htmlImgObject.height = 100;
-        htmlImgObject.className = "thumb"; // subject to change if you need a class for the img:s
+        htmlImgObject.className = "thumb"; // TODO: subject to change if you need a class for the img:s. Feel free to change the img size as well.
         
         return htmlImgObject;
     };
@@ -111,13 +112,15 @@ function createHtmlObjects(imgArray) {
 // Injects html objects into the scrollable right-hand menu and wires click behavior
 // From ChatGPT when asking how to make it so that when an image is pressed, it goes into the correct box for its category.
 function injectHtmlObjects(htmlObjects) {
-    const menuRoot = document.getElementById("img-menu");
+    const menuRoot = document.getElementById("img-menu"); // TODO: Change "img-menu" to the id of the box where the clothing menu should be placed.
     if (!menuRoot) {
         console.warn("Could not find #img-menu container");
         return;
     }
 
-    const slots = Array.from(document.querySelectorAll(".slot")); // Gets all the boxes that has the class slot. Change to match classes that the boxes on Pelle have.
+    const slots = Array.from(document.querySelectorAll(".slot"));
+    /* TODO: Gets the boxes where clothing items will be placed when clicked on in the menu.
+             Change "slot" to the class name that the boxes on Pelle has. Example: Pelle's boxes has class name "clothing-box", so ".slot" should be replaced by ".clothing-box". */
 
     function wireImage(img) {
         // Adds an event listener to each img so that it moves when clicked on
@@ -143,7 +146,7 @@ function injectHtmlObjects(htmlObjects) {
                     }
                     console.warn(`[move blocked] Category "${cat}" must go to the "${cat}" slot.`);
                 }
-            } else if (parent.classList.contains("slot")) { // Checks where the img is currently located in order to know where to move. Change "slot" to whatever class name the boxes on Pelle has.
+            } else if (parent.classList.contains("slot")) { // Checks where the img is currently located in order to know where to move. TODO: Change "slot" to whatever class name the boxes on Pelle has, like done above.
                 // Moving from slot -> back to menu
                 const item = document.createElement("div");
                 item.className = "menu-item";
