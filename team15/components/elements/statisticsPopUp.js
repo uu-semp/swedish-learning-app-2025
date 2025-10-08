@@ -14,14 +14,19 @@ export const StatisticsPopUp = {
         }
 
     },
+    emits:['playAgain', 'exit'],
     template: `
-     <div class="modal-overlay" @click="console.log('!!')">
+     <div class="modal-overlay">
         <div class="modal-content">
-            <h2>{{$language.translate('good-job')}}</h2>
+            <div class ="rowContainer">
+                <img src="./components/assets/coin.png" alt="coin"/>
+                <h2>{{$language.translate('good-job')}}</h2>
+                <img src="./components/assets/coin.png" alt="coin"/>
+            </div>
             <h3>Total number right: {{ procentCalculator(score) }}%</h3>
-            <div class="modal-buttons">
-                <button class="big-buttons" id="medium-buttons">{{$language.translate('play-again')}}</button>
-                <button class="big-buttons" id="medium-buttons">{{$language.translate('exit')}}</button>
+            <div class="popUpButtons">
+                <button class="big-buttons" @click.self="$emit('playAgain')">{{$language.translate('play-again')}}</button>
+                <button class="big-buttons" id="exitButton" @click.self="$emit('exit')">{{$language.translate('exit')}}</button>
             </div>
         </div>
     </div>

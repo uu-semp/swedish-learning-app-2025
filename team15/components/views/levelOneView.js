@@ -129,6 +129,7 @@ export const LevelOneView = {
 
             console.log('PLAYER DATA UPDATED:', { totalTries: this.totalTries, currentAttempts: this.currentAttempts, correctAnswers: this.correctAnswers, currentScore: this.currentScore });
         },
+        restartGame(){console.log("restart game!")},
     },
 
     template: `
@@ -169,7 +170,7 @@ export const LevelOneView = {
                     </div>
                 </div>
             </div>
-            <statisticsPopUp score="1"></statisticsPopUp>
+            <statisticsPopUp @playAgain="restartGame" @exit="confirmExit" score="1"></statisticsPopUp>
         </div>
       `,
 };

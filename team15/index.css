@@ -200,6 +200,40 @@ body {
     border-width: 6px;
 }
 
+.rowContainer{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;     /* vertical center */
+
+}
+
+.rowContainer > h2 {
+    font-size: 40px;
+    margin: 0;
+}
+
+.rowContainer > img {
+    width: 55px;
+    height: 55px;
+}
+
+.popUpButtons{
+    display: flex;
+    justify-content: space-around;
+    gap: 10px;
+}
+
+.popUpButtons > .big-buttons{
+    width:40%;
+    font-size: 16px;
+    border-width: 5px;
+}
+
+.popUpButtons > #exitButton{
+    background-color: #D32F2F;
+    border-color:#B71C1C;
+    color:white;
+}
 
 /* Help View */
 .help-content {
