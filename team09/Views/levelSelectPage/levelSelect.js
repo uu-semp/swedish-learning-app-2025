@@ -1,3 +1,4 @@
+
 function goBacktomainpage() {
     
     window.location.href = "../GameMainPage/GameMainPage.html";
@@ -11,4 +12,4 @@ function goBacktomainpage() {
       alert(`Level ${levelNum} is not ready yet!`);
     }
   }
-  
+
