@@ -1,8 +1,15 @@
-import { local_get_guesses_with_vocab } from "../store/read.js";
+import { init_db, local_get_guesses_with_vocab } from "../store/read.js";
 import { local_set_categories } from "../store/write.js";
-import { get_next_words, update_selection, finish_game } from "./selection.js";
+import {
+  get_next_words,
+  update_selection,
+  finish_game,
+  reset_selection,
+} from "./selection.js";
 
+await init_db();
 local_set_categories(["food"]);
+reset_selection();
 
 const DISPLAY_CORRECT = document.querySelector("#display_correct");
 const DISPLAY_GUESSES = document.querySelector("#display_guesses");

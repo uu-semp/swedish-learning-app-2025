@@ -1,5 +1,6 @@
 import { get, set } from "./alternative_backend/save.js";
 import * as Types from "./storage_type.js";
+import * as DB from "../../scripts/alternative_backend/database_type.js";
 import { TEAM, CATEGORIES, DEFAULT } from "./store_config.js";
 import {
   local_set_categories,
@@ -38,8 +39,13 @@ function safe_get() {
   return data;
 }
 
-export async function init_db() {
-  await loaddb();
+let loaded_before = false;
+
+export async function init_db(reload = false) {
+  if (!loaded_before || reload) {
+    loaded_before = true;
+    await loaddb();
+  }
 }
 
 /**

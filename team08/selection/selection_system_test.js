@@ -1,4 +1,4 @@
-import { local_get_guesses } from "../store/read.js";
+import { init_db, local_get_guesses } from "../store/read.js";
 import { local_set_categories } from "../store/write.js";
 import {
   get_next_words,
@@ -6,7 +6,10 @@ import {
   finish_game,
   reset_selection,
 } from "./selection.js";
+
 local_set_categories(["food", "clothing", "furniture"]);
+await init_db();
+reset_selection();
 
 function testFields() {
   let allDefined = true;

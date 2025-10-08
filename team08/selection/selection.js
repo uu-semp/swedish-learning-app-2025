@@ -7,7 +7,8 @@ import {
 } from "../store/read.js";
 import { local_set_guesses, local_wipe_guesses } from "../store/write.js";
 import * as Types from "../store/storage_type.js";
-import * as DB from "../store/alternative_backend/database_type.js";
+import { get } from "../store/alternative_backend/save.js";
+import { TEAM } from "../store/store_config.js";
 
 /**
  * @typedef {Object} FrontVocab
@@ -35,6 +36,7 @@ let words;
 reset_selection();
 
 export function reset_selection() {
+  console.log("local storage: ", get(TEAM));
   local_wipe_guesses();
   guesses = [];
   words = db_get_categories(local_get_categories());
@@ -46,9 +48,6 @@ export function reset_selection() {
  */
 export function get_next_words() {
   const IDS = get_n_random_words(words, 3);
-  /**
-   * @type {DB.Vocabulary[]}
-   */
   const WORDS = db_get_vocabs(IDS);
 
   const RESULT = [];
