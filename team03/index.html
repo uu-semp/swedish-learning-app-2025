@@ -33,32 +33,51 @@ Owned by Team 03
         </div>
 
         <div class="form-group">
-          <label>Article <span class="required">*</span></label>
+          <label for="swedish-plural">Swedish Plural <span class="optional">(optional)</span></label>
+          <input type="text" id="swedish-plural" name="swedish-plural">
+          <div class="error-message" id="swedish-plural-error"></div>
+        </div>
+
+        <div class="form-group">
+          <label>Article <span class="optional">(optional)</span></label>
           <div class="article-options">
             <label><input type="radio" name="article" value="en"> en</label>
             <label><input type="radio" name="article" value="ett"> ett</label>
           </div>
+          <small class="hint">Click again to deselect</small>
           <div class="error-message" id="article-error"></div>
         </div>
 
         <div class="form-group">
-          <label for="literal">Literal</label>
+          <label for="literal">Literal <span class="optional">(optional)</span></label>
           <input type="text" id="literal" name="literal">
         </div>
 
         <div class="form-group">
-          <label for="category">Category <span class="required">*</span></label>
-          <select id="category" name="category" required>
-            <option value="">Select a category</option>
+          <label for="category">Category (multiple allowed) <span class="required">*</span></label>
+          <select id="category-dropdown" name="category-dropdown">
+            <option value="">Select a category to add...</option>
           </select>
+          <div id="selected-categories" class="selected-categories-box"></div>
           <div class="error-message" id="category-error"></div>
         </div>
 
         <div class="form-group">
-          <label>Image</label>
-          <div class="image-upload">
-            + Upload Image
-          </div>
+          <label for="image-url">Image URL <span class="optional">(optional)</span></label>
+          <input type="text" id="image-url" name="image-url" placeholder="Coming soon">
+          <div class="error-message" id="image-url-error"></div>
+        </div>
+
+        <div class="form-group">
+          <label for="image-copyright">Image Copyright Info <span class="optional">(optional)</span></label>
+          <input type="text" id="image-copyright" name="image-copyright" placeholder="Coming soon">
+          <div class="error-message" id="image-copyright-error"></div>
+        </div>
+
+        <div class="form-group">
+          <label for="audio-url">Audio URL <span class="optional">(optional)</span></label>
+          <input type="text" id="audio-url" name="audio-url" placeholder="Coming soon">
+          <div class="error-message" id="audio-url-error"></div>
         </div>
 
         <button type="submit" class="submit-btn">Add Word</button>

@@ -34,12 +34,15 @@ class VocabularyManager {
   addWord(wordData) {
     const newWord = {
       id: this.generateId(),
-      swedish: wordData.swedish,
       english: wordData.english,
       article: wordData.article,
+      swedish: wordData.swedish,
+      swedish_plural: wordData.swedish_plural,
       literal: wordData.literal,
       category: wordData.category,
-      image: wordData.image
+      image_url: wordData.image_url,
+      image_copyright_info: wordData.image_copyright_info,
+      audio_url: wordData.audio_url
     };
     //Duplicate prevention
     for(let i = 0; i<this.words.length; i++) {
@@ -100,6 +103,7 @@ class VocabularyManager {
 }
 
 let vocabManager;
+let selectedCategories = [];
 
 $(function() {window.vocabulary.when_ready(function () {
 
@@ -113,6 +117,19 @@ $(function() {window.vocabulary.when_ready(function () {
   
   $("#clear-all").on("click", handleClearAll);
   
+  $("#category-dropdown").on("change", handleCategorySelect);
+  
+  //deselect article
+  let lastSelectedArticle = null;
+  $("input[name='article']").on("click", function() {
+    if (lastSelectedArticle === this) {
+      this.checked = false;
+      lastSelectedArticle = null;
+    } else {
+      lastSelectedArticle = this;
+    }
+  });
+  
   populateCategoryDropdown();
   
   displayWords();
@@ -121,16 +138,59 @@ $(function() {window.vocabulary.when_ready(function () {
 
 })})
 
+function handleCategorySelect(event) {
+  const selectedValue = $(event.target).val();
+  
+  //add category if not empty and not already selected
+  if (selectedValue && !selectedCategories.includes(selectedValue)) {
+    selectedCategories.push(selectedValue);
+    renderCategoryChips();
+  }
+  
+  //reset dropdown
+  $(event.target).val('');
+}
+
+function renderCategoryChips() {
+  const container = $("#selected-categories");
+  container.empty();
+  
+  selectedCategories.forEach(category => {
+    const chip = $(`
+      <div class="category-chip">
+        <span>${category.charAt(0).toUpperCase() + category.slice(1)}</span>
+        <button type="button" class="remove-category" data-category="${category}">×</button>
+      </div>
+    `);
+    
+    container.append(chip);
+  });
+  
+  //add click handlers to remove buttons
+  $(".remove-category").on("click", handleRemoveCategory);
+}
+
+function handleRemoveCategory(event) {
+  const categoryToRemove = $(event.target).data("category");
+  selectedCategories = selectedCategories.filter(cat => cat !== categoryToRemove);
+  renderCategoryChips();
+}
+
 function handleAddWord(event) {
   event.preventDefault();
   
+  const categoryValue = selectedCategories.join(", ");
+  
   const wordData = {
-    swedish: $("#swedish").val().trim(),
     english: $("#english").val().trim(),
     article: $("input[name='article']:checked").val() || '',
-    literal: $("#literal").val(),
-    category: $("#category").val(),
-    image: '' //TODO
+    swedish: $("#swedish").val().trim(),
+    swedish_plural: $("#swedish-plural").val().trim(),
+    literal: $("#literal").val().trim(),
+    category: categoryValue,
+    image_url: $("#image-url").val().trim(),
+    image_copyright_info: $("#image-copyright").val().trim(),
+    audio_url: $("#audio-url").val().trim()
   };
 
   //validate fields
@@ -141,10 +201,15 @@ function handleAddWord(event) {
   const result = vocabManager.addWord(wordData);
   
   if (result.success) {
-    $("#swedish").val('');
     $("#english").val('');
+    $("#swedish").val('');
+    $("#swedish-plural").val('');
     $("#literal").val('');
-    $("#category").val('');
+    selectedCategories = [];
+    renderCategoryChips();
+    $("#image-url").val('');
+    $("#image-copyright").val('');
+    $("#audio-url").val('');
     $("input[name='article']").prop('checked', false);
     
     // update display
@@ -167,8 +232,12 @@ function displayWords() {
     html += `<li>
       <strong>${word.swedish}</strong> = ${word.english}
       ${word.article ? `(${word.article})` : ''}
+      ${word.swedish_plural ? `<br>Plural: ${word.swedish_plural}` : ''}
       ${word.literal ? `<br><em>Literal: ${word.literal}</em>` : ''}
       ${word.category ? `<br>Category: ${word.category}` : ''}
+      ${word.image_url ? `<br>Image: <a href="${word.image_url}" target="_blank">View</a>` : ''}
+      ${word.image_copyright_info ? `<br><small>Copyright: ${word.image_copyright_info}</small>` : ''}
+      ${word.audio_url ? `<br>Audio: <a href="${word.audio_url}" target="_blank">Listen</a>` : ''}
       <br><small>ID: ${word.id}</small>
       <button class="delete-word btn-delete" data-id="${word.id}">Delete Word</button>
     </li>`;
@@ -215,13 +284,8 @@ function validateForm(wordData) {
     isValid = false;
   }
   
-  if (!wordData.article) {
-    showArticleValidationError('article', 'Please select an article (en or ett)');
-    isValid = false;
-  }
-  
-  if (!wordData.category) {
-    showValidationError('category', 'Please select a category');
+  if (!wordData.category || wordData.category === '') {
+    showValidationError('category', 'At least one category is required');
     isValid = false;
   }
   
@@ -244,7 +308,7 @@ function showArticleValidationError(fieldId, message) {
 
 function populateCategoryDropdown() {
 
-  const categorySelect = $("#category");
+  const categorySelect = $("#category-dropdown");
   
   const categories = Object.keys(window._vocabulary.categories || {});
   
