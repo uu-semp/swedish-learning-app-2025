@@ -1,0 +1,50 @@
+.backtomainpage-btn {
+    position: absolute;
+    top: 30px;
+    left: 50px;
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    border: none;
+    background: #b08968;
+    color: white;
+    font-size: 40px;
+    cursor: pointer;
+  }
+  
+  .level-title {
+    font-size: 80px;
+    font-weight: bold;
+    color: white;
+    margin-bottom: 30px;
+  }
+  
+  .level-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px 120px;
+  }
+  
+  .level-btn {
+    width: 300px;
+    padding: 30px;
+    border-radius: 35px;
+    border: none;
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+    
+    cursor: pointer;
+    transition: transform 0.2s ease, background 0.3s ease;
+  }
+  
+  .level1 { background: #9bbf92; }
+  .level2 { background: #b25c5c; }
+  .level3 { background: #894a9e; }
+  .level4 { background: #506ba9; }
+  .level5 { background: #3a8ca7; }
+  .level6 { background: #8b6e68; }
+  
+  .level-btn:hover {
+    transform: scale(1.05);
+  }
