@@ -89,13 +89,12 @@ function createHtmlObjects(imgArray) {
 
     const createHtmlImgObject = (imgObject) => {
         let path = imgObject.getImgPath();
-        let description = imgObject.getImgDescription();
+        let id = imgObject.getImgId();
 
         const htmlImgObject = document.createElement("img");
 
-        // Set attributes
         htmlImgObject.src = path;
-        htmlImgObject.alt = description;
+        htmlImgObject.alt = id;
         htmlImgObject.width = 100; // TODO: Update to intended size
         htmlImgObject.height = 100; // TODO: Update to intended size
 
