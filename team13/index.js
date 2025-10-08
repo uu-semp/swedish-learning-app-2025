@@ -56,59 +56,9 @@ $(function () {
   });
 });
 
-function menu_logic() {
-  console.log("menu_logic");
-  return {houseInfo: generateRandom()}
-}
 
 
-function inGame_logic() {
-  var swedishTextArray = ["Jag", "bor", "på", "-street", "-int"]
-  const prompt = []
-  for (var i = 0; i < swedishTextArray.length; i++){
-    prompt[i] = swedishTextArray[i]
-  }
-  currentPrompt = prompt;
-  console.log("inGame_logic");
-  return { 
-    houseInfo : generateRandom(),
-    swedishTextArray: swedishTextArray, 
-    englishTextArray : ["I", "live", "on", "-street", "-int"],
-  }
-}
-function inGame_logic_start(){}
-
-function menu_logic_start(){}
-
-function translateWord(wordIndex, englishText, swedishText, prompt, translatedWords){
-  if (!wordIsTranslated(wordIndex)){
-    translatedWords[translatedWords.length] = wordIndex
-    let newWord = ""
-    let englishWord = englishText[wordIndex];
-    console.log(englishText)
-    console.log(swedishText)
-    console.log(wordIndex)
-    switch(englishWord){
-      case ("-street"): newWord = currentStreet; break;
-      case("-int"): newWord = prompt[wordIndex]; break;
-      default: newWord = englishWord; break;
-    }
-    prompt[wordIndex] = newWord
-    console.log(currentPrompt)
-    renderPrompt()
-  }
-}
-function updatePrompt(wordIndex) {
-  translateWord(wordIndex, currentEnglishText,currentSwedishText,currentPrompt, translatedIndexes)
-  for (let i = 0; i < houseArray.length; i++) {
-    const button = document.getElementById(`word-btn-${i}`);
-    if (button) {
-      button.textContent = `${currentPrompt[i]}`;
-    }
-  }
-}
-
-
+//Generates all random values used for that screen.
 function generateRandom() {
   const numbers = window.vocabulary.get_category("number");
   //vocabulary is NOT guaranteed to be in order. dont assume randomNo == literal
@@ -134,17 +84,53 @@ function generateRandom() {
 
   return result;
 }
-function renderPrompt(){
-  const container = $("#prompt-words")
-  container.empty();
-  console.log("Length of currentPrompt:")
-  console.log(currentPrompt.length)
-  currentPrompt.forEach((promptValue,promptIndex) => {
-    const btn = $(`<button>${renderWord(promptValue,promptIndex)}</button>`);
-    btn.on("click", () => updatePrompt(promptIndex));
-    container.append(btn);
-  });
+
+//gameState
+
+function runGameStateLogic() {
+  const numbers = window.vocabulary.get_category("number");
+  $("#gamestate").text(window.vocabulary.get_vocab(numbers[state]).en);
+
+  switch (state) {
+    case gameStates.menu:
+      return menu_logic();
+    case gameStates.inGame:
+      return inGame_logic();
+  }
 }
+
+function nextGameState() {
+  const totalStates = Object.keys(gameStates).length;
+  state = (state + 1) % totalStates;
+  console.log("New state:", state);
+  runGameStateLogic();
+}
+
+function menu_logic() {
+  console.log("menu_logic");
+  return {houseInfo: generateRandom()}
+}
+
+function inGame_logic() {
+  var swedishTextArray = ["Jag", "bor", "på", "-street", "-int"]
+  const prompt = []
+  for (var i = 0; i < swedishTextArray.length; i++){
+    prompt[i] = swedishTextArray[i]
+  }
+  currentPrompt = prompt;
+  console.log("inGame_logic");
+  return { 
+    houseInfo : generateRandom(),
+    swedishTextArray: swedishTextArray, 
+    englishTextArray : ["I", "live", "on", "-street", "-int"],
+  }
+}
+
+function getKeyName(states, index) {
+  return Object.keys(states).find((key) => states[key] === index);
+}
+
+//houses
 
 function renderHouseButtons() {
   const container = $("#house-buttons");
@@ -157,15 +143,8 @@ function renderHouseButtons() {
   });
 }
 
-function renderWord(word, index){
-  switch (word){
-    case "-street": 
-      return currentStreet
-    case "-int": return correctHouseNumber_swe;
-    default: return word;
-  }
-}
-
+//Generates an array of length houseCount of house numbers. The houses are in sequence,
+//increasing by 1 or 2 depending on a random variable. The array will always contain houseNumber
 function generateRandomHouses(houseNumber, houseCount, highestNumber) {
   const doubleHouses = irandom_range(0, 1);
   const maxPos = Math.min(Math.floor((houseNumber - 1) / (1 + doubleHouses)), houseCount - 1);
@@ -173,7 +152,6 @@ function generateRandomHouses(houseNumber, houseCount, highestNumber) {
     Math.max(Math.ceil((houseCount - 1) - (highestNumber - houseNumber) / (1 + doubleHouses)), 0),
     houseCount - 1
   );
-
   const relativeHousePosition = irandom_range(Math.max(0, minPos), maxPos);
   const houses = [];
 
@@ -184,26 +162,8 @@ function generateRandomHouses(houseNumber, houseCount, highestNumber) {
   return { houseArray: houses, correctHouse: relativeHousePosition };
 }
 
-function getStreet(){
-  const streets = window.vocabulary.get_category("street");
-
-  const randomNo = irandom_range(0, streets.length - 1);
-  return window.vocabulary.get_vocab(streets[randomNo]).sv;
-}
-
-
-function nextGameState() {
-  const totalStates = Object.keys(gameStates).length;
-  state = (state + 1) % totalStates;
-  console.log("New state:", state);
-  runGameStateLogic();
-}
-
+//Alerts correct if correct house
 function clickHouse(num) {
-  console.log("Clicked house:", num);
-  console.log("House array:", houseArray);
-  console.log("Correct house index:", correctHouse);
-
   if (num === correctHouse) {
     alert("Correct!");
   } else {
@@ -220,22 +180,63 @@ function updateHouseButtons() {
   }
 }
 
-function runGameStateLogic() {
-  const numbers = window.vocabulary.get_category("number");
-  $("#gamestate").text(window.vocabulary.get_vocab(numbers[state]).en);
-
-  switch (state) {
-    case gameStates.menu:
-      return menu_logic();
-    case gameStates.inGame:
-      return inGame_logic();
-  }
-}
-
-function getKeyName(states, index) {
-  return Object.keys(states).find((key) => states[key] === index);
-}
+//translation
 
 function wordIsTranslated(wordIndex){
   return translatedIndexes.includes(wordIndex)
+}
+
+//when requested, translates the word and adds its index to the translatedWords array
+function translateWord(wordIndex, englishText, prompt, translatedWords){
+  if (!wordIsTranslated(wordIndex)){
+    translatedWords[translatedWords.length] = wordIndex
+    let newWord = ""
+    let englishWord = englishText[wordIndex];
+
+    newWord = englishWord;
+    
+    prompt[wordIndex] = newWord
+  
+    renderPrompt()
+  }
+}
+
+//Pull a random street name from the vocab
+function getStreet(){
+  const streets = window.vocabulary.get_category("street");
+
+  const randomNo = irandom_range(0, streets.length - 1);
+  return window.vocabulary.get_vocab(streets[randomNo]).sv;
+}
+
+//Updates the question prompt based on what words have been translated
+function updatePrompt(wordIndex) {
+  translateWord(wordIndex, currentEnglishText,currentPrompt, translatedIndexes)
+  for (let i = 0; i < houseArray.length; i++) {
+    const button = document.getElementById(`word-btn-${i}`);
+    if (button) {
+      button.textContent = `${currentPrompt[i]}`;
+    }
+  }
+}
+
+function renderPrompt(){
+  const container = $("#prompt-words")
+  container.empty();
+  console.log("Length of currentPrompt:")
+  console.log(currentPrompt.length)
+  currentPrompt.forEach((promptValue,promptIndex) => {
+    const btn = $(`<button>${renderWord(promptValue,promptIndex)}</button>`);
+    btn.on("click", () => updatePrompt(promptIndex));
+    container.append(btn);
+  });
+}
+
+function renderWord(word, index){
+  switch (word){
+    case "-street": 
+      return currentStreet
+    case "-int": return correctHouseNumber_swe;
+    default: return word;
+  }
 }
