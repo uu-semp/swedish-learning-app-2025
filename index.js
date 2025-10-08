@@ -50,36 +50,31 @@ async function loadGames() {
 
 //// UI ////
 // Build filter button
-function buildFilter(chapters, lang){
+function buildFilter(chapters){
   filterBar.innerHTML = ""; // clear
 
   // Add instruction text
   const label = document.createElement("span");
-
-  if (lang == 'sv') {
-    label.textContent = "Filtrera efter kapitel:";
-  } else if (lang == 'en') {
-    label.textContent = "Filter by chapter:";
-  }
-
-  label.className = "filter-label";
+ 
+  label.className = "filter-label translate";
+  label.id = "filter"
+   label.textContent = translations["filter"][currentLanguage];
   filterBar.appendChild(label);
 
   // "All" first
   filterBar.appendChild(makeFilterBtn("All","all"));
   // then one per chapter
-  if (lang == 'en') {
-    chapters.forEach(ch => filterBar.appendChild(makeFilterBtn(ch, String(ch))));
-  } else {
-    chapters.forEach(ch => filterBar.appendChild(makeFilterBtn(`Kapitel ${ch}`, String(ch))));
-  }
-  
+  chapters.forEach(ch => filterBar.appendChild(makeFilterBtn(ch, String(ch))));
 }
 
 function makeFilterBtn(index, value){
   const btn = document.createElement("button");
   btn.className = "filter-btn";
-  btn.textContent = "";
+  if(currentLanguage == 'en') {
+    btn.textContent = `Chapter ${index}`
+  } else {
+    btn.textContent = `Kapitel ${index}`
+  }
   btn.dataset.chapter = value;
   return btn;
 }
@@ -90,9 +85,9 @@ filterBar.addEventListener("click", (e)=>{
   if(!btn) return;
   const value = btn.dataset.chapter;
   setActiveFilter(value);
-  if(value === "all") return renderGrid(allGames, language);
+  if(value === "all") return renderGrid(allGames);
   const chNum = Number(value);
-  renderGrid(allGames.filter(g => g.supported_chapters.includes(chNum)), language);
+  renderGrid(allGames.filter(g => g.supported_chapters.includes(chNum)));
 });
 
 function setActiveFilter(value){
@@ -107,26 +102,15 @@ function renderGrid(games) {
     const card = document.createElement("article");
     card.className = "card";
 
-    // Build game tags HTML
-    const tagsHtml = (Array.isArray(g.supported_chapters) && g.supported_chapters.length)
-      ? `<div class="card-tags">
-           ${g.supported_chapters.map(ch => `<span class="tag">Kapitel ${ch}</span>`).join("")}
-         </div>`
-      : "";
-
-    // Build game card HTML
-    if(currentLanguage == 'sv') {
-      card.innerHTML = `
-      <img src="assets/main_menu/images/games/${g.id}.png" 
-           alt="${g.sv_title}"
-           onerror="this.onerror=null; this.src='assets/main_menu/images/games/default_image.png';">
-      <div class="card-body">
-        <h3>${g.sv_title}</h3>
-        <p>${g.sv_desc}</p>
-        ${tagsHtml}
-      </div>
-      `;
-    } else if (currentLanguage == 'en') {
+    if(currentLanguage == 'en') {
+      // Build game tags HTML
+      const tagsHtml = (Array.isArray(g.supported_chapters) && g.supported_chapters.length)
+        ? `<div class="card-tags">
+             ${g.supported_chapters.map(ch => `<span class="tag">Chapter ${ch}</span>`).join("")}
+           </div>`
+        : "";
+      
+      // Build game card HTML
       card.innerHTML = `
       <img src="assets/main_menu/images/games/${g.id}.png" 
            alt="${g.eng_title}"
@@ -134,6 +118,27 @@ function renderGrid(games) {
       <div class="card-body">
         <h3>${g.eng_title}</h3>
         <p>${g.eng_desc}</p>
+        ${tagsHtml}
+      </div>
+      `;
+    } else {
+      // Basic Swedish is default for the webpage
+
+      // Build game tags HTML
+      const tagsHtml = (Array.isArray(g.supported_chapters) && g.supported_chapters.length)
+        ? `<div class="card-tags">
+             ${g.supported_chapters.map(ch => `<span class="tag">Kapitel ${ch}</span>`).join("")}
+           </div>`
+        : "";
+
+      // Build game card HTML
+      card.innerHTML = `
+      <img src="assets/main_menu/images/games/${g.id}.png" 
+           alt="${g.sv_title}"
+           onerror="this.onerror=null; this.src='assets/main_menu/images/games/default_image.png';">
+      <div class="card-body">
+        <h3>${g.sv_title}</h3>
+        <p>${g.sv_desc}</p>
         ${tagsHtml}
       </div>
       `;
@@ -162,16 +167,31 @@ function renderGrid(games) {
     const box = document.createElement('div');
     box.id = 'settings-box';
 
+    if(currentLanguage == 'en') {
       box.innerHTML = `
-      <div class="settings-header">
-        <h2 class="settings-title">Settings</h2>
-        <button id="_close_settings" class="settings-btn close">Close</button>
-      </div>
-      <div class="settings-actions">
-        <button id="_open_add" class="settings-btn primary">Add vocabulary</button>
-        <button id="_clear_save" class="settings-btn secondary">Clear data</button>
-      </div>
-    `;
+        <div class="settings-header">
+          <h2 class="settings-title">Settings</h2>
+          <button id="_close_settings" class="settings-btn close">Close</button>
+        </div>
+        <div class="settings-actions">
+          <button id="_open_add" class="settings-btn primary">Add vocabulary</button>
+          <button id="_clear_save" class="settings-btn secondary">Clear data</button>
+        </div>
+      `;
+    } else {
+      // Basic Swedish is default for the webpage
+      box.innerHTML = `
+        <div class="settings-header">
+          <h2 class="settings-title">Inställningar</h2>
+          <button id="_close_settings" class="settings-btn close">Stäng</button>
+        </div>
+        <div class="settings-actions">
+          <button id="_open_add" class="settings-btn primary">Lägg till ord</button>
+          <button id="_clear_save" class="settings-btn secondary">Rensa data</button>
+        </div>
+      `;
+    }
+      
     
     overlay.appendChild(box);
       // Close overlay when clicking outside the box
@@ -236,9 +256,13 @@ function renderGrid(games) {
 //// Navigation ////
 // Open game in iframe
 function openIframe(src) {
+  let back_btn
   frame.src = src;
   menu.hidden = true;
   stage.hidden = false;
+  // Get correctly translated text for the back button
+  back_btn = document.getElementById('back-btn')
+  back_btn.textContent = translations['back-btn'][currentLanguage]
 
   // Save current game to sessionStorage
   sessionStorage.setItem("currentGameSrc", src);
@@ -268,15 +292,16 @@ window.addEventListener("DOMContentLoaded", () => {
 });
 
 //// Language toggle ////
+
+/**
+ * Loads the translations of menu text objects from the file menu_translations.json
+ * Must be run first since text objects depend on access to the translations.
+ */
 async function loadTranslations() {
   try {
-    console.log('init')
     const data = await fetch('assets/main_menu/menu_translations.json');
     if (!data.ok) throw new Error("Failed to menu_translations.json");
-
     translations = await data.json()
-    console.log(translations)
-    console.log('init done')
   } catch (error) {
     console.error(error);
   }
@@ -287,38 +312,30 @@ async function loadTranslations() {
  * Fetches text from menu_translations.json for all menu elements that require text.
  */
 async function setLanguage(lang) {
-  console.log('setLanguage')
+  try {
+    currentLanguage = lang
+    const elements = document.querySelectorAll('.translate');
 
-  console.log(translations)
+    elements.forEach(el => {
+      const id = el.getAttribute('id');
+      el.innerHTML = translations[id][lang]
+    })
 
-  currentLanguage = lang
-  const elements = document.querySelectorAll('.translate');
+    const chapters = [...new Set(allGames.flatMap(g => g.supported_chapters))].sort((a, b) => a - b);
+    buildFilter(chapters)
+    setActiveFilter("all");
+    renderGrid(allGames)
 
-  elements.forEach(el => {
-    const id = el.getAttribute('id');
-    el.innerHTML = translations[id][lang]
-  })
-
-  renderGrid(allGames)
-}
-
-
-function toggleLanguage(new_lang) {
-  const chapters = [...new Set(allGames.flatMap(g => g.supported_chapters))].sort((a, b) => a - b);
-  buildFilter(chapters, new_lang)
-  setActiveFilter("all");
-
-  
+  } catch (error) {
+    console.error(error)
+  }
 }
 
 //// Init ////
 
 async function init() {
-  console.log('init')
   await loadTranslations()
   loadGames();
 }
 
 init()
-
-console.log(translations)

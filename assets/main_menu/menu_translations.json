@@ -1,10 +1,10 @@
 {
-    "footer": {
+    "footer-text": {
         "en": "Created as part of the 'Software Engineering and Project Management' course 2025",
         "sv": "Skapad som en del av kursen 'Metoder och projektledning för mjukvaruutveckling' år 2025"
     },
 
-    "backbtn": {
+    "back-btn": {
         "en": "⬅ Back to menu",
         "sv": "⬅ Tillbaka till menyn"
     },
@@ -27,5 +27,10 @@
     "intro-desc": {
         "en": "Here you can practice basic Swedish from the courses <a href=\"https://www.uu.se/en/study/course?query=5PU028\"target=\"_blank\"> Basic Swedish 1</a> / <a href=\"https://www.uu.se/en/staff/employment/continuing-professional-development/courses-for-employees/swedish-for-academics-1-75-hp\" target=\"_blank\">Swedish for Academics 1</a> at Uppsala University. Each game matches one or more chapters in the course book. Use the filters below to pick the chapter you want to study. Have fun!",
         "sv": "Här kan du öva på enkel svenska från kurserna <a href=\"https://www.uu.se/en/study/course?query=5PU028\"target=\"_blank\">Basic Swedish 1</a>/<a href=\"https://www.uu.se/en/staff/employment/continuing-professional-development/courses-for-employees/swedish-for-academics-1-75-hp\" target=\"_blank\">Swedish for Academics 1</a> på Uppsala Universitet. Varje spel matchar ett eller flera kapitel i kursboken. Använd filter-knapparna nedanför för att välja ett kapitel att öva på. Ha så kul!"
+    },
+
+    "filter": {
+        "en": "Filter by chapter:",
+        "sv": "Filtrera efter kapitel:"
     }
 }
