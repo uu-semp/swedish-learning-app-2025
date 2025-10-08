@@ -99,7 +99,6 @@ function updateQuestion(questionInfo) {
   });
 
   if (questionInfo.type === "clock") {
-    console.log("Setting clock time:", questionInfo.hour, questionInfo.minute);
     withClockDoc((doc, win) => {
       if (typeof win.setAnalogTime === "function") {
         win.setAnalogTime(questionInfo.hour, questionInfo.minute);
@@ -123,8 +122,14 @@ function startGame(level) {
     return;
   }
 
+  window.currentSession = progressUtils.createSession(
+    questionUtils.byDifficulty(level),
+    { mode: "regular", size: 5 }
+  );
+
   // Get a random question for the selected difficulty
-  const questionInfo = questionUtils.getRandom({ difficulty: level });
+  const question = window.currentSession.next();
+  const questionInfo = question ? questionUtils.getById(question.id) : null;
 
   if (!questionInfo) {
     console.error("No questions found for level:", level);
@@ -173,8 +178,6 @@ function selectAnswer(answer, buttonElement) {
   if (submitButton) {
     submitButton.disabled = false;
   }
-
-  console.log("Answer selected:", answer);
 }
 
 function submitAnswer() {
@@ -202,8 +205,6 @@ function submitAnswer() {
       window.currentQuestion.id,
       checkResult.correct
     );
-    console.log(progressResult);
-    console.log(checkResult);
     showSubmissionFeedback(checkResult, progressResult);
   } catch (error) {
     console.error("Error checking answer:", error);

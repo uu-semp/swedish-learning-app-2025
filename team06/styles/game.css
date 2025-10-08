@@ -8,6 +8,7 @@ Game View Styles - Team 06
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     border-radius: 20px;
     max-width: 750px;
+    min-height: 550px;
     margin: 15px auto;
     padding: 20px 30px;
     text-align: center;
