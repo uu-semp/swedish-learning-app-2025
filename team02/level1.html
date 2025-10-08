@@ -7,7 +7,7 @@
     <title>Level 1</title>
 
     <!-- Shared + page-specific styles -->
-    <link rel="stylesheet" href="../style.css" />
+    <link rel="stylesheet" href="../styles/style.css" />
     <link rel="stylesheet" href="./styles/level1.css" />
     <link rel="stylesheet" href="./styles/dragAndDrop.css" />
 </head>
@@ -33,6 +33,7 @@
 
     <script src="./scripts/level1Questions.js"></script>
     <script src="../scripts/vocabulary.js"></script>
+    <script type="module" src="./scripts/imageFetching.js"></script>
     <script type="module" src="./scripts/dragAndDrop.js"></script>
 
     <script>
@@ -48,8 +49,8 @@
           return;
         }
 
-        const next_question = Math.floor(Math.random() * remainingQuestions.length);
-        currentQuestion = remainingQuestions.splice(next_question, 1)[0];
+        // Take the first question from the remaining questions (they come in order from the group)
+        currentQuestion = remainingQuestions.shift();
         const div = document.createElement('div');
         div.className = 'question-block';
         div.innerHTML = `<p>${currentQuestion.question}</p>`;
@@ -58,8 +59,8 @@
 
       // Wait for DOM and questions to be loaded
       document.addEventListener('DOMContentLoaded', function() {
-        if (typeof level1Questions !== "undefined") {
-          remainingQuestions = [...level1Questions];
+        if (typeof getRandomQuestions !== "undefined") {
+          remainingQuestions = getRandomQuestions();
           showRandomQuestion();
         }
 
