@@ -60,16 +60,22 @@ Owned by Team 10
       });
     </script>
     <div id="flashcard-app" data-show-debug="false">
-      <div class="flashcard" @click="flipCard">
-        <div class="flashcard-content" :class="{ flipped: isFlipped }">
-          <div class="front" v-html="currentCard.front"></div>
-          <div class="back">{{ currentCard.back }}</div>
-        </div>
-      </div>
       <div class="controls">
-        <button @click="prevCard" class="menu-page-btn">Previous</button>
-        <button @click="nextCard" class="menu-page-btn">Next</button>
-      </div>
+        <div class="flashcard" @click="flipCard" v-if="!finished">
+          <div class="flashcard-content" :class="{ flipped: isFlipped }">
+            <div class="front" v-html="currentCard.front"></div>
+            <div class="back">{{ currentCard.back }}</div>
+          </div>
+        </div>
+        <div class="controls" v-if="isFlipped && !finished">
+          <button @click="repeat" class="learning-mode-btn">Repeat</button>
+          <button @click="gotIt" class="start-btn">I got it</button>
+        </div>
+        <div v-if="finished" class="completion-message" style="text-align:center;margin-top:2rem;">
+          <h2>Congratulations!</h2>
+          <p>You have learned all 10 words.</p>
+          <button onclick="window.location.href='../index.html'" class="start-btn">Go to Menu</button>
+        </div>
     </div>
     <!-- Vue app script moved below so #flashcard-app exists before mounting -->
   <!-- Vue.js logic moved to learning_mode.js -->

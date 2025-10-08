@@ -16,19 +16,20 @@ function createFlashcardApp(options = { showDebug: true }) {
     data() {
       return {
         cards: [
-          { front: '<img src="../../assets/images/food/apple.png" alt="Apple" style="max-width:200px;max-height:200px;">', back: 'Äpple' },
-          { front: '<img src="../../assets/images/food/banana.png" alt="Banana" style="max-width:200px;max-height:200px;">', back: 'Banan' },
-          { front: '<img src="../../assets/images/food/bread.png" alt="Bread" style="max-width:200px;max-height:200px;">', back: 'Bröd' },
-          { front: '<img src="../../assets/images/food/cheese.png" alt="Cheese" style="max-width:200px;max-height:200px;">', back: 'Ost' },
-          { front: '<img src="../../assets/images/food/milk.png" alt="Milk" style="max-width:200px;max-height:200px;">', back: 'Mjölk' },
-          { front: '<img src="../../assets/images/food/egg.png" alt="Egg" style="max-width:200px;max-height:200px;">', back: 'Ägg' },
-          { front: '<img src="../../assets/images/food/potato.png" alt="Potato" style="max-width:200px;max-height:200px;">', back: 'Potatis' },
-          { front: '<img src="../../assets/images/food/carrot.png" alt="Carrot" style="max-width:200px;max-height:200px;">', back: 'Morot' },
-          { front: '<img src="../../assets/images/food/tomato.png" alt="Tomato" style="max-width:200px;max-height:200px;">', back: 'Tomat' },
-          { front: '<img src="../../assets/images/food/pear.png" alt="Pear" style="max-width:200px;max-height:200px;">', back: 'Päron' }
+          { front: '<img src="../../assets/images/food/apple.png" alt="Apple" style="max-width:200px;max-height:200px;">', back: 'Äpple', gotIt: false },
+          { front: '<img src="../../assets/images/food/banana.png" alt="Banana" style="max-width:200px;max-height:200px;">', back: 'Banan', gotIt: false },
+          { front: '<img src="../../assets/images/food/bread.png" alt="Bread" style="max-width:200px;max-height:200px;">', back: 'Bröd', gotIt: false },
+          { front: '<img src="../../assets/images/food/cheese.png" alt="Cheese" style="max-width:200px;max-height:200px;">', back: 'Ost', gotIt: false },
+          { front: '<img src="../../assets/images/food/milk.png" alt="Milk" style="max-width:200px;max-height:200px;">', back: 'Mjölk', gotIt: false },
+          { front: '<img src="../../assets/images/food/egg.png" alt="Egg" style="max-width:200px;max-height:200px;">', back: 'Ägg', gotIt: false },
+          { front: '<img src="../../assets/images/food/potato.png" alt="Potato" style="max-width:200px;max-height:200px;">', back: 'Potatis', gotIt: false },
+          { front: '<img src="../../assets/images/food/carrot.png" alt="Carrot" style="max-width:200px;max-height:200px;">', back: 'Morot', gotIt: false },
+          { front: '<img src="../../assets/images/food/tomato.png" alt="Tomato" style="max-width:200px;max-height:200px;">', back: 'Tomat', gotIt: false },
+          { front: '<img src="../../assets/images/food/pear.png" alt="Pear" style="max-width:200px;max-height:200px;">', back: 'Päron', gotIt: false }
         ],
         currentIndex: 0,
-        isFlipped: false
+        isFlipped: false,
+        finished: false
       };
     },
     computed: {
@@ -40,13 +41,32 @@ function createFlashcardApp(options = { showDebug: true }) {
       flipCard() {
         this.isFlipped = !this.isFlipped;
       },
-      nextCard() {
+      gotIt() {
+        this.cards[this.currentIndex].gotIt = true;
+        // Remove card if all gotIt
+        if (this.cards.every(card => card.gotIt)) {
+          this.finished = true;
+          return;
+        }
+        // Move to next card that is not gotIt
+        let nextIdx = this.currentIndex;
+        do {
+          nextIdx = (nextIdx + 1) % this.cards.length;
+        } while (this.cards[nextIdx].gotIt);
+        this.currentIndex = nextIdx;
         this.isFlipped = false;
-        this.currentIndex = (this.currentIndex + 1) % this.cards.length;
       },
-      prevCard() {
+      repeat() {
+        // Add current card to end if not already at end
+        const card = this.cards[this.currentIndex];
+        this.cards.push({ ...card, gotIt: false });
         this.isFlipped = false;
-        this.currentIndex = (this.currentIndex - 1 + this.cards.length) % this.cards.length;
+        // Move to next card that is not gotIt
+        let nextIdx = this.currentIndex;
+        do {
+          nextIdx = (nextIdx + 1) % this.cards.length;
+        } while (this.cards[nextIdx].gotIt);
+        this.currentIndex = nextIdx;
       }
     },
     mounted() {
