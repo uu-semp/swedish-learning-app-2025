@@ -13,8 +13,8 @@ Owned by Team 10
   <title>Basic Static Site</title>
   <link rel="stylesheet" href="../../style.css" />
 
-  <script src="../../scripts/vocabulary.js"></script>
-  <script src="../../scripts/save.js"></script>
+  <script src="../scripts/vocabulary.js"></script>
+  <script src="../scripts/save.js"></script>
 
   <!-- You are allowed to use JQuery and Vue.js but don't have to. They just make a
   lot of things easier
@@ -24,8 +24,10 @@ Owned by Team 10
   <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 
   <!-- Site specific scripts and styles -->
-  <link rel="stylesheet" href="learning_mode.css" />
-  <!-- <script src="index.js"></script> -->
+  <link rel="stylesheet" href="../index.css" />
+  <link rel="stylesheet" href="level_two.css" />
+
+  <script src="index.js" defer></script>
 </head>
 <body>
   <header>
@@ -33,52 +35,23 @@ Owned by Team 10
   </header>
 
   <main class="game-frame">
-    <script>
-      // Wait for DOM and vocabulary to be ready
-      $(function() {
-        if (window.vocabulary && window.vocabulary.when_ready) {
-          window.vocabulary.when_ready(function () {
-            // jQuery check
-            $("#check-jquery").on("click", () => {
-              alert("JavaScript and jQuery are working in Learning Mode.");
-            });
+    <div class="container">
+      <h2 style="text-align:center;margin-top:4rem;">Learning Mode</h2>
 
-            // Display a random vocab word
-            $("#display-vocab").text(JSON.stringify(window.vocabulary.get_random()));
+  <div class="button-container" style="display: flex; justify-content: center; gap: 1rem; margin-top: 2rem;">
+        <button onclick="window.location.href='game_page.html'" class="start-btn">Start</button>
+        <button onclick="window.location.href='../index.html'" class="learning-mode-btn">Menu</button>
+      </div>
 
-            // Saving check
-            $("#check-saving").on("click", () => {
-              var data = window.save.get("team10");
-              data.counter = data.counter ?? 0;
-              data.counter += 1;
-              $("#check-saving").text(`This button has been pressed ${data.counter} times`);
-              window.save.set("team10", data);
-            });
-          });
-        }
-      });
-    </script>
-    <div id="flashcard-app" data-show-debug="false">
-      <div class="flashcard" @click="flipCard">
-        <div class="flashcard-content" :class="{ flipped: isFlipped }">
-          <div class="front">{{ currentCard.front }}</div>
-          <div class="back">{{ currentCard.back }}</div>
-        </div>
-      </div>
-      <div class="controls">
-        <button @click="prevCard">Previous</button>
-        <button @click="nextCard">Next</button>
-      </div>
+      <p class="instructions">
+  <br>
+  See a word and its image—click the image to reveal the Swedish spelling.<br>
+  Choose “Got it” if you’ve learned it, or “Repeat” to see it again later.<br>
+  Finish all 10 words to move on to Level 1.
+      </p>
     </div>
-    <!-- Vue app script moved below so #flashcard-app exists before mounting -->
-  <!-- Vue.js logic moved to learning_mode.js -->
-  <script src="learning_mode.js"></script>
-
-    <!-- <hr> -->
-    <!-- Learning: <div id="display-vocab">(This should be replaced by a word)</div> -->
-
-
   </main>
+
   <footer>
     <small>Created as part of the "Software Engineering and Project Management" course 2025</small>
   </footer>
