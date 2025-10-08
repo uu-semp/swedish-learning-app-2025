@@ -15,19 +15,21 @@
 }
 
 .clock-hand {
-    left: calc(var(--clock-group-width) / 2);
-    position: relative;
     background-color: black;
-    height: 7px;
     border-top-right-radius: 15px;
     border-bottom-right-radius: 15px;
+    height: 7px;
+    left: calc(var(--clock-group-width) / 2);
+    position: relative;
+    transform-origin: left;
+    transition: transform 1.5s ease;
+    will-change: transform;
 }
 
 #minute-hand {
     background-color: red;
     top: calc(var(--clock-group-height) / 2 - 14px);
     transform: rotate(0deg);
-    transform-origin: left;
     width: calc(var(--clock-group-height) / 2 - 10px);
 }
 
@@ -35,6 +37,5 @@
     height: 10px;
     top: calc(var(--clock-group-height) / 2 - 4px);
     transform: rotate(0deg);
-    transform-origin: left;
     width: calc(var(--clock-group-height) / 2 - 40px);
 }
