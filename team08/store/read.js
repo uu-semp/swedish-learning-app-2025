@@ -3,7 +3,11 @@ import * as Types from "./storage_type.js";
 import * as DB from "./alternative_backend/database_type.js";
 import { get_vocab, loaddb } from "./alternative_backend/vocabulary_await.js";
 import { TEAM, CATEGORIES, DEFAULT } from "./store_config.js";
-import { local_set_sound_effects, local_set_volume } from "./write.js";
+import {
+  local_set_categories,
+  local_set_sound_effects,
+  local_set_volume,
+} from "./write.js";
 
 /** @type {DB.Database} */
 let db = null;
@@ -26,6 +30,7 @@ function init() {
 function safe_get() {
   let data = get(TEAM);
   if (data == null) {
+    console.log("wiped");
     set(TEAM, DEFAULT);
     return DEFAULT;
   }
@@ -42,9 +47,10 @@ export async function init_db() {
  */
 export function local_get_volume() {
   /** @type {Types.Team8Storage} */
-  let data = get(TEAM);
+  let data = safe_get(TEAM);
   if (data.volume === undefined) {
-    local_set_volume(50);
+    local_set_volume(DEFAULT.volume);
+    return DEFAULT.volume;
   }
   return data.volume;
 }
@@ -58,7 +64,8 @@ export function local_get_categories() {
   let data = safe_get(TEAM);
 
   if (data.category === undefined) {
-    return null;
+    local_set_categories(DEFAULT.category);
+    return DEFAULT.category;
   }
 
   return data.category;
@@ -133,7 +140,8 @@ export function db_get_vocabs(ids) {
 export function local_get_sound_effects() {
   let data = safe_get(TEAM);
   if (data.sound_effects_enabled == undefined) {
-    local_set_sound_effects(false);
+    local_set_sound_effects(DEFAULT.sound_effects_enabled);
+    return DEFAULT.sound_effects_enabled;
   }
 
   return data.sound_effects_enabled;
