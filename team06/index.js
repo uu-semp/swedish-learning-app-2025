@@ -7,29 +7,63 @@
 // VIEW SWITCHING FUNCTIONS
 // ==============================================
 
-//Initialize questionUtils
+// ==============================================
+// Team 06 - Tick-Tock Time Game
+// Main game logic and UI controller
+// ==============================================
+("use strict");
+
+// ==============================================
+// GLOBAL VARIABLES & STATE
+// ==============================================
+
+/** @type {Object|null} Question utilities module for managing questions */
 let questionUtils = null;
 
-// Helper function to hide all views
+/** @type {Object|null} Progress utilities module for tracking user progress */
+let progressUtils = null;
+
+/** @type {string|null} Current difficulty level (easy/medium/hard) */
+let currentDifficulty = null;
+
+/** @type {string|null} Currently selected answer by the user */
+let selectedAnswer = null;
+
+/** @type {HTMLElement|null} Currently selected answer button element */
+let selectedButton = null;
+
+/**
+ * Hides all view containers in the game interface
+ * Used to ensure only one view is visible at a time
+ */
 function hideAllViews() {
   document.querySelectorAll(".view").forEach((view) => {
     view.style.display = "none";
   });
 }
 
-// Show Intro View
+/**
+ * Shows the intro view (game start screen)
+ * Hides all other views and displays the introduction
+ */
 function showIntro() {
   hideAllViews();
   document.getElementById("intro-view").style.display = "block";
 }
 
-// Show Level Selection View
+/**
+ * Shows the level selection view
+ * Allows users to choose difficulty level (easy/medium/hard)
+ */
 function showLevelSelection() {
   hideAllViews();
   document.getElementById("level-view").style.display = "block";
 }
 
-// Show Finish View
+/**
+ * Shows the finish view (game completion screen)
+ * Displays when the session is completed or no more questions available
+ */
 function showFinish() {
   hideAllViews();
   document.getElementById("finish-view").style.display = "block";
@@ -44,7 +78,11 @@ function showFinish() {
 // CLOCK INTEGRATION HELPER
 // ==============================================
 
-// Helper function to work with clock iframe/object
+/**
+ * Helper function to interact with the clock iframe/object
+ * Handles timing issues by waiting for the clock to load if necessary
+ * @param {Function} fn - Callback function to execute with clock document and window
+ */
 function withClockDoc(fn) {
   const clockObj =
     document.getElementById("clock-object") ||
@@ -69,24 +107,62 @@ function withClockDoc(fn) {
 // GAME LOGIC FUNCTIONS
 // ==============================================
 
-function updateQuestion(questionInfo) {
-  if (!questionInfo) {
-    console.error("No question info provided");
+/**
+ * Updates the current question display and handles question progression
+ *
+ * This is the main function responsible for:
+ * - Getting the next question from the session using nextReviewAll
+ * - Updating the UI with question text and answer choices
+ * - Handling clock questions by setting the analog time
+ * - Managing session completion
+ *
+ * @description Uses progressUtils.nextReviewAll to prioritize questions with historical mistakes
+ * @see progressUtils.nextReviewAll for question selection logic
+ */
+function updateQuestion() {
+  if (!window.currentSession) {
+    console.error("No active session");
     return;
   }
 
+  // Check if we've reached the session limit
+  if (window.currentSession.asked >= window.currentSession.size) {
+    console.log("Session completed");
+    showFinish();
+    return;
+  }
+
+  // Get all questions for the current difficulty level
+  const levelQuestions = questionUtils.byDifficulty(currentDifficulty);
+
+  // Use nextReviewAll to get the next question, excluding already seen ones
+  const questionInfo = progressUtils.nextReviewAll(levelQuestions, {
+    excludeIds: window.currentSession.seenIds,
+  });
+  console.log(window.currentSession.seenIds);
+
+  if (!questionInfo) {
+    console.log("No more questions available");
+    showFinish();
+    return;
+  }
+
+  // Reset UI state for new question
   window.currentQuestion = questionInfo;
   selectedAnswer = null;
   selectedButton = null;
 
+  console.log("Next question:", questionInfo);
+
+  // Update question text
   document.getElementById("question").innerText = questionInfo.question;
 
+  // Prepare and shuffle answer choices
   const allChoices = [questionInfo.answer, ...questionInfo.alternatives];
-
   const shuffledChoices = shuffleArray([...allChoices]);
 
+  // Clear previous answer buttons and create new ones
   const answerContainer = document.getElementById("answers-container");
-
   answerContainer.innerHTML = "";
 
   // Create a button for each choice
@@ -98,17 +174,24 @@ function updateQuestion(questionInfo) {
     answerContainer.appendChild(button);
   });
 
+  // Handle clock questions with special display
   if (questionInfo.type === "clock") {
-    withClockDoc((doc, win) => {
-      if (typeof win.setAnalogTime === "function") {
-        win.setAnalogTime(questionInfo.hour, questionInfo.minute);
-      } else {
-        console.warn("No setAnalogTime function in clock.html");
-      }
-    });
+    // Show the clock element
     const clockObject = document.getElementById("clock-object");
     clockObject.style.display = "";
     clockObject.style.visibility = "visible";
+
+    // Set the clock time with a small delay to ensure it's loaded
+    setTimeout(() => {
+      withClockDoc((doc, win) => {
+        if (typeof win.setAnalogTime === "function") {
+          win.setAnalogTime(questionInfo.hour, questionInfo.minute);
+          console.log("Clock set to:", questionInfo.hour, questionInfo.minute);
+        } else {
+          console.warn("No setAnalogTime function in clock.html");
+        }
+      });
+    }, 100); // Small delay to ensure clock is loaded
   } else {
     // Hide the clock for non-clock questions
     const clockObject = document.getElementById("clock-object");
@@ -116,56 +199,69 @@ function updateQuestion(questionInfo) {
   }
 }
 
+/**
+ * Initializes and starts a new game session
+ *
+ * Sets up the game with the specified difficulty level by:
+ * - Setting the global difficulty state
+ * - Initializing progress tracking for all questions of the difficulty
+ * - Creating a new session with 5 questions
+ * - Switching to the game view
+ * - Loading the first question
+ *
+ * @param {string} level - Difficulty level ("easy", "medium", or "hard")
+ */
 function startGame(level) {
-  if (!questionUtils) {
-    console.error("Questions not loaded yet");
+  if (!questionUtils || !progressUtils) {
+    console.error("Question utils or progress utils not loaded yet");
     return;
   }
 
-  window.currentSession = progressUtils.createSession(
-    questionUtils.byDifficulty(level),
-    { mode: "regular", size: 5 }
-  );
+  // Set the global difficulty
+  currentDifficulty = level;
 
-  // Get a random question for the selected difficulty
-  const question = window.currentSession.next();
-  const questionInfo = question ? questionUtils.getById(question.id) : null;
+  // Initialize progress for all questions of this difficulty
+  const levelQuestions = questionUtils.byDifficulty(currentDifficulty);
+  const questionIds = levelQuestions.map((q) => q.id);
+  progressUtils.initProgress(questionIds);
 
-  if (!questionInfo) {
-    console.error("No questions found for level:", level);
-    return;
-  }
-
-  // Update the display with the new question
-  updateQuestion(questionInfo);
+  // Create a session with the selected difficulty questions
+  window.currentSession = progressUtils.createSession(levelQuestions, {
+    mode: "regular",
+    size: 5,
+  });
 
   // Show the game view
   hideAllViews();
   document.getElementById("game-view").style.display = "block";
 
-  // // Initialize game with selected level (to be implemented in game.js)
-  // if (typeof initializeGame === "function") {
-  //   initializeGame(level);
-  // }
+  // Get and display the first question
+  updateQuestion();
 
   console.log("Game started with level:", level);
 }
 
-// ============================
+// ==============================================
 // SELECTION AND SUBMISSION
-// ============================
+// ==============================================
 
-let selectedAnswer = null;
-let selectedButton = null;
+/**
+ * Handles user selection of an answer choice
+ * Updates UI to show selected state and enables submit button
+ * @param {string} answer - The selected answer text
+ * @param {HTMLElement} buttonElement - The button element that was clicked
+ */
 function selectAnswer(answer, buttonElement) {
   if (!window.currentQuestion) {
     console.error("No current question set");
     return;
   }
 
+  // Store the selected answer and button reference
   selectedAnswer = answer;
   selectedButton = buttonElement;
 
+  // Clear previous selections and highlight the new one
   document.querySelectorAll(".answer-btn").forEach((btn) => {
     btn.classList.remove("selected");
   });
@@ -174,12 +270,25 @@ function selectAnswer(answer, buttonElement) {
     buttonElement.classList.add("selected");
   }
 
+  // Enable the submit button once an answer is selected
   const submitButton = document.getElementById("submit-btn");
   if (submitButton) {
     submitButton.disabled = false;
   }
 }
 
+/**
+ * Processes the user's submitted answer
+ *
+ * Handles the complete submission flow:
+ * - Validates that an answer is selected
+ * - Checks the answer using questionUtils.checkAnswerEasy
+ * - Records the result in progress tracking
+ * - Shows visual feedback (correct/wrong styling)
+ * - Switches from Submit to Next button
+ *
+ * @description Disables all buttons after submission to prevent multiple submissions
+ */
 function submitAnswer() {
   if (!window.currentQuestion) {
     console.error("No current question set");
@@ -191,29 +300,49 @@ function submitAnswer() {
     return;
   }
 
+  // Disable all buttons to prevent multiple submissions
   document.querySelectorAll(".answer-btn, .submit-btn").forEach((btn) => {
     btn.disabled = true;
   });
 
   try {
+    // Check if the answer is correct
     const checkResult = questionUtils.checkAnswerEasy(
       window.currentQuestion,
       selectedAnswer
     );
+    console.log("Answer checked:", checkResult);
 
+    // Record the result in progress tracking
     const progressResult = progressUtils.recordResult(
       window.currentQuestion.id,
       checkResult.correct
     );
+    console.log("Progress updated:", progressResult);
+
+    // Show visual feedback to the user
     showSubmissionFeedback(checkResult, progressResult);
   } catch (error) {
     console.error("Error checking answer:", error);
+    // Re-enable buttons if there was an error
     document.querySelectorAll(".answer-btn, .submit-button").forEach((btn) => {
       btn.disabled = false;
     });
   }
 }
 
+/**
+ * Displays visual feedback after answer submission
+ *
+ * Provides immediate visual feedback by:
+ * - Highlighting the correct answer in green
+ * - Highlighting the user's wrong answer in red (if incorrect)
+ * - Switching from Submit button to Next button
+ * - Disabling all answer buttons
+ *
+ * @param {Object} checkResult - Result from questionUtils.checkAnswerEasy
+ * @param {Object} progressResult - Updated progress data from progressUtils
+ */
 function showSubmissionFeedback(checkResult, progressResult) {
   document.querySelectorAll(".answer-btn").forEach((btn) => {
     const buttonText = btn.innerText;
@@ -225,10 +354,11 @@ function showSubmissionFeedback(checkResult, progressResult) {
       // User's wrong answer turns red
       btn.classList.add("wrong");
     }
+
+    // Switch to a "Next" button, so the user can progress
     document.getElementById("submit-btn").style.display = "none";
     document.getElementById("next-btn").style.display = "block";
 
-    // Disable all buttons after submission
     btn.disabled = true;
   });
 
@@ -237,43 +367,37 @@ function showSubmissionFeedback(checkResult, progressResult) {
     console.error("Feedback element not found");
     return;
   }
-
-  // const submitButton = document.getElementById("submit-btn");
-  // if (submitButton) {
-  //   submitButton.innerText = checkResult.message;
-  //   submitButton.disabled = true;
-  //   submitButton.className = `submit-btn feedback-button ${
-  //     checkResult.correct ? "correct" : "incorrect"
-  //   }`;
-  // }
 }
 
+/**
+ * Advances to the next question in the session
+ *
+ * Handles the progression flow:
+ * - Switches from Next button back to Submit button
+ * - Calls updateQuestion() to load and display the next question
+ * - Automatically shows finish view if no more questions available
+ */
 function nextQuestion() {
   document.getElementById("next-btn").style.display = "none";
   document.getElementById("submit-btn").style.display = "block";
 
-  if (!questionUtils) {
-    console.error("Questions not loaded yet");
-    return;
-  }
-  const questionInfo = questionUtils.getRandom({
-    difficulty: window.currentQuestion.difficulty,
-  });
-
-  if (!questionInfo) {
-    console.error("No more questions available");
-    showFinish();
-    return;
-  }
-
-  updateQuestion(questionInfo);
+  // Get and display the next question
+  updateQuestion();
 }
 
 // ==============================================
 // HELPER FUNCTIONS
 // ==============================================
 
-// Shuffle an array using Fisher-Yates algorithm
+/**
+ * Randomizes the order of elements in an array
+ *
+ * Uses the Fisher-Yates shuffle algorithm to ensure uniform distribution
+ * Used to randomize the order of answer choices for each question
+ *
+ * @param {Array} array - The array to shuffle
+ * @returns {Array} A new array with elements in random order
+ */
 function shuffleArray(array) {
   const shuffled = [...array];
   for (let i = shuffled.length - 1; i > 0; i--) {
@@ -287,18 +411,32 @@ function shuffleArray(array) {
 // INITIALIZATION
 // ==============================================
 
+/**
+ * Application initialization when DOM and vocabulary are ready
+ *
+ * Sets up the game by:
+ * - Loading question utilities and initializing questions from JSON
+ * - Loading progress utilities for tracking user performance
+ * - Displaying the intro view
+ * - Setting up test functions for development/debugging
+ */
 $(function () {
   window.vocabulary.when_ready(async function () {
     console.log("Team 06 - Tick-Tock Time initialized!");
+
     try {
+      // Load and initialize question management utilities
       questionUtils = await import("./utils/question_utils.js");
       await questionUtils.initQuestions("./data/questions.json");
+
+      // Load progress tracking utilities
       progressUtils = await import("./utils/progress_utils.js");
 
-      console.log("Questions loaded successfully");
+      console.log("Questions and progress utils loaded successfully");
     } catch (error) {
-      console.error("Failed to load questions:", error);
+      console.error("Failed to load question or progress utils:", error);
     }
+
     // Show intro view on load
     showIntro();
 
