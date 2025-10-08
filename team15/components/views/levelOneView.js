@@ -18,6 +18,7 @@ export const LevelOneView = {
             // Placeholder progress data
             totalTries: 0,
             correctAnswers: 0,
+            gameOver:false,
             showInfo:false,
         };
     },
@@ -44,6 +45,7 @@ export const LevelOneView = {
                 this.currentAttempts = 0;
                 this.incorrectMessage = '';
             } else {
+                this.gameOver=true
                 console.log("Level Complete!");
             }
         },
@@ -131,6 +133,28 @@ export const LevelOneView = {
 
             console.log('PLAYER DATA UPDATED:', { totalTries: this.totalTries, currentAttempts: this.currentAttempts, correctAnswers: this.correctAnswers, currentScore: this.currentScore });
         },
+
+        restartGame(){
+            console.log("level restarted")
+            this.resetGameState()
+            this.startLevel()
+        },
+
+        resetGameState(){
+            this.showModal= false, 
+            this.showCorrectFeedback= false
+            this.showIncorrectFeedback= false
+            this.currentScore= 0, 
+            this.currentItem= null,
+            this.availableItems= clothingItems
+            this.currentIndex= 0
+            this.currentAttempts= 0
+            this.incorrectMessage= ''
+            this.totalTries= 0
+            this.correctAnswers= 0
+            this.gameOver=false
+        }
+
     },
 
     template: `
@@ -173,6 +197,7 @@ export const LevelOneView = {
                     </div>
                 </div>
             </div>
+            <statisticsPopUp v-if="gameOver" @playAgain="restartGame" @exit="confirmExit":totalNumberTries="totalTries" :score="this.currentScore"></statisticsPopUp>
             <div v-if="this.showInfo" class="modal-overlay" @click="handleOverlayClick">
                 <div class="modal-content" @click="this.showInfo=false">
                     <h2>{{$language.translate('information-message')}}</h2>

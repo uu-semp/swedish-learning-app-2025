@@ -4,6 +4,7 @@ import { ChooseLevelView } from './views/chooseLevelView.js';
 import { LevelOneView } from './views/levelOneView.js';
 import { LevelTwoView } from './views/levelTwoView.js';
 import { LevelThreeView } from './views/levelThreeView.js';
+
 import {
   StartGameButton,
   HowToPlayButton,
@@ -21,6 +22,7 @@ import { WardrobeContainer } from "./elements/wardrobeContainer.js";
 import { PelleContainer } from "./elements/pelleContainer.js";
 import { DressPellePrompt } from "./elements/dressPellePrompt.js";
 import { ScoreCounter } from "./elements/scoreCounter.js";
+import { StatisticsPopUp } from "./elements/statisticsPopUp.js";
 
 
 export default {
@@ -44,5 +46,6 @@ export default {
   ExitGameButton,
   PelleContainer,
   DressPellePrompt,
-  ScoreCounter
+  ScoreCounter,
+  StatisticsPopUp
 };
