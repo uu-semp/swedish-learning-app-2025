@@ -15,6 +15,7 @@ $(function () {
   // variables
   let corrects = 0;
   let misses = 0;
+  let wins = 0; // Track total number of wins
 
   let flippedCards = []; // array of currently flipped cards
 
@@ -36,6 +37,8 @@ $(function () {
   });
 
   $("#restart-game").on("click", function () {
+    resetGame();
+    mapCards(); // Load new random cards
     showScreen("menu-screen");
   });
 
@@ -60,13 +63,16 @@ $(function () {
 
   function foundMatch() {
     corrects++;
-    flippedCards[0].addClass("matched");
-    flippedCards[1].addClass("matched");
-    alert
+    
     if (corrects >= corrects_needed) {
-      alert("Congratulations! You've won the game!");
-      resetGame();
-      showScreen("end-screen");
+      wins++; // Increment wins
+      setTimeout(() => {
+        //alert("Congratulations! You've won the game!");
+        $("#wins-count").text(wins); // Update wins display
+        resetGame();
+        
+        showScreen("end-screen");
+      }, 600);
     }
     resetFlipState();
   }
@@ -93,6 +99,7 @@ $(function () {
     const card = this; // store DOM element directly
 
     if (isChecking) return;
+    if ($(card).hasClass("matched")) return; // Ignore matched cards
 
     // Flip back if two cards are already flipped and this card is one of them
     if (allowFlipBack && flippedCards.includes(card)) {
@@ -107,13 +114,34 @@ $(function () {
       flippedCards.push(card);
     }
 
-    // After flipping 2 cards, allow flip back after 0.5s
+    // After flipping 2 cards, check for match
     if (flippedCards.length === 2 && !allowFlipBack) {
       isChecking = true;
-      setTimeout(() => {
-        allowFlipBack = true;
-        isChecking = false;
-      }, 500);
+      
+      const card1 = $(flippedCards[0]);
+      const card2 = $(flippedCards[1]);
+      const pairId1 = card1.attr('data-pair-id');
+      const pairId2 = card2.attr('data-pair-id');
+      
+      if (pairId1 === pairId2) {
+        // Match found! Fade out cards after a delay while keeping their space
+        setTimeout(() => {
+          card1.fadeTo(500, 0, function() {
+            $(this).addClass("matched");
+          });
+          card2.fadeTo(500, 0, function() {
+            $(this).addClass("matched");
+          });
+          foundMatch();
+          isChecking = false;
+        }, 1000); // Wait 1 second before fading out
+      } else {
+        // No match - allow flip back after 0.5s
+        setTimeout(() => {
+          allowFlipBack = true;
+          isChecking = false;
+        }, 500);
+      }
     }
   }
 
