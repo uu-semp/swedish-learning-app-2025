@@ -48,10 +48,6 @@ export const ChooseLevelView = {
           
           <div class="level-buttons-container">
               <level-button :label="$language.translate('level1')" class="big-buttons" @click="switchTo('LevelOneView')"></level-button>
-          </div>
-
-          <!-- Locked Levels -->
-          <dic class="level-buttons-container-locked">
               <level-button :label="$language.translate('level2-locked')" class="big-buttons-locked" @click="openLockedPrompt"></level-button>
               <level-button :label="$language.translate('level3-locked')" class="big-buttons-locked" @click="openLockedPrompt"></level-button>
           </div>
