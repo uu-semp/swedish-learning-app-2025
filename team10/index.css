@@ -3,10 +3,88 @@
 Owned by Team 10
 =================================================
 */
+@import url('https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap');
 
 body {
-    font-family: Arial, sans-serif;
-    width: 1000px;
-    margin-left: auto;
-    margin-right: auto;
+  margin: 0;
+  padding: 0;
+  background-color: #f9f9f9;
+  font: 400 1rem/1.5 'Work Sans', sans-serif;
+  color: #555;
+}
+
+h1, h2, h3 {
+  color: #000;
+  font-weight: 600;
+}
+
+/* Frame matches main menu */
+.game-frame {
+  width: var(--frame-width);
+  height: var(--frame-height);
+  margin: 0 auto;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  padding: 2rem 1rem;
+}
+
+.title {
+  font-size: 2.5rem;
+  text-align: center;
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+}
+
+/* Generic pill buttons */
+button,
+.menu-page-btn,
+.start-btn,
+.learning-mode-btn,
+.submit-btn {
+  padding: 0.8rem 1.5rem;
+  font-size: 1.1rem;
+  border-radius: 999px;
+  border: 2px solid var(--primary-color);
+  background: #fff;
+  color: var(--primary-color);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+button:hover,
+.menu-page-btn:hover,
+.start-btn:hover,
+.learning-mode-btn:hover,
+.submit-btn:hover {
+  background: var(--primary-color);
+  color: #fff;
+  transform: scale(1.03);
+}
+
+/* Menu page container */
+.menu-page-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.2rem;
+}
+
+.back-link {
+  margin-top: 1.5rem;
+  font-size: 1rem;
+  color: var(--primary-color);
+  text-decoration: none;
+}
+.back-link:hover {
+  text-decoration: underline;
+}
+
+.instructions {
+  text-align: center;
+  max-width: 600px;
+  margin: 1.5rem auto 0;
+  font-size: 1rem;
+  color: #555;
 }
