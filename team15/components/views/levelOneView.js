@@ -169,6 +169,7 @@ export const LevelOneView = {
                     </div>
                 </div>
             </div>
+            <statisticsPopUp score="1"></statisticsPopUp>
         </div>
       `,
 };
