@@ -202,7 +202,7 @@ export const LevelOneView = {
             <div class="level-header">
 
                 <div class="score-counter">
-                    <score-counter :score="currentScore" :item-amount="chosenClothingItems.length"></score-counter>
+                    <score-counter :score="currentScore" :item-amount="numberOfQuestionsAsked"></score-counter>
                 </div>
                 
                 <dress-pelle-prompt :item="currentItem"></dress-pelle-prompt>
