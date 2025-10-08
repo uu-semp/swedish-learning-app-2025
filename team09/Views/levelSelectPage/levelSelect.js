@@ -1,11 +1,15 @@
-$(function() {
 
-
-  $("#back-btn").on("click", () => { window.location.href = "../GameMainPage/GameMainPage.html"; });
+function goBacktomainpage() {
+    
+    window.location.href = "../GameMainPage/GameMainPage.html";
+  }
   
-  for (let i = 1; i <= 6; i++) {
-  $(`#level${i}-btn`).on("click", () => {
-    window.location.href = `../LevelView${i}/Levelview.html`;
-  });
-}
-});
+  function startLevel(levelNum) {
+    
+    if (levelNum === 1) {
+      window.location.href = "../LevelView1/Levelview.html";
+    } else {
+      alert(`Level ${levelNum} is not ready yet!`);
+    }
+  }
+

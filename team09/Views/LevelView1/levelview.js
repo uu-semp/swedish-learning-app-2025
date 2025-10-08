@@ -25,6 +25,10 @@ closeHelp.addEventListener("click", () => {
   helpPopup.classList.add("hidden");
 });
 
+function goBacktoLevelSelectpage() {
+    
+  window.location.href = "../LevelSelectPage/levelSelect.html";
+}
 
 function shuffled(arr) {
   return arr.map(v => [Math.random(), v])
