@@ -26,11 +26,11 @@ let currentSwedishText = [];
 let currentEnglishText = [];
 let currentPrompt = [];
 let translatedIndexes = [];
+let currentStreet = "Errorvägen"
 
 
 $(function () {
   window.vocabulary.when_ready(function () {
-
     const gameStateInfo = runGameStateLogic()
     const houseInfo = gameStateInfo.houseInfo;
     currentSwedishText = gameStateInfo.swedishTextArray;
@@ -63,7 +63,7 @@ function menu_logic() {
 
 
 function inGame_logic() {
-  var swedishTextArray = ["Jag", "bor", "på", "exempelgatan", "int"]
+  var swedishTextArray = ["Jag", "bor", "på", "-street", "-int"]
   const prompt = []
   for (var i = 0; i < swedishTextArray.length; i++){
     prompt[i] = swedishTextArray[i]
@@ -73,7 +73,7 @@ function inGame_logic() {
   return { 
     houseInfo : generateRandom(),
     swedishTextArray: swedishTextArray, 
-    englishTextArray : ["I", "live", "on", "-", "int"],
+    englishTextArray : ["I", "live", "on", "-street", "-int"],
   }
 }
 function inGame_logic_start(){}
@@ -89,8 +89,8 @@ function translateWord(wordIndex, englishText, swedishText, prompt, translatedWo
     console.log(swedishText)
     console.log(wordIndex)
     switch(englishWord){
-      case ("-"): newWord = swedishText[wordIndex]; break;
-      case("int"): newWord = prompt[wordIndex]; break;
+      case ("-street"): newWord = currentStreet; break;
+      case("-int"): newWord = prompt[wordIndex]; break;
       default: newWord = englishWord; break;
     }
     prompt[wordIndex] = newWord
@@ -125,6 +125,9 @@ function generateRandom() {
 
   houseArray = result.houseArray;
   correctHouse = result.correctHouse;
+
+  currentStreet = getStreet();
+
   updateHouseButtons();
   renderHouseButtons();
   renderPrompt();
@@ -156,12 +159,9 @@ function renderHouseButtons() {
 
 function renderWord(word, index){
   switch (word){
-    case "-": if (wordIsTranslated(index)){
-      return currentEnglishText[index];
-    }else{
-      return currentSwedishText[index];
-    }
-    case "int": return correctHouseNumber_swe;
+    case "-street": 
+      return currentStreet
+    case "-int": return correctHouseNumber_swe;
     default: return word;
   }
 }
@@ -183,6 +183,14 @@ function generateRandomHouses(houseNumber, houseCount, highestNumber) {
 
   return { houseArray: houses, correctHouse: relativeHousePosition };
 }
+
+function getStreet(){
+  const streets = window.vocabulary.get_category("street");
+
+  const randomNo = irandom_range(0, streets.length - 1);
+  return window.vocabulary.get_vocab(streets[randomNo]).sv;
+}
+
 
 function nextGameState() {
   const totalStates = Object.keys(gameStates).length;
