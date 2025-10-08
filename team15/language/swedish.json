@@ -7,7 +7,7 @@
     "level2": "NIVÅ 2",
     "level3": "NIVÅ 3",
     "go-back": "GÅ TILLBAKA",
-    "exit":"AVSLUTA SPELET",
+    "exit":"AVSLUTA SPEL",
     "exit-confirmation":"ÄR DU SÄKER ATT DU VILL AVSLUTA SPELET?",
     "correct-answer": "RÄTT SVAR! BRA JOBBAT!",
     "wrong-answer": "FEL SVAR, FÖRSÖK IGEN :)",
@@ -29,8 +29,9 @@
     "additional-info": "Om du är osäker på orden kan du alltid spela om en nivå eller kolla ordlistan i det medföljande materialet. Spelet är utformat för att vara roligt samtidigt som det förstärker inlärningen av svenska.",
     "dress-pelle-prompt": "Klä på Pelle ",
     "play-again":"SPELA IGEN",
-    "good-job":"BRA JOBBAT!"  
-
+    "good-job":"BRA JOBBAT!",
+    "num-tries":"TOTALT ANTAL FÖRSÖK: ",
+    "num-right":"TOTALT ANTAL RÄTT: "
 
     
 
