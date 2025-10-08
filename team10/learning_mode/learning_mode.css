@@ -90,7 +90,7 @@ main, .main {
 	margin-top: 20px;
 }
 
-.controls button {
+/* .controls button {
 	margin: 0 10px;
 	padding: 10px 20px;
 	font-size: 1rem;
@@ -104,4 +104,4 @@ main, .main {
 
 .controls button:hover {
 	background-color: #0056b3;
-}
+} */
