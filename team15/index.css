@@ -251,10 +251,12 @@ width:15%; */
     border-width: 5px;
 }
 
-.popUpButtons > #exitButton{
+.popUpButtons > #exitButton {
     background-color: #D32F2F;
     border-color:#B71C1C;
     color:white;
+}
+
 #info-back-button{
     max-width:35% !important;
     padding: 8px 16px;
