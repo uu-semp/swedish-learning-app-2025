@@ -6,14 +6,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   
   
-    <link rel="stylesheet" href="../../Global.css">
+    <link rel="stylesheet" href="../Global.css">
 
     
-    <link rel="stylesheet" href="levelview.css">
+    <link rel="stylesheet" href="../Styles/levelview.css">
 </head>
 <body>
   <main class="quiz">
-  <button class="backtoLevelSelect-btn" onclick="goBacktoLevelSelectpage()">←</button>
+  <button class="backtoLevelSelect-btn" onclick="goBacktoLevelSelectpage()">⬅</button>
   <button id="helpBtn" class="help-btn">?</button>
 
   <div id="resultPopup" class="result-Popup hidden">
@@ -23,7 +23,7 @@
   <p id="mistakeInfo"></p>
   <div class="popup-actions">
     <button id="playAgainBtn" class="btn red">Play again</button>
-    <button id="homeBtn" class="btn brown">🏠</button>
+    <button id="homeBtn" class="btn brown" onclick="goBacktomainpage()">🏠</button>
     <button id="nextLevelBtn" class="btn green">Next level</button>
   </div>
 </div>
@@ -51,7 +51,8 @@
   
   
 
-  <script src="/scripts/vocabulary.js"></script>
-  <script src="./levelview.js"></script>
+  <script src="../../scripts/vocabulary.js"></script>
+  <script src="../JS/levelview.js"></script>
+  
 </body>
 </html>
