@@ -1,55 +1,26 @@
 <!doctype html>
-
-<!--
-=================================================
-Owned by Team 10
-=================================================
--->
-
 <html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Basic Static Site</title>
+  <title>Menu - EatAndLearn</title>
   <link rel="stylesheet" href="../style.css" />
-
-  <script src="../scripts/vocabulary.js"></script>
-  <script src="../scripts/save.js"></script>
-
-  <!-- You are allowed to use JQuery and Vue.js but don't have to. They just make a
-  lot of things easier
-  -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css"> 
-  <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
-  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-
-  <!-- Site specific scripts and styles -->
   <link rel="stylesheet" href="index.css" />
-  <script src="index.js" defer></script>
 </head>
 <body>
   <header>
     <h1>Team 10</h1>
   </header>
 
-  <!-- TODO: Remove this div and it's content -->
-  <div>
-      <hr>
-      <h2>A basic section to make sure that everything works for everyone</h2>
-
-      <p>Font awesome is working: <i class="fa-solid fa-check"></i> (A checkmark should be visible)</p>
-
-      <button id="check-jquery">Check if Javascript and JQuery is working</button> (Clicking the button should show an alert)
-
-      <button id="check-saving">Click this button to see if saving works</button>
-      <hr>
-  </div>
-
   <main class="game-frame">
-    Implement your game inside this tag.
-
-    <hr>
-    Learning: <div id="display-vocab">(This should be replaced by a word)</div>
+    <div class="menu-page-container">
+        <h1 class="title">Menu</h1>
+        <a href="learning_mode/learning_mode.html"><button class="menu-page-btn">Learning Mode</button></a>
+        <a href="level_one/level_one.html"><button class="menu-page-btn">Level 1</button></a>
+        <a href="level_two/level_two.html"><button class="menu-page-btn">Level 2</button></a>
+        <a href="level_three/level_three.html"><button class="menu-page-btn">Level 3</button></a>
+        <a href="index.html" class="back-link">Back to Main Page</a>
+    </div>
   </main>
 
   <footer>
