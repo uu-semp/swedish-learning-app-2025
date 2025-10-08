@@ -33,9 +33,17 @@ export const WardrobeContainer = {
     };
   },
 
+  props:{
+    clothes:{
+      type:Array,
+      required:true,
+    }
+  },
+
   computed: {
     categoryItems() {
-      const chosenItems = clothingItems.filter(items => items.Subcategory === this.selectedCategory);
+      console.log("Hello!!", this.clothes)
+      const chosenItems = this.clothes.filter(items => items.Subcategory === this.selectedCategory);
       return chosenItems.slice(0,9);
     },
   },

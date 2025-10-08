@@ -10,7 +10,6 @@ export const LevelOneView = {
             showIncorrectFeedback: false,
             currentScore: 0, // Initial  player's score
             currentItem: null, 
-            availableItems: clothingItems,
             currentIndex: 0,
             // Track attempts for the current item
             currentAttempts: 0,
@@ -20,6 +19,8 @@ export const LevelOneView = {
             correctAnswers: 0,
             gameOver:false,
             showInfo:false,
+            chosenClothingItems: [],
+            numberOfQuestionsAsked: 10,
         };
     },
 
@@ -29,8 +30,10 @@ export const LevelOneView = {
 
     methods: {
             startLevel() {
-            if (this.availableItems && this.availableItems.length > 0) {
-                this.currentItem = this.availableItems[this.currentIndex];
+                this.chosenClothingItems = this.generateSubCategories()
+                console.log(1)
+            if (this.chosenClothingItems && this.chosenClothingItems.length > 0) {
+                this.currentItem = this.chosenClothingItems[this.currentIndex];
                     this.currentAttempts = 0;
                     this.incorrectMessage = '';
             } else {
@@ -40,14 +43,46 @@ export const LevelOneView = {
 
         loadNextItem() {
             this.currentIndex++; 
-            if (this.currentIndex < this.availableItems.length) {
-                this.currentItem = this.availableItems[this.currentIndex];
+            if (this.currentIndex < this.numberOfQuestionsAsked) {
+                this.currentItem = this.chosenClothingItems[this.currentIndex];
                 this.currentAttempts = 0;
                 this.incorrectMessage = '';
             } else {
                 this.gameOver=true
                 console.log("Level Complete!");
             }
+        },
+
+        generateSubCategories(){
+            const categories = ["accessories", "shirts", "pants", "shoes"]
+            const chosenClothingItems = []
+            for (const subCategory  of categories){
+                const categoryItems =  clothingItems.filter(items => items.Subcategory === subCategory);
+                let chosenSubcategoryItems;
+                console.log(2)
+                if (categoryItems.length > 9){ // We only display 9 items, some don't have 9 items though!
+                    chosenSubcategoryItems = this.subsetGenerator(categoryItems)
+                }
+                else{ chosenSubcategoryItems = categoryItems}
+                chosenClothingItems.push(...chosenSubcategoryItems);
+            }
+            return chosenClothingItems;
+        },
+
+        subsetGenerator(categoryItems){
+            let randomSubset = []
+            for (let i=0; i < 9; i++) {
+                let randomIndex = this.getRandomIndex(categoryItems)
+                let randomItem = categoryItems[randomIndex];
+                randomSubset.push(randomItem);
+                categoryItems.splice(randomIndex, 1) // removes the selected item
+            }
+            return randomSubset;
+        },
+
+        getRandomIndex(subset){
+            console.log(3)
+            return Math.floor(Math.random() * subset.length) //Gives a random index, 
         },
 
         openModal() {
@@ -141,19 +176,21 @@ export const LevelOneView = {
         },
 
         resetGameState(){
-            this.showModal= false, 
-            this.showCorrectFeedback= false
-            this.showIncorrectFeedback= false
-            this.currentScore= 0, 
-            this.currentItem= null,
-            this.availableItems= clothingItems
-            this.currentIndex= 0
-            this.currentAttempts= 0
-            this.incorrectMessage= ''
-            this.totalTries= 0
-            this.correctAnswers= 0
-            this.gameOver=false
-        }
+            showModal= false, 
+            showCorrectFeedback= false;
+            showIncorrectFeedback= false;
+            currentScore= 0;
+            currentItem= null;
+            currentIndex= 0;
+            currentAttempts= 0;
+            incorrectMessage= '';
+            totalTries= 0;
+            correctAnswers= 0;
+            gameOver=false;
+            showInfo=false;
+            chosenClothingItems= [];
+            numberOfQuestionsAsked= 10;
+        },
 
     },
 
@@ -162,7 +199,7 @@ export const LevelOneView = {
             <div class="level-header">
 
                 <div class="score-counter">
-                    <score-counter :score="currentScore" :item-amount="availableItems.length"></score-counter>
+                    <score-counter :score="currentScore" :item-amount="chosenClothingItems.length"></score-counter>
                 </div>
                 
                 <dress-pelle-prompt :item="currentItem"></dress-pelle-prompt>
@@ -180,7 +217,7 @@ export const LevelOneView = {
                                         ></pelle-container>
                                 </div>
                 <div class="wardrobe-wrapper">
-                    <wardrobe-container></wardrobe-container>
+                    <wardrobe-container :clothes="this.chosenClothingItems"></wardrobe-container>
                 </div>
             </div>
 
@@ -197,7 +234,7 @@ export const LevelOneView = {
                     </div>
                 </div>
             </div>
-            <statisticsPopUp v-if="gameOver" @playAgain="restartGame" @exit="confirmExit":totalNumberTries="totalTries" :score="this.currentScore"></statisticsPopUp>
+            <statisticsPopUp v-if="gameOver" @playAgain="restartGame" @exit="confirmExit" :totalNumberTries="totalTries" :score="this.currentScore"></statisticsPopUp>
             <div v-if="this.showInfo" class="modal-overlay" @click="handleOverlayClick">
                 <div class="modal-content" @click="this.showInfo=false">
                     <h2>{{$language.translate('information-message')}}</h2>
