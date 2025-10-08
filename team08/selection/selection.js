@@ -5,14 +5,9 @@ import {
   init_db,
   local_get_categories,
 } from "../store/read.js";
-import {
-  local_set_categories,
-  local_set_guesses,
-  local_wipe_guesses,
-} from "../store/write.js";
+import { local_set_guesses, local_wipe_guesses } from "../store/write.js";
 import * as Types from "../store/storage_type.js";
 import * as DB from "../store/alternative_backend/database_type.js";
-import { CATEGORIES } from "../store/store_config.js";
 
 /**
  * @typedef {Object} FrontVocab
@@ -32,22 +27,25 @@ import { CATEGORIES } from "../store/store_config.js";
 
 await init_db();
 
-// Resets guesses
-local_wipe_guesses();
-
 /** @type {Types.Guess[]} */
-let guesses = [];
+let guesses;
 
-let words = db_get_categories(local_get_categories());
+let words;
+
+reset_selection();
+
+export function reset_selection() {
+  local_wipe_guesses();
+  guesses = [];
+  words = db_get_categories(local_get_categories());
+}
 
 /**
  *
  * @returns {WordSelect}
  */
 export function get_next_words() {
-  console.log(words);
   const IDS = db_get_n_random_words(words, 3);
-  console.log(IDS);
   /**
    * @type {DB.Vocabulary[]}
    */
