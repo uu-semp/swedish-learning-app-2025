@@ -60,7 +60,7 @@ This CSS file contains styles specific to the "Choose Level" view of the app.
 .level-buttons-container .big-buttons {
     /* Remove horizontal margin and adjust vertical margin */
     margin: 0 0 20px 0; /* Space below each button */
-    width: 100%; /* Take full width of its container (max-width: 400px) */
+    width: 400px; /* Take full width of its container (max-width: 400px) */
     
     /* Slightly adjust padding to make them tall and rounded */
     padding: 15px 25px; 
