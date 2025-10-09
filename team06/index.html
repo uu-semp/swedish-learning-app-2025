@@ -29,8 +29,10 @@ Owned by Team 06
   <link rel="stylesheet" href="styles/level.css" />
   <link rel="stylesheet" href="components/clock.css" />
   <link rel="stylesheet" href="styles/game.css" />
+  <link rel="stylesheet" href="styles/summary.css" />
   <script type="module" src="components/clock.js"></script>
-  <script src="index.js" defer></script>
+  <!-- <script src="index.js" defer></script> -->
+  <script type="module" src="index.js"></script>
 </head>
 <body>
   <header>
@@ -89,7 +91,7 @@ Owned by Team 06
               <i class="fa-solid fa-clock"></i>
             </div>
             <h3 class="level-name">Beginner</h3>
-            <p class="level-description">Start with basic hours and half hours</p>
+            <p class="level-description">Start with recognizing time in the clock</p>
             <button class="level-btn" onclick="startGame('easy')">Play Now</button>
           </div>
           
@@ -99,7 +101,7 @@ Owned by Team 06
               <i class="fa-solid fa-clock"></i>
             </div>
             <h3 class="level-name">Intermediate</h3>
-            <p class="level-description">Practice quarters and complex times</p>
+            <p class="level-description">Practice writing time expressions</p>
             <button class="level-btn" onclick="startGame('medium')">Play Now</button>
           </div>
           
@@ -109,7 +111,7 @@ Owned by Team 06
               <i class="fa-solid fa-clock"></i>
             </div>
             <h3 class="level-name">Advanced</h3>
-            <p class="level-description">Master tricky and writing expressions</p>
+            <p class="level-description">Master time during dialogue</p>
             <button class="level-btn" onclick="startGame('hard')">Play Now</button>
           </div>
         </div>
@@ -149,6 +151,32 @@ Owned by Team 06
           <!-- Answer buttons will be populated by JavaScript -->
         </div>
 
+        <!-- Text Input (for medium & hard levels) -->
+        <div class="text-input-section" id="text-input-section" style="display: none;">
+          <input 
+            type="text" 
+            id="answer-input" 
+            class="answer-input" 
+            placeholder="Type your answer here..."
+            autocomplete="off"
+          />
+          
+          <!-- Swedish Special Characters -->
+          <div class="swedish-letters">
+            <button class="letter-btn" onclick="insertLetter('å')">å</button>
+            <button class="letter-btn" onclick="insertLetter('ä')">ä</button>
+            <button class="letter-btn" onclick="insertLetter('ö')">ö</button>
+            <button class="letter-btn" onclick="insertLetter('Å')">Å</button>
+            <button class="letter-btn" onclick="insertLetter('Ä')">Ä</button>
+            <button class="letter-btn" onclick="insertLetter('Ö')">Ö</button>
+          </div>
+          
+          <div class="hint-section" id="hint-section" style="display: none;">
+            <p class="hint-label"><i class="fa-solid fa-lightbulb"></i> Hint:</p>
+            <p class="hint-text" id="hint-text"></p>
+          </div>
+        </div>
+
         <!-- Submit Button -->
         <button id="submit-btn" class="submit-btn" onclick="submitAnswer()">
           Submit Answer
@@ -172,9 +200,22 @@ Owned by Team 06
       </div>
     </div>
 
-    <!-- FINISH VIEW -->
-    <div id="finish-view" class="view" style="display: none;">
-      <h2>Finish View - Coming Soon</h2>
+   <!-- SUMMARY VIEW -->
+    <div id="summary-view" class="view" style="display: none;">
+      <div class="summary-container">
+        <h1 class="summary-title">🎉 Well Done!</h1>
+        <p class="summary-text">You've completed the challenge!</p>
+
+        <div class="summary-score-box">
+          <p class="summary-label">Final Score</p>
+          <h2 id="final-score">0</h2>
+        </div>
+
+        <div class="summary-buttons">
+          <button class="summary-btn" onclick="restartGame()">🔁 Play Again</button>
+          <button class="summary-btn" onclick="showLevelSelection()">⬅ Back to Levels</button>
+        </div>
+      </div>
     </div>
 
     <!-- 
