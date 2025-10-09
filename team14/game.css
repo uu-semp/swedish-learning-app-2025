@@ -61,8 +61,8 @@ body {
 
 /* adjust drop zone positions */
 .hat {
-  left: 52%;
-  top: 15%;
+  left: 50%;
+  top: 12%;
   transform: translateX(-50%);
   width: 120px;
   height: 70px;
@@ -116,26 +116,78 @@ body {
   height: 50px;
 }
 
-/* Wardrobe */
+/* Make the sidebar a proper scroll container host */
 .sidebar {
   grid-column: 2 / 3;
   grid-row: 1 / 2;
   background: #fafbfc;
   padding: 10px;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  align-items: stretch;
+
+  /* critical bits */
+  min-height: 0;     /* allow it to shrink within the grid row */
+  overflow: hidden;  /* keep overflow inside the wardrobe-box */
 }
 
-/* Empty box for clothes list */
+/* Let the wardrobe box actually scroll */
 .wardrobe-box {
   width: 100%;
   height: 100%;
   border: 2px dashed #999;
   border-radius: 6px;
   background-color: #fff;
-  overflow-y: auto;
+
+  /* critical bits */
+  flex: 1 1 auto;
+  min-height: 0;        /* allow it to be shorter than content */
+  overflow-y: auto;     /* enable vertical scrolling */
+  -webkit-overflow-scrolling: touch; /* smooth iOS scrolling */
+
+  /* optional niceties if you kept them */
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
+
+
+/* Each item wrapper created by JS */
+.menu-item {
+  display: flex;
+  justify-content: center;
+}
+
+/* Thumbnails sized so ~3–4 fit in the visible area */
+.thumb {
+  width: 140px;              /* adjust 140–180 to taste */
+  height: auto;
+  display: block;
+  cursor: pointer;
+}
+
+/* Stage layering so Pelle stays visible; zones above him */
+.stage { position: relative; }
+.cat-image { z-index: 1; }
+.dropzone {
+  position: absolute;
+  border: 2px dashed red;
+  border-radius: 6px;
+  color: red;
+  font-size: 12px;
+  text-align: center;
+
+  /* IMPORTANT: allow clicking images inside the dropzone */
+  pointer-events: auto;
+
+  /* Center any child image in the box nicely */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  z-index: 2; /* above cat */
+}
+
 
 /* Instructions bar */
 .instructions {
@@ -153,3 +205,5 @@ body {
   margin: 0;
   line-height: 1.4;
 }
+
+
