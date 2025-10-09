@@ -137,6 +137,31 @@ Words are stored using the same format as system vocabulary for compatibility:
 - Close button click handler - Closes the dialog
 - Overlay click handler - Closes dialog when clicking outside
 
+## Possible Integration with Other Games
+
+Custom words are stored in localStorage using the same data format as system vocabulary. To make them automatically available in all games, the Data Team can add these methods to `vocabulary.js`:
+
+```javascript
+// Add to end of vocabulary.js
+window.vocabulary.get_all = function() {
+  const systemWords = Object.keys(window._vocabulary.vocab || {}).map(id => ({
+    id, ...window._vocabulary.vocab[id]
+  }));
+  const customWords = window.save.get("team03").customWords || [];
+  return [...systemWords, ...customWords];
+};
+
+window.vocabulary.get_by_category = function(category) {
+  const ids = window._vocabulary.categories[category] || [];
+  const systemWords = ids.map(id => ({id, ...window._vocabulary.vocab[id]}));
+  const customWords = (window.save.get("team03").customWords || [])
+    .filter(w => w.category && w.category.includes(category));
+  return [...systemWords, ...customWords];
+};
+```
+
+This creates new convenience methods that merge system and custom words. Games using these methods will automatically receive custom vocabulary without code changes.
+
 ## Future Enhancements
 - Edit existing words
 - Search and filter word list
