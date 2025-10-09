@@ -27,8 +27,12 @@ class SwedishClothingDescriptionGenerator {
       "Pelle valde följande kläder idag"
     ];
     this.isLoaded = false;
-    this.loadPromise = this.loadFromCSV();
+    this.loadPromise = new Promise((resolve) => {
+      this.#resolveLoad = resolve;
+    });
   }
+
+  #resolveLoad = null;
 
   normalizeRequiredCategory(category) {
     if (!category) return null;
@@ -57,81 +61,77 @@ class SwedishClothingDescriptionGenerator {
     }
   }
 
-  inferCategory({ swedish, english, file }) {
-    const lower = `${swedish ?? ""} ${english ?? ""} ${file ?? ""}`.toLowerCase();
-
-    if (/(mössa|keps|hatt|hat)/.test(lower)) {
-      return "hat";
+  markLoaded() {
+    if (!this.isLoaded) {
+      this.isLoaded = true;
+      if (typeof this.#resolveLoad === "function") {
+        this.#resolveLoad();
+        this.#resolveLoad = null;
+      }
     }
-
-    if (/(tröja|jacka|shirt|jacket|top)/.test(lower)) {
-      return "shirt";
-    }
-
-    if (/(jeans|byxor|pants|trousers)/.test(lower)) {
-      return "pants";
-    }
-
-    return null;
   }
 
-  async loadFromCSV() {
-    try {
-  const response = await fetch("./clothing_database.csv");
-      if (!response.ok) {
-        throw new Error(`HTTP ${response.status}`);
-      }
+  resetCollections() {
+    this.hats = [];
+    this.shirts = [];
+    this.pants = [];
+    this.extraCategories = {};
+    this.isLoaded = false;
+  }
 
-      const csvText = await response.text();
-      const lines = csvText.split("\n");
-
-      for (let i = 1; i < lines.length; i++) {
-        const line = lines[i].trim();
-        if (!line) continue;
-
-        const parts = line.split(",").map(part => part.trim());
-        if (parts.length < 3) continue;
-
-        const [file, swedish, english, rawCategory] = parts;
-        const normalizedRequired = this.normalizeRequiredCategory(rawCategory);
-        const inferred = this.inferCategory({ swedish, english, file });
-        const finalCategory = normalizedRequired ?? inferred ?? rawCategory?.toLowerCase();
-
-        const item = {
-          file,
-          swedish,
-          english,
-          category: finalCategory,
-          rawCategory: rawCategory ?? null
-        };
-
-        if (finalCategory === "hat") {
-          this.hats.push(item);
-        } else if (finalCategory === "shirt") {
-          this.shirts.push(item);
-        } else if (finalCategory === "pants") {
-          this.pants.push(item);
-        } else {
-          const extraKey = finalCategory ?? "other";
-          if (!this.extraCategories[extraKey]) {
-            this.extraCategories[extraKey] = [];
-          }
-          this.extraCategories[extraKey].push(item);
-          if (!finalCategory) {
-            console.warn("Uncategorized clothing item", item);
-          }
-        }
-      }
-
-      this.isLoaded = true;
-      console.log("Clothing database loaded", {
-        hats: this.hats.length,
-        shirts: this.shirts.length,
-        pants: this.pants.length
-      });
-    } catch (error) {
-      console.error("Failed to load clothing_database.csv", error);
+  addItem(item) {
+    if (!item || !item.category) {
+      return;
     }
+
+    if (item.category === "hat") {
+      this.hats.push(item);
+    } else if (item.category === "shirt") {
+      this.shirts.push(item);
+    } else if (item.category === "pants") {
+      this.pants.push(item);
+    } else {
+      if (!this.extraCategories[item.category]) {
+        this.extraCategories[item.category] = [];
+      }
+      this.extraCategories[item.category].push(item);
+    }
+  }
+
+  setItemsFromImgObjects(imgObjects = []) {
+    this.resetCollections();
+
+    imgObjects.forEach((imgObject) => {
+      if (!imgObject) return;
+      const category = this.normalizeRequiredCategory(imgObject.getCategory()) ?? imgObject.getCategory();
+      const swedish = imgObject.getImgDescription();
+      const english = typeof imgObject.getEnglishDescription === "function"
+        ? (imgObject.getEnglishDescription() ?? swedish)
+        : swedish;
+
+      const item = {
+        file: imgObject.getImgPath(),
+        swedish,
+        english,
+        category,
+        imgId: imgObject.getImgId()
+      };
+
+      if (!category) {
+        console.warn("Uncategorized clothing item", item);
+        return;
+      }
+
+      this.addItem(item);
+    });
+
+    this.markLoaded();
+
+    console.log("Clothing items loaded from ImgObjects", {
+      hats: this.hats.length,
+      shirts: this.shirts.length,
+      pants: this.pants.length
+    });
   }
   // Generate outfit for game
   generateOutfit() {
@@ -204,7 +204,6 @@ window.clothingGenerator = new SwedishClothingDescriptionGenerator();
 
 // fetch description and 'right' clothes to apply
 function fetchDescription() {
-
 }
 
 // Check clothes function
@@ -231,17 +230,19 @@ function checkClothes(correctClothesIds, appliedClothesIds) {
 }
 
 class ImgObject {
-    #imgId;
-    #imgPath;
-    #imgDescription;
-    #category;
+  #imgId;
+  #imgPath;
+  #imgDescription;
+  #imgEnglishDescription;
+  #category;
 
-    constructor(imgId, imgPath, imgDescription, category) {
-        this.#imgId = imgId;
-        this.#imgPath = imgPath;
-        this.#imgDescription = imgDescription;
-        this.#category = category;
-    }
+  constructor(imgId, imgPath, imgDescription, category, imgEnglishDescription = null) {
+    this.#imgId = imgId;
+    this.#imgPath = imgPath;
+    this.#imgDescription = imgDescription;
+    this.#category = category;
+    this.#imgEnglishDescription = imgEnglishDescription;
+  }
 
     getImgId() {
         return this.#imgId;
@@ -254,6 +255,10 @@ class ImgObject {
     getImgDescription() {
         return this.#imgDescription;
     }
+
+  getEnglishDescription() {
+    return this.#imgEnglishDescription;
+  }
 
     getCategory() {
         return this.#category;
@@ -285,14 +290,25 @@ function loadClothes() {
 
                 const rawTeamPath = window.vocabulary.get_team_data(id);
                 console.log(rawTeamPath);
-                const description = window.vocabulary.get_vocab(id);
-                const path = ".." + rawTeamPath;
+        const description = window.vocabulary.get_vocab(id) ?? {};
+        const path = ".." + rawTeamPath;
 
-                imgArray.push(
-                    new ImgObject(id, path, description.sv, cat)
-                );
+        imgArray.push(
+          new ImgObject(
+            id,
+            path,
+            description.sv ?? "",
+            cat,
+            description.en ?? description.sv ?? ""
+          )
+        );
             }
         }
+
+    if (window.clothingGenerator && typeof window.clothingGenerator.setItemsFromImgObjects === "function") {
+      window.clothingGenerator.setItemsFromImgObjects(imgArray);
+    }
+
         const htmlObjects = createHtmlObjects(imgArray);
         injectHtmlObjects(htmlObjects);
     });
