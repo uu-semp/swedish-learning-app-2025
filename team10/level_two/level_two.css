@@ -19,3 +19,57 @@ h2 {
   gap: 1rem;
   margin-top: 2rem;
 }
+
+/* --- Modal Styles --- */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    text-align: center;
+    width: 90%;
+    max-width: 450px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+.modal-title {
+    font-size: 2em;
+    margin-bottom: 15px;
+}
+
+.modal-title.success {
+    color: #28a745; /* Green */
+}
+
+.modal-title.failure {
+    color: #dc3545; /* Red */
+}
+
+.modal-message {
+    font-size: 1.2em;
+    margin-bottom: 10px;
+}
+
+.modal-action-text {
+    font-size: 1em;
+    color: #666;
+    margin-bottom: 25px;
+}
+
+.advance-btn {
+    width: 100%;
+    padding: 15px;
+    font-size: 1.1em;
+}

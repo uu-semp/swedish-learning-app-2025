@@ -3,6 +3,8 @@ $(document).ready(function(){
   const gameState = JSON.parse(localStorage.getItem('level2GameState'));
   if(!gameState) return;
 
+  let score = 0;
+
   // recreate buttons in same order
   const leftCol = $('#left-col');
   const rightCol = $('#right-col');
@@ -25,6 +27,7 @@ $(document).ready(function(){
     const correct = rightWord === expectedSwedish;
 
     if(correct){
+      score++; // Increment score for correct answers
       $(leftBtn).addClass('correct');
       $(rightBtn).addClass('correct');
     } else {
@@ -35,6 +38,14 @@ $(document).ready(function(){
     const line = drawLine(leftBtn, rightBtn);
     line.setAttribute('class', correct ? 'correct' : 'incorrect');
   });
+
+  // --- Game constants ---
+  const maxQuestions = gameState.leftWords.length;
+  const requiredScore = 4; // User needs 4 out of 5 to pass
+
+  // --- Show Modal ---
+  showCompletionModal(score, maxQuestions, requiredScore);
+
 
   function drawLine(elA, elB){
     const ra = elA.getBoundingClientRect();
@@ -65,5 +76,34 @@ $(document).ready(function(){
       'fish':'fisk'
     };
     return map[english] || '';
+  }
+
+  // This function shows the completion modal.
+  function showCompletionModal(score, maxQuestions, requiredScore) {
+      const modal = $('#completionModal');
+      
+      // Check if the user passed
+      if (score >= requiredScore) {
+          // --- SUCCESS STATE ---
+          $('#modalTitle').text('🎉 Level Complete!').removeClass('failure').addClass('success');
+          $('#modalMessage').html(`You scored <strong>${score}</strong> out of ${maxQuestions}.`);
+          $('#modalActionText').text(`Your score meets the ${requiredScore} needed. Well done!`);
+          $('#modalButton').text('Advance to Next Level').off('click').on('click', function() {
+              // Redirect to the main menu (placeholder for Level 3)
+              window.location.href = '../index.html';
+          });
+      } else {
+          // --- FAILURE STATE ---
+          $('#modalTitle').text('❌ Level Failed').removeClass('success').addClass('failure');
+          $('#modalMessage').html(`You scored <strong>${score}</strong> out of ${maxQuestions}.`);
+          $('#modalActionText').text(`You needed ${requiredScore} to pass. You can try again!`);
+          $('#modalButton').text('Try Level Again').off('click').on('click', function() {
+              // Redirect to the game page to try again
+              window.location.href = 'game_page.html';
+          });
+      }
+
+      // Display the modal
+      modal.show();
   }
 });
