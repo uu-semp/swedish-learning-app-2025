@@ -26,7 +26,6 @@ class SwedishClothingDescriptionGenerator {
             { file: 'RödOchBlåKeps.png', swedish: 'röd och blå keps', english: 'red and blue cap' }
         ];
         
-
         this.shirts = [ // list of shirts
             { file: 'GråOchBeigeTröja.png', swedish: 'grå och beige tröja', english: 'gray and beige shirt' },
             { file: 'GrönOchBeigeTröja.png', swedish: 'grön och beige tröja', english: 'green and beige shirt' },
@@ -36,7 +35,6 @@ class SwedishClothingDescriptionGenerator {
             { file: 'RödOchGul.png', swedish: 'röd och gul tröja', english: 'red and yellow shirt' }
         ];
         
-
         this.pants = [ // list of pants
             { file: 'BlåaJeans.png', swedish: 'blåa jeans', english: 'blue jeans' },
             { file: 'GråaJeans.png', swedish: 'gråa jeans', english: 'gray jeans' },
