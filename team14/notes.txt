@@ -1,0 +1,26 @@
+
+HTMl + JS team:
+- decide to avoid drag and drop thing and doing just a click and appear
+thing to be upgraded later on and have a minimum working software
+
+- the game logic js check directly the presence of 'image.png' without linking
+it to a DB .... for now... 
+
+- The game logic chack if an answer is correct bypassing the target area, simply 
+reordering the player list of clother and the right ansert list so the comparsion is easier
+
+
+
+FUNCTION STATUS:
+=================
+
+DONE:
+- getRandomItem(array) -    Helper function to get random item from array
+- SwedishClothingDescriptionGenerator class - Contains clothing data and generates outfits
+- generateOutfit() -        Creates random outfit descriptions with Swedish/English text
+- checkClothes(correctClothesIds, appliedClothesIds) - Compares two arrays of clothing IDs
+
+NOT DONE / EMPTY:
+- applyClothes(id) -        Function to apply clothes to character (empty)
+- undress(id) -             Function to undress clothes from character (basic implementation)
+
