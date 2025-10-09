@@ -36,38 +36,38 @@ Owned by the Menu Team
             <div>
                 <button class="header-btn">Language</button>
                 <button class="header-btn">About</button>
-                <button class="header-btn">Settings</button>
+                <button class="header-btn" id="settings-btn">Settings</button>
             </div>
         </header>
         <main>
             <!-- Game menu -->
-            <section id="game-menu">
-                <ul>
-                    <li><a onclick="openIframe('./team01/index.html')">Game by Team 01</a></li>
-                    <li><a onclick="openIframe('./team02/index.html')">Game by Team 02</a></li>
-                    <li><a onclick="openIframe('./team03/index.html')">Game by Team 03</a></li>
-                    <li><a onclick="openIframe('./team04/index.html')">Game by Team 04</a></li>
-                    <li><a onclick="openIframe('./team05/index.html')">Game by Team 05</a></li>
-                    <li><a onclick="openIframe('./team06/index.html')">Game by Team 06</a></li>
-                    <li><a onclick="openIframe('./team07/index.html')">Game by Team 07</a></li>
-                    <li><a onclick="openIframe('./team08/index.html')">Game by Team 08</a></li>
-                    <li><a onclick="openIframe('./team09/index.html')">Game by Team 09</a></li>
-                    <li><a onclick="openIframe('./team10/index.html')">Game by Team 10</a></li>
-                    <li><a onclick="openIframe('./team11/index.html')">Game by Team 11</a></li>
-                    <li><a onclick="openIframe('./team13/index.html')">Game by Team 13</a></li>
-                    <li><a onclick="openIframe('./team14/index.html')">Game by Team 14</a></li>
-                    <li><a onclick="openIframe('./team15/index.html')">Game by Team 15</a></li>
-                    <li><a onclick="openIframe('./team16/index.html')">Game by Team 16</a></li>
-                </ul>
+            <section id="game-menu" hidden>
+                <div class="menu-bar">
+                    <div id="intro-text">
+                        <h1>
+                            Welcome to <strong>UU-Games</strong>!  
+                        </h1>
+                        <p>
+                            Here you can practice basic Swedish from the courses
+                            <a href="https://www.uu.se/en/study/course?query=5PU028" target="_blank">Basic Swedish 1</a>/<a href="https://www.uu.se/en/staff/employment/continuing-professional-development/courses-for-employees/swedish-for-academics-1-75-hp" target="_blank">Swedish for Academics 1</a> at Uppsala University.  
+                            Each game matches a chapter in the course book. Use the filters below to pick the chapter you want to study. Have fun!
+                        </p>
+                    </div>
+                    <div id="filter-bar" class="filter-bar">
+                    </div>
+                </div>
+                <div class="grid" id="game-grid"></div>
             </section>
 
             <!-- Game stage -->
              <section id="game-stage" hidden>
-                <div class="stage-header">
-                    <h1>Game Title</h1>
-                    <button id="back-btn">⬅ Back to menu</button>
+                 <div class="stage-header">
+                     <h1>Game Title</h1>
+                     <button id="back-btn">⬅ Back to menu</button>
                 </div>
-                <iframe id="game-frame" class="game-frame" src="" title="Selected game" scrolling="no"></iframe>
+                <div class ="game-container">
+                    <iframe id="game-frame" class="game-frame" src="" title="Selected game" scrolling="no"></iframe>
+                </div>
             </section>
         </main>
         <footer>
