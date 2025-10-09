@@ -14,8 +14,44 @@
 
     <div class="menu-buttons">
       <a href="game.html" class="btn">Start!</a>
-      <a href="help.html" class="btn">How to play!</a>
+      <button id="helpBtn" class="btn">How to play!</button>
     </div>
   </div>
+  <!-- Popup window -->
+  <div id="popup" class="popup">
+    <div class="popup-content">
+      <span id="closePopup" class="close">&times;</span>
+      <h2>How to Play</h2>
+      <p>
+        Follow the instructions to dress Pelle correctly. <br>
+        Click on the clothing items in the wardrobe to dress Pelle. <br>
+        Click again to remove an item. <br>
+        You can only select one item per clothing category. <br>
+        When you think Pelle is dressed correctly, click the confirm button. <br>
+      </p>
+    </div>
+  </div>
+
+  <script>
+    const popup = document.getElementById('popup');
+    const helpBtn = document.getElementById('helpBtn');
+    const closePopup = document.getElementById('closePopup');
+
+    helpBtn.addEventListener('click', () => {
+      popup.style.display = 'flex';
+    });
+
+    closePopup.addEventListener('click', () => {
+      popup.style.display = 'none';
+    });
+
+    // Close popup if user clicks outside the box
+    window.addEventListener('click', (e) => {
+      if (e.target === popup) {
+        popup.style.display = 'none';
+      }
+    });
+  </script>
+  
 </body>
 </html>

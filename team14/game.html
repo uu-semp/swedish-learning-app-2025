@@ -7,8 +7,25 @@
   <link rel="stylesheet" href="game.css" />
 </head>
 <body>
-  <div class="screen">
-    <!-- Add stuff for the game here -->
+  <div class="screen" role="application" aria-label="Dress the cat game screen">
+    <section class="stage" aria-label="Cat stage">
+      <img src="paperpelletransparent.png" alt="Cat to dress" class="cat-image"/>
+      
+      <div class="dropzone hat"></div>
+      <div class="dropzone shirt"></div>
+      <div class="dropzone bottom"></div>
+    </section>
+
+    <aside class="sidebar" aria-label="Wardrobe">
+      <div class="wardrobe-box"></div>
+    </aside>
+
+    <footer class="instructions" aria-live="polite">
+      <p id="instruction-text">
+        instructions here
+      </p>
+    </footer>
   </div>
+
 </body>
 </html>
