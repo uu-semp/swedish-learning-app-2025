@@ -12,51 +12,10 @@ body {
 }
 
 .button-container {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    align-items: center;
-    max-width: 300px;
-    margin: 0 auto;
+    
 }
 
-button {
-    padding: 15px 30px;
-    font-size: 16px;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    width: 200px;
-}
-
-#button1 {
-    background-color: #43cc47;
-    color: white;
-}
-
-#button2 {
-    background-color: #ecad26;
-    color: white;
-}
-
-#button3 {
-    background-color: #ca2828;
-    color: white;
-}
-
-button:hover {
-    transform: scale(1.1);
-}
-
-button:active {
-    transform: scale(1);
-}
-
-#output {
-    margin-top: 10px;
-    padding: 20px;
-}
+ 
 
 
 .hintText {
