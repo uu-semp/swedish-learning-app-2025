@@ -1,0 +1,115 @@
+/* Center the screen */
+body {
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #eceff1;
+  font-family: 'Work Sans';
+}
+
+/* Fixed-sized screen */
+.screen {
+  width: 800px;
+  height: 600px;
+  background: white;
+  border: 3px solid #333;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Title */
+.menu-title {
+  margin: 0 0 50px;
+  font-size: 48px;
+  color: #333;
+}
+
+/* Buttons row */
+.menu-buttons {
+  display: flex;
+  gap: 40px;
+  width: 100%;
+  max-width: 400px;
+}
+
+/* Buttons */
+.btn {
+  flex: 1; 
+  text-align: center;
+  padding: 16px 0;
+  text-decoration: none;
+  background-color: #d26019;
+  color: white;
+  font-family: Work Sans;
+  font-size: 20px;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  transition: background 0.2s ease, transform 0.1s ease;
+  box-shadow: 4px 4px 0px rgba(0,0,0,0.3);
+}
+
+.btn:active {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.3);
+}
+
+.btn:hover {
+  background-color: #913b0c;
+  box-shadow: 4px 4px 0px rgba(0,0,0,0.4);
+}
+
+.menu-image {
+  max-height: 250px; 
+  margin-bottom: 40px; 
+}
+
+/* Popup background */
+.popup {
+  display: none; /* hidden by default */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5); /* semi-transparent overlay */
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* Popup window */
+.popup-content {
+  background: white;
+  padding: 30px;
+  border-radius: 12px;
+  max-width: 500px;
+  width: 80%;
+  box-shadow: 6px 6px 0 rgba(0,0,0,0.5);
+  text-align: center;
+  position: relative;
+}
+
+/* Close button (X) */
+.close {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  font-size: 28px;
+  font-weight: bold;
+  color: #333;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.close:hover {
+  color: #d32f2f;
+}
+
