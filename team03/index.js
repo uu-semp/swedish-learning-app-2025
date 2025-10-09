@@ -99,6 +99,23 @@ let vocabManager;
 let selectedCategories = [];
 
 $(function() {
+  $(".info-btn").on("click", function(e) {
+    e.preventDefault();
+    $("#info-dialog").addClass("active");
+  });
+  
+  $(".close-dialog").on("click", function(e) {
+    e.preventDefault();
+    $("#info-dialog").removeClass("active");
+  });
+  
+  $("#info-dialog").on("click", function(e) {
+    if (e.target === this) {
+      console.log("Closing dialog via overlay");
+      $(this).removeClass("active");
+    }
+  });
+
   window.vocabulary.when_ready(function() {
     vocabManager = new VocabularyManager();
     

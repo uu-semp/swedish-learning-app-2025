@@ -14,10 +14,44 @@ Owned by Team 03
   <link rel="stylesheet" href="index.css">
 </head>
 <body>
+  <div id="info-dialog" class="dialog-overlay">
+    <div class="dialog-content">
+      <div class="dialog-header">
+        <h3>User-Managed Vocabulary Extension Guide</h3>
+        <button type="button" class="close-dialog">×</button>
+      </div>
+      <div class="dialog-body">
+        <div class="field-info">
+          <h4>Required Fields:</h4>
+          <p><strong>English:</strong> The English translation of the Swedish word.</p>
+          <p><strong>Swedish:</strong> The Swedish word you want to learn.</p>
+          <p><strong>Category:</strong> Choose one or more categories that this word belongs to (e.g., colors, food, furniture). You can select multiple categories from the dropdown.</p>
+        </div>
+        <div class="field-info">
+          <h4>Optional Fields:</h4>
+          <p><strong>Swedish Plural:</strong> The plural form of the Swedish word (e.g., "äpplen" for "äpple").</p>
+          <p><strong>Article:</strong> The Swedish article - either "en" or "ett". Click the same option again to deselect.</p>
+          <p><strong>Literal:</strong> A literal translation or additional meaning of the word.</p>
+          <p><strong>Image URL:</strong> A link to an image representing the word.</p>
+          <p><strong>Image Copyright Info:</strong> Copyright information for the image.</p>
+          <p><strong>Audio URL:</strong> A link to an audio file with pronunciation.</p>
+        </div>
+        <div class="field-info">
+          <h4>Tips:</h4>
+          <ul>
+            <li>Words are automatically checked for duplicates based on the English translation</li>
+            <li>All your custom words are saved locally and will be available next time you visit</li>
+            <li>You can delete individual words or clear all words at once</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div class="container">
     <div class="form-container">
-      <h2>Custom Words</h2>
-      <button class="info-btn">i</button>
+      <h2>User-Managed Vocabulary Extension</h2>
+      <button type="button" class="info-btn">i</button>
 
       <form>
         <div class="form-group">

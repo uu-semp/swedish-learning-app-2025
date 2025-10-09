@@ -1,4 +1,4 @@
-# Team 03 - Custom Words Vocabulary Manager
+# Team 03 - User-Managed Vocabulary Extension
 
 ## Overview
 Team 03 has developed a **User-Managed Vocabulary Extension** that allows users to create, store, and manage their own Swedish vocabulary words to use in the Swedish Learning App 2025-project.
@@ -34,6 +34,12 @@ Team 03 has developed a **User-Managed Vocabulary Extension** that allows users 
 - **Two-Column Design** - Form on the left, word list display on the right
 - **Responsive** - Stacks vertically on smaller screens
 
+#### Information Dialog
+- **Information Button** - "i" button in the top-right corner of the form
+- **Field Guide** - Opens a dialog explaining all form fields
+- **Easy to Close** - Click the "×" button or click outside the dialog on the overlay
+- **Comprehensive Help** - Includes explanations for required fields, optional fields, and helpful tips
+
 #### Category Selection
 - Select categories from a dropdown menu
 - Click the "×" button on any chosen category to remove it
@@ -46,6 +52,11 @@ Team 03 has developed a **User-Managed Vocabulary Extension** that allows users 
 - Error highlighting with red borders
 
 ## Usage
+
+### Getting Help
+- Click the **"i" button** in the top-right corner of the form
+- A dialog will open explaining what to fill in for each field
+- Provides guidance on required and optional fields
 
 ### Adding a Word
 1. Fill in the required fields: English, Swedish, and at least one Category
@@ -115,6 +126,12 @@ Each word is stored with the following structure:
 - `handleCategorySelect()` - Manages category selection
 - `renderCategoryChips()` - Displays selected category chips
 - `populateCategoryDropdown()` - Loads categories from vocabulary data
+- `clearForm()` - Resets all form fields after successful submission
+
+#### Dialog Handlers
+- Info button click handler - Opens the field guide dialog
+- Close button click handler - Closes the dialog
+- Overlay click handler - Closes dialog when clicking outside
 
 ## Future Enhancements
 - Image upload functionality
