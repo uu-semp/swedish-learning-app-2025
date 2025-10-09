@@ -163,14 +163,14 @@ $(function () {
       const pairId2 = card2.attr('data-pair-id');
 
       if (pairId1 === pairId2) {
-        // Match found! Fade out cards after a delay while keeping their space
+        // Match found! Mark cards immediately to prevent further clicks
+        card1.addClass("matched");
+        card2.addClass("matched");
+        
+        // Fade out cards after a delay while keeping their space
         setTimeout(() => {
-          card1.fadeTo(500, 0, function() {
-            $(this).addClass("matched");
-          });
-          card2.fadeTo(500, 0, function() {
-            $(this).addClass("matched");
-          });
+          card1.fadeTo(300, 0);
+          card2.fadeTo(300, 0);
           foundMatch();
           isChecking = false;
         }, 1000); // Wait 1 second before fading out
