@@ -7,9 +7,9 @@ function keyFromImgPath(p) {
   return base.split('.')[0].toLowerCase();
 }
 
-let _listEls = [];                 // <li> refs for highlight
-const _shelfImgByKey = new Map();  // key -> <img> on the shelf
-let _dropzoneWired = false;        // ensure we wire the dropzone once
+let _listEls = [];                          // <li> refs for highlight
+const _shelfImgByKey = new Map();           // key -> <img> on the shelf
+let _dropzoneWired = false;                 // ensure we wire the dropzone once
 
 // Single unified path: both click and drop call this.
 function sendPick(key) {

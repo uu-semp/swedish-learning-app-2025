@@ -1,137 +1,201 @@
-<script>
-  function setIframeInteractive(on) {
-    const wrap  = document.querySelector('.popup-frame-wrap');
-    const frame = document.querySelector('.popup-frame');
-    if (!wrap || !frame) return;
-    wrap.style.pointerEvents  = on ? 'auto' : 'none';
-    frame.style.pointerEvents = on ? 'auto' : 'none';
-  }
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Grocery shopping!</title>
 
-  const popupFrame = document.getElementById('popupFrame');
+  <link rel="stylesheet" href="../style.css" />
+  <link rel="icon" type="image/png" href="../team11/assets/favicon.png">
 
-  // --- helpers ---
-  const normalizeKey = v => (v == null ? '' : String(v)).trim().toLowerCase();
+  <script src="../scripts/vocabulary.js"></script>
+  <script src="../scripts/save.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css"> 
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 
-  const keyFromImgPath = (p) => {
-    if (!p) return undefined;
-    const base = p.split('/').pop() || '';
-    return normalizeKey(base.split('.')[0]); // ".../food/beer.png" -> "beer"
-  };
+  <link rel="stylesheet" href="index.css" />
+  <script>window.vocabulary.load_team_data(11);</script>
 
-  // Build [{id, sv}] in the SAME id-key the clicks / drops use (filename basename)
-  function mapWordsFromState(gs) {
-    const raw = Array.isArray(gs?.shoppingList) ? gs.shoppingList : [];
-    const words = raw.map(item => {
-      const idKey =
-        keyFromImgPath(item?.img) ||
-        (item?.id != null ? normalizeKey(item.id) : undefined) ||
-        (item?.en ? normalizeKey(item.en) : undefined) ||
-        (item?.sv ? normalizeKey(item.sv) : undefined);
+  <script type="module" src="data.js" defer></script>
+  <script type="module" src="main.js" defer></script>
+  <script type="module" src="ui.js" defer></script>
+</head>
+<body>
+  <header>
+    <h1>Team 11</h1>
+  </header>
 
-      const svLabel = item?.sv ?? item?.en ?? '';
-      return { id: idKey, sv: svLabel };
-    }).filter(w => !!w.id);
-    return words;
-  }
+  <main class="game-frame">
+    <img src="../team11/assets/paper.png" alt="Paper" class="paper">
+    <img src="../team11/assets/character.png" alt="Character" class="character">
+    <img src="../team11/assets/ShoppingCart.png" alt="Shopping Cart" class="cart">
+    <img src="../team11/assets/shelf.png" alt="Shelf" class="shelf">
 
-  // ui.js calls this when an image is clicked OR dropped (same path)
-  window.sendPickToPopup = function(idKey) {
-    if (!popupFrame || !popupFrame.contentWindow) return;
-    const id = normalizeKey(idKey);
-    console.log('[parent] sending pick (key):', id);
-    popupFrame.contentWindow.postMessage({ type: 'pick', id }, '*');
-  };
+    <div class="shelf_items"></div>
+    <div class="shopping_list"></div>
 
-  // --- handshake / gating ---
-  let popupIsReady = false;
-  let initSent = false;
+    <section class="popup-frame-wrap">
+      <iframe
+        src="./popup.html"
+        title="Popup UI"
+        class="popup-frame"
+        loading="lazy"
+        referrerpolicy="no-referrer"
+        id="popupFrame">
+      </iframe>
+    </section>
 
-  function haveShoppingList() {
-    const gs = window.__team11GameState;
-    return !!(gs && Array.isArray(gs.shoppingList) && gs.shoppingList.length > 0);
-  }
+    <div class="top-right-controls">
+      <div class="status-bar" id="statusBar">
+        <span id="progressPill">0 / 10 klara</span> |
+        <span id="firstTryPill">Rätt: 0</span> |
+        <span id="mistakesPill">Misstag: 0</span> |
+        <span id="targetPill">Tröskel: 8 / 10</span>
+      </div>
+    </div>
 
-  function tryInitPopupOnce() {
-    if (initSent || !popupIsReady || !haveShoppingList()) return false;
+    <div class="chatbubble-toasts"></div>
 
-    const gs = window.__team11GameState;
-    console.log('[parent] raw shoppingList length:', gs.shoppingList.length);
-    console.log('[parent] sample item:', gs.shoppingList[0]);
+    <div class="cart-dropzone" aria-label="Varukorg droppzon">
+      <div class="cart_items" aria-live="polite"></div>
+    </div>
+  </main>
 
-    const words = mapWordsFromState(gs);
-    if (!words.length) {
-      console.warn('[parent] mapped words are empty; will keep waiting…');
-      return false;
+  <footer>
+    <small>Created as part of the "Software Engineering and Project Management" course 2025</small>
+  </footer>
+
+  <script>
+    function setIframeInteractive(on) {
+      const wrap  = document.querySelector('.popup-frame-wrap');
+      const frame = document.querySelector('.popup-frame');
+      if (!wrap || !frame) return;
+      wrap.style.pointerEvents  = on ? 'auto' : 'none';
+      frame.style.pointerEvents = on ? 'auto' : 'none';
     }
 
-    console.log('[parent] initWords -> popup:', words.map(w => w.id));
-    popupFrame?.contentWindow?.postMessage({ type: 'initWords', words }, '*');
-    initSent = true;
-    return true;
-  }
+    const popupFrame = document.getElementById('popupFrame');
 
-  // 1) Message listener (status + popupReady + pickResult + endgame lifecycle)
-  window.addEventListener('message', (event) => {
-    const data = event.data || {};
-    if (data.type === 'statusUpdate') {
-      const s = data.status; if (!s) return;
-      document.getElementById('progressPill').textContent = s.progress;
-      document.getElementById('firstTryPill').textContent = s.firstTry;
-      document.getElementById('mistakesPill').textContent = s.mistakes;
-      document.getElementById('targetPill').textContent = s.target;
+    const keyFromImgPath = (p) => {
+      if (!p) return undefined;
+      const base = p.split('/').pop() || '';
+      return base.split('.')[0].toLowerCase();
+    };
 
-      // 👇 move the highlight to the current target in the list
-      if (typeof s.index === 'number' || typeof s.index === 'string') {
-        window.Team11UI?.highlightListIndex?.(s.index);
+    function mapWordsFromState(gs) {
+      const raw = Array.isArray(gs?.shoppingList) ? gs.shoppingList : [];
+      const words = raw.map(item => {
+        const idKey =
+          keyFromImgPath(item?.img) ||
+          (item?.id != null ? String(item.id).toLowerCase() : undefined) ||
+          (item?.en ? String(item.en).toLowerCase() : undefined) ||
+          (item?.sv ? String(item.sv).toLowerCase() : undefined);
+        const svLabel = item?.sv ?? item?.en ?? '';
+        return { id: idKey, sv: svLabel };
+      }).filter(w => !!w.id);
+      return words;
+    }
+
+    window.sendPickToPopup = function(idKey) {
+      if (!popupFrame || !popupFrame.contentWindow) return;
+      console.log('[parent] sending pick (key):', idKey);
+      popupFrame.contentWindow.postMessage({ type: 'pick', id: String(idKey) }, '*');
+    };
+
+    let popupIsReady = false;
+    let initSent = false;
+
+    function haveShoppingList() {
+      const gs = window.__team11GameState;
+      return !!(gs && Array.isArray(gs.shoppingList) && gs.shoppingList.length > 0);
+    }
+
+    function tryInitPopupOnce() {
+      if (initSent || !popupIsReady || !haveShoppingList()) return false;
+      const gs = window.__team11GameState;
+      const words = mapWordsFromState(gs);
+      popupFrame?.contentWindow?.postMessage({ type: 'initWords', words }, '*');
+      initSent = true;
+      return true;
+    }
+
+    window.addEventListener('message', (event) => {
+      const data = event.data || {};
+      if (data.type === 'statusUpdate') {
+        const s = data.status; if (!s) return;
+        document.getElementById('progressPill').textContent = s.progress;
+        document.getElementById('firstTryPill').textContent = s.firstTry;
+        document.getElementById('mistakesPill').textContent = s.mistakes;
+        document.getElementById('targetPill').textContent = s.target;
+        if (typeof s.index === 'number' || typeof s.index === 'string') {
+          window.Team11UI?.highlightListIndex?.(s.index);
+        }
+      } else if (data.type === 'popupReady') {
+        popupIsReady = true;
+        tryInitPopupOnce();
       }
-      return;
-    }
+      if (data.type === 'endgameOpen') { setIframeInteractive(true); return; }
+      if (data.type === 'endgameClose') { setIframeInteractive(false); return; }
+    });
 
-    if (data.type === 'popupReady') {
-      console.log('[parent] popupReady received');
-      popupIsReady = true;
-      tryInitPopupOnce();
-      return;
-    }
+    window.addEventListener('team11:ready', () => { tryInitPopupOnce(); });
 
-    if (data.type === 'endgameOpen') {
-      setIframeInteractive(true);
-      return;
-    }
-    if (data.type === 'endgameClose') {
-      setIframeInteractive(false);
-      return;
-    }
+    window.addEventListener('DOMContentLoaded', () => {
+      popupFrame?.addEventListener('load', () => tryInitPopupOnce());
+      let attempts = 0;
+      const timer = setInterval(() => {
+        if (tryInitPopupOnce()) { clearInterval(timer); }
+        else if (++attempts > 100) clearInterval(timer);
+      }, 100);
+    });
 
-    // ✅ New: result of a pick so we know whether to stick the image in the cart
-    if (data.type === 'pickResult' && (typeof data.id === 'string' || typeof data.id === 'number')) {
-      const id = normalizeKey(data.id);
-      if (data.ok) {
-        window.Team11UI?.placeItemInCart?.(id);
-      } else {
-        // Optional: cart “shake”
-        // document.querySelector('.cart-dropzone')?.animate([...],{duration:180});
+    window.addEventListener('message', (event) => {
+      const data = event.data || {};
+      if (data.type === 'pickResult' && typeof data.id === 'string') {
+        if (data.ok) {
+          window.Team11UI?.placeItemInCart?.(data.id);
+        } else {
+          // document.querySelector('.cart-dropzone')?.animate([...],{duration:180});
+        }
       }
-      return;
-    }
-  });
+    });
+  </script>
+</body>
+</html>
 
-  // 2) “team11:ready” (from main.js) nudges init when game state is built
-  window.addEventListener('team11:ready', () => {
-    console.log('[parent] team11:ready received');
-    tryInitPopupOnce();
-  });
-
-  // 3) Final safety: poll briefly until both conditions are met
-  window.addEventListener('DOMContentLoaded', () => {
-    popupFrame?.addEventListener('load', () => tryInitPopupOnce());
-    let attempts = 0;
-    const timer = setInterval(() => {
-      if (tryInitPopupOnce()) { clearInterval(timer); }
-      else if (++attempts > 100) {  // ~10s max
-        clearInterval(timer);
-        console.warn('[parent] Gave up waiting for shoppingList/popup readiness.');
-      }
-    }, 100);
-  });
-</script>
+<style>
+  .game-frame { position: relative; }
+  .cart-dropzone {
+    position: absolute;
+    top: 450px;
+    left: 220px;
+    width: 18%;
+    height: 18%;
+    z-index: 5;
+  }
+  .cart-dropzone .cart_items {
+    position: absolute;
+    inset: 0;
+    z-index: 6;
+    pointer-events: none;
+    display: grid;
+    grid-template-columns: repeat(5, 28px);
+    grid-template-rows: repeat(2, 28px);
+    gap: 2px;
+    justify-content: start;
+    align-content: start;
+  }
+  .cart-dropzone .cart_items img {
+    width: 34px;
+    height: 34px;
+    margin: -3px;
+    object-fit: contain;
+    pointer-events: none;
+  }
+  .shelf_items img.is-picked {
+    opacity: .35;
+    filter: grayscale(25%);
+    pointer-events: none;
+  }
+</style>
