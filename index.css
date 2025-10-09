@@ -38,20 +38,18 @@ header img {
     color: rgb(255, 255, 255);
 }
 
-.language-btn {
-    background: transparent; 
-    border: 1px solid #ccc; 
-    padding: 0.25rem 0.9rem 0.15rem;
-    border-radius: 20px; 
-    font-size: 0.9rem;
-    font-weight: 500;
-    cursor: pointer;
-    transition: background 0.2s, color 0.2s, border-color 0.2s;
-    color: rgb(255, 255, 255);
+#lang-eng {
+    position: fixed;
+    right: 16rem;
 }
 
-.language-btn img{
-    height: 1.7rem;
+#lang-sv {
+    position: fixed;
+    right: 10rem;
+}
+
+#settings-btn {
+    width: 7rem;
 }
 
 .header-btn:hover {
