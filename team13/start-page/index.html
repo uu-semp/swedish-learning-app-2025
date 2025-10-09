@@ -1,76 +1,48 @@
-<!DOCTYPE html>
-<html lang="sv">
-<head>
+<!doctype html>
 
+<!--
+=================================================
+Owned by Team 13
+=================================================
+-->
+
+<html lang="en">
+<head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>HSG Game</title>
+
+
   <link rel="stylesheet" href="style.css" />
+  <script src="../scripts/vocabulary.js"></script>
+  <script src="../scripts/save.js"></script>
 
-  <script src="./scripts/vocabulary.js"></script>
-  <script src="./scripts/save.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 
-        <!-- You are allowed to use JQuery and Vue.js but don't have to. They just make a
-  lot of things easier
-  -->
-  <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" />
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
-    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-
-    <!-- Site specific scripts and styles -->
-    <link rel="stylesheet" href="index.css" />
-    <script src="index.js" defer></script>
-
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="index.css" />
+  <script src="index.js" defer></script>
 </head>
 <body>
- <header>
-    <img src="../../assets/main_menu/images/UU_logo.png" alt="Uppsala University Logo">
-      <div>
-        <button class="header-btn">Language</button>
-        <button class="header-btn">About</button>
-        <button class="header-btn" id="settings-btn">Settings</button>
+
+  <main class="game-frame">
+    <!--game starts here -->
+    <section class="content">
+      <div class="buttons">
+        <a href="game.html" class="btn start">Starta spel</a>
+        <a href="points.html" class="btn score">Visa poäng</a>
       </div>
-  </header>
-  <h1>Välkommen till HSG!</h1>
-  </header>
 
-  <main class="start-page">
+      <div class="bubble" id="bubble"></div>
 
-  <section id="game-stage">
-      <div class="stage-header">
-       <h1>House Selection Game</h1>
-        <button id="back-btn">⬅ Back to menu</button>
-      </div>
-        <div class="game-container">
-          <!-- your game goes INSIDE the white box -->
-          <section class="content">
-            <div class="buttons">
-              <a href="game.html" class="btn start">Starta spel</a>
-              <a href="points.html" class="btn score">Visa poäng</a>
-            </div>
-
-            <div class="bubble" id="bubble"></div>
-
-            <div class="characters">
-              <img src="personer.png" alt="Person" class="character">
-              <img src="house.png" alt="House" class="house">
-            </div>
-  </section>
-</div>
-
+      <div class="characters">
+        <img src="personer.png" alt="Person" class="character">
+        <img src="house.png" alt="House" class="house">
       </div>
     </section>
+    <!--game ends here -->
   </main>
-
-
-  <footer>
-    <small>
-      Created as part of the "Software Engineering and Project
-      Management" course 2025
-    </small>
-  </footer>
 
   <script src="script.js"></script>
 </body>
