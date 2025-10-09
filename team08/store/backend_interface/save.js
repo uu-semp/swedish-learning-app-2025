@@ -1,43 +1,3 @@
-// We are using the following now:
-// window.save = {
-//     get(team_name, key = null) {
-//         try {
-//             const json = localStorage.getItem(team_name);
-//             const data = json ? JSON.parse(json) : {};
-//             return key ? data[key] : data;
-//         } catch (error) {
-//             console.warn(`Save API: Failed to get data for ${team_name}:`, error);
-//             return key ? null : {};
-//         }
-//     },
-
-//     set(team_name, key_or_data, value = null) {
-//         try {
-//             let currentData = this.get(team_name);
-//             if (typeof key_or_data === "object" && value === null) {
-//                 currentData = {...currentData, ...key_or_data };
-//             } else {
-//                 currentData[key_or_data] = value;
-//             }
-//             localStorage.setItem(team_name, JSON.stringify(currentData));
-//             return true;
-//         } catch (error) {
-//             console.warn(`Save API: Failed to set data for ${team_name}:`, error);
-//             return false;
-//         }
-//     },
-
-//     clear(team_name) {
-//         try {
-//             localStorage.removeItem(team_name);
-//             return true;
-//         } catch (error) {
-//             console.warn(`Save API: Failed to remove data for ${team_name}:`, error);
-//             return false;
-//         }
-//     },
-// };
-
 /**
  *
  * @param {string} team_name
@@ -62,4 +22,52 @@ export function set(team_name, data) {
  */
 export function clear(team_name) {
   window.save.clear(team_name);
+}
+
+/**
+ *
+ * @param {string} team_name
+ * @param {number} wins
+ * @param {number} completion
+ * @returns {boolean}
+ */
+export function setStats(team_name, wins, completion) {
+  return window.save.stats.set(team_name, wins, completion);
+}
+
+/**
+ *
+ * @param {string} team_name
+ * @returns {Object}
+ */
+export function getStats(team_name) {
+  return window.save.stats.get(team_name);
+}
+
+/**
+ *
+ * @param {string} team_name
+ * @returns {boolean}
+ */
+export function incrementWin(team_name) {
+  return window.save.stats.incrementWin(team_name);
+}
+
+/**
+ *
+ * @param {string} team_name
+ * @param {number} completion
+ * @returns {boolean}
+ */
+export function setCompletion(team_name, completion) {
+  return window.save.stats.setCompletion(team_name, completion);
+}
+
+/**
+ *
+ * @param {string} team_name
+ * @returns {boolean}
+ */
+export function clearStats(team_name) {
+  return window.save.stats.clear(team_name);
 }
