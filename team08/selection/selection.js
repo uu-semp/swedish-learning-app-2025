@@ -7,7 +7,7 @@ import {
 } from "../store/read.js";
 import { local_set_guesses, local_wipe_guesses } from "../store/write.js";
 import * as Types from "../store/storage_type.js";
-import { get } from "../store/alternative_backend/save.js";
+import { get } from "../store/backend_interface/save.js";
 import { TEAM } from "../store/store_config.js";
 
 /**
