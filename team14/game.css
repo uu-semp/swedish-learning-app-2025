@@ -50,7 +50,7 @@ body {
 /* clothing area drop zone */
 .dropzone {
   position: absolute;
-  border: 2px dashed red; 
+  border: none; 
   border-radius: 6px;
   color: red;
   font-size: 12px;
@@ -171,7 +171,7 @@ body {
 .cat-image { z-index: 1; }
 .dropzone {
   position: absolute;
-  border: 2px dashed red;
+  border: none;
   border-radius: 6px;
   color: red;
   font-size: 12px;
@@ -199,6 +199,7 @@ body {
   display: flex;
   align-items: center;
   font-size: 16px;
+  justify-content: space-between;
 }
 
 .instructions p {
@@ -206,4 +207,99 @@ body {
   line-height: 1.4;
 }
 
+/* Popup background */
+.popup {
+  display: none; /* hidden by default */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5); /* semi-transparent overlay */
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* Popup window */
+.popup-content {
+  background: white;
+  padding: 30px;
+  border-radius: 12px;
+  max-width: 500px;
+  width: 80%;
+  box-shadow: 6px 6px 0 rgba(0,0,0,0.5);
+  text-align: center;
+  position: relative;
+}
+
+/* Buttons row */
+.menu-buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 24px;
+  width: 100%;
+}
+
+/* Confirm button (matches main menu buttons) */
+.confirmBtn {
+  width: 140px;               /* fixed width */
+  height: 50px;               /* fixed height */
+  background-color: #d26019;  /* same color */
+  color: white;
+  font-family: 'Work Sans';
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 6px;
+  box-shadow: 3px 3px 0px rgba(0,0,0,0.3);
+  transition: background 0.2s ease, transform 0.1s ease;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Hover and click states (same as .btn) */
+.confirmBtn:hover {
+  background-color: #913b0c;
+  box-shadow: 3px 3px 0px rgba(0,0,0,0.4);
+}
+
+.confirmBtn:active {
+  transform: translate(1px, 1px);
+  box-shadow: 1px 1px 0px rgba(0,0,0,0.3);
+}
+
+/* Buttons */
+.btn {
+  width: 140px;              /* 🔹 fixed width */
+  height: 50px;              /* 🔹 fixed height */
+  text-align: center;
+  text-decoration: none;
+  background-color: #d26019;
+  color: white;
+  font-family: 'Work Sans';
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 6px;
+  transition: background 0.2s ease, transform 0.1s ease;
+  box-shadow: 3px 3px 0px rgba(0,0,0,0.3);
+  display: flex;             /* centers text vertically */
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.btn:active {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.3);
+}
+
+.btn:hover {
+  background-color: #913b0c;
+  box-shadow: 4px 4px 0px rgba(0,0,0,0.4);
+}
 

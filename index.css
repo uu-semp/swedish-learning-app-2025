@@ -45,28 +45,123 @@ header img {
     transform: scale(0.97); 
 }
 
-ul li a:hover {
-    cursor: pointer;
-    color: darkblue;
-    text-decoration: underline;
-}
-
-#game-stage {
+.menu-bar {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center; 
+    align-items: center;
+    padding: 10px 5%;
 }
 
-#game-stage[hidden] {
-  display: none !important;
+#intro-text {
+    text-align: center;
+    max-width: 700px;
+    margin-bottom: 1rem;
+    color: #222;
+    font-size: 1.1rem;
+    line-height: 1.6;
+}
+
+.filter-bar {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.filter-bar button {
+    background: #fcfcfc;
+    border: 2px solid #542020;
+    padding: 0.3rem 0.9rem;
+    border-radius: 20px;
+    transition: background 0.4s, transform 0.4s;
+}
+
+.filter-bar button:hover {
+    transform: scale(1.1);
+}
+
+.filter-bar button.active {
+    background: #5d1212;
+    color: white;
+    transform: scale(1);
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+    padding: 1rem;
+    align-items: start;
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    border: 2px solid #ddd;
+    border-radius: 12px;
+    transition: transform 0.15s ease;
+    cursor: pointer;
+}
+.card:hover {
+    transform: translateY(-3px);
+}
+
+.card img {
+    margin: 15px;
+    aspect-ratio: 16/9; 
+    object-fit: cover;
+    display: block;
+    border-radius: 20px;
+}
+
+.card-body {
+    padding: 14px 16px;
+}
+.card-body h3 {
+    margin: 0 0 6px;
+    font-size: 1.15rem;
+}
+.card-body p {
+    margin: 0;
+    color: #333;
+    line-height: 1.45;
+}
+
+.card-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.75rem;
+}
+
+.tag {
+    background: #701616; 
+    color: #fff;
+    padding: 0.35rem 0.75rem;
+    border-radius: 999px; 
+    font-size: 0.8rem;
+    line-height: 1;
+    white-space: nowrap;
+}
+
+#game-stage {
+    padding: 0 3%;
 }
 
 .stage-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: var(--frame-width);
+    width: min(100%, var(--frame-width));
+    margin: 0 auto;
+}
+
+.game-container {
+    overflow-x: auto;
+    text-align: center; 
 }
 
 #back-btn {
@@ -79,4 +174,141 @@ ul li a:hover {
 
 #back-btn:hover {
     background-color: #bbbbbb;
+}
+
+/* Settings Panel Styles */
+#settings-overlay {
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: flex-end;
+    background: rgba(0,0,0,0.35);
+    z-index: 9999;
+}
+
+#settings-box {
+    background: #fff;
+    padding: 16px;
+    border-radius: 0 0 0 8px;
+    width: 260px;
+    height: fit-content;
+    box-shadow: -2px 0 24px rgba(0,0,0,0.15);
+}
+
+.settings-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 0 16px 0;
+}
+
+.settings-title {
+    margin: 0;
+    font: 600 1.1rem 'Work Sans',sans-serif;
+}
+
+.settings-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.settings-btn {
+    padding: 10px;
+    border-radius: 4px;
+    width: 100%;
+    font: 400 1rem/1.375 'Work Sans', sans-serif;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.settings-btn:hover {
+    transform: scale(1.05);
+}
+
+.settings-btn.close {
+    width: auto;
+    padding: 6px 12px;
+    background: none;
+    border: 1px solid #ccc;
+}
+
+.settings-btn.primary {
+    background: #5d1212;
+    color: white;
+    border: none;
+}
+
+.settings-btn.secondary {
+    background: white;
+    color: #5d1212;
+    border: 1px solid #5d1212;
+}
+
+/* Clear Data Confirmation Dialog */
+.confirm-box {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.2);
+    text-align: center;
+    min-width: 280px;
+}
+
+.confirm-box h3 {
+    margin: 0 0 12px 0;
+    color: #000;
+}
+
+.confirm-box p {
+    margin: 0 0 20px 0;
+    color: #666;
+}
+
+.confirm-box-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+}
+
+.confirm-box-btn {
+    width: auto;
+    padding: 8px 16px;
+}
+
+.confirm-box-btn.cancel {
+    background: none;
+    border: 1px solid #ccc;
+}
+
+.confirm-box-btn.confirm {
+    background: #5d1212;
+    color: white;
+    border: none;
+}
+
+/* Clear Data Success Message */
+.success-message {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #4CAF50;
+    color: white;
+    padding: 12px 24px;
+    border-radius: 4px;
+    animation: fadeOut 3s forwards;
+}
+
+@keyframes fadeOut {
+    0% { opacity: 1; }
+    70% { opacity: 1; }
+    100% { opacity: 0; }
 }

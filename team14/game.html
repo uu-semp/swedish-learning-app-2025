@@ -28,8 +28,52 @@
       <p id="instruction-text">
         instructions here
       </p>
+      <button id="confirm-btn" class="confirmBtn" aria-label="Confirm outfit">Confirm Outfit</button>
     </footer>
   </div>
+  <!-- Popup window -->
+<div id="popup" class="popup">
+  <div class="popup-content">
+    <span id="closePopup" class="close"></span>
+    <h2></h2>
+    <p id="result-text"></p> <!-- ✅ added id so JS can update text -->
+    <div class="menu-buttons">
+      <a href="game.html" class="btn">Play Again!</a>
+      <a href="menu.html" class="btn">Go back to main menu!</a>
+    </div>
+  </div>
+</div>
+
+<script>
+  const popup = document.getElementById('popup');
+  const confirmBtn = document.getElementById('confirm-btn'); // ✅ make sure your button has this id
+  const resultText = document.getElementById('result-text');
+
+  confirmBtn.addEventListener('click', () => {
+    // run your existing checkClothes() function
+    const outfit = window.currentOutfit;
+    if (!outfit) return;
+
+    const correctHat = outfit.items.hat.imgId;
+    const correctShirt = outfit.items.shirt.imgId;
+    const correctPants = outfit.items.pants.imgId;
+
+    const appliedHat = document.getElementById("hat-box").children[0]?.dataset.id;
+    const appliedShirt = document.getElementById("shirt-box").children[0]?.dataset.id;
+    const appliedPants = document.getElementById("pants-box").children[0]?.dataset.id;
+
+    if (correctHat === appliedHat && correctShirt === appliedShirt && correctPants === appliedPants) {
+      resultText.textContent = "✅ Correct!";
+      resultText.style.color = "green";
+    } else {
+      resultText.textContent = "❌ Incorrect!";
+      resultText.style.color = "red";
+    }
+
+    popup.style.display = 'flex'; // show popup after checking
+  });
+</script>
+
 
 <script src="../scripts/vocabulary.js" defer></script>
 <script src="index.js" defer></script>

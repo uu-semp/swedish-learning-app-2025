@@ -302,7 +302,7 @@ function loadClothes() {
                 const rawTeamPath = window.vocabulary.get_team_data(id);
                 console.log(rawTeamPath);
                 const description = window.vocabulary.get_vocab(id) ?? {};
-                const path = ".." + rawTeamPath;
+                const path = rawTeamPath;
 
                 imgArray.push(new ImgObject(id, path, description.sv ?? "", cat,description.en ?? description.sv ?? ""));
             }
