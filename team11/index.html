@@ -1,204 +1,137 @@
-<!doctype html>
+<script>
+  function setIframeInteractive(on) {
+    const wrap  = document.querySelector('.popup-frame-wrap');
+    const frame = document.querySelector('.popup-frame');
+    if (!wrap || !frame) return;
+    wrap.style.pointerEvents  = on ? 'auto' : 'none';
+    frame.style.pointerEvents = on ? 'auto' : 'none';
+  }
 
-<!--
-=================================================
-Owned by Team 11
-=================================================
--->
+  const popupFrame = document.getElementById('popupFrame');
 
-<html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Grocery shopping!</title>
+  // --- helpers ---
+  const normalizeKey = v => (v == null ? '' : String(v)).trim().toLowerCase();
 
-  <!-- course-provided libs -->
-  <link rel="stylesheet" href="../style.css" />
-  <link rel="icon" type="image/png" href="../team11/assets/favicon.png">
+  const keyFromImgPath = (p) => {
+    if (!p) return undefined;
+    const base = p.split('/').pop() || '';
+    return normalizeKey(base.split('.')[0]); // ".../food/beer.png" -> "beer"
+  };
 
-  <script src="../scripts/vocabulary.js"></script>
-  <script src="../scripts/save.js"></script>
+  // Build [{id, sv}] in the SAME id-key the clicks / drops use (filename basename)
+  function mapWordsFromState(gs) {
+    const raw = Array.isArray(gs?.shoppingList) ? gs.shoppingList : [];
+    const words = raw.map(item => {
+      const idKey =
+        keyFromImgPath(item?.img) ||
+        (item?.id != null ? normalizeKey(item.id) : undefined) ||
+        (item?.en ? normalizeKey(item.en) : undefined) ||
+        (item?.sv ? normalizeKey(item.sv) : undefined);
 
-  <!-- optional libs -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css"> 
-  <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
-  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+      const svLabel = item?.sv ?? item?.en ?? '';
+      return { id: idKey, sv: svLabel };
+    }).filter(w => !!w.id);
+    return words;
+  }
 
-  <!-- site-specific -->
-  <link rel="stylesheet" href="index.css" />
+  // ui.js calls this when an image is clicked OR dropped (same path)
+  window.sendPickToPopup = function(idKey) {
+    if (!popupFrame || !popupFrame.contentWindow) return;
+    const id = normalizeKey(idKey);
+    console.log('[parent] sending pick (key):', id);
+    popupFrame.contentWindow.postMessage({ type: 'pick', id }, '*');
+  };
 
-  <!-- load team vocab -->
-  <script>window.vocabulary.load_team_data(11);</script>
+  // --- handshake / gating ---
+  let popupIsReady = false;
+  let initSent = false;
 
-  <!-- modules -->
-  <script type="module" src="data.js" defer></script>
-  <script type="module" src="main.js" defer></script>
-  <script type="module" src="ui.js" defer></script>
-</head>
-<body>
-  <header>
-    <h1>Team 11</h1>
-  </header>
+  function haveShoppingList() {
+    const gs = window.__team11GameState;
+    return !!(gs && Array.isArray(gs.shoppingList) && gs.shoppingList.length > 0);
+  }
 
-  <main class="game-frame">
-    <!-- All images are inside game-frame -->
-    <img src="../team11/assets/paper.png" alt="Paper" class="paper">
-    <img src="../team11/assets/character.png" alt="Character" class="character">
-    <img src="../team11/assets/ShoppingCart.png" alt="Shopping Cart" class="cart">
-    <img src="../team11/assets/shelf.png" alt="Shelf" class="shelf">
+  function tryInitPopupOnce() {
+    if (initSent || !popupIsReady || !haveShoppingList()) return false;
 
-    <div class="shelf_items"></div>
-    <div class="shopping_list"></div>
+    const gs = window.__team11GameState;
+    console.log('[parent] raw shoppingList length:', gs.shoppingList.length);
+    console.log('[parent] sample item:', gs.shoppingList[0]);
 
-    <!-- Popup / toast iframe (click-through by CSS) -->
-    <section class="popup-frame-wrap">
-      <iframe
-        src="./popup.html"
-        title="Popup UI"
-        class="popup-frame"
-        loading="lazy"
-        referrerpolicy="no-referrer"
-        id="popupFrame">
-      </iframe>
-    </section>
-
-    <div class="top-right-controls">
-      <div class="status-bar" id="statusBar">
-        <span id="progressPill">0 / 10 klara</span> |
-        <span id="firstTryPill">Rätt: 0</span> |
-        <span id="mistakesPill">Misstag: 0</span> |
-        <span id="targetPill">Tröskel: 8 / 10</span>
-      </div>
-    </div>
-
-    <div class="chatbubble-toasts"><!-- toasts go here --></div>
-  </main>
-
-  <footer>
-    <small>Created as part of the "Software Engineering and Project Management" course 2025</small>
-  </footer>
-
-  <!-- Parent/iframe handshake + status handling -->
-  <script>
-    function setIframeInteractive(on) {
-  const wrap  = document.querySelector('.popup-frame-wrap');
-  const frame = document.querySelector('.popup-frame');
-  if (!wrap || !frame) return;
-  wrap.style.pointerEvents  = on ? 'auto' : 'none';
-  frame.style.pointerEvents = on ? 'auto' : 'none';
-}
-
-    const popupFrame = document.getElementById('popupFrame');
-
-    // --- helpers ---
-    const keyFromImgPath = (p) => {
-      if (!p) return undefined;
-      const base = p.split('/').pop() || '';
-      return base.split('.')[0].toLowerCase();      // ".../food/beer.png" -> "beer"
-    };
-
-    // Build [{id, sv}] in the SAME id-key the clicks use (filename basename)
-    function mapWordsFromState(gs) {
-      const raw = Array.isArray(gs?.shoppingList) ? gs.shoppingList : [];
-      const words = raw.map(item => {
-        const idKey =
-          keyFromImgPath(item?.img) ||
-          (item?.id != null ? String(item.id).toLowerCase() : undefined) ||
-          (item?.en ? String(item.en).toLowerCase() : undefined) ||
-          (item?.sv ? String(item.sv).toLowerCase() : undefined);
-
-        const svLabel = item?.sv ?? item?.en ?? '';
-        return { id: idKey, sv: svLabel };
-      }).filter(w => !!w.id);
-      return words;
+    const words = mapWordsFromState(gs);
+    if (!words.length) {
+      console.warn('[parent] mapped words are empty; will keep waiting…');
+      return false;
     }
 
-    // ui.js calls this when an image is clicked
-    window.sendPickToPopup = function(idKey) {
-      if (!popupFrame || !popupFrame.contentWindow) return;
-      console.log('[parent] sending pick (key):', idKey);
-      popupFrame.contentWindow.postMessage({ type: 'pick', id: String(idKey) }, '*');
-    };
+    console.log('[parent] initWords -> popup:', words.map(w => w.id));
+    popupFrame?.contentWindow?.postMessage({ type: 'initWords', words }, '*');
+    initSent = true;
+    return true;
+  }
 
-    // --- handshake / gating ---
-    let popupIsReady = false;
-    let initSent = false;
+  // 1) Message listener (status + popupReady + pickResult + endgame lifecycle)
+  window.addEventListener('message', (event) => {
+    const data = event.data || {};
+    if (data.type === 'statusUpdate') {
+      const s = data.status; if (!s) return;
+      document.getElementById('progressPill').textContent = s.progress;
+      document.getElementById('firstTryPill').textContent = s.firstTry;
+      document.getElementById('mistakesPill').textContent = s.mistakes;
+      document.getElementById('targetPill').textContent = s.target;
 
-    function haveShoppingList() {
-      const gs = window.__team11GameState;
-      return !!(gs && Array.isArray(gs.shoppingList) && gs.shoppingList.length > 0);
-    }
-
-    function tryInitPopupOnce() {
-      if (initSent || !popupIsReady || !haveShoppingList()) return false;
-
-      const gs = window.__team11GameState;
-      console.log('[parent] raw shoppingList length:', gs.shoppingList.length);
-      console.log('[parent] sample item:', gs.shoppingList[0]);
-
-      const words = mapWordsFromState(gs);
-      if (!words.length) {
-        console.warn('[parent] mapped words are empty; will keep waiting…');
-        return false;
+      // 👇 move the highlight to the current target in the list
+      if (typeof s.index === 'number' || typeof s.index === 'string') {
+        window.Team11UI?.highlightListIndex?.(s.index);
       }
-
-      console.log('[parent] initWords -> popup:', words.map(w => w.id));
-      popupFrame?.contentWindow?.postMessage({ type: 'initWords', words }, '*');
-      initSent = true;
-      return true;
+      return;
     }
 
-    // 1) Message listener (status + popupReady)
-    window.addEventListener('message', (event) => {
-      const data = event.data || {};
-      if (data.type === 'statusUpdate') {
-        const s = data.status; if (!s) return;
-        document.getElementById('progressPill').textContent = s.progress;
-        document.getElementById('firstTryPill').textContent = s.firstTry;
-        document.getElementById('mistakesPill').textContent = s.mistakes;
-        document.getElementById('targetPill').textContent = s.target;
-
-        // 👇 move the highlight to the current target in the list
-        if (typeof s.index === 'number' || typeof s.index === 'string') {
-          window.Team11UI?.highlightListIndex?.(s.index);
-        }
-      } else if (data.type === 'popupReady') {
-        console.log('[parent] popupReady received');
-        popupIsReady = true;
-        tryInitPopupOnce();
-      }
-      // Endgame lifecycle coming from the iframe
-if (data.type === 'endgameOpen') {
-  // Enable clicks so endgame buttons are usable
-  setIframeInteractive(true);
-  return;
-}
-if (data.type === 'endgameClose') {
-  // Disable clicks again so gameplay clicks go to the shelf, not the iframe
-  setIframeInteractive(false);
-  return;
-}
-
-    });
-
-    // 2) “team11:ready” (from main.js) nudges init when game state is built
-    window.addEventListener('team11:ready', () => {
-      console.log('[parent] team11:ready received');
+    if (data.type === 'popupReady') {
+      console.log('[parent] popupReady received');
+      popupIsReady = true;
       tryInitPopupOnce();
-    });
+      return;
+    }
 
-    // 3) Final safety: poll briefly until both conditions are met
-    window.addEventListener('DOMContentLoaded', () => {
-      popupFrame?.addEventListener('load', () => tryInitPopupOnce());
-      let attempts = 0;
-      const timer = setInterval(() => {
-        if (tryInitPopupOnce()) { clearInterval(timer); }
-        else if (++attempts > 100) {  // ~10s max
-          clearInterval(timer);
-          console.warn('[parent] Gave up waiting for shoppingList/popup readiness.');
-        }
-      }, 100);
-    });
-  </script>
-</body>
-</html>
+    if (data.type === 'endgameOpen') {
+      setIframeInteractive(true);
+      return;
+    }
+    if (data.type === 'endgameClose') {
+      setIframeInteractive(false);
+      return;
+    }
+
+    // ✅ New: result of a pick so we know whether to stick the image in the cart
+    if (data.type === 'pickResult' && (typeof data.id === 'string' || typeof data.id === 'number')) {
+      const id = normalizeKey(data.id);
+      if (data.ok) {
+        window.Team11UI?.placeItemInCart?.(id);
+      } else {
+        // Optional: cart “shake”
+        // document.querySelector('.cart-dropzone')?.animate([...],{duration:180});
+      }
+      return;
+    }
+  });
+
+  // 2) “team11:ready” (from main.js) nudges init when game state is built
+  window.addEventListener('team11:ready', () => {
+    console.log('[parent] team11:ready received');
+    tryInitPopupOnce();
+  });
+
+  // 3) Final safety: poll briefly until both conditions are met
+  window.addEventListener('DOMContentLoaded', () => {
+    popupFrame?.addEventListener('load', () => tryInitPopupOnce());
+    let attempts = 0;
+    const timer = setInterval(() => {
+      if (tryInitPopupOnce()) { clearInterval(timer); }
+      else if (++attempts > 100) {  // ~10s max
+        clearInterval(timer);
+        console.warn('[parent] Gave up waiting for shoppingList/popup readiness.');
+      }
+    }, 100);
+  });
+</script>

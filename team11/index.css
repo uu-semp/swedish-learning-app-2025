@@ -52,6 +52,7 @@ body {
   left: 160px; 
   width: 250px;
   height: auto;
+  z-index: 4;
 }
 
 

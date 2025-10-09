@@ -258,6 +258,12 @@
   const st  = game.perItemState[ix];
 
   const ok = String(id) === String(cur.id); // ids now both like "banana"
+  // 🔔 Tell parent whether this pick was correct (enables “stick in cart”)
+  try {
+    if (window.parent && window.parent !== window) {
+      window.parent.postMessage({ type: 'pickResult', id: String(id), ok: !!ok }, '*');
+    }
+  } catch (_) {}
 
   console.log('[popup] pick:', id, 'target:', cur?.id, 'ok?', ok);
 
