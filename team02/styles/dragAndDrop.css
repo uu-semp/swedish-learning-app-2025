@@ -1,0 +1,62 @@
+html, body {
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  background: var(--bg);
+}
+
+#content-row {
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  overflow: hidden;
+}
+
+#workspace {
+  flex: 1;
+  position: relative;
+  background: #f0f3f6;
+  border-right: 1px solid var(--border);
+  overflow: hidden;
+}
+
+#sidebar {
+  width: 220px;
+  background: var(--panel);
+  border-left: 1px solid var(--border);
+  padding: 12px;
+  box-sizing: border-box;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.image-item {
+  width: 90%;
+  max-height: 160px;
+}
+
+.draggable {
+  position: absolute;
+  cursor: grab;
+  user-select: none;
+  width: 160px;
+  height: 160px;
+  object-fit: cover;
+  border-radius: var(--radius);
+  border: 2px solid rgba(0, 0, 0, 0.05);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+  transition: box-shadow 0.2s;
+}
+
+.draggable:active {
+  cursor: grabbing;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+}

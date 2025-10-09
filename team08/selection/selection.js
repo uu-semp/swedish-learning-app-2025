@@ -4,7 +4,6 @@ import {
   db_get_vocabs,
   init_db,
   local_get_categories,
-  local_get_guesses,
 } from "../store/read.js";
 import {
   local_set_categories,
@@ -38,8 +37,6 @@ local_wipe_guesses();
 
 /** @type {Types.Guess[]} */
 let guesses = [];
-
-local_set_categories([CATEGORIES.FOOD]);
 
 let words = db_get_categories(local_get_categories());
 
