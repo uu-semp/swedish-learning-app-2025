@@ -8,6 +8,7 @@ Game View Styles - Team 06
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     border-radius: 20px;
     max-width: 750px;
+    min-height: 550px;
     margin: 15px auto;
     padding: 20px 30px;
     text-align: center;
@@ -48,36 +49,6 @@ Game View Styles - Team 06
     align-items: center;
     margin: 12px auto;
 }
-
-/* Adjust clock size for game view */
-#game-view .clock {
-    width: 200px;
-    height: 200px;
-    border: 5px solid #2c3e50;
-    padding: 12px;
-}
-
-#game-view .clock-face {
-    transform: translateY(-2px);
-}
-
-#game-view .number {
-    font-size: 1.2em;
-}
-
-/* Adjust number positions for smaller clock */
-#game-view .number1  { transform: translate(-15px, -15px) rotate(30deg) translate(0, -90px) rotate(-30deg); }
-#game-view .number2  { transform: translate(-15px, -15px) rotate(60deg) translate(0, -90px) rotate(-60deg); }
-#game-view .number3  { transform: translate(-15px, -15px) rotate(90deg) translate(0, -90px) rotate(-90deg); }
-#game-view .number4  { transform: translate(-15px, -15px) rotate(120deg) translate(0, -90px) rotate(-120deg); }
-#game-view .number5  { transform: translate(-15px, -15px) rotate(150deg) translate(0, -90px) rotate(-150deg); }
-#game-view .number6  { transform: translate(-15px, -15px) rotate(180deg) translate(0, -90px) rotate(-180deg); }
-#game-view .number7  { transform: translate(-15px, -15px) rotate(210deg) translate(0, -90px) rotate(-210deg); }
-#game-view .number8  { transform: translate(-15px, -15px) rotate(240deg) translate(0, -90px) rotate(-240deg); }
-#game-view .number9  { transform: translate(-15px, -15px) rotate(270deg) translate(0, -90px) rotate(-270deg); }
-#game-view .number10 { transform: translate(-15px, -15px) rotate(300deg) translate(0, -90px) rotate(-300deg); }
-#game-view .number11 { transform: translate(-15px, -15px) rotate(330deg) translate(0, -90px) rotate(-330deg); }
-#game-view .number12 { transform: translate(-15px, -15px) rotate(0deg) translate(0, -90px) rotate(0deg); }
 
 /* Question Section */
 .question-section {
@@ -129,6 +100,11 @@ Game View Styles - Team 06
 
 .answer-btn:active {
     transform: translateY(-1px);
+}
+.answer-btn.selected {
+    border: 1px solid #3c607e;
+    background: #2c6f80;
+    color: white;
 }
 
 .answer-btn.correct {
@@ -253,6 +229,27 @@ Game View Styles - Team 06
     margin: 12px auto 8px;
     display: block;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.next-btn {
+    background: white;
+    color: #667eea;
+    border: 2px solid white;
+    padding: 12px 40px;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin: 15px auto 10px;
+    display: block;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.next-btn:hover {
+    background: rgba(255, 255, 255, 0.95);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
 }
 
 .submit-btn:hover {

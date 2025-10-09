@@ -137,27 +137,8 @@ Owned by Team 06
           </div>
         </div>
 
-        <!-- Clock Component (for easy & medium levels) -->
-        <div class="clock-container" id="clock-section">
-          <div class="clock">
-            <div class="clock-face">
-              <div class="number number1">1</div>
-              <div class="number number2">2</div>
-              <div class="number number3">3</div>
-              <div class="number number4">4</div>
-              <div class="number number5">5</div>
-              <div class="number number6">6</div>
-              <div class="number number7">7</div>
-              <div class="number number8">8</div>
-              <div class="number number9">9</div>
-              <div class="number number10">10</div>
-              <div class="number number11">11</div>
-              <div class="number number12">12</div>
-              <div class="hand hour-hand" id="hour-hand"></div>
-              <div class="hand minute-hand" id="minute-hand"></div>
-            </div>
-          </div>
-        </div>
+        <!-- Clock Component -->
+        <object type="text/html" data="./components/clock.html" height="250" width="250" id="clock-object"></object>
 
         <!-- Question Display -->
         <div class="question-section">
@@ -165,7 +146,7 @@ Owned by Team 06
           <p id="question" class="question-text">Vad är klockan?</p>
         </div>
 
-        <!-- Answer Buttons (for easy level only) -->
+        <!-- Answer Buttons -->
         <div class="answers-container" id="answers-container">
           <!-- Answer buttons will be populated by JavaScript -->
         </div>
@@ -200,9 +181,18 @@ Owned by Team 06
         <button id="submit-btn" class="submit-btn" onclick="submitAnswer()">
           Submit Answer
         </button>
+        <button id="next-btn" class="next-btn" style="display: none;" onclick="nextQuestion()">
+          Next Question
+        </button>
 
         <!-- Feedback Message -->
         <div id="feedback-message" class="feedback-message" style="display: none;"></div>
+
+        <!-- Next Action -->
+        <!-- <div id="next-actions" class="next-actions" style="display: none;">
+        <button onclick="nextQuestion()" class="next-btn">Next Question</button>
+        <button onclick="showFinish()" class="finish-btn">Finish Game</button>
+        </div> -->
 
         <!-- Test Button -->
         <button id="test-fetch" class="test-btn" style="display: none;">Test Fetch Data</button>
