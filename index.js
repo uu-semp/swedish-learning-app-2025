@@ -56,7 +56,7 @@ function buildFilter(chapters){
   // Add instruction text
   const label = document.createElement("span");
  
-  label.className = "filter-label translate";
+  label.className = "filter-label";
   label.id = "filter"
    label.textContent = translations["filter"][currentLanguage];
   filterBar.appendChild(label);
@@ -293,6 +293,8 @@ window.addEventListener("DOMContentLoaded", () => {
 
 //// Language toggle ////
 
+// Note: All text with translations in menu_translations.json must have the class 'translate'
+
 /**
  * Loads the translations of menu text objects from the file menu_translations.json
  * Must be run first since text objects depend on access to the translations.
@@ -309,7 +311,10 @@ async function loadTranslations() {
 
 /**
  * Executes when one of the language toggle buttons are pressed or when the page is first loaded. 
- * Fetches text from menu_translations.json for all menu elements that require text.
+ * Fetches text from menu_translations.json for all menu elements that require text and switches
+ * so the 'lang' translation is displayed. Also rerenders the filter buttons and game grid to
+ * display the correct translation.
+ * @param lang either 'en' or 'sv', since those are the two options in the menu_translations file
  */
 async function setLanguage(lang) {
   try {
