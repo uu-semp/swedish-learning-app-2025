@@ -4,8 +4,8 @@ export const DressPellePrompt = {
 
     template: `
     <div>
-        <h1 v-if="item">
-          {{$language.translate('dress-pelle-prompt')}} {{ item.Article }} {{ item.Swedish }}
+      <h1 v-if="item">
+        {{$language.translate('dress-pelle-prompt')}} {{ item.Article }} <span v-if="item.is_pair">par </span> {{ item.Adjective_sv }} {{ item.Swedish }}
       </h1>
     </div>
     `,
