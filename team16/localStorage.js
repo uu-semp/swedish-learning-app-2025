@@ -13,24 +13,19 @@ export function getGameProgress() {
         total: 10,
         unlocked: true,
         attempts: 0,
-        timeSpent: 0,
-        lastPlayed: Date.now(),
       },
       level2: {
         completed: 0,
         total: 10,
         unlocked: false,
         attempts: 0,
-        timeSpent: 0,
-        lastPlayed: null,
+
       },
       level3: {
         completed: 0,
         total: 10,
         unlocked: false,
         attempts: 0,
-        timeSpent: 0,
-        lastPlayed: null,
       },
     });
   }

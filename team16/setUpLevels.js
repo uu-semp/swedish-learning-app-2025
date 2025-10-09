@@ -17,7 +17,7 @@ async function setUpLevel() {
   return streets;
 }
 
-function getStreetInfo(number, data) {
+function getStreetInfo(number, data) { // adress 20 is repeat on different addresses
   if (number <= 7) {
     return data["Ringgatan"][number - 1];
   } else if (number <= 13) {
