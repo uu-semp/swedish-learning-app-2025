@@ -1,46 +1,169 @@
 /* =============================================
-Owned by Team 05
+Owned by Team 05 — Final Fixed Version
 ================================================ */
+
+/* General base */
 body {
   font-family: Arial, sans-serif;
-  width: 1000px;
-  margin: 0 auto;
+  margin: 0;
+  background: #a4b9cd; /* soft blue-gray background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
 }
 .hidden { display: none !important; }
 .mt-2 { margin-top: 20px; }
 
-/* Main Menu */
+/* Main white frame */
+main.game-frame {
+  background: #fff;
+  border-radius: 20px;
+  padding: 40px 50px;
+  box-shadow: 0 14px 40px rgba(0,0,0,0.25);
+  width: 90%;
+  max-width: 950px;
+  min-height: 70vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* =============================================
+Main Menu — Centered Orange Card
+================================================ */
 .start-screen {
   text-align: center;
-  padding: 80px 20px;
+  padding: 70px 40px;
+  max-width: 600px;
+  width: 100%;
+  margin: auto;
   background: linear-gradient(90deg,#ff6b35,#f7931e,#ffcd3c);
   color: #fff;
-  border-radius: 16px;
-  box-shadow: 0 8px 30px rgba(255,107,53,.3);
+  border-radius: 20px;
+  box-shadow: 0 10px 40px rgba(255,107,53,0.3),
+              0 6px 15px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
-.menu { display:flex;flex-direction:column;gap:18px;max-width:360px;margin:0 auto; }
+
+/* Title */
+.start-screen .game-title {
+  font-size: 32px;
+  font-weight: bold;
+  margin-bottom: 36px;
+  color: #222;
+  text-shadow: 0 2px 4px rgba(255,255,255,0.6);
+}
+
+/* Menu buttons */
+.menu {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  width: 100%;
+  max-width: 340px;
+}
 .menu-btn {
-  display:flex;align-items:center;justify-content:center;gap:12px;
-  padding:14px 18px;font-size:18px;border-radius:12px;border:none;cursor:pointer;color:#fff;
-  background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);
-  box-shadow:0 6px 18px rgba(118,75,162,.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 14px 18px;
+  font-size: 18px;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  color: #fff;
+  background: linear-gradient(135deg,#667eea 0%,#764ba2 100%);
+  box-shadow: 0 6px 18px rgba(118,75,162,0.3);
+  transition: all 0.25s ease;
 }
-.menu-btn:hover { transform:translateY(-4px); }
+.menu-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 28px rgba(118,75,162,0.5);
+}
 
-/* Level Select */
+/* =============================================
+Level Select — Improved Centered Layout
+================================================ */
+.level-select {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 70vh;
+  text-align: center;
+  padding: 40px 20px;
+}
+
+/* Title */
+.level-select h3 {
+  font-size: 26px;
+  font-weight: 700;
+  color: #222;
+  margin-bottom: 30px;
+}
+
+/* Level buttons grid */
 .levels-grid {
-  display:grid;grid-template-columns:repeat(3,1fr);gap:12px;max-width:520px;margin:auto;
-}
-.level-btn {
-  padding:18px;border-radius:12px;border:none;color:#fff;cursor:pointer;
-  background:#4e54c8;box-shadow:0 6px 18px rgba(78,84,200,.3);
-}
-.level-btn.completed { background:#109e68; }
-.back-btn {
-  padding:10px 18px;border:none;border-radius:10px;background:#667eea;color:#fff;cursor:pointer;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  justify-content: center;
+  margin-bottom: 20px;
 }
 
-/* Medium screen */
+.level-btn {
+  padding: 20px 0;
+  border-radius: 14px;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  font-size: 18px;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  box-shadow: 0 6px 18px rgba(118, 75, 162, 0.3);
+  transition: all 0.25s ease;
+  width: 120px;
+}
+.level-btn:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 24px rgba(118, 75, 162, 0.5);
+}
+.level-btn.completed {
+  background: linear-gradient(135deg, #00b09b, #96c93d);
+  box-shadow: 0 6px 18px rgba(0,176,155,0.35);
+}
+
+/* Progress text */
+#overall-progress {
+  margin-top: 8px;
+  font-size: 16px;
+  color: #333;
+}
+
+/* Back button */
+.back-btn {
+  margin-top: 25px;
+  padding: 10px 18px;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: #fff;
+  cursor: pointer;
+  box-shadow: 0 6px 16px rgba(118,75,162,0.3);
+  transition: all 0.25s ease;
+}
+.back-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(118,75,162,0.45);
+}
+
+/* =============================================
+Medium Screen
+================================================ */
 .screen-header {
   display: flex;
   align-items: center;
@@ -56,39 +179,133 @@ body {
   background: linear-gradient(135deg,#74b9ff,#0984e3);
   color: #fff;
   cursor: pointer;
+  transition: all 0.25s ease;
 }
 .help-btn:hover { transform: translateY(-2px); }
 
-.image-wrap { display:flex;align-items:center;justify-content:center;min-height:240px; }
-.image-wrap img { max-width:420px;max-height:260px;border-radius:10px;box-shadow:0 6px 20px rgba(0,0,0,.25);background:#fff; }
+.image-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 240px;
+}
+.image-wrap img {
+  max-width: 420px;
+  max-height: 260px;
+  border-radius: 10px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+  background: #fff;
+}
 .word-fallback {
-  font-size:38px;padding:30px 36px;border-radius:12px;background:#fff;color:#222;
-  box-shadow:0 6px 22px rgba(0,0,0,.25);
+  font-size: 38px;
+  padding: 30px 36px;
+  border-radius: 12px;
+  background: #fff;
+  color: #222;
+  box-shadow: 0 6px 22px rgba(0,0,0,0.25);
 }
-.answer-row { display:flex;gap:10px;justify-content:center;margin-top:16px; }
-#medium-answer { width:60%;max-width:520px;padding:12px 14px;border-radius:10px;border:1px solid #ccc;font-size:16px; }
+.answer-row {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 16px;
+}
+#medium-answer {
+  width: 60%;
+  max-width: 520px;
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+}
 .primary-btn {
-  padding:12px 18px;border:none;border-radius:10px;
-  background:linear-gradient(180deg,#11998e 0%,#38ef7d 100%);color:#fff;cursor:pointer;
+  padding: 12px 18px;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(180deg,#11998e 0%,#38ef7d 100%);
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.25s ease;
 }
-#medium-feedback { margin-top:12px;font-size:18px;min-height:24px; }
+.primary-btn:hover { transform: translateY(-2px); }
+#medium-feedback {
+  margin-top: 12px;
+  font-size: 18px;
+  min-height: 24px;
+  color: #333;
+}
 
-/* Win screen */
-#win-screen { display:flex;align-items:center;justify-content:center; }
+/* =============================================
+Win Screen
+================================================ */
+#win-screen {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 .win-card {
-  text-align:center;padding:24px;border-radius:12px;
-  background:linear-gradient(180deg,#74b9ff 0%,#0984e3 100%);color:#fff;width:min(92%,520px);
-  box-shadow:0 14px 60px rgba(0,0,0,.25);
+  text-align: center;
+  padding: 24px;
+  border-radius: 12px;
+  background: linear-gradient(180deg,#74b9ff 0%,#0984e3 100%);
+  color: #fff;
+  width: min(92%,520px);
+  box-shadow: 0 14px 60px rgba(0,0,0,0.25);
 }
-.win-actions { display:flex;gap:12px;justify-content:center;margin-top:14px; }
+.win-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  margin-top: 14px;
+}
 
-/* Modal */
-.modal { position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.6); }
+/* =============================================
+Modal
+================================================ */
+.modal {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0,0,0,0.6);
+}
 .modal-content {
-  background:linear-gradient(180deg,#74b9ff 0%,#0984e3 100%);
-  color:#fff;padding:20px 26px;border-radius:12px;width:min(88%,540px);text-align:center;
+  background: linear-gradient(180deg,#74b9ff 0%,#0984e3 100%);
+  color: #fff;
+  padding: 20px 26px;
+  border-radius: 12px;
+  width: min(88%,540px);
+  text-align: center;
 }
 .close-btn {
-  margin-top:14px;padding:10px 14px;border:none;border-radius:8px;
-  background:linear-gradient(180deg,#ffecd2 0%,#fcb69f 100%);color:#333;cursor:pointer;
+  margin-top: 14px;
+  padding: 10px 14px;
+  border: none;
+  border-radius: 8px;
+  background: linear-gradient(180deg,#ffecd2 0%,#fcb69f 100%);
+  color: #333;
+  cursor: pointer;
 }
+
+/* =============================================
+Responsive Adjustments
+================================================ */
+@media (max-width: 768px) {
+  main.game-frame {
+    padding: 30px;
+    width: 95%;
+  }
+  .start-screen {
+    padding: 50px 25px;
+  }
+  .start-screen .game-title {
+    font-size: 26px;
+    margin-bottom: 24px;
+  }
+  .menu-btn {
+    font-size: 16px;
+    padding: 12px 16px;
+  }
+}
+
