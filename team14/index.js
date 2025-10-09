@@ -13,7 +13,6 @@ function getRandomItem(array) {
 
 
 // Swedish clothing generator - creates random outfit descriptions and checks player answers
-  // Usage: clothingGenerator.generateOutfit() returns {swedish: "text", correctAnswer: {files}}
 class SwedishClothingDescriptionGenerator {
   constructor() {
     this.hats = [];
@@ -32,6 +31,51 @@ class SwedishClothingDescriptionGenerator {
     this.loadPromise = this.loadFromCSV();
   }
 
+  normalizeRequiredCategory(category) {
+    if (!category) return null;
+    const value = category.trim().toLowerCase();
+    if (this.requiredCategories.includes(value)) {
+      return value;
+    }
+
+    switch (value) {
+      case "head":
+      case "hat":
+      case "hats":
+        return "hat";
+      case "torso":
+      case "upper":
+      case "shirt":
+      case "shirts":
+        return "shirt";
+      case "legs":
+      case "lower":
+      case "pant":
+      case "pants":
+        return "pants";
+      default:
+        return null;
+    }
+  }
+
+  inferCategory({ swedish, english, file }) {
+    const lower = `${swedish ?? ""} ${english ?? ""} ${file ?? ""}`.toLowerCase();
+
+    if (/(mössa|keps|hatt|hat)/.test(lower)) {
+      return "hat";
+    }
+
+    if (/(tröja|jacka|shirt|jacket|top)/.test(lower)) {
+      return "shirt";
+    }
+
+    if (/(jeans|byxor|pants|trousers)/.test(lower)) {
+      return "pants";
+    }
+
+    return null;
+  }
+
   async loadFromCSV() {
     try {
   const response = await fetch("./clothing_database.csv");
@@ -47,26 +91,36 @@ class SwedishClothingDescriptionGenerator {
         if (!line) continue;
 
         const parts = line.split(",").map(part => part.trim());
-        if (parts.length < 4) continue;
+        if (parts.length < 3) continue;
+
+        const [file, swedish, english, rawCategory] = parts;
+        const normalizedRequired = this.normalizeRequiredCategory(rawCategory);
+        const inferred = this.inferCategory({ swedish, english, file });
+        const finalCategory = normalizedRequired ?? inferred ?? rawCategory?.toLowerCase();
 
         const item = {
-          file: parts[0],
-          swedish: parts[1],
-          english: parts[2],
-          category: parts[3]
+          file,
+          swedish,
+          english,
+          category: finalCategory,
+          rawCategory: rawCategory ?? null
         };
 
-        if (item.category === "hat") {
+        if (finalCategory === "hat") {
           this.hats.push(item);
-        } else if (item.category === "shirt") {
+        } else if (finalCategory === "shirt") {
           this.shirts.push(item);
-        } else if (item.category === "pants") {
+        } else if (finalCategory === "pants") {
           this.pants.push(item);
         } else {
-          if (!this.extraCategories[item.category]) {
-            this.extraCategories[item.category] = [];
+          const extraKey = finalCategory ?? "other";
+          if (!this.extraCategories[extraKey]) {
+            this.extraCategories[extraKey] = [];
           }
-          this.extraCategories[item.category].push(item);
+          this.extraCategories[extraKey].push(item);
+          if (!finalCategory) {
+            console.warn("Uncategorized clothing item", item);
+          }
         }
       }
 
@@ -182,15 +236,3 @@ function checkClothes(correctClothesIds, appliedClothesIds) {
 function undress(id) {
   document.getElementById(id).style.display = "none";
 }
-
-
-
-
-
-/*
-  Alternative: 
-  just have a images linked to id database and generate a random description and correct clothes algorithmically
-
-  X thsirt and Y trousers 
-
-*/
