@@ -25,7 +25,7 @@
                     "question": "Hur mycket är klockan?",
                     "hour": 3,
                     "minute": 5,
-                    "answer": "Klockan är fem over tre.",
+                    "answer": "Klockan är fem över tre.",
                     "alternatives": [
                         "Klockan är fem i tre.",
                         "Klockan är fem i två.",

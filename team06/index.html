@@ -150,6 +150,17 @@ Owned by Team 06
         <div class="answers-container" id="answers-container">
           <!-- Answer buttons will be populated by JavaScript -->
         </div>
+        <!-- <button id="hint-btn" class="hint-btn" style="display:none;" onclick="
+          (function(){
+            const q = window.currentQuestion;
+            if (!q || !q.hint) return;
+            const hs = document.getElementById('hint-section');
+            const isVisible = hs && hs.style.display !== 'none';
+            toggleHint(!isVisible, q.hint);
+          })();
+        ">
+          Show Hint
+        </button> -->
 
         <!-- Text Input (for medium & hard levels) -->
         <div class="text-input-section" id="text-input-section" style="display: none;">
