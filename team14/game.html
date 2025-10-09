@@ -11,9 +11,9 @@
     <section class="stage" aria-label="Cat stage">
       <img src="paperpelletransparent.png" alt="Cat to dress" class="cat-image"/>
       
-      <div class="dropzone hat"></div>
-      <div class="dropzone shirt"></div>
-      <div class="dropzone bottom"></div>
+      <div class="dropzone hat" data-accept="hat"></div>
+      <div class="dropzone shirt" data-accept="shirt"></div>
+      <div class="dropzone bottom" data-accept="pants"></div>
       <div class="dropzone gloves"></div>
       <div class="dropzone glasses"></div>
       <div class="dropzone shoes"></div>
@@ -21,7 +21,7 @@
     </section>
 
     <aside class="sidebar" aria-label="Wardrobe">
-      <div class="wardrobe-box"></div>
+      <div class="wardrobe-box" id="img-menu"></div>
     </aside>
 
     <footer class="instructions" aria-live="polite">
@@ -31,5 +31,7 @@
     </footer>
   </div>
 
+<script src="../scripts/vocabulary.js" defer></script>
+<script src="index.js" defer></script>
 </body>
 </html>
