@@ -36,8 +36,9 @@ $(function () {
   });
 
   $("#end-game").on("click", function () {
-    resetGame();
     stopTimer();
+    updateEndScreen();
+    resetGame();
     showScreen("end-screen");
   });
   // --- Timer Functions ---
@@ -86,21 +87,20 @@ $(function () {
     resetFlipState();
     resetTimer();
   }
-
+  function updateEndScreen() {
+    $("#score").text(corrects);
+    $("#time").text(`${elapsedTime} seconds`);
+  }
   function foundMatch() {
     corrects++;
 
     if (corrects >= corrects_needed) {
-        stopTimer();
-        // Display stats on end screen
-        const elapsedSeconds = Math.floor((Date.now() - startTime) / 1000);
-        alert("Congratulations! You've won the game!");
-        $("#end-screen #time").text(`${elapsedTime} seconds`);
-        $("#end-screen").html(`
-        <p>Total Time: ${elapsedSeconds} seconds</p>
-        <p>Total Misses: ${misses}</p>
-        <button id="restart-game">Restart</button>
-      `);
+      stopTimer();
+      alert("Congratulations! You've won the game!");
+      updateEndScreen();
+      wins++; // Increment wins
+      $("#wins-count").text(wins); // Update wins display
+      showScreen("end-screen");
       wins++; // Increment wins
       setTimeout(() => {
         //alert("Congratulations! You've won the game!");
@@ -118,14 +118,8 @@ $(function () {
     if (misses >= misses_max) {
       stopTimer();
       alert("Game Over! You've exceeded the maximum number of misses.");
-      // Display game over screen
-      const elapsedSeconds = Math.floor((Date.now() - startTime) / 1000);
-      $("#end-screen").html(`
-        <h2>💀 Game Over!</h2>
-        <p>Total Time: ${elapsedSeconds} seconds</p>
-        <p>Total Misses: ${misses}</p>
-        <button id="restart-game">Restart</button>
-      `);
+      updateEndScreen();
+      showScreen("end-screen");
       resetGame();
       showScreen("end-screen");
     }
