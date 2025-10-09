@@ -204,29 +204,40 @@ window.clothingGenerator = new SwedishClothingDescriptionGenerator();
 
 // fetch description and 'right' clothes to apply
 function fetchDescription() {
+    const gen = window.clothingGenerator;
+    if (!gen) return;
+
+    gen.loadPromise.then(() => {
+        const outfit = gen.generateOutfit();
+        if (!outfit) return; // safety
+
+        const el = document.getElementById("instruction-text");
+        if (el) el.textContent = outfit.swedish;
+
+        window.currentOutfit = outfit;
+        console.log("Current outfit")
+        console.log(outfit.items);
+    });
 }
 
 // Check clothes function
-function checkClothes(correctClothesIds, appliedClothesIds) {
-  // Simple comparison of two arrays of clothes IDs
-  if (!Array.isArray(correctClothesIds) || !Array.isArray(appliedClothesIds)) {
-    return false;
-  }
-
-  // Sort both arrays to ignore order
-  const sortedCorrect = [...correctClothesIds].sort();
-  const sortedApplied = [...appliedClothesIds].sort();
-
-  // Example: sort(['RödMössa.png', 'BlåaJeans.png', 'GråOchBeigeTröja.png']) 
-  // becomes ['BlåaJeans.png', 'GråOchBeigeTröja.png', 'RödMössa.png']
-  // in this way we can compare arrays without caring the area of the body
-
-  // Check if arrays match
-  const isCorrect = sortedCorrect.length === sortedApplied.length && 
-                   sortedCorrect.every((id, index) => id === sortedApplied[index]);
-
-  return isCorrect;
-  // can also update the progress ?
+function checkClothes() {
+    
+    const outfit = window.currentOutfit;
+    
+    const correctHat = outfit.items.hat.imgId;
+    const correctShirt = outfit.items.shirt.imgId;
+    const correctPants = outfit.items.pants.imgId;
+    
+    const appliedHat = document.getElementById("hat-box").children[0].dataset.id;
+    const appliedShirt = document.getElementById("shirt-box").children[0].dataset.id;
+    const appliedPants = document.getElementById("pants-box").children[0].dataset.id;
+    
+    if (correctHat === appliedHat && correctShirt === appliedShirt && correctPants === appliedPants) {
+        console.log("Correct!");
+    } else {
+        console.log("Incorrect!")
+    }
 }
 
 class ImgObject {
@@ -269,6 +280,7 @@ class ImgObject {
 // Runs the loadClothes function when the javascript file is loaded
 window.addEventListener("DOMContentLoaded", () => {
     if (window.vocabulary && typeof window.vocabulary.load_team_data === "function") {
+        fetchDescription();
         loadClothes();
     } else {
         console.log("API Unavailable")
@@ -381,6 +393,7 @@ function injectHtmlObjects(htmlObjects) {
                 item.appendChild(img);
                 menuRoot.appendChild(item);
             }
+            checkClothes();
         });
     }
 
