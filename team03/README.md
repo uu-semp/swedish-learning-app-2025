@@ -23,10 +23,10 @@ Team 03 has developed a **User-Managed Vocabulary Extension** that allows users 
 #### Optional Fields:
 - **Article** - Swedish article (en/ett) with click-to-deselect functionality
 - **Swedish Plural** - Plural form of the Swedish word
-- **Literal** - Literal translation or meaning
-- **Image URL** - Link to an image
+- **Literal** - Literal representation (e.g., "0" for "noll")
+- **Image** - Upload file (max 2MB) OR enter URL (relative/external paths supported)
 - **Image Copyright Info** - Copyright information for images
-- **Audio URL** - Link to audio pronunciation
+- **Audio** - Upload file (max 5MB) OR enter URL (relative/external paths supported)
 
 ### 🎨 User Interface
 
@@ -60,9 +60,11 @@ Team 03 has developed a **User-Managed Vocabulary Extension** that allows users 
 
 ### Adding a Word
 1. Fill in the required fields: English, Swedish, and at least one Category
-2. Optionally fill in additional fields (article, plural, literal, URLs)
-3. Click "Add Word" button
-4. Form clears automatically on successful submission
+2. Optionally fill in additional fields (article, plural, literal)
+3. For media: Enter URL OR click "Upload Image"/"Upload Audio" to select files from your computer
+4. Preview appears automatically for images and audio
+5. Click "Add Word" button
+6. Form clears automatically on successful submission
 
 ### Managing Categories
 1. Select a category from the dropdown
@@ -87,19 +89,19 @@ team03/
 ```
 
 ### Data Schema
-Each word is stored with the following structure:
+Words are stored using the same format as system vocabulary for compatibility:
 ```javascript
 {
-  id: "abc123de",                        // Auto-generated 8-character ID
-  english: "apple",                      // Required
-  swedish: "äpple",                      // Required
-  article: "ett",                        // Optional (en/ett)
-  swedish_plural: "äpplen",              // Optional
-  literal: "apple",                      // Optional
-  category: "food, fruits",              // Required
-  image_url: "/assets/images/apple.png", // Optional
-  image_copyright_info: "Example",       // Optional
-  audio_url: "/assets/audio/apple.mp3"   // Optional
+  id: "abc123de",                   // Auto-generated 8-character ID
+  en: "apple",                      // English (required)
+  sv: "äpple",                      // Swedish (required)
+  sv_pl: "äpplen",                  // Swedish plural (optional)
+  article: "ett",                   // Article: en/ett (optional)
+  literal: "🍎",                    // Literal representation (optional)
+  category: "food, fruits",         // Categories, comma-separated (required)
+  img: "/assets/images/apple.png",  // Image URL or upload (optional)
+  img_copyright: "Own photo",       // Image copyright (optional)
+  audio: "/assets/audio/apple.mp3"  // Audio URL or upload (optional)
 }
 ```
 
@@ -122,11 +124,13 @@ Each word is stored with the following structure:
 #### Main Functions
 - `handleAddWord()` - Form submission handler
 - `validateForm()` - Validates required fields
-- `displayWords()` - Renders word list
+- `displayWords()` - Renders word list with associated fields
 - `handleCategorySelect()` - Manages category selection
 - `renderCategoryChips()` - Displays selected category chips
 - `populateCategoryDropdown()` - Loads categories from vocabulary data
 - `clearForm()` - Resets all form fields after successful submission
+- `setupMediaPreview()` - Handles URL preview
+- `setupFileUpload()` - Handles file upload with validation and conversion
 
 #### Dialog Handlers
 - Info button click handler - Opens the field guide dialog
@@ -134,8 +138,8 @@ Each word is stored with the following structure:
 - Overlay click handler - Closes dialog when clicking outside
 
 ## Future Enhancements
-- Image upload functionality
-- Audio recording/upload
+- Edit existing words
+- Search and filter word list
 
 ## Team Members
 Team 03

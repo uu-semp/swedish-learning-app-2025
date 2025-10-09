@@ -32,9 +32,9 @@ Owned by Team 03
           <p><strong>Swedish Plural:</strong> The plural form of the Swedish word (e.g., "äpplen" for "äpple").</p>
           <p><strong>Article:</strong> The Swedish article - either "en" or "ett". Click the same option again to deselect.</p>
           <p><strong>Literal:</strong> A literal translation or additional meaning of the word.</p>
-          <p><strong>Image URL:</strong> A link to an image representing the word.</p>
-          <p><strong>Image Copyright Info:</strong> Copyright information for the image.</p>
-          <p><strong>Audio URL:</strong> A link to an audio file with pronunciation.</p>
+          <p><strong>Image:</strong> Enter a URL or click "Upload Image" to select a file from your computer (max 2MB).</p>
+          <p><strong>Image Copyright Info:</strong> Copyright information.</p>
+          <p><strong>Audio:</strong> Enter a URL or click "Upload Audio" to select a file from your computer (max 5MB).</p>
         </div>
         <div class="field-info">
           <h4>Tips:</h4>
@@ -97,20 +97,32 @@ Owned by Team 03
         </div>
 
         <div class="form-group">
-          <label for="image-url">Image URL <span class="optional">(optional)</span></label>
-          <input type="text" id="image-url" name="image-url" placeholder="Coming soon">
+          <label for="image-url">Image <span class="optional">(optional)</span></label>
+          <div class="media-input-group">
+            <input type="text" id="image-url" name="image-url" placeholder="URL">
+            <span class="input-separator">or</span>
+            <label for="image-file" class="file-upload-btn">Upload Image</label>
+            <input type="file" id="image-file" name="image-file" accept="image/*" style="display:none;">
+          </div>
+          <div id="image-preview" class="media-preview"></div>
           <div class="error-message" id="image-url-error"></div>
         </div>
 
         <div class="form-group">
           <label for="image-copyright">Image Copyright Info <span class="optional">(optional)</span></label>
-          <input type="text" id="image-copyright" name="image-copyright" placeholder="Coming soon">
+          <input type="text" id="image-copyright" name="image-copyright" placeholder="Copyright information (Papunets bildbank for example)">
           <div class="error-message" id="image-copyright-error"></div>
         </div>
 
         <div class="form-group">
-          <label for="audio-url">Audio URL <span class="optional">(optional)</span></label>
-          <input type="text" id="audio-url" name="audio-url" placeholder="Coming soon">
+          <label for="audio-url">Audio <span class="optional">(optional)</span></label>
+          <div class="media-input-group">
+            <input type="text" id="audio-url" name="audio-url" placeholder="URL">
+            <span class="input-separator">or</span>
+            <label for="audio-file" class="file-upload-btn">Upload Audio</label>
+            <input type="file" id="audio-file" name="audio-file" accept="audio/*" style="display:none;">
+          </div>
+          <div id="audio-preview" class="media-preview"></div>
           <div class="error-message" id="audio-url-error"></div>
         </div>
 
