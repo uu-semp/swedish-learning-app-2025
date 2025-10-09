@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Image Picker</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+        :root {
+            --img-size: 150px;
+            --menu-w: 180px;
+            --menu-h: 470px;
+            --gap: 12px;
+            --radius: 10px;
+            --border: 1px solid #dadde1;
+        }
+        * { box-sizing: border-box; }
+        body { margin: 0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif; }
+
+        /* Layout: left (slots) + right (menu) */
+        .layout {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            padding: 16px;
+            gap: var(--gap);
+            min-height: 100vh;
+        }
+
+        /* Left column with 3 slots */
+        .left {
+            display: flex;
+            flex-direction: column;
+            gap: var(--gap);
+        }
+        .slot {
+            width: var(--img-size);
+            height: var(--img-size);
+            border: 2px dashed #cfd4d9;
+            border-radius: var(--radius);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            background: #fff;
+        }
+
+        /* Right column container that the menu will be inserted into */
+        .right {
+            width: var(--menu-w);
+            flex: 0 0 var(--menu-w);
+        }
+        .menu-wrapper {
+            width: var(--menu-w);
+            height: var(--menu-h);
+            border: var(--border);
+            border-radius: var(--radius);
+            background: #fff;
+            overflow: hidden; /* keeps rounded corners */
+        }
+        /* The menu content (scroll area) gets injected into this div */
+        #img-menu {
+            width: 100%;
+            height: 100%;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
+        /* Menu item rows */
+        .menu-item {
+            width: var(--menu-w);
+            height: var(--img-size);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-bottom: 1px solid #f1f3f5;
+        }
+        .menu-item:last-child { border-bottom: 0; }
+
+        /* Images (both in menu and in slots) */
+        img.thumb {
+            width: var(--img-size);
+            height: var(--img-size);
+            object-fit: cover;
+            cursor: pointer;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+<div class="layout">
+    <div class="left" id="left-slots">
+        <div class="slot" data-slot="0" data-accept="hat"></div>
+        <div class="slot" data-slot="1" data-accept="shirt"></div>
+        <div class="slot" data-slot="2" data-accept="pants"></div>
+
+    </div>
+
+    <div class="right">
+        <div class="menu-wrapper">
+            <!-- The scrollable list will be inserted into this div -->
+            <div id="img-menu"></div>
+        </div>
+    </div>
+</div>
+
+<script src="../scripts/vocabulary.js" defer></script>
+<script src="index.js" defer></script>
+<script src="index.js"></script>
+</body>
+</html>
