@@ -18,14 +18,14 @@ All changes to the source code must have a ticket created in Jira. For example:
    ```bash
    git clone git@github.com:uu-semp/swedish-learning-app-2025.git
    ```
-   You have successfully cloned the repository to your machine.
+   This command clones the repository to your machine.
 
 2. **Get the latest changes:**
-   
+
    ```bash
    git pull
    ```
-   Ensure you have the latest version of the code locally.
+   Make sure you have the latest version of the code locally.
 
 3. **Create a feature branch:**
 
@@ -33,17 +33,22 @@ All changes to the source code must have a ticket created in Jira. For example:
 
 
    To get the branch name:
-   - Go to Jira and open the ticket you are going to work on
-   - Click **Details** > **Development** > **Create branch**
-   - Jira will suggest a name based on the title
-   - You can modify it, but add `team10/` at the beginning
-   - *Note: I will check with Allison to modify the prefix so `team10` is added automatically instead of `SCRUM-`*
+   - Go to Jira and open the ticket you are going to work on.
+   - Click **Details** > **Development** > **Create branch**.
+   - Jira will suggest a name based on the ticket title.
+   - You can modify it, but add `team10/` at the beginning.
+   - *Note: I will check with Allison to modify the prefix so that `team10` is added automatically instead of `SCRUM-`.*
 
    ```bash
    git checkout -b team10/SCRUM-43-add-readme-md-file
    ```
   
 4. **Commit your changes:**
+
+   ```bash
+   # Add the file(s) you want to commit.
+   git add file_name.js
+   ```
 
    ```bash
    git commit -m "Add README.md with development workflow"
@@ -57,21 +62,23 @@ All changes to the source code must have a ticket created in Jira. For example:
 
 6. **Create a Pull Request** on GitHub.
 
-7. **Approval required:** Follow the current git rule. At least one approval from any team member is required before merging changes to the main branch.
+7. **Approval required:** Follow the current Git rule. At least one approval from any team member is required before merging changes to the main branch.
+
 
 # Dev Tools
 
-The aim of this folder is to have digestible practical tools and information to speed the development process
+The aim of this folder is to provide practical tools and information to speed up the development process.
 
 ## GenAI
 
-The project have use the next AI generative tools:
+This project uses the following AI generative tools:
 
-* Github copilot.
+* GitHub Copilot
 
-## Update word list
 
-Note: Next commands works in Linux but not in MAC / Windows
+## Update Word List
+
+Note: The following commands work in Linux but not on Mac or Windows.
 
 ```bash
 # Disable external fetching in the vocabulary script
@@ -93,9 +100,20 @@ python3 ./assets/gen-vocab.py
 wc -l assets/vocabulary.json
 ```
 
-## Run static webside locally
+
+## Run Static Website Locally
 
 
 ```bash
 python3 -m http.server 8000
 ```
+
+### Unit tests
+
+http://127.0.0.1:8000/team10/index.html
+http://127.0.0.1:8000/team10/learning_mode/learning_mode.html
+
+
+## Run Static Website in GitHub Pages
+
+Fork the repo, enable GitHub pages.
