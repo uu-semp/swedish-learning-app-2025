@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Asset Test</title>
+  <style>
+    .menu-item { margin: 10px; }
+    .thumb { width: 100px; height: 100px; object-fit: cover; }
+    .error-text { color: red; }
+  </style>
+</head>
+<body>
+  <div id="img-menu"></div>
+  <script src="../scripts/vocabulary.js"></script>
+  <script>
+    window.vocabulary.load_team_data(14);
+    window.vocabulary.when_ready(function () {
+      const ids = window.vocabulary.get_team_data_keys();
+      const menu = document.getElementById('img-menu');
+      menu.innerHTML = '';
+      ids.forEach(id => {
+        let data = window.vocabulary.get_team_data(id);
+        let imgPath = data;
+        try {
+          const obj = JSON.parse(data);
+          imgPath = obj.img || data;
+        } catch (e) {}
+        const div = document.createElement('div');
+        div.className = 'menu-item';
+        const img = document.createElement('img');
+        img.className = 'thumb';
+        img.src = imgPath;
+        img.alt = id;
+        img.onload = () => {};
+        img.onerror = () => {
+          img.classList.add('error');
+          const errorText = document.createElement('div');
+          errorText.className = 'error-text';
+          errorText.textContent = 'Failed to load';
+          div.appendChild(errorText);
+        };
+        div.appendChild(img);
+        menu.appendChild(div);
+      });
+    });
+  </script>
+</body>
+</html>
