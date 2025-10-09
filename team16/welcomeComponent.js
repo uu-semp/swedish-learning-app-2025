@@ -1,30 +1,7 @@
+import {updateGameProgress, getGameProgress} from localStorage
+
 // Game progress data that would usually come from the actual student data
-let gameProgress = {
-    level1: { 
-        completed: 7, 
-        total: 10, 
-        unlocked: true, 
-        attempts: 12,
-        timeSpent: 25, // im guessing minutes or something
-        lastPlayed: '2025-09-15'
-    },
-    level2: { 
-        completed: 0, 
-        total: 10, 
-        unlocked: false, 
-        attempts: 0,
-        timeSpent: 0,
-        lastPlayed: null
-    },
-    level3: { 
-        completed: 0, 
-        total: 10, 
-        unlocked: false, 
-        attempts: 0,
-        timeSpent: 0,
-        lastPlayed: null
-    }
-};
+let gameProgress = getGameProgress()
 
 function updateLevelProgress() {
     //To see if levels should be unlocked
@@ -34,6 +11,8 @@ function updateLevelProgress() {
     if (gameProgress.level2.completed === gameProgress.level2.total) {
         gameProgress.level3.unlocked = true;
     }
+
+    updateGameProgress(gameProgress)
 }
 
 function createLevelButton(levelNum, progress) {
