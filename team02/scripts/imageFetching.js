@@ -28,6 +28,7 @@ export async function loadImages() {
                     img.src = "../" + path;
                     img.draggable = true;
                     img.className = 'image-item';
+                    img.dataset.name = imageName;
                     sidebar.appendChild(img);
                     imageElements.push(img);
                     console.log('Added image:', imageName);

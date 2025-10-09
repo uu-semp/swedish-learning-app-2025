@@ -7,7 +7,7 @@
     <title>Level 1</title>
 
     <!-- Shared + page-specific styles -->
-    <link rel="stylesheet" href="../styles/style.css" />
+    <!-- <link rel="stylesheet" href="../styles/style.css" /> -->
     <link rel="stylesheet" href="./styles/level1.css" />
     <link rel="stylesheet" href="./styles/dragAndDrop.css" />
 </head>
@@ -66,8 +66,9 @@
 
         // Listen for drop events in workspace
         const workspace = document.getElementById('workspace');
-        workspace.addEventListener('drop', function(e) {
+        workspace.addEventListener('DropFromSidebar', e => {
           // After a drop, show the next question
+          console.log("Dropped image is: ", e.detail.dataset.name)
           setTimeout(showRandomQuestion, 300); // here we should check if the answer is correct. can be done when we're sure about how the game works.
         });
       });
