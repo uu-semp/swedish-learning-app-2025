@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Team 14 • Clothing Generator Smoke Test</title>
+  <style>
+    :root {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.6;
+      color: #1f2933;
+      background: #f8fafc;
+    }
+
+    body {
+      margin: 0;
+      padding: 2rem;
+      display: flex;
+      justify-content: center;
+    }
+
+    main {
+      width: min(720px, 100%);
+      background: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 12px 30px -12px rgba(15, 23, 42, 0.35);
+      padding: 2rem;
+    }
+
+    h1 {
+      margin-top: 0;
+      font-size: 1.75rem;
+      color: #0b7285;
+    }
+
+    button {
+      background: #0ea5e9;
+      border: none;
+      color: white;
+      padding: 0.75rem 1.5rem;
+      font-size: 1rem;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.2s ease-in-out;
+    }
+
+    button:hover {
+      background: #0284c7;
+    }
+
+    #status {
+      margin: 1rem 0;
+      font-weight: 600;
+      color: #475569;
+    }
+
+    .card {
+      background: #f1f5f9;
+      border-radius: 10px;
+      padding: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .card h2 {
+      margin-top: 0;
+      font-size: 1.1rem;
+      color: #0f172a;
+    }
+
+    #asset-list {
+      list-style: none;
+      padding-left: 1rem;
+    }
+
+    #asset-list li::before {
+      content: "• ";
+      color: #0ea5e9;
+      font-weight: bold;
+    }
+
+    #asset-images {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    #asset-images img {
+      width: 110px;
+      height: 110px;
+      object-fit: contain;
+      background: white;
+      border-radius: 10px;
+      padding: 0.75rem;
+      box-shadow: inset 0 0 0 1px rgba(148, 163, 184, 0.3);
+    }
+
+    code {
+      font-family: "Fira Code", "Courier New", monospace;
+      background: rgba(14, 165, 233, 0.1);
+      padding: 0.15rem 0.35rem;
+      border-radius: 4px;
+    }
+  </style>
+
+  <script>
+    // Minimal stubs so index.js can initialise without the full app context
+    window.save = {
+      _store: {},
+      get(key) {
+        return structuredClone(this._store[key] ?? {});
+      },
+      set(key, value) {
+        this._store[key] = structuredClone(value);
+      }
+    };
+
+    window.vocabulary = {
+      callbacks: [],
+      when_ready(cb) {
+        try {
+          cb?.();
+        } catch (err) {
+          console.error("Vocabulary stub callback failed", err);
+        }
+      },
+      get_random() {
+        return { info: "stub" };
+      },
+      get_category() {
+        return [];
+      },
+      get_vocab() {
+        return {};
+      },
+      load_team_data() {},
+      get_team_data() {
+        return {};
+      },
+      get_team_data_keys() {
+        return [];
+      }
+    };
+  </script>
+
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-3gJwYp4hZp8Sd5y0mKkbB0ZqI1C0V0MDaG8Dc9uHcAA=" crossorigin="anonymous"></script>
+  <script defer src="index.js"></script>
+</head>
+<body>
+  <main>
+    <h1>description generator</h1>
+    <p>Click the button to generate a random outfit using <code>SwedishClothingDescriptionGenerator</code>.</p>
+    <button id="generate-btn" type="button">Generate new outfit</button>
+    <div id="status">Waiting for data…</div>
+
+    <section class="card">
+      <h2>Beskrivning (svenska)</h2>
+      <p id="swedish-text">—</p>
+    </section>
+
+    <section class="card">
+      <h2>Description (english)</h2>
+      <p id="english-text">—</p>
+    </section>
+
+    <section class="card">
+      <h2>Asset filenames</h2>
+      <ul id="asset-list"></ul>
+    </section>
+
+    <section class="card">
+      <h2>Preview</h2>
+      <div id="asset-images"></div>
+    </section>
+  </main>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const statusEl = document.getElementById("status");
+      const swedishEl = document.getElementById("swedish-text");
+      const englishEl = document.getElementById("english-text");
+      const assetListEl = document.getElementById("asset-list");
+      const assetImagesEl = document.getElementById("asset-images");
+      const buttonEl = document.getElementById("generate-btn");
+
+      async function ensureDataReady() {
+        const generator = window.clothingGenerator;
+        if (!generator) {
+          throw new Error("clothingGenerator was not initialised");
+        }
+        if (generator.isLoaded) {
+          return;
+        }
+        await (generator.loadPromise ?? Promise.resolve());
+      }
+
+      async function renderOutfit() {
+        statusEl.textContent = "Loading clothes…";
+        assetListEl.innerHTML = "";
+        assetImagesEl.innerHTML = "";
+
+        try {
+          await ensureDataReady();
+        } catch (error) {
+          statusEl.textContent = "Failed to prepare generator (see console).";
+          console.error(error);
+          return;
+        }
+
+        const outfit = window.clothingGenerator.generateOutfit();
+        if (!outfit) {
+          statusEl.textContent = "No outfit generated (check console).";
+          return;
+        }
+
+        swedishEl.textContent = outfit.swedish;
+        englishEl.textContent = outfit.english;
+
+        outfit.assets.forEach((file) => {
+          const li = document.createElement("li");
+          li.textContent = file;
+          assetListEl.appendChild(li);
+
+          const img = document.createElement("img");
+          img.src = `PelleClothes/${file}`;
+          img.alt = file;
+          img.loading = "lazy";
+          img.onerror = () => {
+            img.style.opacity = "0.35";
+            img.title = "Image not found";
+          };
+          assetImagesEl.appendChild(img);
+        });
+
+        statusEl.textContent = "Outfit generated successfully.";
+      }
+
+      buttonEl.addEventListener("click", renderOutfit);
+      renderOutfit();
+    });
+  </script>
+</body>
+</html>

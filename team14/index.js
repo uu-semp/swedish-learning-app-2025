@@ -15,72 +15,137 @@ function getRandomItem(array) {
 // Swedish clothing generator - creates random outfit descriptions and checks player answers
   // Usage: clothingGenerator.generateOutfit() returns {swedish: "text", correctAnswer: {files}}
 class SwedishClothingDescriptionGenerator {
-    constructor() {
+  constructor() {
+    this.hats = [];
+    this.shirts = [];
+    this.pants = [];
+    this.extraCategories = {};
+    this.requiredCategories = ["hat", "shirt", "pants"];
+    this.descriptionPrefixes = [
+      "Idag tar Pelle på sig",
+      "Kläderna Pelle har valt idag är",
+      "Pelle bestämde sig för att bära",
+      "Den här dagen klär sig Pelle i",
+      "Pelle valde följande kläder idag"
+    ];
+    this.isLoaded = false;
+    this.loadPromise = this.loadFromCSV();
+  }
 
-        this.hats = [ // list of hats
-            { file: 'BlåMössa.png', swedish: 'blå mössa', english: 'blue hat' },
-            { file: 'RödMössa.png', swedish: 'röd mössa', english: 'red hat' },
-            { file: 'TurkosMössa.png', swedish: 'turkos mössa', english: 'turquoise hat' },
-            { file: 'GulOchGrönKeps.png', swedish: 'gul och grön keps', english: 'yellow and green cap' },
-            { file: 'RosaOchLilaKeps.png', swedish: 'rosa och lila keps', english: 'pink and purple cap' },
-            { file: 'RödOchBlåKeps.png', swedish: 'röd och blå keps', english: 'red and blue cap' }
-        ];
-        
-        this.shirts = [ // list of shirts
-            { file: 'GråOchBeigeTröja.png', swedish: 'grå och beige tröja', english: 'gray and beige shirt' },
-            { file: 'GrönOchBeigeTröja.png', swedish: 'grön och beige tröja', english: 'green and beige shirt' },
-            { file: 'LilaOchBeigeTröja.png', swedish: 'lila och beige tröja', english: 'purple and beige shirt' },
-            { file: 'BrunOchGul.png', swedish: 'brun och gul tröja', english: 'brown and yellow shirt' },
-            { file: 'LilaOchGul.png', swedish: 'lila och gul tröja', english: 'purple and yellow shirt' },
-            { file: 'RödOchGul.png', swedish: 'röd och gul tröja', english: 'red and yellow shirt' }
-        ];
-        
-        this.pants = [ // list of pants
-            { file: 'BlåaJeans.png', swedish: 'blåa jeans', english: 'blue jeans' },
-            { file: 'GråaJeans.png', swedish: 'gråa jeans', english: 'gray jeans' },
-            { file: 'SvartaJeans.png', swedish: 'svarta jeans', english: 'black jeans' },
-            { file: 'VitaByxor.png', swedish: 'vita byxor', english: 'white pants' },
-            { file: 'GrönaByxor.png', swedish: 'gröna byxor', english: 'green pants' },
-            { file: 'OrangeByxor.png', swedish: 'orange byxor', english: 'orange pants' }
-        ];
-    }
-    
+  async loadFromCSV() {
+    try {
+  const response = await fetch("./clothing_database.csv");
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}`);
+      }
 
-    // Generate outfit for game
-    generateOutfit() {
-        // Head
-        const hat = getRandomItem(this.hats);
-        
-        // Torso  
-        const shirt = getRandomItem(this.shirts);
-        
-        // Legs
-        const pants = getRandomItem(this.pants);
+      const csvText = await response.text();
+      const lines = csvText.split("\n");
 
-        // Merge description
-        const swedishText = `${hat.swedish}, ${shirt.swedish}, ${pants.swedish}`;
-        const englishText = `${hat.english}, ${shirt.english}, ${pants.english}`;
-        
-        return {
-            // Text for player to see
-            swedish: swedishText,
-            english: englishText,
-            
-            // Answer keys for game to check
-            correctAnswer: {
-                hatFile: hat.file,
-                shirtFile: shirt.file,
-                pantsFile: pants.file
-            },
-            
-            // Full items (if needed)
-            items: {
-                hat: hat,
-                shirt: shirt, 
-                pants: pants
-            }
+      for (let i = 1; i < lines.length; i++) {
+        const line = lines[i].trim();
+        if (!line) continue;
+
+        const parts = line.split(",").map(part => part.trim());
+        if (parts.length < 4) continue;
+
+        const item = {
+          file: parts[0],
+          swedish: parts[1],
+          english: parts[2],
+          category: parts[3]
         };
+
+        if (item.category === "hat") {
+          this.hats.push(item);
+        } else if (item.category === "shirt") {
+          this.shirts.push(item);
+        } else if (item.category === "pants") {
+          this.pants.push(item);
+        } else {
+          if (!this.extraCategories[item.category]) {
+            this.extraCategories[item.category] = [];
+          }
+          this.extraCategories[item.category].push(item);
+        }
+      }
+
+      this.isLoaded = true;
+      console.log("Clothing database loaded", {
+        hats: this.hats.length,
+        shirts: this.shirts.length,
+        pants: this.pants.length
+      });
+    } catch (error) {
+      console.error("Failed to load clothing_database.csv", error);
     }
+  }
+
+  // Generate outfit for game
+  generateOutfit() {
+    if (!this.isLoaded) {
+      console.warn("Clothing data not ready yet. Call generateOutfit after loadPromise resolves.");
+      return null;
+    }
+
+    const categoryPools = {
+      hat: this.hats,
+      shirt: this.shirts,
+      pants: this.pants,
+      ...this.extraCategories
+    };
+
+    const selectedItems = {};
+    const missingCategory = this.requiredCategories.find(category => {
+      const pool = categoryPools[category] ?? [];
+      if (!Array.isArray(pool) || pool.length === 0) {
+        console.error(`Missing clothing data for category: ${category}`);
+        return true;
+      }
+
+      selectedItems[category] = getRandomItem(pool);
+      return false;
+    });
+
+    if (missingCategory) {
+      return null;
+    }
+
+    const prefix = getRandomItem(this.descriptionPrefixes);
+    const swedishList = this.requiredCategories.map(category => selectedItems[category].swedish);
+    const englishList = this.requiredCategories.map(category => selectedItems[category].english);
+
+    const swedishText = `${prefix} ${swedishList.join(', ')}.`;
+    const englishText = `Today Pelle is wearing ${englishList.join(', ')}.`;
+
+    const assetFiles = this.requiredCategories.map(category => selectedItems[category].file);
+    const byCategory = this.requiredCategories.reduce((acc, category) => {
+      acc[category] = selectedItems[category].file;
+      return acc;
+    }, {});
+
+    const items = this.requiredCategories.reduce((acc, category) => {
+      acc[category] = selectedItems[category];
+      return acc;
+    }, {});
+
+    const correctAnswer = {
+      filenames: assetFiles,
+      byCategory
+    };
+
+    if (byCategory.hat) correctAnswer.hatFile = byCategory.hat;
+    if (byCategory.shirt) correctAnswer.shirtFile = byCategory.shirt;
+    if (byCategory.pants) correctAnswer.pantsFile = byCategory.pants;
+
+    return {
+      swedish: swedishText,
+      english: englishText,
+      assets: assetFiles,
+      correctAnswer,
+      items
+    };
+  }
 }
 
 // Description generator class global instance
