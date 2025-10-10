@@ -14,7 +14,31 @@ const BackButton = {
     `
 };
 
-
+const MenuPage = {
+    components: {BackButton},
+    template: `      
+    <div class="container">
+        <h2 style="text-align:center; margin-top:4rem;">Level 3 - Spelling</h2>
+        <div class="button-container">
+            <button class="start-btn" @click="$emit('start')">Start</button>
+            <button class="learning-mode-btn" @click="goBack">Menu</button>
+        </div>
+        <p class="instructions">Instructions: Write the Swedish word for the food item in the image.</p>
+        <div class="progress-container">
+            <div class="progress-icon">
+                <div class="progress-bar">
+                    <div class="progress"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    `,
+    methods: {
+        goBack() {
+            window.location.href = '../index.html'
+        }
+    }  
+};
 
 const DisplayLevel = {
     template: `
@@ -41,7 +65,7 @@ const AnswerContainer = {
             placeholder="Type the Swedish word" 
             class="answer-box"
             ref="answerInput">
-        <button type="submit" class="submit-button">Submit</button>
+        <button type="submit" class="start-btn">Submit</button>
     </form>
     `,
     data() {
@@ -61,12 +85,27 @@ const AnswerContainer = {
 };
 
 const ModalPopup = {
-    props: ['show', 'message', 'type'],
+    props: ['show', 'message', 'type', 'userAnswer', 'englishWord', 'correctWord'],
     template: `
     <div v-if="show" class="modal-overlay">
         <div class="modal-content" :class="type">
-            <p>{{ message }}</p>
+            <p v-if="type === 'correct'">
+                <strong>Correct!</strong><br>
+                 <em>{{ message }}</em>
+            </p>
+
+            <p v-else-if="type === 'incorrect'">
+                <strong>Incorrect!</strong><br>
+                You answered: <span class="user-answer">{{ userAnswer }}</span><br>
+                The Swedish word for <strong>{{ englishWord }}</strong> is: 
+                <strong class="correct-word">{{ correctWord }}</strong>
+            </p>
+
+            <p v-else>
+              {{ message }}
+            </p>
             <button 
+                ref="enterButton"
                 @click="$emit('close')" 
                 class="modal-btn">
                     Close
@@ -78,6 +117,15 @@ const ModalPopup = {
     methods: {
         handleEnter() {
             this.$emit('close')
+        }
+    },
+    watch: {
+        show(newVal) {
+            if (newVal) {
+                this.$nextTick(() => {
+                    this.$refs.enterButton.focus();
+                })
+            }
         }
     }
 };
@@ -99,7 +147,10 @@ const GamePage = {
         <modal-popup 
             :show="showModal" 
             :message="modalMessage" 
-            :type="modalType" 
+            :type="modalType"
+            :user-answer="userAnswer"
+            :english-word="englishWord"
+            :correct-word="correctWord"
             @close="closeModal">
         </modal-popup>
     </div>
@@ -114,6 +165,21 @@ const GamePage = {
             showModal: false,
             modalMessage: '',
             modalType: '', 
+            userAnswer: '',
+            englishWord: '',
+            correctWord: '',
+            compliments: [
+                "Great job!",
+                "Awesome work!",
+                "You nailed it!",
+                "Fantastic!",
+                "Keep it up!",
+                "Perfect answer!",
+                "Well done!",
+                "You're on fire!",
+                "Impressive!",
+                "Excellent!"
+            ]        
         };
     },
     computed: {
@@ -129,7 +195,7 @@ const GamePage = {
             console.error("game_logic is not loaded");
             return;
         }
-        this.words = await window.game_logic.getRandomWordSet(3);
+        this.words = await window.game_logic.getRandomWordSet(10);
 
         this.$nextTick(() => {
                 this.focusAnswerInput();
@@ -145,9 +211,9 @@ const GamePage = {
             console.log('handleSubmit called with answer:', answer);
             if (this.currentWord && answer.toLowerCase() === this.currentWord.sv.toLowerCase()) {
                 this.correctCount++;
-                this.showFeedback(true);
+                this.showFeedback(true, answer);
             } else {
-                this.showFeedback(false);
+                this.showFeedback(false, answer);
             }
             
         },
@@ -157,17 +223,23 @@ const GamePage = {
             }
             this.currentIndex++;
         },
-        showFeedback(isCorrect) {
+        showFeedback(isCorrect, answer) {
             const input = document.querySelector('.answer-box');
             if (input) input.blur();
 
-            this.modalMessage = isCorrect ? 'Correct!' : 'Incorrect, Try again!';
-            this.modalType = isCorrect ? 'correct' : 'incorrect';
-            this.showModal = true;
+                if (isCorrect) {
+                    const randomIndex = Math.floor(Math.random() * this.compliments.length);
+                    const randomCompliment = this.compliments[randomIndex];
+                    this.modalType = 'correct';
+                    this.modalMessage = randomCompliment;
+                } else {
+                    this.modalType = 'incorrect';
+                    this.userAnswer = answer;
+                    this.englishWord = this.currentWord.en;
+                    this.correctWord = this.currentWord.sv;
+                }
 
-            if (isCorrect){
-                setTimeout(() => this.closeModal(), 1500);
-            }
+            this.showModal = true;
         },
         closeModal() {
             this.showModal = false;
