@@ -82,26 +82,19 @@ body {
 
 .info-button {
     align-self: center;
-    height: 50px;
-    width: 50px;
+    height: 40px;
+    width: 40px;
     background-color: #ceffd7;
     border: solid;
     border-color: #02b823;
     border-width: 5px;
-    font-size: 30px;
+    font-size: 20px;
+    font-weight: bold;
     border-radius: 50%;
     float: right;
-    margin: 2% 5% 0% 0%; 
+    margin: 4% 5% 0% 0%; 
 }
-/* // up right down left
-
-
-padding: 8px 16px;
-
-
-
-margin: 0% 0% 4% 4%;
-width:15%; */
+/* // up right down left*/
 
 .info-button:hover {
     background-color: #b6f4c1;
@@ -339,12 +332,14 @@ width:15%; */
     justify-content: space-between;
     align-items: center;
     padding: 10px 20px;
+    padding-bottom:0px;
     box-sizing: border-box;
+    height:20%;
 }
 
 .level-header h1 {
     margin: 0;
-    font-size: 2.5em;
+    font-size: 1.8em;
     color: #333;
 }
 
@@ -449,4 +444,8 @@ width:15%; */
   border: none;
   font-size: 20px;
   cursor: pointer;
+}
+
+.dress-prompt-container{
+    width:80%;
 }
