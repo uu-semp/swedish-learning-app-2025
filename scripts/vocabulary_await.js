@@ -1,4 +1,3 @@
-import * as DB from "./database_type.js";
 import {
   FETCH_EXTERNAL,
   EXTERNAL_URL,
@@ -16,6 +15,11 @@ import {
 /**
  * @typedef {Object.<string, string[]>} CategoryMap
  * A map where keys are categories and values are a list of ids.
+ */
+
+/**
+ * @typedef {Object.<string[]>} IdList
+ * A list of vocab IDs
  */
 
 // Currently there are some problems with these typings because of how the database is structured.
@@ -53,12 +57,12 @@ import {
  * @typedef {Object} Database
  * @property {RowItem[]} rows
  * @property {VocabMap} vocab
+ * @property {IdList} team
  * @property {number} vocabLength
  * @property {CategoryMap} categories
- * @property {number} categoryLength
  */
 
-/** @type {Database} */
+/** @type {DB.Database} */
 let db;
 
 async function fetch_sheets() {
@@ -67,9 +71,9 @@ async function fetch_sheets() {
 }
 
 /**
- *
+ * @param {int} team_id The number of your team, if team specific data should be loaded
  */
-export async function loaddb() {
+export async function loaddb(team_id = -1) {
   // Fetching a parser
   const papa_promise = new Promise((resolve, reject) => {
     const script = document.createElement("script");
@@ -79,10 +83,10 @@ export async function loaddb() {
     script.onerror = reject;
     document.head.appendChild(script);
   });
-  await papa_promise;
 
   // Fetching sheets
   const text = await fetch_sheets();
+  await papa_promise;
 
   console.log("Data: All data received");
 
@@ -90,8 +94,13 @@ export async function loaddb() {
   const parsed = Papa.parse(text, { header: true, skipEmptyLines: true });
   const rows = parsed.data;
 
+  // Stringify incase this get a number
+  const team_id_str = String(team_id).padStart(2, "0");
+  const team_column = `Team${team_id_str}`;
+
   // Creating two alternative access patterns based on rows
   const idToMeta = {};
+  const teamIds = {};
   const catToIds = {};
 
   for (const row of rows) {
@@ -114,14 +123,20 @@ export async function loaddb() {
       if (!catToIds[cat]) catToIds[cat] = [];
       catToIds[cat].push(id);
     }
+
+    // Team data
+    if (team_column && row[team_column]) {
+      meta.team = row[team_column].trim();
+      teamIds.push(id);
+    };
   }
 
   db = {
     vocab: idToMeta,
     categories: catToIds,
     rows: rows,
+    team: teamIds,
     vocabLength: Object.keys(idToMeta).length,
-    categoryLength: Object.keys(catToIds).length,
   };
 }
 
@@ -174,23 +189,72 @@ export function get_random() {
   return db.vocab[ids[randomIndex]];
 }
 
-export function fetch_team_data(TEAM) {
+export function deprecated_load_team_data(team_id) {
   if (db == undefined) {
     console.error("Database has not been loaded");
     return null;
   }
-  db.rows.forEach((row) => {
-    db.vocab[row.ID][TEAM] = row[TEAM];
-  });
+
+  // Stringify incase this get a number
+  const team_id_str = String(team_id).padStart(2, "0");
+  const team_column = `Team${team_id_str}`;
+
+  const teamIds = [];
+
+  for (const row of db.rows) {
+    const id = row["ID"]?.trim();
+    if (!id) continue;
+
+    // Team data
+    if (team_column && row[team_column]) {
+      db.vocab[id].team = row[team_column].trim();
+      teamIds.push(id);
+    };
+  }
+
+  db.team = teamIds;
 }
 
-/** TESTS */
+/**
+ * Returns a list of IDs which have team specific data attached to them
+ * @returns {IdList}
+ */
+export function vocab_with_team_data() {
+  if (db == undefined) {
+    console.error("Database has not been loaded");
+    return null;
+  }
+
+  return db.team;
+}
 
 export function test() {
   if (db == undefined) {
     console.error("Database has not been loaded");
     return null;
   }
+  console.log(db.rows[0].Article != null);
+  console.log(db.rows[0].Audio_url != null);
+  console.log(db.rows[0].Category != null);
+  console.log(db.rows[0].English != null);
+  console.log(db.rows[0].Swedish != null);
+  console.log(db.rows[0].Swedish_plural != null);
+  console.log(db.rows[0].Team01 != null);
+  console.log(db.rows[0].Team02 != null);
+  console.log(db.rows[0].Team03 != null);
+  console.log(db.rows[0].Team04 != null);
+  console.log(db.rows[0].Team05 != null);
+  console.log(db.rows[0].Team06 != null);
+  console.log(db.rows[0].Team07 != null);
+  console.log(db.rows[0].Team08 != null);
+  console.log(db.rows[0].Team09 != null);
+  console.log(db.rows[0].Team10 != null);
+  console.log(db.rows[0].Team11 != null);
+  console.log(db.rows[0].Team12 != null);
+  console.log(db.rows[0].Team13 != null);
+  console.log(db.rows[0].Team14 != null);
+  console.log(db.rows[0].Team15 != null);
+  console.log(db.rows[0].Team16 != null);
 
   let result = true;
 
@@ -223,14 +287,11 @@ export function test() {
       );
   });
 
-  console.log("Check that all fields are non-empty: ", result);
-
-  console.log(
-    "checking that vocab and rows length is the same",
-    db.vocabLength == db.rows.length
-  );
+  console.log(result);
 
   result = true;
+  console.log(db.vocabLength == db.rows.length);
+
   // This fails because vocab key is not always initiated, better to set as zero?
   Object.keys(db.vocab).forEach((key) => {
     result =
@@ -240,27 +301,5 @@ export function test() {
       db.vocab[key].article != null;
   });
 
-  console.log(
-    "Check that english and swedish and article are always defined: ",
-    result
-  );
-
-  fetch_team_data("Team04");
-  let tests = ["623a056b", "2c6d3f66", "47662d57"];
-  result = true;
-  tests.forEach((test) => {
-    result = result && db.vocab[test].Team04 != null;
-  });
-  console.log("Fetching team data test: ", result);
-
-  result = true;
-  Object.keys(db.vocab).forEach((key) => {
-    result = db.vocab[key].Team04 != undefined && result;
-  });
-  console.log("TEAM04 rows are null now: ", result);
-  result = true;
-  Object.keys(db.vocab).forEach((key) => {
-    result = db.vocab[key].Team05 == undefined && result;
-  });
-  console.log("Team05 rows are still undefined: ", result);
+  console.log(result);
 }
