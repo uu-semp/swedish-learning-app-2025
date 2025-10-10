@@ -19,8 +19,7 @@ export const PelleContainer = {
     methods: {
         handleItemDrop(event) {
             const droppedItem = (event.dataTransfer.getData('text/plain') || '').trim();
-            console.log('Dropped item ID in component:', droppedItem, 'expected:', this.expectedItemId);
-
+            
             // Determine correctness by comparing the dragged item's ID with the expected item's ID
             const isCorrect = this.expectedItemId && droppedItem === this.expectedItemId;
 
