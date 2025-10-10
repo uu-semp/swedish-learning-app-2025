@@ -165,23 +165,25 @@ function gameplay() {
         let highscore = words[words.length - 2]; // last element is the highscore object
         let wrong_words = words[words.length - 1]; // last = wrong words
         const wordSet = currentRoundWords(currentRound); // get current round's 4 words
-
+        const correctAnswer = wordSet.find((word) => word.answer === true);
+  
         imageElements.forEach((image, index) => {
             const word = wordSet[index]; // ✅ this defines the word for each image
             
             if (image === correctImage) {
-            markCorrectAnswer(image);
-            } else {
-            markIncorrectAnswer(image);
-            }
-
+              markCorrectAnswer(image);
+            } 
+      
             if (image === clickedImage && image === correctImage) {
-                document.getElementById('instruction').textContent = "Correct answer!";
+                document.getElementById('instruction').textContent = 
+                    "Correct answer! The correct answer was: " + correctAnswer.sv;
                 // Update high score  
                 highscore["round" + (currentRound + 1)] += 1;
                 highscore["total"] += 1;
             } else if (image === clickedImage && image !== correctImage) {
-                document.getElementById('instruction').textContent = "Wrong answer!";
+                document.getElementById('instruction').textContent =
+                    "Wrong answer! The correct answer was: " + correctAnswer.sv;
+                markIncorrectAnswer(image);
                  // Add wrong word to tracking
                 wrong_words["round" + (currentRound + 1)].push(word);
                 wrong_words["all"].push(word);
