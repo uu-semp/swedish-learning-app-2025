@@ -6,7 +6,7 @@
 
 // Number of rounds in the game, can be changed whenever
 // Could also add a button in category, so the user can select the amount of rounds in any given game
-const rounds = 1;
+const rounds = 5;
 
 function game_start(category) {
   var ids = [];
