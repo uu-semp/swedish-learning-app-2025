@@ -8,13 +8,7 @@
 const app = Vue.createApp({
   data() {
     return {
-      tempStreets: [
-        'Rackarberget',
-        'Kungsgatan',
-        'Daghammarskölds väg',
-        'Torgny Segersteds allé',
-        'Flogstavägen'
-      ],
+      vocabStreets: [],
 
       isLoading: true,
       currentScreen: 'game',
@@ -68,8 +62,10 @@ const app = Vue.createApp({
       const vocab = window.vocabulary.get_vocab(this.vocabNumbers[randomNoIndex]);
       this.currentQuestion = vocab;
 
-      const randomStreetIndex = this.irandom_range(0, this.tempStreets.length - 1);
-      this.currentStreet = this.tempStreets[randomStreetIndex];
+      const randomStreetIndex = this.irandom_range(0, this.vocabStreets.length - 1);
+      const vocabStreet = window.vocabulary.get_vocab(this.vocabStreets[randomStreetIndex]);
+      this.currentStreet = vocabStreet.sv
+      
       // const randomStreetIndex = this.irandom_range(0, this.vocabStreets.length - 1);
       // this.currentStreet = window.vocabulary.get_vocab(this.vocabStreets[randomStreetIndex]).sv;
 
@@ -161,7 +157,7 @@ const app = Vue.createApp({
     window.vocabulary.when_ready(() => {
       console.log("Vocabulary loaded, vue ready");
       this.vocabNumbers = window.vocabulary.get_category("number");
-      // this.vocabStreets = window.vocabulary.get_category("street");
+      this.vocabStreets = window.vocabulary.get_category("street");
       this.isLoading = false;
       this.startNewRound();
     });
