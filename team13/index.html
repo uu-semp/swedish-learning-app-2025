@@ -45,7 +45,7 @@ Owned by Team 13
       <div class="progress-wrap">
         <div class="progress-lable">Progress: {{progress}} / {{progressMax}}</div>
         <div class="progress-bar">
-          <div id="progress-fill" : style="{width: progressPercentage}"></div>
+          <div id="progress-fill" :style="{width: progressPercentage}"></div>
         </div>
       </div>
       <button @click="backToMenu">Back to Menu</button>
@@ -67,7 +67,7 @@ Owned by Team 13
       <hr>
       <button @click="toggleTranslation"> {{translationButtonText}}</button>
       <div v-if="showTranslation" id="english-line">
-        I live on {{currentStreet}} {{currentQuestionEnglish}} <br>
+        I live on {{currentStreet}} {{currentQuestion.en}} <br>
       </div>
     </section>
   </main>
