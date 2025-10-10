@@ -58,7 +58,7 @@ import {
  * @property {number} categoryLength
  */
 
-/** @type {DB.Database} */
+/** @type {Database} */
 let db;
 
 async function fetch_sheets() {
@@ -174,33 +174,23 @@ export function get_random() {
   return db.vocab[ids[randomIndex]];
 }
 
+export function fetch_team_data(TEAM) {
+  if (db == undefined) {
+    console.error("Database has not been loaded");
+    return null;
+  }
+  db.rows.forEach((row) => {
+    db.vocab[row.ID][TEAM] = row[TEAM];
+  });
+}
+
+/** TESTS */
+
 export function test() {
   if (db == undefined) {
     console.error("Database has not been loaded");
     return null;
   }
-  console.log(db.rows[0].Article != null);
-  console.log(db.rows[0].Audio_url != null);
-  console.log(db.rows[0].Category != null);
-  console.log(db.rows[0].English != null);
-  console.log(db.rows[0].Swedish != null);
-  console.log(db.rows[0].Swedish_plural != null);
-  console.log(db.rows[0].Team01 != null);
-  console.log(db.rows[0].Team02 != null);
-  console.log(db.rows[0].Team03 != null);
-  console.log(db.rows[0].Team04 != null);
-  console.log(db.rows[0].Team05 != null);
-  console.log(db.rows[0].Team06 != null);
-  console.log(db.rows[0].Team07 != null);
-  console.log(db.rows[0].Team08 != null);
-  console.log(db.rows[0].Team09 != null);
-  console.log(db.rows[0].Team10 != null);
-  console.log(db.rows[0].Team11 != null);
-  console.log(db.rows[0].Team12 != null);
-  console.log(db.rows[0].Team13 != null);
-  console.log(db.rows[0].Team14 != null);
-  console.log(db.rows[0].Team15 != null);
-  console.log(db.rows[0].Team16 != null);
 
   let result = true;
 
@@ -233,11 +223,14 @@ export function test() {
       );
   });
 
-  console.log(result);
+  console.log("Check that all fields are non-empty: ", result);
+
+  console.log(
+    "checking that vocab and rows length is the same",
+    db.vocabLength == db.rows.length
+  );
 
   result = true;
-  console.log(db.vocabLength == db.rows.length);
-
   // This fails because vocab key is not always initiated, better to set as zero?
   Object.keys(db.vocab).forEach((key) => {
     result =
@@ -247,5 +240,27 @@ export function test() {
       db.vocab[key].article != null;
   });
 
-  console.log(result);
+  console.log(
+    "Check that english and swedish and article are always defined: ",
+    result
+  );
+
+  fetch_team_data("Team04");
+  let tests = ["623a056b", "2c6d3f66", "47662d57"];
+  result = true;
+  tests.forEach((test) => {
+    result = result && db.vocab[test].Team04 != null;
+  });
+  console.log("Fetching team data test: ", result);
+
+  result = true;
+  Object.keys(db.vocab).forEach((key) => {
+    result = db.vocab[key].Team04 != undefined && result;
+  });
+  console.log("TEAM04 rows are null now: ", result);
+  result = true;
+  Object.keys(db.vocab).forEach((key) => {
+    result = db.vocab[key].Team05 == undefined && result;
+  });
+  console.log("Team05 rows are still undefined: ", result);
 }
