@@ -1,23 +1,29 @@
 .backtoLevelSelect-btn {
   position: absolute;
-  top: 30px;
-  left: 50px;
-  width: 70px;
-  height: 70px;
+  top: 20px;
+  left: 20px;
+  width: 50px;
+  height: 50px;
   border-radius: 50%;
   border: none;
   background: #b08968;
   color: white;
-  font-size: 40px;
+  font-size: 30px;
+  font-weight: bold;
   cursor: pointer;
+  transition: transform 0.2s ease, background 0.3s ease;
 }
 
+
+.backtoLevelSelect-btn:hover {
+  transform: scale(1.05);
+}
 .help-btn {
   position: absolute;
- top: 20px;
-  right: 90px;
-  width: 60px;
-  height: 60px;
+  top: 20px;
+  right: 20px;
+  width: 50px;
+  height: 50px;
   border-radius: 50%;
   border: none;
   background: #b08968;
@@ -28,6 +34,10 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: transform 0.2s ease, background 0.3s ease;
+}
+.help-btn:hover{
+  transform: scale(1.05);
 }
 
 .help-popup {
@@ -39,13 +49,14 @@
   color: white;
   padding: 20px;
   border-radius: 30px;
-  width: 700px;
-  height: 500px;
+  width: 500px;
+  height: 400px;
   box-shadow: 0 6px 20px rgba(0,0,0,0.3);
-  font-size: 40px;
+  font-size: 30px;
   z-index: 100;
   font-weight: bold;
   text-align: center;
+  font-family: "Comic Sans MS", cursive;
 
 }
 .result-Popup {
@@ -59,9 +70,10 @@
   box-shadow: 0 6px 20px rgba(0,0,0,0.4);
   text-align: center;
   color: white;
-  width: 700px;
-  height: 500px;
+  width: 500px;
+  height: 400px;
   z-index: 1000;
+  font-family: "Comic Sans MS", cursive;
 }
 .result-Popup.hidden { display: none; }
 
@@ -83,15 +95,15 @@
 
 
 .image-area {
-  width: 600px;
-  height: 400px;
+  width: 300px;
+  height: 200px;
   background: white;
   border-radius: 8px;
   display: flex;
   justify-content: center;
   align-items: center;
   margin-bottom: 40px;
-  margin-top: 20px;
+  margin-top: 40px;
 }
 #vocabImg {
   width: 100%;
@@ -102,7 +114,7 @@
 .options {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 100px;
+  gap: 50px;
   width: 70%;
 }
 .option {
@@ -114,7 +126,10 @@
   color: white;
   cursor: pointer;
   border: none;
-  transition: background .2s ease;
+  transition: transform 0.2s ease, background 0.3s ease;
+}
+.option:hover{
+  transform: scale(1.05);
 }
 .option.correct { background: #2ecc71; }
 .option.wrong { background: #e74c3c; }
@@ -124,12 +139,13 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 90%;
-  margin-bottom: 20px;
+  width: 100%;
+  margin-bottom: 10px;
+  margin-top: 30px;
 }
 .progress-wrap {
   flex: 1;
-  height: 25px;
+  height: 20px;
   background: white;
   border-radius: 12px;
   overflow: hidden;
@@ -142,14 +158,19 @@
   transition: width 0.3s ease;
 }
 .next {
-  width: 60px;
-  height: 60px;
+  width: 50px;
+  height: 50px;
   border-radius: 50%;
   border: none;
   background: #b08968;
   color: white;
-  font-size: 28px;
+  font-size: 25px;
   cursor: pointer;
+  transition: transform 0.2s ease, background 0.3s ease;
+}
+
+.next:hover{
+  transform: scale(1.05);
 }
 .hidden { visibility: visible; pointer-events: none; }
 
@@ -168,34 +189,39 @@
 
 h2{
   font-size: 60px;
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 .stars {
-  font-size: 90px;
+  font-size: 40px;
   margin: 15px 0;
   color: gold;
 }
 .popup-actions {
   display: flex;
   justify-content: space-between;
-  margin-top: 20px;
+  margin-top: 30px;
 }
 .btn {
   border: none;
-  padding: 10px 16px;
-  border-radius: 12px;
+  padding: 15px 20px;
+  border-radius: 15px;
   color: white;
-  font-size: 30px;
+  font-size: 20px;
   cursor: pointer;
   font-weight: bold;
+  font-family: "Comic Sans MS", cursive;
 }
 .btn.red { background: #e74c3c; }
 .btn.green { background: #27ae60; }
 .btn.brown { background: #b08968; }
 
 #mistakeInfo {
-  font-size: 30px;     
+  font-size: 25px;     
   font-weight: bold;   
   font-style: italic;  
+ 
+  
         
 }

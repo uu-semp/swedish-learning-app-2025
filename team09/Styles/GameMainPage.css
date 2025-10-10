@@ -8,11 +8,13 @@
   .game-title {
     font-family: "Comic Sans MS", cursive;
     color: white;
-    font-size: 60px;
+    font-size: 30px;
     margin-top: 10px;
+    margin-bottom: 50px;
   }
   
   
+
   .menu {
     display: flex;
     flex-direction: column;
@@ -24,8 +26,9 @@
   
  
   .menu-btn {
-    width: 100%;
-    padding: 35px;
+    font-family: "Comic Sans MS", cursive;
+    width: 70%;
+    padding: 20px;
     border: none;
     border-radius: 35px;
     color: white;
