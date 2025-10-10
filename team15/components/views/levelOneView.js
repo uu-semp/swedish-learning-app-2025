@@ -19,7 +19,7 @@ export const LevelOneView = {
             gameOver:false,
             showInfo:false,
             chosenClothingItems: [],
-            numberOfQuestionsAsked: 3,
+            numberOfQuestionsAsked: 10,
             indexesAsked: []
 
         };
@@ -30,7 +30,9 @@ export const LevelOneView = {
     },
 
     methods: {
-            startLevel() {    
+            startLevel() {  
+                const stats = window.save.stats.get("team15")  //Consol log state of system at start of each round
+                console.log("State of the system: ", stats)  
                 this.chosenClothingItems = this.generateSubCategories()
             if (this.chosenClothingItems && this.chosenClothingItems.length > 0) {
                 let randomIndex = this.getRandomIndex(this.chosenClothingItems)
@@ -214,7 +216,7 @@ export const LevelOneView = {
             this.gameOver=false;
             this.showInfo=false;
             this.chosenClothingItems= [];
-            this.numberOfQuestionsAsked= 3;
+            this.numberOfQuestionsAsked= 10;
             this.indexesAsked= []
 
         },
