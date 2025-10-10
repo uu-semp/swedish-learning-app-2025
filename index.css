@@ -307,6 +307,29 @@ header img {
     animation: fadeOut 3s forwards;
 }
 
+/*info button*/
+.info-btn {
+    position: absolute;
+    right: 16px;
+    bottom: 16px;
+    background: #125d34;
+    color: #fff;
+    border: none;
+    border-radius: 20px;
+    padding: 0.3rem 1rem;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background 0.2s;
+    z-index: 2;
+}
+.info-btn.back {
+    background: #125d34;
+}
+
+.card {
+    position: relative; 
+}
+
 @keyframes fadeOut {
     0% { opacity: 1; }
     70% { opacity: 1; }

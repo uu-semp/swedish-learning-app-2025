@@ -106,16 +106,36 @@ function renderGrid(games) {
            onerror="this.onerror=null; this.src='assets/main_menu/images/games/default_image.png';">
       <div class="card-body">
         <h3>${g.eng_title}</h3>
-        <p>${g.eng_desc}</p>
+        
+        <div class="card-info-content">
         ${tagsHtml}
       </div>
+      <button class="info-btn">Info</button>
     `;
+
+    const infoBtn = card.querySelector('.info-btn');
+    const infoContent = card.querySelector('.card-info-content');
+    let showingTags = true;
+    infoBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (showingTags) {
+        infoContent.innerHTML = `<p>${g.eng_desc}</p>`;
+        infoBtn.textContent = 'Back';
+        infoBtn.classList.add('back');
+      } else {
+        infoContent.innerHTML = tagsHtml;
+        infoBtn.textContent = 'Info';
+        infoBtn.classList.remove('back');
+      }
+      showingTags = !showingTags;
+    });
 
     // Add click event to open game
     card.addEventListener("click", () => openIframe(`./${g.id}/index.html`));
     grid.appendChild(card);
   });
 }
+
 
 //// Settings Feature ////
  // Creates a settings overlay with the following features:
