@@ -8,6 +8,15 @@
 const app = Vue.createApp({
   data() {
     return {
+      tempStreets: [
+        'Rackarberget',
+        'Kungsgatan',
+        'Daghammarskölds väg',
+        'Torgny Segersteds allé',
+        'Flogstavägen'
+      ],
+
+      isLoading: true,
       currentScreen: 'menu',
 
       progress: 1,
@@ -25,7 +34,7 @@ const app = Vue.createApp({
       translatedIndexes: [],
 
       vocabNumbers: [],
-      vocabStreets: [],
+      // vocabStreets: [],
     }
   },
 
@@ -35,6 +44,9 @@ const app = Vue.createApp({
     },
     translationButtonText() {
       return this.showTranslation ? 'Hide translation' : 'Show translation';
+    },
+    startButtonText() {
+      return this.isLoading ? 'Loading Vocabulary...' : 'Start Game';
     }
   },
 
@@ -56,8 +68,10 @@ const app = Vue.createApp({
       const vocab = window.vocabulary.get_vocab(this.vocabNumbers[randomNoIndex]);
       this.currentQuestion = vocab;
 
-      const randomStreetIndex = this.irandom_range(0, this.vocabStreets.length - 1);
-      this.currentStreet = window.vocabulary.get_vocab(this.vocabStreets[randomStreetIndex]).sv;
+      const randomStreetIndex = this.irandom_range(0, this.tempStreets.length - 1);
+      this.currentStreet = this.tempStreets[randomStreetIndex];
+      // const randomStreetIndex = this.irandom_range(0, this.vocabStreets.length - 1);
+      // this.currentStreet = window.vocabulary.get_vocab(this.vocabStreets[randomStreetIndex]).sv;
 
       const houseCount = 4;
       const highestNumber = this.vocabNumbers.length - 1;
@@ -90,7 +104,12 @@ const app = Vue.createApp({
     },
 
     translateWord(wordIndex) {
-      if (this.translatedIndexes.includes(wordIndex)) return;
+
+      if (this.prompt[wordIndex] === '-int' || this.englishSentence[wordIndex] === '-int') {
+        return;
+      }
+
+      if ( this.translatedIndexes.includes(wordIndex)) return;
       
       this.translatedIndexes.push(wordIndex);
       const englishWord = this.englishSentence[wordIndex];
@@ -142,7 +161,8 @@ const app = Vue.createApp({
     window.vocabulary.when_ready(() => {
       console.log("Vocabulary loaded, vue ready");
       this.vocabNumbers = window.vocabulary.get_category("number");
-      this.vocabStreets = window.vocabulary.get_category("street");
+      // this.vocabStreets = window.vocabulary.get_category("street");
+      this.isLoading = false;
     });
   }
   

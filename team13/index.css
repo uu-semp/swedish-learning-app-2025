@@ -1,12 +1,173 @@
-/*
-=================================================
-Owned by Team 13
-=================================================
-*/
+/* =============================================
+   Owned by Team 13
+   ============================================= */
+
+/* .hidden { display: none; } */
 
 body {
     font-family: Arial, sans-serif;
-    width: 1000px;
-    margin-left: auto;
-    margin-right: auto;
+    max-width: 1000px;
+    background-color: #f0f2f5;
+    margin: 0;
+}
+
+.main-header {
+    background-color: #333;
+    color: white;
+    padding: 1rem 2rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+.header-content {
+    max-width: 960px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.main-header h1 {
+    margin: 0;
+    font-size: 1.8rem;
+}
+.header-button {
+    background-color: #555;
+    color: white;
+    border: none;
+    padding: 0.6rem, 1.2rem;
+    border-radius: 999px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.2s;
+}
+.header-button:hover {
+    background-color: #777;
+}
+
+
+/* Center the main game area */
+main.game-frame {
+    padding: 2rem;
+}
+
+.game-box {
+    max-width: 800px;
+    margin: 1rem auto;
+    background-color: white;
+    border: 1px solid #e0e0e0e0;
+    border-top: 5px solid #d9f2fd;
+    border-radius: 8px;
+    padding: 2rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    text-align: center;
+}
+hr {
+    border: none;
+    border-top: 1px solid #eee;
+    margin: 2rem 0;
+}
+
+.start-button, .control-button {
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    font-size: 1rem;
+}
+.start-button:hover, .control-button:hover {
+    background-color: #e0e0e0;
+}
+.start-button {
+    font-size: 1.2rem;
+    padding: 0.8rem 1.5rem;
+}
+.start-button:disabled {
+    background-color: #e9ecef;
+    color: #6c757d;
+    cursor: not-allowed;
+}
+
+/* Progress bar */
+.progress-wrap {text-align: left; margin-bottom: 2rem;}
+.progress-label {color: #555; margin-bottom: 0.5rem;}
+.progress-bar {width: 100%; height: 12px; border: 1px solid #ccc; border-radius: 999px; background: #e9ecef;}
+#progress-fill {height: 100%; background: #28a745; border-radius: 999px; transition: width 180ms ease;}
+
+/* Styling from prompt words */
+#prompt-words {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+#prompt-words button {
+    font-size: 1.5rem;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+}
+
+#english-line {
+    margin-top: 1rem;
+    font-size: 1.2rem;
+    color: #666;
+}
+
+/* Container for house buttons */
+#house-buttons {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 2rem;
+    margin-top: 2.5rem;
+    /* margin-bottom: 2.5rem; */
+}
+
+/* Base house button styling */
+#house-buttons button {
+    position: relative;
+    width: 120px;
+    height: 120px;
+    background: #ffcc80; /* warm orange walls */
+    border: 3px solid #d17a22;
+    border-radius: 0 0 10px 10px;
+    cursor: pointer;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #4a2c00;
+    transition: transform 0.2s, box-shadow 0.2s;
+    padding-top: 30px;
+}
+
+/* Little roof using a pseudo-element */
+#house-buttons button::before {
+    content: "";
+    position: absolute;
+    top: -40px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 63px solid transparent;
+    border-right: 63px solid transparent;
+    border-bottom: 40px solid #d17a22; /* roof color */
+}
+
+/* Hover effect for interactivity */
+#house-buttons button:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+    background: #ffe0b2;
+}
+
+/* Optional: pressed state */
+#house-buttons button:active {
+    transform: translateY(2px);
+}
+
+/* Optional: nice footer */
+footer {
+    text-align: center;
+    margin-top: 3rem;
+    color: #666;
 }

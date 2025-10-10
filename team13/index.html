@@ -11,7 +11,7 @@ Owned by Team 13
   <title>House Selection Game</title>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <link rel="stylesheet" href="../style.css" />
+  <!-- <link rel="stylesheet" href="../style.css" /> For some reason this line breaks everything -->
 
   <script src="../scripts/vocabulary.js"></script>
   <script src="../scripts/save.js"></script>
@@ -28,52 +28,59 @@ Owned by Team 13
   <script src="index.js" defer></script>
 </head>
 <body>
-  <header>
-    <h1>Team 13</h1>
-  </header>
+  <div id="app">
+    <!-- <header class="main-header">
+      <div class="header-content">
+        <h1>Game Title</h1>
+        <button v-if="currentScreen === 'game'" @click="backToMenu" class="header-button">Back to menu</button>
+      </div>
+    </header> -->
+    <main class="game-frame">
+      <!-- Implement your game inside this tag. test test test -->
 
-  <main id="app" class="game-frame">
-    <!-- Implement your game inside this tag. test test test -->
-
-    <section v-if="currentScreen === 'menu'" id="menu-screen">
-      <h2>Welcome to the House Selection game</h2>
-      <p>Practice Swedish numbers by choosing the correct house!</p>
-      <button @click="startGame">Start Game</button>
-    </section>
-
-    <section v-else-if="currentScreen === 'game'" id="game-screen" >
-      <div class="progress-wrap">
-        <div class="progress-lable">Progress: {{progress}} / {{progressMax}}</div>
-        <div class="progress-bar">
-          <div id="progress-fill" :style="{width: progressPercentage}"></div>
+      <section v-if="currentScreen === 'menu'" id="menu-screen">
+        <div class="game-box">
+          <h2>Welcome to the House Selection game</h2>
+          <p>Practice Swedish numbers by choosing the correct house!</p>
+          <button @click="startGame" :disabled="isLoading" class="start-button">{{startButtonText}}</button>
         </div>
-      </div>
-      <button @click="backToMenu">Back to Menu</button>
-      <hr>
-      <div id="prompt-words">
-        <button v-for="(word, index) in prompt"
-                :key="index"
-                @click="translateWord(index)">
-            {{renderWord(word)}}
-        </button>
-      </div>
-      <div id="house-buttons">
-        <button v-for="(houseNum, index) in houseOptions"
-                :key="index"
-                @click="checkAnswer(index)">
-              {{houseNum}}
-        </button>
-      </div>
-      <hr>
-      <button @click="toggleTranslation"> {{translationButtonText}}</button>
-      <div v-if="showTranslation" id="english-line">
-        I live on {{currentStreet}} {{currentQuestion.en}} <br>
-      </div>
-    </section>
-  </main>
+      </section>
 
-  <footer>
-    <small>Created as part of the "Software Engineering and Project Management" course 2025</small>
-  </footer>
+      <section v-else-if="currentScreen === 'game'" id="game-screen" >
+        <div class="game-box">
+          <div class="progress-wrap">
+            <div class="progress-label">Progress: {{progress}} / {{progressMax}}</div>
+            <div class="progress-bar">
+              <div id="progress-fill" :style="{width: progressPercentage}"></div>
+            </div>
+          </div>
+          <button @click="backToMenu">Back to Menu</button>
+          <hr>
+          <div id="prompt-words">
+            <button v-for="(word, index) in prompt"
+                    :key="index"
+                    @click="translateWord(index)">
+                {{renderWord(word)}}
+            </button>
+          </div>
+          <div id="house-buttons">
+            <button v-for="(houseNum, index) in houseOptions"
+                    :key="index"
+                    @click="checkAnswer(index)">
+                  {{houseNum}}
+            </button>
+          </div>
+          <hr>
+          <button @click="toggleTranslation"> {{translationButtonText}}</button>
+          <div v-if="showTranslation" id="english-line">
+            I live on {{currentStreet}} {{currentQuestion.en}} <br>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer>
+      <small>Created as part of the "Software Engineering and Project Management" course 2025</small>
+    </footer>
+  </div>
 </body>
 </html>
