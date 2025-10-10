@@ -39,24 +39,18 @@ body {
 }
 
 .image-item {
-  width: 90%;
-  max-height: 160px;
+  max-height: 80px;
 }
 
 .draggable {
   position: absolute;
   cursor: grab;
   user-select: none;
-  width: 160px;
-  height: 160px;
+  width: 80px;
+  height: 80px;
   object-fit: cover;
-  border-radius: var(--radius);
-  border: 2px solid rgba(0, 0, 0, 0.05);
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
-  transition: box-shadow 0.2s;
 }
 
 .draggable:active {
   cursor: grabbing;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
 }
