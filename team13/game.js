@@ -14,7 +14,7 @@ const app = Vue.createApp({
       currentScreen: 'game',
 
       progress: 1,
-      progressMax: 10,
+      progressMax: 2,
 
       houseOptions: [],
       correctHouseIndex: -1,
@@ -50,15 +50,12 @@ const app = Vue.createApp({
     //   this.currentScreen = 'game';
     //   this.startNewRound();
     // },
-    // backToMenu() {
-    //   this.currentScreen = 'menu';
-    // },
+    backToMenu() {
+      this.currentScreen = 'menu';
+    },
     startNewRound() {
       this.prompt = [...this.swedishSentence];
-      console.log("test");
       this.translatedIndexes = Array(this.prompt.length).fill(false);
-      console.log(this.translatedIndexes)
-      console.log(this.prompt)
       this.showTranslation = false;
 
       const randomNoIndex = this.irandom_range(1, this.vocabNumbers.length - 1);
@@ -108,26 +105,16 @@ const app = Vue.createApp({
         return;
       }
       if (this.translatedIndexes[wordIndex]){
-        console.log("0")
         this.translatedIndexes[wordIndex] = !this.translatedIndexes[wordIndex];
-        console.log("1")
         const swedishWord = this.swedishSentence[wordIndex];
-        console.log("2")
         const newPrompt = [...this.prompt];
-        console.log("3")
         newPrompt[wordIndex] = swedishWord;
-        console.log("4")
         this.prompt = newPrompt;        
       }else{
-        console.log("0")
         this.translatedIndexes[wordIndex] = !this.translatedIndexes[wordIndex];
-        console.log("1")
         const englishWord = this.englishSentence[wordIndex];
-        console.log("2")
         const newPrompt = [...this.prompt];
-        console.log("3")
         newPrompt[wordIndex] = englishWord;
-        console.log("4")
         this.prompt = newPrompt;
       }
     },
