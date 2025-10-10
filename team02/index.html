@@ -1,59 +1,40 @@
-<!doctype html>
-
-<!--
-=================================================
-Owned by Team 02
-=================================================
--->
-
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Basic Static Site</title>
-  <link rel="stylesheet" href="../style.css" />
-
-  <script src="../scripts/vocabulary.js"></script>
-  <script src="../scripts/save.js"></script>
-
-  <!-- You are allowed to use JQuery and Vue.js but don't have to. They just make a
-  lot of things easier
-  -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css"> 
-  <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
-  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-
-  <!-- Site specific scripts and styles -->
-  <link rel="stylesheet" href="index.css" />
-  <script src="index.js" defer></script>
+    <meta charset="UTF-8">
+    <title>Swedish Learning App - Menu</title>
+    <link rel="stylesheet" href="../style.css?v=20251009">
+    <link rel="stylesheet" href="styles/mainMenu.css?v=20251009">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css">
 </head>
 <body>
-  <header>
-    <h1>Team 02</h1>
-  </header>
-
-  <!-- TODO: Remove this div and it's content -->
-  <div>
-      <hr>
-      <h2>A basic section to make sure that everything works for everyone</h2>
-
-      <p>Font awesome is working: <i class="fa-solid fa-check"></i> (A checkmark should be visible)</p>
-
-      <button id="check-jquery">Check if Javascript and JQuery is working</button> (Clicking the button should show an alert)
-
-      <button id="check-saving">Click this button to see if saving works</button>
-      <hr>
-  </div>
-
   <main class="game-frame">
-    Implement your game inside this tag.
-
-    <hr>
-    Learning: <div id="display-vocab">(This should be replaced by a word)</div>
+    <main class="menu-main">
+        <section class="menu-card">
+            <h1><i class="fas fa-paint-brush"></i> Decorate</h1>
+            <div class="menu-buttons">
+                <button class="menu-btn" onclick="window.location.href='levelSelection.html'">
+                    <i class="fas fa-layer-group"></i> Level Selection
+                </button>
+                <button class="menu-btn" onclick="document.getElementById('howToPlayModal').style.display='flex'">
+                    <i class="fas fa-question-circle"></i> How to Play?
+                </button>
+            </div>
+        </section>
+        <div id="howToPlayModal" class="modal" onclick="if(event.target===this)this.style.display='none'">
+            <div class="modal-content">
+                <h2><i class="fas fa-lightbulb"></i> How to Play?</h2>
+                <p>
+                    Choose a difficulty level and drag Swedish words onto the correct images.<br>
+                    Each level brings new challenges and vocabulary!<br>
+                    <strong>Good luck!</strong>
+                </p>
+                <button class="close-btn" onclick="document.getElementById('howToPlayModal').style.display='none'">
+                    <i class="fas fa-times"></i> Close
+                </button>
+            </div>
+        </div>
+    </main>
   </main>
-
-  <footer>
-    <small>Created as part of the "Software Engineering and Project Management" course 2025</small>
-  </footer>
 </body>
 </html>

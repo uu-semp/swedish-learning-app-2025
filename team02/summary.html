@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Summary</title>
+    <!-- Global style guide (must come first) -->
+    <link rel="stylesheet" href="../style.css?v=20251009" />
+    <!-- Page-specific styles -->
+    <link rel="stylesheet" href="styles/summary.css?v=20251009"/>
+</head>
+<body>
+    <main>
+        <section class="summary-card">
+            <h1> Game Summary</h1>
+            <p style="color:#555; margin-bottom: 24px; font-size:1.15rem;">
+                Congratulations! You have completed the game.
+            </p>
+            <div class="summary-content">
+                <div class="item">
+                    <span>Level</span>
+                    <strong id="a-level">-</strong>
+                </div>
+                <div class="item">
+                    <span>Correct answers</span>
+                    <strong id="a-score">0</strong>
+                </div>
+            </div>
+            <nav class="actions">
+                <a class="btn" href="index.html"><i class="fas fa-home"></i> Main Menu</a>
+                <a class="btn" href="./level1.html"><i class="fas fa-redo"></i> Play Again</a>
+            </nav>
+        </section>
+    </main>
+    <!-- Font Awesome for icons -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/js/all.min.js"></script>
+    <!-- Remove any injected index.css when embedded via iframe -->
+    <script>
+        (function() {
+            const links = Array.from(document.querySelectorAll('link[rel="stylesheet"]'));
+            links.forEach(link => {
+                const href = (link.getAttribute('href') || '').toLowerCase();
+                if (href.endsWith('/index.css') || href.endsWith('index.css')) {
+                    if (link.parentNode) {
+                        link.parentNode.removeChild(link);
+                    }
+                }
+            });
+        })();
+    </script>
+    <!-- Hook your script later to fill #a-level and #a-score -->
+    
+</body>
+</html>
