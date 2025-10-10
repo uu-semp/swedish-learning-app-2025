@@ -3,37 +3,24 @@ export const HelpView = {
   props: ["switchTo"],
   template: `
       <div class="help-view">
-      <h1 class = "main-text">About The Game</h1>  
+      <h1 class = "main-text">{{$language.translate('about')}}</h1>  
       
       <div class = "help-content">
-        <h2>Goal of the Game</h2>
-        <p>
-          The purpose of the Dressing Pelle Game is to help players learn Swedish vocabulary 
-          for clothing and practice grammar such as adjectives, colors, and 
-          the use of <em>en</em>/<em>ett</em> and plural forms.
-        </p>
+        <h2>{{$language.translate('goal')}}</h2>
+        <p>{{$language.translate('purpose')}}</p>
 
-        <h2>How to Play</h2>
-        <p>
-          On each level, you will see a description of an item of clothing 
-          (for example: "a red sweater" or "blue shoes").  
-          Your task is to find the correct item and place it on Pelle.  
-          If your choice is correct, you continue; otherwise, you can try again.
-        </p>
+        <h2>{{$language.translate('how-to')}}</h2>
+        <p>{{$language.translate('how-to-play')}}</p>
 
-        <h2>Levels</h2>
+        <h2>{{$language.translate('levels')}}</h2>
         <ul>
-          <li><strong>Level 1:</strong> Drag-and-drop recognition of single clothing items.</li>
-          <li><strong>Level 2:</strong> Choose items with adjectives (color, size, etc.).</li>
-          <li><strong>Level 3:</strong> More advanced grammar, including plural forms and correct adjective endings.</li>
+          <li><strong>{{$language.translate('l1-description')}}</strong></li>
+          <li><strong>{{$language.translate('l2-description')}}</strong></li>
+          <li><strong>{{$language.translate('l3-description')}}</strong></li>
         </ul>
 
-        <h2>Extra Notes</h2>
-        <p>
-          If you are unsure about the vocabulary, you can always replay a level 
-          or check the word list in the provided material.  
-          The game is designed to be fun while reinforcing Swedish language learning.
-        </p>
+        <h2>{{$language.translate('extra')}}</h2>
+        <p>{{$language.translate('additional-info')}}</p>
       </div>
 
       <div class = button-container> 

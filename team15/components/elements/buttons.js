@@ -1,20 +1,21 @@
 export const StartGameButton = {
     name: 'start-game-button',
     template: `
-    <button class = "big-buttons" id="start-game-button">START GAME</button>
+    <button class = "big-buttons" id="start-game-button">{{$language.translate('start-game')}}</button>
   `,
 };
 
 export const HowToPlayButton = {
     name: 'how-to-play-button',
     template: `
-   <button class = "big-buttons" id="how-to-play-button">HOW TO PLAY</button>
+   <button class = "big-buttons" id="how-to-play-button">{{$language.translate('how-to')}}</button>
   `,
 };
+
 export const GoBackButton = {
     name: 'go-back-button',
     template: `
-  <button class = "big-buttons" id="go-back-button">GO BACK</button>
+  <button class = "big-buttons" id="go-back-button">{{$language.translate('go-back')}}</button>
   `,
 };
 
@@ -45,11 +46,23 @@ export const ClothingItemButton = {
             type: String,
             required: true,
         },
+        itemID: { 
+          type: String, 
+          required: true
+        },
     },
+
+    data(){
+      return{
+        isDragged: false,
+      }
+    },
+
     methods: {
         handleDragStart(event) {
             // Set drag data (you can customize this later)
-            event.dataTransfer.setData('text/plain', this.label);
+            this.isDragged = true;
+            event.dataTransfer.setData('text/plain', this.itemID); // We send the itemID of dropped item to check if true later
             event.dataTransfer.effectAllowed = 'move';
         },
     },
@@ -59,7 +72,7 @@ export const ClothingItemButton = {
       style="width: 80px;"
       draggable="true"
       @dragstart="handleDragStart"
-      @dragend="isDragging = false"
+      @dragend="isDragged = false"
        />
     </button>
   `,
@@ -82,7 +95,7 @@ export const CategoryClothingButton = {
 
 export const ExitGameButton = {
     template: `
-    <button class = "big-buttons" id="exit-game-button">Exit Game?</button>
+    <button class = "big-buttons" id="exit-game-button">{{$language.translate('exit')}}</button>
   `,
 };
 export const LanguageFlagButton = {
@@ -96,17 +109,10 @@ export const LanguageFlagButton = {
     height: { type: String, default: "36px" },
   },
   emits: ["select"],
-  methods: {
-    handleClick() {
-      this.$emit("select", this.value);
-      alert(`Language selected: ${this.value}`);
-    },
-  },
   template: `
     <button
       class="flag-button"
       :class="{ selected: selected }"
-      @click="handleClick"
     >
       <img
         :src="src"
