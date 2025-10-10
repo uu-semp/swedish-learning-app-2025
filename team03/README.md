@@ -139,28 +139,67 @@ Words are stored using the same format as system vocabulary for compatibility:
 
 ## Possible Integration with Other Games
 
-Custom words are stored in localStorage using the same data format as system vocabulary. To make them automatically available in all games, the Data Team can add these methods to `vocabulary.js`:
+- Create team03-local-vocab.js file in the scripts-directory:
 
 ```javascript
-// Add to end of vocabulary.js
-window.vocabulary.get_all = function() {
-  const systemWords = Object.keys(window._vocabulary.vocab || {}).map(id => ({
-    id, ...window._vocabulary.vocab[id]
-  }));
-  const customWords = window.save.get("team03").customWords || [];
-  return [...systemWords, ...customWords];
-};
+/*
+ * Merges Team 03's custom words into global vocabulary
+ * Works on ALL pages (main menu, all games)
+ */
 
-window.vocabulary.get_by_category = function(category) {
-  const ids = window._vocabulary.categories[category] || [];
-  const systemWords = ids.map(id => ({id, ...window._vocabulary.vocab[id]}));
-  const customWords = (window.save.get("team03").customWords || [])
-    .filter(w => w.category && w.category.includes(category));
-  return [...systemWords, ...customWords];
-};
+(function () {
+  window.vocabulary.when_ready(() => {
+    // Get custom words directly from localStorage
+    const team03Data = window.save.get("team03");
+    const words = team03Data.customWords || [];
+    
+    if (words.length === 0) {
+      console.log("Team03: No custom words to merge");
+      return;
+    }
+
+    words.forEach(word => {
+      const id = `team03-${word.id}`;
+      
+      // Add to global vocab object
+      window._vocabulary.vocab[id] = {
+        en: word.en,
+        sv: word.sv,
+        sv_pl: word.sv_pl,
+        article: word.article,
+        literal: word.literal,
+        img: word.img,
+        img_copyright: word.img_copyright,
+        audio: word.audio
+      };
+
+      // Add to categories
+      if (word.category) {
+        const categories = word.category.split(",").map(c => c.trim().toLowerCase());
+        categories.forEach(cat => {
+          if (!window._vocabulary.categories[cat]) {
+            window._vocabulary.categories[cat] = [];
+          }
+          if (!window._vocabulary.categories[cat].includes(id)) {
+            window._vocabulary.categories[cat].push(id);
+          }
+        });
+      }
+    });
+
+    console.log(`✅ Team03: Merged ${words.length} custom words into global vocabulary`);
+  });
+})();
 ```
 
-This creates new convenience methods that merge system and custom words. Games using these methods will automatically receive custom vocabulary without code changes.
+All games would then need this in their html-files:
+
+<script src="../scripts/save.js"></script>
+<script src="../scripts/vocabulary.js"></script>
+<script src="../scripts/team03-local-vocab.js"></script>
+
+This way people can use the existing API with "get_vocab(id)", and "get_category(category)".
+
 
 ## Future Enhancements
 - Edit existing words
