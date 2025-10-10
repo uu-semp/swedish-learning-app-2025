@@ -54,8 +54,11 @@ const app = Vue.createApp({
     //   this.currentScreen = 'menu';
     // },
     startNewRound() {
-      this.translatedIndexes = [];
       this.prompt = [...this.swedishSentence];
+      console.log("test");
+      this.translatedIndexes = Array(this.prompt.length).fill(false);
+      console.log(this.translatedIndexes)
+      console.log(this.prompt)
       this.showTranslation = false;
 
       const randomNoIndex = this.irandom_range(1, this.vocabNumbers.length - 1);
@@ -100,18 +103,33 @@ const app = Vue.createApp({
     },
 
     translateWord(wordIndex) {
-
-      if (this.prompt[wordIndex] === '-int' || this.englishSentence[wordIndex] === '-int') {
+      if (this.prompt[wordIndex] === '-int' || 
+          this.prompt[wordIndex] === '-street') {
         return;
       }
-
-      if ( this.translatedIndexes.includes(wordIndex)) return;
-      
-      this.translatedIndexes.push(wordIndex);
-      const englishWord = this.englishSentence[wordIndex];
-      const newPrompt = [...this.prompt];
-      newPrompt[wordIndex] = englishWord;
-      this.prompt = newPrompt;
+      if (this.translatedIndexes[wordIndex]){
+        console.log("0")
+        this.translatedIndexes[wordIndex] = !this.translatedIndexes[wordIndex];
+        console.log("1")
+        const swedishWord = this.swedishSentence[wordIndex];
+        console.log("2")
+        const newPrompt = [...this.prompt];
+        console.log("3")
+        newPrompt[wordIndex] = swedishWord;
+        console.log("4")
+        this.prompt = newPrompt;        
+      }else{
+        console.log("0")
+        this.translatedIndexes[wordIndex] = !this.translatedIndexes[wordIndex];
+        console.log("1")
+        const englishWord = this.englishSentence[wordIndex];
+        console.log("2")
+        const newPrompt = [...this.prompt];
+        console.log("3")
+        newPrompt[wordIndex] = englishWord;
+        console.log("4")
+        this.prompt = newPrompt;
+      }
     },
 
     renderWord(word) {
