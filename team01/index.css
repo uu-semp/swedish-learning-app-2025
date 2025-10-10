@@ -91,7 +91,6 @@ header h1 {
 }
 
 .card.matched {
-    visibility: hidden;
     pointer-events: none;
 }
 
