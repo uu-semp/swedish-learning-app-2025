@@ -105,17 +105,24 @@ const app = Vue.createApp({
 
     translateWord(wordIndex) {
 
-      if (this.prompt[wordIndex] === '-int' || this.englishSentence[wordIndex] === '-int') {
+      if (this.swedishSentence[wordIndex] === '-int' || this.swedishSentence[wordIndex] === '-street') {
         return;
       }
 
-      if ( this.translatedIndexes.includes(wordIndex)) return;
-      
-      this.translatedIndexes.push(wordIndex);
-      const englishWord = this.englishSentence[wordIndex];
-      const newPrompt = [...this.prompt];
-      newPrompt[wordIndex] = englishWord;
-      this.prompt = newPrompt;
+      const isAlreadyTranslated = this.translatedIndexes.includes(wordIndex);
+      if (isAlreadyTranslated) {
+        const swedishWord = this.swedishSentence[wordIndex];
+        const newPrompt = [...this.prompt];
+        newPrompt[wordIndex] = swedishWord;
+        this.prompt = newPrompt;
+        this.translatedIndexes = this.translatedIndexes.filter(index => index !== wordIndex);
+      } else {
+        const englishWord = this.englishSentence[wordIndex];
+        const newPrompt = [...this.prompt];
+        newPrompt[wordIndex] = englishWord;
+        this.prompt = newPrompt;
+        this.translatedIndexes.push(wordIndex);
+      }
     },
 
     renderWord(word) {
