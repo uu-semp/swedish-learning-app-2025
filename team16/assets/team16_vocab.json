@@ -426,7 +426,7 @@
       },
       "number": {
         "cardinal": {
-          "id": "34447f1c",
+          "id": "647d7c5a",
           "sv": "tjugotvå",
           "en": "twentytwo",
           "literal": "22"
@@ -455,7 +455,7 @@
       },
       "number": {
         "cardinal": {
-          "id": "04795e49",
+          "id": "13783e38",
           "sv": "tjugofyra",
           "en": "twentyfour",
           "literal": "24"
@@ -484,7 +484,7 @@
       },
       "number": {
         "cardinal": {
-          "id": "78151153",
+          "id": "2a5e086b",
           "sv": "tjugosex",
           "en": "twentysix",
           "literal": "26"
@@ -513,7 +513,7 @@
       },
       "number": {
         "cardinal": {
-          "id": "044a446a",
+          "id": "2a0c082c",
           "sv": "tjugoåtta",
           "en": "twentyeight",
           "literal": "28"
@@ -542,7 +542,7 @@
       },
       "number": {
         "cardinal": {
-          "id": "412b1b04",
+          "id": "1e24396d",
           "sv": "tjugonio",
           "en": "twentynine",
           "literal": "29"
@@ -571,7 +571,7 @@
       },
       "number": {
         "cardinal": {
-          "id": "616a2c42",
+          "id": "7635387f",
           "sv": "trettioett",
           "en": "thirtyone",
           "literal": "31"
