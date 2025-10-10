@@ -42,20 +42,30 @@ function game_start(category) {
       game_words.push(generated_word);
       ids.splice(rand, 1);
     }
-  }
 
-  // Add a highscore object to the end of the array for tracking the score
-  // Depending on the number of rounds, will add that many items that track the score for that particular round
-  var highscore = {};
-  for (let i = 0; i < rounds; i++) {
-    highscore["round" + (i + 1)] = 0;
-  }
-  highscore["total"] = 0;
-  game_words.push(highscore);
+   }
 
-  // Put the chosen words in local storage
-  localStorage.setItem("game_words", JSON.stringify(game_words));
-}
+    // Add a highscore object to the end of the array for tracking the score
+    // Depending on the number of rounds, will add that many items that track the score for that particular round
+    var highscore = {};
+    for (let i = 0; i < rounds; i++) {
+        highscore["round" + (i + 1)] = 0;
+    };
+    highscore["total"] = 0;
+    game_words.push(highscore);
+
+
+    //Wrong words tracking for replay button
+    var wrong_words = {};
+    for (let i = 0; i < rounds; i++) {
+        wrong_words["round" + (i + 1)] = []; // empty array to hold wrong word IDs or names
+    }
+    wrong_words["all"] = []; // all wrong words across all rounds
+    game_words.push(wrong_words);
+
+    // Put the chosen words in local storage
+    localStorage.setItem('game_words', JSON.stringify(game_words));
+};
 
 document.addEventListener("DOMContentLoaded", () => {
   if (
@@ -143,32 +153,45 @@ function gameplay() {
     }
   }
 
-  function revealAnswer(clickedImage) {
-    // If locked, do nothing
-    if (selectionLock) {
-      return;
-    }
+   function revealAnswer(clickedImage) {
+        // If locked, do nothing
+        if (selectionLock) {
+            return;
+        }
 
-    selectionLock = true;
+        selectionLock = true;
 
-    imageElements.forEach((image) => {
-      if (image === correctImage) {
-        markCorrectAnswer(image);
-      } else {
-        markIncorrectAnswer(image);
-      }
-      if (image === clickedImage && image === correctImage) {
-        document.getElementById("instruction").textContent = "Correct answer!";
-        // Update high score
-        let words = JSON.parse(localStorage.getItem("game_words") || "[]");
-        let highscore = words[words.length - 1]; // last element is the highscore object
+        let words = JSON.parse(localStorage.getItem('game_words') || '[]');
+        let highscore = words[words.length - 2]; // last element is the highscore object
+        let wrong_words = words[words.length - 1]; // last = wrong words
+        const wordSet = currentRoundWords(currentRound); // get current round's 4 words
 
-        highscore["round" + (currentRound + 1)] += 1;
-        highscore["total"] += 1;
+        imageElements.forEach((image, index) => {
+            const word = wordSet[index]; // ✅ this defines the word for each image
+            
+            if (image === correctImage) {
+            markCorrectAnswer(image);
+            } else {
+            markIncorrectAnswer(image);
+            }
 
-        // Save it back in local storage
-        words[words.length - 1] = highscore;
-        localStorage.setItem("game_words", JSON.stringify(words));
+            if (image === clickedImage && image === correctImage) {
+                document.getElementById('instruction').textContent = "Correct answer!";
+                // Update high score  
+                highscore["round" + (currentRound + 1)] += 1;
+                highscore["total"] += 1;
+            } else if (image === clickedImage && image !== correctImage) {
+                document.getElementById('instruction').textContent = "Wrong answer!";
+                 // Add wrong word to tracking
+                wrong_words["round" + (currentRound + 1)].push(word);
+                wrong_words["all"].push(word);
+            }
+        });
+
+        // Save updated data in local storage
+        words[words.length - 2] = highscore;
+        words[words.length - 1] = wrong_words;
+        localStorage.setItem('game_words', JSON.stringify(words));
       } else if (image === clickedImage && image !== correctImage) {
         document.getElementById("instruction").textContent = "Wrong answer!";
       }
