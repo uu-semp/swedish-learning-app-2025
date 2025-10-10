@@ -311,7 +311,7 @@ export default [
         is_pair: false,
         Category: 'clothing',
         Subcategory: 'accessories',
-        Adjective_sv: 'röd',
+        Adjective_sv: 'rött',
         Adjective_en: 'red',
         Image_url: 'assets/images/clothes/necklace.png',
     },

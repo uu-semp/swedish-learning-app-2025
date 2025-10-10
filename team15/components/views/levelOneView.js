@@ -19,7 +19,7 @@ export const LevelOneView = {
             gameOver:false,
             showInfo:false,
             chosenClothingItems: [],
-            numberOfQuestionsAsked: 10,
+            numberOfQuestionsAsked: 3,
             indexesAsked: []
 
         };
@@ -30,7 +30,7 @@ export const LevelOneView = {
     },
 
     methods: {
-            startLevel() {
+            startLevel() {    
                 this.chosenClothingItems = this.generateSubCategories()
             if (this.chosenClothingItems && this.chosenClothingItems.length > 0) {
                 let randomIndex = this.getRandomIndex(this.chosenClothingItems)
@@ -54,8 +54,34 @@ export const LevelOneView = {
                 this.incorrectMessage = '';
                 this.indexesAsked.push(randomIndex)
             } else {
+                this.saveGameScore()
                 this.gameOver=true
             }
+        },
+
+        saveGameScore(){  // Uses the save.js API to set the score of our game! 
+            //Right now this is really simplified, and we don't consider the other levels while setting completion.
+            const stats = window.save.stats.get("team15")
+            const completion = stats.completion
+            let wins = stats.wins
+            let percentageCorrect = this.getPercentage()
+            if (percentageCorrect > completion){ //Only set percentage if better than prev attempts
+                const numWins = wins + 1;
+                save.stats.set("team15", numWins, percentageCorrect)
+                console.log("set new record!")
+            }
+        },
+
+        getPercentage(){
+            return (this.currentScore/this.numberOfQuestionsAsked)*100;
+        },
+
+        getPercentageScore(){ // By using this method the lower the score the better the score point becomes
+            //This can be used to send as the score feature of the save js API (which i cannot get to work ATM)
+            const maxPossible = this.numberOfQuestionsAsked * 3; // We have 3 attempts per question
+            const percentageScore = (this.currentScore / maxPossible) * 100;
+
+            return percentageScore
         },
 
         generateSubCategories(){
@@ -98,6 +124,7 @@ export const LevelOneView = {
         },
         
         confirmExit() {
+            this.saveGameScore()  // If user exits before we still want to save the progress. 
             this.switchTo('ChooseLevelView'); // Navigate to ChooseLevelView
             this.closeModal();
         },
@@ -126,7 +153,6 @@ export const LevelOneView = {
         },
 
       handleDropResult({ isCorrect, droppedItem }) {
-            console.log('Drop result received in LevelOneView:', { isCorrect, droppedItem, expected: this.currentItem ? this.currentItem.ID : null });
             // Record that the player made a try (placeholder for persistent storage)
             this.incrementTotalTries();
             if (isCorrect) {
@@ -167,8 +193,6 @@ export const LevelOneView = {
                     }, 1500);
                 }
             }
-
-            console.log('PLAYER DATA UPDATED:', { totalTries: this.totalTries, currentAttempts: this.currentAttempts, correctAnswers: this.correctAnswers, currentScore: this.currentScore });
         },
 
         restartGame(){
@@ -190,7 +214,7 @@ export const LevelOneView = {
             this.gameOver=false;
             this.showInfo=false;
             this.chosenClothingItems= [];
-            this.numberOfQuestionsAsked= 10;
+            this.numberOfQuestionsAsked= 3;
             this.indexesAsked= []
 
         },
