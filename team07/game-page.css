@@ -13,17 +13,18 @@ Owned by Team 07
 
 .game-frame .image-container {
     display: grid;
-    grid-template-columns: auto auto;  
+    grid-template-columns: auto auto;
     gap: 20px;
-    max-width: 250px;   /* Storlek av bilder*/
-    margin: 1rem auto;     
+    max-width: 250px;
+    /* Storlek av bilder*/
+    margin: 1rem auto;
     align-items: center;
     justify-items: center;
 }
 
 .game-frame .image-container img {
-    width: 100%;    
-    aspect-ratio: 1 / 1; 
+    width: 100%;
+    aspect-ratio: 1 / 1;
     object-fit: cover;
     display: block;
     border: 6px solid #000000;
@@ -36,6 +37,7 @@ Owned by Team 07
     border-color: green;
     box-shadow: 0 0 4px darkgreen;
 }
+
 .game-frame .image-container img.incorrect {
     border-color: red;
     box-shadow: 0 0 0 4px darkred;
@@ -71,4 +73,32 @@ Owned by Team 07
     cursor: pointer;
 }
 
+.game-frame #copyright-button {
+    position: absolute;
+    left: 20px;
+    bottom: 20px;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
 
+.game-frame #overlay {
+    position: fixed;
+    display: none;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgb(255, 255, 255);
+    z-index: 2;
+    padding: 5px;
+}
+
+.game-frame #overlay button {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
