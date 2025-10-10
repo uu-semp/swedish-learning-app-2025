@@ -92,7 +92,7 @@ const app = Vue.createApp({
 
       if (this.progress >= this.progressMax) {
         alert("Congrats! You finished 10 rounds.");
-        this.backToMenu();
+        window.location.href = 'index.html';
         return;
       }
 
