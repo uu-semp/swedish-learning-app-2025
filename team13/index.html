@@ -25,31 +25,26 @@ Owned by Team 13
 
   <!-- Site specific scripts and styles -->
   <link rel="stylesheet" href="index.css" />
-  <script src="index.js" defer></script>
+  <script src="main.js" defer></script>
+  <script src="houses.js" defer></script>
+  <script src="translation.js" defer></script>
 </head>
 <body>
   <header>
     <h1>Team 13</h1>
   </header>
 
-  <!-- TODO: Remove this div and it's content -->
-  <div>
-      <hr>
-      <h2>A basic section to make sure that everything works for everyone</h2>
-
-      <p>Font awesome is working: <i class="fa-solid fa-check"></i> (A checkmark should be visible)</p>
-
-      <button id="check-jquery">Check if Javascript and JQuery is working</button> (Clicking the button should show an alert)
-
-      <button id="check-saving">Click this button to see if saving works</button>
-      <hr>
-  </div>
-
   <main class="game-frame">
-    Implement your game inside this tag.
+    <button onclick="generateRandom()">Re-randomize</button>
+    <button onclick="nextGameState()">Change gameState</button>
+    <hr>
+    <div id="prompt-words"></div>
+
+    <div id="house-buttons"></div>
 
     <hr>
-    Learning: <div id="display-vocab">(This should be replaced by a word)</div>
+  <!-- Literal: <div id="number-literal"></div><br>-->
+    Gamestate: <div id="gamestate"></div>
   </main>
 
   <footer>
