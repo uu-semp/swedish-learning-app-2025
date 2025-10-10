@@ -192,7 +192,6 @@ function gameplay() {
         words[words.length - 2] = highscore;
         words[words.length - 1] = wrong_words;
         localStorage.setItem('game_words', JSON.stringify(words));
-        console.log(words[words.length - 1], "wrong words");
     }
 
   imageElements.forEach((image) => {
