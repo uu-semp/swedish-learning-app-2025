@@ -32,3 +32,23 @@ document.addEventListener("DOMContentLoaded", () => {
 
   document.getElementById("message").textContent = message;
 });
+
+// Try again button
+document.getElementById("tryagain-button").addEventListener("click", () => {
+  // Orden från rungan
+  let words = JSON.parse(localStorage.getItem("game_words") || "[]");
+
+  if (words.length) {
+    let highscore = words[words.length - 1];
+
+    // Nollställ alla poäng
+    for (let key in highscore) {
+      highscore[key] = 0;
+    }
+    words[words.length - 1] = highscore;
+    localStorage.setItem("game_words", JSON.stringify(words));
+  }
+
+  // Tillbaka till spelsidan
+  window.location.href = "game-page.html";
+});
