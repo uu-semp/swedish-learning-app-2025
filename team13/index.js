@@ -1,171 +1,243 @@
 // ==============================================
-// Owned by Team 13
+// Owned by the Menu Team
 // ==============================================
-
 
 "use strict";
 
-const app = Vue.createApp({
-  data() {
-    return {
-      tempStreets: [
-        'Rackarberget',
-        'Kungsgatan',
-        'Daghammarskölds väg',
-        'Torgny Segersteds allé',
-        'Flogstavägen'
-      ],
 
-      isLoading: true,
-      currentScreen: 'menu',
+// Elements
+const grid = document.getElementById("game-grid");
+const frame = document.getElementById("game-frame");
+const menu = document.getElementById("game-menu");
+const stage = document.getElementById("game-stage");
+const backBtn = document.getElementById("back-btn");
+const filterBar = document.getElementById("filter-bar");
 
-      progress: 1,
-      progressMax: 10,
+let allGames = [];
 
-      houseOptions: [],
-      correctHouseIndex: -1,
-      currentQuestion: null,
-      currentStreet: '',
+//// Data ////
+// Load games from JSON
+async function loadGames() {
+  try {
+    // Load game data
+    const res = await fetch("assets/main_menu/games.json", { cache: "no-store" });
+    if (!res.ok) throw new Error("Failed to load games.json");
+    allGames = await res.json();
 
-      showTranslation: false,
-      swedishSentence: ["Jag", "bor", "på", "-street", "-int"],
-      englishSentence: ["I", "live", "on", "-street", "-int"],
-      prompt: [],
-      translatedIndexes: [],
-
-      vocabNumbers: [],
-      // vocabStreets: [],
-    }
-  },
-
-  computed: {
-    progressPercentage() {
-      return (this.progress / this.progressMax) * 100 + '%';
-    },
-    translationButtonText() {
-      return this.showTranslation ? 'Hide translation' : 'Show translation';
-    },
-    startButtonText() {
-      return this.isLoading ? 'Loading Vocabulary...' : 'Start Game';
-    }
-  },
-
-  methods: {
-    startGame() {
-      this.progress = 1;
-      this.currentScreen = 'game';
-      this.startNewRound();
-    },
-    backToMenu() {
-      this.currentScreen = 'menu';
-    },
-    startNewRound() {
-      this.translatedIndexes = [];
-      this.prompt = [...this.swedishSentence];
-      this.showTranslation = false;
-
-      const randomNoIndex = this.irandom_range(1, this.vocabNumbers.length - 1);
-      const vocab = window.vocabulary.get_vocab(this.vocabNumbers[randomNoIndex]);
-      this.currentQuestion = vocab;
-
-      const randomStreetIndex = this.irandom_range(0, this.tempStreets.length - 1);
-      this.currentStreet = this.tempStreets[randomStreetIndex];
-      // const randomStreetIndex = this.irandom_range(0, this.vocabStreets.length - 1);
-      // this.currentStreet = window.vocabulary.get_vocab(this.vocabStreets[randomStreetIndex]).sv;
-
-      const houseCount = 4;
-      const highestNumber = this.vocabNumbers.length - 1;
-      const result = this.generateRandomHouses(vocab.literal, houseCount, highestNumber);
-
-      this.houseOptions = result.houseArray;
-      this.correctHouseIndex = result.correctHouse;
-    },
-
-    checkAnswer(selectedIndex) {
-      const wasCorrect = (selectedIndex === this.correctHouseIndex);
-      alert(wasCorrect ? "Correct!" : "Wrong house.");
-
-      this.progress += wasCorrect ? 1 : -1;
-      if (this.progress < 1)  {
-        this.progress = 1;
-      }
-
-      if (this.progress >= this.progressMax) {
-        alert("Congrats! You finished 10 rounds.");
-        this.backToMenu();
-        return;
-      }
-
-      this.startNewRound();
-    },
-
-    toggleTranslation() {
-      this.showTranslation = !this.showTranslation;
-    },
-
-    translateWord(wordIndex) {
-
-      if (this.prompt[wordIndex] === '-int' || this.englishSentence[wordIndex] === '-int') {
-        return;
-      }
-
-      if ( this.translatedIndexes.includes(wordIndex)) return;
-      
-      this.translatedIndexes.push(wordIndex);
-      const englishWord = this.englishSentence[wordIndex];
-      const newPrompt = [...this.prompt];
-      newPrompt[wordIndex] = englishWord;
-      this.prompt = newPrompt;
-    },
-
-    renderWord(word) {
-      switch (word) {
-        case 
-          "-street": return this.currentStreet;
-
-        case 
-          "-int": return this.currentQuestion ? this.currentQuestion.sv : '';
-      
-        default: 
-          return word;
-      }
-    },
-    
-    generateRandomHouses(houseNumber, houseCount, highestNumber) {
-      const doubleHouses = this.irandom_range(0, 1);
-      const maxPos = Math.min(Math.floor((houseNumber - 1) / (1 + doubleHouses)), houseCount - 1);
-      const minPos = Math.min(
-        Math.max(Math.ceil((houseCount - 1) - (highestNumber - houseNumber) / (1 + doubleHouses)), 0),
-        houseCount - 1
-      );
-    
-      const relativeHousePosition = this.irandom_range(Math.max(0, minPos), maxPos);
-      const houses = [];
-    
-      for (let i = 0; i < houseCount; i++) {
-        houses.push(houseNumber - (relativeHousePosition - i) * (1 + doubleHouses));
-      }
-    
-      return { houseArray: houses, correctHouse: relativeHousePosition };
-    },
-
-    irandom_range(min, max) {
-      min = Math.ceil(min);
-      max = Math.floor(max);
-      return Math.floor(Math.random() * (max - min + 1)) + min;
-    }
-
-  },
-  
-  mounted() {
-    window.vocabulary.when_ready(() => {
-      console.log("Vocabulary loaded, vue ready");
-      this.vocabNumbers = window.vocabulary.get_category("number");
-      // this.vocabStreets = window.vocabulary.get_category("street");
-      this.isLoading = false;
+    // Sort by smallest supported chapter
+    allGames.sort((a, b) => {
+      const aMin = Math.min(...a.supported_chapters);
+      const bMin = Math.min(...b.supported_chapters);
+      return aMin - bMin;
     });
+
+    // Filter games by chapter
+    const chapters = [...new Set(allGames.flatMap(g => g.supported_chapters))].sort((a, b) => a - b);
+    buildFilter(chapters);
+    setActiveFilter("all"); // default
+
+    // Render game grid
+    renderGrid(allGames);
+  } catch (err) {
+    console.error("Error loading games:", err);
+    grid.innerHTML = "<p>Could not load games.</p>";
   }
-  
+}
+
+
+//// UI ////
+// Build filter button
+function buildFilter(chapters){
+  filterBar.innerHTML = ""; // clear
+
+  // Add instruction text
+  const label = document.createElement("span");
+  label.textContent = "Filter by chapter:";
+  label.className = "filter-label";
+  filterBar.appendChild(label);
+
+  // "All" first
+  filterBar.appendChild(makeFilterBtn("All","all"));
+  // then one per chapter
+  chapters.forEach(ch => filterBar.appendChild(makeFilterBtn(`Chapter ${ch}`, String(ch))));
+}
+
+function makeFilterBtn(label, value){
+  const btn = document.createElement("button");
+  btn.className = "filter-btn";
+  btn.textContent = label;
+  btn.dataset.chapter = value;
+  return btn;
+}
+
+// Handle filter button
+filterBar.addEventListener("click", (e)=>{
+  const btn = e.target.closest(".filter-btn");
+  if(!btn) return;
+  const value = btn.dataset.chapter;
+  setActiveFilter(value);
+  if(value === "all") return renderGrid(allGames);
+  const chNum = Number(value);
+  renderGrid(allGames.filter(g => g.supported_chapters.includes(chNum)));
 });
 
-app.mount('#app');
+function setActiveFilter(value){
+  document.querySelectorAll(".filter-btn").forEach(b => b.classList.toggle("active", b.dataset.chapter === value));
+}
+
+// Render grid of game cards
+function renderGrid(games) {
+  grid.innerHTML = "";
+  games.forEach((g) => {
+    const card = document.createElement("article");
+    card.className = "card";
+
+    // Build game tags HTML
+    const tagsHtml = (Array.isArray(g.supported_chapters) && g.supported_chapters.length)
+      ? `<div class="card-tags">
+           ${g.supported_chapters.map(ch => `<span class="tag">Chapter ${ch}</span>`).join("")}
+         </div>`
+      : "";
+
+    // Build game card HTML
+    card.innerHTML = `
+      <img src="assets/main_menu/images/games/${g.id}.png" 
+           alt="${g.eng_title}"
+           onerror="this.onerror=null; this.src='assets/main_menu/images/games/default_image.png';">
+      <div class="card-body">
+        <h3>${g.eng_title}</h3>
+        <p>${g.eng_desc}</p>
+        ${tagsHtml}
+      </div>
+    `;
+
+    // Add click event to open game
+    card.addEventListener("click", () => openIframe(`./${g.id}/index.html`));
+    grid.appendChild(card);
+  });
+}
+
+//// Settings Feature ////
+ // Creates a settings overlay with the following features:
+ // (1) a slider for the global volume control
+ // (2) a button to the 'add vocabulary' form, managed by team03
+ // (3) a 'clear saved data' button
+(() => {
+  const settingsBtn = document.getElementById('settings-btn');
+  if (!settingsBtn) return;
+
+  //Creates the settings overlay UI
+  function createSettingsOverlay() {
+    const overlay = document.createElement('div');
+    overlay.id = 'settings-overlay';
+
+    const box = document.createElement('div');
+    box.id = 'settings-box';
+
+    box.innerHTML = `
+      <div class="settings-header">
+        <h2 class="settings-title">Settings</h2>
+        <button id="_close_settings" class="settings-btn close">Close</button>
+      </div>
+      <div class="settings-actions">
+        <button id="_open_add" class="settings-btn primary">Add vocabulary</button>
+        <button id="_clear_save" class="settings-btn secondary">Clear data</button>
+      </div>
+    `;
+    overlay.appendChild(box);
+      // Close overlay when clicking outside the box
+      overlay.addEventListener('mousedown', (e) => {
+        if (e.target === overlay) overlay.remove();
+      });
+
+    // Settings overlay event handlers
+    overlay.querySelector('#_close_settings').addEventListener('click', () => overlay.remove());
+
+    // Clear saved data button
+    overlay.querySelector('#_clear_save').addEventListener('click', () => {
+      const confirmBox = document.createElement('div');
+      confirmBox.className = 'confirm-box';
+      confirmBox.innerHTML = `
+        <h3>Clear Game Data?</h3>
+        <p>This will reset all saved progress and cannot be undone.</p>
+        <div class="confirm-box-actions">
+          <button class="settings-btn confirm-box-btn cancel" 
+            onclick="this.parentElement.parentElement.remove()">Cancel</button>
+          <button class="settings-btn confirm-box-btn confirm" 
+            id="_confirm_clear">Clear Data</button>
+        </div>
+      `;
+      
+      box.appendChild(confirmBox);
+      
+      confirmBox.querySelector('#_confirm_clear').onclick = () => {
+        // Clear data for all teams
+        for (let i = 1; i <= 16; i++) {
+          const teamName = `team${String(i).padStart(2, '0')}`;
+          window.save.clear(teamName);
+        }
+        confirmBox.remove();
+        
+        // Show success message
+        const msg = document.createElement('div');
+        msg.className = 'success-message';
+        msg.textContent = 'Game data cleared successfully';
+        box.appendChild(msg);
+        setTimeout(() => msg.remove(), 3000);
+      };
+    });  // Add vocabulary button - will open the form once present, for now opens a new tab to team03
+  overlay.querySelector('#_open_add').addEventListener('click', () => {
+      const candidate = './team03/index.html';
+      fetch(candidate, { method: 'HEAD' }).then(res => {
+        if (res.ok) window.open(candidate, '_blank');
+        else window.open('about:blank', '_blank');
+      }).catch(() => window.open('about:blank', '_blank'));
+    });
+
+    return overlay;
+  }
+
+  settingsBtn.addEventListener('click', () => {
+    const existing = document.getElementById('settings-overlay');
+    if (existing) return; // already open
+    document.body.appendChild(createSettingsOverlay());
+  });
+})();
+
+//// Navigation ////
+// Open game in iframe
+function openIframe(src) {
+  frame.src = src;
+  menu.hidden = true;
+  stage.hidden = false;
+
+  // Save current game to sessionStorage
+  sessionStorage.setItem("currentGameSrc", src);
+}
+
+// Back to menu
+backBtn.addEventListener("click", () => {
+  frame.src = ""; // Stop the game
+  stage.hidden = true;
+  menu.hidden = false;
+
+  // Remove current game to sessionStorage
+  sessionStorage.removeItem("currentGameSrc");
+});
+
+window.addEventListener("DOMContentLoaded", () => {
+  // Restore current game from sessionStorage
+  const savedSrc = sessionStorage.getItem("currentGameSrc");
+
+  if (savedSrc) {
+    // Reopen the game directly
+    openIframe(savedSrc);
+  } else {
+    // Make sure we’re on the menu
+    backBtn.click();
+  }
+});
+
+
+//// Init ////
+loadGames();
