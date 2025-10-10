@@ -8,6 +8,7 @@
 
     <!-- Shared + page-specific styles -->
     <link rel="stylesheet" href="../style.css" />
+    <link rel="stylesheet" href="./styles/room.css" />
     <link rel="stylesheet" href="./styles/level1.css" />
     <link rel="stylesheet" href="./styles/dragAndDrop.css" />
 </head>
@@ -20,7 +21,22 @@
     <div id="questions-container"></div>
 
     <div id="content-row">
-        <div id="workspace"></div>
+        <div id="workspace">
+            <div class="room-container overflow-hidden">
+                <div class="floor">
+                    <div class="floor-tile"></div>
+                    <div class="floor-tile"></div>
+                    <div class="floor-tile"></div>
+                    <div class="floor-tile"></div>
+                    <div class="floor-tile"></div>
+                </div>
+                <div class="baseboard"></div>
+                <div class="window">
+                    <div class="pane-h"></div>
+                    <div class="pane-v"></div>
+                </div>
+            </div>
+        </div>
         <div id="sidebar">
             <h2>Images</h2>
         </div>
