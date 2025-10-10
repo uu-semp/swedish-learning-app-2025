@@ -192,11 +192,7 @@ function gameplay() {
         words[words.length - 2] = highscore;
         words[words.length - 1] = wrong_words;
         localStorage.setItem('game_words', JSON.stringify(words));
-      } else if (image === clickedImage && image !== correctImage) {
-        document.getElementById("instruction").textContent = "Wrong answer!";
-      }
-    });
-  }
+    }
 
   imageElements.forEach((image) => {
     image.addEventListener("click", () => {
