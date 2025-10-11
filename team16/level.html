@@ -9,13 +9,19 @@
   <link rel="stylesheet" href="index.css" />
   
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
   
+  <!-- Core scripts - MUST load first -->
   <script src="../scripts/vocabulary.js"></script>
   <script src="../scripts/save.js"></script>
   
-  <script src="level.js" defer></script>
+  <!-- External libraries -->
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+  
+  <!-- Game scripts-->
+  <script type="module" src="localStorage.js"></script>
+  <script type="module" src="setUpLevels.js"></script>
+  <script type="module" src="level.js"></script>
 </head>
 <body>
   <header>
@@ -56,7 +62,7 @@
             <input 
               v-model="textAnswer" 
               @keyup.enter="checkTextAnswer"
-              placeholder="Ex: Ringgatan ett">
+              placeholder="Ex: ringgatan ett">
             <button @click="checkTextAnswer">Skicka</button>
           </div>
         </div>
@@ -84,8 +90,8 @@
                 v-if="currentQuestion && currentQuestion.type === 'text'" 
                 class="pointer"
                 :style="{ 
-                  top: (currentQuestion.target.labelY * 100) + '%', 
-                  left: (currentQuestion.target.labelX * 100) + '%'
+                  top: (currentQuestion.target.coords.y * 100) + '%', 
+                  left: (currentQuestion.target.coords.x * 100) + '%'
                 }">
               </div>
             </div>
