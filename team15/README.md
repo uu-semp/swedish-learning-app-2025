@@ -23,10 +23,8 @@ This project is an interactive Swedish language-learning game designed to make v
 
 ## 🏗️ Installation / Setup Instructions
 
-## 🏗️ 5. Installation / Setup Instructions
-
 ### Prerequisites
-- **Python 3.x**
+- **Python 3.9.x or above**
 - **Git**
 
 ---
@@ -51,10 +49,6 @@ This project is an interactive Swedish language-learning game designed to make v
 5. **Open your browser and go to:**
     ```bash
     http://localhost:8000
-
-### Prerequisites
-- Python 3.x
-- Git
 
 
 ## 👥 Team Members / Contributors
