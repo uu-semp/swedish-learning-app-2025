@@ -51,7 +51,7 @@
 
     <script>
         let remainingQuestions = [];
-        let currentQuestion = null;
+        window.currentQuestion = null;
 
         function showRandomQuestion() {
             const questionsContainer = document.getElementById('questions-container');
@@ -63,7 +63,7 @@
             }
 
             // Take the first question from the remaining questions (they come in order from the group)
-            currentQuestion = remainingQuestions.shift();
+            window.currentQuestion = remainingQuestions.shift();
             const div = document.createElement('div');
             div.className = 'question-block';
             div.innerHTML = `<p>${currentQuestion.question}</p>`;
