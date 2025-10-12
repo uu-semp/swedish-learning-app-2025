@@ -77,16 +77,29 @@ function generateRandom() {
 
   return result;
 }
+
 function renderHouseButtons() {
   const container = $("#house-buttons");
-  container.empty(); // clear previous buttons
+  container.empty();
 
   houseArray.forEach((houseNum, index) => {
-    const btn = $(`<button>House ${houseNum}</button>`);
+    // Button uses a background image; the big number comes from data-number
+    const btn = $(`
+      <button
+        type="button"
+        id="house-btn-${index}"
+        class="house-card"
+        data-number="${houseNum}"
+        aria-label="House ${houseNum}"
+      >
+        <span class="visually-hidden">House ${houseNum}</span>
+      </button>
+    `);
     btn.on("click", () => clickHouse(index));
     container.append(btn);
   });
 }
+
 
 function generateRandomHouses(houseNumber, houseCount, highestNumber) {
   const doubleHouses = irandom_range(0, 1);
