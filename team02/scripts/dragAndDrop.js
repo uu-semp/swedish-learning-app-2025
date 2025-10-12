@@ -7,6 +7,7 @@ let dragSource = null;
     const images = await loadImages();
 
     const workspace = document.getElementById('workspace');
+    const sidebar = document.getElementById('sidebar');
     let draggedImage = null;
 
     images.forEach(img => {
@@ -24,24 +25,20 @@ let dragSource = null;
 
         const tile = e.target.closest('.floor-tile');
         if (tile) {
+            const rect = workspace.getBoundingClientRect();
+            tile.appendChild(draggedImage);
+            draggedImage.className = 'draggable';
+            draggedImage.style.position = '';
+            draggedImage.style.left = '';
+            draggedImage.style.top = '';
             const index = tile.dataset.index;
             console.log('Dropped on tile index:', index);
-            console.log("Current question:", currentQuestion);
+            console.log("Current question:", window.currentQuestion);
+            // Fire events
+            const eventName = dragSource === 'sidebar' ? 'DropFromSidebar' : 'DropFromWorkspace';
+            workspace.dispatchEvent(new CustomEvent(eventName, { detail: { draggedImage, tile } }));
+            workspace.dispatchEvent(new CustomEvent('FurnitureDropped', { detail: { draggedImage, tile } }));
         }
-
-        workspace.appendChild(draggedImage);
-        const rect = workspace.getBoundingClientRect();
-        draggedImage.className = 'draggable';
-        draggedImage.style.position = 'absolute';
-        draggedImage.style.left = (e.clientX - rect.left - 75) + 'px';
-        draggedImage.style.top = (e.clientY - rect.top - 75) + 'px';
-
-        const eventName = dragSource === 'sidebar' ? 'DropFromSidebar' : 'DropFromWorkspace';
-        console.log("Event name: ", eventName)
-        workspace.dispatchEvent(new CustomEvent(eventName, { detail: {draggedImage, tile}}));
-        // Unified event
-        workspace.dispatchEvent(new CustomEvent('FurnitureDropped', { detail: {draggedImage, tile}}));
-
         dragSource = null;
         draggedImage = null;
     });
