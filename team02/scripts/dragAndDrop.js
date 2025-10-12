@@ -39,6 +39,8 @@ let dragSource = null;
             const workspaceRect = workspace.getBoundingClientRect();
             workspace.appendChild(draggedImage);
             draggedImage.classList.add('draggable', 'placed');
+            draggedImage.draggable = false;
+            draggedImage.style.cursor = 'default'; // optional visual cue
             draggedImage.style.position = 'absolute';
             draggedImage.style.left = (tileRect.left - workspaceRect.left + tileRect.width / 2 - draggedImage.offsetWidth / 2) + 'px';
             draggedImage.style.top = (tileRect.top - workspaceRect.top + tileRect.height / 2 - draggedImage.offsetHeight / 2) + 'px';
