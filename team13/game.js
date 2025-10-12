@@ -104,19 +104,16 @@ const app = Vue.createApp({
           this.prompt[wordIndex] === '-street') {
         return;
       }
+      let newWord = ""
       if (this.translatedIndexes[wordIndex]){
-        this.translatedIndexes[wordIndex] = !this.translatedIndexes[wordIndex];
-        const swedishWord = this.swedishSentence[wordIndex];
-        const newPrompt = [...this.prompt];
-        newPrompt[wordIndex] = swedishWord;
-        this.prompt = newPrompt;        
+        newWord = this.swedishSentence[wordIndex];  
       }else{
-        this.translatedIndexes[wordIndex] = !this.translatedIndexes[wordIndex];
-        const englishWord = this.englishSentence[wordIndex];
-        const newPrompt = [...this.prompt];
-        newPrompt[wordIndex] = englishWord;
-        this.prompt = newPrompt;
+        newWord = this.englishSentence[wordIndex];
       }
+      this.translatedIndexes[wordIndex] = !this.translatedIndexes[wordIndex];
+      const newPrompt = [...this.prompt];
+      newPrompt[wordIndex] = newWord;
+      this.prompt = newPrompt;
     },
 
     renderWord(word) {
