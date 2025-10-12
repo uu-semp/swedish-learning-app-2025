@@ -74,3 +74,137 @@ nav.actions {
   border-color: var(--primary-color);
   color: #fff;
 }
+
+#question-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 1rem auto;
+    width: 90%;
+    max-width: 900px;
+}
+#questions-container {
+    flex: 1;
+}
+
+#hint-button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 18px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+#hint-button:hover {
+    background-color: #45a049;
+    transform: scale(1.05);
+}
+
+#hint-button:active {
+    transform: scale(0.98);
+}
+
+.question-block {
+    background-color: #f8f8f8;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    padding: 1rem 1.5rem;
+    margin: 1rem auto;
+    width: 80%;
+    max-width: 800px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.question-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.question-content p {
+    margin: 0;
+    font-size: 1.1rem;
+    font-weight: 500;
+    flex: 1;
+}
+
+.hint-btn {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 14px;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+    margin-left: 1rem;
+}
+/* === Hint Modal === */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+    animation: fadeIn 0.3s ease;
+}
+
+/* Modal content box */
+.modal-content {
+    background-color: #fff;
+    padding: 1.5rem 2rem;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 400px;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    animation: popUp 0.3s ease;
+}
+
+/* Modal header + text */
+.modal-content h2 {
+    margin-top: 0;
+    color: #4CAF50;
+}
+
+.modal-content p {
+    font-size: 1rem;
+    color: #333;
+}
+
+/* Close button */
+.close-btn {
+    margin-top: 1rem;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 16px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.close-btn:hover {
+    background-color: #45a049;
+    transform: scale(1.05);
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes popUp {
+    from { transform: scale(0.9); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
