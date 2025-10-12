@@ -25,15 +25,17 @@ let dragSource = null;
 
         const tile = e.target.closest('.floor-tile');
         if (tile) {
-            const rect = workspace.getBoundingClientRect();
-            tile.appendChild(draggedImage);
-            draggedImage.className = 'draggable';
-            draggedImage.style.position = '';
-            draggedImage.style.left = '';
-            draggedImage.style.top = '';
-            const index = tile.dataset.index;
-            console.log('Dropped on tile index:', index);
-            console.log("Current question:", window.currentQuestion);
+            const tileRect = tile.getBoundingClientRect();
+            const workspaceRect = workspace.getBoundingClientRect();
+
+            workspace.appendChild(draggedImage);
+            draggedImage.classList.add('draggable', 'placed');
+            draggedImage.style.position = 'absolute';
+            draggedImage.style.left = (tileRect.left - workspaceRect.left + tileRect.width / 2 - draggedImage.offsetWidth / 2) + 'px';
+            draggedImage.style.top = (tileRect.top - workspaceRect.top + tileRect.height / 2 - draggedImage.offsetHeight / 2) + 'px';
+            // Prevent tilt inheritance
+            draggedImage.style.transform = 'none';
+            draggedImage.style.transformOrigin = 'center center';
             // Fire events
             const eventName = dragSource === 'sidebar' ? 'DropFromSidebar' : 'DropFromWorkspace';
             workspace.dispatchEvent(new CustomEvent(eventName, { detail: { draggedImage, tile } }));
