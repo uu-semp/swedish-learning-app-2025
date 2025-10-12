@@ -62,3 +62,14 @@ body {
 .draggable:active {
   cursor: grabbing;
 }
+.floor-tile.wrong-drop {
+    animation: flashRed 0.4s ease;
+}
+
+@keyframes flashRed {
+    0%   { background-color: #c5a98b; }     /* normal color */
+    25%  { background-color: #ffb3b3; }     /* light red */
+    50%  { background-color: #ff6666; }     /* bright red */
+    75%  { background-color: #ffb3b3; }
+    100% { background-color: #c5a98b; }     /* back to normal */
+}
