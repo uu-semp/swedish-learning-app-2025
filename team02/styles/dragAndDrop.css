@@ -53,6 +53,12 @@ body {
 
 }
 
+.draggable.placed {
+    transform: scale(1.3) translateY(-40px);
+    transform-origin: center bottom;
+    transition: transform 0.3s ease;
+}
+
 .draggable:active {
   cursor: grabbing;
 }

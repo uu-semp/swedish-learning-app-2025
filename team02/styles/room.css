@@ -15,7 +15,7 @@
     transform-origin: bottom;
     transform: rotateX(75deg);
     display: flex;
-} 
+}
 
 .floor-tile {
     flex: 1;
