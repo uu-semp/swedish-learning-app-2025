@@ -34,6 +34,7 @@ let dragSource = null;
             itemName === window.currentQuestion.answer &&
             window.currentQuestion.index.includes(tileIndex)
         ) {
+            // Correct placement
             const tileRect = tile.getBoundingClientRect();
             const workspaceRect = workspace.getBoundingClientRect();
             workspace.appendChild(draggedImage);
@@ -48,6 +49,18 @@ let dragSource = null;
             workspace.dispatchEvent(new CustomEvent('FurnitureDropped', { detail: { draggedImage, tile } }));
             dragSource = null;
             draggedImage = null;
+        }
+        else {
+            // Incorrect placement
+            tile.classList.add('wrong-drop');
+            setTimeout(() => tile.classList.remove('wrong-drop'), 400);
+            sidebar.appendChild(draggedImage);
+            draggedImage.style.position = '';
+            draggedImage.style.left = '';
+            draggedImage.style.top = '';
+            document.dispatchEvent(new CustomEvent('AnswerIncorrect', {
+                detail: { reason: 'Wrong item or tile' }
+            }));
         }
 
     });
