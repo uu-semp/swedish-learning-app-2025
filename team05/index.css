@@ -4,9 +4,122 @@ Owned by Team 05
 =================================================
 */
 
-body {
-    font-family: Arial, sans-serif;
-    width: 1000px;
-    margin-left: auto;
-    margin-right: auto;
+
+
+#image-container, #word-container {
+  position: relative;
+  width: 45%;
+}
+
+.game-frame {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.game-frame {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+/* 🧩 New container for horizontal layout */
+.game-area {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 60px; /* space between columns */
+  width: 90%;
+  margin-top: 30px;
+}
+
+/* Images on the left */
+.images {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+}
+
+/* Words in the middle */
+.words {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 15px;
+}
+
+/* Buttons on the right */
+.buttons {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 15px;
+}
+
+.item {
+  width: 120px;  /* slightly bigger for better visibility */
+  height: 120px;
+  object-fit: contain;
+  cursor: pointer;
+  border: 2px solid transparent;
+  border-radius: 10px;
+  background-color: #f8f8f8;
+  transition: border-color 0.2s, transform 0.2s;
+}
+
+.item:hover {
+  transform: scale(1.05);
+}
+
+.item.selected {
+  border-color: #007bff;
+}
+
+/* 🧩 Match word boxes to image size */
+.word {
+  width: 120px;
+  height: 120px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 10px;
+  background-color: #f0f0f0;
+  border: 2px solid transparent;
+  border-radius: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.2s;
+  box-sizing: border-box;
+}
+
+.word:hover {
+  background-color: #e0e0e0;
+  transform: scale(1.05);
+}
+
+.word.selected {
+  border-color: #007bff;
+}
+
+.message {
+  margin-top: 20px;
+  font-size: 1.1em;
+}
+
+button {
+  padding: 8px 16px;
+  cursor: pointer;
+  border-radius: 8px;
+  border: none;
+  background-color: #007bff;
+  color: white;
+  transition: background-color 0.2s;
+}
+
+button:hover {
+  background-color: #0056b3;
 }
