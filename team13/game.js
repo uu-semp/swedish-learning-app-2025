@@ -60,12 +60,6 @@ const app = Vue.createApp({
     //   this.currentScreen = 'menu';
     // },
     startNewRound() {
-        // Remove any leftover "✔ Correct!" / "✖ Wrong..." messages
-      document.querySelectorAll(".house-message").forEach(n => n.remove());
-      this.translatedIndexes = [];
-      this.prompt = [...this.swedishSentence];
-      this.showTranslation = false;
-      
       this.translatedIndexes = [];
       this.prompt = [...this.swedishSentence];
       this.showTranslation = false;
@@ -88,89 +82,61 @@ const app = Vue.createApp({
     },
 
     checkAnswer(selectedIndex) {
-        const wasCorrect = (selectedIndex === this.correctHouseIndex);
-        // show a message under the clicked house instead of alert
-    const btns = document.querySelectorAll("#house-buttons button");
-    document.querySelectorAll(".house-message").forEach(n => n.remove());
+      const wasCorrect = (selectedIndex === this.correctHouseIndex);
+      alert(wasCorrect ? "Correct!" : "Wrong house.");
 
-    if (!wasCorrect) {
-      const msg = document.createElement("div");
-      msg.className = "house-message wrong";
-      msg.textContent = "✖ Wrong house, try again!";
-      btns[selectedIndex].parentElement.insertBefore(msg, btns[selectedIndex].nextSibling);
-      return; // stay on the same round
-    } else {
-      const ok = document.createElement("div");
-      ok.className = "house-message correct";
-      ok.textContent = "✔ Correct!";
-      btns[selectedIndex].parentElement.insertBefore(ok, btns[selectedIndex].nextSibling);
+      this.progress += wasCorrect ? 1 : -1;
+      if (this.progress < 1)  {
+        this.progress = 1;
+      }
 
-      // briefly show it, then proceed using your existing code below
-      setTimeout(() => {
-        this.progress += 1;
-        if (this.progress >= this.progressMax) {
-          alert("Congrats! You finished 10 rounds.");
-          window.location.href = 'index.html';
-          return;
-        }
-        this.startNewRound();
-      }, 700);
-      return; // prevent the original block below from running immediately
-    }
+      if (this.progress >= this.progressMax) {
+        alert("Congrats! You finished 10 rounds.");
+        window.location.href = 'index.html';
+        return;
+      }
 
+      this.startNewRound();
+    },
 
-        this.progress += wasCorrect ? 1 : -1;
-        if (this.progress < 1)  {
-          this.progress = 1;
-        }
+    toggleTranslation() {
+      this.showTranslation = !this.showTranslation;
+    },
 
-        if (this.progress >= this.progressMax) {
-          alert("Congrats! You finished 10 rounds.");
-          window.location.href = 'index.html';
-          return;
-        }
+    translateWord(wordIndex) {
 
-        this.startNewRound();
-      },
+      if (this.swedishSentence[wordIndex] === '-int' || this.swedishSentence[wordIndex] === '-street') {
+        return;
+      }
 
-      toggleTranslation() {
-        this.showTranslation = !this.showTranslation;
-      },
+      const isAlreadyTranslated = this.translatedIndexes.includes(wordIndex);
+      if (isAlreadyTranslated) {
+        const swedishWord = this.swedishSentence[wordIndex];
+        const newPrompt = [...this.prompt];
+        newPrompt[wordIndex] = swedishWord;
+        this.prompt = newPrompt;
+        this.translatedIndexes = this.translatedIndexes.filter(index => index !== wordIndex);
+      } else {
+        const englishWord = this.englishSentence[wordIndex];
+        const newPrompt = [...this.prompt];
+        newPrompt[wordIndex] = englishWord;
+        this.prompt = newPrompt;
+        this.translatedIndexes.push(wordIndex);
+      }
+    },
 
-      translateWord(wordIndex) {
+    renderWord(word) {
+      switch (word) {
+        case 
+          "-street": return this.currentStreet;
 
-        if (this.swedishSentence[wordIndex] === '-int' || this.swedishSentence[wordIndex] === '-street') {
-          return;
-        }
-
-        const isAlreadyTranslated = this.translatedIndexes.includes(wordIndex);
-        if (isAlreadyTranslated) {
-          const swedishWord = this.swedishSentence[wordIndex];
-          const newPrompt = [...this.prompt];
-          newPrompt[wordIndex] = swedishWord;
-          this.prompt = newPrompt;
-          this.translatedIndexes = this.translatedIndexes.filter(index => index !== wordIndex);
-        } else {
-          const englishWord = this.englishSentence[wordIndex];
-          const newPrompt = [...this.prompt];
-          newPrompt[wordIndex] = englishWord;
-          this.prompt = newPrompt;
-          this.translatedIndexes.push(wordIndex);
-        }
-      },
-
-      renderWord(word) {
-        switch (word) {
-          case 
-            "-street": return this.currentStreet;
-
-          case 
-            "-int": return this.currentQuestion ? this.currentQuestion.sv : '';
-        
-          default: 
-            return word;
-        }
-      },
+        case 
+          "-int": return this.currentQuestion ? this.currentQuestion.sv : '';
+      
+        default: 
+          return word;
+      }
+    },
     
     generateRandomHouses(houseNumber, houseCount, highestNumber) {
       const doubleHouses = this.irandom_range(0, 1);
