@@ -37,6 +37,14 @@ Owned by Team 07
 
   <main class="game-frame">
 
+    <div id="overlay">
+      <button onclick="off()">Close</button>
+      <h2>Copyright information for pictures</h2>
+      <p id="copyright_1"></p>
+      <p id="copyright_2"></p>
+      <p id="copyright_3"></p>
+      <p id="copyright_4"></p>
+    </div>
     <i id="back-button" class="fa-solid fa-arrow-left"></i>
 
     <!-- Ljudspelare -->
@@ -59,6 +67,9 @@ Owned by Team 07
     <h5>Click sound icon to hear the word again</h5>
     <!-- Ljudikon -->
     <i id="sound-icon" class="fa-solid fa-volume-high"></i>
+
+    <!--Copyright knapp-->
+    <button id="copyright-button" onclick="on()">Copyright</button>
 
     <!-- Nästa knapp -->
     <button id="next-button">Next</button>
@@ -88,6 +99,18 @@ Owned by Team 07
     if (words[i].answer == 'true')
       document.getElementById('audio-src').src = words[i].audio;
   }*/
+
+  function on() {
+    document.getElementById("overlay").style.display = "block";
+    for (let i = 0; i < 4; i++) {
+      document.getElementById("copyright_" + (i + 1)).innerHTML = "<b>Picture " + (i + 1) + " copyright: </b>" + words[i].img_copyright;
+    }
+
+  }
+
+  function off() {
+    document.getElementById("overlay").style.display = "none";
+  }
 </script>
 
 </html>
