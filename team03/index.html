@@ -14,10 +14,44 @@ Owned by Team 03
   <link rel="stylesheet" href="index.css">
 </head>
 <body>
+  <div id="info-dialog" class="dialog-overlay">
+    <div class="dialog-content">
+      <div class="dialog-header">
+        <h3>User-Managed Vocabulary Extension Guide</h3>
+        <button type="button" class="close-dialog">×</button>
+      </div>
+      <div class="dialog-body">
+        <div class="field-info">
+          <h4>Required Fields:</h4>
+          <p><strong>English:</strong> The English translation of the Swedish word.</p>
+          <p><strong>Swedish:</strong> The Swedish word you want to learn.</p>
+          <p><strong>Category:</strong> Choose one or more categories that this word belongs to (e.g., colors, food, furniture). You can select multiple categories from the dropdown.</p>
+        </div>
+        <div class="field-info">
+          <h4>Optional Fields:</h4>
+          <p><strong>Swedish Plural:</strong> The plural form of the Swedish word (e.g., "äpplen" for "äpple").</p>
+          <p><strong>Article:</strong> The Swedish article - either "en" or "ett". Click the same option again to deselect.</p>
+          <p><strong>Literal:</strong> A literal translation or additional meaning of the word.</p>
+          <p><strong>Image:</strong> Enter a URL or click "Upload Image" to select a file from your computer (max 2MB).</p>
+          <p><strong>Image Copyright Info:</strong> Copyright information.</p>
+          <p><strong>Audio:</strong> Enter a URL or click "Upload Audio" to select a file from your computer (max 5MB).</p>
+        </div>
+        <div class="field-info">
+          <h4>Tips:</h4>
+          <ul>
+            <li>Words are automatically checked for duplicates based on the English translation</li>
+            <li>All your custom words are saved locally and will be available next time you visit</li>
+            <li>You can delete individual words or clear all words at once</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div class="container">
     <div class="form-container">
-      <h2>Custom Words</h2>
-      <button class="info-btn">i</button>
+      <h2>User-Managed Vocabulary Extension</h2>
+      <button type="button" class="info-btn">i</button>
 
       <form>
         <div class="form-group">
@@ -33,32 +67,63 @@ Owned by Team 03
         </div>
 
         <div class="form-group">
-          <label>Article <span class="required">*</span></label>
+          <label for="swedish-plural">Swedish Plural <span class="optional">(optional)</span></label>
+          <input type="text" id="swedish-plural" name="swedish-plural">
+          <div class="error-message" id="swedish-plural-error"></div>
+        </div>
+
+        <div class="form-group">
+          <label>Article <span class="optional">(optional)</span></label>
           <div class="article-options">
             <label><input type="radio" name="article" value="en"> en</label>
             <label><input type="radio" name="article" value="ett"> ett</label>
           </div>
+          <small class="hint">Click again to deselect</small>
           <div class="error-message" id="article-error"></div>
         </div>
 
         <div class="form-group">
-          <label for="literal">Literal</label>
+          <label for="literal">Literal <span class="optional">(optional)</span></label>
           <input type="text" id="literal" name="literal">
         </div>
 
         <div class="form-group">
-          <label for="category">Category <span class="required">*</span></label>
-          <select id="category" name="category" required>
-            <option value="">Select a category</option>
+          <label for="category">Category (multiple allowed) <span class="required">*</span></label>
+          <select id="category-dropdown" name="category-dropdown">
+            <option value="">Select a category to add...</option>
           </select>
+          <div id="selected-categories" class="selected-categories-box"></div>
           <div class="error-message" id="category-error"></div>
         </div>
 
         <div class="form-group">
-          <label>Image</label>
-          <div class="image-upload">
-            + Upload Image
+          <label for="image-url">Image <span class="optional">(optional)</span></label>
+          <div class="media-input-group">
+            <input type="text" id="image-url" name="image-url" placeholder="URL">
+            <span class="input-separator">or</span>
+            <label for="image-file" class="file-upload-btn">Upload Image</label>
+            <input type="file" id="image-file" name="image-file" accept="image/*" style="display:none;">
           </div>
+          <div id="image-preview" class="media-preview"></div>
+          <div class="error-message" id="image-url-error"></div>
+        </div>
+
+        <div class="form-group">
+          <label for="image-copyright">Image Copyright Info <span class="optional">(optional)</span></label>
+          <input type="text" id="image-copyright" name="image-copyright" placeholder="Copyright information (Papunets bildbank for example)">
+          <div class="error-message" id="image-copyright-error"></div>
+        </div>
+
+        <div class="form-group">
+          <label for="audio-url">Audio <span class="optional">(optional)</span></label>
+          <div class="media-input-group">
+            <input type="text" id="audio-url" name="audio-url" placeholder="URL">
+            <span class="input-separator">or</span>
+            <label for="audio-file" class="file-upload-btn">Upload Audio</label>
+            <input type="file" id="audio-file" name="audio-file" accept="audio/*" style="display:none;">
+          </div>
+          <div id="audio-preview" class="media-preview"></div>
+          <div class="error-message" id="audio-url-error"></div>
         </div>
 
         <button type="submit" class="submit-btn">Add Word</button>

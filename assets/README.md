@@ -50,7 +50,7 @@ Each row on the sheet corresponds to one vocabulary. The following is a descript
 
 The data is structured like a relational database, keyed by vocabulary ID. Use the provided API:
 
-* `window.vocabulary.get_vocab(id)`: This returns the vocabulary metadata belonging to the given ID.
+* `get_vocab(id)`: This returns the vocabulary metadata belonging to the given ID.
 
     Words usually have the following metadata:
     - `en`              The vocabulary in english
@@ -62,17 +62,37 @@ The data is structured like a relational database, keyed by vocabulary ID. Use t
     - `img_copyright`   The copyright information for this image if it needs to be displayed (Optional)
     - `audio`           The URL of the audio for this word (Optional)
 
-* `window.vocabulary.get_category(category)`: Returns a list of vocabulary IDs belonging to the given category.
+* `get_category(category)`: Returns a list of vocabulary IDs belonging to the given category.
 
-Getting the english word of the first furniture item would look like this:
+Getting the English word of the first furniture item would look like this:
 
 ```js
-// Get all vocabulary belonging to the category `furniture`
-const ids = window.vocabulary.get_category("furniture");
-// Load the metadata for the first ID
-const vocab = window.vocabulary.get_vocab(ids[0]);
-// Access the `en` field
-const english = vocab.en;
+import * from "../../scripts/database_type.js";
+import {
+  loaddb,
+  get_category,
+  get_vocab,
+} from "../../scripts/vocabulary_await.js";
+
+let loaded_before = false;
+
+async function init_db(reload = false) {
+  if (!loaded_before || reload) {
+    loaded_before = true;
+    await loaddb();
+  }
+}
+
+async function first_english_word() {
+    await init_db();
+
+    // Get all vocabulary belonging to the category `furniture`
+    const ids = get_category("furniture");
+    // Load the metadata for the first ID
+    const vocab = get_vocab(ids[0]);
+    // Access the `en` field
+    return vocab.en;
+}
 ```
 
 #### Adding team specific data
@@ -94,36 +114,28 @@ Here are three possible examples:
 
 #### Access team specific data
 
-Before accessing team specific metadata you need to load it into memory. For this you need to add the following call before the call to `window.vocabulary.when_ready`
+Before accessing team specific metadata you need to load it into memory. For this you need to specify your team number when calling `loaddb()`
 
 ```js
-window.vocabulary.load_team_data(<team_number>); // Add this line
-$(function() {window.vocabulary.when_ready(function () {
-    // ...
-})});
+loaddb(<team_id>);
 ```
 
-Once loaded you can use two main functions to access the data:
+This will attach the team specific data of your team to the vocabulary entries.
 
-* `window.vocabulary.get_team_data_keys()`: This returns an array with the IDs of all vocabulary which has custom data for the loaded team.
-* `window.vocabulary.get_team_data(id)`: This returns the data stored in the column of your team as a string. You can then process it as needed.
+You can use `get_team_data_keys()` to get all IDs which have custom data attached to them for your team.
 
-## Updating the local JSON
+## Fetching the local CSV file
 
-For faster loading and version control, the Google Sheets data can be exported as JSON.
+For faster loading and version control, the Google Sheets data can be exported as CSV.
 
 1. Download the CSV from the Google Sheets document.
 2. Save it as `words.csv` in the repository root.
-3. Run `gen-vocab.py` from the root of the repository to update the files:
-    ```
-    python3 ./assets/gen-vocab.py
-    ```
-4. In `/scripts/vocabulary.js`, set:
+3. In `scripts/database_config.js`, set:
     ```js
     const FETCH_EXTERNAL = false;
     ```
 
-Done — the website now loads vocabulary from the local JSON files.
+Done — the website now loads vocabulary from the local CSV file.
 
 ## Troubleshooting
 
