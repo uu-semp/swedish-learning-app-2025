@@ -160,6 +160,13 @@
         }
       }
     });
+
+    window.addEventListener('message', (event) => {
+      if (event.data?.type === 'playAgain') {
+        document.querySelector('.popup-frame-wrap').style.display = 'none';
+        window.startGame();
+      }
+    });
   </script>
 </body>
 </html>

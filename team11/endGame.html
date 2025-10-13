@@ -111,8 +111,7 @@
 
     // Button
     document.getElementById('playAgain').onclick = () => {
-      try { window.parent.postMessage({ type: 'endgameClose' }, '*'); } catch (_) {}
-      window.location.href = './popup.html';
+      try { window.parent.postMessage({ type: 'playAgain' }, '*'); } catch (_) {}
     };
   </script>
 </body>
