@@ -7,8 +7,14 @@ export const StartView = {
   props: ["switchTo"], //This is the method switch-to passed from the parent in app.js in right format for .js
   data() {
     return {
-      selectedLanguage: null, // 'sv' or 'en'
+      selectedLanguage: this.$language.selectedLanguage, // 'sv' or 'en' 
     };
+  },
+  methods:{
+    languageSwitch(Language){
+      this.$language.load(Language)
+      this.selectedLanguage = this.$language.selectedLanguage      
+    },
   },
   template: `
       <div>
@@ -19,6 +25,7 @@ export const StartView = {
           alt="Swedish"
           value="sv"
           :selected="selectedLanguage === 'sv'"
+          @click="languageSwitch('sv')"
           @select="selectedLanguage = $event"
         ></language-flag-button>
 
@@ -27,11 +34,12 @@ export const StartView = {
           alt="English"
           value="en"
           :selected="selectedLanguage === 'en'"
+          @click="languageSwitch('en')"
           @select="selectedLanguage = $event"
         ></language-flag-button>
       </div>
 
-      <h1 class = "main-text">WELCOME TO THE DRESSING PELLE GAME</h1> 
+      <h1 class = "main-text">{{$language.translate('start-message')}}</h1> 
 
       <div class = button-grid>
         <div class = button-container> 
@@ -41,7 +49,6 @@ export const StartView = {
           <how-to-play-button @click="switchTo('HelpView')"></how-to-play-button>
         </div>
         </div>
-        <info-button></info-button>
       </div>
     `,
 };

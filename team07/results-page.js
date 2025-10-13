@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const words = JSON.parse(localStorage.getItem("game_words") || "[]");
   if (!words.length) return;
 
-  const highscore = words[words.length - 1];
+  const highscore = words[words.length - 2]; // fix here
   const rounds = Object.keys(highscore).length - 1;
   const totalCorrect = highscore.total;
 
@@ -31,4 +31,24 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   document.getElementById("message").textContent = message;
+});
+
+// Try again button
+document.getElementById("tryagain-button").addEventListener("click", () => {
+  // Words from the previous round
+  let words = JSON.parse(localStorage.getItem("game_words") || "[]");
+
+  if (words.length) {
+    let highscore = words[words.length - 2];
+
+    // Reset highscore
+    for (let key in highscore) {
+      highscore[key] = 0;
+    }
+    words[words.length - 2] = highscore;
+    localStorage.setItem("game_words", JSON.stringify(words));
+  }
+
+  // Back to game page
+  window.location.href = "game-page.html";
 });

@@ -7,7 +7,8 @@
     <title>Level 1</title>
 
     <!-- Shared + page-specific styles -->
-    <link rel="stylesheet" href="../styles/style.css" />
+    <link rel="stylesheet" href="../style.css" />
+    <link rel="stylesheet" href="./styles/room.css" />
     <link rel="stylesheet" href="./styles/level1.css" />
     <link rel="stylesheet" href="./styles/dragAndDrop.css" />
 </head>
@@ -17,8 +18,25 @@
         <h1>Welcome to Level 1</h1>
     </header>
 
+    <div id="questions-container"></div>
+
     <div id="content-row">
-        <div id="workspace"></div>
+        <div id="workspace">
+            <div class="room-container overflow-hidden">
+                <div class="floor">
+                    <div class="floor-tile"></div>
+                    <div class="floor-tile"></div>
+                    <div class="floor-tile"></div>
+                    <div class="floor-tile"></div>
+                    <div class="floor-tile"></div>
+                </div>
+                <div class="baseboard"></div>
+                <div class="window">
+                    <div class="pane-h"></div>
+                    <div class="pane-v"></div>
+                </div>
+            </div>
+        </div>
         <div id="sidebar">
             <h2>Images</h2>
         </div>
@@ -29,10 +47,52 @@
         <a class="btn" href="./summary.html">View Summary</a>
     </nav>
 
+    <script src="./scripts/level1Questions.js"></script>
+    <script src="../scripts/vocabulary.js"></script>
+    <script type="module" src="./scripts/imageFetching.js"></script>
+    <script type="module" src="./scripts/dragAndDrop.js"></script>
+
+    <script>
+      let remainingQuestions = [];
+      let currentQuestion = null;
+
+      function showRandomQuestion() {
+        const questionsContainer = document.getElementById('questions-container');
+        questionsContainer.innerHTML = '';
+        if (remainingQuestions.length === 0) {
+          // Redirect to summary page when done
+          window.location.href = "./summary.html";
+          return;
+        }
+
+        // Take the first question from the remaining questions (they come in order from the group)
+        currentQuestion = remainingQuestions.shift();
+        const div = document.createElement('div');
+        div.className = 'question-block';
+        div.innerHTML = `<p>${currentQuestion.question}</p>`;
+        questionsContainer.appendChild(div);
+      }
+
+      // Wait for DOM and questions to be loaded
+      document.addEventListener('DOMContentLoaded', function() {
+        if (typeof getRandomQuestions !== "undefined") {
+          remainingQuestions = getRandomQuestions();
+          showRandomQuestion();
+        }
+
+        // Listen for drop events in workspace
+        const workspace = document.getElementById('workspace');
+        workspace.addEventListener('DropFromSidebar', e => {
+          // After a drop, show the next question
+          console.log("Dropped image is: ", e.detail.dataset.name)
+          setTimeout(showRandomQuestion, 300); // here we should check if the answer is correct. can be done when we're sure about how the game works.
+        });
+      });
+    </script>
+
     <footer>
         <a href="index.html">⬅ Back to menu</a>
     </footer>
-    <script src="./scripts/dragAndDrop.js"></script>
 </body>
 
 </html>
