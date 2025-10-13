@@ -1,29 +1,14 @@
 .navigation {
     align-items: center;
     display: flex;
-    flex-direction: column;
-}
-
-.navigation button {
-    height: 40px;
-    width: 100px;
-}
-
-.navigation {
-    align-items: center;
-    display: flex;
     flex-direction: row;
     justify-content: space-around;
 }
 
 .navigation button {
+    border-radius: 5px;
     height: 40px;
-    width: 100px;
-}
-
-.level-select-group {
-    display: flex;
-    flex-direction: row;
+    width: 25%;
 }
 
 .level-btn {
