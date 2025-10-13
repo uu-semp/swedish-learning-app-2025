@@ -1,6 +1,6 @@
 import { get, set } from "./backend_interface/save.js";
 import * as Types from "./storage_type.js";
-import * as DB from "../../scripts/alternative_backend/database_type.js";
+import * as DB from "../../scripts/database_type.js";
 import { TEAM, CATEGORIES, DEFAULT } from "./store_config.js";
 import {
   local_set_categories,
@@ -12,7 +12,7 @@ import {
   get_category,
   get_random,
   get_vocab,
-} from "../../scripts/alternative_backend/vocabulary_await.js";
+} from "../../scripts/vocabulary_await.js";
 
 init();
 
