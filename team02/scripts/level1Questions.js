@@ -33,7 +33,7 @@ const instructionGroups = [
     { question: "Dra 'spis' höger om 'kylskåp'.", answer: "stove", swedish: "spis", index: [3, 4] },
     { question: "Dra 'bord' höger om 'kylskåp'.", answer: "table", swedish: "bord", index: [3, 4] },
     { question: "Dra 'stol' vänster om 'bord'.", answer: "chair", swedish: "stol", index: [0, 1] },
-    { question: "Dra 'dörr' höger om 'kylskåp'.", answer: "door", swedish: "dörr", index: [0, 1] }
+    { question: "Dra 'dörr' vänster om 'kylskåp'.", answer: "door", swedish: "dörr", index: [0, 1] }
   ]
 ];
 
