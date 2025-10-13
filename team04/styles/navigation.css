@@ -12,22 +12,40 @@
     width: 25%;
 }
 
+.navigation button:hover {
+    background-color: rgb(223, 223, 223);
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.7);
+}
+
 .navigation button:nth-child(1) {
     border-radius: var(--border-radius-button) 0 0 var(--border-radius-button);
     border-right: none;
+    font-size: 15px;
+    font-weight: bold;
 }
 .navigation button:nth-child(2) {
     border-right: none;
+    font-size: 15px;
+    font-weight: bold;
 }
 
 .navigation button:nth-child(3) {
     border-right: none;
 }
 
+.navigation button:nth-child(3):hover {
+    color: rgb(190, 0, 0);
+}
+
 .navigation button:nth-child(4) {
     border-radius: 0 var(--border-radius-button) var(--border-radius-button) 0;
-
 }
+
+.navigation button:nth-child(4):hover {
+    color: rgb(0, 190, 0);
+}
+
+
 
 .level-btn {
     align-items: center;
