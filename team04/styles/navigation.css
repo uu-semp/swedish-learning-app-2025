@@ -9,3 +9,26 @@
     width: 100px;
 }
 
+.navigation {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.navigation button {
+    height: 40px;
+    width: 100px;
+}
+
+.level-select-group {
+    display: flex;
+    flex-direction: row;
+}
+
+.level-btn {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    font-size: 40px;
+}
