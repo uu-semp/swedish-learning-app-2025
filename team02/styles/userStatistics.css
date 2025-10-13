@@ -85,6 +85,9 @@ body {
 }
 
 .button-container {
+    display: flex;
+    justify-content: center;
+    gap: 25px;
     margin-top: 25px;
 }
 
@@ -94,11 +97,16 @@ body {
     color: #fff;
     border: none;
     border-radius: 8px;
-    padding: 12px 0;
+    padding: 12px 12px;
     font-size: 16px;
     font-weight: bold;
     cursor: pointer;
     transition: background-color 0.3s ease, transform 0.1s ease;
+}
+
+.menu-btn.danger {
+    background-color: #d9534f;
+    padding: 12px 12px;
 }
 
 .menu-btn i {
@@ -107,5 +115,10 @@ body {
 
 .menu-btn:hover {
     background-color: #d79b1f;
+    transform: scale(1.02);
+}
+
+.menu-btn.danger:hover {
+    background-color: #d63c37;
     transform: scale(1.02);
 }
