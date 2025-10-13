@@ -4,6 +4,8 @@
 
 "use strict";
 
+import { loadProgress, resetProgress } from './dev-tools/cookies.js';
+
 $(function() {window.vocabulary.when_ready(function () {
 
   // These are only dummy functions and can be removed.
@@ -48,6 +50,8 @@ document.addEventListener('DOMContentLoaded', () => {
             // Ask the user to confirm before deleting everything
             if (confirm('Are you sure you want to reset all your progress? This action cannot be undone.')) {
                 resetProgress(); // This function is from cookies.js
+                // Clear all stats for team
+                save.stats.clear("team10");
                 alert('Your progress has been reset.');
                 location.reload(); // Reload the page to update the UI
             }

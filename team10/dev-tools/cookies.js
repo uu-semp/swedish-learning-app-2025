@@ -12,7 +12,7 @@
  * @param {string} value - The value of the cookie.
  * @param {number} days - The number of days until the cookie expires.
  */
-function setCookie(name, value, days) {
+export function setCookie(name, value, days) {
     let expires = "";
     if (days) {
         const date = new Date();
@@ -27,7 +27,7 @@ function setCookie(name, value, days) {
  * @param {string} name - The name of the cookie to retrieve.
  * @returns {string|null} The cookie value or null if not found.
  */
-function getCookie(name) {
+export function getCookie(name) {
     const nameEQ = name + "=";
     const ca = document.cookie.split(';');
     for (let i = 0; i < ca.length; i++) {
@@ -43,7 +43,7 @@ function getCookie(name) {
  * The progress object is converted to a JSON string for storage.
  * @param {{currentLevel: number, levelScores: object}} progressData - The user's progress object.
  */
-function saveProgress(progressData) {
+export function saveProgress(progressData) {
     const progressString = JSON.stringify(progressData);
     setCookie('eatAndLearnProgress', progressString, 365); // Save for one year
 }
@@ -53,7 +53,7 @@ function saveProgress(progressData) {
  * If no progress is found, it returns a default object for a new player.
  * @returns {{currentLevel: number, levelScores: object}} The user's progress object.
  */
-function loadProgress() {
+export function loadProgress() {
     const progressString = getCookie('eatAndLearnProgress');
     if (progressString) {
         return JSON.parse(progressString);
@@ -73,6 +73,6 @@ function loadProgress() {
 /**
  * Resets all game progress and deletes the cookie.
  */
-function resetProgress() {
+export function resetProgress() {
     setCookie('eatAndLearnProgress', '', -1); // Set expiry to a past date to delete
 } 

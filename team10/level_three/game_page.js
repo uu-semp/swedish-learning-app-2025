@@ -2,6 +2,8 @@
 // Owned by Team 10
 // ==============================================
 
+import {loadProgress, saveProgress} from '../dev-tools/cookies.js'
+
 const { createApp } = Vue
 
 const BackButton = {
@@ -12,32 +14,7 @@ const BackButton = {
     `
 };
 
-const MenuPage = {
-    components: {BackButton},
-    template: `      
-    <div class="container">
-        <h1 class="title">EatAndLearn</h1>
 
-        <p class="instructions">Instructions: Write the Swedish word for the food item in the image.</p>
-        <div class="button-container">
-            <back-button @back="goBack"></back-button>
-            <button class="start-btn" @click="$emit('start')">Start</button>
-        </div>
-        <div class="progress-container">
-            <div class="progress-icon">
-                <div class="progress-bar">
-                    <div class="progress"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-    `,
-    methods: {
-        goBack() {
-            window.location.href = '../index.html'
-        }
-    }  
-};
 
 const DisplayLevel = {
     template: `
@@ -90,7 +67,10 @@ const GamePage = {
         return {
             words: [], 
             currentIndex: 0, 
-            defaultImg: "assets/images/food/food.png"
+            defaultImg: "assets/images/food/food.png",
+            score: 0, 
+            questionsAnswered: 0, 
+            isGameOver: false
         };
     },
     computed: {
@@ -111,28 +91,74 @@ const GamePage = {
     },
     methods: {
         handleSubmit(answer) {
-            console.log('handleSubmit called with answer:', answer);
-            alert(`You submitted: ${answer}`);
-            this.nextWord();
+            if (this.isGameOver) return;
+
+            const correctAnswer = this.currentWord.sv;
+            
+            // Compare the user's answer (case-insensitive and trimmed)
+            if (answer.trim().toLowerCase() === correctAnswer.toLowerCase()) {
+                this.score++;
+                // Optional: Visual feedback for correct answer
+                document.body.style.backgroundColor = '#d4edda';
+            } else {
+                // Optional: Visual feedback for incorrect answer
+                document.body.style.backgroundColor = '#f8d7da';
+            }
+
+            // Reset background color after a moment
+            setTimeout(() => {
+                document.body.style.backgroundColor = '';
+            }, 300);
+
+            this.questionsAnswered++;
+            
+            if (this.questionsAnswered >= this.words.length) {
+                this.endGame();
+            } else {
+                this.nextWord();
+            }
         },
         nextWord() {
-            this.currentIndex = (this.currentIndex + 1) % this.words.length;
+            this.currentIndex++;
             console.log('nextWord called, next index:', this.currentIndex);
         },
+        endGame() {
+            this.isGameOver = true;
+            let progress = loadProgress(); // From cookies.js
+
+            // Update score for level 3
+            progress.levelScores[3] += this.score;
+            let totalScore = progress.levelScores[3];
+
+            if (totalScore >= 10) {
+                // GAME COMPLETED 
+                alert(`Congratulations! You finished the game!`);
+                
+                // Update main application stats
+                window.save.stats.setCompletion("team10", 100);
+                window.save.stats.incrementWin("team10");
+            } else {
+                alert(`Game over! You got ${this.score}/${this.words.length}. You need 10 correct answers to win.`);
+            }
+
+            saveProgress(progress); // Save final score to your cookie
+            
+            // Redirect back to the main menu after a short delay
+            setTimeout(() => {
+                window.location.href = '../index.html';
+            }, 1000);
+        },
         goBack() {
-            this.currentView = 'menu';
+            // This should switch the view back to the menu component
+            this.$root.currentView = 'menu';
         }
     }
 };
 
 
 const app = createApp({
-    components: { MenuPage, GamePage, BackButton},
-    data() {
-        return { currentView: 'menu' };
-    },
+    components: { GamePage, BackButton},
     template: `
-    <menu-page v-if="currentView === 'menu'" @start="currentView='game'"></menu-page>
     <game-page v-else></game-page>
     `,
 }).mount('#app');

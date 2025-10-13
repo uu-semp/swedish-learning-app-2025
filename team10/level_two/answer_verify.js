@@ -1,3 +1,8 @@
+// ==============================================
+// Owned by Team 10
+// ==============================================
+import {loadProgress, saveProgress} from '../dev-tools/cookies.js'
+
 $(document).ready(function(){
   const svg = document.getElementById('result-wires');
   const gameState = JSON.parse(localStorage.getItem('level2GameState'));
@@ -52,7 +57,6 @@ $(document).ready(function(){
   function updateAndSaveProgress(newScore) {
     let progress = loadProgress();
 
-    // ✨ CUMULATIVE LOGIC STARTS HERE ✨
     // Initialize score for level 2 if it doesn't exist
     if (!progress.levelScores[2]) {
       progress.levelScores[2] = 0;
@@ -66,6 +70,7 @@ $(document).ready(function(){
     if (totalScore >= 10 && progress.currentLevel === 2) {
       progress.currentLevel = 3; // Advance to Level 3!
       alert(`You got ${newScore} correct! Your total score is now ${totalScore}/10. Congratulations, you've unlocked Level 3!`);
+      save.stats.setCompletion("team10", 67);
     } else if (progress.currentLevel > 2) {
        alert(`You got ${newScore} correct! Great job practicing!`);
     } else {
