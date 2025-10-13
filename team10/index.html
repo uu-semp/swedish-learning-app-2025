@@ -6,6 +6,12 @@
   <title>Menu - EatAndLearn</title>
   <link rel="stylesheet" href="../style.css" />
   <link rel="stylesheet" href="index.css" />
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="../../scripts/vocabulary.js"></script>
+  <script src="../scripts/save.js"></script>
+  <script src="dev-tools/cookies.js"></script>
+  <script type ="module" src="index.js" defer></script>
+</head>
 </head>
 <body>
   <header>
@@ -16,11 +22,18 @@
     <div class="menu-page-container">
         <h1 class="title">Menu</h1>
         <a href="learning_mode/learning_mode.html"><button class="menu-page-btn">Learning Mode</button></a>
-        <a href="level_one/level_one.html"><button class="menu-page-btn">Level 1</button></a>
-        <a href="level_two/level_two.html"><button class="menu-page-btn">Level 2</button></a>
-        <a href="level_three/level_three.html"><button class="menu-page-btn">Level 3</button></a>
-        <a href="index.html" class="back-link">Back to Main Page</a>
+        <a id="level-1-link" href="level_one/level_one.html"><button class="menu-page-btn">Level 1</button></a>
+        <a id="level-2-link" href="level_two/level_two.html"><button class="menu-page-btn">Level 2</button></a>
+        <a id="level-3-link" href="level_three/level_three.html"><button class="menu-page-btn">Level 3</button></a>
+        <button id="reset-progress-btn" class="menu-page-btn">Reset Progress</button>
+
+        <div class="progress-container">
+          <div class="progress-bar-outer">
+          <div class="progress-bar-inner"></div>
+      </div>
     </div>
+    </div>
+
   </main>
 
   <footer>

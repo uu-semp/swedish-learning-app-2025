@@ -11,7 +11,7 @@ $(function () {
   // constants
   const time_delay = 2000; // 2 seconds delay after every match
   const corrects_needed = 8; // number of correct pairs needed to win
-  const misses_max = 10; // number of misses allowed before losing
+  const misses_max = 20; // number of misses allowed before losing
   // variables
   let corrects = 0;
   let misses = 0;
@@ -84,6 +84,7 @@ $(function () {
   function resetGame() {
     corrects = 0;
     misses = 0;
+    $("#moves").text(`moves: 0`);
     resetFlipState();
     resetTimer();
   }
@@ -94,6 +95,7 @@ $(function () {
   }
   function foundMatch() {
     corrects++;
+    $("#moves").text(`moves: ${misses + corrects}`);
 
     if (corrects >= corrects_needed) {
       stopTimer();
@@ -101,14 +103,10 @@ $(function () {
       updateEndScreen();
       wins++; // Increment wins
       $("#wins-count").text(wins); // Update wins display
-      showScreen("end-screen");
-      wins++; // Increment wins
       setTimeout(() => {
-        //alert("Congratulations! You've won the game!");
-        $("#wins-count").text(wins); // Update wins display
-        resetGame();
-
-        showScreen("end-screen");
+      $("#wins-count").text(wins); // Update wins display
+      resetGame();
+      showScreen("end-screen");
       }, 600);
     }
     resetFlipState();
@@ -116,15 +114,14 @@ $(function () {
 
   function notMatch() {
     misses++;
+    $("#moves").text(`moves: ${misses + corrects}`);
     if (misses >= misses_max) {
       stopTimer();
-      alert("Game Over! You've exceeded the maximum number of misses.");
+      alert("Game Over! You've exceeded the maximum number of moves.");
       updateEndScreen();
-      showScreen("end-screen");
       resetGame();
       showScreen("end-screen");
     }
-    resetFlipState();
   }
 
   // Event delegation för dynamiskt skapade kort
@@ -142,7 +139,7 @@ $(function () {
     if ($(card).hasClass("matched")) return; // Ignore matched cards
 
     // Flip back if two cards are already flipped and this card is one of them
-    if (allowFlipBack) {
+    if (allowFlipBack && flippedCards.length === 2) {
       resetFlipState();
       allowFlipBack = false;
       return;
@@ -180,6 +177,7 @@ $(function () {
         setTimeout(() => {
           allowFlipBack = true;
           isChecking = false;
+          notMatch();
         }, 500);
       }
     }
