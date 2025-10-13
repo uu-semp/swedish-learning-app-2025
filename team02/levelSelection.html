@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Level Selection</title>
+
+  <!-- Shared styles (must come first) -->
+  <link rel="stylesheet" href="../style.css" />
+
+  <!-- Third-party libraries -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+  <!-- Page-specific styles -->
+  <link rel="stylesheet" href="styles/levelSelection.css" />
+  <script src="scripts/levelSelection.js" defer></script>
+</head>
+<body>
+  <header>
+    <h1><i class="fas fa-graduation-cap"></i> Level Selection</h1>
+  </header>
+
+  <main>
+    <div class="level-card">
+      <div class="button-container">
+        <button id="button1"><i class="fas fa-seedling"></i> Level 1</button>
+        <button id="button2"><i class="fas fa-leaf"></i> Level 2</button>
+        <button id="button3"><i class="fas fa-tree"></i> Level 3</button>
+      </div>
+      <div id="output">Click a button to choose a level!</div>
+    </div>
+  </main>
+
+  <footer>
+    <small>
+      Created as part of the "Software Engineering and Project Management" course 2025
+    </small>
+  </footer>
+</body>
+</html>
