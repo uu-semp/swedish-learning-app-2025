@@ -88,6 +88,7 @@ $(function () {
     resetTimer();
   }
   function updateEndScreen() {
+    $("#header_endscreen").text(corrects >= corrects_needed ? "Congratulations! You've won the game!" : "Game Over!");
     $("#score").text(corrects);
     $("#time").text(`${elapsedTime} seconds`);
   }
@@ -141,7 +142,7 @@ $(function () {
     if ($(card).hasClass("matched")) return; // Ignore matched cards
 
     // Flip back if two cards are already flipped and this card is one of them
-    if (allowFlipBack && flippedCards.includes(card)) {
+    if (allowFlipBack) {
       resetFlipState();
       allowFlipBack = false;
       return;
@@ -166,7 +167,7 @@ $(function () {
         // Match found! Mark cards immediately to prevent further clicks
         card1.addClass("matched");
         card2.addClass("matched");
-        
+
         // Fade out cards after a delay while keeping their space
         setTimeout(() => {
           card1.fadeTo(300, 0);
