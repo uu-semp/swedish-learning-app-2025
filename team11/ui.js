@@ -45,7 +45,7 @@ export function displayShelf(shelf) {
 
     // Click/keyboard -> same path as drop
     img.tabIndex = 0;
-    img.addEventListener('click', () => sendPick(key));
+  img.addEventListener('click', (e) => { e.stopPropagation(); sendPick(key); });
     img.addEventListener('keydown', (e) => {
       if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); sendPick(key); }
     });
@@ -143,6 +143,7 @@ function setupCartDropzone() {
     dz.addEventListener('dragleave', () => dz.classList.remove('is-hover'));
     dz.addEventListener('drop', (e) => {
       e.preventDefault();
+      e.stopPropagation();
       dz.classList.remove('is-hover');
       const key = e.dataTransfer && e.dataTransfer.getData('text/plain');
       handleDropKey(key);
