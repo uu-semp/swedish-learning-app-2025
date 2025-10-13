@@ -1,61 +1,76 @@
 $(document).ready(function () {
+  window.vocabulary.when_ready(function() {
+    setupLevel(5); // Setup the game with 10 word pairs
+  });
+
   let leftSelected = null;
   let rightSelected = null;
   const svg = document.querySelector('.wires');
-  const connections = []; // store {left,right,line}
+  const connections = [];
 
-  // click left buttons
-  $('.col.left .word-btn').on('click', function () {
+  function setupLevel(wordCount) {
+    const foodIds = window.vocabulary.get_category("food"); // Assuming you have a "foods" category
+    
+    // Get a random selection of word IDs
+    const randomIds = foodIds.sort(() => 0.5 - Math.random()).slice(0, wordCount);
+    
+    const leftWords = [];
+    const rightWords = [];
+
+    randomIds.forEach(id => {
+      const vocab = window.vocabulary.get_vocab(id);
+      leftWords.push({ text: vocab.en, id: id });
+      rightWords.push({ text: vocab.sv, id: id });
+    });
+    // Shuffle the Swedish words to make it a challenge
+    rightWords.sort(() => 0.5 - Math.random());
+
+    // Create and append buttons
+    const leftCol = $('.col.left');
+    const rightCol = $('.col.right');
+    leftWords.forEach(word => {
+      leftCol.append(`<button class="word-btn" data-id="${word.id}">${word.text}</button>`);
+    });
+    rightWords.forEach(word => {
+      rightCol.append(`<button class="word-btn" data-id="${word.id}">${word.text}</button>`);
+    });
+  }
+  
+  // Re-attach event listeners since buttons are now dynamic
+  $('.match-stage').on('click', '.col.left .word-btn', function () {
     const $btn = $(this);
-
-    // if already paired: unpair
-    if ($btn.hasClass('paired')) {
-      unpairButton(this);
-      return;
-    }
-
-    // deselect
+    if ($btn.hasClass('paired')) { unpairButton(this); return; }
     if ($btn.hasClass('selected')) {
       $btn.removeClass('selected');
       leftSelected = null;
       $('.col.left .word-btn').not('.paired').removeClass('disabled');
       return;
     }
-
-    // select new left
     $('.col.left .word-btn').not('.paired').removeClass('selected').addClass('disabled');
     $btn.removeClass('disabled').addClass('selected');
     leftSelected = this;
     tryPair();
   });
 
-  // click right buttons
-  $('.col.right .word-btn').on('click', function () {
+  $('.match-stage').on('click', '.col.right .word-btn', function () {
     const $btn = $(this);
-
-    if ($btn.hasClass('paired')) {
-      unpairButton(this);
-      return;
-    }
-
+    if ($btn.hasClass('paired')) { unpairButton(this); return; }
     if ($btn.hasClass('selected')) {
       $btn.removeClass('selected');
       rightSelected = null;
       $('.col.right .word-btn').not('.paired').removeClass('disabled');
       return;
     }
-
     $('.col.right .word-btn').not('.paired').removeClass('selected').addClass('disabled');
     $btn.removeClass('disabled').addClass('selected');
     rightSelected = this;
     tryPair();
   });
-  //click submit button
+
   $('#submitBtn').on('click', function(){
     saveGameState();
     window.location.href = 'answer_verify.html';
   });
-
 
   function tryPair() {
     if (leftSelected && rightSelected) {
@@ -120,13 +135,18 @@ $(document).ready(function () {
   }
   function saveGameState() {
     // collect the left/right button texts and the connections
-    const leftWords = $('.col.left .word-btn').map(function(){return $(this).text();}).get();
-    const rightWords = $('.col.right .word-btn').map(function(){return $(this).text();}).get();
+    const leftWords = $('.col.left .word-btn').map(function(){
+        return { text: $(this).text(), id: $(this).data('id') };
+    }).get();
+
+    const rightWords = $('.col.right .word-btn').map(function(){
+        return { text: $(this).text(), id: $(this).data('id') };
+    }).get();
 
     // build array of pairs with index of left and right button
     const pairs = connections.map(c => ({
-        leftIndex: $('.col.left .word-btn').index(c.left),
-        rightIndex: $('.col.right .word-btn').index(c.right)
+        leftId: $(c.left).data('id'),
+        rightId: $(c.right).data('id')
     }));
 
     const gameState = { leftWords, rightWords, pairs };
