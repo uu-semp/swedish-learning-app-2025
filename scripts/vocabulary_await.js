@@ -3,6 +3,7 @@ import {
   EXTERNAL_URL,
   INTERNAL_URL,
 } from "./database_config.js";
+import * as DB from "./database_type.js"
 // ==============================================
 // Owned by the Data Team and Team08
 // ==============================================
@@ -18,7 +19,7 @@ import {
  */
 
 /**
- * @typedef {Object.<string[]>} IdList
+ * @typedef {string[]} IdList
  * A list of vocab IDs
  */
 
@@ -62,7 +63,7 @@ import {
  * @property {CategoryMap} categories
  */
 
-/** @type {DB.Database} */
+/** @type {Database} */
 let db;
 
 async function fetch_sheets() {
@@ -100,7 +101,7 @@ export async function loaddb(team_id = -1) {
 
   // Creating two alternative access patterns based on rows
   const idToMeta = {};
-  const teamIds = {};
+  const teamIds = [];
   const catToIds = {};
 
   for (const row of rows) {
@@ -125,7 +126,7 @@ export async function loaddb(team_id = -1) {
     }
 
     // Team data
-    if (team_column && row[team_column]) {
+    if (row[team_column]) {
       meta.team = row[team_column].trim();
       teamIds.push(id);
     };
