@@ -66,10 +66,17 @@
             if (remainingQuestions.length === 0) {
                 // Store final score in localStorage before redirecting
                 console.log('Game completed! Final score:', totalScore);
-                window.save.stats.incrementWin("team02");
+                window.save.stats.incrementWin(TEAM_NAME);
                 localStorage.setItem('gameScore', totalScore);
                 if (totalScore === 5) {
-                    window.save.set("team02", "level1Passed", 1);
+                    const currentStats = window.save.stats.get(TEAM_NAME);
+                    // If this level wasn't passed before, increase completion
+                    if (window.save.get(TEAM_NAME, "level1Passed") != 1) {
+                        const newCompletion = Math.min(100, currentStats.completion + 33.3);
+                        window.save.stats.setCompletion(TEAM_NAME, newCompletion);
+                    }
+                    // Mark this level as passed
+                    window.save.set(TEAM_NAME, "level1Passed", 1);
                 }
                 localStorage.setItem('gameLevel', 'Level 1');
                 console.log('Stored in localStorage - Score:', totalScore, 'Level: Level 1');

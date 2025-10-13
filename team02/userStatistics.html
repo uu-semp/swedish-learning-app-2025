@@ -17,7 +17,6 @@
             document.getElementById("progress-bar").style.width = (stats.completion ?? 0) + "%";
             document.getElementById("progress-percent").textContent = (stats.completion ?? 0) + "%";
             document.getElementById("words-count").textContent = (window.save.get(TEAM_NAME, "learnedWords") ?? []).length;
-            const learnedWordsCount = (window.save.get(TEAM_NAME, "learnedWords") ?? []).length;
 
         });
     </script>
