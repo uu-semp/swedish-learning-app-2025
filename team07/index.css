@@ -10,3 +10,108 @@ body {
     margin-left: auto;
     margin-right: auto;
 }
+
+.game-frame {
+    display: flex;
+    flex-direction: column;
+    align-items: top;
+    justify-content: center;
+}
+
+.indexheader {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 4rem;
+}
+
+.indexheader h1 {
+    font-size: 4.5rem;
+    text-align: center;
+    font-family: 'Times New Roman', Times, serif;
+    margin-top: 2rem;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+}
+
+.indexheader h2 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    text-align: center;
+    font-family: 'Times New Roman', Times, serif;
+    margin-top: 10rem;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+}
+
+.play_button {
+    background-color: rgb(85, 224, 85);
+    color: black;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 32px;
+    margin-top: 20px;
+    display: block;
+    margin-bottom: 20px;
+    height: 60px;
+    width: 300px;
+    align-items: center;
+
+}
+
+.play_button:hover {
+    background-color: #4fc437;
+}
+
+.word_button {
+    background-color: #d7d7d7;
+    color: black;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 32px;
+    margin-top: 20px;
+    display: block;
+    margin-bottom: 20px;
+    height: 60px;
+    width: 300px;
+    align-items: center;
+
+}
+
+.word_button:hover {
+    background-color: #c4c4c4;
+}
+
+.score_button {
+    background-color: rgb(225, 235, 84);
+    color: black;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 32px;
+    margin-top: 20px;
+    display: block;
+    margin-bottom: 20px;
+    height: 60px;
+    width: 300px;
+    align-items: center;
+
+}
+
+.score_button:hover {
+    background-color: #adc930;
+}
+
+.indexbox {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
