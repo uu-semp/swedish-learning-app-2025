@@ -65,12 +65,11 @@ Owned by Team 13
             </button>
           </div>
           <div id="house-buttons">
-            <button v-for="(houseNum, index) in houseOptions"
-                    :key="index"
-                    @click="checkAnswer(index)">
-                  Hus {{houseNum}}
-            </button>
+            <div v-for="(houseNum, index) in houseOptions" :key="index">
+              <button @click="checkAnswer(index)">Hus {{houseNum}}</button>
+            </div>
           </div>
+
           <hr>
           <button @click="toggleTranslation"> {{translationButtonText}}</button>
           <div v-if="showTranslation" id="english-line">
