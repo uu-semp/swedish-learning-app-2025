@@ -65,7 +65,7 @@ const app = Vue.createApp({
       this.translatedIndexes = [];
       this.prompt = [...this.swedishSentence];
       this.showTranslation = false;
-
+      
       this.translatedIndexes = [];
       this.prompt = [...this.swedishSentence];
       this.showTranslation = false;
@@ -96,7 +96,7 @@ const app = Vue.createApp({
     if (!wasCorrect) {
       const msg = document.createElement("div");
       msg.className = "house-message wrong";
-      msg.innerHTML = "✖ Wrong house<br>Try again!";
+      msg.textContent = "✖ Wrong house, try again!";
       btns[selectedIndex].parentElement.insertBefore(msg, btns[selectedIndex].nextSibling);
       return; // stay on the same round
     } else {
