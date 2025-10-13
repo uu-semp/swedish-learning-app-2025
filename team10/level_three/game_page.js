@@ -58,15 +58,23 @@ const DisplayImage = {
 
 const AnswerContainer = {
     template: `
-    <form @submit.prevent="submitAnswer" class="answer-container">
-        <input 
-            type="text" 
-            v-model="answer" 
-            placeholder="Type the Swedish word" 
-            class="answer-box"
-            ref="answerInput">
-        <button type="submit" class="start-btn">Submit</button>
-    </form>
+    <div class="input-container">
+        <div class="swedish-char-btns">
+            <button type="button" @click="insertChar('å')">å</button>
+            <button type="button" @click="insertChar('ä')">ä</button>
+            <button type="button" @click="insertChar('ö')">ö</button>
+        </div>
+        <form @submit.prevent="submitAnswer" class="answer-container">
+            <input 
+                type="text" 
+                v-model="answer" 
+                placeholder="Type the Swedish word" 
+                class="answer-box"
+                ref="answerInput"
+            >
+            <button type="submit" class="start-btn">Submit</button>
+        </form>
+    </div>
     `,
     data() {
         return { answer: ''}
@@ -80,6 +88,18 @@ const AnswerContainer = {
         },
         focusInput() {
             this.$refs.answerInput.focus();
+        },
+        insertChar(char) {
+            const input = this.$refs.answerInput;
+            const start = input.selectionStart;
+            const end = input.selectionEnd;
+
+            this.answer = this.answer.substring(0, start) + char + this.answer.substring(end);
+
+            this.$nextTick(() => {
+                input.setSelectionRange(start + 1, start + 1);
+                input.focus();
+            })
         }
     }
 };

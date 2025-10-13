@@ -17,8 +17,8 @@ Owned by Team 10
     font-weight: bold;
     text-transform: uppercase;
     text-align: center;
-    margin-top: 20px;
-    margin-bottom: 10px;
+    margin-top: 0px;
+    margin-bottom: 0px;
 }
 
 .display-image {
@@ -30,7 +30,7 @@ Owned by Team 10
     object-fit: contain;
     border: 2px solid black;
     border-radius: 10px;
-    margin-top: 20px;
+    margin-top: 10px;
 }
 
 .answer-container {
@@ -57,6 +57,34 @@ Owned by Team 10
 .answer-box:hover {
     background-color: gray;
     transform: scale(1.05);
+}
+
+.input-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.special-char-buttons {
+    display: flex;
+    gap: 0.3rem;
+}
+
+.special-char-buttons button {
+    background-color: white;
+    border: 2px solid var(--primary-color);
+    border-radius: 999px;
+    padding: 0.8rem 1.5rem;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.special-char-buttons button:hover {
+    background-color: var(--primary-color);
 }
 
 .submit-button {
