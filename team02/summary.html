@@ -28,7 +28,7 @@
             </div>
             <nav class="actions">
                 <a class="btn" href="index.html"><i class="fas fa-home"></i> Main Menu</a>
-                <a class="btn" href="./level1.html"><i class="fas fa-redo"></i> Play Again</a>
+                <a class="btn" href="#" id="play-again-btn"><i class="fas fa-redo"></i> Play Again</a>
             </nav>
         </section>
     </main>
@@ -48,7 +48,56 @@
             });
         })();
     </script>
-    <!-- Hook your script later to fill #a-level and #a-score -->
+    <!-- Script to populate summary with actual game data -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get stored game data
+            const score = localStorage.getItem('gameScore');
+            const level = localStorage.getItem('gameLevel');
+            
+            // Debug: log what we found
+            console.log('Retrieved from localStorage - Score:', score, 'Level:', level);
+            console.log('All localStorage keys:', Object.keys(localStorage));
+            
+            // Update the summary display
+            if (score !== null && level !== null) {
+                document.getElementById('a-score').textContent = score;
+                document.getElementById('a-level').textContent = level;
+                
+                // Set the "Play Again" link based on the completed level
+                const playAgainBtn = document.getElementById('play-again-btn');
+                if (level === 'Level 1') {
+                    playAgainBtn.href = './level1.html';
+                } else if (level === 'Level 2') {
+                    playAgainBtn.href = './level2.html';
+                } else if (level === 'Level 3') {
+                    playAgainBtn.href = './level3.html';
+                } else {
+                    // Default to level 1 if level is unknown
+                    playAgainBtn.href = './level1.html';
+                }
+                
+                // Clear the stored data after displaying
+                localStorage.removeItem('gameScore');
+                localStorage.removeItem('gameLevel');
+            } else {
+                // If no game data found, show a message or redirect
+                document.getElementById('a-score').textContent = '0';
+                document.getElementById('a-level').textContent = 'No game completed';
+                document.getElementById('play-again-btn').href = './level1.html'; // Default to level 1
+                console.log('No game data found in localStorage. User may have accessed summary directly.');
+            }
+        });
+        
+        // Temporary test function for debugging
+        function testGameCompletion() {
+            localStorage.setItem('gameScore', '3');
+            localStorage.setItem('gameLevel', 'Level 1');
+            console.log('Test data stored in localStorage');
+            // Reload the page to see the changes
+            location.reload();
+        }
+    </script>
     
 </body>
 </html>

@@ -40,10 +40,7 @@
         </div>
     </div>
 
-    <!-- Summary link -->
-    <nav class="actions">
-        <a class="btn" href="./summary.html">View Summary</a>
-    </nav>
+    <!-- Summary link will be shown after game completion -->
 
     <script src="./scripts/level1Questions.js"></script>
     <script src="../scripts/vocabulary.js"></script>
@@ -54,11 +51,18 @@
     <script>
         let remainingQuestions = [];
         window.currentQuestion = null;
+        let currentQuestionAttempts = 0; // Track attempts for current question
+        let totalScore = 0; // Track total score (first-try correct answers)
 
         function showRandomQuestion() {
             const questionsContainer = document.getElementById('questions-container');
             questionsContainer.innerHTML = '';
             if (remainingQuestions.length === 0) {
+                // Store final score in localStorage before redirecting
+                console.log('Game completed! Final score:', totalScore);
+                localStorage.setItem('gameScore', totalScore);
+                localStorage.setItem('gameLevel', 'Level 1');
+                console.log('Stored in localStorage - Score:', totalScore, 'Level: Level 1');
                 // Redirect to summary page when done
                 window.location.href = "./summary.html";
                 return;
@@ -66,6 +70,7 @@
 
             // Take the first question from the remaining questions (they come in order from the group)
             window.currentQuestion = remainingQuestions.shift();
+            currentQuestionAttempts = 0; // Reset attempts for new question
             const div = document.createElement('div');
             div.className = 'question-block';
             div.innerHTML = `
@@ -123,11 +128,17 @@
             });
             document.addEventListener('AnswerCorrect', e => {
                 console.log("Answer is correct!. Showing next question...");
+                // Award point only if this was the first attempt (no incorrect attempts yet)
+                if (currentQuestionAttempts === 0) {
+                    totalScore++;
+                    console.log("First-try correct! Score:", totalScore);
+                }
                 setTimeout(showRandomQuestion, 300);
             });
 
             document.addEventListener('AnswerIncorrect', e => {
-                console.log("Answer is not correct! Reason: ", e.detail.reason);
+                currentQuestionAttempts++;
+                console.log("Answer is not correct! Reason: ", e.detail.reason, "Attempt:", currentQuestionAttempts);
             })
         });
     </script>
