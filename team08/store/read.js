@@ -29,7 +29,11 @@ function init() {
     set(TEAM, data);
   }
 }
-function safe_get() {
+/**
+ *
+ * @returns {Types.Team8Storage}
+ */
+export function safe_get() {
   let data = get(TEAM);
   if (data == null) {
     console.log("wiped");
@@ -119,6 +123,19 @@ export function local_get_guesses_with_vocab() {
       vocab: get_vocab(guess.id),
     };
   });
+}
+
+/**
+ * This method takes an id and outputs whether it is covered or not
+ * @type {String} id
+ * @returns {boolean}
+ */
+export function local_has_id_been_covered(id) {
+  const DATA = safe_get(TEAM);
+  if (DATA.id_covered == undefined) {
+    return false;
+  }
+  return DATA.id_covered[id];
 }
 
 /** DB METHODS */

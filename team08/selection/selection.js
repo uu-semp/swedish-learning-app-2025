@@ -5,7 +5,11 @@ import {
   init_db,
   local_get_categories,
 } from "../store/read.js";
-import { local_set_guesses, local_wipe_guesses } from "../store/write.js";
+import {
+  local_set_guesses,
+  local_update_progress,
+  local_wipe_guesses,
+} from "../store/write.js";
 import * as Types from "../store/storage_type.js";
 import { get } from "../store/backend_interface/save.js";
 import { TEAM } from "../store/store_config.js";
@@ -78,5 +82,6 @@ export function update_selection(guess) {
 }
 
 export function finish_game() {
+  local_update_progress(guesses);
   local_set_guesses(guesses);
 }
