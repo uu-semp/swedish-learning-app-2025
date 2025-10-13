@@ -38,6 +38,28 @@ body {
   font-size: 0.9em;
 }
 
+.instructions {
+  position: absolute;
+  top: 20px;          
+  right: 20px;         
+
+  width: 450px;
+  min-height: 120px;
+
+  background: url('./assets/chatbubble.png') no-repeat center / 100% 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+
+  font-size: 0.7em;  
+  padding: 0px 24px 22px 28px;  
+  filter: drop-shadow(0 2px 8px rgba(0,0,0,0.15));
+
+}
+
+
 .character {
   position: absolute;
   top: 300px; 
@@ -127,7 +149,7 @@ body {
   background: rgba(255,255,255,0.85);
   border-radius: 8px;
   padding: 4px 12px;
-  font-size: 1rem;
+  font-size: 0.8rem;
   margin-bottom: 0.2rem;
   box-shadow: 0 1px 4px rgba(0,0,0,0.04);
 }
