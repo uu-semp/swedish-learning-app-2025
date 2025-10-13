@@ -91,7 +91,9 @@ export default {
     nextQuestion() {
       if (this.currentIndex < this.questions.length - 1) {
         this.currentIndex++;
-        this.selectedOption = null;
+        const stored = this.answers.find(a => a.id === this.currentIndex);
+        this.selectedOption = stored ? stored.user : null;
+
 
         const q = this.questions[this.currentIndex];
         setClock(q.hour, q.minute);
