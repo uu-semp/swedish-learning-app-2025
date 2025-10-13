@@ -5,7 +5,22 @@
     <title>User Statistics - Swedish Learning App</title>
     <link rel="stylesheet" href="../style.css?v=20251009">
     <link rel="stylesheet" href="styles/userStatistics.css?v=20251013">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css">
+    <script src="../scripts/save.js" defer></script>
+    <script defer>
+        document.addEventListener("DOMContentLoaded", () => {
+            const TEAM_NAME = "team02";
+
+            const stats = window.save.stats.get(TEAM_NAME);
+
+            // Update the UI
+            document.getElementById("wins-count").textContent = stats.wins ?? 0;
+            document.getElementById("progress-bar").style.width = (stats.completion ?? 0) + "%";
+            document.getElementById("progress-percent").textContent = (stats.completion ?? 0) + "%";
+            document.getElementById("words-count").textContent = (window.save.get(TEAM_NAME, "learnedWords") ?? []).length;
+            const learnedWordsCount = (window.save.get(TEAM_NAME, "learnedWords") ?? []).length;
+
+        });
+    </script>
 </head>
 <body>
 <main class="stats-frame">
@@ -14,12 +29,12 @@
 
         <div class="stat-item">
             <span><i class="fas fa-trophy"></i> Wins</span>
-            <strong id="wins-count">12</strong>
+            <strong id="wins-count">0</strong>
         </div>
 
         <div class="stat-item">
             <span><i class="fas fa-book-open"></i> Words Learned</span>
-            <strong id="words-count">45</strong>
+            <strong id="words-count">0</strong>
         </div>
 
         <div class="stat-item progress-section">
@@ -27,7 +42,7 @@
             <div class="progress-bar-container">
                 <div class="progress-bar" id="progress-bar"></div>
             </div>
-            <span id="progress-percent">60%</span>
+            <span id="progress-percent">0%</span>
         </div>
 
         <div class="button-container">
@@ -35,19 +50,8 @@
                 <i class="fas fa-arrow-left"></i> Back to Menu
             </button>
         </div>
+
     </section>
 </main>
-
-<script>
-    // Example placeholder values
-    const wins = 12;
-    const wordsLearned = 45;
-    const progressPercent = 60;
-
-    document.getElementById('wins-count').textContent = wins;
-    document.getElementById('words-count').textContent = wordsLearned;
-    document.getElementById('progress-bar').style.width = progressPercent + '%';
-    document.getElementById('progress-percent').textContent = progressPercent + '%';
-</script>
 </body>
 </html>
