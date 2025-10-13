@@ -10,14 +10,20 @@
     box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.5);
     height: 60px;
     width: 200px;
-    transition: box-shadow 100ms ease, transform 100ms ease;;
-    will-change: box-shadow;
+    transition: box-shadow 100ms ease, transform 100ms ease, background-color 1s ease;
+    will-change: box-shadow, transform, background-color;
 }
 
 .card:hover {
     box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.6);   
     transform: scale(1.1);
     transition: box-shadow 200ms ease, transform 300ms ease;
-    will-change: box-shadow;
+    will-change: box-shadow, transform;
+}
 
+/* When clicking or holding down mouse button */
+.card:active {
+    transform: scale(1.2);
+    box-shadow: 7px 7px 7px rgba(0, 0, 0, 0.8);
+    will-change: transform, box-shadow;
 }
