@@ -1,6 +1,5 @@
 const TEAM_NAME = "team02";
 const LEARNED_WORDS_KEY = "learnedWords";
-
 if (!window.save.get(TEAM_NAME, LEARNED_WORDS_KEY)) {
     window.save.set(TEAM_NAME, LEARNED_WORDS_KEY, []);
 }
@@ -37,12 +36,6 @@ function showRandomQuestion() {
         window.save.stats.incrementWin(TEAM_NAME);
         localStorage.setItem('gameScore', totalScore);
         if (totalScore === 5) {
-            const currentStats = window.save.stats.get(TEAM_NAME);
-            // If this level wasn't passed before, increase completion
-            if (window.save.get(TEAM_NAME, `level${levelIndex}Passed`) != 1) {
-                const newCompletion = Math.min(100, currentStats.completion + 33.3);
-                window.save.stats.setCompletion(TEAM_NAME, newCompletion);
-            }
             // Mark this level as passed
             window.save.set(TEAM_NAME, `level${levelIndex}Passed`, 1);
         }

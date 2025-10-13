@@ -6,8 +6,8 @@ export async function loadImages() {
             const selectedQuestions = window.getRandomQuestions ? window.getRandomQuestions() : [];
             const requiredImages = selectedQuestions.map(q => q.answer);
             
-            console.log('Selected questions:', selectedQuestions);
-            console.log('Required images:', requiredImages);
+            // console.log('Selected questions:', selectedQuestions);
+            // console.log('Required images:', requiredImages);
 
             const sidebar = document.getElementById('sidebar');
             const imageElements = [];
@@ -21,7 +21,7 @@ export async function loadImages() {
                 // Extract the image name from the path (e.g., "chair" from "/assets/images/furniture/chair.png")
                 const imageName = path.split('/').pop().replace('.png', '');
                 
-                console.log('Checking image:', imageName, 'Required:', requiredImages, 'Match:', requiredImages.includes(imageName));
+                // console.log('Checking image:', imageName, 'Required:', requiredImages, 'Match:', requiredImages.includes(imageName));
                 
                 // Only load images that are needed for the questions
                 if (requiredImages.includes(imageName)) {
@@ -32,7 +32,7 @@ export async function loadImages() {
                     img.dataset.name = imageName;
                     sidebar.appendChild(img);
                     imageElements.push(img);
-                    console.log('Added required image:', imageName);
+                    // console.log('Added required image:', imageName);
                 }
             });
 
@@ -40,7 +40,7 @@ export async function loadImages() {
             if (window.getRandomDistractorImages) {
                 try {
                     const distractorPaths = await window.getRandomDistractorImages();
-                    console.log('Distractor paths:', distractorPaths);
+                    // console.log('Distractor paths:', distractorPaths);
                     
                     distractorPaths.forEach(path => {
                         const imageName = path.split('/').pop().replace('.png', '');
@@ -51,14 +51,14 @@ export async function loadImages() {
                         img.dataset.name = imageName;
                         sidebar.appendChild(img);
                         imageElements.push(img);
-                        console.log('Added distractor image:', imageName);
+                        // console.log('Added distractor image:', imageName);
                     });
                 } catch (error) {
                     console.log('Could not load distractor images:', error);
                 }
             }
 
-            console.log('Total images loaded:', imageElements.length);
+            // console.log('Total images loaded:', imageElements.length);
             resolve(imageElements);
         });
     });
