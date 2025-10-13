@@ -1,5 +1,5 @@
 // ==============================================
-// Owned by Team 05 — Medium Levels (4–6)
+// Owned by Team 05 — Red Room (Medium Levels 4–6)
 // ==============================================
 "use strict";
 
@@ -12,14 +12,12 @@ function shuffle(arr){const a=arr.slice();for(let i=a.length-1;i>0;i--){const j=
 function chunk(arr,n){const o=[];for(let i=0;i<arr.length;i+=n)o.push(arr.slice(i,i+n));return o;}
 function normalizeSv(s){return (s||"").trim().toLowerCase().replace(/^(en|ett)\s+/,"");}
 
-// ---------------- save/load ----------------
 function getSaved(){
   const bag=window.save.get(SAVE_KEY)||{};
   return bag.progress||{unlocked:4,completed:[],medium:{levelIdx:0,itemIdx:0}};
 }
 function putSaved(p){const bag=window.save.get(SAVE_KEY)||{};bag.progress=p;window.save.set(SAVE_KEY,bag);}
 
-// ---------------- vocabulary data ----------------
 function loadFurnitureItems(){
   const ids=(window.vocabulary.get_category&&window.vocabulary.get_category("furniture"))||[];
   const out=[];
@@ -36,41 +34,22 @@ function buildMediumLevels(all,perLevel=5){
   return groups;
 }
 
-// Changed it here
-function imageCandidates(raw) {
-  // Accept many shapes and try several fallbacks
-  const r = String(raw || "").trim();
-
-  // absolute URL → just use it
-  if (/^https?:\/\//i.test(r)) return [r];
-
-  // strip leading "./" or "/" so we can build relative paths
-  const s = r.replace(/^\.?\//, "").replace(/^\/+/, "");
-
-  const c = new Set();
-
-  // as-is (in case CSV already gives a good relative path)
-  if (s) c.add(s);
-
-  // If it already starts with "assets/", fix it relative to team05/
-  if (s.startsWith("assets/")) c.add(`../${s}`);
-
-  // If it starts with "images/" or "furniture/", prepend the known base
-  if (s.startsWith("images/")) c.add(`../assets/${s}`);
-  if (s.startsWith("furniture/")) c.add(`../assets/images/${s}`);
-
-  // Common fallbacks when CSV only has a filename or subpath
-  c.add(`../assets/images/${s}`);                 // e.g., bed.png or furniture/bed.png
-  c.add(`../assets/images/furniture/${s}`);       // e.g., bed.png
-
+function imageCandidates(raw){
+  const r=String(raw||"").trim();
+  if(/^https?:\/\//i.test(r))return[r];
+  const s=r.replace(/^\.?\//,"").replace(/^\/+/,"");
+  const c=new Set();
+  if(s)c.add(s);
+  if(s.startsWith("assets/"))c.add(`../${s}`);
+  if(s.startsWith("images/"))c.add(`../assets/${s}`);
+  if(s.startsWith("furniture/"))c.add(`../assets/images/${s}`);
+  c.add(`../assets/images/${s}`);
+  c.add(`../assets/images/furniture/${s}`);
   return Array.from(c);
 }
 
-
-// ---------------- ui state ----------------
 const Medium={levels:[],items:[],idx:0,levelNumber:4};
 
-// ---------------- core flow ----------------
 function go(sel){["#start-screen","#level-select","#medium-screen","#win-screen","#intro-modal"].forEach(hide);show(sel);}
 
 function updateProgressUI(p){
@@ -94,45 +73,33 @@ function mediumStart(level,p){
   go("#medium-screen");
 }
 
-function renderWord() {
-  const slot = $("#medium-image-wrap").empty();
+function renderWord(){
+  const slot=$("#medium-image-wrap").empty();
   $("#medium-feedback").text("");
-  const cur = Medium.items[Medium.idx];
-  if (!cur) return;
+  const cur=Medium.items[Medium.idx];
+  if(!cur)return;
 
-  // Changed it here — robust multi-candidate image loading
-  const candidates = imageCandidates(cur.img);
-  const alt = cur.en || "object";
-  const placeholder = `https://via.placeholder.com/300x200?text=${encodeURIComponent(alt || "No Image")}`;
+  const candidates=imageCandidates(cur.img);
+  const alt=cur.en||"object";
+  const placeholder=`https://via.placeholder.com/300x200?text=${encodeURIComponent(alt||"No Image")}`;
+  const $img=$("<img>").attr({alt});
 
-  const $img = $("<img>").attr({ alt });
-
-  let i = 0;
-  const tryNext = () => {
-    if (i >= candidates.length) {
-      console.warn("Image not found. Using placeholder:", placeholder, "for", cur);
-      $img.attr("src", placeholder);
-      return;
-    }
-    const src = candidates[i++];
-    // tiny guard to avoid looping forever if placeholder errors (unlikely)
-    if (src === placeholder) { $img.attr("src", placeholder); return; }
-    $img.attr("src", src);
+  let i=0;
+  const tryNext=()=>{
+    if(i>=candidates.length){$img.attr("src",placeholder);return;}
+    const src=candidates[i++];
+    if(src===placeholder){$img.attr("src",placeholder);return;}
+    $img.attr("src",src);
   };
 
-  $img.on("error", () => {
-    console.warn("Failed to load image, trying next candidate:", $img.attr("src"));
-    tryNext();
-  });
-
-  tryNext(); // kick off the first candidate
+  $img.on("error",()=>tryNext());
+  tryNext();
   slot.append($img);
 
   $("#medium-progress").text(`${Medium.idx}/${Medium.items.length}`);
-  $id("medium-answer").value = "";
+  $id("medium-answer").value="";
   $id("medium-answer").focus();
 }
-
 
 function checkAnswer(p){
   const cur=Medium.items[Medium.idx];if(!cur)return;
@@ -142,11 +109,9 @@ function checkAnswer(p){
   if(answers.includes(user)){
     $("#medium-feedback").text("✅ Correct!");
     Medium.idx++;
-    if(Medium.idx>=Medium.items.length) levelComplete(Medium.levelNumber,p);
+    if(Medium.idx>=Medium.items.length)levelComplete(Medium.levelNumber,p);
     else renderWord();
-  }else{
-    $("#medium-feedback").text("❌ Try again");
-  }
+  }else{$("#medium-feedback").text("❌ Try again");}
 }
 
 function levelComplete(level,p){
@@ -160,7 +125,6 @@ function levelComplete(level,p){
   go("#win-screen");
 }
 
-// ---------------- init ----------------
 $(function(){
   const run=()=>{
     const items=loadFurnitureItems();
@@ -169,28 +133,16 @@ $(function(){
     updateProgressUI(p);
 
     $("#btn-start").on("click",()=>{updateProgressUI(getSaved());go("#level-select");});
-    $("#btn-continue").on("click",()=>{
-      const ps=getSaved();const next=[4,5,6].find(n=>!ps.completed.includes(n))||4;
-      mediumStart(next,ps);
-    });
-
-    // Changed it here: Level screen instruction modal trigger
-    $("#btn-level-instruction").on("click",()=>$("#intro-modal").removeClass("hidden"));
+    $("#btn-continue").on("click",()=>{const ps=getSaved();const next=[4,5,6].find(n=>!ps.completed.includes(n))||4;mediumStart(next,ps);});
     $("#btn-intro").on("click",()=>$("#intro-modal").removeClass("hidden"));
     $("#close-intro").on("click",()=>$("#intro-modal").addClass("hidden"));
-
-    $(".level-btn").on("click",function(){
-      const lvl=Number($(this).data("level"));mediumStart(lvl,getSaved());
-    });
+    $(".level-btn").on("click",function(){const lvl=Number($(this).data("level"));mediumStart(lvl,getSaved());});
     $("#btn-back-from-levels").on("click",()=>go("#start-screen"));
     $("#medium-back").on("click",()=>{updateProgressUI(getSaved());go("#level-select");});
     $("#medium-check").on("click",()=>checkAnswer(getSaved()));
-    $(document).on("keydown",e=>{
-      if(e.key==="Enter"&&$("#medium-screen:visible").length&&$("#medium-answer").is(":focus")){
-        e.preventDefault();$("#medium-check").trigger("click");
-      }
-    });
+    $(document).on("keydown",e=>{if(e.key==="Enter"&&$("#medium-screen:visible").length&&$("#medium-answer").is(":focus")){e.preventDefault();$("#medium-check").trigger("click");}});
     $("#win-menu").on("click",()=>go("#level-select"));
+    $("#btn-level-instruction").on("click",()=>$("#intro-modal").removeClass("hidden"));
     go("#start-screen");
   };
 
@@ -198,3 +150,4 @@ $(function(){
     window.vocabulary.when_ready(run);
   else setTimeout(run,200);
 });
+
