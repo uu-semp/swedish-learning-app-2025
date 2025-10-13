@@ -7,29 +7,7 @@
     <link rel="stylesheet" href="../style.css?v=20251009">
     <link rel="stylesheet" href="styles/userStatistics.css?v=20251013">
     <script src="../scripts/save.js" defer></script>
-    <script defer>
-        document.addEventListener("DOMContentLoaded", () => {
-            const TEAM_NAME = "team02";
-            const LEVEL_COUNT = 3;
-            let percentage = 0;
-
-            for (let i = 1; i <= LEVEL_COUNT; i++) {
-                if (window.save.get(TEAM_NAME, `level${i}Passed`) === 1) {
-                    percentage += 100 / LEVEL_COUNT;
-                }
-            }
-
-            window.save.stats.setCompletion(TEAM_NAME, Math.round(percentage))
-
-            const stats = window.save.stats.get(TEAM_NAME);
-
-            // Update the UI
-            document.getElementById("wins-count").textContent = stats.wins ?? 0;
-            document.getElementById("progress-bar").style.width = (stats.completion ?? 0) + "%";
-            document.getElementById("progress-percent").textContent = (stats.completion ?? 0) + "%";
-            document.getElementById("words-count").textContent = (window.save.get(TEAM_NAME, "learnedWords") ?? []).length;
-        });
-    </script>
+    <script src="./scripts/userStatistics.js" defer></script>
 </head>
 
 <body>
@@ -59,8 +37,11 @@
                 <button class="menu-btn" onclick="window.location.href='index.html'">
                     <i class="fas fa-arrow-left"></i> Back to Menu
                 </button>
-            </div>
 
+                <button class="menu-btn danger" id="clear-stats-btn">
+                    <i class="fas fa-trash"></i> Clear Statistics
+                </button>
+            </div>
         </section>
     </main>
 </body>
