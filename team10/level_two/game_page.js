@@ -1,3 +1,8 @@
+// ==============================================
+// Owned by Team 10
+// ==============================================
+import {loadProgress, saveProgress} from '../dev-tools/cookies.js'
+
 $(document).ready(function () {
   window.vocabulary.when_ready(function() {
     setupLevel(5); // Setup the game with 10 word pairs
