@@ -10,45 +10,42 @@ Owned by Team 13
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Basic Static Site</title>
-  <link rel="stylesheet" href="../style.css" />
+<title>HSG Game - Main Menu</title>
 
+
+  <link rel="stylesheet" href="style.css" />
   <script src="../scripts/vocabulary.js"></script>
   <script src="../scripts/save.js"></script>
-
-  <!-- You are allowed to use JQuery and Vue.js but don't have to. They just make a
-  lot of things easier
-  -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css"> 
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css">
   <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
   <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-
-  <!-- Site specific scripts and styles -->
+  
   <link rel="stylesheet" href="index.css" />
-  <script src="main.js" defer></script>
-  <script src="houses.js" defer></script>
-  <script src="translation.js" defer></script>
+  <script src="index.js" defer></script>
+  <script src="script.js" defer></script>
 </head>
 <body>
-  <header>
-    <h1>Team 13</h1>
-  </header>
 
-  <main class="game-frame">
-    <button onclick="generateRandom()">Re-randomize</button>
-    <button onclick="nextGameState()">Change gameState</button>
-    <hr>
-    <div id="prompt-words"></div>
+  <main class="menu-wrapper">
+    <!--game starts here -->
+    <div class="menu-container">
+      <div class="top-section">
+        <div class="buttons">
+          <a href="game.html" class="btn start">Starta spel</a>
+          <a href="points.html" class="btn score">Visa poäng</a>
+        </div>
 
-    <div id="house-buttons"></div>
+        <div class="bubble" id="bubble"></div>
+      </div>
 
-    <hr>
-  <!-- Literal: <div id="number-literal"></div><br>-->
-    Gamestate: <div id="gamestate"></div>
+        <div class="characters">
+          <img src="personer.png" alt="Person" class="character">
+          <img src="house.png" alt="House" class="house">
+        </div>
+    </div>
+    <!--game ends here -->
   </main>
 
-  <footer>
-    <small>Created as part of the "Software Engineering and Project Management" course 2025</small>
-  </footer>
 </body>
 </html>
