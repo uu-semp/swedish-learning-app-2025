@@ -7,6 +7,17 @@
 
 .card {
     border-radius: 10px;
-    height: 40px;
-    width: 100px;
+    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.5);
+    height: 60px;
+    width: 200px;
+    transition: box-shadow 100ms ease, transform 100ms ease;;
+    will-change: box-shadow;
+}
+
+.card:hover {
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.6);   
+    transform: scale(1.1);
+    transition: box-shadow 200ms ease, transform 300ms ease;
+    will-change: box-shadow;
+
 }
