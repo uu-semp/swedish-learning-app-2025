@@ -6,9 +6,27 @@
 }
 
 .navigation button {
-    border-radius: 5px;
+    --border-radius-button: 10px;
+    background-color: rgb(240, 240, 240);
     height: 40px;
     width: 25%;
+}
+
+.navigation button:nth-child(1) {
+    border-radius: var(--border-radius-button) 0 0 var(--border-radius-button);
+    border-right: none;
+}
+.navigation button:nth-child(2) {
+    border-right: none;
+}
+
+.navigation button:nth-child(3) {
+    border-right: none;
+}
+
+.navigation button:nth-child(4) {
+    border-radius: 0 var(--border-radius-button) var(--border-radius-button) 0;
+
 }
 
 .level-btn {
