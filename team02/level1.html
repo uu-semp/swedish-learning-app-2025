@@ -40,15 +40,21 @@
         </div>
     </div>
 
-    <!-- Summary link will be shown after game completion -->
 
     <script src="./scripts/level1Questions.js"></script>
     <script src="../scripts/vocabulary.js"></script>
     <script type="module" src="./scripts/imageFetching.js"></script>
     <script type="module" src="./scripts/dragAndDrop.js"></script>
     <script type="module" src="./scripts/feedback.js"></script>
+    <script src="../scripts/save.js"></script>
 
     <script>
+        const TEAM_NAME = "team02";
+        const LEARNED_WORDS_KEY = "learnedWords";
+        if (!window.save.get(TEAM_NAME, LEARNED_WORDS_KEY)) {
+            window.save.set(TEAM_NAME, LEARNED_WORDS_KEY, []);
+        }
+        let learnedWords = save.get(TEAM_NAME, "learnedWords");
         let remainingQuestions = [];
         window.currentQuestion = null;
         let currentQuestionAttempts = 0; // Track attempts for current question
@@ -60,7 +66,11 @@
             if (remainingQuestions.length === 0) {
                 // Store final score in localStorage before redirecting
                 console.log('Game completed! Final score:', totalScore);
+                window.save.stats.incrementWin("team02");
                 localStorage.setItem('gameScore', totalScore);
+                if (totalScore === 5) {
+                    window.save.set("team02", "level1Passed", 1);
+                }
                 localStorage.setItem('gameLevel', 'Level 1');
                 console.log('Stored in localStorage - Score:', totalScore, 'Level: Level 1');
                 // Redirect to summary page when done
@@ -130,6 +140,10 @@
                 console.log("Answer is correct!. Showing next question...");
                 // Award point only if this was the first attempt (no incorrect attempts yet)
                 if (currentQuestionAttempts === 0) {
+                    if (!learnedWords.includes(window.currentQuestion.swedish)) {
+                        learnedWords.push(window.currentQuestion.swedish);
+                        save.set("team02", "learnedWords", learnedWords);
+                    }
                     totalScore++;
                     console.log("First-try correct! Score:", totalScore);
                 }
