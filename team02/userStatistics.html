@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User Statistics - Swedish Learning App</title>
+    <link rel="stylesheet" href="../style.css?v=20251009">
+    <link rel="stylesheet" href="styles/userStatistics.css?v=20251013">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css">
+</head>
+<body>
+<main class="stats-frame">
+    <section class="stats-card">
+        <h1><i class="fas fa-chart-line"></i> User Statistics</h1>
+
+        <div class="stat-item">
+            <span><i class="fas fa-trophy"></i> Wins</span>
+            <strong id="wins-count">12</strong>
+        </div>
+
+        <div class="stat-item">
+            <span><i class="fas fa-book-open"></i> Words Learned</span>
+            <strong id="words-count">45</strong>
+        </div>
+
+        <div class="stat-item progress-section">
+            <span><i class="fas fa-tasks"></i> Game Progress</span>
+            <div class="progress-bar-container">
+                <div class="progress-bar" id="progress-bar"></div>
+            </div>
+            <span id="progress-percent">60%</span>
+        </div>
+
+        <div class="button-container">
+            <button class="menu-btn" onclick="window.location.href='index.html'">
+                <i class="fas fa-arrow-left"></i> Back to Menu
+            </button>
+        </div>
+    </section>
+</main>
+
+<script>
+    // Example placeholder values
+    const wins = 12;
+    const wordsLearned = 45;
+    const progressPercent = 60;
+
+    document.getElementById('wins-count').textContent = wins;
+    document.getElementById('words-count').textContent = wordsLearned;
+    document.getElementById('progress-bar').style.width = progressPercent + '%';
+    document.getElementById('progress-percent').textContent = progressPercent + '%';
+</script>
+</body>
+</html>
