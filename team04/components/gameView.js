@@ -21,7 +21,8 @@ export default {
 
       <navigation 
        @next="nextQuestion" 
-       @prev="prevQuestion">
+       @prev="prevQuestion"
+       :selectedOption="this.selectedOption">
       </navigation>
   </div>
   `,
