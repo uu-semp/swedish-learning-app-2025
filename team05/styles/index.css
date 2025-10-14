@@ -150,7 +150,7 @@ main.game-frame {
   margin-bottom: 20px;
 }
 .image-wrap img {
-  max-width: 400px;
+  max-width: 300px;
   border-radius: 12px;
   box-shadow: 0 6px 20px rgba(255,0,0,0.5);
 }
