@@ -5,37 +5,37 @@
   "vocabs": [
     {
       "id": "383b2052",
-      "waxWidth": 0.125,
+      "maxWidth": 0.25,
       "note": "armchair"
     },
     {
       "id": "54016a6f",
-      "waxWidth": 0.125,
+      "maxWidth": 0.25,
       "note": "drawer"
     },
     {
       "id": "031e117b",
-      "waxWidth": 0.125,
+      "maxWidth": 0.25,
       "note": "chair"
     },
     {
       "id": "7a0a7964",
-      "waxWidth": 0.125,
+      "maxWidth": 0.25,
       "note": "desk"
     },
     {
       "id": "1b2d5670",
-      "waxWidth": 0.125,
+      "maxWidth": 0.25,
       "note": "door"
     },
     {
       "id": "310d5d0b",
-      "waxWidth": 0.125,
+      "maxWidth": 0.25,
       "note": "flower"
     },
     {
       "id": "766d2079",
-      "waxWidth": 0.125,
+      "maxWidth": 0.25,
       "note": "bed"
     }
   ],

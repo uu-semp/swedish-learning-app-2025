@@ -15,7 +15,7 @@ let staticItems = new Map();
 let currentlyDraggedItem = null; // Info about the item being dragged
 
 // --- DOM Element References ---
-let gameFrame, levelIndicator, promptBar, itemList, roomContainer, doneButton, modalOverlay, modalText, modalCloseButton;
+let gameFrame, levelIndicator, promptBar, itemList, roomContainer, doneButton, modalOverlay, modalTitle, modalText, modalCloseButton;
 
 /**
  * Initializes the game, sets up DOM references and event listeners.
@@ -64,6 +64,7 @@ function setupDOM() {
   roomContainer = document.getElementById('room-container');
   doneButton = document.getElementById('done-button');
   modalOverlay = document.getElementById('modal-overlay');
+  modalTitle = document.querySelector('#modal-content h3');
   modalText = document.getElementById('modal-text');
   modalCloseButton = document.getElementById('modal-close-button');
 }
@@ -73,7 +74,6 @@ function setupDOM() {
  */
 function setupEventListeners() {
   doneButton.addEventListener('click', handleDoneClick);
-  modalCloseButton.addEventListener('click', () => modalOverlay.classList.add('hidden'));
 
   // --- Drag and Drop Event Listeners ---
   // Allow the room to be a drop target
@@ -232,7 +232,9 @@ function handleDrop(e) {
     img.src = '/' + fullVocab.img;
     img.className = 'placed-item';
     img.dataset.vocabIndex = vocabIndex;
+
     img.style.width = `${vocabDef.maxWidth * smallestRoomDim}px`;
+
     img.draggable = true;
 
     img.addEventListener('dragstart', (e) => {
@@ -283,6 +285,28 @@ function handleDragEnd() {
 }
 
 /**
+ * Displays the modal with custom content and button behavior.
+ * @param {string} title - The title for the modal.
+ * @param {string} text - The main text content.
+ * @param {string} buttonText - The text for the close/action button.
+ * @param {Function} [onButtonClick] - Optional callback to run when the button is clicked.
+ */
+function showModal(title, text, buttonText, onButtonClick) {
+  modalTitle.textContent = title;
+  modalText.textContent = text;
+  modalCloseButton.textContent = buttonText;
+
+  modalCloseButton.onclick = () => {
+    modalOverlay.classList.add('hidden');
+    if (onButtonClick) {
+      onButtonClick();
+    }
+  };
+
+  modalOverlay.classList.remove('hidden');
+}
+
+/**
  * Handles the 'Done' button click, triggering level validation.
  */
 function handleDoneClick() {
@@ -292,16 +316,25 @@ function handleDoneClick() {
   } else {
     levelFailures[currentLevel]++;
     if (levelFailures[currentLevel] >= 2) {
-      // Failed twice, move to next level
-      alert("Let's move on to the next challenge!");
-      currentLevel++;
-      loadLevel(currentLevel);
+      // Failed twice, use the modal to move to the next level.
+      showModal(
+        "Let's Move On",
+        "No worries! Let's try the next challenge.",
+        "Continue",
+        () => {
+          currentLevel++;
+          loadLevel(currentLevel);
+        }
+      );
     } else {
-      // First fail, show hint
-      modalText.textContent = levelData.hint;
-      modalOverlay.classList.remove('hidden');
-      // Reset the level for another try
-      setupLevelUI();
+      // First fail, show hint and reset the level.
+      setupLevelUI(); // Reset the level first
+      showModal(
+        "Hint",
+        levelData.hint,
+        "Try Again",
+        null // The button only needs to close the modal.
+      );
     }
   }
 }

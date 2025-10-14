@@ -5,22 +5,22 @@
   "vocabs": [
     {
       "id": "2715491b",
-      "waxWidth": 0.125,
+      "maxWidth": 0.25,
       "note": "shower"
     },
     {
       "id": "623f2e2b",
-      "waxWidth": 0.125,
+      "maxWidth": 0.25,
       "note": "towel"
     },
     {
       "id": "2d757412",
-      "waxWidth": 0.125,
+      "maxWidth": 0.25,
       "note": "toilet"
     },
     {
       "id": "13641648",
-      "waxWidth": 0.125,
+      "maxWidth": 0.25,
       "note": "mirror"
     }
   ],

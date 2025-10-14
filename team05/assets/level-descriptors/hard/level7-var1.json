@@ -5,17 +5,17 @@
   "vocabs": [
     {
       "id": "383b2052",
-      "waxWidth": 0.125,
+      "maxWidth": 0.25,
       "note": "armchair"
     },
     {
       "id": "54016a6f",
-      "waxWidth": 0.125,
+      "maxWidth": 0.25,
       "note": "drawer"
     },
     {
       "id": "031e117b",
-      "waxWidth": 0.05,
+      "maxWidth": 0.25,
       "note": "chair"
     }
   ],
