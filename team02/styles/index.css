@@ -12,48 +12,43 @@ body {
 }
 
 .button-container {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    align-items: center;
-    max-width: 300px;
-    margin: 0 auto;
+    
 }
 
-button {
-    padding: 15px 30px;
-    font-size: 16px;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    width: 200px;
-}
+ 
 
-#button1 {
-    background-color: #43cc47;
-    color: white;
-}
 
-#button2 {
+.hintText {
+    display: none;
+    position: absolute;
+    width: 85%;
+    height: 81%;
     background-color: #ecad26;
     color: white;
+    text-align: center;
+    padding-top: 5%;
+    border-radius: 8%;
+    border: 4px solid #bd891b;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Work Sans';
+    font-size: 150%;
+    font-weight: bold;
+
+
 }
 
-#button3 {
-    background-color: #ca2828;
+.hintButton:hover {
+    background-color: #ecad26;
     color: white;
+    border: 4px solid #bd891b;
 }
 
-button:hover {
-    transform: scale(1.1);
-}
 
-button:active {
-    transform: scale(1);
+.hintButton:hover + .hintText{
+    display: block;
 }
-
-#output {
-    margin-top: 10px;
-    padding: 20px;
+.hintText:hover {
+    display: block;
 }

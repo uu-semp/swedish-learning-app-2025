@@ -1,0 +1,139 @@
+/*
+=================================================
+Level Selection Page Styles - Team 02
+=================================================
+*/
+
+html, body {
+  height: 100%;
+}
+
+body {
+  background: linear-gradient(135deg, #e0eafc 0%, #cfdef3 100%);
+  min-height: 100vh;
+  margin: 0;
+  font-family: Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  width: 100%;
+}
+
+.level-card {
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.18);
+  padding: 40px 30px 30px 30px;
+  max-width: 350px;
+  width: 90vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 30px 0;
+}
+
+header {
+  display: block !important;
+}
+
+header h1 {
+  margin-top: 30px;
+  font-size: 2.2rem;
+  color: #2d3a4b;
+  letter-spacing: 1px;
+  text-shadow: 0 2px 8px #e0eafc;
+}
+
+.button-container {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  align-items: center;
+  width: 100%;
+  margin: 25px 0 10px 0;
+}
+
+button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 16px 0;
+  font-size: 1.1rem;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(.4,0,.2,1);
+  width: 100%;
+  box-shadow: 0 2px 8px rgba(44, 62, 80, 0.08);
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+#button1 {
+  background-color: #43cc47;
+  color: white;
+}
+#button2 {
+  background-color: #ecad26;
+  color: white;
+}
+#button3 {
+  background-color: #ca2828;
+  color: white;
+}
+
+button:hover {
+  filter: brightness(1.08);
+  transform: translateY(-2px) scale(1.04);
+  box-shadow: 0 6px 18px rgba(44, 62, 80, 0.13);
+}
+
+#output {
+  margin-top: 18px;
+  padding: 16px;
+  background: #f7fafc;
+  border-radius: 8px;
+  color: #2d3a4b;
+  font-size: 1rem;
+  min-height: 32px;
+  box-shadow: 0 1px 4px rgba(44, 62, 80, 0.06);
+  width: 100%;
+}
+
+footer {
+  display: block !important;
+  margin-top: auto;
+  padding: 22px 0 14px 0;
+  width: 100%;
+  text-align: center;
+  color: #2d3a4b;
+  font-size: 1.08rem;
+  background: #f3f6fa;
+  border-top: 2px solid #d1dbe8;
+  font-weight: 500;
+  letter-spacing: 0.2px;
+  box-shadow: 0 -2px 8px rgba(44, 62, 80, 0.04);
+}
+
+@media (max-width: 500px) {
+  .level-card {
+    padding: 18px 5vw 18px 5vw;
+  }
+  header h1 {
+    font-size: 1.3rem;
+  }
+  button {
+    font-size: 1rem;
+    padding: 12px 0;
+  }
+}
