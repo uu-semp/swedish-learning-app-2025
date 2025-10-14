@@ -1,0 +1,32 @@
+{
+  "background": {
+    "path": "/team05/assets/backgrounds/hallway.svg"
+  },
+  "vocabs": [
+    {
+      "id": "383b2052",
+      "waxWidth": 0.125,
+      "note": "armchair"
+    },
+    {
+      "id": "54016a6f",
+      "waxWidth": 0.125,
+      "note": "drawer"
+    },
+    {
+      "id": "031e117b",
+      "waxWidth": 0.125,
+      "note": "chair"
+    }
+  ],
+  "staticVocabs": [],
+  "proximityRequirements": [
+    {
+      "indexA": 3,
+      "indexB": 0,
+      "proximity": 1.0
+    }
+  ],
+  "prompt": "Place \"@3 $3\" in the hallway",
+  "hint": "Something you can sit on"
+}

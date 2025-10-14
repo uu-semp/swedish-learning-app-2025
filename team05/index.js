@@ -1,26 +1,11 @@
-// ==============================================
-// Owned by Team 05
-// ==============================================
-
 "use strict";
 
-$(function() {window.vocabulary.when_ready(function () {
+document.addEventListener("DOMContentLoaded", function() {
+  window.vocabulary.when_ready(function () {
+    console.log("Vocabulary initialized")
 
-  // These are only dummy functions and can be removed.
-  $("#check-jquery").on("click", () => {
-    alert("JavaScript and jQuery are working.");
+    // example code, can be removed
+    const chair_vocab = window.vocabulary.get_vocab("031e117b") // I know this id is for chair
+    console.log(chair_vocab) // will give Object { en: "chair", sv: "stol", sv_pl: "stolar", article: "en", img: "assets/images/furniture/chair.png", img_copyright: 'Image: Papunets bildbank, <a href="papunet.net">papunet.net</a>, Elina Vanninen, Sergio Palao / ARASAAC och Sclera licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/deed">CC BY-NC-SA 3.0</a>', audio: "assets/audio/furniture/chair.mp3" }
   });
-
-  $("#display-vocab").text(JSON.stringify(window.vocabulary.get_random()));
-
-  $("#check-saving").on("click", () => {
-    var data = window.save.get("team05");
-    data.counter = data.counter ?? 0;
-    data.counter += 1;
-    $("#check-saving").text(`This button has been pressed ${data.counter} times`);
-    window.save.set("team05", data);
-  });
-
-})});
-
-
+});

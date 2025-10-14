@@ -1,0 +1,20 @@
+[
+  {
+    "level": 7,
+    "include": [
+      "/team05/assets/level-descriptors/hard/level7-var1.json"
+    ]
+  },
+  {
+    "level": 8,
+    "include": [
+      "/team05/assets/level-descriptors/hard/level8-var1.json"
+    ]
+  },
+  {
+    "level": 9,
+    "include": [
+      "/team05/assets/level-descriptors/hard/level9-var1.json"
+    ]
+  }
+]
