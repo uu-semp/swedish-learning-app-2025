@@ -19,7 +19,7 @@
       "note": "chair"
     },
     {
-      "id": "031e117b",
+      "id": "7a0a7964",
       "waxWidth": 0.125,
       "note": "desk"
     },
@@ -63,6 +63,6 @@
       "proximity": 0.3
     }
   ],
-  "prompt": "Place \"@7 $7\" close to the \"@5\", and also \"@6 $6\", on top of the \"@2\".",
+  "prompt": "Place \"@7 $7\" close to the \"$5\", and also \"@6 $6\" on top of the \"$2\".",
   "hint": "There should also be something you can rest on close to the door, and the drawer needs something that fits on top of it."
 }

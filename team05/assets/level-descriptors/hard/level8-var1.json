@@ -48,6 +48,6 @@
       "proximity": 0.3
     }
   ],
-  "prompt": "Place \"@2 $2\" close to the \"@1\"",
+  "prompt": "Place \"@2 $2\" close to the \"$1\"",
   "hint": "Someone needs to dry themselves when stepping out of the shower."
 }
