@@ -1,16 +1,16 @@
 /* =============================================
 Owned by Team 05
 ================================================ */
-body {
+/* body {
   font-family: Arial, sans-serif;
   width: 1000px;
   margin: 0 auto;
 }
 .hidden { display: none !important; }
-.mt-2 { margin-top: 20px; }
+.mt-2 { margin-top: 20px; } */
 
 /* Main Menu */
-.start-screen {
+/* .start-screen {
   text-align: center;
   padding: 80px 20px;
   background: linear-gradient(90deg,#ff6b35,#f7931e,#ffcd3c);
@@ -25,10 +25,10 @@ body {
   background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);
   box-shadow:0 6px 18px rgba(118,75,162,.3);
 }
-.menu-btn:hover { transform:translateY(-4px); }
+.menu-btn:hover { transform:translateY(-4px); } */
 
 /* Level Select */
-.levels-grid {
+/* .levels-grid {
   display:grid;grid-template-columns:repeat(3,1fr);gap:12px;max-width:520px;margin:auto;
 }
 .level-btn {
@@ -38,10 +38,10 @@ body {
 .level-btn.completed { background:#109e68; }
 .back-btn {
   padding:10px 18px;border:none;border-radius:10px;background:#667eea;color:#fff;cursor:pointer;
-}
+} */
 
 /* Medium screen */
-.screen-header {
+/* .screen-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -71,19 +71,19 @@ body {
   padding:12px 18px;border:none;border-radius:10px;
   background:linear-gradient(180deg,#11998e 0%,#38ef7d 100%);color:#fff;cursor:pointer;
 }
-#medium-feedback { margin-top:12px;font-size:18px;min-height:24px; }
+#medium-feedback { margin-top:12px;font-size:18px;min-height:24px; } */
 
 /* Win screen */
-#win-screen { display:flex;align-items:center;justify-content:center; }
+/* #win-screen { display:flex;align-items:center;justify-content:center; }
 .win-card {
   text-align:center;padding:24px;border-radius:12px;
   background:linear-gradient(180deg,#74b9ff 0%,#0984e3 100%);color:#fff;width:min(92%,520px);
   box-shadow:0 14px 60px rgba(0,0,0,.25);
 }
-.win-actions { display:flex;gap:12px;justify-content:center;margin-top:14px; }
+.win-actions { display:flex;gap:12px;justify-content:center;margin-top:14px; } */
 
 /* Modal */
-.modal { position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.6); }
+/* .modal { position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.6); }
 .modal-content {
   background:linear-gradient(180deg,#74b9ff 0%,#0984e3 100%);
   color:#fff;padding:20px 26px;border-radius:12px;width:min(88%,540px);text-align:center;
@@ -91,4 +91,258 @@ body {
 .close-btn {
   margin-top:14px;padding:10px 14px;border:none;border-radius:8px;
   background:linear-gradient(180deg,#ffecd2 0%,#fcb69f 100%);color:#333;cursor:pointer;
+} */ 
+
+
+/* =============================================
+Owned by Team 05 — Red Room (Red-Black Final Theme)
+================================================= */
+
+/* Base */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  background: #000;
+  color: #fff;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
+.hidden { display: none !important; }
+.mt-2 { margin-top: 20px; }
+
+main.game-frame {
+  background: linear-gradient(135deg, #000, #1a0000, #2b0000);
+  border-radius: 20px;
+  padding: 40px 50px;
+  box-shadow: 0 14px 40px rgba(255,0,0,0.3);
+  width: 90%;
+  max-width: 950px;
+  min-height: 70vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Start Screen */
+.start-screen {
+  text-align: center;
+  padding: 70px 40px;
+  background: linear-gradient(135deg, #dc143c, #8b0000, #000);
+  border-radius: 20px;
+  box-shadow: 0 10px 40px rgba(255,0,0,0.3);
+  border: 2px solid #dc143c;
+}
+
+.game-title {
+  font-size: 42px;
+  margin-bottom: 34px;
+  color: #fff;
+  text-shadow: 0 6px 20px rgba(255,0,0,0.6);
+  letter-spacing: 1px;
+}
+
+.menu {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  max-width: 360px;
+  margin: 0 auto;
+}
+
+.menu-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 14px 18px;
+  font-size: 18px;
+  border-radius: 12px;
+  border: 2px solid #dc143c;
+  background: linear-gradient(135deg, #8b0000 0%, #000 60%, #dc143c 100%);
+  color: #fff;
+  box-shadow: 0 6px 18px rgba(220,20,60,0.3);
+  cursor: pointer;
+  transition: all .25s ease;
+}
+.menu-btn:hover {
+  transform: translateY(-4px);
+  background: linear-gradient(135deg, #dc143c, #8b0000, #000);
+  box-shadow: 0 10px 28px rgba(220,20,60,0.6);
+}
+
+/* Level Select */
+.level-select {
+  text-align: center;
+  background: linear-gradient(135deg, #8b0000, #000);
+  padding: 50px;
+  border-radius: 20px;
+  box-shadow: 0 8px 30px rgba(255,0,0,0.3);
+  border: 2px solid #dc143c;
+}
+
+.levels-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  justify-content: center;
+  margin: 20px auto;
+  max-width: 400px;
+}
+
+.level-btn {
+  padding: 18px;
+  border-radius: 12px;
+  border: 2px solid #dc143c;
+  background: linear-gradient(135deg, #000, #8b0000);
+  color: #fff;
+  cursor: pointer;
+  transition: all .25s ease;
+}
+.level-btn:hover {
+  background: linear-gradient(135deg, #dc143c, #8b0000);
+}
+.level-btn.completed {
+  background: linear-gradient(135deg, #008000, #00b300);
+}
+
+.back-btn {
+  margin-top: 22px;
+  padding: 10px 18px;
+  border-radius: 10px;
+  border: 2px solid #dc143c;
+  background: linear-gradient(180deg, #8b0000 0%, #000 100%);
+  color: #fff;
+  cursor: pointer;
+}
+.back-btn:hover {
+  background: linear-gradient(180deg, #dc143c, #8b0000);
+}
+
+/* Medium Level Screen */
+.screen-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+.help-btn {
+  padding: 8px 12px;
+  font-size: 14px;
+  border-radius: 8px;
+  border: 2px solid #dc143c;
+  background: linear-gradient(135deg, #dc143c, #8b0000);
+  color: #fff;
+  cursor: pointer;
+}
+.help-btn:hover { background: linear-gradient(135deg, #ff1744, #dc143c); }
+
+.image-wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 240px;
+  margin-bottom: 20px;
+}
+.image-wrap img {
+  max-width: 400px;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(255,0,0,0.5);
+}
+
+.answer-row {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 16px;
+}
+
+#medium-answer {
+  width: 60%;
+  max-width: 520px;
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 2px solid #dc143c;
+  background: #1a1a1a;
+  color: #fff;
+}
+
+.primary-btn {
+  padding: 12px 18px;
+  border: 2px solid #dc143c;
+  border-radius: 10px;
+  background: linear-gradient(180deg, #dc143c, #8b0000);
+  color: #fff;
+  cursor: pointer;
+}
+.primary-btn:hover {
+  background: linear-gradient(180deg, #ff1744, #dc143c);
+}
+
+#medium-feedback {
+  margin-top: 12px;
+  font-size: 18px;
+  color: #fff;
+}
+
+/* Win Screen */
+#win-screen {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.win-card {
+  text-align: center;
+  padding: 24px;
+  border-radius: 12px;
+  background: linear-gradient(180deg, #8b0000, #000);
+  color: #fff;
+  box-shadow: 0 10px 40px rgba(255,0,0,0.3);
+  border: 2px solid #dc143c;
+}
+.win-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  margin-top: 14px;
+}
+
+/* Modal */
+.modal {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0,0,0,0.8);
+  z-index: 2000;
+}
+.modal-content {
+  background: linear-gradient(180deg, #8b0000, #000);
+  border: 2px solid #dc143c;
+  color: #fff;
+  padding: 20px 26px;
+  border-radius: 12px;
+  width: min(88%, 540px);
+  text-align: center;
+  box-shadow: 0 14px 60px rgba(220,20,60,0.4);
+}
+.close-btn {
+  margin-top: 14px;
+  padding: 10px 14px;
+  border: 2px solid #dc143c;
+  border-radius: 8px;
+  background: linear-gradient(180deg, #dc143c, #8b0000);
+  color: #fff;
+  cursor: pointer;
+}
+.english-hint {
+  font-size: 20px;
+  text-align: center;
+  color: #ff9999;
+  margin-top: 8px;
+  font-style: italic;
+  letter-spacing: 0.5px;
+}
+.close-btn:hover { background: linear-gradient(180deg, #ff1744, #dc143c); }
