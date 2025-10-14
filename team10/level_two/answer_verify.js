@@ -89,8 +89,9 @@ $(document).ready(function(){
           $('#modalMessage').html(`You scored <strong>${score}</strong> out of ${maxQuestions}.`);
           $('#modalActionText').text(`Your score meets the ${requiredScore} needed. Well done!`);
           $('#modalButton').text('Advance to Next Level').off('click').on('click', function() {
-              // Redirect to the main menu (placeholder for Level 3)
-              window.location.href = '../index.html';
+              // *** THIS IS THE UPDATED LINE ***
+              // Redirect to the Level 3 page
+              window.location.href = '../level_three/level_three.html';
           });
       } else {
           // --- FAILURE STATE ---
