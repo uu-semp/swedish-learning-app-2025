@@ -82,7 +82,6 @@ $(document).ready(function(){
   function showCompletionModal(score, maxQuestions, requiredScore) {
       const modal = $('#completionModal');
       
-      // *** NEW: Add click handler for the "View Answers" button ***
       $('#viewAnswersBtn').on('click', function() {
         modal.hide();
       });
@@ -96,6 +95,14 @@ $(document).ready(function(){
           $('#modalButton').text('Advance to Next Level').off('click').on('click', function() {
               window.location.href = '../level_three/level_three.html';
           });
+          
+          // *** NEW: Show and configure the advance button on the main page ***
+          const advanceButtonOnPage = $('#advanceBtn');
+          advanceButtonOnPage.show();
+          advanceButtonOnPage.on('click', function() {
+              window.location.href = '../level_three/level_three.html';
+          });
+
       } else {
           // --- FAILURE STATE ---
           $('#modalTitle').text('❌ Level Failed').removeClass('success').addClass('failure');

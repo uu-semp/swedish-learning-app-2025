@@ -80,7 +80,6 @@ h2 {
 }
 
 .modal-button-container .submit-button {
-    /* Use calc() to explicitly set the width for each button */
     width: calc(50% - 5px);
     margin: 0;
     padding: 15px;

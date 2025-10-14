@@ -10,3 +10,15 @@ line.correct {
 line.incorrect {
   stroke: red !important;
 }
+
+.bottom-nav-container {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 2rem;
+  padding: 0 1rem;
+}
+
+.bottom-nav-container .submit-btn {
+  margin-top: 0;
+}

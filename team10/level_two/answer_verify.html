@@ -23,9 +23,10 @@
       <svg class="wires" id="result-wires"></svg>
     </div>
 
-    <div style="text-align:center;">
+    <div class="bottom-nav-container">
       <button class="submit-btn play-again" onclick="window.location.href='game_page.html'">Play Again</button>
       <button class="submit-btn main-menu" onclick="window.location.href='../index.html'">Main Menu</button>
+      <button class="submit-btn advance-btn" id="advanceBtn" style="display: none;">Advance to Next Level</button>
     </div>
 
   </main>
@@ -36,8 +37,8 @@
         <p id="modalMessage" class="modal-message"></p>
         <p id="modalActionText" class="modal-action-text"></p>
         <div class="modal-button-container">
-            <button id="viewAnswersBtn" class="submit-btn view-answers-btn">View Answers</button>
-            <button id="modalButton" class="submit-button advance-btn"></button>
+            <button id="viewAnswersBtn" class="submit-btn">View Answers</button>
+            <button id="modalButton" class="submit-button"></button>
         </div>
     </div>
   </div>
