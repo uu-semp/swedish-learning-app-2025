@@ -68,7 +68,14 @@ function game_start(category) {
 };
 
 document.addEventListener("DOMContentLoaded", () => {
-  if (
+  if(document.getElementById("categorybox")){
+    window.vocabulary.when_ready(function () {
+      document.getElementById("loader").style.display = "none";
+      document.querySelector(".categorybox").style.display = "block";
+    });
+  }
+
+    if (
     document.getElementById("img-1") &&
     document.getElementById("img-2") &&
     document.getElementById("img-3") &&
@@ -77,7 +84,7 @@ document.addEventListener("DOMContentLoaded", () => {
     startGame();
   } else {
     console.error("Game images missing");
-  }
+  } 
 });
 
 function startGame() {
