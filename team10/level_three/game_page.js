@@ -207,7 +207,9 @@ const GamePage = {
             return this.words[this.currentIndex] || null;
         },
         currentImg() {
-            return "../../" + this.currentWord?.img || this.defaultImg;
+            return  this.currentWord?.img
+                ? "../../" + this.currentWord.img
+                : "../../" + this.defaultImg;
         }
     },
     async mounted() {
@@ -239,7 +241,7 @@ const GamePage = {
         },
         nextWord() {
             if (this.currentIndex == (this.words.length - 1)) {
-                this.$emit('game-over', { score: this.correctCount, total: this.words.length });
+                this.endGame();
             }
             this.currentIndex++;
         },
@@ -267,30 +269,23 @@ const GamePage = {
             this.focusAnswerInput();
         },
         endGame() {
-            this.isGameOver = true;
             let progress = loadProgress(); // From cookies.js
 
             // Update score for level 3
-            progress.levelScores[3] += this.score;
+            progress.levelScores[3] += this.correctCount;
             let totalScore = progress.levelScores[3];
+            console.log('totalscore: ', totalScore)
 
             if (totalScore >= 10) {
-                // GAME COMPLETED 
-                alert(`Congratulations! You finished the game!`);
-                
                 // Update main application stats
                 window.save.stats.setCompletion("team10", 100);
                 window.save.stats.incrementWin("team10");
-            } else {
-                alert(`Game over! You got ${this.score}/${this.words.length}. You need 10 correct answers to win.`);
             }
 
+             // GAME COMPLETED 
+            this.$emit('game-over', { score: this.correctCount, total: this.words.length, won: ( this.correctCount/this.words.length >= 0.8 )}); 
+ 
             saveProgress(progress); // Save final score to your cookie
-            
-            // Redirect back to the main menu after a short delay
-            setTimeout(() => {
-                window.location.href = '../index.html';
-            }, 1000);
         },
         goBack() {
             this.$emit('back');
@@ -299,15 +294,24 @@ const GamePage = {
 };
 
 const GameOverPage = {
-    props: ['score', 'total'],
-    template: `
-    <div class="game-over">
-        <h2>Game finished!</h2>
-        <p>You got {{ score }} out of {{ total }} words correct!</p>
-        <button @click="$emit('back-to-menu')">Back to Menu</button>
+  props: ['score', 'total', 'won'],
+  template: `
+    <div class="game-over" :class="{ win: won, lose: !won }">
+      <h2 v-if="won">Congratulations!</h2>
+      <h2 v-else>Game Over</h2>
+
+      <p v-if="won">
+        You finished the game! You got <strong>{{ score }}</strong> out of <strong>{{ total }}</strong> correct.
+      </p>
+      <p v-else>
+        You got <strong>{{ score }}</strong> out of <strong>{{ total }}</strong>. You need 10 correct answers to win.
+      </p>
+
+      <button class="menu-btn" @click="$emit('back-to-menu')">Back to Menu</button>
     </div>
-    `
+  `
 };
+
 
 const app = createApp({
     components: { MenuPage, GamePage, GameOverPage },
@@ -315,7 +319,8 @@ const app = createApp({
         return { 
             currentView: 'menu', 
             finalScore: 0,
-            totalWords: 0 
+            totalWords: 0,
+            playerWon: false 
         };
     },
     template: `
@@ -332,13 +337,15 @@ const app = createApp({
         v-else-if="currentView === 'gameOver'"
         :score="finalScore"
         :total="totalWords"
+        :won="playerWon"
         @back-to-menu="currentView = 'menu'"
     ></game-over-page>
     `,
     methods: {
-        handleGameOver({ score, total }) {
+        handleGameOver({ score, total, won }) {
             this.finalScore = score;
             this.totalWords = total;
+            this.playerWon = won;
             this.currentView = 'gameOver';
         }
     }
