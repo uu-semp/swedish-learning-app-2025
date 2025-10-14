@@ -235,21 +235,6 @@ $(function () {
   });
 });
 
-// FIXME: repace fetch with API call to get the data.
-function mapCards() {
-  const data = fetch("sepm25_data_scema_sheet1(1).json")
-    .then((response) => response.json())
-    .then((data) => {
-      const furnitureOnly = data.filter(
-        (item) => item.category === "furniture" && item.image_url !== null
-      );
-      const pairs = getRandomPairs(furnitureOnly, numPairs);
-      const cards = prepareGridItems(pairs);
-      console.log(cards);
-      renderGrid(cards);
-    });
-}
-
 function getRandomPairs(data, numPairs) {
   console.log(data);
   const shuffled = [...data].sort(() => 0.5 - Math.random());
@@ -310,11 +295,36 @@ let numPairs = 8; // number of pairs of cards
 
 // Modify mapCards() slightly to store the fetched pairs
 function mapCards() {
-  fetch("sepm25_data_scema_sheet1(1).json")
-    .then((response) => response.json())
-    .then((data) => {
+  fetch("../words.csv")
+    .then((response) => response.text())
+    .then((csv) => {
+      const data = csv
+        .split("\n")
+        .slice(1)
+        .map((row) => {
+          const [
+            id,
+            english,
+            article,
+            swedish,
+            swedish_plural,
+            literal,
+            category,
+            image_url,
+          ] = row.split(",");
+          return {
+            id,
+            english,
+            article,
+            swedish,
+            swedish_plural,
+            literal,
+            category,
+            image_url,
+          };
+        });
       const furnitureOnly = data.filter(
-        (item) => item.category === "furniture" && item.image_url !== null
+        (item) => item.category === "furniture" && item.image_url
       );
       const pairs = getRandomPairs(furnitureOnly, numPairs);
       currentPairs = pairs; // store globally for hint use
