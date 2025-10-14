@@ -15,7 +15,7 @@ const app = Vue.createApp({
       currentScreen: 'game',
 
       progress: 1,
-      progressMax: 10,
+      progressMax: 2,
 
       houseOptions: [],
       correctHouseIndex: -1,
@@ -88,7 +88,7 @@ const app = Vue.createApp({
 
       if (this.progress >= this.progressMax) {
         alert(`Congrats! You finished ${this.progressMax} rounds.`);
-        window.location.href = 'index.html';
+        window.location.href = 'end_screen.html';
         return;
       }
 
