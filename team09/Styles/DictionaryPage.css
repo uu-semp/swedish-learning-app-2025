@@ -1,6 +1,6 @@
 /* Dictionary.css */
 body {
-    background: linear-gradient(135deg, #1e62c8, #1faeae);  /* ← background */
+    background: linear-gradient(135deg, #1e62c8, #1faeae);  
     min-height: 100vh;
     margin: 0;
     display: flex;
