@@ -296,18 +296,18 @@ const GamePage = {
 const GameOverPage = {
   props: ['score', 'total', 'won'],
   template: `
-    <div class="game-over" :class="{ win: won, lose: !won }">
-      <h2 v-if="won">Congratulations!</h2>
-      <h2 v-else>Game Over</h2>
-
-      <p v-if="won">
-        You finished the game! You got <strong>{{ score }}</strong> out of <strong>{{ total }}</strong> correct.
-      </p>
-      <p v-else>
-        You got <strong>{{ score }}</strong> out of <strong>{{ total }}</strong>. You need 10 correct answers to win.
-      </p>
-
-      <button class="menu-btn" @click="$emit('back-to-menu')">Back to Menu</button>
+    <div class="game-over-container" :class="{ win: won, lose: !won }">
+        <h2 v-if="won">Congratulations!</h2>
+        <h2 v-else>Game Over</h2>
+        <p v-if="won">
+            You finished the game! You got <strong>{{ score }}</strong> out of <strong>{{ total }}</strong> correct.
+        </p>
+        <p v-else>
+            You got <strong>{{ score }}</strong> out of <strong>{{ total }}</strong>. You need 10 correct answers to win.
+        </p>
+        <div class="button-container">
+            <button class="menu-btn" @click="$emit('back-to-menu')">Back to Menu</button>
+        </div>
     </div>
   `
 };
