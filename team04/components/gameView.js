@@ -73,21 +73,21 @@ export default {
     
   methods: {
     selectOption(index) {
-      this.selectedOption = index;
-      // create tuple-like object: { id: questionIndex, user: selectedIndex, correct: correctIndex }
       const id = this.currentIndex;
-      const correct = this.currentQuestion ? this.currentQuestion.correctIndex : null;
-      const entry = { id, user: index, correct };
-
-      // update existing answer for this question or push new
+      // If this question was already answered, ignore further selections.
+      // To allow changes, change this to `if (existing && !allowChange) { ... }`
       const existing = this.answers.find(a => a.id === id);
       if (existing) {
-        existing.user = entry.user;
-        existing.correct = entry.correct;
-      } else {
-        this.answers.push(entry);
+        this.selectedOption = existing.user;
+        return;
       }
-  },
+      this.selectedOption = index;
+      // create tuple-like object: { id: questionIndex, user: selectedIndex, correct: correctIndex }
+      const correct = this.currentQuestion ? this.currentQuestion.correctIndex : null;
+      const entry = { id, user: index, correct, answered: true }
+      // push new answer entry
+      this.answers.push(entry);
+    },
     nextQuestion() {
       if (this.currentIndex < this.questions.length - 1) {
         this.currentIndex++;
