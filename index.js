@@ -70,11 +70,8 @@ function buildFilter(chapters){
 function makeFilterBtn(index, value){
   const btn = document.createElement("button");
   btn.className = "filter-btn";
-  if(currentLanguage == 'en') {
-    btn.textContent = `Chapter ${index}`
-  } else {
-    btn.textContent = `Kapitel ${index}`
-  }
+  btn.textContent = `${translations["chapter"][currentLanguage]} ${index}`
+ 
   btn.dataset.chapter = value;
   return btn;
 }
@@ -100,49 +97,26 @@ function renderGrid(games) {
 
   games.forEach((g) => {
     const card = document.createElement("article");
-    card.className = "card";
+    card.className = "card translate";
 
-    if(currentLanguage == 'en') {
-      // Build game tags HTML
-      const tagsHtml = (Array.isArray(g.supported_chapters) && g.supported_chapters.length)
-        ? `<div class="card-tags">
-             ${g.supported_chapters.map(ch => `<span class="tag">Chapter ${ch}</span>`).join("")}
-           </div>`
-        : "";
-      
-      // Build game card HTML
-      card.innerHTML = `
+    // Build game tags HTML
+    const tagsHtml = (Array.isArray(g.supported_chapters) && g.supported_chapters.length)
+      ? `<div class="card-tags">
+           ${g.supported_chapters.map(ch => `<span class="tag">${translations["chapter"][currentLanguage]} ${ch}</span>`).join("")}
+         </div>`
+      : "";
+    
+    // Build game card HTML
+    card.innerHTML = `
       <img src="assets/main_menu/images/games/${g.id}.png" 
-           alt="${g.eng_title}"
+           alt="${g.title[currentLanguage]}"
            onerror="this.onerror=null; this.src='assets/main_menu/images/games/default_image.png';">
       <div class="card-body">
-        <h3>${g.eng_title}</h3>
-        <p>${g.eng_desc}</p>
+        <h3>${g.title[currentLanguage]}</h3>
+        <p>${g.desc[currentLanguage]}</p>
         ${tagsHtml}
       </div>
       `;
-    } else {
-      // Basic Swedish is default for the webpage
-
-      // Build game tags HTML
-      const tagsHtml = (Array.isArray(g.supported_chapters) && g.supported_chapters.length)
-        ? `<div class="card-tags">
-             ${g.supported_chapters.map(ch => `<span class="tag">Kapitel ${ch}</span>`).join("")}
-           </div>`
-        : "";
-
-      // Build game card HTML
-      card.innerHTML = `
-      <img src="assets/main_menu/images/games/${g.id}.png" 
-           alt="${g.sv_title}"
-           onerror="this.onerror=null; this.src='assets/main_menu/images/games/default_image.png';">
-      <div class="card-body">
-        <h3>${g.sv_title}</h3>
-        <p>${g.sv_desc}</p>
-        ${tagsHtml}
-      </div>
-      `;
-    }
 
     // Add click event to open game
     card.addEventListener("click", () => openIframe(`./${g.id}/index.html`));
@@ -166,31 +140,17 @@ function renderGrid(games) {
 
     const box = document.createElement('div');
     box.id = 'settings-box';
-
-    if(currentLanguage == 'en') {
-      box.innerHTML = `
-        <div class="settings-header">
-          <h2 class="settings-title">Settings</h2>
-          <button id="_close_settings" class="settings-btn close">Close</button>
-        </div>
-        <div class="settings-actions">
-          <button id="_open_add" class="settings-btn primary">Add vocabulary</button>
-          <button id="_clear_save" class="settings-btn secondary">Clear data</button>
-        </div>
-      `;
-    } else {
-      // Basic Swedish is default for the webpage
-      box.innerHTML = `
-        <div class="settings-header">
-          <h2 class="settings-title">Inställningar</h2>
-          <button id="_close_settings" class="settings-btn close">Stäng</button>
-        </div>
-        <div class="settings-actions">
-          <button id="_open_add" class="settings-btn primary">Lägg till ord</button>
-          <button id="_clear_save" class="settings-btn secondary">Rensa data</button>
-        </div>
-      `;
-    }
+    
+    box.innerHTML = `
+      <div class="settings-header">
+        <h2 class="settings-title">${translations["settings-btn"][currentLanguage]}</h2>
+        <button id="_close_settings" class="settings-btn close">${translations["close"][currentLanguage]}</button>
+      </div>
+      <div class="settings-actions">
+        <button id="_open_add" class="settings-btn primary">${translations["add-word"][currentLanguage]}</button>
+        <button id="_clear_save" class="settings-btn secondary">${translations["clear-data"][currentLanguage]}</button>
+      </div>
+    `;
       
     
     overlay.appendChild(box);
@@ -205,15 +165,14 @@ function renderGrid(games) {
     // Clear saved data button
     overlay.querySelector('#_clear_save').addEventListener('click', () => {
       const confirmBox = document.createElement('div');
-      confirmBox.className = 'confirm-box';
+      confirmBox.className = 'confirm-box translate';
       confirmBox.innerHTML = `
-        <h3>Clear Game Data?</h3>
-        <p>This will reset all saved progress and cannot be undone.</p>
+        ${translations["clear?"][currentLanguage]}
         <div class="confirm-box-actions">
           <button class="settings-btn confirm-box-btn cancel" 
-            onclick="this.parentElement.parentElement.remove()">Cancel</button>
+            onclick="this.parentElement.parentElement.remove()">${translations["cancel"][currentLanguage]}</button>
           <button class="settings-btn confirm-box-btn confirm" 
-            id="_confirm_clear">Clear Data</button>
+            id="_confirm_clear">${translations["clear-data"][currentLanguage]}</button>
         </div>
       `;
       
@@ -327,9 +286,9 @@ async function setLanguage(lang) {
     })
 
     const chapters = [...new Set(allGames.flatMap(g => g.supported_chapters))].sort((a, b) => a - b);
-    buildFilter(chapters)
-    setActiveFilter("all");
-    renderGrid(allGames)
+    //buildFilter(chapters)
+    //setActiveFilter("all");
+    //renderGrid(allGames)
 
   } catch (error) {
     console.error(error)

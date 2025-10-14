@@ -27,5 +27,35 @@
     "filter": {
         "en": "Filter by chapter:",
         "sv": "Filtrera efter kapitel:"
+    },
+
+    "chapter": {
+        "en": "Chapter",
+        "sv": "Kapitel"
+    },
+
+    "add-word": {
+        "en": "Add vocabulary",
+        "sv": "Lägg till glosor"
+    },
+
+    "clear?": {
+        "en":"<h3>Clear Game Data?</h3>\n<p>This will reset all saved progress and cannot be undone.</p>",
+        "sv":"<h3>Rensa speldata?</h3>\n<p>Detta kommer återställa alla framsteg och kan inte ångras.</p>"
+    },
+
+    "cancel": {
+        "en": "Cancel",
+        "sv": "Avbryt"
+    },
+
+    "clear-data": {
+        "en": "Clear data",
+        "sv": "Rensa data"
+    },
+
+    "close": {
+        "en": "Close",
+        "sv": "Stäng"
     }
 }
