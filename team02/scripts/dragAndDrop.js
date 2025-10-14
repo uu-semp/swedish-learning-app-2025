@@ -44,7 +44,7 @@ let dragSource = null;
             draggedImage.style.position = 'absolute';
             draggedImage.style.left = (tileRect.left - workspaceRect.left + tileRect.width / 2 - draggedImage.offsetWidth / 2) + 'px';
             draggedImage.style.top = (tileRect.top - workspaceRect.top + tileRect.height / 2 - draggedImage.offsetHeight / 2) + 'px';
-            draggedImage.style.transform = 'scale(1.3) translateY(-40px)';
+            draggedImage.style.transform = 'scale(1.6) translateY(-10px)';
             draggedImage.style.transition = 'transform 0.3s ease';
             const eventName = dragSource === 'sidebar' ? 'DropFromSidebar' : 'DropFromWorkspace';
             workspace.dispatchEvent(new CustomEvent(eventName, { detail: { draggedImage, tile } }));
