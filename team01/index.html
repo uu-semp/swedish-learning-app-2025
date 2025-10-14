@@ -169,15 +169,16 @@ Owned by Team 01
         <button id="hint-button">Help</button>
         <button id="end-game">Quit</button>
       </div>
+      <p id="moves">moves: 0</p>
+      <p id="elapsed-time">Time: 0s</p>
 
     </section>
 
-    <p id="elapsed-time">Time: 0s</p>
     <!-- End Screen -->
     <section id="end-screen" style="display: none;">
-      <h2>Game Over</h2>
+      <h2><span id="header_endscreen"></span></h2>
       <p>Your score: <span id="score">0</span></p>
-      <p>Time elapsed: <span id="time">0</span> seconds</p>
+      <p>Time elapsed: <span id="time">0</span></p>
       <p>Total Wins: <span id="wins-count">0</span></p>
       <button id="restart-game">Play Again</button>
     </section>
