@@ -82,6 +82,11 @@ $(document).ready(function(){
   function showCompletionModal(score, maxQuestions, requiredScore) {
       const modal = $('#completionModal');
       
+      // *** NEW: Add click handler for the "View Answers" button ***
+      $('#viewAnswersBtn').on('click', function() {
+        modal.hide();
+      });
+
       // Check if the user passed
       if (score >= requiredScore) {
           // --- SUCCESS STATE ---
@@ -89,8 +94,6 @@ $(document).ready(function(){
           $('#modalMessage').html(`You scored <strong>${score}</strong> out of ${maxQuestions}.`);
           $('#modalActionText').text(`Your score meets the ${requiredScore} needed. Well done!`);
           $('#modalButton').text('Advance to Next Level').off('click').on('click', function() {
-              // *** THIS IS THE UPDATED LINE ***
-              // Redirect to the Level 3 page
               window.location.href = '../level_three/level_three.html';
           });
       } else {
@@ -99,7 +102,6 @@ $(document).ready(function(){
           $('#modalMessage').html(`You scored <strong>${score}</strong> out of ${maxQuestions}.`);
           $('#modalActionText').text(`You needed ${requiredScore} to pass. You can try again!`);
           $('#modalButton').text('Try Level Again').off('click').on('click', function() {
-              // Redirect to the game page to try again
               window.location.href = 'game_page.html';
           });
       }

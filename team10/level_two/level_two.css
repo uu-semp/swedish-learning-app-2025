@@ -69,7 +69,20 @@ h2 {
 }
 
 .advance-btn {
-    width: 100%;
+    padding: 15px;
+    font-size: 1.1em;
+}
+
+.modal-button-container {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+.modal-button-container .submit-button {
+    /* Use calc() to explicitly set the width for each button */
+    width: calc(50% - 5px);
+    margin: 0;
     padding: 15px;
     font-size: 1.1em;
 }
