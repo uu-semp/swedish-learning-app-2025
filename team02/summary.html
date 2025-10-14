@@ -29,6 +29,7 @@
             <nav class="actions">
                 <a class="btn" href="index.html"><i class="fas fa-home"></i> Main Menu</a>
                 <a class="btn" href="#" id="play-again-btn"><i class="fas fa-redo"></i> Play Again</a>
+                <a class="btn" href="#" id="play-next-btn"><i class="fas fa-arrow-right"></i> Next Level</a>
             </nav>
         </section>
     </main>
@@ -76,6 +77,18 @@
                     // Default to level 1 if level is unknown
                     playAgainBtn.href = "level.html?level=1";
                 }
+
+                const playNextBtn = document.getElementById('play-next-btn');
+                if (level === 'Level 1') {
+                    playNextBtn.href = "level.html?level=2";
+                } else if (level === 'Level 2') {
+                    playNextBtn.href = "level.html?level=3";
+                } else if (level === 'Level 3') {
+                    playNextBtn.href = "index.html";
+                } else {
+                    // Default to level 1 if level is unknown
+                    playNextBtn.href = "level.html?level=2";
+                }
                 
                 // Clear the stored data after displaying
                 localStorage.removeItem('gameScore');
@@ -88,6 +101,7 @@
                 console.log('No game data found in localStorage. User may have accessed summary directly.');
             }
         });
+
     </script>
     
 </body>
