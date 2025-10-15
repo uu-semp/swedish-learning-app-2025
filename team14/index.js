@@ -393,7 +393,6 @@ function injectHtmlObjects(htmlObjects) {
                 item.appendChild(img);
                 menuRoot.appendChild(item);
             }
-            checkClothes();
         });
     }
 
