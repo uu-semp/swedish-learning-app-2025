@@ -72,7 +72,7 @@ header img {
 
 .filter-bar button {
     background: #fcfcfc;
-    border: 2px solid #542020;
+    border: 2px solid var(--primary-color);
     padding: 0.3rem 0.9rem;
     border-radius: 20px;
     transition: background 0.4s, transform 0.4s;
@@ -83,7 +83,7 @@ header img {
 }
 
 .filter-bar button.active {
-    background: #5d1212;
+    background: var(--primary-color);
     color: white;
     transform: scale(1);
 }
@@ -138,7 +138,7 @@ header img {
 }
 
 .tag {
-    background: #701616; 
+    background: var(--primary-color); 
     color: #fff;
     padding: 0.35rem 0.75rem;
     border-radius: 999px; 
@@ -237,15 +237,15 @@ header img {
 }
 
 .settings-btn.primary {
-    background: #5d1212;
+    background: var(--primary-color);
     color: white;
     border: none;
 }
 
 .settings-btn.secondary {
     background: white;
-    color: #5d1212;
-    border: 1px solid #5d1212;
+    color: var(--primary-color);
+    border: 1px solid var(--primary-color);
 }
 
 /* Clear Data Confirmation Dialog */
@@ -289,7 +289,7 @@ header img {
 }
 
 .confirm-box-btn.confirm {
-    background: #5d1212;
+    background: var(--primary-color);
     color: white;
     border: none;
 }
