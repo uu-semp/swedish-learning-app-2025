@@ -106,7 +106,7 @@ function renderGrid(games) {
            onerror="this.onerror=null; this.src='assets/main_menu/images/games/default_image.png';">
       <div class="card-body">
         <h3>${g.eng_title}</h3>
-        <p>${g.eng_desc.replace(/\n/g, '<br>')}}</p>
+        <p>${g.eng_desc.replace(/\n/g, '<br>')}</p>
         ${tagsHtml}
       </div>
     `;
