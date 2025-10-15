@@ -59,19 +59,17 @@ const app = Vue.createApp({
       this.prompt = [...this.swedishSentence];
       this.showTranslation = false;
 
-      const randomNoIndex = this.irandom_range(1, this.vocabNumbers.length - 1);
+      const randomNoIndex = irandom_range(1, this.vocabNumbers.length - 1);
       const vocab = window.vocabulary.get_vocab(this.vocabNumbers[randomNoIndex]);
       this.currentQuestion = vocab;
 
-      const randomStreetIndex = this.irandom_range(0, this.vocabStreets.length - 1);
+      const randomStreetIndex = irandom_range(0, this.vocabStreets.length - 1);
       const vocabStreet = window.vocabulary.get_vocab(this.vocabStreets[randomStreetIndex]);
       this.currentStreet = vocabStreet.sv
-      // const randomStreetIndex = this.irandom_range(0, this.vocabStreets.length - 1);
-      // this.currentStreet = window.vocabulary.get_vocab(this.vocabStreets[randomStreetIndex]).sv;
 
       const houseCount = 4;
       const highestNumber = this.vocabNumbers.length - 1;
-      const result = this.generateRandomHouses(vocab.literal, houseCount, highestNumber);
+      const result = generateRandomHouses(vocab.literal, houseCount, highestNumber);
 
       this.houseOptions = result.houseArray;
       this.correctHouseIndex = result.correctHouse;
@@ -88,6 +86,8 @@ const app = Vue.createApp({
 
       if (this.progress >= this.progressMax) {
         alert(`Congrats! You finished ${this.progressMax} rounds.`);
+        save.set("team13", "stage_completed_1", true) 
+        //for future: make this "stage_completed_" + stageNumber.string()
         window.location.href = 'end_screen.html';
         return;
       }
@@ -129,30 +129,7 @@ const app = Vue.createApp({
           return word;
       }
     },
-    
-    generateRandomHouses(houseNumber, houseCount, highestNumber) {
-      const doubleHouses = this.irandom_range(0, 1);
-      const maxPos = Math.min(Math.floor((houseNumber - 1) / (1 + doubleHouses)), houseCount - 1);
-      const minPos = Math.min(
-        Math.max(Math.ceil((houseCount - 1) - (highestNumber - houseNumber) / (1 + doubleHouses)), 0),
-        houseCount - 1
-      );
-    
-      const relativeHousePosition = this.irandom_range(Math.max(0, minPos), maxPos);
-      const houses = [];
-    
-      for (let i = 0; i < houseCount; i++) {
-        houses.push(houseNumber - (relativeHousePosition - i) * (1 + doubleHouses));
-      }
-    
-      return { houseArray: houses, correctHouse: relativeHousePosition };
-    },
 
-    irandom_range(min, max) {
-      min = Math.ceil(min);
-      max = Math.floor(max);
-      return Math.floor(Math.random() * (max - min + 1)) + min;
-    }
 
   },
   
