@@ -87,6 +87,8 @@ const app = Vue.createApp({
       if (this.progress >= this.progressMax) {
         alert(`Congrats! You finished ${this.progressMax} rounds.`);
         save.set("team13", "stage_completed_1", true) 
+        save.stats.incrementWin("team13");
+        save.stats.setCompletion("team13", 100);
         //for future: make this "stage_completed_" + stageNumber.string()
         window.location.href = 'end_screen.html';
         return;
