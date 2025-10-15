@@ -1,4 +1,6 @@
 import shuffleQuestions from "../utils/shuffleQuestions.js";
+import progressBar from "./progressBar.js";
+
 export default {
   name: "GameView",
   template: `
@@ -18,7 +20,7 @@ export default {
           @select="selectOption">
         </cards>
       </section>
-
+      <progress-bar :steps="questions.length" :active="currentIndex+1"></progress-bar>
       <navigation 
        @next="nextQuestion" 
        @prev="prevQuestion"
@@ -34,8 +36,11 @@ export default {
       level_3: "47662d57",
       questions: [],
       currentIndex: 0,
-      selectedOption: null,
+      selectedOption: null
     };
+  },
+  components: {
+    'progress-bar': progressBar
   },
   created() {
     // get raw data for the selected level
@@ -57,8 +62,12 @@ export default {
     isCorrect() {
       if (this.selectedOption === null) return false;
       return this.selectedOption === this.currentQuestion.correctIndex;
-    }
+    },
+    stepArray() {
+    return Array.from({ length: this.steps }, (_, i) => i + 1);
   },
+  },
+    
   methods: {
     selectOption(index) {
       this.selectedOption = index;
