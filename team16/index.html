@@ -1,77 +1,53 @@
 <!doctype html>
-
-<!--
-=================================================
-Owned by Team 16
-=================================================
--->
-
 <html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Basic Static Site</title>
+  <title>Var bor jag? - Team 16</title>
   <link rel="stylesheet" href="../style.css" />
   <link rel="stylesheet" href="welcomeComponent.css" />
 
+  <!-- Core scripts - MUST load first -->
   <script src="../scripts/vocabulary.js"></script>
   <script src="../scripts/save.js"></script>
 
-  <!-- You are allowed to use JQuery and Vue.js but don't have to. They just make a
-  lot of things easier
-  -->
+  <!-- External libraries -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css"> 
   <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
-  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 
-  <!-- Site specific scripts and styles -->
+  <!-- Site specific scripts - Load as ES6 modules -->
   <link rel="stylesheet" href="index.css" />
-  <script src="welcomeComponent.js" defer></script>
-  <script src="index.js" defer></script>
+  <script type="module" src="localStorage.js"></script>
+  <script type="module" src="setUpLevels.js"></script>
+  <script type="module" src="welcomeComponent.js"></script>
+  <script type="module" src="index.js"></script>
 </head>
 <body>
-  <!-- TODO: Remove this div and it's content
-  <div>
-      <hr>
-      <h2>A basic section to make sure that everything works for everyone</h2>
-
-      <p>Font awesome is working: <i class="fa-solid fa-check"></i> (A checkmark should be visible)</p>
-
-      <button id="check-jquery">Check if Javascript and JQuery is working</button> (Clicking the button should show an alert)
-
-      <button id="check-saving">Click this button to see if saving works</button>
-      <hr>
-  </div> -->
-
   <main class="game-frame">
-    <!--Implement your game inside this tag. -->
     <div class="welcome-container">
       <h1 class="game-title">Var bor jag?</h1>
       <h2 class="welcome-message">Välkommen!</h2>
       <p class="subtitle">Välj en nivå...</p>
       
       <div class="level-buttons" id="levelButtons">
-          <!-- Levels will be populated by JavaScript -->
+        <!-- Levels will be populated by JavaScript -->
       </div>
       
       <button class="summary-btn" onclick="showSummary()">Visa Sammanfattning</button>
     </div>
 
-  <!-- Summary Modal -->
+    <!-- Summary Modal -->
     <div id="summaryModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2>Elevens Framsteg</h2>
-                <span class="close" onclick="closeSummary()">&times;</span>
-            </div>
-            <div class="modal-body" id="summaryContent">
-                <!-- Summary content will be populated by JavaScript -->
-            </div>
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>Elevens Framsteg</h2>
+          <span class="close" onclick="closeSummary()">&times;</span>
         </div>
+        <div class="modal-body" id="summaryContent">
+          <!-- Summary content will be populated by JavaScript -->
+        </div>
+      </div>
     </div>
-
-    <!-- <hr>
-    Learning: <div id="display-vocab">(This should be replaced by a word)</div> -->
   </main>
 
   <footer>
