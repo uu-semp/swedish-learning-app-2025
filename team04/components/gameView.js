@@ -36,7 +36,11 @@ export default {
       level_3: "47662d57",
       questions: [],
       currentIndex: 0,
-      selectedOption: null
+      selectedOption: null,
+      startTime: null,
+      endTime: null,
+      answerStats: { correct: 0, incorrect: 0, skipped: 0 },
+      answers: [], // [{index, result: 'correct'|'incorrect'|'skipped'}]
     };
   },
   components: {
@@ -54,6 +58,7 @@ export default {
     const parsed = JSON.parse(rawData);
     this.questions = shuffleQuestions(parsed);
     this.currentIndex = 0;
+    this.startTime = Date.now();
   },
   computed: {
     currentQuestion() {
@@ -71,12 +76,28 @@ export default {
   methods: {
     selectOption(index) {
       this.selectedOption = index;
+      const isCorrect = index === this.currentQuestion.correctIndex;
+      this.answers[this.currentIndex] = {
+        index: this.currentIndex,
+        result: isCorrect ? 'correct' : 'incorrect'
+      };
   },
     nextQuestion() {
+      if (this.selectedOption === null) {
+        this.answers[this.currentIndex] = {
+          index: this.currentIndex,
+          result: 'skipped'
+        };
+      }
       if (this.currentIndex < this.questions.length - 1) {
         this.currentIndex++;
         this.selectedOption = null;
       } else {
+        this.$root.currentView = 'finish';
+      }
+      if (this.currentIndex >= this.questions.length - 1) {
+        this.endTime = Date.now();
+        this.$root.finishStats = this.calculateStats();
         this.$root.currentView = 'finish';
       }
     },
@@ -85,6 +106,25 @@ export default {
         this.currentIndex--;
         this.selectedOption = null;
       }
+    },
+    calculateStats() {
+      let correct = 0, incorrect = 0, skipped = 0;
+      this.answers.forEach(ans => {
+        if (!ans) skipped++;
+        else if (ans.result === 'correct') correct++;
+        else if (ans.result === 'incorrect') incorrect++;
+        else skipped++;
+      });
+      const total = this.questions.length;
+      const percent = total ? Math.round((correct / total) * 100) : 0;
+      const durationMs = (this.endTime || Date.now()) - this.startTime;
+      return {
+        correct,
+        incorrect,
+        skipped,
+        percent,
+        durationMs
+      };
     }
   }
 };
