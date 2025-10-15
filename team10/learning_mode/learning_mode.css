@@ -13,26 +13,25 @@ body {
 	padding: 1rem;
 }
 
-main, .main {
-	display: flex;
-	flex-direction: column;
-	align-items: flex-start;
+.game-frame {
+	position: relative !important;
+	overflow: hidden !important;
 }
 
 /* Flashcard styles */
 .flashcard {
-	width: 90vw;
-	max-width: 400px;
-	min-width: 200px;
-	height: 40vw;
-	max-height: 250px;
-	min-height: 120px;
-	margin: 20px auto;
-	perspective: 1000px;
-	cursor: pointer;
-	display: flex;
-	align-items: center;
-	justify-content: center;
+	width: 90vw !important;
+	max-width: 400px !important;
+	min-width: 200px !important;
+	height: 40vw !important;
+	max-height: 250px !important;
+	min-height: 120px !important;
+	margin: 0 auto 20px auto !important;
+	perspective: 1000px !important;
+	cursor: pointer !important;
+	display: flex !important;
+	align-items: center !important;
+	justify-content: center !important;
 }
 
 .flashcard-content {
@@ -88,23 +87,33 @@ main, .main {
 	transform: rotateY(180deg);
 }
 
+.flashcard-container {
+	display: flex !important;
+	flex-direction: column !important;
+	align-items: center !important;
+	justify-content: center !important;
+	height: 100% !important;
+	width: 100% !important;
+	position: absolute !important;
+	top: 0 !important;
+	left: 0 !important;
+	right: 0 !important;
+	bottom: 0 !important;
+}
+
 .controls {
 	text-align: center;
 	margin-top: 20px;
 }
 
-/* .controls button {
-	margin: 0 10px;
-	padding: 10px 20px;
-	font-size: 1rem;
-	border: none;
-	border-radius: 5px;
-	background-color: #007BFF;
-	color: white;
-	cursor: pointer;
-	transition: background-color 0.3s;
+.completion-message {
+	text-align: center;
+	margin-top: 2rem;
 }
 
-.controls button:hover {
-	background-color: #0056b3;
-} */
+.button-container {
+	position: absolute !important;
+	top: 10px !important;
+	right: 10px !important;
+	z-index: 1000 !important;
+}

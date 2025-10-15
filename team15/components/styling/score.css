@@ -1,0 +1,20 @@
+/* Score component styling */
+
+.score-counter {
+  position: fixed;
+  top: 30px; 
+  right: 30px; 
+  background-color: #ceffd7;
+  border: 4px solid #02b823; 
+  border-radius: 15px;
+  padding: 4px 10px; 
+  font-size: 25px; 
+  font-weight: bold;
+}
+
+.score-counter img {
+    width: 35px;  
+    height: 35px;  
+    vertical-align: middle;
+    object-fit: contain; 
+}
