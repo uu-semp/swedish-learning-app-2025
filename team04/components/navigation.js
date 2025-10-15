@@ -9,11 +9,10 @@ export default {
     template: `
       <nav class="navigation">
           <button class="level-select-btn" title="Return to level selection menu">Level select menu</button>
-          <button class="reset-btn" title="Reset the current game session">Reset session</button>
+          <button class="reset-btn" title="Reset the current game session" @click='$emit("reset")'>Reset session</button>
           <button class="level-btn" title="Previous question" @click='$emit("prev")'>&#8678;</button>
           <button class="level-btn" title="Next question" @click='$emit("next")' :style="highlightNextQuestionBtn">&#8680;</button>
         </div>      
- 
       </nav>
     `,
     computed: {

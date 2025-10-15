@@ -24,6 +24,7 @@ export default {
       <navigation 
        @next="nextQuestion" 
        @prev="prevQuestion"
+       @reset="resetQuestion">
        :selectedOption="this.selectedOption">
       </navigation>
   </div>
@@ -107,7 +108,12 @@ export default {
         this.selectedOption = null;
       }
     },
-    calculateStats() {
+    resetQuestion() {
+      if(this.currentIndex > 0) {
+        this.currentIndex = 0;
+      } 
+      this.selectedOption = null;
+    }, calculateStats() {
       let correct = 0, incorrect = 0, skipped = 0;
       this.answers.forEach(ans => {
         if (!ans) skipped++;
