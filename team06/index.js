@@ -165,13 +165,36 @@ function showSummary() {
 
 // Restart Game
 function restartGame() {
-	// Reset game-related variables (if declared globally)
-	if (typeof resetGame === "function") {
-		resetGame();
-	}
+  console.log("🔁 Restarting game...");
 
-	hideAllViews();
-	document.getElementById("game-view").style.display = "block";
+  // Step 1: Reset global variables
+  score = 0;
+  selectedAnswer = null;
+  selectedButton = null;
+  currentDifficulty = currentDifficulty || "easy"; // fallback if none selected
+
+  // Step 2: Recreate a new session with same difficulty
+  if (questionUtils && progressUtils) {
+    const levelQuestions = questionUtils.byDifficulty(currentDifficulty);
+    const questionIds = levelQuestions.map((q) => q.id);
+    progressUtils.initProgress(questionIds);
+
+    window.currentSession = progressUtils.createSession(levelQuestions, {
+      mode: "regular",
+      size: 5,
+    });
+  }
+
+  // Step 3: Update score UI
+  const scoreEl = document.getElementById("score-value");
+  if (scoreEl) scoreEl.textContent = "0";
+
+  // Step 4: Switch back to game view and load first question
+  hideAllViews();
+  document.getElementById("game-view").style.display = "block";
+  updateQuestion();
+
+  console.log("✅ Game fully restarted at level:", currentDifficulty);
 }
 // Show Finish View
 function showFinish() {
