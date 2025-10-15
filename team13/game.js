@@ -14,8 +14,9 @@ const app = Vue.createApp({
       isLoading: true,
       currentScreen: 'game',
 
-      progress: 1,
-      progressMax: 2,
+      progress: 0,
+      progressMax: 10,
+      progressMin: 0,
 
       houseOptions: [],
       correctHouseIndex: -1,
@@ -80,8 +81,8 @@ const app = Vue.createApp({
       alert(wasCorrect ? "Correct!" : "Wrong house.");
 
       this.progress += wasCorrect ? 1 : -1;
-      if (this.progress < 1)  {
-        this.progress = 1;
+      if (this.progress < this.progressMin)  {
+        this.progress = this.progressMin;
       }
 
       if (this.progress >= this.progressMax) {
