@@ -32,3 +32,11 @@ header h1 {
     background-color: #e0e0e0;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
+
+.badge { display:inline-block; padding:.4rem .7rem; border-radius:999px; font-weight:600; }
+.ok { background:#e8f5e9; border:1px solid #4caf50; }
+.no { background:#ffebee; border:1px solid #e53935; }
+ul { list-style:none; padding-left:0; }
+li { margin:.5rem 0; }
+
+    

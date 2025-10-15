@@ -6,6 +6,6 @@ if (team13_data.stage_completed_1) {
     el.textContent = "🏆 You have completed level 1!";
     el.classList.add("ok");
 } else {
-    el.textContent = "❌ you have not completed level 1 yet.";
+    el.textContent = "❌ You have not completed level 1 yet.";
     el.classList.add("no");
 }
