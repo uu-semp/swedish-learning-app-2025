@@ -101,7 +101,7 @@ function renderGrid(games) {
 
     // Build game card HTML
     card.innerHTML = `
-      <img src="assets/main_menu/images/games/${g.id}.png" 
+      <img src="assets/main_menu/images/game_logos/${g.id}_logo.png" 
            alt="${g.eng_title}"
            onerror="this.onerror=null; this.src='assets/main_menu/images/games/default_image.png';">
       <div class="card-body">
