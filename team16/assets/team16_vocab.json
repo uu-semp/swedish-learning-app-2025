@@ -372,10 +372,10 @@
           "literal": "20"
         },
         "ordinal": {
-          "id": "1431537c",
-          "sv": "sjunde",
-          "en": "seventh",
-          "literal": "7."
+          "id": "101c5e1d",
+          "sv": "sjätte",
+          "en": "sixth",
+          "literal": "6."
         }
       }
     }
@@ -432,10 +432,10 @@
           "literal": "22"
         },
         "ordinal": {
-          "id": "1e055517",
-          "sv": "tredje",
-          "en": "third",
-          "literal": "3."
+          "id": "51085e77",
+          "sv": "andra",
+          "en": "second",
+          "literal": "2."
         }
       }
     },
@@ -461,10 +461,10 @@
           "literal": "24"
         },
         "ordinal": {
-          "id": "1f780c21",
-          "sv": "femte",
-          "en": "fifth",
-          "literal": "5."
+          "id": "1e055517",
+          "sv": "tredje",
+          "en": "third",
+          "literal": "3."
         }
       }
     },
@@ -490,10 +490,10 @@
           "literal": "26"
         },
         "ordinal": {
-          "id": "773e7806",
-          "sv": "åttonde",
-          "en": "eighth",
-          "literal": "8."
+          "id": "1775693f",
+          "sv": "fjärd",
+          "en": "fourth",
+          "literal": "4."
         }
       }
     },
@@ -519,10 +519,10 @@
           "literal": "28"
         },
         "ordinal": {
-          "id": "79152e28",
-          "sv": "tionde",
-          "en": "tenth",
-          "literal": "10."
+          "id": "1f780c21",
+          "sv": "femte",
+          "en": "fifth",
+          "literal": "5."
         }
       }
     },
@@ -548,10 +548,10 @@
           "literal": "29"
         },
         "ordinal": {
-          "id": "5608397a",
-          "sv": "elfte",
-          "en": "eleventh",
-          "literal": "11."
+          "id": "101c5e1d",
+          "sv": "sjätte",
+          "en": "sixth",
+          "literal": "6."
         }
       }
     },
@@ -577,10 +577,10 @@
           "literal": "31"
         },
         "ordinal": {
-          "id": "47795e54",
-          "sv": "trettonde",
-          "en": "thirteenth",
-          "literal": "13."
+          "id": "1431537c",
+          "sv": "sjunde",
+          "en": "seventh",
+          "literal": "7."
         }
       }
     }
