@@ -22,5 +22,3 @@ $(function() {window.vocabulary.when_ready(function () {
   });
 
 })});
-
-

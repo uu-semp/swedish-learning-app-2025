@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Var bor jag? - Level</title>
+  
+  <link rel="stylesheet" href="../style.css" />
+  <link rel="stylesheet" href="index.css" />
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+  
+  <script src="../scripts/vocabulary.js"></script>
+  <script src="../scripts/save.js"></script>
+  
+  <script src="level.js" defer></script>
+</head>
+<body>
+  <header>
+    <h1>Var bor jag?</h1>
+    <button class="back-button" onclick="window.location.href='index.html'">
+      ← Tillbaka
+    </button>
+  </header>
+
+  <main class="game-frame">
+    <div id="app" v-cloak>
+      <div class="status-bar">
+        <div>❤️ Liv: {{ lives }}</div>
+        <div>⭐ Poäng: {{ score }}</div>
+        <div>📈 Nivå: {{ level }}</div>
+      </div>
+
+      <div class="game-content">
+        <div class="left-panel">
+          <div class="character-section">
+            <div class="character">
+              <div class="character-name"><strong>{{ character.name }}</strong></div>
+              <img src="kevin.png" alt="Kevin">
+            </div>
+
+            <div class="speech" v-if="currentQuestion">
+              <div>{{ currentQuestion.instruction }}</div>
+              <div v-if="translation" class="translation">{{ translation }}</div>
+              <button class="translate-btn" @click="translateQuestion">🌍 Översätt</button>
+            </div>
+          </div>
+
+          <div v-if="feedback" :class="['feedback', feedbackClass]">
+            {{ feedback }}
+          </div>
+
+          <div class="text-question" v-if="currentQuestion && currentQuestion.type === 'text'">
+            <input 
+              v-model="textAnswer" 
+              @keyup.enter="checkTextAnswer"
+              placeholder="Ex: Ringgatan ett">
+            <button @click="checkTextAnswer">Skicka</button>
+          </div>
+        </div>
+
+        <div class="right-panel">
+          <div class="map-wrapper">
+            <div class="map-container">
+              <img src="map.png" alt="Karta" class="map-image">
+              
+              <div
+                v-for="(h, i) in houses"
+                :key="i"
+                class="house-clickable"
+                :style="{ 
+                  top: (h.y * 100) + '%', 
+                  left: (h.x * 100) + '%',
+                  width: (h.width * 100) + '%',
+                  height: (h.height * 100) + '%'
+                }"
+                @click="checkHouseClick(h)"
+                v-if="level === 1 || level === 2"
+              ></div>
+
+              <div 
+                v-if="currentQuestion && currentQuestion.type === 'text'" 
+                class="pointer"
+                :style="{ 
+                  top: (currentQuestion.target.labelY * 100) + '%', 
+                  left: (currentQuestion.target.labelX * 100) + '%'
+                }">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <small>Created as part of the "Software Engineering and Project Management" course 2025</small>
+  </footer>
+</body>
+</html>

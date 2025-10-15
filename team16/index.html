@@ -1,16 +1,12 @@
-<!DOCTYPE html>
-<html lang="sv">
-<head>
-  <meta charset="UTF-8" />
-  <title>Svenska Lärspel</title>
-  <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
-  <link rel="stylesheet" href="style.css" />
-</head>
-<body>
-<div id="app" v-cloak>
-  <!-- Statusbar -->
-  <div class="status-bar">
-<html lang="sv">
+<!doctype html>
+
+<!--
+=================================================
+Owned by Team 16
+=================================================
+-->
+
+<html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
@@ -20,7 +16,6 @@
 
   <script src="../scripts/vocabulary.js"></script>
   <script src="../scripts/save.js"></script>
-  <script src="welcomeComponent.js"></script>
 
   <!-- You are allowed to use JQuery and Vue.js but don't have to. They just make a
   lot of things easier
@@ -31,54 +26,27 @@
 
   <!-- Site specific scripts and styles -->
   <link rel="stylesheet" href="index.css" />
+  <script src="welcomeComponent.js" defer></script>
   <script src="index.js" defer></script>
 </head>
 <body>
-<div id="app" v-cloak>
-  <!-- Statusbar -->
-  <div class="status-bar">
-    <div>❤️ Liv: {{ lives }}</div>
-    <div>⭐ Poäng: {{ score }}</div>
-    <div>📈 Nivå: {{ level }}</div>
-  </div>
+  <!-- TODO: Remove this div and it's content
+  <div>
+      <hr>
+      <h2>A basic section to make sure that everything works for everyone</h2>
 
-  <!-- Kevin + fråga -->
-  <div class="character-section">
-  <div class="character">
-    <div class="character-name"><strong>{{ character.name }}</strong></div>
-    <img src="kevin.png" alt="Kevin">
-  </div>
+      <p>Font awesome is working: <i class="fa-solid fa-check"></i> (A checkmark should be visible)</p>
 
-  <div class="speech" v-if="currentQuestion">
-    <div>{{ currentQuestion.instruction }}</div>
+      <button id="check-jquery">Check if Javascript and JQuery is working</button> (Clicking the button should show an alert)
 
-    <!-- Översättning -->
-    <div v-if="translation" class="translation">{{ translation }}</div>
-    <button class="translate-btn" @click="translateQuestion">🌍 Översätt</button>
-
-    <!-- Level 2: färgfrågor -->
-    <div class="text-question" v-if="currentQuestion.type === 'color'">
-      <input v-model="textAnswer" placeholder="Skriv färgen">
-      <button @click="checkColorAnswer">Skicka</button>
-    </div>
-
-    <!-- Level 3: pekade hus -->
-    <div class="text-question" v-if="currentQuestion.type === 'point'">
-      <input v-model="textAnswer" placeholder="Ex: Storgatan 14">
-      <button @click="checkPointAnswer">Skicka</button>
-    </div>
-  </div>
-  
-<!-- Feedback (place this outside speech but inside character-section) -->
-<div v-if="feedback" :class="['feedback', feedbackClass]">
-  {{ feedback }}
-</div>
-
+      <button id="check-saving">Click this button to see if saving works</button>
+      <hr>
+  </div> -->
 
   <main class="game-frame">
     <!--Implement your game inside this tag. -->
     <div class="welcome-container">
-      <h1 class="game-title">Game Name</h1>
+      <h1 class="game-title">Var bor jag?</h1>
       <h2 class="welcome-message">Välkommen!</h2>
       <p class="subtitle">Välj en nivå...</p>
       
@@ -102,29 +70,12 @@
         </div>
     </div>
 
-  <!-- Karta -->
-  <div class="map-wrapper" @click="logCoords($event)">
-    <img src="map.png" alt="Karta" class="map-image">
-    <button
-      v-for="(h,i) in houses"
-      :key="i"
-      class="house"
-      :style="{ top:(h.y*100)+'%', left:(h.x*100)+'%' }"
-      @click.stop="checkAnswer(h.street,h.number)"
-      v-if="level===1"
-    >
-      {{ h.number }}
-    </button>
+    <!-- <hr>
+    Learning: <div id="display-vocab">(This should be replaced by a word)</div> -->
+  </main>
 
-    <!-- Markering för level 3 -->
-    <div 
-      v-if="currentQuestion && currentQuestion.type==='point'" 
-      class="pointer"
-      :style="{ top:(currentQuestion.target.y*100)+'%', left:(currentQuestion.target.x*100)+'%' }">
-    </div>
-  </div>
-</div>
-
-<script src="index.js"></script>
-</body> 
+  <footer>
+    <small>Created as part of the "Software Engineering and Project Management" course 2025</small>
+  </footer>
+</body>
 </html>

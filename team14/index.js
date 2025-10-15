@@ -204,29 +204,40 @@ window.clothingGenerator = new SwedishClothingDescriptionGenerator();
 
 // fetch description and 'right' clothes to apply
 function fetchDescription() {
+    const gen = window.clothingGenerator;
+    if (!gen) return;
+
+    gen.loadPromise.then(() => {
+        const outfit = gen.generateOutfit();
+        if (!outfit) return; // safety
+
+        const el = document.getElementById("instruction-text");
+        if (el) el.textContent = outfit.swedish;
+
+        window.currentOutfit = outfit;
+        console.log("Current outfit")
+        console.log(outfit.items);
+    });
 }
 
 // Check clothes function
-function checkClothes(correctClothesIds, appliedClothesIds) {
-  // Simple comparison of two arrays of clothes IDs
-  if (!Array.isArray(correctClothesIds) || !Array.isArray(appliedClothesIds)) {
-    return false;
-  }
-
-  // Sort both arrays to ignore order
-  const sortedCorrect = [...correctClothesIds].sort();
-  const sortedApplied = [...appliedClothesIds].sort();
-
-  // Example: sort(['RödMössa.png', 'BlåaJeans.png', 'GråOchBeigeTröja.png']) 
-  // becomes ['BlåaJeans.png', 'GråOchBeigeTröja.png', 'RödMössa.png']
-  // in this way we can compare arrays without caring the area of the body
-
-  // Check if arrays match
-  const isCorrect = sortedCorrect.length === sortedApplied.length && 
-                   sortedCorrect.every((id, index) => id === sortedApplied[index]);
-
-  return isCorrect;
-  // can also update the progress ?
+function checkClothes() {
+    
+    const outfit = window.currentOutfit;
+    
+    const correctHat = outfit.items.hat.imgId;
+    const correctShirt = outfit.items.shirt.imgId;
+    const correctPants = outfit.items.pants.imgId;
+    
+    const appliedHat = document.getElementById("hat-box").children[0].dataset.id;
+    const appliedShirt = document.getElementById("shirt-box").children[0].dataset.id;
+    const appliedPants = document.getElementById("pants-box").children[0].dataset.id;
+    
+    if (correctHat === appliedHat && correctShirt === appliedShirt && correctPants === appliedPants) {
+        console.log("Correct!");
+    } else {
+        console.log("Incorrect!")
+    }
 }
 
 class ImgObject {
@@ -269,6 +280,7 @@ class ImgObject {
 // Runs the loadClothes function when the javascript file is loaded
 window.addEventListener("DOMContentLoaded", () => {
     if (window.vocabulary && typeof window.vocabulary.load_team_data === "function") {
+        fetchDescription();
         loadClothes();
     } else {
         console.log("API Unavailable")
@@ -287,27 +299,18 @@ function loadClothes() {
             const ids = window.vocabulary.get_category(cat);
             console.log(ids)
             for (const id of ids) {
-
                 const rawTeamPath = window.vocabulary.get_team_data(id);
                 console.log(rawTeamPath);
-        const description = window.vocabulary.get_vocab(id) ?? {};
-        const path = ".." + rawTeamPath;
+                const description = window.vocabulary.get_vocab(id) ?? {};
+                const path = rawTeamPath;
 
-        imgArray.push(
-          new ImgObject(
-            id,
-            path,
-            description.sv ?? "",
-            cat,
-            description.en ?? description.sv ?? ""
-          )
-        );
+                imgArray.push(new ImgObject(id, path, description.sv ?? "", cat,description.en ?? description.sv ?? ""));
             }
         }
 
-    if (window.clothingGenerator && typeof window.clothingGenerator.setItemsFromImgObjects === "function") {
-      window.clothingGenerator.setItemsFromImgObjects(imgArray);
-    }
+        if (window.clothingGenerator && typeof window.clothingGenerator.setItemsFromImgObjects === "function") {
+          window.clothingGenerator.setItemsFromImgObjects(imgArray);
+        }
 
         const htmlObjects = createHtmlObjects(imgArray);
         injectHtmlObjects(htmlObjects);
@@ -352,23 +355,21 @@ function createHtmlObjects(imgArray) {
 // Injects html objects into the scrollable right-hand menu and wires click behavior
 // From ChatGPT when asking how to make it so that when an image is pressed, it goes into the correct box for its category.
 function injectHtmlObjects(htmlObjects) {
-    const menuRoot = document.getElementById("img-menu"); // TODO: Change "img-menu" to the id of the box where the clothing menu should be placed.
+    const menuRoot = document.getElementById("img-menu");
     if (!menuRoot) {
         console.warn("Could not find #img-menu container");
         return;
     }
 
-    const slots = Array.from(document.querySelectorAll(".slot"));
-    /* TODO: Gets the boxes where clothing items will be placed when clicked on in the menu.
-             Change "slot" to the class name that the boxes on Pelle has. Example: Pelle's boxes has class name "clothing-box", so ".slot" should be replaced by ".clothing-box". */
+    const slots = Array.from(document.querySelectorAll(".dropzone"));
 
     function wireImage(img) {
-        // Adds an event listener to each img so that it moves when clicked on
         img.addEventListener("click", () => {
             const parent = img.parentElement;
             if (!parent) return;
-            if (parent.classList.contains("menu-item")) { // Checks where the img is currently located in order to know where to move
-                // Moving from menu -> must go to the slot that accepts this category
+
+            if (parent.classList.contains("menu-item")) {
+                // Moving from menu -> go to the matching dropzone
                 const cat = img.dataset.category || "";
                 const target = slots.find(
                     (s) => s.dataset.accept === cat && s.childElementCount === 0
@@ -385,17 +386,17 @@ function injectHtmlObjects(htmlObjects) {
                     }
                     console.warn(`[move blocked] Category "${cat}" must go to the "${cat}" slot.`);
                 }
-            } else if (parent.classList.contains("slot")) { // Checks where the img is currently located in order to know where to move. TODO: Change "slot" to whatever class name the boxes on Pelle has, like done above.
-                // Moving from slot -> back to menu
+            } else if (parent.classList.contains("dropzone")) {
+                // Moving from dropzone -> back to menu
                 const item = document.createElement("div");
                 item.className = "menu-item";
                 item.appendChild(img);
                 menuRoot.appendChild(item);
             }
+            checkClothes();
         });
     }
 
-    // Creates containers for each img before adding them to the scrollable menu.
     htmlObjects.forEach((img) => {
         wireImage(img);
         const item = document.createElement("div");
@@ -404,6 +405,7 @@ function injectHtmlObjects(htmlObjects) {
         menuRoot.appendChild(item);
     });
 }
+
 
 /*
   Alternative: 
