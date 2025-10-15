@@ -70,6 +70,7 @@ function buildFilter(chapters){
 function makeFilterBtn(index, value){
   const btn = document.createElement("button");
   btn.className = "filter-btn";
+  btn.id = `${index}`
   btn.textContent = `${translations["chapter"][currentLanguage]} ${index}`
  
   btn.dataset.chapter = value;
@@ -97,7 +98,8 @@ function renderGrid(games) {
 
   games.forEach((g) => {
     const card = document.createElement("article");
-    card.className = "card translate";
+    card.className = "card";
+    card.id = `${g.id}`
 
     // Build game tags HTML
     const tagsHtml = (Array.isArray(g.supported_chapters) && g.supported_chapters.length)
@@ -280,16 +282,36 @@ async function setLanguage(lang) {
     currentLanguage = lang
     const elements = document.querySelectorAll('.translate');
 
+    // Translating menu text (not games or filter)
     elements.forEach(el => {
       const id = el.getAttribute('id');
-      el.innerHTML = translations[id][lang]
+      el.innerHTML = translations[id][lang];
     })
 
-    const chapters = [...new Set(allGames.flatMap(g => g.supported_chapters))].sort((a, b) => a - b);
-    //buildFilter(chapters)
-    //setActiveFilter("all");
-    //renderGrid(allGames)
+    // Translating all text in the game grid
+    allGames.forEach((g) => {
+      // the 'alt' text for the image
+      const img = document.querySelector(`#${g.id} > img`);
+      img.alt = g["title"][currentLanguage];
 
+      // the title of the game
+      const h3 = document.querySelector(`#${g.id} > div > h3`);
+      h3.innerHTML = g["title"][currentLanguage];
+
+      // the description of the game
+      const p = document.querySelector(`#${g.id} > div > p`);
+      p.innerHTML = g["desc"][currentLanguage];
+    })
+
+    // Translating the filter buttons
+    const filters = document.querySelectorAll('.filter-btn');
+    filters.forEach(fil => {
+      const index = fil.getAttribute('id')
+      fil.textContent = `${translations["chapter"][currentLanguage]} ${index}`
+    })
+
+    
+   
   } catch (error) {
     console.error(error)
   }
