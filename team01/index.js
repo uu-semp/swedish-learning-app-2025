@@ -2,20 +2,20 @@
 // Owned by Team 01
 // ==============================================
 
-let numPairs = 8; // number of pairs of cards
-
 "use strict";
 
 $(function () {
-
   // constants
+  const team_name = "team01"; // Team name for saving data
   const time_delay = 2000; // 2 seconds delay after every match
   const corrects_needed = 8; // number of correct pairs needed to win
   const misses_max = 20; // number of misses allowed before losing
+
   // variables
   let corrects = 0;
   let misses = 0;
-  let wins = 0; // Track total number of wins
+  let wins = save.stats.get(team_name).wins; // Load wins from storage
+  $("#wins-count").text(wins); // Update the display with the loaded win count
 
   let flippedCards = []; // array of currently flipped cards
   let elapsedTime = 0;
@@ -74,8 +74,8 @@ $(function () {
   // Game logic
   mapCards();
 
-
-  function resetFlipState() {  // when no pair is found, card flips back
+  function resetFlipState() {
+    // when no pair is found, card flips back
     flippedCards[0]?.removeClass("flipped");
     flippedCards[1]?.removeClass("flipped");
     flippedCards = [];
@@ -89,7 +89,11 @@ $(function () {
     resetTimer();
   }
   function updateEndScreen() {
-    $("#header_endscreen").text(corrects >= corrects_needed ? "Congratulations! You've won the game!" : "Game Over!");
+    $("#header_endscreen").text(
+      corrects >= corrects_needed
+        ? "Congratulations! You've won the game!"
+        : "Game Over!"
+    );
     $("#score").text(corrects);
     $("#time").text(`${elapsedTime} seconds`);
   }
@@ -102,11 +106,12 @@ $(function () {
       alert("Congratulations! You've won the game!");
       updateEndScreen();
       wins++; // Increment wins
+      save.stats.incrementWin(team_name); // Save the new win count
       $("#wins-count").text(wins); // Update wins display
       setTimeout(() => {
-      $("#wins-count").text(wins); // Update wins display
-      resetGame();
-      showScreen("end-screen");
+        $("#wins-count").text(wins); // Update wins display
+        resetGame();
+        showScreen("end-screen");
       }, 600);
     }
     resetFlipState();
@@ -130,7 +135,6 @@ $(function () {
   // keep this at the top
   let allowFlipBack = false;
   let isChecking = false;
-
 
   function clickCard() {
     const card = this; // store DOM element directly
@@ -157,8 +161,8 @@ $(function () {
 
       const card1 = $(flippedCards[0]);
       const card2 = $(flippedCards[1]);
-      const pairId1 = card1.attr('data-pair-id');
-      const pairId2 = card2.attr('data-pair-id');
+      const pairId1 = card1.attr("data-pair-id");
+      const pairId2 = card2.attr("data-pair-id");
 
       if (pairId1 === pairId2) {
         // Match found! Mark cards immediately to prevent further clicks
@@ -184,7 +188,7 @@ $(function () {
   }
 
   function resetFlipState() {
-    flippedCards.forEach(card => $(card).removeClass("flipped"));
+    flippedCards.forEach((card) => $(card).removeClass("flipped"));
     flippedCards = [];
     allowFlipBack = false;
   }
@@ -196,13 +200,15 @@ $(function () {
     });
 
     if (flippedTextCards.length === 0) {
-      $("#hint-text").text("No text cards are flipped! Flip a card with text to get help.");
+      $("#hint-text").text(
+        "No text cards are flipped! Flip a card with text to get help."
+      );
     } else {
       let hints = [];
 
       flippedTextCards.each(function () {
         const swedishWord = $(this).data("content");
-        const match = currentPairs.find(p => p.swedish === swedishWord);
+        const match = currentPairs.find((p) => p.swedish === swedishWord);
         if (match) {
           hints.push(`${swedishWord} → ${match.english}`);
         } else {
@@ -216,7 +222,6 @@ $(function () {
     $("#hint-modal").fadeIn();
   });
 
-
   // Close modal when clicking the "x"
   $("#close-hint").on("click", function () {
     $("#hint-modal").fadeOut();
@@ -228,23 +233,7 @@ $(function () {
       $(this).fadeOut();
     }
   });
-
-
 });
-
-// FIXME: repace fetch with API call to get the data.
-function mapCards() {
-  const data = fetch('sepm25_data_scema_sheet1(1).json')
-    .then(response => response.json())
-    .then(data => {
-      const furnitureOnly = data.filter(item => item.category === 'furniture' && item.image_url !== null);
-      const pairs = getRandomPairs(furnitureOnly, numPairs);
-      const cards = prepareGridItems(pairs);
-      console.log(cards);
-      renderGrid(cards);
-    });
-}
-
 
 function getRandomPairs(data, numPairs) {
   console.log(data);
@@ -257,8 +246,8 @@ function prepareGridItems(pairs) {
 
   pairs.forEach((pair, index) => {
     const id = `pair-${index}`;
-    cards.push({ id, type: 'description', content: pair.swedish });
-    cards.push({ id, type: 'image', content: pair.image_url });
+    cards.push({ id, type: "description", content: pair.swedish });
+    cards.push({ id, type: "image", content: pair.image_url });
   });
 
   // Shuffle the final cards
@@ -266,22 +255,24 @@ function prepareGridItems(pairs) {
 }
 
 function renderGrid(cards) {
-  const gameBoard = document.getElementById('game-board');
-  gameBoard.innerHTML = ''; // Rensa befintliga kort
+  const gameBoard = document.getElementById("game-board");
+  gameBoard.innerHTML = ""; // Rensa befintliga kort
 
   cards.forEach((card, index) => {
-    const cardElement = document.createElement('div');
-    cardElement.className = 'card';
-    cardElement.setAttribute('data-index', index + 1);
-    cardElement.setAttribute('data-content', card.content);
-    cardElement.setAttribute('data-type', card.type);
-    cardElement.setAttribute('data-pair-id', card.id);
+    const cardElement = document.createElement("div");
+    cardElement.className = "card";
+    cardElement.setAttribute("data-index", index + 1);
+    cardElement.setAttribute("data-content", card.content);
+    cardElement.setAttribute("data-type", card.type);
+    cardElement.setAttribute("data-pair-id", card.id);
 
     // Bestäm innehållet för baksidan baserat på typ
     let backContent;
-    if (card.type === 'image') {
+    if (card.type === "image") {
       // Fixa bildvägen - lägg till ../ för att gå upp en mapp
-      const imagePath = card.content.startsWith('assets/') ? '../' + card.content : card.content;
+      const imagePath = card.content.startsWith("assets/")
+        ? "../" + card.content
+        : card.content;
       backContent = `<img src="${imagePath}" alt="Furniture" style="width: 100%; height: 100%; object-fit: cover; border-radius: 10px;">`;
     } else {
       backContent = card.content;
@@ -300,17 +291,44 @@ function renderGrid(cards) {
 
 // Keep reference to the loaded card data for hints
 let currentPairs = [];
+let numPairs = 8; // number of pairs of cards
 
 // Modify mapCards() slightly to store the fetched pairs
 function mapCards() {
-  fetch('sepm25_data_scema_sheet1(1).json')
-    .then(response => response.json())
-    .then(data => {
-      const furnitureOnly = data.filter(item => item.category === 'furniture' && item.image_url !== null);
+  fetch("../words.csv")
+    .then((response) => response.text())
+    .then((csv) => {
+      const data = csv
+        .split("\n")
+        .slice(1)
+        .map((row) => {
+          const [
+            id,
+            english,
+            article,
+            swedish,
+            swedish_plural,
+            literal,
+            category,
+            image_url,
+          ] = row.split(",");
+          return {
+            id,
+            english,
+            article,
+            swedish,
+            swedish_plural,
+            literal,
+            category,
+            image_url,
+          };
+        });
+      const furnitureOnly = data.filter(
+        (item) => item.category === "furniture" && item.image_url
+      );
       const pairs = getRandomPairs(furnitureOnly, numPairs);
       currentPairs = pairs; // store globally for hint use
       const cards = prepareGridItems(pairs);
       renderGrid(cards);
     });
 }
-

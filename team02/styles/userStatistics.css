@@ -1,0 +1,124 @@
+/*
+=================================================
+Owned by Team 02
+=================================================
+*/
+
+body {
+    font-family: 'Work Sans', Arial, sans-serif;
+    background-color: #f5f7fa; /* Light grayish white background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.stats-frame {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.stats-card {
+    background-color: #ffffff; /* White card */
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    width: 380px;
+    padding: 40px;
+    text-align: center;
+}
+
+.stats-card h1 {
+    color: #000;
+    font-size: 26px;
+    font-weight: 700;
+    margin-bottom: 30px;
+}
+
+.stat-item {
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    padding: 12px 18px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 600;
+    color: #333;
+    border: 1px solid #eee;
+}
+
+.stat-item i {
+    margin-right: 10px;
+    color: #ecad26;
+}
+
+.progress-section {
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+}
+
+.progress-bar-container {
+    width: 100%;
+    height: 18px;
+    background-color: #eee;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-top: 10px;
+}
+
+.progress-bar {
+    height: 100%;
+    background-color: #ecad26;
+    width: 60%;
+    transition: width 0.4s ease;
+}
+
+#progress-percent {
+    font-size: 14px;
+    color: #666;
+    margin-top: 5px;
+    align-self: flex-end;
+}
+
+.button-container {
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+    margin-top: 25px;
+}
+
+.menu-btn {
+    width: 100%;
+    background-color: #ecad26;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 12px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.1s ease;
+}
+
+.menu-btn.danger {
+    background-color: #d9534f;
+    padding: 12px 12px;
+}
+
+.menu-btn i {
+    margin-right: 8px;
+}
+
+.menu-btn:hover {
+    background-color: #d79b1f;
+    transform: scale(1.02);
+}
+
+.menu-btn.danger:hover {
+    background-color: #d63c37;
+    transform: scale(1.02);
+}
