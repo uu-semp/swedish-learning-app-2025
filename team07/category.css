@@ -1,0 +1,59 @@
+/*
+=================================================
+Owned by Team 07
+=================================================
+*/
+
+body {
+    font-family: Arial, sans-serif;
+    width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.game-frame {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.category_button {
+    background-color: #d7d7d7;
+    color: black;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 20px;
+    display: block;
+    margin-bottom: 10px;
+    height: 50px;
+    width: 300px;
+    align-items: center;
+
+}
+
+.category_button:hover {
+    background-color: #c4c4c4;
+}
+
+.categorybox {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+.loader {
+  border: 16px solid grey;
+  border-top: 16px solid black;
+  border-radius: 50%;
+  width: 100px;
+  height: 100px;
+  animation: spin 2s linear infinite;
+  margin: 40px auto; /* center horizontally */
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }

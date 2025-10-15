@@ -20,7 +20,15 @@ Owned by the Menu Team
                 fn();
                 results.push(`✅PASS: ${name}`);
             } catch (err) {
-                results.push(`❌FAIL: ${name} – ${err.message}`);
+                results.push(`❌FAIL: ${name} ${err.message}`);
+            }
+        }
+
+        function assertEquals(actual, expected) {
+            const actualStr = JSON.stringify(actual);
+            const expectedStr = JSON.stringify(expected);
+            if (actualStr !== expectedStr) {
+                throw new Error(`\n   Expected: ${expectedStr}\n   Got: ${actualStr}`);
             }
         }
 
@@ -30,29 +38,13 @@ Owned by the Menu Team
 
             const resetStorage = () => localStorage.clear();
 
-            test("get() should return empty object if group does not exist", () => {
-                resetStorage();
-                const result = window.save.get("nonexistent");
-                if (JSON.stringify(result) !== "{}") throw new Error("expected {}");
-            });
-
-            test("get() should return stored object", () => {
-                resetStorage();
-                window.save.set("team12", {
-                    score: 10
-                });
-                const result = window.save.get("team12");
-                if (JSON.stringify(result) !== JSON.stringify({
-                        score: 10
-                    }))
-                    throw new Error("expected {score: 10}");
-            });
-
-            test("get(group, key) should return specific value", () => {
+            test("set() with key and value should update correctly", () => {
                 resetStorage();
                 window.save.set("team12", "score", 12);
-                if (window.save.get("team12", "score") !== 12)
-                    throw new Error("expected 12");
+                const result = window.save.get("team12");
+                assertEquals(result, {
+                    "score": 12
+                });
             });
 
             test("set() with object should merge data", () => {
@@ -64,21 +56,35 @@ Owned by the Menu Team
                     difficulty: "easy"
                 });
                 const result = window.save.get("team12");
-                if (JSON.stringify(result) !== JSON.stringify({
-                        score: 12,
-                        difficulty: "easy"
-                    }))
-                    throw new Error("merge failed");
+                assertEquals(result, {
+                    "score": 12,
+                    "difficulty": "easy"
+                });
             });
 
-            test("set() with key and value should update correctly", () => {
+            test("get() should return empty object if group does not exist", () => {
+                resetStorage();
+                const result = window.save.get("nonexistent");
+                assertEquals(result, {});
+            });
+
+            test("get() should return stored object", () => {
+                resetStorage();
+                window.save.set("team12", {
+                    score: 10
+                });
+                const result = window.save.get("team12");
+                assertEquals(result, {
+                    "score": 10
+                });
+
+            });
+
+            test("get(group, key) should return specific value", () => {
                 resetStorage();
                 window.save.set("team12", "score", 12);
-                const result = window.save.get("team12");
-                if (JSON.stringify(result) !== JSON.stringify({
-                        score: 12
-                    }))
-                    throw new Error("expected {score: 12}");
+                const result = window.save.get("team12", "score");
+                assertEquals(result, 12);
             });
 
             test("clear() should remove group data", () => {
@@ -88,14 +94,14 @@ Owned by the Menu Team
                 });
                 window.save.clear("team12");
                 const result = window.save.get("team12");
-                if (JSON.stringify(result) !== "{}") throw new Error("expected {} after clear");
+                assertEquals(result, {});
             });
 
             test("should handle invalid JSON gracefully", () => {
                 resetStorage();
-                localStorage.setItem("bad", "{invalid json}");
-                const result = window.save.get("bad");
-                if (JSON.stringify(result) !== "{}") throw new Error("malformed JSON not handled");
+                localStorage.setItem("team12", "{invalid json}");
+                const result = window.save.get("team12");
+                assertEquals(result, {});
             });
 
             test("get() should return {} if getItem throws", () => {
@@ -105,7 +111,7 @@ Owned by the Menu Team
                     throw new Error("getItem failed");
                 };
                 const result = window.save.get("team12");
-                if (JSON.stringify(result) !== "{}") throw new Error("expected {} on error");
+                assertEquals(result, {});
                 localStorage.getItem = original;
             });
 
@@ -116,7 +122,7 @@ Owned by the Menu Team
                     throw new Error("getItem failed");
                 };
                 const result = window.save.get("team12", "score");
-                if (result !== null) throw new Error("expected null on error");
+                assertEquals(result, null);
                 localStorage.getItem = original;
             });
 
@@ -127,7 +133,7 @@ Owned by the Menu Team
                     throw new Error("setItem failed");
                 };
                 const result = window.save.set("team12", "score", 12);
-                if (result !== false) throw new Error("expected false on error");
+                assertEquals(result, false);
                 localStorage.setItem = original;
             });
 
@@ -138,8 +144,159 @@ Owned by the Menu Team
                     throw new Error("removeItem failed");
                 };
                 const result = window.save.clear("team12");
-                if (result !== false) throw new Error("expected false on error");
+                assertEquals(result, false);
                 localStorage.removeItem = original;
+            });
+
+            test("stats.set with valid values", () => {
+                resetStorage();
+                const result = window.save.stats.set("team12", 5, 75);
+                assertEquals(result, true);
+                const stats = window.save.stats.get("team12");
+                assertEquals(stats, {
+                    wins: 5,
+                    completion: 75
+                });
+            });
+
+            test("stats.set floors decimal values", () => {
+                resetStorage();
+                window.save.stats.set("team12", 3.7, 82.9);
+                const stats = window.save.stats.get("team12");
+                assertEquals(stats, {
+                    wins: 3,
+                    completion: 82
+                });
+            });
+
+            test("stats.set clamps negative wins to 0", () => {
+                resetStorage();
+                window.save.stats.set("team12", -5, 50);
+                const stats = window.save.stats.get("team12");
+                assertEquals(stats.wins, 0);
+            });
+
+            test("stats.set clamps completion to 0-100 range (too high)", () => {
+                resetStorage();
+                window.save.stats.set("team12", 2, 150);
+                const stats = window.save.stats.get("team12");
+                assertEquals(stats.completion, 100);
+            });
+
+            test("stats.set clamps completion to 0-100 range (too low)", () => {
+                resetStorage();
+                window.save.stats.set("team12", 2, -10);
+                const stats = window.save.stats.get("team12");
+                assertEquals(stats.completion, 0);
+            });
+
+            test("stats.set rejects non-number wins", () => {
+                resetStorage();
+                const result = window.save.stats.set("team12", "5", 50);
+                assertEquals(result, false);
+            });
+
+            test("stats.set rejects non-number completion", () => {
+                resetStorage();
+                const result = window.save.stats.set("team12", 5, "50");
+                assertEquals(result, false);
+            });
+
+            test("stats.get returns default values for new team", () => {
+                resetStorage();
+                const stats = window.save.stats.get("team12");
+                assertEquals(stats, {
+                    wins: 0,
+                    completion: 0
+                });
+            });
+
+            test("stats.incrementWin increases win count", () => {
+                resetStorage();
+                window.save.stats.set("team12", 5, 60);
+                window.save.stats.incrementWin("team12");
+                const stats = window.save.stats.get("team12");
+                assertEquals(stats, {
+                    wins: 6,
+                    completion: 60
+                });
+            });
+
+            test("stats.incrementWin on new team", () => {
+                resetStorage();
+                window.save.stats.incrementWin("team12");
+                const stats = window.save.stats.get("team12");
+                assertEquals(stats, {
+                    wins: 1,
+                    completion: 0
+                });
+            });
+
+            test("stats.incrementWin multiple times", () => {
+                resetStorage();
+                window.save.stats.set("team12", 0, 25);
+                window.save.stats.incrementWin("team12");
+                window.save.stats.incrementWin("team12");
+                window.save.stats.incrementWin("team12");
+                const stats = window.save.stats.get("team12");
+                assertEquals(stats, {
+                    wins: 3,
+                    completion: 25
+                });
+            });
+
+            test("stats.setCompletion updates completion only", () => {
+                resetStorage();
+                window.save.stats.set("team12", 10, 50);
+                window.save.stats.setCompletion("team12", 85);
+                const stats = window.save.stats.get("team12");
+                assertEquals(stats, {
+                    wins: 10,
+                    completion: 85
+                });
+            });
+
+            test("stats.setCompletion validates range", () => {
+                resetStorage();
+                window.save.stats.set("team12", 5, 50);
+                window.save.stats.setCompletion("team12", 200);
+                const stats = window.save.stats.get("team12");
+                assertEquals(stats.completion, 100);
+            });
+
+            test("stats.clear resets to zeros", () => {
+                resetStorage();
+                window.save.stats.set("team12", 20, 95);
+                window.save.stats.clear("team12");
+                const stats = window.save.stats.get("team12");
+                assertEquals(stats, {
+                    wins: 0,
+                    completion: 0
+                });
+            });
+
+            test("stats persists with regular save data", () => {
+                resetStorage();
+                window.save.set("team12", "key", "value");
+                window.save.stats.set("team12", 7, 80);
+                const allData = window.save.get("team12");
+                assertEquals(allData.key, "value", "Regular data should persist");
+                assertEquals(allData.stats, {
+                    wins: 7,
+                    completion: 80
+                });
+            });
+
+            test("regular save.clear removes stats too", () => {
+                resetStorage();
+                window.save.set("team12", "data", "value");
+                window.save.stats.set("team12", 5, 50);
+                window.save.clear("team12");
+                const stats = window.save.stats.get("team12");
+                assertEquals(stats, {
+                    wins: 0,
+                    completion: 0
+                });
             });
 
             results.forEach(r => console.log(r));

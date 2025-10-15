@@ -1,0 +1,49 @@
+.finish-summary {
+  background: #f9fafb;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  max-width: 400px;
+  margin: 40px auto;
+  padding: 24px 18px;
+  text-align: center;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  height: auto !important;
+  min-height: 0 !important;
+  display: block !important;
+}
+
+.finish-summary h2 {
+  color: #2d3748;
+  font-size: 2rem;
+  margin-bottom: 10px;
+  letter-spacing: 1px;
+  text-align: center;
+}
+
+.finish-summary p {
+  font-size: 1.1rem;
+  margin: 24px 0;
+  color: #4a5568;
+  text-align: center;
+  line-height: 1.2;
+}
+
+.finish-summary p strong {
+  color: #2b6cb0;
+}
+
+.finish-summary button {
+  margin-top: 24px;
+  padding: 10px 28px;
+  background: #4299e1;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.finish-summary button:hover {
+  background: #2b6cb0;
+}

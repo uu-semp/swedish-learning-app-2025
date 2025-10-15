@@ -16,15 +16,13 @@ Owned by Team 10
   <script src="../scripts/vocabulary.js"></script>
   <script src="../scripts/save.js"></script>
 
-  <!-- You are allowed to use JQuery and Vue.js but don't have to. They just make a
-  lot of things easier
-  -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css"> 
   <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
   <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 
   <!-- Site specific scripts and styles -->
-  <link rel="stylesheet" href="../main_menu.css" />
+  <link rel="stylesheet" href="../index.css" />
+
   <script src="index.js" defer></script>
 </head>
 <body>
@@ -33,25 +31,24 @@ Owned by Team 10
   </header>
 
   <main class="game-frame">
-        <div class="container">
-        <h1 class="title">EatAndLearn</h1>
-        
-        <div class="button-container">
-            <button class="learning-mode-btn">Menu</button>
-            <button class="start-btn">Start</button>
-        </div>
-        <p class="instructions">This is the instruction manual for learning mode</p>
-        <div class="progress-container">
-            <div class="progress-icon">
-                <div class="progress-bar">
-                    <div class="progress"></div>
-                </div>
-            </div>
-        </div>
-    </div>
+    <div class="container">
+      <h2 style="text-align:center;margin-top:4rem;">Welcome to Learning Mode!</h2>
 
-    <hr>
-    Learning: <div id="display-vocab">(This should be replaced by a word)</div>
+  <div class="button-container" style="display: flex; justify-content: center; gap: 1rem; margin-top: 2rem;">
+        <button onclick="window.location.href='game_page.html'" class="start-btn">Start</button>
+        <button onclick="window.location.href='../index.html'" class="learning-mode-btn">Menu</button>
+      </div>
+
+      <p class="instructions">
+  <br>
+       Each flashcard shows a food word with its image. Flip the card to see the Swedish spelling and hear the pronunciation.<br>
+        <br>
+
+       Try to memorize each word. When you’re ready, choose “I got it” to mark it as learned, or “Repeat” to see it again later.<br>
+       <br>
+       <b>Be honest with yourself—practice makes perfect!</b>
+      </p>
+    </div>
   </main>
 
   <footer>

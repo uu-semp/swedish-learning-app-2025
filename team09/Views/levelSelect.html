@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Select Level</title>
+
+  
+  <link rel="stylesheet" href="../Global.css">
+  <link rel="stylesheet" href="../Styles/levelSelect.css">
+</head>
+<body>
+  <main class="quiz">
+    
+    <button class="backtomainpage-btn" onclick="goBacktomainpage()">⬅</button>
+
+    
+    <h1 class="level-title">Choose Your Level</h1>
+
+    
+    <section class="level-grid">
+      <div class="level-block">
+        <button class="level-btn level1" onclick="startLevel(1)">Level 1</button>
+        <div id="level1Stats" class="stats-panel"></div>
+      </div>
+    
+      <div class="level-block">
+        <button class="level-btn level2" onclick="startLevel(2)">Level 2</button>
+        <div id="level2Stats" class="stats-panel"></div>
+      </div>
+    
+      <div class="level-block">
+        <button class="level-btn level3" onclick="startLevel(3)">Level 3</button>
+        <div id="level3Stats" class="stats-panel"></div>
+      </div>
+    </section>
+    
+  
+  </main>
+
+  
+  <script src="../../scripts/save.js"></script>
+<script src="../JS/levelSelect.js"></script>
+
+
+</body>
+</html>
+
