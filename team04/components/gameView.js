@@ -36,6 +36,7 @@ export default {
       level_2: "2c6d3f66",
       level_3: "47662d57",
       questions: [],
+      userAnswers: [], // [{id, user, correct}]
       currentIndex: 0,
       selectedOption: null,
       startTime: null,
@@ -78,6 +79,19 @@ export default {
     selectOption(index) {
       this.selectedOption = index;
       const isCorrect = index === this.currentQuestion.correctIndex;
+       // create tuple-like object: { id: questionIndex, user: selectedIndex, correct: correctIndex }
+      const id = this.currentIndex;
+      const correct = this.currentQuestion ? this.currentQuestion.correctIndex : null;
+      const entry = { id, user: index, correct };
+
+      // update existing answer for this question or push new
+      const existing = this.userAnswers.find(a => a.id === id);
+      if (existing) {
+        existing.user = entry.user;
+        existing.correct = entry.correct;
+      } else {
+        this.userAnswers.push(entry);
+      }
       this.answers[this.currentIndex] = {
         index: this.currentIndex,
         result: isCorrect ? 'correct' : 'incorrect'
@@ -92,7 +106,8 @@ export default {
       }
       if (this.currentIndex < this.questions.length - 1) {
         this.currentIndex++;
-        this.selectedOption = null;
+        const stored = this.userAnswers.find(a => a.id === this.currentIndex);
+        this.selectedOption = stored ? stored.user : null;
       } else {
         this.$root.currentView = 'finish';
       }
@@ -105,14 +120,20 @@ export default {
     prevQuestion() {
       if (this.currentIndex > 0) {
         this.currentIndex--;
-        this.selectedOption = null;
+        const stored = this.userAnswers.find(a => a.id === this.currentIndex);
+        this.selectedOption = stored ? stored.user : null;
       }
     },
     resetQuestion() {
+      if (window.confirm("Are you sure you want to reset the quiz? Your progress will be lost.")) {
       if(this.currentIndex > 0) {
         this.currentIndex = 0;
       } 
       this.selectedOption = null;
+      this.userAnswers = [];
+      this.answers = [];
+      }
+      
     }, calculateStats() {
       let correct = 0, incorrect = 0, skipped = 0;
       this.answers.forEach(ans => {
