@@ -78,6 +78,43 @@ This project uses the following AI generative tools:
 
 ## Update Word List
 
+TL;DR: The procedure was deleted on:
+
+```bash
+git log --diff-filter=D -- assets/gen-vocab.py
+commit 26774254a7ace94d34306daf68a8c2cde0ba830d
+Author: Fridtjof Stoldt <xFrednet@gmail.com>
+Date:   Fri Oct 10 16:21:17 2025 +0200
+
+    Data: Update docs for async access
+
+$ git log --stat 26774254a7ace94d34306daf68a8c2cde0ba830d
+commit 26774254a7ace94d34306daf68a8c2cde0ba830d
+Author: Fridtjof Stoldt <xFrednet@gmail.com>
+Date:   Fri Oct 10 16:21:17 2025 +0200
+
+    Data: Update docs for async access
+
+ .github/workflows/check-generated-files.yml | 27 ------------------------
+ assets/README.md                            | 62 ++++++++++++++++++++++++++++++++----------------------
+ assets/gen-vocab.py                         | 77 -------------------------------------------------------------------
+ 3 files changed, 37 insertions(+), 129 deletions(-)
+
+commit d2613f69fba6b1a02764d1d7737cec0f26259c38
+Author: Fridtjof Stoldt <xFrednet@gmail.com>
+Date:   Fri Oct 10 15:59:41 2025 +0200
+
+    Data: Add async data fetching and wrap it in the old API
+
+ scripts/{alternative_backend => }/database_config.js  |   0
+ scripts/{alternative_backend => }/database_type.js    |   3 +-
+ scripts/vocabulary.js                                 | 175 ++++++--------------------------------------------------
+ scripts/{alternative_backend => }/vocabulary_await.js | 121 ++++++++++++++++++++++++++-------------
+ 4 files changed, 98 insertions(+), 201 deletions(-)
+```
+
+
+
 Note: The following commands work in Linux but not on Mac or Windows.
 
 ```bash
@@ -85,7 +122,13 @@ Note: The following commands work in Linux but not on Mac or Windows.
 sed -i 's/const FETCH_EXTERNAL = true;/const FETCH_EXTERNAL = false;/' scripts/vocabulary.js
 
 # Download the latest word list from the Google Sheets document as a CSV file
-curl -L "https://docs.google.com/spreadsheets/d/1de16iRzmgSqWvTTxiNvQYM79sWJBwFJN0Up3Y0allDg/export?format=csv&gid=0" -o words.csv
+# Original Sheet shows this error: 
+#    Error: Duplicate ID found -> #ERROR!
+#curl -L "https://docs.google.com/spreadsheets/d/1de16iRzmgSqWvTTxiNvQYM79sWJBwFJN0Up3Y0allDg/export?format=csv&gid=0" -o words.csv
+
+# Curate DB for food
+curl -L "https://docs.google.com/spreadsheets/d/16rDLsfAVBxNiDR9hT17w0rKA5gWWDrF2Z93-XJTH2bc/export?format=csv&gid=0" -o words.csv
+
 
 # Verify that the FETCH_EXTERNAL constant has been updated in the vocabulary script
 grep "const FETCH_EXTERNAL" scripts/vocabulary.js

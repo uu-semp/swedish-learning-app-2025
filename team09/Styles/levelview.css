@@ -74,6 +74,10 @@
   height: 400px;
   z-index: 1000;
   font-family: "Comic Sans MS", cursive;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* 平均分佈各區塊 */
+  
 }
 .result-Popup.hidden { display: none; }
 
@@ -194,9 +198,15 @@ h2{
 }
 
 .stars {
-  font-size: 40px;
-  margin: 15px 0;
+  font-size: 2rem;
   color: gold;
+  letter-spacing: 6px;
+  margin-bottom: 15px;
+  transition: transform 0.3s ease;
+}
+
+.stars:hover {
+  transform: scale(1.1);
 }
 .popup-actions {
   display: flex;
@@ -220,8 +230,17 @@ h2{
 #mistakeInfo {
   font-size: 25px;     
   font-weight: bold;   
-  font-style: italic;  
- 
+  font-style: italic;       
+}
+#resultTitle {
+    flex: 0 0 10px;           
+    width: 100%;              
+    display: flex;
+    align-items: center;      
+    justify-content: center;  
+    font-weight: bold;
+    text-align: center;
+    font-size: 40px;
+    scale: calc(min(1, 500px / (var(--text-length, 1) * 20px)));
   
-        
 }

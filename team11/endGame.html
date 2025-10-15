@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="sv">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Resultat – Ica Väst</title>
+  <link rel="stylesheet" href="../style.css" />
+  <style>
+  html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+  }
+
+  .stage {
+    background: url('./assets/chatbubble.png') no-repeat center / 150% auto;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .result-box {
+    width: clamp(360px, 90%, 700px);
+    padding: clamp(16px, 3vw, 28px); /* tighter */
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.4rem; /* small consistent spacing */
+  }
+
+  .result-box h1 {
+    font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+    margin: 0.2em 0 0.1em 0; /* reduced spacing */
+  }
+
+  .result-box p {
+    font-size: clamp(.85rem, 1.8vw, 1rem);
+    margin: 0.1em 0;
+  }
+
+  .stats {
+    font-size: clamp(.8rem, 1.5vw, .95rem);
+    line-height: 1; /* tighter line spacing */
+    margin: 0.2em 0;
+  }
+
+  .actions {
+    margin-top: 0.4em; /* smaller gap above button */
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 6px; /* tighter button spacing if more buttons later */
+  }
+
+  .actions button {
+    background: #0f172a;
+    color: #fff;
+    border: none;
+    border-radius: 999px;
+    padding: 6px 14px; /* smaller button */
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+  }
+
+  .actions button:hover {
+    opacity: 0.85;
+  }
+</style>
+
+</head>
+<body>
+  <div class="stage">
+    <div class="result-box">
+      <h1 id="headline">Resultat</h1>
+      <div class="stats">
+        <p><strong>Rätt:</strong> <span id="correct">0</span> / <span id="total">0</span></p>
+        <p><strong>Misstag:</strong> <span id="mistakes">0</span></p>
+      </div>
+      <div class="actions">
+        <button id="playAgain">Spela igen</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Pull saved results
+    let stats = null;
+    try { stats = JSON.parse(sessionStorage.getItem('team11_end_stats') || 'null'); } catch(e){}
+
+    const $ = id => document.getElementById(id);
+    if (stats) {
+      const { total, correct, mistakes, threshold, won } = stats;
+      $('correct').textContent  = String(correct);
+      $('total').textContent    = String(total);
+      $('mistakes').textContent = String(mistakes);
+      $('headline').textContent = won ? 'Bra jobbat, du vann!' : 'Bra försök!';
+    } else {
+      $('headline').textContent = 'Ingen data';
+      $('correct').textContent = $('total').textContent = $('mistakes').textContent = '0';
+    }
+
+    // Button
+    document.getElementById('playAgain').onclick = () => {
+      try { window.parent.postMessage({ type: 'playAgain' }, '*'); } catch (_) {}
+    };
+  </script>
+</body>
+</html>

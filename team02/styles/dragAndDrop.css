@@ -39,24 +39,43 @@ body {
 }
 
 .image-item {
-  width: 90%;
-  max-height: 160px;
+  max-height: 80px;
 }
 
 .draggable {
   position: absolute;
   cursor: grab;
   user-select: none;
-  width: 160px;
-  height: 160px;
+  width: 80px;
+  height: 80px;
   object-fit: cover;
-  border-radius: var(--radius);
-  border: 2px solid rgba(0, 0, 0, 0.05);
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
-  transition: box-shadow 0.2s;
+  transform: translateY(+50%) translateX(+50%);
+
+}
+
+.draggable.placed {
+    transform: scale(1.6) translateY(-30px);
+    transform-origin: center bottom;
+    transition: transform 0.3s ease;
+    pointer-events: none; /* prevents re-dragging */
+    cursor: default;
+    filter: brightness(1.1);
+}
+.draggable.placed {
+
 }
 
 .draggable:active {
   cursor: grabbing;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+}
+.floor-tile.wrong-drop {
+    animation: flashRed 0.4s ease;
+}
+
+@keyframes flashRed {
+    0%   { background-color: #c5a98b; }     /* normal color */
+    25%  { background-color: #ffb3b3; }     /* light red */
+    50%  { background-color: #ff6666; }     /* bright red */
+    75%  { background-color: #ffb3b3; }
+    100% { background-color: #c5a98b; }     /* back to normal */
 }
