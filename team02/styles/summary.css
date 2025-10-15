@@ -65,6 +65,10 @@
     width: 100%;
 }
 
+#a-score {
+    color: #28a745 !important;
+}
+
 .btn {
     display: inline-flex;
     align-items: center;
@@ -83,7 +87,7 @@
 .btn:hover {
     background: var(--primary-color, #9d0000);
     color: #fff;
-    border: 1px solid var(--primary-color, #9d0000);
+    border: 1px solid var(--primary-color, #62ff00);
 }
 
 @media (max-width: 600px) {

@@ -27,6 +27,7 @@ h1, h2, h3 {
   border-radius: 12px;
   box-shadow: 0 4px 10px rgba(0,0,0,0.05);
   padding: 2rem 1rem;
+  position: relative;
 }
 
 .title {
@@ -87,4 +88,46 @@ button:hover,
   margin: 1.5rem auto 0;
   font-size: 1rem;
   color: #555;
+}
+
+/* Style for locked buttons */
+.menu-page-btn.locked {
+    background-color: #6c757d; /* A grey color */
+    cursor: not-allowed; /* Show a 'not allowed' cursor on hover */
+}
+
+.menu-page-btn.locked:hover {
+    transform: none; /* Optional: remove hover effect */
+}
+
+/* Add a specific style for the reset button */
+#reset-progress-btn {
+    background-color: #dc3545; /* A red color */
+}
+
+
+
+/* Styles for the progress bar */
+.progress-container {
+    position: absolute;
+    bottom: 2rem;
+    right: 2rem;
+    width: 150px;
+}
+
+.progress-bar-outer {
+    width: 100%;
+    height: 20px;
+    background-color: #e9ecef;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    overflow: hidden;
+}
+
+.progress-bar-inner {
+    height: 100%;
+    width: 0%; /* The JavaScript will change this width */
+    background-color: #28a745; /* Green color */
+    border-radius: 10px;
+    transition: width 0.5s ease-in-out;
 }
