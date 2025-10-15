@@ -1,5 +1,5 @@
 const CATEGORY = "clothing";
-const TOTAL_QUESTIONS = 5; 
+const TOTAL_QUESTIONS = 10; 
 
 const imgEl = document.getElementById("vocabImg");
 const optsEl = document.getElementById("options");
@@ -87,14 +87,12 @@ function renderRound() {
 function onPick(clickedBtn, isCorrect) {
   const buttons = [...optsEl.querySelectorAll(".option")];
 
+  
+  buttons.forEach(b => b.disabled = true);
+
   if (isCorrect) {
     clickedBtn.classList.add("correct");
-    for (const b of buttons) b.disabled = true;
-    progress++;
-    updateProgress();
-    nextBtn.classList.remove("hidden");
   } else {
-    
     totalMistakes++;
     mistakeDetails[currentCorrectId] = (mistakeDetails[currentCorrectId] || 0) + 1;
 
@@ -102,18 +100,14 @@ function onPick(clickedBtn, isCorrect) {
     const correctText = getLabel(window.vocabulary.get_vocab(currentCorrectId));
     const correctBtn = buttons.find(b => b.textContent === correctText);
     if (correctBtn) correctBtn.classList.add("correct");
-
-    for (const b of buttons) b.disabled = true;
-
-    
-    setTimeout(() => {
-      buttons.forEach(b => {
-        b.disabled = false;
-        b.classList.remove("wrong", "correct");
-      });
-    }, 1000);
   }
+
+ 
+  progress++;
+  updateProgress();
+  nextBtn.classList.remove("hidden");
 }
+
 
 function updateProgress() {
   const ratio = progress / TOTAL_QUESTIONS;
@@ -125,10 +119,53 @@ nextBtn.addEventListener("click", renderRound);
 
 function showResult() {
   const mistakeInfo = document.getElementById("mistakeInfo");
-  let detailText = `You finished this level with <b>${totalMistakes}</b> mistakes.<br/><br/>`;
-  mistakeInfo.innerHTML = detailText;
+  const resultTitle = document.getElementById("resultTitle");
+  const starContainer = document.getElementById("starContainer");
+
+  
+  let stars = 0;
+  let message = "";
+  const correctAnswers = TOTAL_QUESTIONS - totalMistakes;
+  if (correctAnswers >= 8) {
+    stars = 3;
+    message = "Amazing! You’re a Swedish star!";
+  } else if (correctAnswers >= 6) {
+    stars = 2;
+    message = "Great work! Just a few more to be perfect.";
+  } else if (correctAnswers >= 3) {
+    stars = 1;
+    message = "Nice try! Keep practicing and you’ll shine.";
+  } else {
+    stars = 0;
+    message = "Don’t worry! Review and try again.";
+  }
+
+  const fullStar = "⭐";
+  const emptyStar = "☆";
+  starContainer.innerHTML = fullStar.repeat(stars) + emptyStar.repeat(3 - stars);
+  resultTitle.textContent = message;
+  mistakeInfo.innerHTML = `You answered <b>${correctAnswers}</b> out of <b>${TOTAL_QUESTIONS}</b> correctly.`;
 
   resultPopup.classList.remove("hidden");
+
+  const params = new URLSearchParams(window.location.search);
+  const currentLevel = parseInt(params.get("level") || "1");
+  const TEAM_KEY = `Team09-Level${currentLevel}`;
+  
+ 
+  const completion = Math.round((correctAnswers / TOTAL_QUESTIONS) * 100);
+  
+  
+  window.save.stats.setCompletion(TEAM_KEY, completion);
+  window.save.stats.incrementWin(TEAM_KEY);
+  
+  
+  const oldBest = window.save.get(TEAM_KEY, "bestScore") || 0;
+  if (correctAnswers > oldBest) {
+    window.save.set(TEAM_KEY, "bestScore", correctAnswers);
+  }
+  
+
 
   document.getElementById("playAgainBtn").onclick = () => {
     resultPopup.classList.add("hidden");
@@ -137,7 +174,18 @@ function showResult() {
   document.getElementById("closeResult").onclick = () => {
     resultPopup.classList.add("hidden");
   };
+
+ 
+  document.getElementById("nextLevelBtn").onclick = () => {
+    const params = new URLSearchParams(window.location.search);
+    const currentLevel = parseInt(params.get("level") || "1");
+    const nextLevel = currentLevel + 1;
+    window.location.href = `../Views/Levelview.html?level=${nextLevel}`;
+  };
+  
 }
+
+
 
 function goBacktomainpage() {
     
@@ -164,3 +212,4 @@ if (document.readyState === "loading") {
 } else {
   start();
 }
+

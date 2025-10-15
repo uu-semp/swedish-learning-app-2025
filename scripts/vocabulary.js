@@ -7,6 +7,7 @@ let resolved_methods = null;
 
 window._vocabulary = {
     pending: 1,
+    team: null,
 };
 
 (async () => {
@@ -46,6 +47,7 @@ window.vocabulary = {
 
     when_ready(callback) {
         if (window._vocabulary !== undefined && window._vocabulary.pending == 0) {
+            resolved_methods.deprecated_load_team_data(window._vocabulary.team);
             callback();
         } else {
             this.callbacks.push(callback);
@@ -53,7 +55,9 @@ window.vocabulary = {
     },
 
     load_team_data(team_id) {
-        resolved_methods.deprecated_load_team_data(team_id);
+        if (window._vocabulary !== undefined) {
+            window._vocabulary.team = team_id;
+        }
     },
 
     // This returns the team metadata belonging to the given ID.
@@ -85,6 +89,8 @@ function checkCallbacks() {
 
     // Clear the list again
     window.vocabulary.callbacks = []
+
+    resolved_methods.deprecated_load_team_data(window._vocabulary.team);
 
     // Call all callbacks
     for (const cb of cbs) {

@@ -9,7 +9,6 @@
     <!-- Shared + page-specific styles -->
     <link rel="stylesheet" href="../style.css" />
     <link rel="stylesheet" href="./styles/room.css" />
-    <link rel="stylesheet" href="./styles/level1.css" />
     <link rel="stylesheet" href="./styles/dragAndDrop.css" />
 </head>
 
@@ -18,23 +17,21 @@
         <h1>Welcome to Level 1</h1>
     </header>
 
-    <div id="questions-container"></div>
+    <div id="question-row">
+        <div id="questions-container"></div>
+    </div>
 
     <div id="content-row">
         <div id="workspace">
             <div class="room-container overflow-hidden">
                 <div class="floor">
-                    <div class="floor-tile"></div>
-                    <div class="floor-tile"></div>
-                    <div class="floor-tile"></div>
-                    <div class="floor-tile"></div>
-                    <div class="floor-tile"></div>
+                    <div class="floor-tile" data-index="0"></div>
+                    <div class="floor-tile" data-index="1"></div>
+                    <div class="floor-tile" data-index="2"></div>
+                    <div class="floor-tile" data-index="3"></div>
+                    <div class="floor-tile" data-index="4"></div>
                 </div>
                 <div class="baseboard"></div>
-                <div class="window">
-                    <div class="pane-h"></div>
-                    <div class="pane-v"></div>
-                </div>
             </div>
         </div>
         <div id="sidebar">
@@ -42,57 +39,151 @@
         </div>
     </div>
 
-    <!-- Summary link -->
-    <nav class="actions">
-        <a class="btn" href="./summary.html">View Summary</a>
-    </nav>
 
     <script src="./scripts/level1Questions.js"></script>
     <script src="../scripts/vocabulary.js"></script>
     <script type="module" src="./scripts/imageFetching.js"></script>
     <script type="module" src="./scripts/dragAndDrop.js"></script>
+    <script type="module" src="./scripts/feedback.js"></script>
+    <script src="../scripts/save.js"></script>
 
     <script>
-      let remainingQuestions = [];
-      let currentQuestion = null;
+        const TEAM_NAME = "team02";
+        const LEARNED_WORDS_KEY = "learnedWords";
+        if (!window.save.get(TEAM_NAME, LEARNED_WORDS_KEY)) {
+            window.save.set(TEAM_NAME, LEARNED_WORDS_KEY, []);
+        }
+        let learnedWords = save.get(TEAM_NAME, "learnedWords");
+        let remainingQuestions = [];
+        window.currentQuestion = null;
+        let currentQuestionAttempts = 0; // Track attempts for current question
+        let totalScore = 0; // Track total score (first-try correct answers)
 
-      function showRandomQuestion() {
-        const questionsContainer = document.getElementById('questions-container');
-        questionsContainer.innerHTML = '';
-        if (remainingQuestions.length === 0) {
-          // Redirect to summary page when done
-          window.location.href = "./summary.html";
-          return;
+        function showRandomQuestion() {
+            const questionsContainer = document.getElementById('questions-container');
+            questionsContainer.innerHTML = '';
+            if (remainingQuestions.length === 0) {
+                // Store final score in localStorage before redirecting
+                console.log('Game completed! Final score:', totalScore);
+                window.save.stats.incrementWin(TEAM_NAME);
+                localStorage.setItem('gameScore', totalScore);
+                if (totalScore === 5) {
+                    const currentStats = window.save.stats.get(TEAM_NAME);
+                    // If this level wasn't passed before, increase completion
+                    if (window.save.get(TEAM_NAME, "level1Passed") != 1) {
+                        const newCompletion = Math.min(100, currentStats.completion + 33.3);
+                        window.save.stats.setCompletion(TEAM_NAME, newCompletion);
+                    }
+                    // Mark this level as passed
+                    window.save.set(TEAM_NAME, "level1Passed", 1);
+                }
+                localStorage.setItem('gameLevel', 'Level 1');
+                console.log('Stored in localStorage - Score:', totalScore, 'Level: Level 1');
+                // Redirect to summary page when done
+                window.location.href = "./summary.html";
+                return;
+            }
+
+            // Take the first question from the remaining questions (they come in order from the group)
+            window.currentQuestion = remainingQuestions.shift();
+            currentQuestionAttempts = 0; // Reset attempts for new question
+            const div = document.createElement('div');
+            div.className = 'question-block';
+            div.innerHTML = `
+                <div class="question-content">
+                    <p>${currentQuestion.question}</p>
+                    <button id="hint-button" class="btn hint-btn">Need a hint?</button>
+                </div>`;
+            questionsContainer.appendChild(div);
+            const hintButton = div.querySelector('#hint-button');
+            hintButton.addEventListener('click', () => {
+                const modal = document.getElementById('hintModal');
+                const hintText = document.getElementById('hintText');
+                hintText.textContent = `${window.currentQuestion.swedish} => ${window.currentQuestion.answer}.`;
+                modal.style.display = 'flex'; // show modal with flex centering
+            });
         }
 
-        // Take the first question from the remaining questions (they come in order from the group)
-        currentQuestion = remainingQuestions.shift();
-        const div = document.createElement('div');
-        div.className = 'question-block';
-        div.innerHTML = `<p>${currentQuestion.question}</p>`;
-        questionsContainer.appendChild(div);
-      }
+        // Wait for DOM and questions to be loaded
+        document.addEventListener('DOMContentLoaded', function () {
+            if (typeof getRandomQuestions !== "undefined") {
+                remainingQuestions = getRandomQuestions();
+                showRandomQuestion();
+            }
 
-      // Wait for DOM and questions to be loaded
-      document.addEventListener('DOMContentLoaded', function() {
-        if (typeof getRandomQuestions !== "undefined") {
-          remainingQuestions = getRandomQuestions();
-          showRandomQuestion();
-        }
+            // Make only floor tiles droppable
+            const floorTiles = document.querySelectorAll('.floor-tile');
+            floorTiles.forEach(tile => {
+                // Allow drag over
+                tile.addEventListener('dragover', e => {
+                    e.preventDefault();
+                    tile.classList.add('highlight-drop'); // optional visual feedback
+                });
 
-        // Listen for drop events in workspace
-        const workspace = document.getElementById('workspace');
-        workspace.addEventListener('DropFromSidebar', e => {
-          // After a drop, show the next question
-          console.log("Dropped image is: ", e.detail.dataset.name)
-          setTimeout(showRandomQuestion, 300); // here we should check if the answer is correct. can be done when we're sure about how the game works.
+                tile.addEventListener('dragleave', e => {
+                    tile.classList.remove('highlight-drop');
+                });
+
+                // Handle drop
+                tile.addEventListener('drop', e => {
+                    e.preventDefault();
+                    tile.classList.remove('highlight-drop');
+
+                    const draggedElementId = e.dataTransfer.getData('text/plain');
+                    const draggedElement = document.getElementById(draggedElementId);
+
+                    if (draggedElement) {
+                        tile.appendChild(draggedElement);
+                        // Fire the custom event to trigger question change
+                        const dropEvent = new CustomEvent('DropFromSidebar', {
+                            detail: { dataset: draggedElement.dataset }
+                        });
+                        document.getElementById('workspace').dispatchEvent(dropEvent);
+                    }
+                });
+            });
+            document.addEventListener('AnswerCorrect', e => {
+                console.log("Answer is correct!. Showing next question...");
+                // Award point only if this was the first attempt (no incorrect attempts yet)
+                if (currentQuestionAttempts === 0) {
+                    if (!learnedWords.includes(window.currentQuestion.swedish)) {
+                        learnedWords.push(window.currentQuestion.swedish);
+                        save.set("team02", "learnedWords", learnedWords);
+                    }
+                    totalScore++;
+                    console.log("First-try correct! Score:", totalScore);
+                }
+                setTimeout(showRandomQuestion, 300);
+            });
+
+            document.addEventListener('AnswerIncorrect', e => {
+                currentQuestionAttempts++;
+                console.log("Answer is not correct! Reason: ", e.detail.reason, "Attempt:", currentQuestionAttempts);
+            })
         });
-      });
     </script>
 
     <footer>
         <a href="index.html">⬅ Back to menu</a>
     </footer>
+
+    <div id="hintModal" class="modal" onclick="if(event.target===this)this.style.display='none'">
+        <div class="modal-content">
+            <h2> Hint</h2>
+            <p id="hintText">Here will be your hint text</p>
+            <button class="close-btn" onclick="document.getElementById('hintModal').style.display='none'">
+                ✖ Close
+            </button>
+        </div>
+    </div>
+
+    <style>
+        /* Optional highlight style */
+        .highlight-drop {
+            outline: 2px dashed #4CAF50;
+            background-color: rgba(76, 175, 80, 0.1);
+        }
+    </style>
 </body>
 
 </html>

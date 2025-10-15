@@ -1,8 +1,8 @@
 .room-container { 
     /* Remove me when you put me in the div */
     position: relative;
-    width: 800px;
-    height: 500px;
+    width: 580px;
+    height: 332.2px;
     perspective: 1000px; 
     background-color: lightgrey;
 }
@@ -15,7 +15,7 @@
     transform-origin: bottom;
     transform: rotateX(75deg);
     display: flex;
-} 
+}
 
 .floor-tile {
     flex: 1;
@@ -55,10 +55,10 @@
 
 .baseboard {
     position: absolute;
-    width: 91%;
+    width: 98%;
     height: 15px;
     background-color: #f5f5f5;
-    left: 4.5%;
+    left: 1%;
     bottom: 20%;
     transform: translateZ(-200px);
 }
