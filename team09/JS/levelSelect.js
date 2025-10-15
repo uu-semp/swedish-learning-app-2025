@@ -6,8 +6,14 @@ function goBacktomainpage() {
   
  
   function startLevel(levelNum) {
-    window.location.href = `../Views/Levelview.html?level=${levelNum}`;
+    if (levelNum === 3) {
+      window.location.href = `../Views/AdvancedLevelview.html?level=${levelNum}`;
+    } else {
+      window.location.href = `../Views/Levelview.html?level=${levelNum}`;
+    }
   }
+  
+  
 
   function displayPlayerStats() {
     for (let i = 1; i <= 3; i++) {
