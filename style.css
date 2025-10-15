@@ -53,3 +53,26 @@ p{
     width: var(--frame-width);
     height: var(--frame-height);
 }
+
+    .badge { display:inline-block; padding:.4rem .7rem; border-radius:999px; font-weight:600; }
+    .ok { background:#e8f5e9; border:1px solid #4caf50; }
+    .no { background:#ffebee; border:1px solid #e53935; }
+    ul { list-style:none; padding-left:0; }
+    li { margin:.5rem 0; }
+
+.start-page-button {
+    position: absolute;
+    top: 1.0rem;
+    right: 1.0rem;
+
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    background-color: #ff5252;
+    color: #ffffff;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
