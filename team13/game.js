@@ -111,7 +111,7 @@ const app = Vue.createApp({
         this.progress += 1;
         if (this.progress >= this.progressMax) {
           alert("Congrats! You finished 10 rounds.");
-          localStorage.setItem("team13_level1_completed", "1");
+          localStorage.setItem("team13_level1_completed", true);
 
           window.location.href = 'index.html';
           return;
@@ -204,7 +204,7 @@ const app = Vue.createApp({
   mounted() {
 
     if (localStorage.getItem("team13_level1_completed") === null) {
-      localStorage.setItem("team13_level1_completed", "0");
+      localStorage.setItem("team13_level1_completed", false);
     }
 
     window.vocabulary.when_ready(() => {
