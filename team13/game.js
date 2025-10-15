@@ -38,6 +38,7 @@ const app = Vue.createApp({
     }
   },
 
+
   computed: {
     progressPercentage() {
       return (this.progress / this.progressMax) * 100 + '%';
@@ -110,6 +111,8 @@ const app = Vue.createApp({
         this.progress += 1;
         if (this.progress >= this.progressMax) {
           alert("Congrats! You finished 10 rounds.");
+          localStorage.setItem("team13_level1_completed", "1");
+
           window.location.href = 'index.html';
           return;
         }
@@ -199,6 +202,11 @@ const app = Vue.createApp({
   },
   
   mounted() {
+
+    if (localStorage.getItem("team13_level1_completed") === null) {
+      localStorage.setItem("team13_level1_completed", "0");
+    }
+
     window.vocabulary.when_ready(() => {
       console.log("Vocabulary loaded, vue ready");
       this.vocabNumbers = window.vocabulary.get_category("number");
