@@ -4,12 +4,69 @@ Owned by Team 03
 =================================================
 */
 
+@import url('https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+
+/* ============================================
+   BASE STYLES & VARIABLES
+   ============================================ */
+
 body {
     margin: 0;
     padding: 0;
     height: 100vh;
     overflow: hidden;
+    font-family: 'Work Sans', sans-serif;
+    --primary-color: #9d0000;
 }
+
+/* ============================================
+   HEADER & NAVBAR
+   ============================================ */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    height: 50px;
+    background-color: rgb(36, 34, 34);
+    color: white;
+    flex-shrink: 0;
+}
+
+header img {
+    height: 100%;
+    max-height: 100%;
+}
+
+header h2 {
+    flex: 1;
+    text-align: center;
+    margin: 0 20px;
+    color: white;
+    font-size: 1.2rem;
+}
+
+.header-btn {
+    background: transparent;
+    border: 1px solid #ccc;
+    padding: 0.35rem 0.9rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s, border-color 0.2s;
+    color: rgb(255, 255, 255);
+}
+
+.header-btn:hover {
+    background: white;
+    color: rgb(55, 54, 54);
+    border-color: white;
+}
+
+/* ============================================
+   DIALOG / MODAL
+   ============================================ */
 
 .dialog-overlay {
     display: none !important;
@@ -101,7 +158,7 @@ body {
     margin: 0 0 10px 0;
     font-size: 16px;
     font-family: 'Work Sans', sans-serif;
-    color: #4a90e2;
+    color: var(--primary-color);
 }
 
 .field-info p {
@@ -131,30 +188,34 @@ body {
     color: #333;
 }
 
+/* ============================================
+   MAIN LAYOUT
+   ============================================ */
 
 .container {
     width: 100%;
-    height: 100vh;
+    height: calc(100vh - 50px);
     display: flex;
     flex-direction: row;
     gap: 20px;
     padding: 20px;
     font-family: 'Work Sans', sans-serif;
-    background: #f5f5f5;
+    background: white;
     box-sizing: border-box;
 }
 
 .form-container {
     background: #fff;
-    padding: 15px 20px;
+    padding: 15px 20px 20px 20px;
     border-radius: 12px;
     box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    border: 1px solid #ddd;
     position: relative;
     display: flex;
     flex-direction: column;
     flex: 50%;
     overflow-y: auto;
-    height: calc(100vh - 40px);
+    max-height: 100%;
 }
 
 .form-container h2 {
@@ -192,6 +253,10 @@ body {
     color: #555;
     font-family: 'Work Sans', sans-serif;
 }
+
+/* ============================================
+   FORM INPUTS & VALIDATION
+   ============================================ */
 
 .form-group input, 
 .form-group select {
@@ -250,6 +315,10 @@ body {
     font-style: italic;
 }
 
+/* ============================================
+   MEDIA UPLOAD & PREVIEW
+   ============================================ */
+
 .media-preview {
     margin-top: 8px;
     padding: 8px;
@@ -300,18 +369,20 @@ body {
 }
 
 .file-upload-btn {
-    background: #4a90e2;
-    color: white;
+    background: var(--primary-color);
+    color: #fff !important;
     padding: 6px 12px;
-    border-radius: 6px;
+    border-radius: 20px;
     cursor: pointer;
     font-size: 13px;
     transition: background 0.2s;
     white-space: nowrap;
+    border: none;
 }
 
 .file-upload-btn:hover {
-    background: #357abd;
+    background: #7d0000;
+    color: #fff !important;
 }
 
 .file-info {
@@ -320,6 +391,10 @@ body {
     color: #666;
     font-style: italic;
 }
+
+/* ============================================
+   CATEGORY SELECTION
+   ============================================ */
 
 .selected-categories-box {
     display: flex;
@@ -344,10 +419,10 @@ body {
     display: inline-flex;
     align-items: center;
     gap: 4px;
-    background: #4a90e2;
+    background: var(--primary-color);
     color: white;
     padding: 4px 8px;
-    border-radius: 12px;
+    border-radius: 999px;
     font-size: 12px;
     font-family: 'Work Sans', sans-serif;
     white-space: nowrap;
@@ -390,9 +465,13 @@ body {
 .article-options input[type="radio"] {
     width: auto;
     margin: 0;
-    accent-color: #4a90e2;
+    accent-color: var(--primary-color);
     cursor: pointer;
 }
+
+/* ============================================
+   BUTTONS & ACTIONS
+   ============================================ */
 
 .image-upload {
     border: 2px dashed #ccc;
@@ -405,25 +484,26 @@ body {
 }
 
 .image-upload:hover {
-    border-color: #4a90e2;
-    color: #4a90e2;
+    border-color: var(--primary-color);
+    color: var(--primary-color);
 }
 
 .submit-btn {
     margin-top: 5px;
     width: 100%;
     padding: 8px;
-    background: #4a90e2;
+    background: var(--primary-color);
     color: #fff;
     border: none;
-    border-radius: 8px;
+    border-radius: 20px;
     font-size: 15px;
     font-family: 'Work Sans', sans-serif;
     cursor: pointer;
+    transition: background 0.2s;
 }
 
 .submit-btn:hover {
-    background: #357abd;
+    background: #7d0000;
 }
 
 .display-container {
@@ -431,11 +511,11 @@ body {
     padding: 20px 25px;
     border-radius: 12px;
     box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    border: 2px solid #e0e0e0;
+    border: 1px solid #ddd;
     flex: 1 1 50%;
     display: flex;
     flex-direction: column;
-    height: calc(100vh - 40px);
+    max-height: 100%;
     overflow: hidden;
 }
 
@@ -455,10 +535,10 @@ body {
 
 .clear-btn {
     padding: 6px 12px;
-    background: #4a90e2;
+    background: var(--primary-color);
     color: #fff;
-    border: 2px solid #4a90e2;
-    border-radius: 6px;
+    border: 2px solid var(--primary-color);
+    border-radius: 20px;
     font-size: 13px;
     font-family: 'Work Sans', sans-serif;
     cursor: pointer;
@@ -466,32 +546,35 @@ body {
 }
 
 .clear-btn:hover {
-    background: #357abd;
-    border-color: #357abd;
+    background: #7d0000;
+    border-color: #7d0000;
 }
 
 .clear-btn:disabled {
     opacity: 0.5;
     cursor: not-allowed;
-    background: #4a90e2;
+    background: var(--primary-color);
     color: #fff;
 }
 
 .btn-delete {
-    background-color: #e74c3c; /* red */
-  color: white;
-  border: none;
-  padding: 8px 14px;
-  font-size: 16px;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    font-size: 14px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
 }
 
 .btn-delete:hover {
-  background-color: #c0392b; /* darker red on hover */
+    background-color: #7d0000;
 }
 
+/* ============================================
+   WORD DISPLAY
+   ============================================ */
 
 #words-display {
     flex: 1;
@@ -513,7 +596,7 @@ body {
     margin-bottom: 10px;
     padding: 12px;
     border-radius: 6px;
-    border-left: 3px solid #4a90e2;
+    border-left: 3px solid var(--primary-color);
     font-size: 14px;
 }
 
@@ -593,7 +676,7 @@ body {
 }
 
 #words-display li a {
-    color: #4a90e2;
+    color: var(--primary-color);
     text-decoration: none;
 }
 
@@ -619,6 +702,10 @@ body {
     border: 1px solid #e0e8f0;
 }
 
+/* ============================================
+   RESPONSIVE DESIGN
+   ============================================ */
+
 @media (max-width: 1024px) {
     .container {
         flex-direction: column;
@@ -642,6 +729,24 @@ body {
 }
 
 @media (max-width: 768px) {
+    header {
+        padding: 10px;
+    }
+    
+    header img {
+        height: 30px;
+    }
+    
+    header h2 {
+        font-size: 1rem;
+        margin: 0 10px;
+    }
+    
+    .header-btn {
+        padding: 0.25rem 0.6rem;
+        font-size: 0.8rem;
+    }
+    
     .container {
         padding: 10px;
         gap: 10px;
