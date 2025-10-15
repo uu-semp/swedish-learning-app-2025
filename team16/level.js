@@ -4,16 +4,13 @@ import { setUpLevel } from './setUpLevels.js';
 import { getGameProgress, updateGameProgress } from './localStorage.js';
 
 $(function() {
-  // Wait for all dependencies to load
   initializeGame();
 });
 
 async function initializeGame() {
   try {
-    // Loading level data from the backend
     const { streets, allData } = await setUpLevel(10);
     
-    // Create houses array for all streets on the map
     const allHouses = createHousesArray(allData);
     
     new Vue({
@@ -34,7 +31,8 @@ async function initializeGame() {
         levelStreets: streets,
         questions: {},
         allStreetData: allData,
-        startTime: Date.now()
+        startTime: Date.now(),
+        correctAnswersThisLevel: 0
       },
 
       created() { 
@@ -51,7 +49,6 @@ async function initializeGame() {
           console.log('Generating questions from street data...');
           const questions = {};
           
-          // Level 1
           questions[1] = this.levelStreets.map(streetInfo => {
             const cardinalNumber = streetInfo.number.cardinal.sv;
             return {
@@ -65,7 +62,6 @@ async function initializeGame() {
             };
           });
           
-          // Level 2
           questions[2] = this.levelStreets.map(streetInfo => {
             const ordinalNumber = streetInfo.number.ordinal.sv;
             return {
@@ -79,7 +75,6 @@ async function initializeGame() {
             };
           });
           
-          // Level 3
           questions[3] = this.levelStreets.map(streetInfo => {
             const colorSv = streetInfo.color.sv;
             const cardinalNumber = streetInfo.number.cardinal.sv;
@@ -97,8 +92,11 @@ async function initializeGame() {
         },
 
         startLevel(lv) {
+          console.log(`Starting level ${lv}...`);
           this.level = lv;
+          this.correctAnswersThisLevel = 0;
           this.remainingQuestions = [...this.questions[lv]];
+          console.log(`Level ${lv} has ${this.remainingQuestions.length} questions`);
           this.pickNextQuestion();
         },
 
@@ -108,22 +106,38 @@ async function initializeGame() {
           this.feedbackClass = "";
           this.hoveredHouse = null;
 
+          if (this.correctAnswersThisLevel >= 10) {
+            console.log(`Level ${this.level} complete with ${this.correctAnswersThisLevel} correct answers!`);
+            this.updateGameProgressMethod();
+            this.completeLevel();
+            return;
+          }
+
           if (this.remainingQuestions.length > 0) {
             const i = Math.floor(Math.random() * this.remainingQuestions.length);
             this.currentQuestion = this.remainingQuestions.splice(i, 1)[0];
             this.textAnswer = "";
           } else {
-            this.completeLevel();
+            console.log(`Reloading questions. Progress: ${this.correctAnswersThisLevel}/10`);
+            this.feedback = `Du har svarat på ${this.correctAnswersThisLevel}/10 frågor. Fortsätt spela!`;
+            this.feedbackClass = "correct";
+            
+            setTimeout(() => {
+              this.remainingQuestions = [...this.questions[this.level]];
+              this.pickNextQuestion();
+            }, 2000);
           }
         },
 
         completeLevel() {
-          this.updateGameProgressMethod();  
-          
           if (this.level < 3) {
             this.feedback = `🎉 Du klarade nivå ${this.level}! Bra jobbat 👏`;
             this.feedbackClass = "correct";
-            setTimeout(() => this.startLevel(this.level + 1), 2000);
+            
+            setTimeout(() => {
+              this.startTime = Date.now();
+              this.startLevel(this.level + 1);
+            }, 2000);
           } else {
             this.feedback = "🏆 Du har klarat alla nivåer! Fantastiskt 🎉";
             this.feedbackClass = "correct";
@@ -136,20 +150,17 @@ async function initializeGame() {
         updateGameProgressMethod() {
           const gameProgress = getGameProgress();
           const levelKey = `level${this.level}`;
-          const questionsCompleted = this.questions[this.level].length - this.remainingQuestions.length;
-          
           
           const timeSpent = Math.round((Date.now() - this.startTime) / 60000);
           
-          gameProgress[levelKey].completed = questionsCompleted;
+          gameProgress[levelKey].completed = this.correctAnswersThisLevel;
           gameProgress[levelKey].attempts++;
           gameProgress[levelKey].timeSpent += timeSpent;
           gameProgress[levelKey].lastPlayed = new Date().toISOString().split('T')[0];
 
-          // Unlock next level if current level is complete
-          if (this.level === 1 && questionsCompleted === 10) {
+          if (this.level === 1 && this.correctAnswersThisLevel >= 10) {
             gameProgress.level2.unlocked = true;
-          } else if (this.level === 2 && questionsCompleted === 10) {
+          } else if (this.level === 2 && this.correctAnswersThisLevel >= 10) {
             gameProgress.level3.unlocked = true;
           }
 
@@ -164,7 +175,9 @@ async function initializeGame() {
           
           if (house.street === this.currentQuestion.correct.street && 
               houseLiteral === correctLiteral) {
-            this.score += 10; 
+            this.score += 10;
+            this.correctAnswersThisLevel++;
+            this.updateGameProgressMethod();
             this.feedback = "✅ Rätt svar!";
             this.feedbackClass = "correct";
             setTimeout(() => this.pickNextQuestion(), 1000);
@@ -178,7 +191,9 @@ async function initializeGame() {
           
           const ans = this.textAnswer.trim().toLowerCase().replace(/\s+/g," ");
           if (ans === this.currentQuestion.correct) {
-            this.score += 10; 
+            this.score += 10;
+            this.correctAnswersThisLevel++;
+            this.updateGameProgressMethod();
             this.feedback = "✅ Rätt! Bra jobbat.";
             this.feedbackClass = "correct";
             setTimeout(() => this.pickNextQuestion(), 1000);
@@ -209,6 +224,7 @@ async function initializeGame() {
           this.feedback = "";
           this.feedbackClass = "";
           this.startTime = Date.now();
+          this.correctAnswersThisLevel = 0;
           this.remainingQuestions = [...this.questions[this.level]];
           this.pickNextQuestion();
         },
@@ -245,7 +261,6 @@ async function initializeGame() {
 function createHousesArray(allData) {
   const houses = [];
   
-  // Process answer for Ringgatan
   allData.Ringgatan.forEach((house, index) => {
     houses.push({
       street: "Ringgatan",
@@ -260,7 +275,6 @@ function createHousesArray(allData) {
     });
   });
   
-  // Process answer for Skolgatan
   allData.Skolgatan.forEach((house, index) => {
     houses.push({
       street: "Skolgatan",
@@ -275,7 +289,6 @@ function createHousesArray(allData) {
     });
   });
   
-  // Process answer for Parkvägen
   allData.Parkvägen.forEach((house, index) => {
     houses.push({
       street: "Parkvägen",

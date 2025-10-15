@@ -5,25 +5,28 @@ export async function setUpLevel(numQuestions = 10) {
 
     console.log("Loaded street data:", data);
 
-    // all the valid house numbers from the map
+    // All valid house numbers from the map
     const validHouseNumbers = [
       1, 2, 3, 4, 5, 6, 7,           // Ringgatan
       11, 12, 13, 14, 15, 20,        // Skolgatan
-      20, 22, 24, 25, 28, 29, 31     // Parkvägen
+      21, 22, 24, 25, 28, 29, 31     // Parkvägen
     ];
 
-    const selectedNumbers = [];
-    while (selectedNumbers.length < Math.min(numQuestions, validHouseNumbers.length)) {
-      const randomIndex = Math.floor(Math.random() * validHouseNumbers.length);
-      const houseNumber = validHouseNumbers[randomIndex];
-      
-      if (!selectedNumbers.includes(houseNumber)) {
-        selectedNumbers.push(houseNumber);
-      }
-    }
+    const shuffled = [...validHouseNumbers].sort(() => Math.random() - 0.5);
+    const selectedNumbers = shuffled.slice(0, Math.min(numQuestions, validHouseNumbers.length));
 
-    const streets = selectedNumbers.map((num) => getStreetInfo(num, data)).filter(s => s !== null);
+    console.log('Selected house numbers:', selectedNumbers);
+
+    const streets = selectedNumbers
+      .map((num) => getStreetInfo(num, data))
+      .filter(s => s !== null);
+    
     console.log("Selected streets:", streets);
+    
+    if (streets.length < numQuestions) {
+      console.warn(`Warning: Only found ${streets.length} valid streets out of ${numQuestions} requested`);
+    }
+    
     return { streets, allData: data };
   } catch (error) {
     console.error("Error loading level data:", error);
@@ -32,25 +35,26 @@ export async function setUpLevel(numQuestions = 10) {
 }
 
 export function getStreetInfo(houseNumber, data) {
-  // Check Ringgatan (house numbers 1-7)
+    
+  // Check Ringgatan
   if (houseNumber >= 1 && houseNumber <= 7) {
     const house = data["Ringgatan"].find(h => h.number.cardinal.literal === String(houseNumber));
     return house ? { ...house, streetName: "Ringgatan" } : null;
   }
   
-  // Check Skolgatan (house numbers 11-15, 20)
+  // Check Skolgatan
   const skolgatan = [11, 12, 13, 14, 15, 20];
   if (skolgatan.includes(houseNumber)) {
     const house = data["Skolgatan"].find(h => h.number.cardinal.literal === String(houseNumber));
     return house ? { ...house, streetName: "Skolgatan" } : null;
   }
   
-  // Check Parkvägen (house numbers 20, 22, 24-25, 28-29, 31)
-  const parkvagen = [20, 22, 24, 25, 28, 29, 31];
+  // Check Parkvägen
+  const parkvagen = [21, 22, 24, 25, 28, 29, 31];
   if (parkvagen.includes(houseNumber)) {
     const house = data["Parkvägen"].find(h => h.number.cardinal.literal === String(houseNumber));
     return house ? { ...house, streetName: "Parkvägen" } : null;
   }
   
-  return null; // if the house number does not exist
+  return null; // House number doesn't exist
 }
