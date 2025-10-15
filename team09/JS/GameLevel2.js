@@ -193,7 +193,7 @@ document.getElementById("nextLevelBtn").onclick = () => {
   const params = new URLSearchParams(window.location.search);
   const currentLevel = parseInt(params.get("level") || "1");
   const nextLevel = currentLevel + 1;
-  window.location.href = `../Views/Levelview.html?level=${nextLevel}`;
+  window.location.href = `../Views/AdvancedLevelview.html?level=${nextLevel}`;
 };
 
 }
