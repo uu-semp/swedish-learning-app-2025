@@ -60,6 +60,7 @@ export function loadProgress() {
     } else {
         // Default object for a new player
         return {
+            game_completed: false,
             currentLevel: 1,
             levelScores: {
                 1: 0,

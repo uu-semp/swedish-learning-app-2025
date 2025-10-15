@@ -270,22 +270,22 @@ const GamePage = {
         },
         endGame() {
             let progress = loadProgress(); // From cookies.js
-
             // Update score for level 3
             progress.levelScores[3] += this.correctCount;
             let totalScore = progress.levelScores[3];
             console.log('totalscore: ', totalScore)
 
-            if (totalScore >= 10) {
+            if (totalScore >= 10 && progress.game_completed == false) {
                 // Update main application stats
                 window.save.stats.setCompletion("team10", 100);
                 window.save.stats.incrementWin("team10");
+                progress.game_completed = true;
+                saveProgress(progress);
+                window.location.href = '../advance-next-level/advance-next-level.html';
+            } else {
+                this.$emit('game-over', { score: this.correctCount, total: this.words.length, won:  false }); 
+                saveProgress(progress);
             }
-
-             // GAME COMPLETED 
-            this.$emit('game-over', { score: this.correctCount, total: this.words.length, won: ( this.correctCount/this.words.length >= 0.8 )}); 
- 
-            saveProgress(progress); // Save final score to your cookie
         },
         goBack() {
             this.$emit('back');
