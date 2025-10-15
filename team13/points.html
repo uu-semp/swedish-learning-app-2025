@@ -30,7 +30,7 @@
     const lvl1 = localStorage.getItem("team13_level1_completed");
 
     const el = document.getElementById("lvl1");
-    if (lvl1 === "1") {
+    if (lvl1) {
       el.textContent = "🏆 You have completed level 1!";
       el.classList.add("ok");
     } else {
