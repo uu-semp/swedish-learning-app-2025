@@ -131,14 +131,17 @@ $(function() {
     const currentItem = GameState.items[GameState.currentItemIndex];
     $("#medium-feedback").text("");
     $("#medium-progress").text(`${GameState.currentItemIndex} / ${GameState.items.length}`);
-
-    // Set up image with fallback
+    
     const $imageWrap = $("#medium-image-wrap").empty();
     const altText = currentItem.en || "Swedish vocabulary object";
-    const placeholderUrl = `https://via.placeholder.com/300x200?text=${encodeURIComponent(altText)}`;
-    const $img = $("<img>").attr("alt", altText).attr("src", currentItem.img || placeholderUrl);
-    $img.on("error", () => $img.attr("src", placeholderUrl));
-    $imageWrap.append($img);
+
+    if (currentItem.img) {
+      const $img = $("<img>").attr("alt", altText).attr("src", currentItem.img);
+      $imageWrap.append($img);
+    } else {
+      // Optionally, you can handle the "no image" case differently
+      console.warn("No image URL provided for this item.");
+    }
 
     // Display English hint and focus input
     $("#medium-english").text(currentItem.en || "");

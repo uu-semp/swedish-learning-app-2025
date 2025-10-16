@@ -174,3 +174,7 @@ main.game-frame {
   cursor: pointer;
 }
 .close-btn:hover { background: linear-gradient(180deg, #ff1744, #dc143c); }
+
+h1, h2, h3, p {
+  color: white;
+}
