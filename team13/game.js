@@ -19,7 +19,7 @@ const app = Vue.createApp({
       isLoading: true,
       currentScreen: 'game',
 
-      progress: 1,
+progress: 0,
       progressMax: 10,
 
       houseOptions: [],
