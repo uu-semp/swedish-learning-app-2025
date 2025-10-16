@@ -101,7 +101,8 @@ export function local_update_progress(guesses) {
   set(TEAM, data);
 
   // Uses calculated information about covers to update completion and wins
-  setCompletion(TEAM, data.covers / WORDS);
+  // Store in percentage
+  setCompletion(TEAM, (data.covers / WORDS) * 100);
 
   const CORRECT_GUESSES = guesses.filter(
     (guess) => guess.guessed_correct
