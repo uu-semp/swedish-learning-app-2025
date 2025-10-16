@@ -81,7 +81,8 @@ document.getElementById("confirmBtn").addEventListener("click", () => {
   const chosen = currentData.words[selectedIndex];
   const isCorrect = selectedIndex === correctIndex;
 
-  update_selection({ id: chosen.id, guessed_correct: isCorrect }); // store result
+  if (firstAttempt)
+    update_selection({ id: chosen.id, guessed_correct: isCorrect }); // store result
 
   // Disable clicking while evaluating
   document.querySelectorAll(".image-card").forEach((card) => {
