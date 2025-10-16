@@ -15,7 +15,18 @@ let staticItems = new Map();
 let currentlyDraggedItem = null; // Info about the item being dragged
 
 // --- DOM Element References ---
-let gameFrame, levelIndicator, promptBar, itemList, roomContainer, doneButton, modalOverlay, modalTitle, modalText, modalCloseButton;
+let
+  gameFrame,
+  levelIndicator,
+  promptBar,
+  itemList,
+  roomContainer,
+  backButton,
+  doneButton,
+  modalOverlay,
+  modalTitle,
+  modalText,
+  modalCloseButton;
 
 /**
  * Initializes the game, sets up DOM references and event listeners.
@@ -58,6 +69,7 @@ function setupDOM() {
                 </div>
             </div>
             <div id="bottom-bar">
+                <button id="back-button">Back to Menu</button>
                 <button id="done-button">Done</button>
             </div>
             <div id="modal-overlay" class="hidden">
@@ -77,6 +89,7 @@ function setupDOM() {
   promptBar = document.getElementById('prompt-bar');
   itemList = document.getElementById('item-list');
   roomContainer = document.getElementById('room-container');
+  backButton = document.getElementById('back-button');
   doneButton = document.getElementById('done-button');
   modalOverlay = document.getElementById('modal-overlay');
   modalTitle = document.querySelector('#modal-content h3');
@@ -88,6 +101,10 @@ function setupDOM() {
  * Sets up global event listeners for the game.
  */
 function setupEventListeners() {
+  backButton.addEventListener('click', () => {
+    window.location.href = '../';
+  });
+
   doneButton.addEventListener('click', handleDoneClick);
 
   // --- Drag and Drop Event Listeners ---
@@ -413,5 +430,6 @@ function displayGameComplete() {
         <div style="display:flex; flex-direction:column; justify-content:center; align-items:center; height:100%; text-align:center;">
             <h2>Congratulations!</h2>
             <p>You have completed all the levels.</p>
+            <button id="back-button" onclick="window.location.href='../'">Back to Menu</button>
         </div>`;
 }
