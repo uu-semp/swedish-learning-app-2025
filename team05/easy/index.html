@@ -1,0 +1,63 @@
+<!doctype html>
+
+<!--
+=================================================
+Owned by Team 05
+=================================================
+-->
+
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Basic Static Site</title>
+  <link rel="stylesheet" href="../../style.css" />
+
+  <script src="../../scripts/vocabulary.js"></script>
+  <script src="../../scripts/save.js"></script>
+
+  <!-- You are allowed to use JQuery and Vue.js but don't have to. They just make a
+  lot of things easier
+  -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+  <!-- Site specific scripts and styles -->
+  <link rel="stylesheet" href="../styles/easy.css" />
+  <script src="https://cdn.jsdelivr.net/npm/leader-line@1.0.7/leader-line.min.js"></script>
+  <script src="../js/easy.js" defer></script>
+</head>
+<body>
+  <header>
+    <h1>Team 05</h1>
+  </header>
+
+
+  <main class="game-frame">
+  <div class="top-bar">
+    <h2 id="level-text">Level 1</h2>
+    <p class="instructions">Match the pictures with the correct words.</p>
+  </div>
+
+  <div class="game-area">
+    <div id="image-container" class="images"></div>
+    <div id="word-container" class="words"></div>
+
+    <div class="right-panel">
+      <div class="buttons">
+        <button id="submit-btn">Submit Answers</button>
+        <button id="reset-btn">Reset Level</button>
+      </div>
+      <div id="message" class="message"></div>
+    </div>
+  </div>
+</main>
+    <!--Learning: <div id="display-vocab">(Word)</div>  -->
+  </main>
+
+  <footer>
+    <small>Created as part of the "Software Engineering and Project Management" course 2025</small>
+  </footer>
+</body>
+</html>
