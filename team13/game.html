@@ -1,0 +1,89 @@
+<!doctype html>
+
+<!--
+=================================================
+Owned by Team 13
+=================================================
+-->
+
+<html lang="en">
+<head>
+  <title>House Selection Game</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <!-- <link rel="stylesheet" href="../style.css" /> For some reason this line breaks everything -->
+
+  <script src="../scripts/vocabulary.js"></script>
+  <script src="../scripts/save.js"></script>
+
+  <!-- You are allowed to use JQuery and Vue.js but don't have to. They just make a
+  lot of things easier
+  -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css"> 
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+  <!-- Site specific scripts and styles -->
+  <link rel="stylesheet" href="game.css" />
+  <script src="game.js" defer></script>
+  <script src="houses.js" defer></script>
+  
+</head>
+<body>
+  <div id="app">
+    <!-- <header class="main-header">
+      <div class="header-content">
+        <h1>Game Title</h1>
+        <button v-if="currentScreen === 'game'" @click="backToMenu" class="header-button">Start page</button>
+      </div>
+    </header> -->
+    <main class="game-frame">
+      <!-- Implement your game inside this tag. test test test -->
+
+      <!-- <section v-if="currentScreen === 'menu'" id="menu-screen">
+        <div class="game-box">
+          <h2>Welcome to the House Selection game</h2>
+          <p>Practice Swedish numbers by choosing the correct house!</p>
+          <button @click="startGame" :disabled="isLoading" class="start-button">{{startButtonText}}</button>
+        </div>
+      </section> -->
+
+      <section v-else-if="currentScreen === 'game'" id="game-screen" >
+        <div class="game-box">
+          <a href="index.html" class="start-page-button">⬅ Tillbaka</a>
+          <div class="progress-wrap">
+            <div class="progress-label">Progress: {{progress}} / {{progressMax}}</div>
+            <div class="progress-bar">
+              <div id="progress-fill" :style="{width: progressPercentage}"></div>
+            </div>
+          </div>
+          <!-- <button @click="backToMenu">Back to Menu</button> -->
+          <hr>
+          <div id="prompt-words">
+            <button v-for="(word, index) in prompt"
+                    :key="index"
+                    @click="translateWord(index)">
+                {{renderWord(word)}}
+            </button>
+          </div>
+          <div id="house-buttons">
+            <button v-for="(houseNum, index) in houseOptions"
+                    :key="index"
+                    @click="checkAnswer(index)">
+                  Hus {{houseNum}}
+            </button>
+          </div>
+          <hr>
+          <button @click="toggleTranslation"> {{translationButtonText}}</button>
+          <div v-if="showTranslation" id="english-line">
+            I live on {{currentStreet}} {{currentQuestion.en}} <br>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer>
+      <small>Created as part of the "Software Engineering and Project Management" course 2025</small>
+    </footer>
+  </div>
+</body>
+</html>

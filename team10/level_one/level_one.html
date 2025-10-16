@@ -25,6 +25,8 @@ Owned by Team 10
 
   <!-- Site specific scripts and styles -->
   <link rel="stylesheet" href="../index.css" />
+  <link rel="stylesheet" href="level_one.css" />
+
   <script src="index.js" defer></script>
 </head>
 <body>
@@ -33,25 +35,18 @@ Owned by Team 10
   </header>
 
   <main class="game-frame">
-        <div class="container">
-        <h1 class="title">EatAndLearn</h1>
-        
-        <div class="button-container">
-            <button class="learning-mode-btn">Menu</button>
-            <button class="start-btn">Start</button>
-        </div>
-        <p class="instructions">This is the instruction manual for level one</p>
-        <div class="progress-container">
-            <div class="progress-icon">
-                <div class="progress-bar">
-                    <div class="progress"></div>
-                </div>
-            </div>
-        </div>
-    </div>
+    <div class="container">
+      <h2 style="text-align:center;margin-top:4rem;">Level 1 – Picture to Swedish word</h2>
 
-    <hr>
-    Learning: <div id="display-vocab">(This should be replaced by a word)</div>
+      <div class="button-container">
+        <button onclick="window.location.href='level_one_game.html'" class="start-btn">Start</button>
+        <button onclick="window.location.href='../index.html'" class="learning-mode-btn">Menu</button>
+      </div>
+
+      <p class="instructions">
+        Click “Start” to begin the Level 1 game. Picture of the food on the left and swedish word on the right, press the button "True" if they match or "False" if they don't!
+      </p>
+    </div>
   </main>
 
   <footer>

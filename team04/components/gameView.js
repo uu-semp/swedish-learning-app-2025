@@ -1,4 +1,3 @@
-import setClock from "../utils/setClock.js";
 import shuffleQuestions from "../utils/shuffleQuestions.js";
 import progressBar from "./progressBar.js";
 
@@ -6,10 +5,13 @@ export default {
   name: "GameView",
   template: `
     <div class="game-container">
-      <statistics 
-       :currentIndex="currentIndex"></statistics>
+      <statistics></statistics>
       <section class="center-section">
-        <clock></clock>
+        <clock
+          v-if="currentQuestion"
+          :hour="currentQuestion.hour"
+          :minute="currentQuestion.minute"> 
+        </clock>
         <cards 
           v-if="currentQuestion"
           :options="currentQuestion.options"
@@ -21,10 +23,10 @@ export default {
       <progress-bar :steps="questions.length" :active="currentIndex+1"></progress-bar>
       <navigation 
        @next="nextQuestion" 
-       @prev="prevQuestion">
+       @prev="prevQuestion"
+       @reset="resetQuestion">
+       :selectedOption="this.selectedOption">
       </navigation>
-
-      <button @click="$root.currentView = 'finish'">Switch to FinishView</button>
   </div>
   `,
   props: ["selectedLevel"],
@@ -32,11 +34,15 @@ export default {
     return {
       level_1: "623a056b",
       level_2: "2c6d3f66",
-      level_3: "477662d57",
+      level_3: "47662d57",
       questions: [],
-      answers: [],
+      userAnswers: [], // [{id, user, correct}]
       currentIndex: 0,
-      selectedOption: null
+      selectedOption: null,
+      startTime: null,
+      endTime: null,
+      answerStats: { correct: 0, incorrect: 0, skipped: 0 },
+      answers: [], // [{index, result: 'correct'|'incorrect'|'skipped'}]
     };
   },
   components: {
@@ -47,16 +53,14 @@ export default {
     const levelKey = `level_${this.selectedLevel}`;
     const vocabId = this[levelKey];
     const rawData = window.vocabulary.get_team_data(vocabId);
+    console.log("rawData type:", typeof rawData);
+    console.log("rawData preview:", rawData);
+
     // shuffle questions and set current index to 0
     const parsed = JSON.parse(rawData);
     this.questions = shuffleQuestions(parsed);
     this.currentIndex = 0;
-
-    console.log(`Loaded Level ${this.selectedLevel} data:`, this.questions);
-  },
-  mounted() {
-    const firstQ = this.questions[0];
-    setClock(firstQ.hour, firstQ.minute); 
+    this.startTime = Date.now();
   },
   computed: {
     currentQuestion() {
@@ -73,9 +77,12 @@ export default {
     
   methods: {
     selectOption(index) {
+      this.selectedOption = index;
+      const isCorrect = index === this.currentQuestion.correctIndex;
+       // create tuple-like object: { id: questionIndex, user: selectedIndex, correct: correctIndex }
       const id = this.currentIndex;
-      // If this question was already answered, ignore further selections.
-      // To allow changes, change this to `if (existing && !allowChange) { ... }`
+      
+      // update existing answer for this question or push new
       const existing = this.answers.find(a => a.id === id);
       if (existing) {
         this.selectedOption = existing.user;
@@ -87,29 +94,66 @@ export default {
       const entry = { id, user: index, correct, answered: true }
       // push new answer entry
       this.answers.push(entry);
-    },
+      this.answers[this.currentIndex] = {
+        index: this.currentIndex,
+        result: isCorrect ? 'correct' : 'incorrect'
+      };
+  },
     nextQuestion() {
+      if (this.selectedOption === null) {
+        this.answers[this.currentIndex] = {
+          index: this.currentIndex,
+          result: 'skipped'
+        };
+      }
       if (this.currentIndex < this.questions.length - 1) {
         this.currentIndex++;
-        const stored = this.answers.find(a => a.id === this.currentIndex);
+        const stored = this.userAnswers.find(a => a.id === this.currentIndex);
         this.selectedOption = stored ? stored.user : null;
-
-
-        const q = this.questions[this.currentIndex];
-        setClock(q.hour, q.minute);
       } else {
+        this.$root.currentView = 'finish';
+      }
+      if (this.currentIndex >= this.questions.length - 1) {
+        this.endTime = Date.now();
+        this.$root.finishStats = this.calculateStats();
         this.$root.currentView = 'finish';
       }
     },
     prevQuestion() {
       if (this.currentIndex > 0) {
         this.currentIndex--;
-        const stored = this.answers.find(a => a.id === this.currentIndex);
+        const stored = this.userAnswers.find(a => a.id === this.currentIndex);
         this.selectedOption = stored ? stored.user : null;
-
-        const q = this.questions[this.currentIndex];
-        setClock(q.hour, q.minute);
       }
+    },
+    resetQuestion() {
+      if (window.confirm("Are you sure you want to reset the quiz? Your progress will be lost.")) {
+      if(this.currentIndex > 0) {
+        this.currentIndex = 0;
+      } 
+      this.selectedOption = null;
+      this.userAnswers = [];
+      this.answers = [];
+      }
+      
+    }, calculateStats() {
+      let correct = 0, incorrect = 0, skipped = 0;
+      this.answers.forEach(ans => {
+        if (!ans) skipped++;
+        else if (ans.result === 'correct') correct++;
+        else if (ans.result === 'incorrect') incorrect++;
+        else skipped++;
+      });
+      const total = this.questions.length;
+      const percent = total ? Math.round((correct / total) * 100) : 0;
+      const durationMs = (this.endTime || Date.now()) - this.startTime;
+      return {
+        correct,
+        incorrect,
+        skipped,
+        percent,
+        durationMs
+      };
     }
   }
 };

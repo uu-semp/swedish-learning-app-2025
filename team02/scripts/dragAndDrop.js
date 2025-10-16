@@ -1,73 +1,69 @@
-// Replace with fetching images from the Data Team
-// This static loading is temporary
-const imageFolder = './images/';
-const images = ['arbetsbord.png', 'bänk.png', 'bord.png', 'byrå.png'];
-// ----------------------------------------------------------------------
-const sidebar = document.getElementById('sidebar');
-const workspace = document.getElementById('workspace');
-let draggedImage = null;
+// dragAndDrop.js
+import { loadImages } from './imageFetching.js';
 
-images.forEach(name => {
-  const img = document.createElement('img');
-  img.src = imageFolder + name;
-  img.draggable = true;
-  img.className = 'image-item';
-  img.addEventListener('dragstart', e => {
-    draggedImage = img;
-  });
-  sidebar.appendChild(img);
-});
+let dragSource = null;
 
-workspace.addEventListener('dragover', e => e.preventDefault());
+(async () => {
+    const images = await loadImages();
 
-workspace.addEventListener('drop', e => {
-  e.preventDefault();
-  if (!draggedImage) return;
+    const workspace = document.getElementById('workspace');
+    const sidebar = document.getElementById('sidebar');
+    let draggedImage = null;
 
-  workspace.appendChild(draggedImage);
-  const rect = workspace.getBoundingClientRect();
-  draggedImage.className = 'draggable';
-  draggedImage.style.position = 'absolute';
-  draggedImage.style.left = (e.clientX - rect.left - 75) + 'px';
-  draggedImage.style.top = (e.clientY - rect.top - 75) + 'px';
-  makeDraggable(draggedImage);
+    images.forEach(img => {
+        img.addEventListener('dragstart', () => draggedImage = img);
+    });
 
-  draggedImage = null;
-});
+    document.addEventListener('dragstart', e => {
+        if (e.target.closest('#sidebar')) dragSource = 'sidebar';
+        else if (e.target.closest('#workspace')) dragSource = 'workspace';
+    });
+    workspace.addEventListener('dragover', e => e.preventDefault());
+    workspace.addEventListener('drop', e => {
+        e.preventDefault();
+        if (!draggedImage) return;
+        const tile = e.target.closest('.floor-tile');
+        if (!tile) return;
+        const tileIndex = parseInt(tile.dataset.index);
+        const itemName = draggedImage.dataset.name;
+        console.log(itemName);
+        console.log(currentQuestion);
+        console.log(itemName === window.currentQuestion.answer);
+        if (
+            window.currentQuestion &&
+            itemName === window.currentQuestion.answer &&
+            window.currentQuestion.index.includes(tileIndex)
+        ) {
+            // Correct placement
+            const tileRect = tile.getBoundingClientRect();
+            const workspaceRect = workspace.getBoundingClientRect();
+            workspace.appendChild(draggedImage);
+            draggedImage.classList.add('draggable', 'placed');
+            draggedImage.draggable = false;
+            draggedImage.style.cursor = 'default'; // optional visual cue
+            draggedImage.style.position = 'absolute';
+            draggedImage.style.left = (tileRect.left - workspaceRect.left + tileRect.width / 2 - draggedImage.offsetWidth / 2) + 'px';
+            draggedImage.style.top = (tileRect.top - workspaceRect.top + tileRect.height / 2 - draggedImage.offsetHeight / 2) + 'px';
+            draggedImage.style.transform = 'scale(1.6) translateY(-10px)';
+            draggedImage.style.transition = 'transform 0.3s ease';
+            const eventName = dragSource === 'sidebar' ? 'DropFromSidebar' : 'DropFromWorkspace';
+            workspace.dispatchEvent(new CustomEvent(eventName, { detail: { draggedImage, tile } }));
+            workspace.dispatchEvent(new CustomEvent('FurnitureDropped', { detail: { draggedImage, tile } }));
+            dragSource = null;
+            draggedImage = null;
+        }
+        else {
+            // Incorrect placement
+            tile.classList.add('wrong-drop');
+            setTimeout(() => tile.classList.remove('wrong-drop'), 400);
+            sidebar.appendChild(draggedImage);
+            draggedImage.style.position = '';
+            draggedImage.style.left = '';
+            draggedImage.style.top = '';
+            document.dispatchEvent(new CustomEvent('AnswerIncorrect', {
+                detail: { reason: 'Wrong item or tile' }
+            }));
+        }
 
-function makeDraggable(img) {
-  let isDragging = false;
-  let offsetX = 0, offsetY = 0;
-
-  img.addEventListener('mousedown', e => {
-    if (e.button !== 0) return;
-    isDragging = true;
-    const rect = img.getBoundingClientRect();
-    const parentRect = workspace.getBoundingClientRect();
-    offsetX = e.clientX - rect.left;
-    offsetY = e.clientY - rect.top;
-    img.style.zIndex = 1000;
-
-    const moveHandler = e => {
-      if (!isDragging) return;
-      const x = e.clientX - parentRect.left - offsetX;
-      const y = e.clientY - parentRect.top - offsetY;
-      img.style.left = x + 'px';
-      img.style.top = y + 'px';
-    };
-
-    const upHandler = () => {
-      isDragging = false;
-      img.style.zIndex = '';
-      document.removeEventListener('mousemove', moveHandler);
-      document.removeEventListener('mouseup', upHandler);
-    };
-
-    document.addEventListener('mousemove', moveHandler);
-    document.addEventListener('mouseup', upHandler);
-  });
-
-  img.addEventListener('dragstart', e => {
-    e.preventDefault();
-  });
-}
+    });
+})();

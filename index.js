@@ -34,7 +34,7 @@ async function loadGames() {
     // Filter games by chapter
     const chapters = [...new Set(allGames.flatMap(g => g.supported_chapters))].sort((a, b) => a - b);
     buildFilter(chapters);
-    setActiveFilter("all"); // default
+    setActiveFilter("all", true);
 
     // Render game grid
     renderGrid(allGames);
@@ -75,14 +75,36 @@ filterBar.addEventListener("click", (e)=>{
   const btn = e.target.closest(".filter-btn");
   if(!btn) return;
   const value = btn.dataset.chapter;
-  setActiveFilter(value);
-  if(value === "all") return renderGrid(allGames);
-  const chNum = Number(value);
-  renderGrid(allGames.filter(g => g.supported_chapters.includes(chNum)));
+  const wasActive = btn.classList.contains("active");
+  setActiveFilter(value, !wasActive);
+  
+  // Show all games if "all" is selected or no filters active
+  if(activeFilters.has("all") || activeFilters.size === 0) {
+    return renderGrid(allGames);
+  }
+  
+  // Show games matching any selected chapter
+  renderGrid(allGames.filter(g => 
+    g.supported_chapters.some(ch => activeFilters.has(String(ch)))
+  ));
 });
 
-function setActiveFilter(value){
-  document.querySelectorAll(".filter-btn").forEach(b => b.classList.toggle("active", b.dataset.chapter === value));
+// Track active filters using a Set
+const activeFilters = new Set(["all"]);
+
+function setActiveFilter(value, active) {
+  if (value === "all") {
+    activeFilters.clear();
+    if (active) activeFilters.add("all");
+    document.querySelectorAll(".filter-btn").forEach(b => b.classList.toggle("active", active && b.dataset.chapter === "all"));
+  } else {
+    activeFilters.delete("all");
+    if (active) activeFilters.add(value);
+    else activeFilters.delete(value);
+    document.querySelectorAll(".filter-btn").forEach(b => {
+      b.classList.toggle("active", b.dataset.chapter === "all" ? false : activeFilters.has(b.dataset.chapter));
+    });
+  }
 }
 
 // Render grid of game cards
@@ -101,12 +123,12 @@ function renderGrid(games) {
 
     // Build game card HTML
     card.innerHTML = `
-      <img src="assets/main_menu/images/games/${g.id}.png" 
+      <img src="assets/main_menu/images/game_logos/${g.id}_logo.png" 
            alt="${g.eng_title}"
            onerror="this.onerror=null; this.src='assets/main_menu/images/games/default_image.png';">
       <div class="card-body">
         <h3>${g.eng_title}</h3>
-        <p>${g.eng_desc}</p>
+        <p>${g.eng_desc.replace(/\n/g, '<br>')}</p>
         ${tagsHtml}
       </div>
     `;

@@ -50,6 +50,19 @@ body {
     /* margin: 0px 15px 100px 15px;  top right bottom left */
 }
 
+.big-buttons-locked {
+    font-weight: bold;
+    background-color: lightgrey;
+    border-color: grey;
+    border: solid;
+    border-width: 10px;
+    border-radius: 30px;
+    padding: 25px;
+    text-align: center;
+    font-size: 30px;
+    /* margin: 0px 15px 100px 15px;  top right bottom left */
+}
+
 .big-buttons:hover {
     background-color: #b6f4c1;
     cursor: grab;
@@ -68,18 +81,20 @@ body {
 }
 
 .info-button {
-    height: 50px;
-    width: 50px;
+    align-self: center;
+    height: 40px;
+    width: 40px;
     background-color: #ceffd7;
     border: solid;
     border-color: #02b823;
     border-width: 5px;
-    font-size: 30px;
+    font-size: 20px;
+    font-weight: bold;
     border-radius: 50%;
-    margin: 20px;
-    margin-top: 50px;
     float: right;
+    margin: 4% 5% 0% 0%; 
 }
+/* // up right down left*/
 
 .info-button:hover {
     background-color: #b6f4c1;
@@ -175,9 +190,9 @@ body {
   transition: all 0.2s ease;
 }
 
-.flag-button:hover {
+.flag-button:hover img {
   background-color: #b6f4c1;  
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);  
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);  
   transition: 0.3s ease;  
 }
 
@@ -186,12 +201,62 @@ body {
   object-fit: cover;
   border: 2px solid transparent;  
   transition: border-color 0.2s ease;
+  border-radius: 15%;
 }
 
 .flag-button.selected img {
   border-color: #22c55e;  /* change to green */
+  border-width:5px;
 }
 
+#medium-buttons{
+    width: 50px !important;
+    font-size:20px;
+    border-width: 6px;
+}
+
+.rowContainer{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;     /* vertical center */
+
+}
+
+.rowContainer > h2 {
+    font-size: 40px;
+    margin: 0;
+}
+
+.rowContainer > img {
+    width: 55px;
+    height: 55px;
+}
+
+.popUpButtons{
+    display: flex;
+    justify-content: space-around;
+    gap: 10px;
+}
+
+.popUpButtons > .big-buttons{
+    width:40%;
+    font-size: 16px;
+    border-width: 5px;
+}
+
+.popUpButtons > #exitButton {
+    background-color: #D32F2F;
+    border-color:#B71C1C;
+    color:white;
+}
+
+#info-back-button{
+    max-width:35% !important;
+    padding: 8px 16px;
+    font-size: 16px;
+    border-width: 4px;
+    border-radius: 15px;
+}
 
 /* Help View */
 .help-content {
@@ -267,17 +332,19 @@ body {
     justify-content: space-between;
     align-items: center;
     padding: 10px 20px;
+    padding-bottom:0px;
     box-sizing: border-box;
+    height:20%;
 }
 
 .level-header h1 {
     margin: 0;
-    font-size: 2.5em;
+    font-size: 1.8em;
     color: #333;
 }
 
 /* Style override for the exit button inside the header */
-.level-header .big-buttons {
+#exit-game-button {
     background-color: #D32F2F; /* Red */
     border-color: #B71C1C; /* Darker Red */
     color: white;
@@ -287,7 +354,8 @@ body {
     font-size: 16px;
     border-width: 4px;
     border-radius: 15px;
-    margin: 0; /* Remove any inherited margin */
+    margin: 0% 0% 4% 4%;
+    width:15%;
 }
 
 .level-header .big-buttons:hover {
@@ -295,10 +363,6 @@ body {
     border-color: #D32F2F;
 }
 
-.feedback-area {
-    padding: 0 20px 10px;
-    min-height: 50px; /* Reserve space to prevent layout shifting when feedback appears */
-}
 
 .main-content-area {
     display: flex;
@@ -314,13 +378,15 @@ body {
 
 /* Simple feedback text colors */
 .feedback-container {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    z-index: 100;
-    padding: 10px 20px;
-    border-radius: 5px;
-    border: 2px solid;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  margin: auto;
+  z-index: 1001;
+  padding: 10px 20px;
+  border-radius: 5px;
+  border: 5px solid;
 }
 
 .feedback-text {
@@ -346,4 +412,40 @@ body {
 
 .incorrect-feedback .feedback-text {
     color: red;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: white;
+  padding: 2rem;
+  border-radius: 1rem;
+  max-width: 400px;
+  text-align: center;
+  position: relative;
+}
+
+.close-btn {
+  position: absolute;
+  top: 8px;
+  right: 12px;
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.dress-prompt-container{
+    width:80%;
 }

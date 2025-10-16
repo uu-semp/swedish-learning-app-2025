@@ -4,37 +4,222 @@ Owned by Team 03
 =================================================
 */
 
-:root {
-    --frame-width: 800px;
-    --frame-height: 600px;
+@import url('https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+
+/* ============================================
+   BASE STYLES & VARIABLES
+   ============================================ */
+
+body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    overflow: hidden;
+    font-family: 'Work Sans', sans-serif;
+    --primary-color: #9d0000;
 }
 
-.container {
-    max-width: var(--frame-width);
-    width: 100%;
-    max-height: var(--frame-height);
-    margin: 0 auto;
-    padding: 20px;
+/* ============================================
+   HEADER & NAVBAR
+   ============================================ */
+header {
     display: flex;
-    flex-direction: column;
-    gap: 20px;
-    overflow-y: auto; /*make scrollable*/
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    height: 50px;
+    background-color: rgb(36, 34, 34);
+    color: white;
+    flex-shrink: 0;
+}
+
+header img {
+    height: 100%;
+    max-height: 100%;
+}
+
+header h2 {
+    flex: 1;
+    text-align: center;
+    margin: 0 20px;
+    color: white;
+    font-size: 1.2rem;
+}
+
+.header-btn {
+    background: transparent;
+    border: 1px solid #ccc;
+    padding: 0.35rem 0.9rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s, border-color 0.2s;
+    color: rgb(255, 255, 255);
+}
+
+.header-btn:hover {
+    background: white;
+    color: rgb(55, 54, 54);
+    border-color: white;
+}
+
+/* ============================================
+   DIALOG / MODAL
+   ============================================ */
+
+.dialog-overlay {
+    display: none !important;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+}
+
+.dialog-overlay.active {
+    display: flex !important;
+}
+
+.dialog-content {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    max-width: 600px;
+    width: 90%;
+    max-height: 80vh;
+    overflow-y: auto;
+    animation: slideIn 0.3s ease;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateY(-50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.dialog-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 25px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.dialog-header h3 {
+    margin: 0;
+    font-size: 20px;
     font-family: 'Work Sans', sans-serif;
-    background: #fff;
+    color: #000;
+}
+
+.close-dialog {
+    background: none;
+    border: none;
+    font-size: 28px;
+    color: #666;
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: background 0.2s;
+}
+
+.close-dialog:hover {
+    background: #f0f0f0;
+    color: #000;
+}
+
+.dialog-body {
+    padding: 20px 25px;
+}
+
+.field-info {
+    margin-bottom: 20px;
+}
+
+.field-info:last-child {
+    margin-bottom: 0;
+}
+
+.field-info h4 {
+    margin: 0 0 10px 0;
+    font-size: 16px;
+    font-family: 'Work Sans', sans-serif;
+    color: var(--primary-color);
+}
+
+.field-info p {
+    margin: 8px 0;
+    font-size: 14px;
+    line-height: 1.5;
+    color: #333;
+}
+
+.field-info code {
+    background: #f5f5f5;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-family: monospace;
+    font-size: 13px;
+}
+
+.field-info ul {
+    margin: 8px 0;
+    padding-left: 20px;
+}
+
+.field-info li {
+    margin: 5px 0;
+    font-size: 14px;
+    line-height: 1.5;
+    color: #333;
+}
+
+/* ============================================
+   MAIN LAYOUT
+   ============================================ */
+
+.container {
+    width: 100%;
+    height: calc(100vh - 50px);
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    padding: 20px;
+    font-family: 'Work Sans', sans-serif;
+    background: white;
     box-sizing: border-box;
 }
 
 .form-container {
     background: #fff;
-    padding: 20px 25px;
+    padding: 15px 20px 20px 20px;
     border-radius: 12px;
     box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    border: 1px solid #ddd;
     position: relative;
-    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    flex: 50%;
+    overflow-y: auto;
+    max-height: 100%;
 }
 
 .form-container h2 {
-    margin: 0 0 15px 0;
+    margin: 0 0 10px 0;
     font-size: 20px;
     color: #000;
     font-family: 'Work Sans', sans-serif;
@@ -58,21 +243,25 @@ Owned by Team 03
 }
 
 .form-group {
-    margin-bottom: 12px;
+    margin-bottom: 8px;
 }
 
 .form-group label {
     display: block;
-    margin-bottom: 5px;
+    margin-bottom: 3px;
     font-size: 14px;
     color: #555;
     font-family: 'Work Sans', sans-serif;
 }
 
+/* ============================================
+   FORM INPUTS & VALIDATION
+   ============================================ */
+
 .form-group input, 
 .form-group select {
     width: 100%;
-    padding: 8px;
+    padding: 6px 8px;
     border: 1px solid #ccc;
     border-radius: 6px;
     font-size: 14px;
@@ -88,6 +277,13 @@ Owned by Team 03
 .required {
     color: #e74c3c;
     font-weight: bold;
+}
+
+.optional {
+    color: #888;
+    font-weight: normal;
+    font-size: 12px;
+    font-style: italic;
 }
 
 .form-group input.error,
@@ -106,9 +302,151 @@ Owned by Team 03
 .error-message {
     color: #e74c3c;
     font-size: 12px;
-    margin-top: 4px;
-    min-height: 16px;
+    margin-top: 2px;
+    min-height: 14px;
     display: block;
+}
+
+.hint {
+    display: block;
+    color: #888;
+    font-size: 11px;
+    margin-top: 2px;
+    font-style: italic;
+}
+
+/* ============================================
+   MEDIA UPLOAD & PREVIEW
+   ============================================ */
+
+.media-preview {
+    margin-top: 8px;
+    padding: 8px;
+    background: #f9f9f9;
+    border-radius: 6px;
+    min-height: 0;
+}
+
+.media-preview:empty {
+    display: none;
+}
+
+.preview-image {
+    max-width: 150px;
+    max-height: 100px;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.preview-audio {
+    width: 100%;
+    max-width: 250px;
+    height: 32px;
+}
+
+.preview-error {
+    color: #e74c3c;
+    font-size: 12px;
+    font-style: italic;
+}
+
+.media-input-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.media-input-group input[type="text"] {
+    flex: 1;
+    min-width: 200px;
+}
+
+.input-separator {
+    color: #888;
+    font-size: 13px;
+    font-style: italic;
+}
+
+.file-upload-btn {
+    background: var(--primary-color);
+    color: #fff !important;
+    padding: 6px 12px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 13px;
+    transition: background 0.2s;
+    white-space: nowrap;
+    border: none;
+}
+
+.file-upload-btn:hover {
+    background: #7d0000;
+    color: #fff !important;
+}
+
+.file-info {
+    margin-top: 4px;
+    font-size: 11px;
+    color: #666;
+    font-style: italic;
+}
+
+/* ============================================
+   CATEGORY SELECTION
+   ============================================ */
+
+.selected-categories-box {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin-top: 6px;
+    padding: 6px;
+    min-height: 32px;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    background: #fafafa;
+}
+
+.selected-categories-box:empty::before {
+    content: "No categories selected";
+    color: #999;
+    font-size: 12px;
+    font-style: italic;
+}
+
+.category-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: var(--primary-color);
+    color: white;
+    padding: 4px 8px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-family: 'Work Sans', sans-serif;
+    white-space: nowrap;
+}
+
+.category-chip .remove-category {
+    background: rgba(255, 255, 255, 0.3);
+    border: none;
+    color: white;
+    border-radius: 50%;
+    width: 16px;
+    height: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 0;
+    line-height: 1;
+}
+
+.category-chip .remove-category:hover {
+    background: rgba(255, 255, 255, 0.5);
 }
 
 .article-options {
@@ -127,7 +465,13 @@ Owned by Team 03
 .article-options input[type="radio"] {
     width: auto;
     margin: 0;
+    accent-color: var(--primary-color);
+    cursor: pointer;
 }
+
+/* ============================================
+   BUTTONS & ACTIONS
+   ============================================ */
 
 .image-upload {
     border: 2px dashed #ccc;
@@ -140,25 +484,26 @@ Owned by Team 03
 }
 
 .image-upload:hover {
-    border-color: #4a90e2;
-    color: #4a90e2;
+    border-color: var(--primary-color);
+    color: var(--primary-color);
 }
 
 .submit-btn {
-    margin-top: 15px;
+    margin-top: 5px;
     width: 100%;
-    padding: 10px;
-    background: #4a90e2;
+    padding: 8px;
+    background: var(--primary-color);
     color: #fff;
     border: none;
-    border-radius: 8px;
+    border-radius: 20px;
     font-size: 15px;
     font-family: 'Work Sans', sans-serif;
     cursor: pointer;
+    transition: background 0.2s;
 }
 
 .submit-btn:hover {
-    background: #357abd;
+    background: #7d0000;
 }
 
 .display-container {
@@ -166,7 +511,12 @@ Owned by Team 03
     padding: 20px 25px;
     border-radius: 12px;
     box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    border: 2px solid #e0e0e0;
+    border: 1px solid #ddd;
+    flex: 1 1 50%;
+    display: flex;
+    flex-direction: column;
+    max-height: 100%;
+    overflow: hidden;
 }
 
 .display-header {
@@ -185,10 +535,10 @@ Owned by Team 03
 
 .clear-btn {
     padding: 6px 12px;
-    background: #4a90e2;
+    background: var(--primary-color);
     color: #fff;
-    border: 2px solid #4a90e2;
-    border-radius: 6px;
+    border: 2px solid var(--primary-color);
+    border-radius: 20px;
     font-size: 13px;
     font-family: 'Work Sans', sans-serif;
     cursor: pointer;
@@ -196,36 +546,39 @@ Owned by Team 03
 }
 
 .clear-btn:hover {
-    background: #357abd;
-    border-color: #357abd;
+    background: #7d0000;
+    border-color: #7d0000;
 }
 
 .clear-btn:disabled {
     opacity: 0.5;
     cursor: not-allowed;
-    background: #4a90e2;
+    background: var(--primary-color);
     color: #fff;
 }
 
 .btn-delete {
-    background-color: #e74c3c; /* red */
-  color: white;
-  border: none;
-  padding: 8px 14px;
-  font-size: 16px;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    font-size: 14px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
 }
 
 .btn-delete:hover {
-  background-color: #c0392b; /* darker red on hover */
+    background-color: #7d0000;
 }
 
+/* ============================================
+   WORD DISPLAY
+   ============================================ */
 
 #words-display {
-    height: 300px;
-    overflow-y: scroll;
+    flex: 1;
+    overflow-y: auto;
     border: 1px solid #e0e0e0;
     border-radius: 8px;
     padding: 15px;
@@ -243,7 +596,7 @@ Owned by Team 03
     margin-bottom: 10px;
     padding: 12px;
     border-radius: 6px;
-    border-left: 3px solid #4a90e2;
+    border-left: 3px solid var(--primary-color);
     font-size: 14px;
 }
 
@@ -251,22 +604,84 @@ Owned by Team 03
     margin-bottom: 0;
 }
 
-#words-display li strong {
+.word-header {
+    margin-bottom: 8px;
+}
+
+.word-header strong {
     color: #000;
     font-size: 15px;
     font-family: 'Work Sans', sans-serif;
 }
 
-#words-display li em {
+.word-detail {
+    margin: 4px 0;
+    color: #555;
+    font-size: 13px;
+}
+
+.word-detail em {
     color: #555;
     font-size: 13px;
     font-family: 'Work Sans', sans-serif;
 }
 
-#words-display li small {
-    color: #555;
+.word-media {
+    margin: 10px 0;
+    padding: 8px;
+    background: #f9f9f9;
+    border-radius: 6px;
+}
+
+.word-image {
+    max-width: 200px;
+    max-height: 150px;
+    border-radius: 4px;
+    display: block;
+    margin-bottom: 4px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.image-error {
+    color: #e74c3c;
+    font-size: 12px;
+    font-style: italic;
+}
+
+.copyright-info {
+    font-size: 11px;
+    color: #888;
+    margin-top: 4px;
+}
+
+.word-audio {
+    width: 100%;
+    max-width: 300px;
+    height: 32px;
+}
+
+.word-actions {
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid #f0f0f0;
+    padding-top: 8px;
+}
+
+.word-actions small {
+    color: #888;
     font-size: 11px;
     font-family: 'Work Sans', sans-serif;
+}
+
+#words-display li a {
+    color: var(--primary-color);
+    text-decoration: none;
+}
+
+#words-display li a:hover {
+    text-decoration: underline;
 }
 
 #words-display p {
@@ -287,13 +702,53 @@ Owned by Team 03
     border: 1px solid #e0e8f0;
 }
 
+/* ============================================
+   RESPONSIVE DESIGN
+   ============================================ */
+
+@media (max-width: 1024px) {
+    .container {
+        flex-direction: column;
+        overflow-y: auto;
+    }
+    
+    .form-container {
+        max-width: 100%;
+        height: auto;
+        min-width: unset;
+    }
+    
+    .display-container {
+        height: auto;
+        min-height: 400px;
+    }
+    
+    #words-display {
+        height: 300px;
+    }
+}
+
 @media (max-width: 768px) {
-    body {
+    header {
         padding: 10px;
     }
     
+    header img {
+        height: 30px;
+    }
+    
+    header h2 {
+        font-size: 1rem;
+        margin: 0 10px;
+    }
+    
+    .header-btn {
+        padding: 0.25rem 0.6rem;
+        font-size: 0.8rem;
+    }
+    
     .container {
-        max-width: 100%;
-        gap: 15px;
+        padding: 10px;
+        gap: 10px;
     }
 }
