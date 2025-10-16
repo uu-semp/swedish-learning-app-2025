@@ -7,20 +7,21 @@
 $(function () {
   window.vocabulary.when_ready(function () {
 
-    // --- Step 1: Load data from your Google Sheet ---
+    // --- Step 1: Load data using the vocabulary API ---
     async function loadVocabulary() {
-      const response = await fetch("https://opensheet.elk.sh/1de16iRzmgSqWvTTxiNvQYM79sWJBwFJN0Up3Y0allDg/Sheet1");
-      const data = await response.json();
+      // Get all vocabulary IDs belonging to the "furniture" category.
+      const furnitureIds = window.vocabulary.get_category("furniture");
 
-      // Only furniture rows
-      const furnitureItems = data.filter(row => row.Category === "furniture");
-
-      // Simplify for our game
-      return furnitureItems.map(item => ({
-        english: item.English.trim(),
-        swedish: item.Swedish.trim(),
-        image: item.Image_url
-      }));
+      // Map the IDs to the data structure our game needs.
+      // The async function automatically returns this data as a promise.
+      return furnitureIds.map(id => {
+        const vocab = window.vocabulary.get_vocab(id);
+        return {
+          english: vocab.en,
+          swedish: vocab.sv,
+          image: vocab.img
+        };
+      });
     }
 
     // --- Step 2: Globals ---
@@ -30,49 +31,49 @@ $(function () {
     const connections = {}; // stores imageId -> word
 
     // --- Step 3: Build a level ---
-    
+
     function createLevel(words) {
-  const imageContainer = document.getElementById("image-container");
-  const wordContainer = document.getElementById("word-container");
-  const levelText = document.getElementById("level-text");
-  const message = document.getElementById("message");
+      const imageContainer = document.getElementById("image-container");
+      const wordContainer = document.getElementById("word-container");
+      const levelText = document.getElementById("level-text");
+      const message = document.getElementById("message");
 
-  imageContainer.innerHTML = "";
-  wordContainer.innerHTML = "";
-  message.textContent = "";
-  levelText.textContent = `Level ${currentLevel + 1}`;
+      imageContainer.innerHTML = "";
+      wordContainer.innerHTML = "";
+      message.textContent = "";
+      levelText.textContent = `Level ${currentLevel + 1}`;
 
-  // --- Create image boxes (in order, unchanged) ---
-  words.forEach((item, index) => {
-    const img = document.createElement("img");
-    img.src = "../" + item.image;
-    img.classList.add("item");
-    img.dataset.answer = item.swedish;
-    img.dataset.index = index;
-    imageContainer.appendChild(img);
-  });
+      // --- Create image boxes (in order, unchanged) ---
+      words.forEach((item, index) => {
+        const img = document.createElement("img");
+        img.src = "../" + item.image;
+        img.classList.add("item");
+        img.dataset.answer = item.swedish;
+        img.dataset.index = index;
+        imageContainer.appendChild(img);
+      });
 
-  // --- Shuffle word boxes visually ---
-  const shuffled = [...words].sort(() => Math.random() - 0.5);
+      // --- Shuffle word boxes visually ---
+      const shuffled = [...words].sort(() => Math.random() - 0.5);
 
-  shuffled.forEach(item => {
-    const word = document.createElement("div");
-    word.textContent = item.swedish;
-    word.classList.add("word");
+      shuffled.forEach(item => {
+        const word = document.createElement("div");
+        word.textContent = item.swedish;
+        word.classList.add("word");
 
-    // find original index for matching logic
-    const originalIndex = words.findIndex(w => w.swedish === item.swedish);
-    word.dataset.word = item.swedish;
-    word.dataset.index = originalIndex;
+        // find original index for matching logic
+        const originalIndex = words.findIndex(w => w.swedish === item.swedish);
+        word.dataset.word = item.swedish;
+        word.dataset.index = originalIndex;
 
-    wordContainer.appendChild(word);
-  });
+        wordContainer.appendChild(word);
+      });
 
-  setupMatching();
-}
+      setupMatching();
+    }
 
 
-    // --- Step 4:  ---
+    // --- Step 4: Setup Matching Logic ---
     function setupMatching() {
       const items = document.querySelectorAll(".item");
       const words = document.querySelectorAll(".word");
@@ -168,6 +169,20 @@ $(function () {
       createLevel(levelWords);
     }
 
+    /**
+     * Selects hard game level depending on level URL parameter
+     */
+    function selectLevel() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const levelFromUrl = urlParams.get('level');
+      const parsedLevel = parseInt(levelFromUrl, 10);
+
+      // Check if the parsed level is a number and is within the valid range (7-9)
+      if (!isNaN(parsedLevel) && parsedLevel >= 1 && parsedLevel <= 3) {
+        currentLevel = parsedLevel - 1;
+      }
+    }
+
     // --- Step 7: Button events ---
     document.getElementById("submit-btn").addEventListener("click", () => {
       const start = currentLevel * WORDS_PER_LEVEL;
@@ -177,26 +192,26 @@ $(function () {
     });
 
     document.getElementById("reset-btn").addEventListener("click", () => {
-  const start = currentLevel * WORDS_PER_LEVEL;
-  const end = start + WORDS_PER_LEVEL;
-  const levelWords = allWords.slice(start, end);
+      const start = currentLevel * WORDS_PER_LEVEL;
+      const end = start + WORDS_PER_LEVEL;
+      const levelWords = allWords.slice(start, end);
 
-  // Clear arrows first
-  if (window.currentLines) {
-    Object.values(window.currentLines).forEach(line => line.remove());
-    window.currentLines = {};
-  }
+      // Clear arrows first
+      if (window.currentLines) {
+        Object.values(window.currentLines).forEach(line => line.remove());
+        window.currentLines = {};
+      }
 
-  // Clear connections and recreate the level
-  for (const key in connections) delete connections[key];
-  createLevel(levelWords);
-});
+      // Clear connections and recreate the level
+      for (const key in connections) delete connections[key];
+      createLevel(levelWords);
+    });
 
     // --- Step 8: Initialize ---
     loadVocabulary().then(vocab => {
+      selectLevel()
       allWords = vocab;
       nextLevel();
     });
-
   });
 });
