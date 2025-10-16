@@ -74,20 +74,17 @@ $(function() {
             // Update score for level 1
             progress.levelScores[1] += score;
             let totalScore = progress.levelScores[1];
-            alert(`You have this score: ${progress.levelScores[1]} and this level: ${progress.currentLevel}`);
             // Check if they passed and can advance
+            alert(`You got ${score} correct! Your total score is now ${totalScore}/10`);
             if (totalScore >= 10 && progress.currentLevel === 1) {
                 progress.currentLevel = 2; // Advance to level 2
                 save.stats.setCompletion("team10", 33); // Update main stats
-                alert(`You got ${score}/${totalQuestions} correct! You have unlocked Level 2!`);
+                window.location.href = '../advance-next-level/advance-next-level2.html';
             } else {
-                alert(`Game over! You got ${score}/${totalQuestions} correct. You need 10 to advance.`);
+                window.location.href = '../index.html';
             }
 
             saveProgress(progress); // Save the updated progress to the cookie
-            
-            // Redirect back to the menu
-            window.location.href = '../index.html';
         }
 
         // --- Event Listeners ---

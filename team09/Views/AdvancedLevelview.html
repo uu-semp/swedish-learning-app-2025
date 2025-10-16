@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Clothing Quiz</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  
+  
+    <link rel="stylesheet" href="../Global.css">
+
+    
+    <link rel="stylesheet" href="../Styles/AdvancedLevelview.css">
+</head>
+<body>
+  <main class="quiz">
+  <button class="backtoLevelSelect-btn" onclick="goBacktoLevelSelectpage()">⬅</button>
+  <button id="helpBtn" class="help-btn">?</button>
+
+  <div id="resultPopup" class="result-Popup hidden">
+  <button id="closeResult" class="close-btn">✕</button>
+  <h2 id="resultTitle" ></h2>
+  <div class="stars" id="starContainer">⭐ ⭐ ⭐</div>
+  <p id="mistakeInfo"></p>
+  <div class="popup-actions">
+    <button id="playAgainBtn" class="btn red">Play again</button>
+    <button id="homeBtn" class="btn brown" onclick="goBacktomainpage()">🏠</button>
+    <button id="nextLevelBtn" class="btn green">Next level</button>
+  </div>
+</div>
+
+      
+  <div id="helpPopup" class="help-popup hidden">
+    <button id="closeHelp" class="close-btn">✕</button>
+    <p>Enter the correct article and word!!</p>
+  </div>
+
+
+    <section class="image-area">
+      <img id="vocabImg" alt="vocab image" />
+    </section>
+   
+    <section id="options" class="options">
+        <div class="input-area">
+          <input id="articleInput" type="text" placeholder=" (en / ett)" maxlength="4" />
+          <input id="wordInput" type="text" placeholder="words" />
+          <button id="submitBtn" class="btn green">Submit</button>
+        </div>
+        <p id="gameFeedback" class="feedback-text"></p>
+      </section>
+      
+  
+    <section class="bottom">
+      <div class="progress-wrap">
+        <div id="progress" class="progress"></div>
+      </div>
+      <button id="nextBtn" class="next hidden">➡</button>
+    </section>
+  </main>
+  
+  
+
+  <script src="../../scripts/vocabulary.js"></script>
+  
+  <script src="../../scripts/save.js"></script>
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const level = params.get("level") || "3";
+
+    const script = document.createElement("script");
+    script.src = `../JS/GameLevel${level}.js`;
+    document.head.appendChild(script);
+  </script>
+</body>
+</html>
