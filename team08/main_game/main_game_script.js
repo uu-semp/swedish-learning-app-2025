@@ -4,7 +4,7 @@ import {
   finish_game,
 } from "../selection/selection.js";
 
-let totalRounds = 5;
+let totalRounds = 10;
 let currentRound = 1;
 let score = 0;
 let currentData = null;
@@ -19,6 +19,8 @@ function loadRound() {
   document.getElementById(
     "round"
   ).textContent = `Round ${currentRound} / ${totalRounds}`;
+
+
   document.getElementById("feedback").innerHTML = "";
   document.getElementById("confirmBtn").disabled = true;
   document.getElementById("nextBtn").style.display = "none";
@@ -29,7 +31,7 @@ function loadRound() {
 
   // set audio
   document.getElementById("audioPlayer").src =
-    "/" + currentData.words[currentData.correct_index].audio;
+    currentData.words[currentData.correct_index].audio;
 
   // Auto-play the audio for the new round
   const audio = document.getElementById("audioPlayer");
@@ -54,7 +56,7 @@ function loadRound() {
     card.setAttribute("role", "button");
     card.setAttribute("aria-label", w.en); // name read by screen readers
 
-    card.innerHTML = `<img src="${"/" + w.img}" alt="${w.en}">`;
+    card.innerHTML = `<img src="${w.img}" alt="${w.en}">`;
 
 
     card.addEventListener("click", () => {
@@ -142,7 +144,7 @@ document.getElementById("confirmBtn").addEventListener("click", () => {
     const correctWord = currentData.words[correctIndex].en;
     const hintLetter = correctWord.charAt(0).toUpperCase();
     feedbackEl.innerHTML = `<span style="color:red;"><i class="fas fa-times-circle"></i> Wrong!</span> You chose <b>${chosen.en}</b>. Hint: starts with <b>${hintLetter}</b>...`;
-
+    feedbackEl.style.marginTop = "2rem";
     confirmBtn.style.display = "none";
 
     // Create or show Try Again button
@@ -173,12 +175,14 @@ document.getElementById("confirmBtn").addEventListener("click", () => {
       confirmBtn.style.display = "inline-block";
       confirmBtn.disabled = true;
 
+
       //  Reset all card visuals completely
       document.querySelectorAll(".image-card").forEach((card) => {
         card.classList.remove("selected");
-        card.style.borderColor = "transparent";
-        card.style.background = "white";
         card.style.opacity = "1";
+        card.style.border = "0.5px solid #000000";
+        card.style.borderRadius = "8px";
+        card.style.background = "white";
         card.style.pointerEvents = "auto";
         card.style.cursor = "pointer";
       });
@@ -406,31 +410,31 @@ function enableKeyboardNavigation() {
 }
 
 
-  // Small on-screen popup to show current volume/effect changes
-  function showVolumePopup(text) {
-    let popup = document.getElementById("volumePopup");
-    if (!popup) {
-      popup = document.createElement("div");
-      popup.id = "volumePopup";
-      popup.style.position = "fixed";
-      popup.style.bottom = "80px";
-      popup.style.right = "20px";
-      popup.style.padding = "8px 14px";
-      popup.style.borderRadius = "8px";
-      popup.style.background = "rgba(0,0,0,0.7)";
-      popup.style.color = "#fff";
-      popup.style.fontSize = "14px";
-      popup.style.zIndex = "9999";
-      popup.style.transition = "opacity 0.3s ease";
-      document.body.appendChild(popup);
-    }
-    popup.textContent = text;
-    popup.style.opacity = "1";
-    clearTimeout(popup._timeout);
-    popup._timeout = setTimeout(() => {
-      popup.style.opacity = "0";
-    }, 1200);
+// Small on-screen popup to show current volume/effect changes
+function showVolumePopup(text) {
+  let popup = document.getElementById("volumePopup");
+  if (!popup) {
+    popup = document.createElement("div");
+    popup.id = "volumePopup";
+    popup.style.position = "fixed";
+    popup.style.bottom = "80px";
+    popup.style.right = "20px";
+    popup.style.padding = "8px 14px";
+    popup.style.borderRadius = "8px";
+    popup.style.background = "rgba(0,0,0,0.7)";
+    popup.style.color = "#fff";
+    popup.style.fontSize = "14px";
+    popup.style.zIndex = "9999";
+    popup.style.transition = "opacity 0.3s ease";
+    document.body.appendChild(popup);
   }
+  popup.textContent = text;
+  popup.style.opacity = "1";
+  clearTimeout(popup._timeout);
+  popup._timeout = setTimeout(() => {
+    popup.style.opacity = "0";
+  }, 1200);
+}
 
 
 // Start first round
