@@ -19,14 +19,14 @@
   <!-- TOP BANNER -->
   <div id="top-banner">
     <!-- Exit to Home Button -->
-    <button id="homeBtn" class="corner-btn " title="Exit to Home" onclick="window.location='../index.html';">
+    <button id="homeBtn" class="corner-btn " title="Exit to Home" aria-label="Home" onclick="window.location='../index.html';">
       <i class="fas fa-house fa-2x"></i>
     </button>
 
     <h2 id="gameTitle">Select the picture that matches the sound</h2>
 
       <!-- Settings Button -->
-      <button id="settingsBtn" class="corner-btn " title="Sound Settings">
+      <button id="settingsBtn" class="corner-btn " aria-label="Settings" title="Sound Settings">
         <i class="fas fa-gear fa-2x"></i>
       </button>
   </div>
@@ -34,11 +34,11 @@
   <!-- MAIN GAME AREA -->
   <div id="game-content">
 
-    <h3 id="round">Round 1 / 10</h3>
+    <h3 id="round">Round </h3>
 
     <!-- Audio -->
     <div>
-      <button id="playAudio" class="btn" title="Replay Audio">
+      <button id="playAudio" class="btn" title="Replay Audio" aria-label="Play audio">
         <i class="fas fa-volume-up fa fa-3x"></i>
       </button>
       <audio id="audioPlayer"></audio>
@@ -74,7 +74,8 @@
     </div>
 
     <!-- Feedback -->
-    <div id="feedback" class="feedback"></div>
+    <!-- <div id="feedback" class="feedback"></div> -->
+    <div id="feedback" role="alert" aria-live="assertive"></div>
 
     <!-- Next -->
     <div>

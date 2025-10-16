@@ -14,6 +14,9 @@ import { TEAM, CATEGORIES, WORDS, WIN_BARRIER } from "./store_config.js";
  * @returns {Number} 0 if success else fail
  */
 export function local_set_volume(percentage) {
+  if (typeof percentage != "number") {
+    console.error("Trying to set volume to ", typeof percentage);
+  }
   if (percentage > 100 || percentage < 0) {
     console.error("Volume is outside range");
     return 1;
@@ -69,6 +72,9 @@ export function local_wipe_guesses() {
  * @param {boolean} enabled
  */
 export function local_set_sound_effects(enabled) {
+  if (typeof enabled != "boolean") {
+    console.error("Trying to set volume to ", typeof enabled);
+  }
   let data = safe_get();
   data.sound_effects_enabled = enabled;
   set(TEAM, data);

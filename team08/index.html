@@ -14,7 +14,9 @@ Owned by Team 08
   <script src="../scripts/save.js"></script>
 
   <!-- global styles -->
+  <link rel="stylesheet" href="reset.css">
   <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="options/settings.css">
 
   <!-- legacy scripts that provide window.vocabulary / save -->
   <script defer src="../scripts/vocabulary.js"></script>
@@ -48,6 +50,8 @@ Owned by Team 08
     </button>
 
     <button id="start-btn" class="welcome__start-btn" aria-label="start game">Start</button>
+    <div id="volumePopup">
+    </div>
   </main>
 
   <!-- Creates the modal window. Default hidden form view -->
@@ -65,6 +69,7 @@ Owned by Team 08
       <br>
     </div>
   </dialog>
+
 
   <footer>
     <small>Created as part of the "Software Engineering and Project Management" course 2025</small>

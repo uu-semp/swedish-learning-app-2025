@@ -3,8 +3,11 @@ import {
   update_selection,
   finish_game,
 } from "../selection/selection.js";
+import { local_set_volume, local_set_sound_effects } from "../store/write.js";
+import { local_get_volume, local_get_sound_effects } from "../store/read.js";
 
-let totalRounds = 5;
+
+let totalRounds = 10;
 let currentRound = 1;
 let score = 0;
 let currentData = null;
@@ -19,6 +22,7 @@ function loadRound() {
   document.getElementById(
     "round"
   ).textContent = `Round ${currentRound} / ${totalRounds}`;
+
   document.getElementById("feedback").innerHTML = "";
   document.getElementById("confirmBtn").disabled = true;
   document.getElementById("nextBtn").style.display = "none";
@@ -29,7 +33,7 @@ function loadRound() {
 
   // set audio
   document.getElementById("audioPlayer").src =
-    "/" + currentData.words[currentData.correct_index].audio;
+    "../../" + currentData.words[currentData.correct_index].audio;
 
   // Auto-play the audio for the new round
   const audio = document.getElementById("audioPlayer");
@@ -47,8 +51,15 @@ function loadRound() {
     let card = document.createElement("div");
     card.className = "image-card";
     card.dataset.index = i;
-    card.innerHTML = `<img src="${"/" + w.img}" alt="${w.en}">`;
-    // <div class="image-label">${w.en}</div>
+
+    //makes it focusable
+    card.tabIndex = 0;
+
+    card.setAttribute("role", "button");
+    card.setAttribute("aria-label", w.en); // name read by screen readers
+
+    card.innerHTML = `<img src="${"../../" + w.img}" alt="${w.en}">`;
+
     card.addEventListener("click", () => {
       document
         .querySelectorAll(".image-card")
@@ -59,6 +70,7 @@ function loadRound() {
     });
     container.appendChild(card);
   });
+  enableKeyboardNavigation();
 }
 
 // Confirm Choice
@@ -85,6 +97,27 @@ document.getElementById("confirmBtn").addEventListener("click", () => {
     fx.play();
   }
 
+  // Disable all image clicks after confirmation
+  document.querySelectorAll(".image-card").forEach((card) => {
+    card.style.pointerEvents = "none"; // Prevent further clicking
+    //visually dim incorrect ones
+    card.style.opacity = "0.5";
+    // Remove highlight selection effect (optional)
+    card.classList.remove("selected");
+
+    // Make unfocusable via keyboard
+    card.tabIndex = -1;
+
+    // Remove keyboard focus highlight (if currently focused)
+    card.blur();
+
+    // Disable click response by overriding handler
+    card.onclick = (e) => {
+      e.stopPropagation();
+      e.preventDefault();
+    };
+  });
+
   if (isCorrect) {
     // Correct Answer
     if (firstAttempt) score++;
@@ -109,7 +142,7 @@ document.getElementById("confirmBtn").addEventListener("click", () => {
     const correctWord = currentData.words[correctIndex].en;
     const hintLetter = correctWord.charAt(0).toUpperCase();
     feedbackEl.innerHTML = `<span style="color:red;"><i class="fas fa-times-circle"></i> Wrong!</span> You chose <b>${chosen.en}</b>. Hint: starts with <b>${hintLetter}</b>...`;
-
+    feedbackEl.style.marginTop = "2rem";
     confirmBtn.style.display = "none";
 
     // Create or show Try Again button
@@ -143,9 +176,10 @@ document.getElementById("confirmBtn").addEventListener("click", () => {
       //  Reset all card visuals completely
       document.querySelectorAll(".image-card").forEach((card) => {
         card.classList.remove("selected");
-        card.style.borderColor = "transparent";
-        card.style.background = "white";
         card.style.opacity = "1";
+        card.style.border = "0.5px solid #000000";
+        card.style.borderRadius = "8px";
+        card.style.background = "white";
         card.style.pointerEvents = "auto";
         card.style.cursor = "pointer";
       });
@@ -220,6 +254,44 @@ const audioPlayer = document.getElementById("audioPlayer");
 
 let effectsEnabled = true;
 
+// Load global audio 
+const globalAudioSettings = localStorage.getItem("team08");
+if (globalAudioSettings) {
+  try {
+    const parsed = JSON.parse(globalAudioSettings);
+    if (parsed.volume !== undefined) {
+      const normalizedVol = Math.min(1, Math.max(0, parseInt(parsed.volume) / 100));
+      localStorage.setItem("gameVolume", normalizedVol);
+      console.log(`Sound effects enabled: ${normalizedVol}`);
+    }
+    if (parsed.sound_effects_enabled !== undefined) {
+      localStorage.setItem("effectsEnabled", parsed.sound_effects_enabled);
+      console.log(`Sound effects enabled: ${parsed.sound_effects_enabled}`);
+    }
+  } catch (e) {
+    console.warn("Invalid audio settings format in localStorage.");
+  }
+}
+
+//  Restore saved settings 
+const savedVolume = localStorage.getItem("gameVolume");
+const savedEffects = localStorage.getItem("effectsEnabled");
+
+if (savedVolume !== null) {
+  volumeControl.value = savedVolume;
+  audioPlayer.volume = parseFloat(savedVolume);
+} else {
+  // Default to slider's initial value
+  audioPlayer.volume = parseFloat(volumeControl.value);
+}
+
+if (savedEffects !== null) {
+  effectsEnabled = savedEffects === "true";
+  toggleEffects.innerHTML = effectsEnabled
+    ? `<i class="fas fa-music"></i> ON`
+    : `<i class="fas fa-music-slash"></i> OFF`;
+}
+
 // Open modal
 settingsBtn.addEventListener("click", () => {
   soundModal.style.display = "block";
@@ -235,23 +307,171 @@ window.addEventListener("click", (event) => {
   if (event.target === soundModal) soundModal.style.display = "none";
 });
 
-// Volume control
+//  Volume control — sync + persist
 volumeControl.addEventListener("input", () => {
-  audioPlayer.volume = volumeControl.value;
+  const vol = parseFloat(volumeControl.value);
+  audioPlayer.volume = vol;
+  localStorage.setItem("gameVolume", vol);
+  // updateglobal audio 
+  local_set_volume(vol*100)
+  
 });
 
-// Toggle sound effects
+//  Toggle sound effects — sync + persist
 toggleEffects.addEventListener("click", () => {
   effectsEnabled = !effectsEnabled;
   toggleEffects.innerHTML = effectsEnabled
     ? `<i class="fas fa-music"></i> ON`
     : `<i class="fas fa-music-slash"></i> OFF`;
+  localStorage.setItem("effectsEnabled", effectsEnabled);
+  
+// updateglobal audio 
+  local_set_sound_effects(effectsEnabled);
 });
 
 window.addEventListener("beforeunload", () => {
   const audio = document.getElementById("audioPlayer");
   if (audio) audio.pause();
 });
+
+// Enable Keyboard keys for buttons
+document.addEventListener("keydown", (e) => {
+  // Increase volume (ArrowUp)
+  if (e.key === "+") {
+    e.preventDefault();
+    let newVol = Math.min(1, parseFloat(volumeControl.value) + 0.1);
+    volumeControl.value = newVol.toFixed(1);
+    audioPlayer.volume = newVol;
+    localStorage.setItem("gameVolume", newVol);
+    showVolumePopup(`🔊 ${Math.round(newVol * 100)}%`);
+  }
+
+  // Decrease volume (ArrowDown)
+  if (e.key === "-") {
+    e.preventDefault();
+    let newVol = Math.max(0, parseFloat(volumeControl.value) - 0.1);
+    volumeControl.value = newVol.toFixed(1);
+    audioPlayer.volume = newVol;
+    localStorage.setItem("gameVolume", newVol);
+
+    showVolumePopup(`🔉 ${Math.round(newVol * 100)}%`);
+  }
+
+  // Toggle sound effects (M)
+  if (e.key.toLowerCase() === "m") {
+    e.preventDefault();
+    effectsEnabled = !effectsEnabled;
+    toggleEffects.innerHTML = effectsEnabled
+      ? `<i class="fas fa-music"></i> ON`
+      : `<i class="fas fa-music-slash"></i> OFF`;
+    localStorage.setItem("effectsEnabled", effectsEnabled);
+    
+    showVolumePopup(effectsEnabled ? "🎵 Effects ON" : "🔇 Effects OFF");
+  }
+
+  if (e.key === "p" || e.key === "x")
+    document.getElementById("playAudio").click(); // play audio
+  if (
+    e.key === "c" &&
+    document.getElementById("confirmBtn").style.display === "inline-block" &&
+    !document.getElementById("confirmBtn").disabled
+  )
+    document.getElementById("confirmBtn").click(); //press confirm
+  if (
+    e.key === "v" &&
+    document.getElementById("tryAgainBtn").style.display === "inline-block" &&
+    !document.getElementById("tryAgainBtn").disabled
+  )
+    document.getElementById("tryAgainBtn").click(); //press Retry
+  if (
+    e.key === "n" &&
+    document.getElementById("nextBtn").style.display === "inline-block"
+  )
+    document.getElementById("nextBtn").click(); // go next
+  if (e.key === "s") document.getElementById("settingsBtn").click(); // Open Settings
+});
+
+let keyboardNavListener = null;
+
+function enableKeyboardNavigation() {
+  const cards = Array.from(document.querySelectorAll(".image-card"));
+
+  // Make sure each card can actually receive focus
+  cards.forEach((c) => {
+    c.tabIndex = 0;
+  });
+
+  let currentFocus = -1;
+
+  // Remove any previous listener
+  if (keyboardNavListener) {
+    document.removeEventListener("keydown", keyboardNavListener);
+  }
+
+  keyboardNavListener = (e) => {
+    if (!cards.length) return;
+
+    if (e.key === "ArrowRight" || e.key === "ArrowLeft") {
+      e.preventDefault();
+
+      // remove visual from old
+      if (currentFocus >= 0 && cards[currentFocus]) {
+        cards[currentFocus].classList.remove("keyboard-focus");
+      }
+
+      // initialize focus if none yet
+      if (currentFocus === -1) {
+        currentFocus = 0;
+      } else if (e.key === "ArrowRight") {
+        currentFocus = (currentFocus + 1) % cards.length;
+      } else if (e.key === "ArrowLeft") {
+        currentFocus = (currentFocus - 1 + cards.length) % cards.length;
+      }
+
+      //  move focus
+      const card = cards[currentFocus];
+      card.focus();
+      card.classList.add("keyboard-focus");
+    }
+
+    //  Select with Enter or Space
+    if (
+      (e.key === "Enter" || e.key === " ") &&
+      document.activeElement.classList.contains("image-card")
+    ) {
+      e.preventDefault();
+      document.activeElement.click();
+    }
+  };
+
+  document.addEventListener("keydown", keyboardNavListener);
+}
+
+// Small on-screen popup to show current volume/effect changes
+function showVolumePopup(text) {
+  let popup = document.getElementById("volumePopup");
+  if (!popup) {
+    popup = document.createElement("div");
+    popup.id = "volumePopup";
+    popup.style.position = "fixed";
+    popup.style.bottom = "80px";
+    popup.style.right = "20px";
+    popup.style.padding = "8px 14px";
+    popup.style.borderRadius = "8px";
+    popup.style.background = "rgba(0,0,0,0.7)";
+    popup.style.color = "#fff";
+    popup.style.fontSize = "14px";
+    popup.style.zIndex = "9999";
+    popup.style.transition = "opacity 0.3s ease";
+    document.body.appendChild(popup);
+  }
+  popup.textContent = text;
+  popup.style.opacity = "1";
+  clearTimeout(popup._timeout);
+  popup._timeout = setTimeout(() => {
+    popup.style.opacity = "0";
+  }, 1200);
+}
 
 // Start first round
 loadRound();

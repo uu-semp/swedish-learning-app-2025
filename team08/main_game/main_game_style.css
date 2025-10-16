@@ -6,11 +6,11 @@ body {
     padding: 0;
     background: white;
     font-family: Arial, sans-serif;
-    overflow: hidden;     /* prevent scrollbars in iframe */
+    overflow: hidden;    /* prevent scrollbars in iframe */
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content:  space-between;
+    justify-content: space-between;
     box-sizing: border-box;
     position: relative;
 }
@@ -18,11 +18,12 @@ body {
 /* ===== TOP BANNER ===== */
 #top-banner {
     position: relative;
-    width: 100vw; /* ensure full width of iframe */
-    background: linear-gradient(90deg, #2c3e50, #4a90e2);;
+    width: 100vw;
+    /* ensure full width of iframe */
+    background: linear-gradient(90deg, #2c3e50, #4a90e2);
     color: white;
     display: flex;
-    justify-content: space-between;;
+    justify-content: space-between;
     align-items: center;
     padding: 0.6rem 1.2rem;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
@@ -31,13 +32,13 @@ body {
     flex-shrink: 0;
     left: 0;
     top: 0;
-  }
+}
 
-  #top-banner h2 {
+#top-banner h2 {
     color: white;
     padding: 0.5rem 0.5rem;
     border-radius: 10px;
-    margin:1px;
+    margin: 1px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
     font-size: 1.5em;
     letter-spacing: 0.3px;
@@ -45,6 +46,7 @@ body {
     font-family: 'Courier New', Courier, monospace;
     flex-direction: row;
 }
+
 #top-banner .corner-btn {
     background: transparent;
     border: none;
@@ -52,28 +54,12 @@ body {
     font-size: 1.2rem;
     cursor: pointer;
     transition: transform 0.1s ease, color 0.3s ease;
-  }
-/* #top-banner .corner-btn {
-    position: absolute;
-    top: 15px;
-    background: solid #338ceb;
-    border: 1px solid transparent;
-    border-radius: 50%;
-    width: 48px;
-    height: 48px;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-    cursor: pointer;
-    transition: all 0.2s ease;
-    z-index: 10;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-    cursor: pointer;
-    color:black;
-} */
+}
 
 /* Hover effect */
 #top-banner .corner-btn:hover {
     background: #338ceb;
-    color: white ;
+    color: white;
     transform: scale(1.15);
 }
 
@@ -96,7 +82,7 @@ body {
     box-sizing: border-box;
     width: 100%;
     overflow: hidden;
-  }
+}
 
 
 .image-options {
@@ -126,6 +112,21 @@ body {
     background: #f0f8ff;
 }
 
+.image-card:focus {
+    outline: 3px solid #4a90e2;
+    outline-offset: 3px;
+}
+
+.image-card.keyboard-focus {
+    border-color: #4a90e2;
+    box-shadow: 0 0 8px rgba(74, 144, 226, 0.6);
+}
+
+button:focus {
+    outline: 2px solid #ffd700;
+    outline-offset: 2px;
+}
+
 .btn {
     margin-top: 1rem;
     padding: 0.5rem 1rem;
@@ -133,7 +134,7 @@ body {
     border: none;
     border-radius: 7px;
     background: #338ceb;
-    color:whitesmoke;
+    color: whitesmoke;
     transition: transform 0.2s;
     box-shadow: 7px 7px 3px lightblue;
 }
@@ -189,7 +190,8 @@ body {
 
 /* ===== BOTTOM BANNER ===== */
 #bottom-banner {
-    width: 100vw; /* ensure full width of iframe */
+    width: 100vw;
+    /* ensure full width of iframe */
     background: linear-gradient(90deg, #2c3e50, #4a90e2);
     color: white;
     text-align: center;
@@ -198,4 +200,4 @@ body {
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
     box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.25);
-  }
+}
