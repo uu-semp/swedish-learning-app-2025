@@ -81,17 +81,20 @@ export default {
       const isCorrect = index === this.currentQuestion.correctIndex;
        // create tuple-like object: { id: questionIndex, user: selectedIndex, correct: correctIndex }
       const id = this.currentIndex;
-      const correct = this.currentQuestion ? this.currentQuestion.correctIndex : null;
-      const entry = { id, user: index, correct };
-
+      
       // update existing answer for this question or push new
       const existing = this.userAnswers.find(a => a.id === id);
       if (existing) {
-        existing.user = entry.user;
-        existing.correct = entry.correct;
-      } else {
-        this.userAnswers.push(entry);
+        this.selectedOption = existing.user;
+        return;
       }
+      this.selectedOption = index;
+      // create tuple-like object: { id: questionIndex, user: selectedIndex, correct: correctIndex }
+      const correct = this.currentQuestion ? this.currentQuestion.correctIndex : null;
+      const entry = { id, user: index, correct, answered: true }
+      // push new answer entry
+      this.userAnswers.push(entry);
+      
       this.answers[this.currentIndex] = {
         index: this.currentIndex,
         result: isCorrect ? 'correct' : 'incorrect'
