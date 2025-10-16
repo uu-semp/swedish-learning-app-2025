@@ -2,25 +2,48 @@
 // Owned by Team 08
 // ==============================================
 
-"use strict";
+import "./options/settings.js";
+import { local_get_persistent_notice } from "./store/read.js";
+import { local_set_persistent_notice } from "./store/write.js";
 
-$(function() {window.vocabulary.when_ready(function () {
+const startBtn = document.getElementById("start-btn");
 
-  // These are only dummy functions and can be removed.
-  $("#check-jquery").on("click", () => {
-    alert("JavaScript and jQuery are working.");
-  });
+startBtn.addEventListener("click", () => {
+  // Navigate to main game page
+  window.location.href = "./select.html";
+});
 
-  $("#display-vocab").text(JSON.stringify(window.vocabulary.get_random()));
+/** Handling tutorial */
 
-  $("#check-saving").on("click", () => {
-    var data = window.save.get("team08");
-    data.counter = data.counter ?? 0;
-    data.counter += 1;
-    $("#check-saving").text(`This button has been pressed ${data.counter} times`);
-    window.save.set("team08", data);
-  });
+const tutorialBtn = document.querySelector(".welcome__tutorial-btn");
+/** @type {HTMLDialogElement | null} */
+const tutorial_modal = document.getElementById("tutorial-modal");
 
-})});
+const close_tutorial_modal = document.getElementById("close-tutorial");
 
+tutorialBtn.addEventListener("click", () => {
+  tutorial_modal?.showModal();
+});
 
+close_tutorial_modal.addEventListener("click", () => {
+  tutorial_modal?.close();
+});
+
+tutorial_modal?.addEventListener("click", (e) => {
+  if (e.target === tutorial_modal) {
+    tutorial_modal.close();
+  }
+});
+
+const persistentPopup = document.querySelector("#persistent-popup");
+const proceedBtn = document.querySelector("#persistent-popup button");
+if (!local_get_persistent_notice()) {
+  persistentPopup.style.display = "none";
+} else {
+  persistentPopup.style.display = "block";
+}
+
+proceedBtn.addEventListener("click", () => {
+  local_set_persistent_notice(false);
+  persistentPopup.style.display = "none";
+});

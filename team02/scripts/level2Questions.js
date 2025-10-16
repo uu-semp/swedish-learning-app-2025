@@ -30,8 +30,8 @@ const instructionGroups = [
   // 🍳 Group 4: Kitchen setup
   [
     { question: "Placera kylskåpet i mitten.", answer: "refrigerator", swedish: "kylskåp", index: [2] },
-    { question: "Placera spisen mellan kylskåpet och bordet.", answer: "stove", swedish: "spis", index: [3] },
     { question: "Placera bordet längst till höger.", answer: "table", swedish: "bord", index: [4] },
+    { question: "Placera spisen mellan kylskåpet och bordet.", answer: "stove", swedish: "spis", index: [3] },
     { question: "Placera stolen längst till vänster.", answer: "chair", swedish: "stol", index: [0] },
     { question: "Placera dörren mellan stolen och kylskåpet.", answer: "door", swedish: "dörr", index: [1] }
   ]
@@ -41,15 +41,23 @@ const instructionGroups = [
 // Store the selected group globally so both scripts use the same group
 let selectedGroup = null;
 
-// Function to get 1 random group (5 connected questions) - returns a copy
+// Function to get 1 random group with least learned words (5 connected questions) - returns a copy
 function getRandomQuestions() {
-  if (!selectedGroup) {
-    const randomGroupIndex = Math.floor(Math.random() * instructionGroups.length);
-    selectedGroup = instructionGroups[randomGroupIndex];
-    console.log('Selected group index:', randomGroupIndex);
-    console.log('Selected group questions:', selectedGroup);
-  }
-  // Return a copy of the group so modifications don't affect other scripts
+  const learnedWords = save.get("team02", "learnedWords") || [];
+
+  const learnedCounts = instructionGroups.map(group =>
+    group.filter(item => learnedWords.includes(item.swedish)).length
+  );
+
+  const minLearnedCount = Math.min(...learnedCounts);
+
+  const leastLearnedGroups = instructionGroups.filter((_, i) => learnedCounts[i] === minLearnedCount);
+
+  const randomIndex = Math.floor(Math.random() * leastLearnedGroups.length);
+  selectedGroup = leastLearnedGroups[randomIndex];
+
+  console.log('Selected group:', selectedGroup, ". Learned word count: ", minLearnedCount);
+
   return [...selectedGroup];
 }
 

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Say What?</title>
+  <script src="../../scripts/save.js"></script>
+
+  <link rel="stylesheet" href="../reset.css">
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <!-- FontAwesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="main_game_style.css">
+  <link rel="stylesheet" href="../options/settings.css">
+
+  <script type="module" src="main_game_script.js"></script>
+  <script type="module" src="../options/settings.js"></script>
+</head>
+
+<body>
+  <!-- TOP BANNER -->
+  <div id="top-banner">
+    <!-- Exit to Home Button -->
+    <button id="homeBtn" class="corner-btn " title="Exit to Home" aria-label="Home"
+      onclick="window.location='../index.html';">
+      <i class="fas fa-house fa-2x"></i>
+    </button>
+
+    <h2 id="gameTitle">Select the picture that matches the sound</h2>
+
+    <!-- Settings Button -->
+    <button id="settingsBtn" class="corner-btn " aria-label="Settings" title="Sound Settings">
+      <i class="fas fa-gear fa-2x"></i>
+    </button>
+  </div>
+
+  <!-- MAIN GAME AREA -->
+  <div id="game-content">
+
+    <h3 id="round">Round </h3>
+
+    <!-- Audio -->
+    <div>
+      <button id="playAudio" class="btn" title="Replay Audio" aria-label="Play audio">
+        <i class="fas fa-volume-up fa fa-3x"></i>
+      </button>
+      <audio id="audioPlayer"></audio>
+    </div>
+
+
+    <!-- Images -->
+    <div class="image-options" id="imageOptions"></div>
+
+    <!-- Confirm -->
+    <div>
+      <button id="confirmBtn" class="btn" disabled>
+        <i class="fas fa-check fa"></i> Confirm
+      </button>
+    </div>
+
+    <!-- Feedback -->
+    <!-- <div id="feedback" class="feedback"></div> -->
+    <div id="feedback" role="alert" aria-live="assertive"></div>
+
+    <!-- Next -->
+    <div>
+      <button id="nextBtn" class="btn" style="display:none;">
+        <i class="fas fa-forward fa-shake"></i> Next
+      </button>
+    </div>
+
+    <!-- End Screen -->
+    <div id="endScreen" class="end-screen" style="display:none;">
+      <h2><i class="fas fa-flag-checkered fa-bounce"></i> Game Over!</h2>
+      <p id="finalScore"></p>
+      <button id="restartBtn" class="btn">
+        <i class="fas fa-redo fa-spin"></i> Play Again
+      </button>
+    </div>
+  </div>
+  <!-- BOTTOM BANNER -->
+  <div id="bottom-banner">
+    <p>Good luck! Learn and have fun 🎉</p>
+  </div>
+
+  <button id="copyrightBtn" title="Copyright Information" aria-label="Copyright">
+    <i class="fas fa-copyright fa-2x"></i>
+  </button>
+
+
+  <div id="volumePopup">
+  </div>
+  <!-- Creates the modal window. Default hidden form view -->
+  <dialog id="settings-modal">
+    <h2>Settings</h2>
+    <button id="close-settings">&times;</button>
+    <div>
+      <label for="volume-slider">VOLUME</label>
+      <input type="range" id="volume-slider" min="0" max="100" value="50">
+      <br>
+    </div>
+    <div class="switch">
+      <label for="sound-effects-toggle">Sound Effects</label>
+      <input type="checkbox" id="sound-effects-toggle" checked>
+      <br>
+    </div>
+  </dialog>
+
+  <section id="copyright">
+    <div>
+      <button id="close-copyright">&times;</button>
+      <h2>Licenses - numbered left to right</h2>
+      <table>
+        <tr>
+          <th>Image</th>
+          <th>License</th>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td id="image1"></td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td id="image2"></td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td id="image3"></td>
+        </tr>
+      </table>
+    </div>
+  </section>
+</body>
+
+</html>
