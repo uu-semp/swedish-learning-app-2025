@@ -35,19 +35,23 @@ Owned by Team 05
 
 
   <main class="game-frame">
-  <h2 id="level-text">Level 1</h2>
+  <div class="top-bar">
+    <h2 id="level-text">Level 1</h2>
+    <p class="instructions">Match the pictures with the correct words.</p>
+  </div>
 
   <div class="game-area">
     <div id="image-container" class="images"></div>
     <div id="word-container" class="words"></div>
 
-    <div class="buttons">
-      <button id="submit-btn">Submit Answers</button>
-      <button id="reset-btn">Reset Level</button>
+    <div class="right-panel">
+      <div class="buttons">
+        <button id="submit-btn">Submit Answers</button>
+        <button id="reset-btn">Reset Level</button>
+      </div>
+      <div id="message" class="message"></div>
     </div>
   </div>
-
-  <div id="message" class="message"></div>
 </main>
     <!--Learning: <div id="display-vocab">(Word)</div>  -->
   </main>

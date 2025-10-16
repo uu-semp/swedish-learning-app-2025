@@ -30,35 +30,47 @@ $(function () {
     const connections = {}; // stores imageId -> word
 
     // --- Step 3: Build a level ---
+    
     function createLevel(words) {
-      const imageContainer = document.getElementById("image-container");
-      const wordContainer = document.getElementById("word-container");
-      const levelText = document.getElementById("level-text");
-      const message = document.getElementById("message");
+  const imageContainer = document.getElementById("image-container");
+  const wordContainer = document.getElementById("word-container");
+  const levelText = document.getElementById("level-text");
+  const message = document.getElementById("message");
 
-      imageContainer.innerHTML = "";
-      wordContainer.innerHTML = "";
-      message.textContent = "";
-      levelText.textContent = `Level ${currentLevel + 1}`;
+  imageContainer.innerHTML = "";
+  wordContainer.innerHTML = "";
+  message.textContent = "";
+  levelText.textContent = `Level ${currentLevel + 1}`;
 
-      words.forEach((item, index) => {
-        const img = document.createElement("img");
-        img.src = "../" + item.image;
-        img.classList.add("item");
-        img.dataset.answer = item.swedish;
-        img.dataset.index = index;
-        imageContainer.appendChild(img);
+  // --- Create image boxes (in order, unchanged) ---
+  words.forEach((item, index) => {
+    const img = document.createElement("img");
+    img.src = "../" + item.image;
+    img.classList.add("item");
+    img.dataset.answer = item.swedish;
+    img.dataset.index = index;
+    imageContainer.appendChild(img);
+  });
 
-        const word = document.createElement("div");
-        word.textContent = item.swedish;
-        word.classList.add("word");
-        word.dataset.word = item.swedish;
-        word.dataset.index = index;
-        wordContainer.appendChild(word);
-      });
+  // --- Shuffle word boxes visually ---
+  const shuffled = [...words].sort(() => Math.random() - 0.5);
 
-      setupMatching();
-    }
+  shuffled.forEach(item => {
+    const word = document.createElement("div");
+    word.textContent = item.swedish;
+    word.classList.add("word");
+
+    // find original index for matching logic
+    const originalIndex = words.findIndex(w => w.swedish === item.swedish);
+    word.dataset.word = item.swedish;
+    word.dataset.index = originalIndex;
+
+    wordContainer.appendChild(word);
+  });
+
+  setupMatching();
+}
+
 
     // --- Step 4:  ---
     function setupMatching() {

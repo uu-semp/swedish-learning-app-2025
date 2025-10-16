@@ -11,11 +11,11 @@ Owned by Team 05
   width: 45%;
 }
 
-.game-frame {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
+body {
+  font-family: Arial, sans-serif;
+  width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .game-frame {
@@ -23,6 +23,27 @@ Owned by Team 05
   flex-direction: column;
   align-items: center;
   text-align: center;
+}
+
+.top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 90%;
+  margin-top: 10px;
+  margin-bottom: 10px; /* smaller gap before the images */
+}
+
+#level-text {
+  font-size: 1.3em; /* smaller and cleaner */
+  font-weight: bold;
+  margin: 0;
+}
+
+.instructions {
+  font-size: 1.1em;
+  color: #444;
+  margin: 0;
 }
 
 /* 🧩 New container for horizontal layout */
@@ -32,7 +53,8 @@ Owned by Team 05
   align-items: flex-start;
   gap: 60px; /* space between columns */
   width: 90%;
-  margin-top: 30px;
+  margin-top: 10px; /* tighter spacing */
+  overflow: hidden; /* prevent arrows pushing out */
 }
 
 /* Images on the left */
@@ -51,6 +73,14 @@ Owned by Team 05
   gap: 15px;
 }
 
+.right-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 20px;
+  width: 450px
+}
+
 /* Buttons on the right */
 .buttons {
   display: flex;
@@ -59,26 +89,12 @@ Owned by Team 05
   gap: 15px;
 }
 
-.item {
-  width: 120px;  /* slightly bigger for better visibility */
-  height: 120px;
-  object-fit: contain;
-  cursor: pointer;
-  border: 2px solid transparent;
-  border-radius: 10px;
-  background-color: #f8f8f8;
-  transition: border-color 0.2s, transform 0.2s;
-}
-
-.item:hover {
-  transform: scale(1.05);
-}
-
 .item.selected {
   border-color: #007bff;
 }
 
 /* 🧩 Match word boxes to image size */
+.item,
 .word {
   width: 120px;
   height: 120px;
@@ -86,18 +102,20 @@ Owned by Team 05
   justify-content: center;
   align-items: center;
   text-align: center;
-  padding: 10px;
-  background-color: #f0f0f0;
-  border: 2px solid transparent;
   border-radius: 10px;
-  font-size: 16px;
+  border: 2px solid transparent;
+  background-color: #f8f8f8;
   cursor: pointer;
-  transition: background-color 0.2s, transform 0.2s;
+  transition: transform 0.2s, border-color 0.2s;
   box-sizing: border-box;
 }
 
+.word {
+  font-size: 16px;
+}
+
+.item:hover,
 .word:hover {
-  background-color: #e0e0e0;
   transform: scale(1.05);
 }
 
@@ -106,8 +124,12 @@ Owned by Team 05
 }
 
 .message {
-  margin-top: 20px;
-  font-size: 1.1em;
+  font-size: 1em;
+  color: #222;
+  text-align: left;
+  max-width: 450px; /* ✅ matches panel width */
+  line-height: 1.4em;
+  word-wrap: break-word;
 }
 
 button {
@@ -118,6 +140,7 @@ button {
   background-color: #007bff;
   color: white;
   transition: background-color 0.2s;
+  width: 140px;
 }
 
 button:hover {
