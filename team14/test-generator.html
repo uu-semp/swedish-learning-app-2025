@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="sv">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Swedish Clothing Generator Test</title>
+    <style>
+      :root {
+        color-scheme: light dark;
+        font-family: "Segoe UI", -apple-system, sans-serif;
+      }
+
+      body {
+        margin: 0;
+        padding: 2rem;
+        background: #f4f6fb;
+        color: #222;
+        display: grid;
+        gap: 1.5rem;
+        justify-items: start;
+      }
+
+      button {
+        padding: 0.75rem 1.5rem;
+        font-size: 1rem;
+        border-radius: 0.5rem;
+        border: none;
+        background: #2b6cb0;
+        color: #fff;
+        cursor: pointer;
+        transition: background 0.2s ease-in-out;
+      }
+
+      button[disabled] {
+        cursor: wait;
+        background: #94a3b8;
+      }
+
+      button:not([disabled]):hover {
+        background: #1f4f86;
+      }
+
+      .card {
+        background: #fff;
+        border-radius: 0.75rem;
+        box-shadow: 0 1rem 3rem -1.5rem rgba(15, 23, 42, 0.4);
+        padding: 1.5rem;
+        width: min(32rem, 100%);
+      }
+
+      .card h2 {
+        margin-top: 0;
+        font-size: 1.25rem;
+        color: #1e293b;
+      }
+
+      .card p {
+        margin: 0.5rem 0;
+      }
+
+      .list {
+        list-style: none;
+        padding: 0;
+        margin: 1rem 0 0;
+        display: grid;
+        gap: 0.75rem;
+      }
+
+      .list li {
+        padding: 0.75rem;
+        background: #f1f5f9;
+        border-radius: 0.5rem;
+        font-size: 0.95rem;
+      }
+
+      .asset-preview {
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+        margin-top: 1.5rem;
+      }
+
+      .asset-preview img {
+        width: 96px;
+        height: 96px;
+        object-fit: contain;
+        border-radius: 0.5rem;
+        background: #e2e8f0;
+        padding: 0.5rem;
+        box-shadow: inset 0 0 0 1px rgba(15, 23, 42, 0.05);
+      }
+
+      footer {
+        font-size: 0.85rem;
+        color: #475569;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Testa SwedishClothingDescriptionGenerator</h1>
+      <p>
+        Klicka på knappen nedan för att generera en slumpmässig beskrivning.
+        Testet använder samma <code>ImgObject</code>-klass som spelet.
+      </p>
+      <button id="generate" disabled>Genererar outfit…</button>
+    </header>
+
+    <section class="card" aria-live="polite">
+      <h2>Resultat</h2>
+      <p id="swedish" lang="sv">Ingen beskrivning genererad ännu.</p>
+      <p id="english" lang="en"></p>
+      <ul id="items" class="list"></ul>
+      <div id="preview" class="asset-preview"></div>
+    </section>
+
+    <footer>
+      <strong>Tips:</strong> kör sidan via en lokal server så att CSV-filen får hämtas.
+    </footer>
+
+    <script src="./index.js"></script>
+    <script>
+      const button = document.getElementById("generate");
+      const swedish = document.getElementById("swedish");
+      const english = document.getElementById("english");
+      const itemsList = document.getElementById("items");
+      const preview = document.getElementById("preview");
+
+      function renderOutfit(outfit) {
+        if (!outfit) {
+          swedish.textContent = "Ingen outfit kunde genereras.";
+          english.textContent = "";
+          itemsList.innerHTML = "";
+          preview.innerHTML = "";
+          return;
+        }
+
+        swedish.textContent = outfit.swedish;
+        english.textContent = outfit.english;
+
+        itemsList.innerHTML = "";
+        Object.entries(outfit.items).forEach(([category, item]) => {
+          const li = document.createElement("li");
+          li.textContent = `${category}: ${item.swedish} (${item.english})`;
+          itemsList.appendChild(li);
+        });
+
+        preview.innerHTML = "";
+        outfit.assets.forEach((path) => {
+          const img = document.createElement("img");
+          img.alt = path;
+          img.src = path;
+          preview.appendChild(img);
+        });
+      }
+
+      async function generate() {
+        await window.clothingGenerator.loadPromise;
+        renderOutfit(window.clothingGenerator.generateOutfit());
+      }
+
+      async function loadCsvAndPopulateGenerator() {
+        try {
+          const response = await fetch("./clothing_database.csv");
+          if (!response.ok) {
+            throw new Error(`HTTP ${response.status}`);
+          }
+
+          const text = await response.text();
+          const [headerLine, ...rows] = text.split("\n");
+          const header = headerLine.split(",").map((part) => part.trim().toLowerCase());
+
+          const colIndex = (name) => header.indexOf(name);
+          const filenameIdx = colIndex("filename");
+          const swedishIdx = colIndex("swedish");
+          const englishIdx = colIndex("english");
+          const areaIdx = colIndex("area");
+
+          const imgObjects = rows
+            .map((line) => line.trim())
+            .filter(Boolean)
+            .map((line) => line.split(",").map((part) => part.trim()))
+            .map((parts, idx) => {
+              const filename = parts[filenameIdx] ?? `unknown-${idx}`;
+              const swedish = parts[swedishIdx] ?? "";
+              const english = parts[englishIdx] ?? swedish;
+              const area = parts[areaIdx] ?? "";
+              const category =
+                window.clothingGenerator.normalizeRequiredCategory(area) ?? area ?? "";
+              const path = `./PelleClothes/${filename}`;
+
+              return new ImgObject(filename, path, swedish, category, english);
+            });
+
+          window.clothingGenerator.setItemsFromImgObjects(imgObjects);
+        } catch (error) {
+          console.error("Kunde inte läsa CSV-filen", error);
+          swedish.textContent = "Kunde inte läsa CSV-filen.";
+          throw error;
+        }
+      }
+
+      button.addEventListener("click", () => {
+        button.textContent = "Genererar…";
+        button.disabled = true;
+        generate()
+          .catch((error) => {
+            console.error("Fel vid generering", error);
+            swedish.textContent = "Fel uppstod, se konsolen.";
+            english.textContent = "";
+          })
+          .finally(() => {
+            button.textContent = "Generera outfit";
+            button.disabled = false;
+          });
+      });
+
+      window.clothingGenerator.loadPromise
+        .then(() => {
+          button.textContent = "Generera outfit";
+          button.disabled = false;
+        })
+        .catch((error) => {
+          console.error("Generatorn kunde inte laddas", error);
+          button.textContent = "Laddning misslyckades";
+        });
+
+      loadCsvAndPopulateGenerator().catch(() => {
+        button.textContent = "Laddning misslyckades";
+      });
+    </script>
+  </body>
+</html>
