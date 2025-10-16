@@ -111,3 +111,14 @@ export function local_update_progress(guesses) {
     incrementWin(TEAM);
   }
 }
+
+/**
+ *
+ * @param {Boolean} new_persistence
+ */
+export function local_set_persistent_notice(new_persistence) {
+  let data = safe_get();
+
+  data.persistent_notice = new_persistence;
+  set(TEAM, data);
+}
