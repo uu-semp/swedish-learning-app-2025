@@ -6,23 +6,24 @@ Owned by Team 08
 
 /* Design tokens and responsive sizes */
 :root {
-  --app-width: 50rem;        /* 800px */
-  --app-height: 37.5rem;     /* 600px */
-  --spacing-xs: .25rem;
-  --spacing-sm: .5rem;
+  --app-width: 50rem; /* 800px */
+  --app-height: 37.5rem; /* 600px */
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
   --spacing-md: 1rem;
   --spacing-lg: 2rem;
-  --radius: .75rem;          /* 12px */
-  --color-primary: #D2132A;  /* heading red */
+  --radius: 0.75rem; /* 12px */
+  --color-primary: #d2132a; /* heading red */
   --color-text: #010101;
-  --color-card: #D9D8D9;     /* tutorial card */
-  --color-cta: #0168AA;      /* start button blue */
+  --color-card: #d9d8d9; /* tutorial card */
+  --color-cta: #0168aa; /* start button blue */
   --outline: #222222;
   --font-sans: "Work Sans", system-ui, sans-serif;
 }
 
 /* Page baseline */
-html, body {
+html,
+body {
   /* Box model */
   height: 100%;
 }
@@ -32,7 +33,7 @@ body {
   margin: 0;
 
   /* Typography */
-    font-family: var(--font-sans), serif;
+  font-family: var(--font-sans), serif;
 
   /* Visual */
   background: #eaf6ff;
@@ -69,7 +70,7 @@ body {
   font-size: clamp(2.25rem, 6vw, 4rem);
   line-height: 1.03;
   font-weight: 800;
-  letter-spacing: -.02em;
+  letter-spacing: -0.02em;
 
   /* Visual */
   color: var(--color-primary);
@@ -94,73 +95,6 @@ body {
   color: rgb(0, 0, 0);
 }
 
-/* MODAL */
-
-#settings-modal div {
-  display: flex;
-  flex-direction: row;
-  gap: 0.5rem;
-}
-#settings-modal h2 {
-  text-transform: uppercase;
-}
-
-dialog {
-  border: none;
-  border-radius: 30px;
-  padding: 2em;
-  width: 450px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-}
-
-/* INPUTS */
-
-dialog label {
-  text-transform: uppercase;
-}
-
-#volume-slider {
-  width: 300px;
-  margin-left: auto;
-}
-
-/* INPUTS | SOUND EFFECTS */
-.switch {
-  --false: #e81b1b;
-  --true: #009068;
-}
-
-input[type="checkbox"] {
-  appearance: none;
-  height: 16px;
-  width: 30px;
-  background-color: #fff;
-  border: 2px solid black;
-  position: relative;
-  border-radius: 0.2em;
-  cursor: pointer;
-  margin-left: auto;
-}
-
-input[type="checkbox"]::before {
-  content: "";
-  display: block;
-  height: 13.4px;
-  width: 50%;
-  top: 6px;
-  left: 7px;
-  transform: translate(-50%, -50%);
-  position: absolute;
-  background-color: var(--false);
-  border-radius: 2px;
-  transition: 0.3s ease;
-}
-
-input[type="checkbox"]:checked::before {
-  background-color: var(--true);
-  left: 20px;
-}
-
 /* Welcome styles moved to team08/welcome/index.css */
 /* Subtitle / description */
 .welcome__subtitle {
@@ -173,7 +107,7 @@ input[type="checkbox"]:checked::before {
   line-height: 1.35;
 
   /* Visual */
-  color: rgba(17,17,17,.92);
+  color: rgba(17, 17, 17, 0.92);
 }
 
 /* Tutorial button */
@@ -199,7 +133,7 @@ input[type="checkbox"]:checked::before {
   /* Visual */
   background: var(--color-card);
   cursor: pointer;
-  transition: background-color .2s, transform .1s;
+  transition: background-color 0.2s, transform 0.1s;
 }
 
 .welcome__tutorial-btn:hover {
@@ -209,8 +143,8 @@ input[type="checkbox"]:checked::before {
 
 .welcome__tutorial-btn:focus {
   /* Visual */
-  outline: 3px solid rgba(43,102,168,.16);
-  outline-offset: .125rem;
+  outline: 3px solid rgba(43, 102, 168, 0.16);
+  outline-offset: 0.125rem;
 }
 
 .welcome__tutorial-btn:active {
@@ -220,7 +154,7 @@ input[type="checkbox"]:checked::before {
 
 .welcome__tutorial-text {
   /* Box model */
-  padding: .25rem .5rem;
+  padding: 0.25rem 0.5rem;
 
   /* Typography */
   font-size: 1.25rem;
@@ -228,7 +162,7 @@ input[type="checkbox"]:checked::before {
   text-align: center;
 
   /* Visual */
-  color: rgba(0,0,0,.85);
+  color: rgba(0, 0, 0, 0.85);
 }
 
 /* Start button */
@@ -239,7 +173,7 @@ input[type="checkbox"]:checked::before {
   max-width: 22rem;
   padding: 1rem 2.25rem;
   margin-top: 1.25rem;
-  border-radius: .75rem;
+  border-radius: 0.75rem;
   border: none;
   box-sizing: border-box;
 
@@ -247,22 +181,22 @@ input[type="checkbox"]:checked::before {
   font-size: 1.25rem;
   font-weight: 800;
   text-transform: uppercase;
-  letter-spacing: .02em;
+  letter-spacing: 0.02em;
   text-align: center;
 
   /* Visual */
   background: var(--color-cta);
   color: #fff;
-  box-shadow: 0 4px 0 rgba(0,0,0,.06);
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.06);
   cursor: pointer;
 }
 
 .welcome__start-btn:hover,
 .welcome__start-btn:focus {
   /* Visual */
-  filter: brightness(.98);
-  outline: 3px solid rgba(43,102,168,.16);
-  outline-offset: .125rem;
+  filter: brightness(0.98);
+  outline: 3px solid rgba(43, 102, 168, 0.16);
+  outline-offset: 0.125rem;
 }
 
 /* small screens: reduce vertical spacing */

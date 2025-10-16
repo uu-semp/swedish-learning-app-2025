@@ -1,0 +1,98 @@
+#volumePopup {
+  position: fixed;
+  bottom: 30px;
+  right: 20px;
+  padding: 8px 14px;
+  border-radius: 8px;
+  background: rgba(0, 0, 0, 0.7);
+  color: #fff;
+  font-size: 14px;
+  z-index: 9999;
+  transition: opacity 0.3s ease;
+  opacity: 0;
+}
+
+/* MODAL */
+
+#settings-modal div {
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+}
+#settings-modal h2 {
+  text-transform: uppercase;
+}
+
+#settings-modal {
+  border: none;
+  border-radius: 30px;
+  padding: 2em;
+  width: 450px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+/* INPUTS */
+
+#settings-modal label {
+  text-transform: uppercase;
+}
+
+#volume-slider {
+  width: 300px;
+  margin-left: auto;
+}
+
+/* INPUTS | SOUND EFFECTS */
+.switch {
+  --false: #e81b1b;
+  --true: #009068;
+}
+
+#sound-effects-toggle {
+  appearance: none;
+  height: 16px;
+  width: 30px;
+  background-color: #fff;
+  border: 2px solid black;
+  position: relative;
+  border-radius: 0.2em;
+  cursor: pointer;
+  margin-left: auto;
+}
+
+#sound-effects-toggle::before {
+  content: "";
+  display: block;
+  height: 13.4px;
+  width: 50%;
+  top: 6px;
+  left: 7px;
+  transform: translate(-50%, -50%);
+  position: absolute;
+  background-color: var(--false);
+  border-radius: 2px;
+  transition: 0.3s ease;
+}
+
+#sound-effects-toggle:checked::before {
+  background-color: var(--true);
+  left: 20px;
+}
+
+#close-settings,
+#open-settings-button {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin-top: 0.25rem;
+  margin-right: 0.25rem;
+}
+
+#close-settings {
+  margin-right: 0.8rem;
+  background: none;
+  border: none;
+  font-size: 30px;
+  cursor: pointer;
+  color: rgb(0, 0, 0);
+}

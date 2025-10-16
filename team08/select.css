@@ -77,18 +77,15 @@ input[type="checkbox"] {
   outline: none;
   transition: outline 0.1s;
 }
-
-input[type="checkbox"]:checked {
+.check_category:checked {
   background-size: cover;
   padding: 2px;
 }
-
-input[type="checkbox"]:not(:disabled):checked {
+.check_category:not(:disabled):checked {
   border-color: black;
   background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="20" height="20" viewBox="0 0 32 32" xml:space="preserve"><path style="fill: %23274c77" d="M11.941,28.877l-11.941-11.942l5.695-5.696l6.246,6.246l14.364-14.364L32,8.818"/></svg>');
 }
-
-input[type="checkbox"]:focus {
+.check_category:focus {
   outline: 2px solid var(--color-primary);
   outline-offset: 4px;
 }
