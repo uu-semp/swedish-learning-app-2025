@@ -7,8 +7,8 @@ const instructionGroups = [
     { question: "Dra 'lampa' höger om 'dator'.", answer: "lamp", swedish: "lampa", index: [4, 5] },
     { question: "Dra 'skrivbord' höger om 'dator'.", answer: "desk", swedish: "skrivbord", index: [4, 5] },
     { question: "Dra 'bokhylla' höger om 'stol'.", answer: "bookshelf", swedish: "bokhylla", index: [1] },
-    { question: "Dra 'papper' längst till höger.", answer: "paper", swedish: "papper", index: [6] },
-    { question: "Dra 'penna' höger om 'dator'.", answer: "pen", swedish: "penna", index: [2] }
+    { question: "Dra 'kudde' längst till höger.", answer: "pillow", swedish: "kudde", index: [6] },
+    { question: "Dra 'klocka' höger om 'dator'.", answer: "clock", swedish: "klocka", index: [2] }
   ],
   
   // Group 2: Living room setup
