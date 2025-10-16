@@ -21,9 +21,24 @@ let gameFrame, levelIndicator, promptBar, itemList, roomContainer, doneButton, m
  * Initializes the game, sets up DOM references and event listeners.
  */
 function initGame() {
+  selectLevel();
   setupDOM();
   setupEventListeners();
   loadLevel(currentLevel);
+}
+
+/**
+ * Selects hard game level depending on level URL parameter
+ */
+function selectLevel() {
+  const urlParams = new URLSearchParams(window.location.search);
+  const levelFromUrl = urlParams.get('level');
+  const parsedLevel = parseInt(levelFromUrl, 10);
+
+  // Check if the parsed level is a number and is within the valid range (7-9)
+  if (!isNaN(parsedLevel) && parsedLevel >= 7 && parsedLevel <= 9) {
+    currentLevel = parsedLevel;
+  }
 }
 
 /**
