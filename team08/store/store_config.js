@@ -25,5 +25,5 @@ export const DEFAULT = {
   category: [],
   id_covered: {},
   covers: 0,
-  persistent_notice: false,
+  persistent_notice: true,
 };
