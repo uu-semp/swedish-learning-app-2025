@@ -30,8 +30,8 @@ const instructionGroups = [
   // 🍳 Group 4: Kitchen setup
   [
     { question: "Placera kylskåpet i mitten.", answer: "refrigerator", swedish: "kylskåp", index: [2] },
-    { question: "Placera spisen mellan kylskåpet och bordet.", answer: "stove", swedish: "spis", index: [3] },
     { question: "Placera bordet längst till höger.", answer: "table", swedish: "bord", index: [4] },
+    { question: "Placera spisen mellan kylskåpet och bordet.", answer: "stove", swedish: "spis", index: [3] },
     { question: "Placera stolen längst till vänster.", answer: "chair", swedish: "stol", index: [0] },
     { question: "Placera dörren mellan stolen och kylskåpet.", answer: "door", swedish: "dörr", index: [1] }
   ]
