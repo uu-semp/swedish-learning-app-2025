@@ -21,7 +21,7 @@ let
   promptBar,
   itemList,
   roomContainer,
-  backButton,
+  levelsButton,
   doneButton,
   modalOverlay,
   modalTitle,
@@ -69,7 +69,7 @@ function setupDOM() {
                 </div>
             </div>
             <div id="bottom-bar">
-                <button id="back-button">Back to Menu</button>
+                <button id="levels-button">Back to Levels</button>
                 <button id="done-button">Done</button>
             </div>
             <div id="modal-overlay" class="hidden">
@@ -89,7 +89,7 @@ function setupDOM() {
   promptBar = document.getElementById('prompt-bar');
   itemList = document.getElementById('item-list');
   roomContainer = document.getElementById('room-container');
-  backButton = document.getElementById('back-button');
+  levelsButton = document.getElementById('levels-button');
   doneButton = document.getElementById('done-button');
   modalOverlay = document.getElementById('modal-overlay');
   modalTitle = document.querySelector('#modal-content h3');
@@ -101,8 +101,8 @@ function setupDOM() {
  * Sets up global event listeners for the game.
  */
 function setupEventListeners() {
-  backButton.addEventListener('click', () => {
-    window.location.href = '../';
+  levelsButton.addEventListener('click', () => {
+    window.location.href = '../main_menu/levels_hard.html';
   });
 
   doneButton.addEventListener('click', handleDoneClick);
@@ -165,7 +165,7 @@ function setupLevelUI() {
   }
 
   // Update UI elements
-  levelIndicator.textContent = `Level ${currentLevel}`;
+  levelIndicator.textContent = `Level ${currentLevel}/9`;
   document.getElementById('room-background').src = levelData.background.path;
   promptBar.innerHTML = parsePrompt(levelData.prompt);
 
@@ -429,7 +429,7 @@ function displayGameComplete() {
   gameFrame.innerHTML = `
         <div style="display:flex; flex-direction:column; justify-content:center; align-items:center; height:100%; text-align:center;">
             <h2>Congratulations!</h2>
-            <p>You have completed all the levels.</p>
-            <button id="back-button" onclick="window.location.href='../'">Back to Menu</button>
+            <p>You have completed all the levels of Red Room.</p>
+            <button id="menu-button" onclick="window.location.href='../'">Back to Menu</button>
         </div>`;
 }

@@ -41,12 +41,12 @@ $(function () {
       imageContainer.innerHTML = "";
       wordContainer.innerHTML = "";
       message.textContent = "";
-      levelText.textContent = `Level ${currentLevel + 1}`;
+      levelText.textContent = `Level ${currentLevel + 1}/9`;
 
       // --- Create image boxes (in order, unchanged) ---
       words.forEach((item, index) => {
         const img = document.createElement("img");
-        img.src = "../" + item.image;
+        img.src = "/" + item.image;
         img.classList.add("item");
         img.dataset.answer = item.swedish;
         img.dataset.index = index;
@@ -123,6 +123,7 @@ $(function () {
     }
 
     // --- Step 5: Check answers ---
+    // --- Step 5: Check answers ---
     function checkAnswers(levelWords) {
       const message = document.getElementById("message");
       let correct = 0;
@@ -135,9 +136,19 @@ $(function () {
       });
 
       if (correct === levelWords.length) {
-        message.textContent = "✅ All correct! Loading next level...";
-        currentLevel++;
-        setTimeout(nextLevel, 2000);
+        // Check if the level just completed is Level 3 (currentLevel is 0-indexed)
+        if (currentLevel === 2) {
+          message.textContent = "✅ Well done! Redirecting to the medium levels...";
+
+          setTimeout(() => {
+            window.location.href = '../medium';
+          }, 2000);
+
+        } else {
+          message.textContent = "✅ All correct! Loading next level...";
+          currentLevel++;
+          setTimeout(nextLevel, 2000);
+        }
       } else {
         message.innerHTML = `❌ Some are incorrect:<br>${mistakes.join("<br>")}`;
       }

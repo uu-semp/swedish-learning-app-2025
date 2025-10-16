@@ -3,12 +3,10 @@
   --primary-bg: #f4f7f6;
   --secondary-bg: #ffffff;
   --border-color: #e0e0e0;
-  --text-color: #333;
   --prompt-bg: #e74c3c;
   --level-bg: #4a5568;
   --done-button-bg: #2ecc71;
   --done-button-hover: #27ae60;
-  --font-main: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
 /* --- Game Frame & Container --- */
@@ -19,8 +17,6 @@
   border: 1px solid var(--border-color);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   box-sizing: border-box;
-  font-family: var(--font-main);
-  color: var(--text-color);
   user-select: none;
 }
 
@@ -67,8 +63,8 @@
   border-top: 1px solid var(--border-color);
 }
 
-#back-button {
-  background-color: #a0aec0;
+#menu-button, #levels-button {
+  background-color: #7b808e;
   color: white;
   border: none;
   padding: 12px 24px;

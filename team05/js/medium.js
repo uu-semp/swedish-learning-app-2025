@@ -131,7 +131,7 @@ $(function() {
     const currentItem = GameState.items[GameState.currentItemIndex];
     $("#medium-feedback").text("");
     $("#medium-progress").text(`${GameState.currentItemIndex} / ${GameState.items.length}`);
-    
+
     const $imageWrap = $("#medium-image-wrap").empty();
     const altText = currentItem.en || "Swedish vocabulary object";
 
@@ -190,8 +190,7 @@ $(function() {
     progress.unlocked = Math.max(progress.unlocked, level + 1);
     saveProgress(progress);
 
-    $('#win-title').text(`You completed Level ${level}!`);
-    $('#win-progress-text').text(`Progress: ${progress.completed.length}/3 levels`);
+    $('#win-title').text(`You completed Level ${level}/9!`);
 
     // --- Special navigation logic for the last level ---
     if (level === 6) {
