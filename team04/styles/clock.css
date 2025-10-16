@@ -31,12 +31,12 @@
     background-color: red;
     top: calc(var(--clock-group-height) / 2 - 14px);
     transform: rotate(0deg);
-    width: calc(var(--clock-group-height) / 2 - 10px);
+    width: calc(var(--clock-group-height) / 2 - 40px);
 }
 
 #hour-hand {
     height: 10px;
     top: calc(var(--clock-group-height) / 2 - 4px);
     transform: rotate(0deg);
-    width: calc(var(--clock-group-height) / 2 - 40px);
+    width: calc(var(--clock-group-height) / 2 - 60px);
 }
