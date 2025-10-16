@@ -21,7 +21,6 @@ export default {
      * @returns {CSS} CSS animation propert
      */
     highlightNextQuestionBtn() {
-      console.log('HAS SELECTION: ' + this.hasSelection);
       if (this.hasSelection) {
         return { animation: 'blinkingEffect 2s infinite' }
       }
