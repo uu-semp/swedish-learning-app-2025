@@ -83,7 +83,7 @@ export default {
       const id = this.currentIndex;
       
       // update existing answer for this question or push new
-      const existing = this.answers.find(a => a.id === id);
+      const existing = this.userAnswers.find(a => a.id === id);
       if (existing) {
         this.selectedOption = existing.user;
         return;
@@ -93,7 +93,8 @@ export default {
       const correct = this.currentQuestion ? this.currentQuestion.correctIndex : null;
       const entry = { id, user: index, correct, answered: true }
       // push new answer entry
-      this.answers.push(entry);
+      this.userAnswers.push(entry);
+      
       this.answers[this.currentIndex] = {
         index: this.currentIndex,
         result: isCorrect ? 'correct' : 'incorrect'
