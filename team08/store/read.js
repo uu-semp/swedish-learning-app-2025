@@ -4,6 +4,7 @@ import * as DB from "../../scripts/database_type.js";
 import { TEAM, CATEGORIES, DEFAULT } from "./store_config.js";
 import {
   local_set_categories,
+  local_set_persistent_notice,
   local_set_sound_effects,
   local_set_volume,
 } from "./write.js";
@@ -136,6 +137,18 @@ export function local_has_id_been_covered(id) {
     return false;
   }
   return DATA.id_covered[id];
+}
+/**
+ *
+ * @returns {Boolean}
+ */
+export function local_get_persistent_notice() {
+  let data = safe_get();
+  if (data.persistent_notice == undefined) {
+    local_set_persistent_notice(false);
+    return false;
+  }
+  return data.persistent_notice;
 }
 
 /** DB METHODS */

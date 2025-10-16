@@ -101,7 +101,8 @@ export function local_update_progress(guesses) {
   set(TEAM, data);
 
   // Uses calculated information about covers to update completion and wins
-  setCompletion(TEAM, data.covers / WORDS);
+  // Store in percentage
+  setCompletion(TEAM, (data.covers / WORDS) * 100);
 
   const CORRECT_GUESSES = guesses.filter(
     (guess) => guess.guessed_correct
@@ -109,4 +110,15 @@ export function local_update_progress(guesses) {
   if (CORRECT_GUESSES > WIN_BARRIER * guesses.length) {
     incrementWin(TEAM);
   }
+}
+
+/**
+ *
+ * @param {Boolean} new_persistence
+ */
+export function local_set_persistent_notice(new_persistence) {
+  let data = safe_get();
+
+  data.persistent_notice = new_persistence;
+  set(TEAM, data);
 }

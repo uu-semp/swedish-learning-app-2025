@@ -2,7 +2,9 @@ import { local_set_volume, local_set_sound_effects } from "../store/write.js";
 import { local_get_volume, local_get_sound_effects } from "../store/read.js";
 
 const settingsModal = document.querySelector("#settings-modal");
-const openSettingsButton = document.querySelector("#open-settings-button");
+const openSettingsButton = document.querySelector("#open-settings-button")
+  ? document.querySelector("#open-settings-button")
+  : document.querySelector("#settingsBtn");
 const closeSettingsButton = document.querySelector("#close-settings");
 const popup = document.getElementById("volumePopup");
 
@@ -73,7 +75,6 @@ document.addEventListener("keydown", (e) => {
   if (e.key.toLowerCase() === "m") {
     e.preventDefault();
     let effectsEnabled = !local_get_sound_effects();
-    localStorage.setItem("effectsEnabled", effectsEnabled);
     local_set_sound_effects(effectsEnabled);
     update_components();
     showVolumePopup(effectsEnabled ? "🎵 Effects ON" : "🔇 Effects OFF");

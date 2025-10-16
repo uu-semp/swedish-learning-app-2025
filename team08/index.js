@@ -3,28 +3,45 @@
 // ==============================================
 
 import "./options/settings.js";
-import { init_db } from "./store/read.js";
+import { local_get_persistent_notice } from "./store/read.js";
+import { local_set_persistent_notice } from "./store/write.js";
 
-const init = async () => {
-  await init_db();
+const startBtn = document.getElementById("start-btn");
 
-  const startBtn = document.getElementById("start-btn");
-  const tutorialBtn = document.querySelector(".welcome__tutorial-btn");
+startBtn.addEventListener("click", () => {
+  // Navigate to main game page
+  window.location.href = "./select.html";
+});
 
-  if (startBtn) {
-    startBtn.addEventListener("click", () => {
-      // Navigate to main game page
-      window.location.href = "./select.html";
-    });
+/** Handling tutorial */
+
+const tutorialBtn = document.querySelector(".welcome__tutorial-btn");
+/** @type {HTMLDialogElement | null} */
+const tutorial_modal = document.getElementById("tutorial-modal");
+
+const close_tutorial_modal = document.getElementById("close-tutorial");
+
+tutorialBtn.addEventListener("click", () => {
+  tutorial_modal?.showModal();
+});
+
+close_tutorial_modal.addEventListener("click", () => {
+  tutorial_modal?.close();
+});
+
+tutorial_modal?.addEventListener("click", (e) => {
+  if (e.target === tutorial_modal) {
+    tutorial_modal.close();
   }
+});
 
-  if (tutorialBtn) {
-    tutorialBtn.addEventListener("click", () => {
-      // TODO Navigate to tutorial page
-      window.location.href = "./end-screen/index.html";
-    });
-  }
-};
+const persistentPopup = document.querySelector("#persistent-popup");
+const proceedBtn = document.querySelector("#persistent-popup button");
+if (local_get_persistent_notice()) {
+  persistentPopup.style.display = "none";
+}
 
-// Initialize when DOM is ready
-document.addEventListener("DOMContentLoaded", init);
+proceedBtn.addEventListener("click", () => {
+  local_set_persistent_notice(true);
+  persistentPopup.style.display = "none";
+});

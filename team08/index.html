@@ -52,8 +52,64 @@ Owned by Team 08
     <button id="start-btn" class="welcome__start-btn" aria-label="start game">Start</button>
     <div id="volumePopup">
     </div>
+    <div id="persistent-popup">
+      <p>
+        This game uses persistent storage to save your progress, guesses and selections. <br>
+        By playing or pressing proceed, you agree to the use of persistent storage.
+      </p>
+      <button>Proceed</button>
+    </div>
   </main>
 
+  <dialog id="tutorial-modal">
+    <div id="tutorial-modal-content">
+      <button id="close-tutorial">&times;</button>
+      <h2>Gameplay</h2>
+      <p>
+        The following game challenges you to identify what image corresponds to the audio that you can play.
+        There is a settings button in the top right corner that you can use to control the volume and enable/disable
+        sound
+        effects.
+        Once you press start, you get to choose the categories that you want to be tested on.
+        These will then be the pool that the game uses to draw different words from.
+      </p>
+      <p>
+        When you get into the game you will be able to press a play audio button to hear the word you are supposed to
+        match to the images.
+        To progress through the game, you select an image and if you are sure it corresponds to the audio, you press the
+        confirm
+        button.
+        If you are wrong, you will get the opportunity to try again: press the "try again" button.
+        If you are right, you get a new word to guess and this continues for ten words.
+        After that, you proceed to the end screen and can restart the game.
+      </p>
+      <h2>Keybindings</h2>
+      <div class="keybinding-help">
+        <table>
+          <thead>
+            <tr>
+              <th>Key</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><i class="fa-solid fa-arrow-left"></i> / <i class="fa-solid fa-arrow-right"></i></td>
+              <td>Move between images</td>
+            </tr>
+            <tr>
+              <td><i class="fa-solid fa-plus"></i> / <i class="fa-solid fa-minus"></i></td>
+              <td>Control volume</td>
+            </tr>
+            <tr>
+              <td>m</td>
+              <td>Toggle sound effects</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </dialog>
   <!-- Creates the modal window. Default hidden form view -->
   <dialog id="settings-modal">
     <h2>Settings</h2>

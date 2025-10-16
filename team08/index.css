@@ -170,3 +170,81 @@ body {
   outline: 3px solid rgba(43, 102, 168, 0.16);
   outline-offset: 0.125rem;
 }
+
+/* Tutorial dialog */
+#tutorial-modal {
+  /* Box model */
+  padding: 0;
+  border: none;
+  border-radius: var(--radius);
+
+  /* Visual */
+  background: white;
+}
+
+/* Tutorial content wrapper */
+#tutorial-modal-content {
+  /* Box model */
+  position: relative;
+  padding: var(--spacing-lg);
+
+  h2 {
+    text-align: center;
+    font-size: larger;
+    margin: 10px 0;
+  }
+}
+
+/* Close button */
+#close-tutorial {
+  /* Positioning */
+  position: absolute;
+  top: var(--spacing-sm);
+  right: var(--spacing-sm);
+
+  /* Box model */
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border: none;
+  border-radius: var(--radius);
+
+  /* Typography */
+  font-size: 1.5rem;
+  line-height: 1;
+
+  /* Visual */
+  background: transparent;
+  cursor: pointer;
+}
+
+.keybinding-help {
+  /* Box model */
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.keybinding-help table {
+  border-collapse: separate;
+  border-spacing: 20px 5px;
+}
+
+#persistent-popup {
+  position: absolute;
+  left: 10px;
+  top: 10px;
+  width: 450px;
+  height: 120px;
+  background-color: gray;
+  border: 4px solid black;
+}
+#persistent-popup p {
+  width: 100%;
+  color: white;
+  text-align: left;
+  padding-left: 5px;
+}
+#persistent-popup button {
+  position: absolute;
+  right: 0;
+  border: 1px solid black;
+}
