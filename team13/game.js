@@ -69,10 +69,9 @@ progress: 0,
       const vocab = window.vocabulary.get_vocab(this.vocabNumbers[randomNoIndex]);
       this.currentQuestion = vocab;
 
-      const randomStreetIndex = this.irandom_range(0, this.tempStreets.length - 1);
-      this.currentStreet = this.tempStreets[randomStreetIndex];
-      // const randomStreetIndex = this.irandom_range(0, this.vocabStreets.length - 1);
-      // this.currentStreet = window.vocabulary.get_vocab(this.vocabStreets[randomStreetIndex]).sv;
+const randomStreetIndex = irandom_range(0 , this.vocabStreets.length - 1);
+const vocabStreet = window.vocabulary.get_vocab(this.vocabStreets[randomStreetIndex]);
+this.currentStreet = vocabStreet.sv
 
       const houseCount = 4;
       const highestNumber = this.vocabNumbers.length - 1;
