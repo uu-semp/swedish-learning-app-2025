@@ -26,6 +26,13 @@ export const InfoButton = {
   `,
 };
 
+export const LicenseButton = {
+    name: 'license-button',
+    template: `
+  <button class = "info-button">©</button>
+  `,
+};
+
 export const LevelButton = {
     name: 'level-button',
     props: {

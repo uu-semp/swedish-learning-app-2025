@@ -18,6 +18,7 @@ export const LevelOneView = {
             correctAnswers: 0,
             gameOver:false,
             showInfo:false,
+            showLicense:false,
             chosenClothingItems: [],
             numberOfQuestionsAsked: 10,
             indexesAsked: []
@@ -134,6 +135,8 @@ export const LevelOneView = {
         handleOverlayClick(event) {
             if (event.target.classList.contains('modal-overlay')) {
                 this.closeModal();
+                this.showInfo = false;
+                this.showLicense = false;
             }
         },
 
@@ -253,6 +256,7 @@ export const LevelOneView = {
             <div>
                 <exit-game-button @click="openModal"></exit-game-button>
                 <info-button @click="this.showInfo=true"></info-button>
+                <license-button @click="this.showLicense=true"></license-button>
             </div>
             <div v-if="showModal" class="modal-overlay" @click="handleOverlayClick">
                 <div class="modal-content" @click.stop>
@@ -269,6 +273,22 @@ export const LevelOneView = {
                     <h2>{{$language.translate('information-message')}}</h2>
                     <div class="modal-buttons">
                         <button class="big-buttons" id="info-back-button" @click="this.showInfo=false">{{$language.translate('okay-continue')}}</button>
+                    </div>
+                </div>
+            </div>
+            <div v-if="this.showLicense" class="modal-overlay" @click="handleOverlayClick">
+                <div class="modal-content license-modal" @click="this.showLicense=false">
+                    <h2>{{$language.translate('license-information')}}</h2>
+                    <div class="license-content">
+                        <p>{{$language.translate('license-details')}}</p>
+                        <div class="license-sections">
+                            <p><strong>{{$language.translate('license-freepik')}}</strong></p>
+                            <p><strong>{{$language.translate('license-public-domain')}}</strong></p>
+                            <p><strong>{{$language.translate('license-cc')}}</strong></p>
+                        </div>
+                    </div>
+                    <div class="modal-buttons">
+                        <button class="big-buttons" @click="this.showLicense=false">{{$language.translate('okay-continue')}}</button>
                     </div>
                 </div>
             </div>
