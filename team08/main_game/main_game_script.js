@@ -23,7 +23,6 @@ function loadRound() {
     "round"
   ).textContent = `Round ${currentRound} / ${totalRounds}`;
 
-
   document.getElementById("feedback").innerHTML = "";
   document.getElementById("confirmBtn").disabled = true;
   document.getElementById("nextBtn").style.display = "none";
@@ -33,7 +32,8 @@ function loadRound() {
   document.getElementById("confirmBtn").style.display = "inline-block";
 
   // set audio
-  document.getElementById("audioPlayer").src ="../../"+ currentData.words[currentData.correct_index].audio;
+  document.getElementById("audioPlayer").src =
+    "../../" + currentData.words[currentData.correct_index].audio;
 
   // Auto-play the audio for the new round
   const audio = document.getElementById("audioPlayer");
@@ -58,8 +58,7 @@ function loadRound() {
     card.setAttribute("role", "button");
     card.setAttribute("aria-label", w.en); // name read by screen readers
 
-    card.innerHTML = `<img src="${"../../"+w.img}" alt="${w.en}">`;
-
+    card.innerHTML = `<img src="${"../../" + w.img}" alt="${w.en}">`;
 
     card.addEventListener("click", () => {
       document
@@ -99,7 +98,7 @@ document.getElementById("confirmBtn").addEventListener("click", () => {
   }
 
   // Disable all image clicks after confirmation
-  document.querySelectorAll(".image-card").forEach(card => {
+  document.querySelectorAll(".image-card").forEach((card) => {
     card.style.pointerEvents = "none"; // Prevent further clicking
     //visually dim incorrect ones
     card.style.opacity = "0.5";
@@ -173,7 +172,6 @@ document.getElementById("confirmBtn").addEventListener("click", () => {
       tryAgainBtn.style.display = "none";
       confirmBtn.style.display = "inline-block";
       confirmBtn.disabled = true;
-
 
       //  Reset all card visuals completely
       document.querySelectorAll(".image-card").forEach((card) => {
@@ -371,15 +369,26 @@ document.addEventListener("keydown", (e) => {
     showVolumePopup(effectsEnabled ? "🎵 Effects ON" : "🔇 Effects OFF");
   }
 
-  if (e.key === "p" || e.key === "x") document.getElementById("playAudio").click(); // play audio
-  if (e.key === "c" && document.getElementById("confirmBtn").style.display === "inline-block" && !document.getElementById("confirmBtn").disabled)
+  if (e.key === "p" || e.key === "x")
+    document.getElementById("playAudio").click(); // play audio
+  if (
+    e.key === "c" &&
+    document.getElementById("confirmBtn").style.display === "inline-block" &&
+    !document.getElementById("confirmBtn").disabled
+  )
     document.getElementById("confirmBtn").click(); //press confirm
-  if (e.key === "v" && document.getElementById("tryAgainBtn").style.display === "inline-block" && !document.getElementById("tryAgainBtn").disabled)
+  if (
+    e.key === "v" &&
+    document.getElementById("tryAgainBtn").style.display === "inline-block" &&
+    !document.getElementById("tryAgainBtn").disabled
+  )
     document.getElementById("tryAgainBtn").click(); //press Retry
-  if (e.key === "n" && document.getElementById("nextBtn").style.display === "inline-block")
+  if (
+    e.key === "n" &&
+    document.getElementById("nextBtn").style.display === "inline-block"
+  )
     document.getElementById("nextBtn").click(); // go next
   if (e.key === "s") document.getElementById("settingsBtn").click(); // Open Settings
-
 });
 
 let keyboardNavListener = null;
@@ -388,7 +397,7 @@ function enableKeyboardNavigation() {
   const cards = Array.from(document.querySelectorAll(".image-card"));
 
   // Make sure each card can actually receive focus
-  cards.forEach(c => {
+  cards.forEach((c) => {
     c.tabIndex = 0;
   });
 
@@ -426,7 +435,10 @@ function enableKeyboardNavigation() {
     }
 
     //  Select with Enter or Space
-    if ((e.key === "Enter" || e.key === " ") && document.activeElement.classList.contains("image-card")) {
+    if (
+      (e.key === "Enter" || e.key === " ") &&
+      document.activeElement.classList.contains("image-card")
+    ) {
       e.preventDefault();
       document.activeElement.click();
     }
@@ -434,7 +446,6 @@ function enableKeyboardNavigation() {
 
   document.addEventListener("keydown", keyboardNavListener);
 }
-
 
 // Small on-screen popup to show current volume/effect changes
 function showVolumePopup(text) {
@@ -461,7 +472,6 @@ function showVolumePopup(text) {
     popup.style.opacity = "0";
   }, 1200);
 }
-
 
 // Start first round
 loadRound();
