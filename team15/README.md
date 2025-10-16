@@ -1,6 +1,6 @@
 # 🏷️ Swedish Learning App – Dressing Pelle
 
-A web-based application that helps users learn basic Swedish words and pronunciation through interactive exercises.
+A web-based application that helps users learn basic Swedish words through interactive exercises.
 
 ## 💡 Overview / Introduction
 
@@ -12,7 +12,7 @@ This project is an interactive Swedish language-learning game designed to make v
 - Three progressive levels with increasing linguistic complexity
 - Immediate feedback on answers (correct/incorrect detection)
 - End-of-level performance summaries for progress tracking
-- Support for English and Swedish language files
+- Support for English and Swedish language
 - Score counter and wardrobe popup interactions
 
 ## 🧰 Technologies Used
@@ -62,7 +62,7 @@ This project is an interactive Swedish language-learning game designed to make v
 ---
 
 ## 🧭 Development Process
-We followed the **Scrum** methodology, holding **bi-weekly sprint meetings** and **bi-weekly retrospective meetings**, and using **JIRA** to track issues and milestones.
+We followed the **Scrum** methodology, holding **bi-weekly sprint meetings** and **bi-weekly retrospective meetings**, and used **JIRA** to track issues and milestones.
 
 ---
 
