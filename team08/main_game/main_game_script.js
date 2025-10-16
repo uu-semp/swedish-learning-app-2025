@@ -3,6 +3,9 @@ import {
   update_selection,
   finish_game,
 } from "../selection/selection.js";
+import { local_set_volume, local_set_sound_effects } from "../store/write.js";
+import { local_get_volume, local_get_sound_effects } from "../store/read.js";
+
 
 let totalRounds = 10;
 let currentRound = 1;
@@ -30,8 +33,7 @@ function loadRound() {
   document.getElementById("confirmBtn").style.display = "inline-block";
 
   // set audio
-  document.getElementById("audioPlayer").src =
-    currentData.words[currentData.correct_index].audio;
+  document.getElementById("audioPlayer").src ="../../"+ currentData.words[currentData.correct_index].audio;
 
   // Auto-play the audio for the new round
   const audio = document.getElementById("audioPlayer");
@@ -56,7 +58,7 @@ function loadRound() {
     card.setAttribute("role", "button");
     card.setAttribute("aria-label", w.en); // name read by screen readers
 
-    card.innerHTML = `<img src="${w.img}" alt="${w.en}">`;
+    card.innerHTML = `<img src="${"../../"+w.img}" alt="${w.en}">`;
 
 
     card.addEventListener("click", () => {
@@ -70,9 +72,6 @@ function loadRound() {
     container.appendChild(card);
   });
   enableKeyboardNavigation();
-  showVolumePopup(text)
-
-
 }
 
 // Confirm Choice
@@ -257,7 +256,26 @@ const audioPlayer = document.getElementById("audioPlayer");
 
 let effectsEnabled = true;
 
-//  Restore saved settings (if any)
+// Load global audio 
+const globalAudioSettings = localStorage.getItem("team08");
+if (globalAudioSettings) {
+  try {
+    const parsed = JSON.parse(globalAudioSettings);
+    if (parsed.volume !== undefined) {
+      const normalizedVol = Math.min(1, Math.max(0, parseInt(parsed.volume) / 100));
+      localStorage.setItem("gameVolume", normalizedVol);
+      console.log(`Sound effects enabled: ${normalizedVol}`);
+    }
+    if (parsed.sound_effects_enabled !== undefined) {
+      localStorage.setItem("effectsEnabled", parsed.sound_effects_enabled);
+      console.log(`Sound effects enabled: ${parsed.sound_effects_enabled}`);
+    }
+  } catch (e) {
+    console.warn("Invalid audio settings format in localStorage.");
+  }
+}
+
+//  Restore saved settings 
 const savedVolume = localStorage.getItem("gameVolume");
 const savedEffects = localStorage.getItem("effectsEnabled");
 
@@ -296,6 +314,9 @@ volumeControl.addEventListener("input", () => {
   const vol = parseFloat(volumeControl.value);
   audioPlayer.volume = vol;
   localStorage.setItem("gameVolume", vol);
+  // updateglobal audio 
+  local_set_volume(vol)
+  
 });
 
 //  Toggle sound effects — sync + persist
@@ -305,6 +326,9 @@ toggleEffects.addEventListener("click", () => {
     ? `<i class="fas fa-music"></i> ON`
     : `<i class="fas fa-music-slash"></i> OFF`;
   localStorage.setItem("effectsEnabled", effectsEnabled);
+  
+// updateglobal audio 
+  local_set_sound_effects(effectsEnabled);
 });
 
 window.addEventListener("beforeunload", () => {
@@ -331,6 +355,7 @@ document.addEventListener("keydown", (e) => {
     volumeControl.value = newVol.toFixed(1);
     audioPlayer.volume = newVol;
     localStorage.setItem("gameVolume", newVol);
+
     showVolumePopup(`🔉 ${Math.round(newVol * 100)}%`);
   }
 
@@ -342,6 +367,7 @@ document.addEventListener("keydown", (e) => {
       ? `<i class="fas fa-music"></i> ON`
       : `<i class="fas fa-music-slash"></i> OFF`;
     localStorage.setItem("effectsEnabled", effectsEnabled);
+    
     showVolumePopup(effectsEnabled ? "🎵 Effects ON" : "🔇 Effects OFF");
   }
 
