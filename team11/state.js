@@ -3,7 +3,7 @@
 // Team 11 – Game state helpers
 // =================================================
 
-import { generateShelf, generateShoppingList } from "./gamelogic.js";
+import { generateShelf, generateShoppingList } from "./gameLogic.js";
 import { getItems } from "./data.js";
 
 // Keep a local storage key in this module (don't rely on other files)

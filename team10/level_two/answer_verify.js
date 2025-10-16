@@ -69,8 +69,9 @@ $(document).ready(function(){
     // Check for level up condition (only advance if they are currently on level 2)
     if (totalScore >= 10 && progress.currentLevel === 2) {
       progress.currentLevel = 3; // Advance to Level 3!
-      alert(`You got ${newScore} correct! Your total score is now ${totalScore}/10. Congratulations, you've unlocked Level 3!`);
+      alert(`You got ${newScore} correct! Your total score is now ${totalScore}/10`);
       save.stats.setCompletion("team10", 67);
+      window.location.href = '../advance-next-level/advance-next-level3.html';
     } else if (progress.currentLevel > 2) {
        alert(`You got ${newScore} correct! Great job practicing!`);
     } else {

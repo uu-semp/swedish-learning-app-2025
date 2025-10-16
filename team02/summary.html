@@ -14,7 +14,7 @@
         <section class="summary-card">
             <h1> Game Summary</h1>
             <p style="color:#555; margin-bottom: 24px; font-size:1.15rem;">
-                Congratulations! You have completed the game.
+                Congratulations! You have completed the level.
             </p>
             <div class="summary-content">
                 <div class="item">
@@ -28,7 +28,8 @@
             </div>
             <nav class="actions">
                 <a class="btn" href="index.html"><i class="fas fa-home"></i> Main Menu</a>
-                <a class="btn" href="./level1.html"><i class="fas fa-redo"></i> Play Again</a>
+                <a class="btn" href="#" id="play-again-btn"><i class="fas fa-redo"></i> Play Again</a>
+                <a class="btn" href="#" id="play-next-btn"><i class="fas fa-arrow-right"></i> Next Level</a>
             </nav>
         </section>
     </main>
@@ -48,7 +49,60 @@
             });
         })();
     </script>
-    <!-- Hook your script later to fill #a-level and #a-score -->
+    <!-- Script to populate summary with actual game data -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get stored game data
+            const score = localStorage.getItem('gameScore');
+            const level = localStorage.getItem('gameLevel');
+            
+            // Debug: log what we found
+            console.log('Retrieved from localStorage - Score:', score, 'Level:', level);
+            console.log('All localStorage keys:', Object.keys(localStorage));
+            
+            // Update the summary display
+            if (score !== null && level !== null) {
+                document.getElementById('a-score').textContent = score;
+                document.getElementById('a-level').textContent = level;
+                
+                // Set the "Play Again" link based on the completed level
+                const playAgainBtn = document.getElementById('play-again-btn');
+                if (level === 'Level 1') {
+                    playAgainBtn.href = "level.html?level=1";
+                } else if (level === 'Level 2') {
+                    playAgainBtn.href = "level.html?level=2";
+                } else if (level === 'Level 3') {
+                    playAgainBtn.href = "level.html?level=3";
+                } else {
+                    // Default to level 1 if level is unknown
+                    playAgainBtn.href = "level.html?level=1";
+                }
+
+                const playNextBtn = document.getElementById('play-next-btn');
+                if (level === 'Level 1') {
+                    playNextBtn.href = "level.html?level=2";
+                } else if (level === 'Level 2') {
+                    playNextBtn.href = "level.html?level=3";
+                } else if (level === 'Level 3') {
+                    playNextBtn.href = "index.html";
+                } else {
+                    // Default to level 1 if level is unknown
+                    playNextBtn.href = "level.html?level=2";
+                }
+                
+                // Clear the stored data after displaying
+                localStorage.removeItem('gameScore');
+                localStorage.removeItem('gameLevel');
+            } else {
+                // If no game data found, show a message or redirect
+                document.getElementById('a-score').textContent = '0';
+                document.getElementById('a-level').textContent = 'No game completed';
+                document.getElementById('play-again-btn').href = './level.html?level=1'; // Default to level 1
+                console.log('No game data found in localStorage. User may have accessed summary directly.');
+            }
+        });
+
+    </script>
     
 </body>
 </html>

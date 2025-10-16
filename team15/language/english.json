@@ -35,5 +35,10 @@
     "num-tries":"TOTAL NUMBER OF TRIES: ",
     "num-right":"TOTAL NUMBER RIGHT: ",
     "information-message":"Drag the correct clothing item onto Pelle, and drop it there to give your answer!"  ,
-    "okay-continue":"OKAY! GO BACK"  
+    "okay-continue":"OKAY! GO BACK",
+    "license-information":"LICENSE INFORMATION",
+    "license-details":"This game uses images from multiple sources with proper attribution required by each license:",
+    "license-freepik":"Freepik License: Pelle character by macrovector, coin by studiogstock, hat icons by jcomp, shirt by brgfx, pants and shoes by freepik. All from freepik.com under Freepik License terms.",
+    "license-public-domain":"Public Domain: Swedish and UK flag images from Wikimedia Commons (no attribution required)", 
+    "license-cc":"CC BY-NC-SA 3.0: All clothing item images from Papunets bildbank (papunet.net) created by Elina Vanninen, Sergio Palao/ARASAAC, and Sclera. Licensed under Creative Commons Attribution-NonCommercial-ShareAlike 3.0. License URL: https://creativecommons.org/licenses/by-nc-sa/3.0/"
 }
