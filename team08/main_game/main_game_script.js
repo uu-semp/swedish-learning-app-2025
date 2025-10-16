@@ -249,28 +249,6 @@ document.getElementById("restartBtn").addEventListener("click", () => {
 
 // ===== SOUND SETTINGS MODAL =====
 
-// Load global audio
-const globalAudioSettings = localStorage.getItem("team08");
-if (globalAudioSettings) {
-  try {
-    const parsed = JSON.parse(globalAudioSettings);
-    if (parsed.volume !== undefined) {
-      const normalizedVol = Math.min(
-        1,
-        Math.max(0, parseInt(parsed.volume) / 100)
-      );
-      localStorage.setItem("gameVolume", normalizedVol);
-      console.log(`Sound effects enabled: ${normalizedVol}`);
-    }
-    if (parsed.sound_effects_enabled !== undefined) {
-      localStorage.setItem("effectsEnabled", parsed.sound_effects_enabled);
-      console.log(`Sound effects enabled: ${parsed.sound_effects_enabled}`);
-    }
-  } catch (e) {
-    console.warn("Invalid audio settings format in localStorage.");
-  }
-}
-
 window.addEventListener("beforeunload", () => {
   const audio = document.getElementById("audioPlayer");
   if (audio) audio.pause();
