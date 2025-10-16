@@ -313,7 +313,7 @@ volumeControl.addEventListener("input", () => {
   audioPlayer.volume = vol;
   localStorage.setItem("gameVolume", vol);
   // updateglobal audio 
-  local_set_volume(vol)
+  local_set_volume(vol*100)
   
 });
 
