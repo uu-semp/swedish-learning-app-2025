@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="../scripts/save.js"></script>
+  <title>Select Categories</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="reset.css">
+  <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="select.css">
+  <link rel="stylesheet" href="options/settings.css">
+  <script type="module" src="options/settings.js"></script>
+  <script type="module" src="./select.js"></script>
+</head>
+
+<body class="game-frame">
+  <main>
+    <a href="index.html" id="home">
+      <i class="fa fa-home" aria-hidden="true"></i>
+    </a>
+    <button id="open-settings-button" aria-label="open settings">
+      <i class="fa-solid fa-gear"></i>
+    </button>
+
+    <h1>Game Setup</h1>
+    <section>
+      <h2>Choose which categories of vocabulary to include:</h2>
+      <div id="categories">
+        <div class="category-container">
+          <input type="checkbox" name="Food" id="Food" class="check_category">
+          <img src="../assets/team08/selection_images/emojione_pot-of-food.png" alt="A cooking stew">
+          <label for="Food">Food</label>
+        </div>
+        <div class="category-container">
+          <input type="checkbox" name="Clothing" id="Clothing" class="check_category">
+          <img src="../assets/team08/selection_images/emojione-v1_t-shirt.png" alt="A green t-shirt">
+          <label for="Clothing">Clothing</label>
+        </div>
+        <div class="category-container">
+          <input type="checkbox" name="Furniture" id="Furniture" class="check_category">
+          <img src="../assets/team08/selection_images/twemoji_chair.png" alt="A small wooden chair">
+          <label for="Furniture">Furniture</label>
+        </div>
+    </section>
+    </div>
+    <a href="./main_game/main_game_component.html" id="start-game">Continue</a>
+    <p class="error-message">Select at least one category</p>
+
+    <div id="volumePopup">
+    </div>
+  </main>
+
+  <!-- Creates the modal window. Default hidden form view -->
+  <dialog id="settings-modal">
+    <h2>Settings</h2>
+    <button id="close-settings">&times;</button>
+    <div>
+      <label for="volume-slider">VOLUME</label>
+      <input type="range" id="volume-slider" min="0" max="100" value="50">
+      <br>
+    </div>
+    <div class="switch">
+      <label for="sound-effects-toggle">Sound Effects</label>
+      <input type="checkbox" id="sound-effects-toggle" checked>
+      <br>
+    </div>
+  </dialog>
+</body>
+
+</html>
