@@ -8,15 +8,14 @@
 const app = Vue.createApp({
   data() {
     return {
-tempStreets: []
-      ],
+tempStreets: [],
 
       isLoading: true,
       currentScreen: 'game',
 
 progress: 0,
       progressMax: 10,
-
+      progressMin: 1,
       houseOptions: [],
       correctHouseIndex: -1,
       currentQuestion: null,
@@ -29,7 +28,7 @@ progress: 0,
       translatedIndexes: [],
 
       vocabNumbers: [],
-      // vocabStreets: [],
+      vocabStreets: [],
     }
   },
 
@@ -69,7 +68,7 @@ progress: 0,
       const vocab = window.vocabulary.get_vocab(this.vocabNumbers[randomNoIndex]);
       this.currentQuestion = vocab;
 
-const randomStreetIndex = irandom_range(0 , this.vocabStreets.length - 1);
+const randomStreetIndex = this.irandom_range(0 , this.vocabStreets.length - 1);
 const vocabStreet = window.vocabulary.get_vocab(this.vocabStreets[randomStreetIndex]);
 this.currentStreet = vocabStreet.sv
 
@@ -92,6 +91,10 @@ this.currentStreet = vocabStreet.sv
       msg.className = "house-message wrong";
       msg.innerHTML = "✖ Wrong house<br>Try again!";
       btns[selectedIndex].parentElement.insertBefore(msg, btns[selectedIndex].nextSibling);
+      this.progress += wasCorrect ? 1 : -1;
+      if (this.progress < this.progressMin)  {
+        this.progress = this.progressMin;
+      }
       return; // stay on the same round
     } else {
       const ok = document.createElement("div");
@@ -103,7 +106,7 @@ this.currentStreet = vocabStreet.sv
       setTimeout(() => {
         this.progress += 1;
         if (this.progress >= this.progressMax) {
-      alert(`Congrats! You finished ${this.progressMax} rounds.`);
+      // alert(`Congrats! You finished ${this.progressMax} rounds.`);
       save.set("team13", "stage_completed_1", true) 
       save.stats.incrementWin("team13");
       save.stats.setCompletion("team13", 100);
@@ -115,20 +118,21 @@ this.currentStreet = vocabStreet.sv
       }, 700);
       return; // prevent the original block below from running immediately
     }
+    
 
 
-        this.progress += wasCorrect ? 1 : -1;
+        /*this.progress += wasCorrect ? 1 : -1;
         if (this.progress < 1)  {
           this.progress = 1;
         }
 
         if (this.progress >= this.progressMax) {
-          alert("Congrats! You finished 10 rounds.");
+          // alert("Congrats! You finished 10 rounds.");
           window.location.href = 'index.html';
           return;
         }
 
-        this.startNewRound();
+        this.startNewRound();*/
       },
 
       toggleTranslation() {
@@ -197,7 +201,7 @@ this.currentStreet = vocabStreet.sv
     window.vocabulary.when_ready(() => {
       console.log("Vocabulary loaded, vue ready");
       this.vocabNumbers = window.vocabulary.get_category("number");
-      // this.vocabStreets = window.vocabulary.get_category("street");
+      this.vocabStreets = window.vocabulary.get_category("street");
       this.isLoading = false;
       this.startNewRound();
     });
