@@ -1,53 +1,28 @@
-<!doctype html>
 <!-- =============================================
-Owned by Team 05 — Red Room (Final Integrated Version)
+Owned by Team 05 — Red Room
 ================================================= -->
+
+<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Red Room – Team 05</title>
 
-  <!-- course-shared libs -->
-  <link rel="stylesheet" href="../style.css" />
-  <script src="../scripts/vocabulary.js"></script>
-  <script src="../scripts/save.js"></script>
+  <link rel="stylesheet" href="../../style.css" />
+  <script src="../../scripts/vocabulary.js"></script>
+  <script src="../../scripts/save.js"></script>
 
-  <!-- allowed libs -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css">
   <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
 
-  <!-- team-specific -->
-  <link rel="stylesheet" href="styles/index.css" />
-  <script src="js/index.js" defer></script>
+  <link rel="stylesheet" href="../styles/medium.css" />
+  <script src="../js/medium.js" defer></script>
 </head>
 <body>
 <header><h1>Team 05 – Red Room</h1></header>
 
 <main class="game-frame">
-  <!-- Screen 1 – Main Menu -->
-  <section id="start-screen" class="start-screen">
-    <h2 class="game-title">Red Room</h2>
-    <div class="menu">
-      <button class="menu-btn" id="btn-start"><i class="fa-solid fa-play"></i> Start Game</button>
-      <button class="menu-btn" id="btn-continue"><i class="fa-solid fa-forward"></i> Continue</button>
-      <button class="menu-btn" id="btn-intro"><i class="fa-solid fa-info-circle"></i> How to Play</button>
-    </div>
-  </section>
-
-  <!-- Screen 2 – Level Selection -->
-  <section id="level-select" class="hidden level-select">
-    <h3>Select a Level (4 – 6)</h3>
-    <div class="levels-grid">
-      <button class="level-btn" data-level="4">Level 4</button>
-      <button class="level-btn" data-level="5">Level 5</button>
-      <button class="level-btn" data-level="6">Level 6</button>
-    </div>
-    <p id="overall-progress" class="mt-2"></p>
-    <button id="btn-back-from-levels" class="back-btn"><i class="fa-solid fa-arrow-left"></i> Main Menu</button>
-  </section>
-
-  <!-- Screen 3 – Medium (Picture → Word Typing) -->
   <section id="medium-screen" class="hidden">
     <div class="screen-header">
       <button class="back-btn" id="medium-back"><i class="fa-solid fa-arrow-left"></i> Levels</button>
@@ -66,7 +41,6 @@ Owned by Team 05 — Red Room (Final Integrated Version)
     </div>
   </section>
 
-  <!-- Screen 4 – Win -->
   <section id="win-screen" class="hidden">
     <div class="win-card">
       <h2 id="win-title">You completed Level X!</h2>
@@ -78,7 +52,6 @@ Owned by Team 05 — Red Room (Final Integrated Version)
     </div>
   </section>
 
-  <!-- Instruction modal -->
   <div id="intro-modal" class="modal hidden" role="dialog" aria-modal="true">
     <div class="modal-content">
       <h3>How to Play</h3>

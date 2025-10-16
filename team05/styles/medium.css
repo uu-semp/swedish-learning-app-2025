@@ -1,0 +1,176 @@
+/* =============================================
+Owned by Team 05
+================================================
+** NOTE: Styles for the start screen and level
+** selection screen have been removed as they
+** are no longer used on this page.
+================================================ */
+
+/* Base */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  background: #000;
+  color: #fff;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.hidden { display: none !important; }
+.mt-2 { margin-top: 20px; }
+
+main.game-frame {
+  background: linear-gradient(135deg, #000, #1a0000, #2b0000);
+  border-radius: 20px;
+  padding: 40px 50px;
+  box-shadow: 0 14px 40px rgba(255,0,0,0.3);
+  width: 90%;
+  max-width: 950px;
+  min-height: 70vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* General Buttons */
+.back-btn {
+  margin-top: 22px;
+  padding: 10px 18px;
+  border-radius: 10px;
+  border: 2px solid #dc143c;
+  background: linear-gradient(180deg, #8b0000 0%, #000 100%);
+  color: #fff;
+  cursor: pointer;
+}
+.back-btn:hover {
+  background: linear-gradient(180deg, #dc143c, #8b0000);
+}
+
+/* Medium Level Screen */
+.screen-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+.help-btn {
+  padding: 8px 12px;
+  font-size: 14px;
+  border-radius: 8px;
+  border: 2px solid #dc143c;
+  background: linear-gradient(135deg, #dc143c, #8b0000);
+  color: #fff;
+  cursor: pointer;
+}
+.help-btn:hover { background: linear-gradient(135deg, #ff1744, #dc143c); }
+
+.image-wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 240px;
+  margin-bottom: 20px;
+}
+.image-wrap img {
+  max-height: 250px;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(255,0,0,0.5);
+}
+
+.answer-row {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 16px;
+}
+
+#medium-answer {
+  width: 60%;
+  max-width: 520px;
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 2px solid #dc143c;
+  background: #1a1a1a;
+  color: #fff;
+}
+
+.primary-btn {
+  padding: 12px 18px;
+  border: 2px solid #dc143c;
+  border-radius: 10px;
+  background: linear-gradient(180deg, #dc143c, #8b0000);
+  color: #fff;
+  cursor: pointer;
+}
+.primary-btn:hover {
+  background: linear-gradient(180deg, #ff1744, #dc143c);
+}
+
+#medium-feedback {
+  margin-top: 12px;
+  font-size: 18px;
+  color: #fff;
+}
+
+.english-hint {
+  font-size: 20px;
+  text-align: center;
+  color: #ff9999;
+  margin-top: 8px;
+  font-style: italic;
+  letter-spacing: 0.5px;
+}
+
+/* Win Screen */
+#win-screen {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.win-card {
+  text-align: center;
+  padding: 24px;
+  border-radius: 12px;
+  background: linear-gradient(180deg, #8b0000, #000);
+  color: #fff;
+  box-shadow: 0 10px 40px rgba(255,0,0,0.3);
+  border: 2px solid #dc143c;
+}
+.win-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  margin-top: 14px;
+}
+
+/* Modal */
+.modal {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0,0,0,0.8);
+  z-index: 2000;
+}
+.modal-content {
+  background: linear-gradient(180deg, #8b0000, #000);
+  border: 2px solid #dc143c;
+  color: #fff;
+  padding: 20px 26px;
+  border-radius: 12px;
+  width: min(88%, 540px);
+  text-align: center;
+  box-shadow: 0 14px 60px rgba(220,20,60,0.4);
+}
+.close-btn {
+  margin-top: 14px;
+  padding: 10px 14px;
+  border: 2px solid #dc143c;
+  border-radius: 8px;
+  background: linear-gradient(180deg, #dc143c, #8b0000);
+  color: #fff;
+  cursor: pointer;
+}
+.close-btn:hover { background: linear-gradient(180deg, #ff1744, #dc143c); }
