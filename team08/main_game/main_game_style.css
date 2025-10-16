@@ -207,14 +207,15 @@ button:focus {
 
 #close-copyright {
   position: absolute;
-  top: 2px;
-  right: 2px;
-  background-color: none;
+  top: 5px;
+  right: 5px;
+  background-color: transparent;
   border: none;
-  font-size: larger;
+  font-size: 30px;
 }
 #close-copyright:hover {
   cursor: pointer;
+  transform: scale(1.1);
 }
 
 #copyright {
