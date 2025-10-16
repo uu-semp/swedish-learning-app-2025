@@ -69,9 +69,8 @@ function buildFilter(chapters){
 
 function makeFilterBtn(index, value){
   const btn = document.createElement("button");
-  btn.className = "filter-btn";
-  btn.id = `${index}`
-  btn.textContent = `${translations["chapter"][currentLanguage]} ${index}`
+  btn.className = "filter-btn"; 
+  btn.textContent = `${translations["chapter"][currentLanguage]} ${index}`;
  
   btn.dataset.chapter = value;
   return btn;
@@ -126,7 +125,7 @@ function renderGrid(games) {
     // Build game tags HTML
     const tagsHtml = (Array.isArray(g.supported_chapters) && g.supported_chapters.length)
       ? `<div class="card-tags">
-           ${g.supported_chapters.map(ch => `<span class="tag">${translations["chapter"][currentLanguage]} ${ch}</span>`).join("")}
+           ${g.supported_chapters.map(ch => `<span class="tag" data-chapter=${ch}>${translations["chapter"][currentLanguage]} ${ch}</span>`).join("")}
          </div>`
       : "";
     
@@ -328,11 +327,17 @@ async function setLanguage(lang) {
     // Translating the filter buttons
     const filters = document.querySelectorAll('.filter-btn');
     filters.forEach(fil => {
-      const index = fil.getAttribute('id')
+      //console.log(fil)
+      const index = fil.getAttribute('data-chapter')
       fil.textContent = `${translations["chapter"][currentLanguage]} ${index}`
     })
 
-    
+    // Translating the filter tags in the game grid
+    const tags = document.querySelectorAll('.tag');
+    tags.forEach(tag => {
+      const index = tag.getAttribute('data-chapter')
+      tag.textContent = `${translations["chapter"][currentLanguage]} ${index}`
+    })
    
   } catch (error) {
     console.error(error)
