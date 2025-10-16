@@ -22,10 +22,10 @@ export default {
       </section>
       <progress-bar :steps="questions.length" :active="currentIndex+1"></progress-bar>
       <navigation 
-       @next="nextQuestion" 
-       @prev="prevQuestion"
-       @reset="resetQuestion">
-       :selectedOption="this.selectedOption">
+        :has-selection="selectedOption !== null"
+        @next="nextQuestion" 
+        @prev="prevQuestion"
+        @reset="resetQuestion">
       </navigation>
   </div>
   `,
