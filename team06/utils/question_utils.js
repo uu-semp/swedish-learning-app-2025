@@ -227,7 +227,7 @@ function saveOverrides(over) {
  * @returns {Promise<Question[]>} All questions in normalized order.
  * @throws {Error} on fetch/parse/validation errors
  */
-export async function initQuestions(datasetUrl = "./data/questions.json") {
+export async function initQuestions(datasetUrl = "../data/questions.json") {
     const res = await fetch(datasetUrl);
     if (!res.ok) throw new Error(`HTTP ${res.status} loading ${datasetUrl}`);
     const json = await res.json();

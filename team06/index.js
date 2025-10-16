@@ -145,9 +145,9 @@ function insertLetter(letter) {
 // Show Summary View (after all questions are done)
 function showSummary() {
 	hideAllViews();
-  document.getElementById("summary-view").style.display = "block";
-  const scoreElement = document.getElementById("final-score");
-  if (scoreElement) scoreElement.textContent = String(score);
+	document.getElementById("summary-view").style.display = "block";
+	const scoreElement = document.getElementById("final-score");
+	if (scoreElement) scoreElement.textContent = String(score);
 
 	// Optional: dynamic feedback text
 	const summarySubtitle = document.querySelector(".summary-subtitle");
@@ -242,14 +242,14 @@ function updateQuestion() {
 	selectedAnswer = null;
 	selectedButton = null;
 
-  // // Reset/prepare hint UI
-  // toggleHint(false, "");
-  // const hintBtn = document.getElementById("hint-btn");
-  // if (hintBtn) {
-  //   const hasHint = !!(q.hint && String(q.hint).trim());
-  //   hintBtn.style.display = hasHint ? "inline-block" : "none";
-  //   hintBtn.textContent = "Show Hint";
-  // }
+	// // Reset/prepare hint UI
+	// toggleHint(false, "");
+	// const hintBtn = document.getElementById("hint-btn");
+	// if (hintBtn) {
+	//   const hasHint = !!(q.hint && String(q.hint).trim());
+	//   hintBtn.style.display = hasHint ? "inline-block" : "none";
+	//   hintBtn.textContent = "Show Hint";
+	// }
 
 	// Update counter "Question X/Y"
 	const counterEl = document.getElementById("question-counter");
@@ -557,18 +557,18 @@ $(function () {
 		showIntro();
 
 		// OLD TEST FUNCTIONS (kept for reference)
-		$("#check-jquery").on("click", () => {
-			alert("JavaScript and jQuery are working.");
-		});
+		// $("#check-jquery").on("click", () => {
+		// 	alert("JavaScript and jQuery are working.");
+		// });
 
-		$("#check-saving").on("click", () => {
-			var data = window.save.get("team06");
-			data.counter = data.counter ?? 0;
-			data.counter += 1;
-			$("#check-saving").text(
-				`This button has been pressed ${data.counter} times`
-			);
-			window.save.set("team06", data);
-		});
+		// $("#check-saving").on("click", () => {
+		// 	var data = window.save.get("team06");
+		// 	data.counter = data.counter ?? 0;
+		// 	data.counter += 1;
+		// 	$("#check-saving").text(
+		// 		`This button has been pressed ${data.counter} times`
+		// 	);
+		// 	window.save.set("team06", data);
+		// });
 	});
 });

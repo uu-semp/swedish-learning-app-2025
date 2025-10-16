@@ -66,8 +66,7 @@
  * Key to access data from localStorage.
  * @constant {string}
  */
-const LS_KEY = "team06_progress_v1";
-
+const LS_KEY = "team06";
 /* ========================== Internal helpers ========================== */
 //#region
 
@@ -78,9 +77,11 @@ const LS_KEY = "team06_progress_v1";
  */
 function _load() {
 	try {
-		const s = localStorage.getItem(LS_KEY);
-		return s ? JSON.parse(s) : {};
+		const s = window.save.get(LS_KEY);
+		console.log("Loaded data: ", s);
+		return s ? s : {};
 	} catch {
+		console.log("failed to fetch data at id: ", LS_KEY);
 		return {};
 	}
 }
@@ -91,7 +92,8 @@ function _load() {
  * @returns {void}
  */
 function _save(db) {
-	localStorage.setItem(LS_KEY, JSON.stringify(db));
+	console.log("Saved data: ", db);
+	window.save.set(LS_KEY, db);
 }
 
 /**
@@ -184,7 +186,7 @@ export function resetQuestion(id) {
  * @returns {void}
  */
 export function resetAll() {
-	localStorage.removeItem(LS_KEY);
+	window.save.clear(LS_KEY);
 }
 //#endregion
 /* ========================= Question selectors ========================= */
@@ -357,17 +359,17 @@ export function createSession(questions, { mode = "regular", size = 5 } = {}) {
 		/** Returns a question or null if session is exhausted (no eligible left or reached size) */
 		next() {
 			if (asked >= size) return null;
-            const q = pickNext();
-            if (!q) return null; // no eligible left
-            seen.add(q.id); // mark as seen immediately, never repeat in this session
-            asked += 1;
-            return q;
+			const q = pickNext();
+			if (!q) return null; // no eligible left
+			seen.add(q.id); // mark as seen immediately, never repeat in this session
+			asked += 1;
+			return q;
 		},
 
-        /** Record the result into progress store */
-        record(q, wasCorrect) {
-            return recordResult(q.id, wasCorrect);
-        }
+		/** Record the result into progress store */
+		record(q, wasCorrect) {
+			return recordResult(q.id, wasCorrect);
+		},
 	};
 }
 
