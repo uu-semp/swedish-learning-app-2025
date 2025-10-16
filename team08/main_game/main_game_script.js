@@ -41,7 +41,10 @@ function loadRound() {
   });
 
   // Play Audio button
-  document.getElementById("playAudio").onclick = () => audio.play();
+  document.getElementById("playAudio").onclick = () => {
+    audio.volume = local_get_volume() / 100;
+    audio.play();
+  };
 
   // render images
   let container = document.getElementById("imageOptions");
