@@ -20,6 +20,7 @@ tempStreets: [],
       correctHouseIndex: -1,
       currentQuestion: null,
       currentStreet: '',
+      houseClicked: false,
 
       showTranslation: false,
       swedishSentence: ["Jag", "bor", "på", "-street", "-int"],
@@ -45,14 +46,6 @@ tempStreets: [],
   },
 
   methods: {
-    // startGame() {
-    //   this.progress = 1;
-    //   this.currentScreen = 'game';
-    //   this.startNewRound();
-    // },
-    // backToMenu() {
-    //   this.currentScreen = 'menu';
-    // },
     startNewRound() {
         // Remove any leftover "✔ Correct!" / "✖ Wrong..." messages
       document.querySelectorAll(".house-message").forEach(n => n.remove());
@@ -78,6 +71,7 @@ tempStreets: [],
 
       this.houseOptions = result.houseArray;
       this.correctHouseIndex = result.correctHouse;
+      this.houseClicked = false;
     },
 
     checkAnswer(selectedIndex) {
@@ -101,18 +95,17 @@ tempStreets: [],
         ok.className = "house-message correct";
         ok.textContent = "✔ Correct!";
         btns[selectedIndex].parentElement.insertBefore(ok, btns[selectedIndex].nextSibling);
-
-        // briefly show it, then proceed using your existing code below
+        if (!this.houseClicked){this.progress += 1}
+        this.houseClicked = true;
         setTimeout(() => {
-          this.progress += 1;
+          
           if (this.progress >= this.progressMax) {
-        // alert(`Congrats! You finished ${this.progressMax} rounds.`);
-        save.set("team13", "stage_completed_1", true) 
-        save.stats.incrementWin("team13");
-        save.stats.setCompletion("team13", 100);
-        //for future: make this "stage_completed_" + stageNumber.string()
-        window.location.href = 'end_screen.html';
-        return;
+            save.set("team13", "stage_completed_1", true) 
+            save.stats.incrementWin("team13");
+            save.stats.setCompletion("team13", 100);
+            //for future: make this "stage_completed_" + stageNumber.string()
+            window.location.href = 'end_screen.html';
+            return;
           }
           this.startNewRound();
         }, 700);
