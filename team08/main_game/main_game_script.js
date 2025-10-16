@@ -46,6 +46,9 @@ function loadRound() {
     audio.play();
   };
 
+  // Add copyright
+  update_licenses(currentData.words);
+
   // render images
   let container = document.getElementById("imageOptions");
   container.innerHTML = "";
@@ -247,13 +250,12 @@ document.getElementById("restartBtn").addEventListener("click", () => {
   loadRound();
 });
 
-// ===== SOUND SETTINGS MODAL =====
-
 window.addEventListener("beforeunload", () => {
   const audio = document.getElementById("audioPlayer");
   if (audio) audio.pause();
 });
 
+// ===== Keyboard Nav =====
 // Enable Keyboard keys for buttons
 document.addEventListener("keydown", (e) => {
   if (e.key === "p" || e.key === "x")
@@ -332,6 +334,36 @@ function enableKeyboardNavigation() {
   };
 
   document.addEventListener("keydown", keyboardNavListener);
+}
+
+// CopyRight Info
+/** @type {HTMLElement} */
+const copyright_modal = document.getElementById("copyright");
+/** @type {HTMLElement} */
+const copyright_modal_exit = document.getElementById("close-copyright");
+
+const copyrightBtn = document.getElementById("copyrightBtn");
+copyrightBtn.addEventListener("click", () => {
+  copyright_modal.style.display = "block";
+});
+
+copyright_modal_exit.addEventListener("click", () => {
+  copyright_modal.style.display = "none";
+});
+
+const IMAGE_1 = document.getElementById("image1");
+const IMAGE_2 = document.getElementById("image2");
+const IMAGE_3 = document.getElementById("image3");
+const IMAGES = [IMAGE_1, IMAGE_2, IMAGE_3];
+
+/**
+ *
+ * @param {import("../selection/selection.js").FrontVocab[]} words
+ */
+function update_licenses(words) {
+  for (let i = 0; i < IMAGES.length; i++) {
+    IMAGES[i].innerHTML = words[i].img_copyright;
+  }
 }
 
 // Start first round

@@ -37,11 +37,13 @@ tutorial_modal?.addEventListener("click", (e) => {
 
 const persistentPopup = document.querySelector("#persistent-popup");
 const proceedBtn = document.querySelector("#persistent-popup button");
-if (local_get_persistent_notice()) {
+if (!local_get_persistent_notice()) {
   persistentPopup.style.display = "none";
+} else {
+  persistentPopup.style.display = "block";
 }
 
 proceedBtn.addEventListener("click", () => {
-  local_set_persistent_notice(true);
+  local_set_persistent_notice(false);
   persistentPopup.style.display = "none";
 });
