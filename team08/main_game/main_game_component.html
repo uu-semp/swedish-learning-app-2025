@@ -12,23 +12,27 @@
   <!-- FontAwesome -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
   <link rel="stylesheet" href="main_game_style.css">
+  <link rel="stylesheet" href="../options/settings.css">
 
+  <script type="module" src="main_game_script.js"></script>
+  <script type="module" src="../options/settings.js"></script>
 </head>
 
 <body>
   <!-- TOP BANNER -->
   <div id="top-banner">
     <!-- Exit to Home Button -->
-    <button id="homeBtn" class="corner-btn " title="Exit to Home" aria-label="Home" onclick="window.location='../index.html';">
+    <button id="homeBtn" class="corner-btn " title="Exit to Home" aria-label="Home"
+      onclick="window.location='../index.html';">
       <i class="fas fa-house fa-2x"></i>
     </button>
 
     <h2 id="gameTitle">Select the picture that matches the sound</h2>
 
-      <!-- Settings Button -->
-      <button id="settingsBtn" class="corner-btn " aria-label="Settings" title="Sound Settings">
-        <i class="fas fa-gear fa-2x"></i>
-      </button>
+    <!-- Settings Button -->
+    <button id="settingsBtn" class="corner-btn " aria-label="Settings" title="Sound Settings">
+      <i class="fas fa-gear fa-2x"></i>
+    </button>
   </div>
 
   <!-- MAIN GAME AREA -->
@@ -44,24 +48,6 @@
       <audio id="audioPlayer"></audio>
     </div>
 
-    <!-- Sound Settings Modal -->
-    <div id="soundModal" class="modal">
-      <div class="modal-content">
-        <h3><i class="fas fa-volume-high"></i> Sound Settings</h3>
-
-        <label for="volumeControl">Volume:</label>
-        <input type="range" id="volumeControl" min="0" max="1" step="0.05" value="1">
-
-        <div style="margin-top:1rem;">
-          <label>Sound Effects:</label>
-          <button id="toggleEffects" class="btn"><i class="fas fa-music"></i> ON</button>
-        </div>
-
-        <button id="closeModal" class="btn" style="margin-top:1rem;">
-          <i class="fas fa-times"></i> Close
-        </button>
-      </div>
-    </div>
 
     <!-- Images -->
     <div class="image-options" id="imageOptions"></div>
@@ -97,8 +83,25 @@
   <div id="bottom-banner">
     <p>Good luck! Learn and have fun 🎉</p>
   </div>
-  <!-- Import selection.js -->
-  <script type="module" src="main_game_script.js"></script>
+
+
+  <div id="volumePopup">
+  </div>
+  <!-- Creates the modal window. Default hidden form view -->
+  <dialog id="settings-modal">
+    <h2>Settings</h2>
+    <button id="close-settings">&times;</button>
+    <div>
+      <label for="volume-slider">VOLUME</label>
+      <input type="range" id="volume-slider" min="0" max="100" value="50">
+      <br>
+    </div>
+    <div class="switch">
+      <label for="sound-effects-toggle">Sound Effects</label>
+      <input type="checkbox" id="sound-effects-toggle" checked>
+      <br>
+    </div>
+  </dialog>
 </body>
 
 </html>

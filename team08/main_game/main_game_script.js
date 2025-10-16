@@ -3,9 +3,7 @@ import {
   update_selection,
   finish_game,
 } from "../selection/selection.js";
-import { local_set_volume, local_set_sound_effects } from "../store/write.js";
 import { local_get_volume, local_get_sound_effects } from "../store/read.js";
-
 
 let totalRounds = 10;
 let currentRound = 1;
@@ -37,6 +35,7 @@ function loadRound() {
 
   // Auto-play the audio for the new round
   const audio = document.getElementById("audioPlayer");
+  audio.volume = local_get_volume() / 100;
   audio.play().catch(() => {
     console.log("Autoplay blocked, user interaction required.");
   });
@@ -89,11 +88,11 @@ document.getElementById("confirmBtn").addEventListener("click", () => {
     card.style.pointerEvents = "none";
   });
 
-  if (effectsEnabled) {
+  if (local_get_sound_effects()) {
     const fx = new Audio(
       isCorrect ? "soundEffects/right.mp3" : "soundEffects/wrong.mp3"
     );
-    fx.volume = volumeControl.value;
+    fx.volume = local_get_volume() / 100;
     fx.play();
   }
 
@@ -245,22 +244,17 @@ document.getElementById("restartBtn").addEventListener("click", () => {
 });
 
 // ===== SOUND SETTINGS MODAL =====
-const soundModal = document.getElementById("soundModal");
-const settingsBtn = document.getElementById("settingsBtn");
-const closeModal = document.getElementById("closeModal");
-const volumeControl = document.getElementById("volumeControl");
-const toggleEffects = document.getElementById("toggleEffects");
-const audioPlayer = document.getElementById("audioPlayer");
 
-let effectsEnabled = true;
-
-// Load global audio 
+// Load global audio
 const globalAudioSettings = localStorage.getItem("team08");
 if (globalAudioSettings) {
   try {
     const parsed = JSON.parse(globalAudioSettings);
     if (parsed.volume !== undefined) {
-      const normalizedVol = Math.min(1, Math.max(0, parseInt(parsed.volume) / 100));
+      const normalizedVol = Math.min(
+        1,
+        Math.max(0, parseInt(parsed.volume) / 100)
+      );
       localStorage.setItem("gameVolume", normalizedVol);
       console.log(`Sound effects enabled: ${normalizedVol}`);
     }
@@ -273,62 +267,6 @@ if (globalAudioSettings) {
   }
 }
 
-//  Restore saved settings 
-const savedVolume = localStorage.getItem("gameVolume");
-const savedEffects = localStorage.getItem("effectsEnabled");
-
-if (savedVolume !== null) {
-  volumeControl.value = savedVolume;
-  audioPlayer.volume = parseFloat(savedVolume);
-} else {
-  // Default to slider's initial value
-  audioPlayer.volume = parseFloat(volumeControl.value);
-}
-
-if (savedEffects !== null) {
-  effectsEnabled = savedEffects === "true";
-  toggleEffects.innerHTML = effectsEnabled
-    ? `<i class="fas fa-music"></i> ON`
-    : `<i class="fas fa-music-slash"></i> OFF`;
-}
-
-// Open modal
-settingsBtn.addEventListener("click", () => {
-  soundModal.style.display = "block";
-});
-
-// Close modal
-closeModal.addEventListener("click", () => {
-  soundModal.style.display = "none";
-});
-
-// Close when clicking outside modal
-window.addEventListener("click", (event) => {
-  if (event.target === soundModal) soundModal.style.display = "none";
-});
-
-//  Volume control — sync + persist
-volumeControl.addEventListener("input", () => {
-  const vol = parseFloat(volumeControl.value);
-  audioPlayer.volume = vol;
-  localStorage.setItem("gameVolume", vol);
-  // updateglobal audio 
-  local_set_volume(vol*100)
-  
-});
-
-//  Toggle sound effects — sync + persist
-toggleEffects.addEventListener("click", () => {
-  effectsEnabled = !effectsEnabled;
-  toggleEffects.innerHTML = effectsEnabled
-    ? `<i class="fas fa-music"></i> ON`
-    : `<i class="fas fa-music-slash"></i> OFF`;
-  localStorage.setItem("effectsEnabled", effectsEnabled);
-  
-// updateglobal audio 
-  local_set_sound_effects(effectsEnabled);
-});
-
 window.addEventListener("beforeunload", () => {
   const audio = document.getElementById("audioPlayer");
   if (audio) audio.pause();
@@ -336,39 +274,6 @@ window.addEventListener("beforeunload", () => {
 
 // Enable Keyboard keys for buttons
 document.addEventListener("keydown", (e) => {
-  // Increase volume (ArrowUp)
-  if (e.key === "+") {
-    e.preventDefault();
-    let newVol = Math.min(1, parseFloat(volumeControl.value) + 0.1);
-    volumeControl.value = newVol.toFixed(1);
-    audioPlayer.volume = newVol;
-    localStorage.setItem("gameVolume", newVol);
-    showVolumePopup(`🔊 ${Math.round(newVol * 100)}%`);
-  }
-
-  // Decrease volume (ArrowDown)
-  if (e.key === "-") {
-    e.preventDefault();
-    let newVol = Math.max(0, parseFloat(volumeControl.value) - 0.1);
-    volumeControl.value = newVol.toFixed(1);
-    audioPlayer.volume = newVol;
-    localStorage.setItem("gameVolume", newVol);
-
-    showVolumePopup(`🔉 ${Math.round(newVol * 100)}%`);
-  }
-
-  // Toggle sound effects (M)
-  if (e.key.toLowerCase() === "m") {
-    e.preventDefault();
-    effectsEnabled = !effectsEnabled;
-    toggleEffects.innerHTML = effectsEnabled
-      ? `<i class="fas fa-music"></i> ON`
-      : `<i class="fas fa-music-slash"></i> OFF`;
-    localStorage.setItem("effectsEnabled", effectsEnabled);
-    
-    showVolumePopup(effectsEnabled ? "🎵 Effects ON" : "🔇 Effects OFF");
-  }
-
   if (e.key === "p" || e.key === "x")
     document.getElementById("playAudio").click(); // play audio
   if (
@@ -445,32 +350,6 @@ function enableKeyboardNavigation() {
   };
 
   document.addEventListener("keydown", keyboardNavListener);
-}
-
-// Small on-screen popup to show current volume/effect changes
-function showVolumePopup(text) {
-  let popup = document.getElementById("volumePopup");
-  if (!popup) {
-    popup = document.createElement("div");
-    popup.id = "volumePopup";
-    popup.style.position = "fixed";
-    popup.style.bottom = "80px";
-    popup.style.right = "20px";
-    popup.style.padding = "8px 14px";
-    popup.style.borderRadius = "8px";
-    popup.style.background = "rgba(0,0,0,0.7)";
-    popup.style.color = "#fff";
-    popup.style.fontSize = "14px";
-    popup.style.zIndex = "9999";
-    popup.style.transition = "opacity 0.3s ease";
-    document.body.appendChild(popup);
-  }
-  popup.textContent = text;
-  popup.style.opacity = "1";
-  clearTimeout(popup._timeout);
-  popup._timeout = setTimeout(() => {
-    popup.style.opacity = "0";
-  }, 1200);
 }
 
 // Start first round

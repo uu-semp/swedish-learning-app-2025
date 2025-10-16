@@ -17,10 +17,14 @@
 #settings-modal div {
   display: flex;
   flex-direction: row;
-  gap: 0.5rem;
+  gap: 20px;
+  align-items: center;
 }
 #settings-modal h2 {
   text-transform: uppercase;
+  padding-bottom: 20px;
+  font-size: larger;
+  font-weight: bold;
 }
 
 #settings-modal {
@@ -46,6 +50,7 @@
 .switch {
   --false: #e81b1b;
   --true: #009068;
+  margin-top: 10px;
 }
 
 #sound-effects-toggle {
@@ -79,20 +84,40 @@
   left: 20px;
 }
 
-#close-settings,
-#open-settings-button {
+#close-settings {
   position: absolute;
   top: 0;
   right: 0;
   margin-top: 0.25rem;
-  margin-right: 0.25rem;
-}
-
-#close-settings {
   margin-right: 0.8rem;
   background: none;
   border: none;
   font-size: 30px;
   cursor: pointer;
   color: rgb(0, 0, 0);
+}
+
+/** Settings Header */
+
+#home,
+#open-settings-button {
+  position: absolute;
+  top: 10px;
+  font-size: 30px;
+}
+
+#open-settings-button {
+  right: 10px;
+  background: none;
+  border: none;
+}
+#home {
+  left: 10px;
+}
+#home i {
+  color: black;
+}
+
+#open-settings-button:hover {
+  cursor: pointer;
 }
