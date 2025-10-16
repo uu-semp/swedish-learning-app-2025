@@ -14,11 +14,14 @@ const backBtn = document.getElementById("back-btn");
 const filterBar = document.getElementById("filter-bar");
 
 let allGames = [];
+let currentLanguage = 'sv';
+let translations = {};
 
 //// Data ////
 // Load games from JSON
 async function loadGames() {
   try {
+    setLanguage(currentLanguage)
     // Load game data
     const res = await fetch("assets/main_menu/games.json", { cache: "no-store" });
     if (!res.ok) throw new Error("Failed to load games.json");
@@ -34,7 +37,7 @@ async function loadGames() {
     // Filter games by chapter
     const chapters = [...new Set(allGames.flatMap(g => g.supported_chapters))].sort((a, b) => a - b);
     buildFilter(chapters);
-    setActiveFilter("all"); // default
+    setActiveFilter("all", true);
 
     // Render game grid
     renderGrid(allGames);
@@ -52,20 +55,23 @@ function buildFilter(chapters){
 
   // Add instruction text
   const label = document.createElement("span");
-  label.textContent = "Filter by chapter:";
+ 
   label.className = "filter-label";
+  label.id = "filter"
+   label.textContent = translations["filter"][currentLanguage];
   filterBar.appendChild(label);
 
   // "All" first
   filterBar.appendChild(makeFilterBtn("All","all"));
   // then one per chapter
-  chapters.forEach(ch => filterBar.appendChild(makeFilterBtn(`Chapter ${ch}`, String(ch))));
+  chapters.forEach(ch => filterBar.appendChild(makeFilterBtn(ch, String(ch))));
 }
 
-function makeFilterBtn(label, value){
+function makeFilterBtn(index, value){
   const btn = document.createElement("button");
-  btn.className = "filter-btn";
-  btn.textContent = label;
+  btn.className = "filter-btn"; 
+  btn.textContent = `${translations["chapter"][currentLanguage]} ${index}`;
+ 
   btn.dataset.chapter = value;
   return btn;
 }
@@ -75,41 +81,65 @@ filterBar.addEventListener("click", (e)=>{
   const btn = e.target.closest(".filter-btn");
   if(!btn) return;
   const value = btn.dataset.chapter;
-  setActiveFilter(value);
-  if(value === "all") return renderGrid(allGames);
-  const chNum = Number(value);
-  renderGrid(allGames.filter(g => g.supported_chapters.includes(chNum)));
+  const wasActive = btn.classList.contains("active");
+  setActiveFilter(value, !wasActive);
+  
+  // Show all games if "all" is selected or no filters active
+  if(activeFilters.has("all") || activeFilters.size === 0) {
+    return renderGrid(allGames);
+  }
+  
+  // Show games matching any selected chapter
+  renderGrid(allGames.filter(g => 
+    g.supported_chapters.some(ch => activeFilters.has(String(ch)))
+  ));
 });
 
-function setActiveFilter(value){
-  document.querySelectorAll(".filter-btn").forEach(b => b.classList.toggle("active", b.dataset.chapter === value));
+// Track active filters using a Set
+const activeFilters = new Set(["all"]);
+
+function setActiveFilter(value, active) {
+  if (value === "all") {
+    activeFilters.clear();
+    if (active) activeFilters.add("all");
+    document.querySelectorAll(".filter-btn").forEach(b => b.classList.toggle("active", active && b.dataset.chapter === "all"));
+  } else {
+    activeFilters.delete("all");
+    if (active) activeFilters.add(value);
+    else activeFilters.delete(value);
+    document.querySelectorAll(".filter-btn").forEach(b => {
+      b.classList.toggle("active", b.dataset.chapter === "all" ? false : activeFilters.has(b.dataset.chapter));
+    });
+  }
 }
 
 // Render grid of game cards
 function renderGrid(games) {
   grid.innerHTML = "";
+
   games.forEach((g) => {
     const card = document.createElement("article");
     card.className = "card";
+    card.id = `${g.id}`
 
     // Build game tags HTML
     const tagsHtml = (Array.isArray(g.supported_chapters) && g.supported_chapters.length)
       ? `<div class="card-tags">
-           ${g.supported_chapters.map(ch => `<span class="tag">Chapter ${ch}</span>`).join("")}
+           ${g.supported_chapters.map(ch => `<span class="tag" data-chapter=${ch}>${translations["chapter"][currentLanguage]} ${ch}</span>`).join("")}
          </div>`
       : "";
-
+    
     // Build game card HTML
     card.innerHTML = `
-      <img src="assets/main_menu/images/games/${g.id}.png" 
-           alt="${g.eng_title}"
+      <img src="assets/main_menu/images/game_logos/${g.id}_logo.png" 
+           alt="${g.title[currentLanguage]}"
            onerror="this.onerror=null; this.src='assets/main_menu/images/games/default_image.png';">
       <div class="card-body">
-        <h3>${g.eng_title}</h3>
-        <p>${g.eng_desc}</p>
+        <h3>${g.title[currentLanguage]}</h3>
+        <p>${g.desc[currentLanguage].replace(/\n/g, '<br>')}</p>
         ${tagsHtml}
       </div>
-    `;
+      `;
 
     // Add click event to open game
     card.addEventListener("click", () => openIframe(`./${g.id}/index.html`));
@@ -133,17 +163,19 @@ function renderGrid(games) {
 
     const box = document.createElement('div');
     box.id = 'settings-box';
-
+    
     box.innerHTML = `
       <div class="settings-header">
-        <h2 class="settings-title">Settings</h2>
-        <button id="_close_settings" class="settings-btn close">Close</button>
+        <h2 class="settings-title">${translations["settings-btn"][currentLanguage]}</h2>
+        <button id="_close_settings" class="settings-btn close">${translations["close"][currentLanguage]}</button>
       </div>
       <div class="settings-actions">
-        <button id="_open_add" class="settings-btn primary">Add vocabulary</button>
-        <button id="_clear_save" class="settings-btn secondary">Clear data</button>
+        <button id="_open_add" class="settings-btn primary">${translations["add-word"][currentLanguage]}</button>
+        <button id="_clear_save" class="settings-btn secondary">${translations["clear-data"][currentLanguage]}</button>
       </div>
     `;
+      
+    
     overlay.appendChild(box);
       // Close overlay when clicking outside the box
       overlay.addEventListener('mousedown', (e) => {
@@ -156,15 +188,14 @@ function renderGrid(games) {
     // Clear saved data button
     overlay.querySelector('#_clear_save').addEventListener('click', () => {
       const confirmBox = document.createElement('div');
-      confirmBox.className = 'confirm-box';
+      confirmBox.className = 'confirm-box translate';
       confirmBox.innerHTML = `
-        <h3>Clear Game Data?</h3>
-        <p>This will reset all saved progress and cannot be undone.</p>
+        ${translations["clear?"][currentLanguage]}
         <div class="confirm-box-actions">
           <button class="settings-btn confirm-box-btn cancel" 
-            onclick="this.parentElement.parentElement.remove()">Cancel</button>
+            onclick="this.parentElement.parentElement.remove()">${translations["cancel"][currentLanguage]}</button>
           <button class="settings-btn confirm-box-btn confirm" 
-            id="_confirm_clear">Clear Data</button>
+            id="_confirm_clear">${translations["clear-data"][currentLanguage]}</button>
         </div>
       `;
       
@@ -207,9 +238,13 @@ function renderGrid(games) {
 //// Navigation ////
 // Open game in iframe
 function openIframe(src) {
+  let back_btn
   frame.src = src;
   menu.hidden = true;
   stage.hidden = false;
+  // Get correctly translated text for the back button
+  back_btn = document.getElementById('back-btn')
+  back_btn.textContent = translations['back-btn'][currentLanguage]
 
   // Save current game to sessionStorage
   sessionStorage.setItem("currentGameSrc", src);
@@ -238,6 +273,82 @@ window.addEventListener("DOMContentLoaded", () => {
   }
 });
 
+//// Language toggle ////
+
+// Note: All text with translations in menu_translations.json must have the class 'translate'
+
+/**
+ * Loads the translations of menu text objects from the file menu_translations.json
+ * Must be run first since text objects depend on access to the translations.
+ */
+async function loadTranslations() {
+  try {
+    const data = await fetch('assets/main_menu/menu_translations.json');
+    if (!data.ok) throw new Error("Failed to menu_translations.json");
+    translations = await data.json()
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+/**
+ * Executes when one of the language toggle buttons are pressed or when the page is first loaded. 
+ * Fetches text from menu_translations.json for all menu elements that require text and switches
+ * so the 'lang' translation is displayed. Also rerenders the filter buttons and game grid to
+ * display the correct translation.
+ * @param lang either 'en' or 'sv', since those are the two options in the menu_translations file
+ */
+async function setLanguage(lang) {
+  try {
+    currentLanguage = lang
+    const elements = document.querySelectorAll('.translate');
+
+    // Translating menu text (not games or filter)
+    elements.forEach(el => {
+      const id = el.getAttribute('id');
+      el.innerHTML = translations[id][lang];
+    })
+
+    // Translating all text in the game grid
+    allGames.forEach((g) => {
+      // the 'alt' text for the image
+      const img = document.querySelector(`#${g.id} > img`);
+      img.alt = g["title"][currentLanguage];
+
+      // the title of the game
+      const h3 = document.querySelector(`#${g.id} > div > h3`);
+      h3.innerHTML = g["title"][currentLanguage];
+
+      // the description of the game
+      const p = document.querySelector(`#${g.id} > div > p`);
+      p.innerHTML = g["desc"][currentLanguage];
+    })
+
+    // Translating the filter buttons
+    const filters = document.querySelectorAll('.filter-btn');
+    filters.forEach(fil => {
+      //console.log(fil)
+      const index = fil.getAttribute('data-chapter')
+      fil.textContent = `${translations["chapter"][currentLanguage]} ${index}`
+    })
+
+    // Translating the filter tags in the game grid
+    const tags = document.querySelectorAll('.tag');
+    tags.forEach(tag => {
+      const index = tag.getAttribute('data-chapter')
+      tag.textContent = `${translations["chapter"][currentLanguage]} ${index}`
+    })
+   
+  } catch (error) {
+    console.error(error)
+  }
+}
 
 //// Init ////
-loadGames();
+
+async function init() {
+  await loadTranslations()
+  loadGames();
+}
+
+init()

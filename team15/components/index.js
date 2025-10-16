@@ -3,21 +3,28 @@ import { HelpView } from './views/helpView.js';
 import { ChooseLevelView } from './views/chooseLevelView.js';
 import { LevelOneView } from './views/levelOneView.js';
 import { LevelTwoView } from './views/levelTwoView.js';
+import { LevelThreeView } from './views/levelThreeView.js';
+
 import {
   StartGameButton,
   HowToPlayButton,
   InfoButton,
+  LicenseButton,
   GoBackButton,
   LevelButton,
   CategoryClothingButton,
   ClothingItemButton,
   LanguageFlagButton,
-  ExitGameButton
+  ExitGameButton,
 } from "./elements/buttons.js";
 import { CorrectAnswerFeedback } from "./elements/correctAnswerFeedback.js";
 import { IncorrectAnswerFeedback } from "./elements/incorrectAnswerFeedback.js";
 import { WardrobeContainer } from "./elements/wardrobeContainer.js";
 import { PelleContainer } from "./elements/pelleContainer.js";
+import { DressPellePrompt } from "./elements/dressPellePrompt.js";
+import { ScoreCounter } from "./elements/scoreCounter.js";
+import { StatisticsPopUp } from "./elements/statisticsPopUp.js";
+
 
 export default {
   StartView,
@@ -25,10 +32,12 @@ export default {
   ChooseLevelView,
   LevelOneView,
   LevelTwoView,
+  LevelThreeView,
   StartGameButton,
   HowToPlayButton,
   GoBackButton,
   InfoButton,
+  LicenseButton,
   LevelButton,
   CorrectAnswerFeedback,
   IncorrectAnswerFeedback,
@@ -38,4 +47,7 @@ export default {
   LanguageFlagButton,
   ExitGameButton,
   PelleContainer,
+  DressPellePrompt,
+  ScoreCounter,
+  StatisticsPopUp
 };

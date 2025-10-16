@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Red Room</title>
+  <link rel="stylesheet" href="styles/main_menu.css" />
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+  <script src="js/main_menu.js" defer></script>
+</head>
+<body>
+<main class="game-frame">
+  <!-- Start Screen -->
+  <div id="start-screen" class="start-screen">
+    <img src="assets/logo.svg" alt="Red Room" width="300px">
+    <div class="menu">
+      <button class="menu-btn" id="btn-start"><i class="fa-solid fa-play"></i> Start Game</button>
+      <button class="menu-btn" id="btn-continue"><i class="fa-solid fa-forward"></i> Continue</button>
+      <button class="menu-btn" id="btn-intro"><i class="fa-solid fa-info-circle"></i> Introduction</button>
+      <button class="menu-btn" id="btn-help"><i class="fa-solid fa-question-circle"></i> Help</button>
+    </div>
+  </div>
+
+  <!-- Levels Menu -->
+  <div id="levels-menu" class="hidden start-screen">
+    <h2 class="game-title">Select Difficulty</h2>
+    <div class="menu">
+      <button class="menu-btn" onclick="location.href='main_menu/levels_easy.html'">Easy</button>
+      <button class="menu-btn" onclick="location.href='main_menu/levels_medium.html'">Medium</button>
+      <button class="menu-btn" onclick="location.href='main_menu/levels_hard.html'">Hard</button>
+    </div>
+    <button id="btn-back-to-menu" class="back-btn"><i class="fa-solid fa-arrow-left"></i> Back</button>
+  </div>
+</main>
+
+<footer>
+  <small>Created as part of the "Software Engineering and Project Management" course 2025</small>
+</footer>
+</body>
+</html>

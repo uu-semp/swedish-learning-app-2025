@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Red Room Game</title>
+  <link rel="stylesheet" href="../styles/main_menu.css" />
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+  <script>
+    "use strict";
+    $(function () {
+      const params = new URLSearchParams(window.location.search);
+      const level = parseInt(params.get("level")) || 1;
+
+      // show the current level
+      $("#game-level-title").text("Level " + level);
+      $("#word-display").text("Word for Level " + level);
+
+      //
+      $("#check-answer").on("click", function () {
+        const user = $("#answer-input").val().trim();
+        if (!user) {
+          $("#feedback").text("Please enter an answer!").css("color", "#ffd97a");
+        } else {
+          $("#feedback").text("✅ Correct! (Demo)").css("color", "limegreen");
+        }
+      });
+
+      // cal go-back page
+      function getBackPage(lvl) {
+        if (lvl >= 1 && lvl <= 3) return "levels_easy.html";
+        if (lvl >= 4 && lvl <= 6) return "levels_medium.html";
+        if (lvl >= 7 && lvl <= 9) return "levels_hard.html";
+        return "../index.html";
+      }
+
+      // click return: go back to main menu with current level
+      $("#btn-back").on("click", function () {
+        const backPage = getBackPage(level);
+        location.href = "../index.html?last=" + level;
+      });
+    });
+  </script>
+</head>
+
+<body>
+<main class="game-frame">
+  <div id="game-content" class="start-screen">
+    <h2 id="game-level-title" class="game-title">Level</h2>
+    <div class="menu">
+      <p id="word-display" style="font-size:28px;">(Word will appear here)</p>
+      <div class="answer-row">
+        <input type="text" id="answer-input" placeholder="Enter your answer" autocomplete="off" />
+        <button id="check-answer" class="primary-btn">Check</button>
+      </div>
+      <p id="feedback" aria-live="polite"></p>
+    </div>
+    <button id="btn-back" class="back-btn">
+      <i class="fa-solid fa-arrow-left"></i> Back
+    </button>
+  </div>
+</main>
+</body>
+</html>

@@ -16,9 +16,7 @@ Owned by Team 10
   <script src="../../scripts/vocabulary.js"></script>
   <script src="../../scripts/save.js"></script>
 
-  <!-- You are allowed to use JQuery and Vue.js but don't have to. They just make a
-  lot of things easier
-  -->
+
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css"> 
   <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
   <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
@@ -33,7 +31,7 @@ Owned by Team 10
     <h1>Team 10</h1>
   </header>
 
-  <main class="game-frame">
+  <main>
     <script>
       // Wait for DOM and vocabulary to be ready
       $(function() {
@@ -59,8 +57,23 @@ Owned by Team 10
         }
       });
     </script>
+  <div class="button-container" style="display: flex; justify-content: right; gap: 1rem; margin-top: 2rem;">
+        <button onclick="window.location.href='../index.html'" class="learning-mode-btn">Exit</button>
+  </div>
+
     <div id="flashcard-app" data-show-debug="false">
-      <div class="controls">
+      <!-- Loading state -->
+      <div v-if="loading" style="text-align:center;margin-top:2rem;">
+        <p>Loading cards...</p>
+      </div>
+      
+      <!-- Error state -->
+      <div v-if="error" style="text-align:center;margin-top:2rem;color:red;">
+        <p>{{ error }}</p>
+      </div>
+      
+      <!-- Main flashcard content -->
+      <div v-if="!loading && !error && currentCard" class="flashcard-container">
         <div class="flashcard" @click="flipCard" v-if="!finished">
           <div class="flashcard-content" :class="{ flipped: isFlipped }">
             <div class="front" v-html="currentCard.front"></div>
@@ -71,11 +84,12 @@ Owned by Team 10
           <button @click="repeat" class="learning-mode-btn">Repeat</button>
           <button @click="gotIt" class="start-btn">I got it</button>
         </div>
-        <div v-if="finished" class="completion-message" style="text-align:center;margin-top:2rem;">
+        <div v-if="finished" class="completion-message">
           <h2>Congratulations!</h2>
           <p>You have learned all 10 words.</p>
           <button onclick="window.location.href='../index.html'" class="start-btn">Go to Menu</button>
         </div>
+      </div>
     </div>
     <!-- Vue app script moved below so #flashcard-app exists before mounting -->
   <!-- Vue.js logic moved to learning_mode.js -->
