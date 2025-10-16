@@ -94,7 +94,7 @@ $(function () {
         ? "Congratulations! You've won the game!"
         : "Game Over!"
     );
-    $("#score").text(corrects);
+    $("#score").text(corrects + misses);
     $("#time").text(`${elapsedTime} seconds`);
   }
   function foundMatch() {
