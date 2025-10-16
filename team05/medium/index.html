@@ -1,0 +1,70 @@
+<!-- =============================================
+Owned by Team 05 — Red Room
+================================================= -->
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Red Room – Team 05</title>
+
+  <link rel="stylesheet" href="../../style.css" />
+  <script src="../../scripts/vocabulary.js"></script>
+  <script src="../../scripts/save.js"></script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+
+  <link rel="stylesheet" href="../styles/medium.css" />
+  <script src="../js/medium.js" defer></script>
+</head>
+<body>
+<header><h1>Team 05 – Red Room</h1></header>
+
+<main class="game-frame">
+  <section id="medium-screen" class="hidden">
+    <div class="screen-header">
+      <button class="back-btn" id="medium-back"><i class="fa-solid fa-arrow-left"></i> Levels</button>
+      <div class="crumb">Level <span id="medium-level-number">4</span> • <span id="medium-progress">0 / 0</span></div>
+      <button id="btn-level-instruction" class="help-btn"><i class="fa-solid fa-circle-info"></i> How to Play</button>
+    </div>
+
+    <div class="card">
+      <div id="medium-image-wrap" class="image-wrap"></div>
+      <p id="medium-english" class="english-hint"></p>
+      <div class="answer-row">
+        <input type="text" id="medium-answer" placeholder="Write the Swedish word" autocomplete="off" />
+        <button id="medium-check" class="primary-btn">Check</button>
+      </div>
+      <p id="medium-feedback" aria-live="polite"></p>
+    </div>
+  </section>
+
+  <section id="win-screen" class="hidden">
+    <div class="win-card">
+      <h2 id="win-title">You completed Level X!</h2>
+      <p id="win-progress-text"></p>
+      <div class="win-actions">
+        <button id="win-next" class="primary-btn">Next Level</button>
+        <button id="win-menu" class="back-btn">Main Menu</button>
+      </div>
+    </div>
+  </section>
+
+  <div id="intro-modal" class="modal hidden" role="dialog" aria-modal="true">
+    <div class="modal-content">
+      <h3>How to Play</h3>
+      <p>
+        Look at the picture shown.<br>
+        Type the Swedish translation of the object in the input box.<br>
+        Press “Check” or Enter.<br>
+        Correct answers unlock the next image.<br>
+        Complete all items to finish the level!
+      </p>
+      <button id="close-intro" class="close-btn"><i class="fa-solid fa-xmark"></i> Close</button>
+    </div>
+  </div>
+</main>
+</body>
+</html>
