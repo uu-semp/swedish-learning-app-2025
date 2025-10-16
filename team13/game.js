@@ -8,12 +8,7 @@
 const app = Vue.createApp({
   data() {
     return {
-      tempStreets: [
-        'Rackarberget',
-        'Kungsgatan',
-        'Daghammarskölds väg',
-        'Torgny Segersteds allé',
-        'Flogstavägen'
+tempStreets: []
       ],
 
       isLoading: true,
