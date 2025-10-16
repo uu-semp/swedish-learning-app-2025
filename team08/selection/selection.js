@@ -18,9 +18,10 @@ import { TEAM } from "../store/store_config.js";
  * @typedef {Object} FrontVocab
  * @property {string} en - English word (e.g., "sweater").
  * @property {string} sv - Swedish translation.
- * @property {string} img - Copyright or license information for the image.
+ * @property {string} img - image url.
  * @property {string} audio - URL or path to audio pronunciation (may be empty).
  * @property {string} id - URL or path to audio pronunciation (may be empty).
+ * @property {string} img_copyright - Copyright or license information for the image.
  */
 
 /**
@@ -62,6 +63,7 @@ export function get_next_words() {
       img: WORDS[i].img,
       audio: WORDS[i].audio,
       id: IDS[i],
+      img_copyright: WORDS[i].img_copyright,
     };
     RESULT.push(ITEM);
   }
