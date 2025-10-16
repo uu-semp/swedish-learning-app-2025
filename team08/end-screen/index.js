@@ -12,8 +12,6 @@ class EndScreen {
     return {
       scoreText: document.getElementById('scoreText'),
       scoreBar: document.getElementById('scoreBar'),
-      completionText: document.getElementById('completionText'),
-      completionBar: document.getElementById('completionBar'),
       categoryName: document.getElementById('categoryName'),
       showWordsBtn: document.getElementById('showWordsBtn'),
       playAgainBtn: document.getElementById('playAgainBtn'),
@@ -91,16 +89,6 @@ class EndScreen {
       this.elements.scoreBar.style.width = `${scorePercentage}%`;
     }
 
-    // Update completion text and bar
-    if (this.elements.completionText) {
-      this.elements.completionText.textContent = `${data.currentLevel}/${data.totalLevels} Levels`;
-    }
-    
-    if (this.elements.completionBar) {
-      const completionPercentage = (data.currentLevel / data.totalLevels) * 100;
-      this.elements.completionBar.style.width = `${completionPercentage}%`;
-    }
-
     // Update category
     if (this.elements.categoryName) {
       this.elements.categoryName.textContent = data.category;
@@ -114,7 +102,7 @@ class EndScreen {
 
   animateProgressBars() {
     // Reset bars to 0 and animate after a small delay
-    const bars = [this.elements.scoreBar, this.elements.completionBar];
+    const bars = [this.elements.scoreBar];
     
     bars.forEach(bar => {
       if (bar) {

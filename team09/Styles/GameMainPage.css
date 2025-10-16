@@ -1,0 +1,49 @@
+
+
+  .home-logo {
+    width: 280px;
+    height: auto;
+  }
+  
+ 
+  .game-title {
+    font-family: "Comic Sans MS", cursive;
+    color: white;
+    font-size: 30px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+  }
+  
+  
+
+  .menu {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 50px;
+    width: 100%;
+    max-width: 550px;
+  }
+  
+ 
+  .menu-btn {
+    font-family: "Comic Sans MS", cursive;
+    width: 70%;
+    padding: 20px;
+    border: none;
+    border-radius: 35px;
+    color: white;
+    font-weight: bold;
+    font-size: 25px;
+    cursor: pointer;
+    transition: transform 0.2s ease, background 0.3s ease;
+  }
+  
+  .menu-btn.start { background: #b08968; }
+  .menu-btn.info { background: #6f4a8e; }
+  .menu-btn.dict { background: #468faf; }
+  
+  .menu-btn:hover {
+    transform: scale(1.05);
+  }
+  

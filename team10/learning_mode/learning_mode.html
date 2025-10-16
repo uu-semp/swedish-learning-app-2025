@@ -24,7 +24,8 @@ Owned by Team 10
   <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 
   <!-- Site specific scripts and styles -->
-  <link rel="stylesheet" href="../main_menu.css" />
+  <link rel="stylesheet" href="../index.css" />
+
   <script src="index.js" defer></script>
 </head>
 <body>
@@ -33,25 +34,21 @@ Owned by Team 10
   </header>
 
   <main class="game-frame">
-        <div class="container">
-        <h1 class="title">EatAndLearn</h1>
-        
-        <div class="button-container">
-            <button class="learning-mode-btn">Menu</button>
-            <button class="start-btn">Start</button>
-        </div>
-        <p class="instructions">This is the instruction manual for learning mode</p>
-        <div class="progress-container">
-            <div class="progress-icon">
-                <div class="progress-bar">
-                    <div class="progress"></div>
-                </div>
-            </div>
-        </div>
-    </div>
+    <div class="container">
+      <h2 style="text-align:center;margin-top:4rem;">Learning Mode</h2>
 
-    <hr>
-    Learning: <div id="display-vocab">(This should be replaced by a word)</div>
+  <div class="button-container" style="display: flex; justify-content: center; gap: 1rem; margin-top: 2rem;">
+        <button onclick="window.location.href='game_page.html'" class="start-btn">Start</button>
+        <button onclick="window.location.href='../index.html'" class="learning-mode-btn">Menu</button>
+      </div>
+
+      <p class="instructions">
+  <br>
+  See a word and its image—click the image to reveal the Swedish spelling.<br>
+  Choose “Got it” if you’ve learned it, or “Repeat” to see it again later.<br>
+  Finish all 10 words to move on to Level 1.
+      </p>
+    </div>
   </main>
 
   <footer>

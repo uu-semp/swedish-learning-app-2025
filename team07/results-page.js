@@ -4,23 +4,51 @@
 
 "use strict";
 
-$(function () {
-  window.vocabulary.when_ready(function () {
-    // These are only dummy functions and can be removed.
-    $("#check-jquery").on("click", () => {
-      alert("JavaScript and jQuery are working.");
-    });
+document.addEventListener("DOMContentLoaded", () => {
+  const words = JSON.parse(localStorage.getItem("game_words") || "[]");
+  if (!words.length) return;
 
-    $("#display-vocab").text(JSON.stringify(window.vocabulary.get_random()));
+  const highscore = words[words.length - 2]; // fix here
+  const rounds = Object.keys(highscore).length - 1;
+  const totalCorrect = highscore.total;
 
-    $("#check-saving").on("click", () => {
-      var data = window.save.get("team07");
-      data.counter = data.counter ?? 0;
-      data.counter += 1;
-      $("#check-saving").text(
-        `This button has been pressed ${data.counter} times`
-      );
-      window.save.set("team07", data);
-    });
-  });
+  // Display score
+  document.getElementById(
+    "total-result"
+  ).textContent = `You got ${totalCorrect}/${rounds} words correct!`;
+
+  // Percentage of correct answers
+  const percentage = Math.round((totalCorrect / rounds) * 100);
+
+  // Message to show based on percentage of correct answers
+  let message = "";
+  if (percentage > 90) {
+    message = "Really good!";
+  } else if (percentage > 50) {
+    message = "Good job!";
+  } else {
+    message = "Good try!";
+  }
+
+  document.getElementById("message").textContent = message;
+});
+
+// Try again button
+document.getElementById("tryagain-button").addEventListener("click", () => {
+  // Words from the previous round
+  let words = JSON.parse(localStorage.getItem("game_words") || "[]");
+
+  if (words.length) {
+    let highscore = words[words.length - 2];
+
+    // Reset highscore
+    for (let key in highscore) {
+      highscore[key] = 0;
+    }
+    words[words.length - 2] = highscore;
+    localStorage.setItem("game_words", JSON.stringify(words));
+  }
+
+  // Back to game page
+  window.location.href = "game-page.html";
 });

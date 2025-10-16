@@ -3,136 +3,131 @@
 Owned by Team 10
 =================================================
 */
+@import url('https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap');
 
 body {
-    margin: 0;
-    padding: 0;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #f0f0f0;
-    font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f9f9f9;
+  font: 400 1rem/1.5 'Work Sans', sans-serif;
+  color: #555;
 }
 
-.container {
-    position: relative;
-    width: 100%;
-    height: 100%;
+h1, h2, h3 {
+  color: #000;
+  font-weight: 600;
+}
+
+/* Frame matches main menu */
+.game-frame {
+  width: var(--frame-width);
+  height: var(--frame-height);
+  margin: 0 auto;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  padding: 2rem 1rem;
+  position: relative;
 }
 
 .title {
-  font-size: 3rem;
-  color: #333;
-  text-align: center;       /* always center text */
-  width: 100%;              /* full width so it’s centered */
-  margin-top: 1rem;         /* space from top of page */
-  margin-bottom: 2rem;      /* space before buttons */
+  font-size: 2.5rem;
+  text-align: center;
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+}
+
+/* Generic pill buttons */
+button,
+.menu-page-btn,
+.start-btn,
+.learning-mode-btn,
+.submit-btn {
+  padding: 0.8rem 1.5rem;
+  font-size: 1.1rem;
+  border-radius: 999px;
+  border: 2px solid var(--primary-color);
+  background: #fff;
+  color: var(--primary-color);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+button:hover,
+.menu-page-btn:hover,
+.start-btn:hover,
+.learning-mode-btn:hover,
+.submit-btn:hover {
+  background: var(--primary-color);
+  color: #fff;
+  transform: scale(1.03);
+}
+
+/* Menu page container */
+.menu-page-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.2rem;
+}
+
+.back-link {
+  margin-top: 1.5rem;
+  font-size: 1rem;
+  color: var(--primary-color);
+  text-decoration: none;
+}
+.back-link:hover {
+  text-decoration: underline;
 }
 
 .instructions {
-    position: absolute;
-    top: 30%; /* Position it between the title and the start button */
-    left: 50%;
-    transform: translateX(-50%);
-    width: 80%; /* Prevent text from going to the edges */
-    text-align: center;
-    font-size: 1.2rem;
-    color: #555;
+  text-align: center;
+  max-width: 600px;
+  margin: 1.5rem auto 0;
+  font-size: 1rem;
+  color: #555;
 }
 
-.button-container {
-  display: flex;
-  flex-direction: column;       /* stack buttons vertically */
-  align-items: center;          /* center horizontally */
-  justify-content: center;      /* center vertically */
-  height: 70vh;                /* full viewport height */
-  gap: 1rem;                    /* space between buttons */
+/* Style for locked buttons */
+.menu-page-btn.locked {
+    background-color: #6c757d; /* A grey color */
+    cursor: not-allowed; /* Show a 'not allowed' cursor on hover */
 }
 
-.start-btn,
-.learning-mode-btn {
-  padding: 1rem 2rem;
-  font-size: 1.5rem;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  width: 200px; /* optional fixed width for uniform look */
+.menu-page-btn.locked:hover {
+    transform: none; /* Optional: remove hover effect */
 }
 
-.start-btn {
-  background-color: #4CAF50;
-  color: white;
+/* Add a specific style for the reset button */
+#reset-progress-btn {
+    background-color: #dc3545; /* A red color */
 }
 
-.learning-mode-btn {
-  background-color: #2196F3;
-  color: white;
-}
 
+
+/* Styles for the progress bar */
 .progress-container {
     position: absolute;
     bottom: 2rem;
     right: 2rem;
+    width: 150px;
 }
 
-.progress-icon {
-    width: 60px;
-    height: 60px;
-    background-color: #fff;
-    border-radius: 50%;
-    padding: 10px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.progress-bar {
-    width: 80%;
-    height: 8px;
-    background-color: #ddd;
-    border-radius: 4px;
+.progress-bar-outer {
+    width: 100%;
+    height: 20px;
+    background-color: #e9ecef;
+    border-radius: 10px;
+    border: 1px solid #ccc;
     overflow: hidden;
 }
 
-.progress {
-    width: 70%; /* Adjust this value to show different progress levels */
+.progress-bar-inner {
     height: 100%;
-    background-color: #4CAF50;
-    border-radius: 4px;
-}
-
-
-/* Menu page */
-/* Styles for the new menu page */
-.menu-page-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-    gap: 1.5rem; /* Adds space between buttons */
-}
-
-.menu-page-btn {
-    padding: 1rem 2rem;
-    font-size: 1.5rem;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    background-color: #2196F3;
-    color: white;
-    width: 250px; /* Gives buttons a uniform width */
-}
-
-.back-link {
-    margin-top: 2rem;
-    font-size: 1.2rem;
-    color: #333;
-    text-decoration: none;
-}
-
-.back-link:hover {
-    text-decoration: underline;
+    width: 0%; /* The JavaScript will change this width */
+    background-color: #28a745; /* Green color */
+    border-radius: 10px;
+    transition: width 0.5s ease-in-out;
 }

@@ -1,0 +1,64 @@
+<!doctype html>
+
+<!--
+=================================================
+Owned by Team 07
+=================================================
+-->
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Basic Static Site</title>
+  <link rel="stylesheet" href="../style.css" />
+
+  <script src="../scripts/vocabulary.js"></script>
+  <script src="../scripts/save.js"></script>
+
+  <!-- You are allowed to use JQuery and Vue.js but don't have to. They just make a
+  lot of things easier
+  -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+  <!-- Site specific scripts and styles -->
+  <link rel="stylesheet" href="word-list.css" />
+  <script src="word-list.js" defer></script>
+
+</head>
+
+<body class="word-list-body" onload="display_word_list()">
+  <header>
+    <h1>Team 07</h1>
+  </header>
+
+  <main class="game-frame" style="overflow:auto;">
+    <i id="back-button" class="fa-solid fa-arrow-left"></i>
+
+    <div class="word-list-header">
+      <h1>Word list</h1>
+    </div>
+
+    <div class="list-item" id="list">
+        <p class="paragraph" id="paragraph"></p>
+    </div>
+
+  </main>
+
+  <footer>
+    <small>Created as part of the "Software Engineering and Project Management" course 2025</small>
+  </footer>
+
+  <script>
+    document.getElementById('back-button').addEventListener('click', function () {
+      window.location.href = 'index.html';
+    })
+
+  </script>
+</body>
+
+
+</html>
