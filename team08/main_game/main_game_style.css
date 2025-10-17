@@ -207,26 +207,30 @@ button:focus {
 
 #close-copyright {
   position: absolute;
-  top: 5px;
-  right: 5px;
+  top: 2px;
+  right: 2px;
   background-color: transparent;
   border: none;
   font-size: 30px;
+  transition: all 0.2s ease;
 }
+
 #close-copyright:hover {
   cursor: pointer;
   transform: scale(1.1);
+  background-color: rgba(155, 155, 155, 0.3);
+  border-radius: 50%;
 }
 
 #copyright {
   position: fixed;
   display: none;
-  bottom: 0px;
+  bottom: 0;
   left: 5px;
   background-color: white;
   width: 600px;
-  height: 200px;
-  border: 4px solid black;
+  height: 114px;
+  border: 2px solid black;
   border-radius: 5px;
   padding: 10px;
 }
@@ -250,6 +254,9 @@ button:focus {
 #copyright table td:nth-child(1) {
   width: 8ch;
   text-align: left;
+  border-right: 2px solid black;
+  vertical-align: middle;
+  padding-left: 6px;
 }
 
 #copyright table td:nth-child(2) {
@@ -258,4 +265,21 @@ button:focus {
 
 #copyright table th {
   text-transform: uppercase;
+  background: linear-gradient(90deg, #2c3e50, #4a90e2);
+  color: white;
+  padding: 8px;
+  border-radius: 5px;
+  font-weight: bold;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+.table_wrapper {
+  overflow-y: auto;
+  padding-bottom: 10px;
+  height: 20px;
+  max-height: 75px;
+}
+#copyright table tbody tr:hover {
+  background-color: rgba(60, 144, 241, 0.336);
+  transition: all 0.3s ease;
+  transform: translateX(5px) translateY(-2px);
 }
