@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Hard Levels</title>
   <link rel="stylesheet" href="../styles/main_menu.css" />
+  <script src="../../scripts/save.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
 </head>
 <body>
@@ -12,12 +13,30 @@
   <div class="start-screen">
     <h2 class="game-title">Hard Levels</h2>
     <div class="menu">
-      <button class="menu-btn" onclick="location.href='../hard?level=7'">Level 7</button>
-      <button class="menu-btn" onclick="location.href='../hard?level=8'">Level 8</button>
-      <button class="menu-btn" onclick="location.href='../hard?level=9'">Level 9</button>
+      <button class="menu-btn" data-level="7" onclick="location.href='../hard?level=7'">Level 7</button>
+      <button class="menu-btn" data-level="8" onclick="location.href='../hard?level=8'">Level 8</button>
+      <button class="menu-btn" data-level="9" onclick="location.href='../hard?level=9'">Level 9</button>
     </div>
     <button class="back-btn" onclick="location.href='../index.html'"><i class="fa-solid fa-arrow-left"></i>Back</button>
   </div>
 </main>
+
+<script>
+  $(function() {
+    const stats = save.stats.get("team05");
+    const wins = stats ? stats.wins : 0;
+    const unlockedLevel = wins + 1;
+
+    $('.menu .menu-btn').each(function() {
+      const button = $(this);
+      const buttonLevel = parseInt(button.data('level'), 10);
+
+      if (buttonLevel > unlockedLevel) {
+        button.prop('disabled', true);
+      }
+    });
+  });
+</script>
+
 </body>
 </html>

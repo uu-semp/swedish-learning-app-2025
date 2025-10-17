@@ -62,19 +62,6 @@ $(function() {
     return (str || "").trim().toLowerCase().replace(/^(en|ett)\s+/, "");
   }
 
-  // --- Save/Load Progress ---
-  function getSavedProgress() {
-    const savedData = window.save.get(SAVE_KEY) || {};
-    // Default progress if none is saved.
-    return savedData.progress || { unlocked: 4, completed: [] };
-  }
-
-  function saveProgress(progress) {
-    const savedData = window.save.get(SAVE_KEY) || {};
-    savedData.progress = progress;
-    window.save.set(SAVE_KEY, savedData);
-  }
-
   // --- Vocabulary and Level Building ---
   /**
    * Loads and formats furniture items from the global vocabulary script.
@@ -110,9 +97,8 @@ $(function() {
   /**
    * Sets up and displays a specific level.
    * @param {number} level - The level number (4, 5, or 6).
-   * @param {object} progress - The player's saved progress object.
    */
-  function startLevel(level, progress) {
+  function startLevel(level) {
     GameState.currentLevelNumber = level;
     GameState.items = GameState.levels[level - 4] || []; // level 4 is index 0
     GameState.currentItemIndex = 0;
@@ -139,20 +125,17 @@ $(function() {
       const $img = $("<img>").attr("alt", altText).attr("src", currentItem.img);
       $imageWrap.append($img);
     } else {
-      // Optionally, you can handle the "no image" case differently
       console.warn("No image URL provided for this item.");
     }
 
-    // Display English hint and focus input
     $("#medium-english").text(currentItem.en || "");
     $("#medium-answer").val("").focus();
   }
 
   /**
    * Checks the user's answer against the correct Swedish words.
-   * @param {object} progress - The player's saved progress object.
    */
-  function checkUserAnswer(progress) {
+  function checkUserAnswer() {
     const currentItem = GameState.items[GameState.currentItemIndex];
     if (!currentItem) return;
 
@@ -167,9 +150,8 @@ $(function() {
       $("#medium-feedback").text("✅ Correct!");
       GameState.currentItemIndex++;
 
-      // Check for level completion
       if (GameState.currentItemIndex >= GameState.items.length) {
-        setTimeout(() => handleLevelCompletion(GameState.currentLevelNumber, progress), 500);
+        setTimeout(() => handleLevelCompletion(GameState.currentLevelNumber), 500);
       } else {
         setTimeout(renderCurrentWord, 500);
       }
@@ -179,28 +161,29 @@ $(function() {
   }
 
   /**
-   * Handles the win screen and navigation after a level is completed.
+   * Handles the win screen and saves progress after a level is completed.
    * @param {number} level - The completed level number.
-   * @param {object} progress - The player's saved progress object.
    */
-  function handleLevelCompletion(level, progress) {
-    if (!progress.completed.includes(level)) {
-      progress.completed.push(level);
+  function handleLevelCompletion(level) {
+    const newWins = level; // This is the highest level completed (4, 5, or 6)
+    const newCompletion = Math.round((newWins / 9) * 100);
+    const currentStats = save.stats.get(SAVE_KEY);
+
+    // Only update if current progress is better than saved progress
+    if (!currentStats || newWins > currentStats.wins) {
+      save.stats.set(SAVE_KEY, newWins, newCompletion);
     }
-    progress.unlocked = Math.max(progress.unlocked, level + 1);
-    saveProgress(progress);
 
     $('#win-title').text(`You completed Level ${level}/9!`);
 
-    // --- Special navigation logic for the last level ---
     if (level === 6) {
       $('#win-next').text('Continue to Hard Levels').off('click').on('click', () => {
-        window.location.href = '../hard'; // Redirect to the next stage
+        window.location.href = '../hard';
       });
     } else {
       const nextLevel = level + 1;
       $('#win-next').text('Next Level').off('click').on('click', () => {
-        startLevel(nextLevel, getSavedProgress());
+        startLevel(nextLevel);
       });
     }
     showScreen("#win-screen");
@@ -208,20 +191,16 @@ $(function() {
 
   // --- Event Listeners Setup ---
   function setupEventListeners() {
-    // Back button goes to the main level selection menu
     $('#medium-back').on('click', () => {
       window.location.href = '../main_menu/levels_medium.html';
     });
 
-    // Win screen "Menu" button also goes back to the level selection
     $('#win-menu').on('click', () => {
       window.location.href = '../main_menu/levels_medium.html';
     });
 
-    // Check answer button
-    $('#medium-check').on('click', () => checkUserAnswer(getSavedProgress()));
+    $('#medium-check').on('click', () => checkUserAnswer());
 
-    // Allow submitting with the Enter key
     $(document).on('keydown', (event) => {
       if (event.key === 'Enter' && $('#medium-screen').is(':visible') && $('#medium-answer').is(':focus')) {
         event.preventDefault();
@@ -229,7 +208,6 @@ $(function() {
       }
     });
 
-    // Instructions modal
     $('#btn-level-instruction').on('click', () => showElement('#intro-modal'));
     $('#close-intro').on('click', () => hideElement('#intro-modal'));
   }
@@ -242,10 +220,9 @@ $(function() {
     const levelParam = parseInt(urlParams.get('level'), 10);
     const startingLevel = [4, 5, 6].includes(levelParam) ? levelParam : 4;
 
-    startLevel(startingLevel, getSavedProgress());
+    startLevel(startingLevel);
   }
 
-  // Start the game after the vocabulary data is ready
   setupEventListeners();
   if (window.vocabulary && typeof window.vocabulary.when_ready === "function") {
     window.vocabulary.when_ready(initializeGame);

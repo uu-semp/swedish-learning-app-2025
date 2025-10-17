@@ -123,7 +123,6 @@ $(function () {
     }
 
     // --- Step 5: Check answers ---
-    // --- Step 5: Check answers ---
     function checkAnswers(levelWords) {
       const message = document.getElementById("message");
       let correct = 0;
@@ -136,6 +135,15 @@ $(function () {
       });
 
       if (correct === levelWords.length) {
+        const newWins = currentLevel + 1; // +1 because currentLevel is 0-indexed
+        const newCompletion = Math.round((newWins / 9) * 100);
+        const currentStats = save.stats.get("team05");
+
+        // Only update if current progress is better than saved progress
+        if (!currentStats || newWins > currentStats.wins) {
+          save.stats.set("team05", newWins, newCompletion);
+        }
+
         // Check if the level just completed is Level 3 (currentLevel is 0-indexed)
         if (currentLevel === 2) {
           message.textContent = "✅ Well done! Redirecting to the medium levels...";

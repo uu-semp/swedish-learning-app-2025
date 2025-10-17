@@ -80,6 +80,20 @@ Owned by Team 05
   background: linear-gradient(135deg, #dc143c 0%, #8b0000 50%, #000000 100%);
 }
 
+.menu-btn:disabled {
+  background: linear-gradient(135deg, #4d0000, #333333);
+  color: #999;
+  border-color: #666;
+  box-shadow: none;
+  cursor: not-allowed;
+}
+
+.menu-btn:disabled:hover {
+  transform: none;
+  box-shadow: none;
+  background: linear-gradient(135deg, #4d0000, #333333);
+}
+
 /* Game area */
 #game-content {
   text-align: center;

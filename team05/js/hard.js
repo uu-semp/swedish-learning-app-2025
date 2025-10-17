@@ -108,13 +108,31 @@ function setupEventListeners() {
   doneButton.addEventListener('click', handleDoneClick);
 
   // --- Drag and Drop Event Listeners ---
-  // Allow the room to be a drop target
   roomContainer.addEventListener('dragover', e => e.preventDefault());
   roomContainer.addEventListener('drop', handleDrop);
-
-  // If an item is dragged, its 'dragend' event will always fire
   document.addEventListener('dragend', handleDragEnd);
 }
+
+// =======================================================
+// == START: New Progress Saving Function ================
+// =======================================================
+/**
+ * Saves the player's progress (wins and completion percentage).
+ * Only updates if the new progress is better than the saved progress.
+ * @param {number} completedLevel - The level number that was just successfully completed.
+ */
+function saveGameProgress(completedLevel) {
+  const newWins = completedLevel;
+  const newCompletion = Math.round((newWins / 9) * 100);
+  const currentStats = save.stats.get("team05");
+
+  if (!currentStats || newWins > currentStats.wins) {
+    save.stats.set("team05", newWins, newCompletion);
+  }
+}
+// =======================================================
+// == END: New Progress Saving Function ==================
+// =======================================================
 
 /**
  * Fetches the level data and starts the setup process.
@@ -122,6 +140,8 @@ function setupEventListeners() {
  */
 async function loadLevel(levelNumber) {
   if (levelNumber > MAX_LEVEL) {
+    // This means level 9 was just completed, so save the final progress.
+    saveGameProgress(MAX_LEVEL);
     displayGameComplete();
     return;
   }
@@ -135,13 +155,10 @@ async function loadLevel(levelNumber) {
       throw new Error(`Configuration for level ${levelNumber} not found.`);
     }
 
-    // Pick a random variation
     const variationPath = levelConfig.include[Math.floor(Math.random() * levelConfig.include.length)];
-
     const dataResponse = await fetch(variationPath);
     levelData = await dataResponse.json();
 
-    // Pre-fetch vocab data for easy access
     levelData.fullVocabData = levelData.vocabs.map(v => window.vocabulary.get_vocab(v.id));
 
     setupLevelUI();
@@ -155,7 +172,6 @@ async function loadLevel(levelNumber) {
  * Resets and populates the UI for the current level.
  */
 function setupLevelUI() {
-  // Reset state from previous level
   placedItems.clear();
   staticItems.clear();
   itemList.innerHTML = '';
@@ -164,7 +180,6 @@ function setupLevelUI() {
     levelFailures[currentLevel] = 0;
   }
 
-  // Update UI elements
   levelIndicator.textContent = `Level ${currentLevel}/9`;
   document.getElementById('room-background').src = levelData.background.path;
   promptBar.innerHTML = parsePrompt(levelData.prompt);
@@ -173,20 +188,17 @@ function setupLevelUI() {
   const roomRect = roomContainer.getBoundingClientRect();
   const smallestRoomDim = Math.min(roomRect.width, roomRect.height);
 
-  // Populate static and draggable items
   levelData.vocabs.forEach((vocab, i) => {
-    const vocabIndex = i + 1; // 1-based index
+    const vocabIndex = i + 1;
     const fullVocab = levelData.fullVocabData[i];
 
     if (staticIndices.has(vocabIndex)) {
-      // This is a static item, place it in the room
       const staticInfo = levelData.staticVocabs.find(sv => sv.index === vocabIndex);
       const img = document.createElement('img');
       img.src = '/' + fullVocab.img;
       img.className = 'static-item';
       img.style.width = `${vocab.maxWidth * smallestRoomDim}px`;
-
-      img.onload = () => { // Position after image has loaded to get its dimensions
+      img.onload = () => {
         const x = staticInfo.x * roomRect.width - img.width / 2;
         const y = staticInfo.y * roomRect.height - img.height / 2;
         img.style.left = `${x}px`;
@@ -195,21 +207,17 @@ function setupLevelUI() {
       };
       roomContainer.appendChild(img);
     } else {
-      // This is a draggable item, place it in the side list
       const wrapper = document.createElement('div');
       wrapper.className = 'draggable-item-wrapper';
-
       const img = document.createElement('img');
       img.src = '/' + fullVocab.img;
       img.className = 'draggable-item';
       img.dataset.vocabIndex = vocabIndex;
       img.draggable = true;
-
       img.addEventListener('dragstart', (e) => {
         currentlyDraggedItem = { vocabIndex, isFromList: true, element: img };
-        e.dataTransfer.setData('text/plain', vocabIndex); // Necessary for Firefox
+        e.dataTransfer.setData('text/plain', vocabIndex);
       });
-
       wrapper.appendChild(img);
       itemList.appendChild(wrapper);
     }
@@ -244,7 +252,6 @@ function handleDrop(e) {
   const { vocabIndex, isFromList } = currentlyDraggedItem;
   const roomRect = roomContainer.getBoundingClientRect();
 
-  // Calculate drop coordinates relative to the room
   let x = e.clientX - roomRect.left;
   let y = e.clientY - roomRect.top;
 
@@ -252,45 +259,33 @@ function handleDrop(e) {
   const relativeY = y / roomRect.height;
 
   if (isFromList) {
-    // Hide the item in the list
     currentlyDraggedItem.element.closest('.draggable-item-wrapper').style.display = 'none';
-
-    // Create a new element in the room
     const vocabDef = levelData.vocabs[vocabIndex - 1];
     const fullVocab = levelData.fullVocabData[vocabIndex - 1];
     const smallestRoomDim = Math.min(roomRect.width, roomRect.height);
-
     const img = document.createElement('img');
     img.src = '/' + fullVocab.img;
     img.className = 'placed-item';
     img.dataset.vocabIndex = vocabIndex;
-
     img.style.width = `${vocabDef.maxWidth * smallestRoomDim}px`;
-
     img.draggable = true;
-
     img.addEventListener('dragstart', (e) => {
       currentlyDraggedItem = { vocabIndex, isFromList: false, element: img };
       e.dataTransfer.setData('text/plain', vocabIndex);
     });
-
-    img.onload = () => { // Position after load to get correct dimensions
+    img.onload = () => {
       img.style.left = `${x - img.width / 2}px`;
       img.style.top = `${y - img.height / 2}px`;
     };
-
     roomContainer.appendChild(img);
     placedItems.set(vocabIndex, { el: img, x: relativeX, y: relativeY });
-
   } else {
-    // Move an existing item within the room
     const item = placedItems.get(vocabIndex);
     item.x = relativeX;
     item.y = relativeY;
     item.el.style.left = `${x - item.el.width / 2}px`;
     item.el.style.top = `${y - item.el.height / 2}px`;
   }
-
   currentlyDraggedItem.wasDroppedInRoom = true;
 }
 
@@ -299,15 +294,10 @@ function handleDrop(e) {
  */
 function handleDragEnd() {
   if (!currentlyDraggedItem) return;
-
-  // If an item was dragged from the room but not dropped back in
   if (!currentlyDraggedItem.isFromList && !currentlyDraggedItem.wasDroppedInRoom) {
     const { vocabIndex, element } = currentlyDraggedItem;
-
-    // Remove from room and unhide in list
     element.remove();
     placedItems.delete(vocabIndex);
-
     const listItem = itemList.querySelector(`.draggable-item[data-vocab-index='${vocabIndex}']`);
     if (listItem) {
       listItem.closest('.draggable-item-wrapper').style.display = 'flex';
@@ -327,14 +317,12 @@ function showModal(title, text, buttonText, onButtonClick) {
   modalTitle.textContent = title;
   modalText.textContent = text;
   modalCloseButton.textContent = buttonText;
-
   modalCloseButton.onclick = () => {
     modalOverlay.classList.add('hidden');
     if (onButtonClick) {
       onButtonClick();
     }
   };
-
   modalOverlay.classList.remove('hidden');
 }
 
@@ -343,29 +331,32 @@ function showModal(title, text, buttonText, onButtonClick) {
  */
 function handleDoneClick() {
   if (validateLevel()) {
+    // Correct! Save progress and move to the next level.
+    saveGameProgress(currentLevel);
     currentLevel++;
     loadLevel(currentLevel);
   } else {
     levelFailures[currentLevel]++;
     if (levelFailures[currentLevel] >= 2) {
-      // Failed twice, use the modal to move to the next level.
+      // Failed twice, save progress for this level and move to the next.
       showModal(
         "Let's Move On",
         "No worries! Let's try the next challenge.",
         "Continue",
         () => {
+          saveGameProgress(currentLevel);
           currentLevel++;
           loadLevel(currentLevel);
         }
       );
     } else {
-      // First fail, show hint and reset the level.
-      setupLevelUI(); // Reset the level first
+      // First fail, show hint and reset.
+      setupLevelUI();
       showModal(
         "Hint",
         levelData.hint,
         "Try Again",
-        null // The button only needs to close the modal.
+        null
       );
     }
   }
@@ -383,7 +374,6 @@ function validateLevel() {
     if (req.indexB !== 0 && !staticItems.has(req.indexB)) requiredIndices.add(req.indexB);
   });
 
-  // 1. Check if exactly the required items (and no extras) are placed.
   if (placedItems.size !== requiredIndices.size) return false;
   for (const placedIndex of placedItems.keys()) {
     if (!requiredIndices.has(placedIndex)) return false;
@@ -392,22 +382,16 @@ function validateLevel() {
   const roomRect = roomContainer.getBoundingClientRect();
   const maxDim = Math.max(roomRect.width, roomRect.height);
 
-  // 2. Check proximity requirements.
   for (const req of requirements) {
     const posA = getObjectPosition(req.indexA);
     const posB = getObjectPosition(req.indexB);
-
-    if (!posA || !posB) return false; // An item required for a check wasn't placed
-
-    // Calculate normalized distance
+    if (!posA || !posB) return false;
     const dx = (posA.x - posB.x) * roomRect.width;
     const dy = (posA.y - posB.y) * roomRect.height;
     const distance = Math.sqrt(dx * dx + dy * dy) / maxDim;
-
-    if (distance > req.proximity) return false; // Failed proximity check
+    if (distance > req.proximity) return false;
   }
-
-  return true; // All checks passed
+  return true;
 }
 
 /**
@@ -416,7 +400,7 @@ function validateLevel() {
  * @returns {{x: number, y: number} | null} The position or null if not found.
  */
 function getObjectPosition(index) {
-  if (index === 0) return { x: 0.5, y: 0.5 }; // Pseudo-object at the center
+  if (index === 0) return { x: 0.5, y: 0.5 };
   if (placedItems.has(index)) return placedItems.get(index);
   if (staticItems.has(index)) return staticItems.get(index);
   return null;
@@ -429,7 +413,7 @@ function displayGameComplete() {
   gameFrame.innerHTML = `
         <div style="display:flex; flex-direction:column; justify-content:center; align-items:center; height:100%; text-align:center;">
             <h2>Congratulations!</h2>
-            <p>You have completed all the levels of Red Room.</p>
-            <button id="menu-button" onclick="window.location.href='../'">Back to Menu</button>
+            <p>You have completed all the levels.</p>
+            <button id="menu-button" onclick="window.location.href='../'">Back to Main Menu</button>
         </div>`;
 }
