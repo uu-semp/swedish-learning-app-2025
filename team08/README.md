@@ -74,4 +74,4 @@ Current testing is conducted through an HTML test page in the selection componen
 
 ---
 
-_This README was written using speech to text and then formatted using an LLM_
+_This README was written using speech-to-text and then formatted using an LLM_
