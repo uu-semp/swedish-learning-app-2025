@@ -9,18 +9,33 @@ Owned by Team 04
     padding: 0;
 }
 
+body {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-width: 100vw;
+    min-height: 100vh;
+}
+
 button {
     cursor: pointer;
 }
 
+
+
 #app {
-    align-items: center;
+    height: 100%;
+    width: 100%;
+}
+
+/* NOTE: This targets our "game-frame". Should be given a name in the future */
+#app > div {
     display: flex;
     flex-direction: column;
-    flex-wrap: wrap;
     justify-content: space-between;
-    min-height: 100vh;
-    min-width: 100vw;
+    height: 100%;
+    width: 100%;
 }
 
 /* Cards + Clock */ 
@@ -29,8 +44,11 @@ button {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    gap: 5vw;
-    height: 50vh;
+    justify-content: space-around;
 }
+
+
+
+
 
 

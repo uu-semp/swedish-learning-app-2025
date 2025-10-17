@@ -1,5 +1,4 @@
 .cards-group {
-    background-color: darksalmon;
     display: flex;
     flex-direction: column;
     height: 100%;
@@ -7,7 +6,29 @@
 }
 
 .card {
+    background-color: rgb(235, 250, 255);
     border-radius: 10px;
-    height: 5vh;
-    width: 15vw;
+    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.5);
+    font-size: 20px;
+    font-weight: bold;
+    height: 60px;
+    transition: box-shadow 100ms ease, transform 100ms ease, background-color 1s ease;
+    width: 200px;
+    will-change: box-shadow, transform, background-color;
+}
+
+.card:hover {
+    background-color: rgb(221, 234, 255);
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.6);
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.7);   
+    transform: scale(1.1);
+    transition: box-shadow 200ms ease, transform 300ms ease;
+    will-change: box-shadow, transform;
+}
+
+/* When clicking or holding down mouse button */
+.card:active {
+    box-shadow: 7px 7px 7px rgba(0, 0, 0, 0.8);
+    transform: scale(1.2);
+    will-change: transform, box-shadow;
 }

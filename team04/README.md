@@ -43,16 +43,24 @@ You need a modern web browser to run this application.
 ├── index.html          # Main HTML file
 ├── index.css           # Global styles
 ├── index.js            # Main entry point for JS
+├── INSTRUCTIONS.md     # Instructions for the project
+├── README.md           # This README file
 ├── assets/
 │   └── images/         # Images and assets
+│       └── clock.jpg
 ├── components/         # Vue components
 │   ├── cards.js
 │   ├── clock.js
+│   ├── finishView.js
+│   ├── footer.js
+│   ├── gameView.js
+│   ├── header.js
 │   ├── navigation.js
 │   └── statistics.js
 └── styles/             # Component-specific styles
     ├── cards.css
     ├── clock.css
+    ├── game-frame.css
     ├── navigation.css
     └── statistics.css
 ```
