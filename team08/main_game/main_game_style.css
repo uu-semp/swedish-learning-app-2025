@@ -234,7 +234,7 @@ button:focus {
   left: 0;
   background-color: white;
   width: 600px;
-  height: 80px;
+  height: 140px;
   border: 2px solid black;
   border-radius: 5px;
   padding: 10px;
@@ -266,6 +266,11 @@ button:focus {
 
 #copyright table td:nth-child(2) {
   width: auto;
+  vertical-align: middle;
+}
+
+#copyright table td {
+  height: 30px;
 }
 
 #copyright table th {
@@ -281,7 +286,7 @@ button:focus {
   overflow-y: auto;
   padding-bottom: 10px;
   height: 20px;
-  max-height: 40px;
+  max-height: 100px;
 }
 #copyright table tbody tr:hover {
   background-color: rgba(60, 144, 241, 0.336);
