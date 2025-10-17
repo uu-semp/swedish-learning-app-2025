@@ -264,7 +264,7 @@ function handleDrop(e) {
     const fullVocab = levelData.fullVocabData[vocabIndex - 1];
     const smallestRoomDim = Math.min(roomRect.width, roomRect.height);
     const img = document.createElement('img');
-    img.src = '/' + fullVocab.img;
+    img.src = '../../' + fullVocab.img;
     img.className = 'placed-item';
     img.dataset.vocabIndex = vocabIndex;
     img.style.width = `${vocabDef.maxWidth * smallestRoomDim}px`;
