@@ -195,7 +195,7 @@ function setupLevelUI() {
     if (staticIndices.has(vocabIndex)) {
       const staticInfo = levelData.staticVocabs.find(sv => sv.index === vocabIndex);
       const img = document.createElement('img');
-      img.src = '/' + fullVocab.img;
+      img.src = '../../' + fullVocab.img;
       img.className = 'static-item';
       img.style.width = `${vocab.maxWidth * smallestRoomDim}px`;
       img.onload = () => {
@@ -210,7 +210,7 @@ function setupLevelUI() {
       const wrapper = document.createElement('div');
       wrapper.className = 'draggable-item-wrapper';
       const img = document.createElement('img');
-      img.src = '/' + fullVocab.img;
+      img.src = '../../' + fullVocab.img;
       img.className = 'draggable-item';
       img.dataset.vocabIndex = vocabIndex;
       img.draggable = true;

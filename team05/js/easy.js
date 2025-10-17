@@ -46,7 +46,7 @@ $(function () {
       // --- Create image boxes (in order, unchanged) ---
       words.forEach((item, index) => {
         const img = document.createElement("img");
-        img.src = "/" + item.image;
+        img.src = "../../" + item.image;
         img.classList.add("item");
         img.dataset.answer = item.swedish;
         img.dataset.index = index;

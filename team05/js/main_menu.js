@@ -110,7 +110,7 @@ $(function () {
       if (vocab && vocab.img && vocab.img_copyright) {
         creditsHtml += `
           <li>
-            <img src="/${vocab.img}" alt="${vocab.en}">
+            <img src="../${vocab.img}" alt="${vocab.en}">
             <strong>${vocab.en}</strong>
             <div class="copyright-text">${vocab.img_copyright}</div>
           </li>
