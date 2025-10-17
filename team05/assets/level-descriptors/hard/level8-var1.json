@@ -1,0 +1,53 @@
+{
+  "background": {
+    "path": "/team05/assets/backgrounds/bathroom.svg"
+  },
+  "vocabs": [
+    {
+      "id": "2715491b",
+      "maxWidth": 0.25,
+      "note": "shower"
+    },
+    {
+      "id": "623f2e2b",
+      "maxWidth": 0.25,
+      "note": "towel"
+    },
+    {
+      "id": "2d757412",
+      "maxWidth": 0.25,
+      "note": "toilet"
+    },
+    {
+      "id": "13641648",
+      "maxWidth": 0.25,
+      "note": "mirror"
+    }
+  ],
+  "staticVocabs": [
+    {
+      "index": 1,
+      "x": 0.8,
+      "y": 0.5
+    },
+    {
+      "index": 3,
+      "x": 0.2,
+      "y": 0.5
+    },
+    {
+      "index": 4,
+      "x": 0.5,
+      "y": 0.5
+    }
+  ],
+  "proximityRequirements": [
+    {
+      "indexA": 2,
+      "indexB": 1,
+      "proximity": 0.3
+    }
+  ],
+  "prompt": "Place \"@2 $2\" close to the \"$1\"",
+  "hint": "Someone needs to dry themselves when stepping out of the shower."
+}
