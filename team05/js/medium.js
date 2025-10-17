@@ -76,7 +76,7 @@ $(function() {
         en: vocab.en || "",
         sv: vocab.sv || "",
         sv_pl: vocab.sv_pl || "",
-        img: "/" + vocab.img || "",
+        img: "../../" + vocab.img || "",
         article: vocab.article || "",
       });
     }
