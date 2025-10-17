@@ -147,7 +147,7 @@ async function loadLevel(levelNumber) {
   }
 
   try {
-    const indexResponse = await fetch('/team05/assets/level-descriptors/hard/index.json');
+    const indexResponse = await fetch('../assets/level-descriptors/hard/index.json');
     const levelIndex = await indexResponse.json();
 
     const levelConfig = levelIndex.find(l => l.level === levelNumber);
