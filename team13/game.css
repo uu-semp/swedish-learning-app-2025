@@ -189,6 +189,13 @@ hr {
     /* margin-bottom: 2.5rem; */
 }
 
+#house-buttons > div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+
 /* Base house button styling */
 #house-buttons button {
     position: relative;
@@ -237,3 +244,9 @@ footer {
     margin-top: 3rem;
     color: #666;
 }
+
+
+/*Result message styling*/
+.house-message { margin-top: .4rem; font-size: 1rem; font-weight: 600; text-align: center; }
+.house-message.wrong { color: #dc3545; }
+.house-message.correct { color: #28a745; }

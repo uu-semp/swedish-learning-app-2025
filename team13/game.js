@@ -8,8 +8,7 @@
 const app = Vue.createApp({
   data() {
     return {
-      tempStreets: [
-      ],
+tempStreets: [],
 
       isLoading: true,
       currentScreen: 'game',
@@ -17,11 +16,11 @@ const app = Vue.createApp({
       progress: 0,
       progressMax: 10,
       progressMin: 0,
-
       houseOptions: [],
       correctHouseIndex: -1,
       currentQuestion: null,
       currentStreet: '',
+      houseClicked: false,
 
       showTranslation: false,
       swedishSentence: ["Jag", "bor", "på", "-street", "-int"],
@@ -30,7 +29,7 @@ const app = Vue.createApp({
       translatedIndexes: [],
 
       vocabNumbers: [],
-      // vocabStreets: [],
+      vocabStreets: [],
     }
   },
 
@@ -47,15 +46,13 @@ const app = Vue.createApp({
   },
 
   methods: {
-    // startGame() {
-    //   this.progress = 1;
-    //   this.currentScreen = 'game';
-    //   this.startNewRound();
-    // },
-    // backToMenu() {
-    //   this.currentScreen = 'menu';
-    // },
     startNewRound() {
+        // Remove any leftover "✔ Correct!" / "✖ Wrong..." messages
+      document.querySelectorAll(".house-message").forEach(n => n.remove());
+      this.translatedIndexes = [];
+      this.prompt = [...this.swedishSentence];
+      this.showTranslation = false;
+
       this.translatedIndexes = [];
       this.prompt = [...this.swedishSentence];
       this.showTranslation = false;
@@ -64,7 +61,7 @@ const app = Vue.createApp({
       const vocab = window.vocabulary.get_vocab(this.vocabNumbers[randomNoIndex]);
       this.currentQuestion = vocab;
 
-      const randomStreetIndex = irandom_range(0, this.vocabStreets.length - 1);
+      const randomStreetIndex = irandom_range(0 , this.vocabStreets.length - 1);
       const vocabStreet = window.vocabulary.get_vocab(this.vocabStreets[randomStreetIndex]);
       this.currentStreet = vocabStreet.sv
 
@@ -74,33 +71,52 @@ const app = Vue.createApp({
 
       this.houseOptions = result.houseArray;
       this.correctHouseIndex = result.correctHouse;
+      this.houseClicked = false;
     },
 
     checkAnswer(selectedIndex) {
       const wasCorrect = (selectedIndex === this.correctHouseIndex);
-      alert(wasCorrect ? "Correct!" : "Wrong house.");
+      // show a message under the clicked house instead of alert
+      const btns = document.querySelectorAll("#house-buttons button");
+      document.querySelectorAll(".house-message").forEach(n => n.remove());
 
-      this.progress += wasCorrect ? 1 : -1;
-      if (this.progress < this.progressMin)  {
-        this.progress = this.progressMin;
+      if (!wasCorrect) {
+        const msg = document.createElement("div");
+        msg.className = "house-message wrong";
+        msg.innerHTML = "✖ Wrong house<br>Try again!";
+        btns[selectedIndex].parentElement.insertBefore(msg, btns[selectedIndex].nextSibling);
+        this.progress += wasCorrect ? 1 : -1;
+        if (this.progress < this.progressMin)  {
+          this.progress = this.progressMin;
+        }
+        return; // stay on the same round
+      } else {
+        const ok = document.createElement("div");
+        ok.className = "house-message correct";
+        ok.textContent = "✔ Correct!";
+        btns[selectedIndex].parentElement.insertBefore(ok, btns[selectedIndex].nextSibling);
+        if (!this.houseClicked){this.progress += 1}
+        this.houseClicked = true;
+        setTimeout(() => {
+          
+          if (this.progress >= this.progressMax) {
+            save.set("team13", "stage_completed_1", true) 
+            save.stats.incrementWin("team13");
+            save.stats.setCompletion("team13", 100);
+            //for future: make this "stage_completed_" + stageNumber.string()
+            window.location.href = 'end_screen.html';
+            return;
+          }
+          this.startNewRound();
+        }, 700);
+        return; // prevent the original block below from running immediately
       }
-
-      if (this.progress >= this.progressMax) {
-        alert(`Congrats! You finished ${this.progressMax} rounds.`);
-        save.set("team13", "stage_completed_1", true) 
-        save.stats.incrementWin("team13");
-        save.stats.setCompletion("team13", 100);
-        //for future: make this "stage_completed_" + stageNumber.string()
-        window.location.href = 'end_screen.html';
-        return;
-      }
-
-      this.startNewRound();
     },
 
     toggleTranslation() {
       this.showTranslation = !this.showTranslation;
     },
+
 
     translateWord(wordIndex) {
 
@@ -120,22 +136,20 @@ const app = Vue.createApp({
       this.prompt = newPrompt;
     },
 
-    renderWord(word) {
-      switch (word) {
-        case 
-          "-street": return this.currentStreet;
+      renderWord(word) {
+        switch (word) {
+          case 
+            "-street": return this.currentStreet;
 
-        case 
-          "-int": return this.currentQuestion ? this.currentQuestion.sv : '';
-      
-        default: 
-          return word;
-      }
-    },
+          case 
+            "-int": return this.currentQuestion ? this.currentQuestion.sv : '';
 
-
+          default: 
+            return word;
+        }
+      },
   },
-  
+
   mounted() {
     window.vocabulary.when_ready(() => {
       console.log("Vocabulary loaded, vue ready");
@@ -145,7 +159,7 @@ const app = Vue.createApp({
       this.startNewRound();
     });
   }
-  
+
 });
 
 app.mount('#app');

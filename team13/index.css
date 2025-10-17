@@ -10,3 +10,37 @@ body {
     margin-left: auto;
     margin-right: auto;
 }
+
+.congrats-title {
+  text-align: center;
+  font-size: 2.5rem;
+  color: #2c3e50;
+  margin-top: 1rem;
+}
+
+.congrats-subtitle {
+  text-align: center;
+  font-size: 1.3rem;
+  color: #555;
+  margin-bottom: 1.5rem;
+}
+
+.level-badge {
+  display: inline-block;
+  background-color: #f3fff3;
+  border: 1px solid #38b000;
+  border-radius: 12px;
+  padding: 2px 8px;
+  font-weight: 600;
+}
+
+.menu-wrapper {
+  display: flex;
+  justify-content: center;   
+  align-items: center;       
+  min-height: 100vh;         
+}
+
+.menu-container {
+  text-align: center;       
+}

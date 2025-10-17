@@ -109,9 +109,6 @@ button:hover,
 
 /* Styles for the progress bar */
 .progress-container {
-    position: absolute;
-    bottom: 2rem;
-    right: 2rem;
     width: 150px;
 }
 

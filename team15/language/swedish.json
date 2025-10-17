@@ -36,5 +36,10 @@
     "num-tries":"TOTALT ANTAL FÖRSÖK: ",
     "num-right":"TOTALT ANTAL RÄTT: ",
     "information-message":"Dra klädesplagget på Pelle, och släpp det där för att ge ditt svar!",
-    "okay-continue":"OKEJ! GÅ TILLBAKA"  
+    "okay-continue":"OKEJ! GÅ TILLBAKA",
+    "license-information":"LICENSINFORMATION",
+    "license-details":"Detta spel använder bilder från flera källor med korrekt tillskrivning som krävs av varje licens:",
+    "license-freepik":"Freepik License: Pelle-karaktär av macrovector, mynt av studiogstock, hatt-ikoner av jcomp, tröja av brgfx, byxor och skor av freepik. Alla från freepik.com under Freepik License-villkor.",
+    "license-public-domain":"Public Domain: Svenska och brittiska flaggbilder från Wikimedia Commons (ingen tillskrivning krävs)",
+    "license-cc":"CC BY-NC-SA 3.0: Alla klädbilder från Papunets bildbank (papunet.net) skapade av Elina Vanninen, Sergio Palao/ARASAAC och Sclera. Licensierad under Creative Commons Attribution-NonCommercial-ShareAlike 3.0. Licens-URL: https://creativecommons.org/licenses/by-nc-sa/3.0/"
 }

@@ -97,7 +97,7 @@
                 // If no game data found, show a message or redirect
                 document.getElementById('a-score').textContent = '0';
                 document.getElementById('a-level').textContent = 'No game completed';
-                document.getElementById('play-again-btn').href = './level1.html'; // Default to level 1
+                document.getElementById('play-again-btn').href = './level.html?level=1'; // Default to level 1
                 console.log('No game data found in localStorage. User may have accessed summary directly.');
             }
         });
