@@ -362,7 +362,7 @@ const IMAGES = [IMAGE_1, IMAGE_2, IMAGE_3];
  */
 function update_licenses(words) {
   for (let i = 0; i < IMAGES.length; i++) {
-    IMAGES[i].innerHTML = words[i].img_copyright || "none";
+    IMAGES[i].innerHTML = words[i].img_copyright || "None";
   }
 }
 
