@@ -103,7 +103,6 @@ $(function () {
 
     if (corrects >= corrects_needed) {
       stopTimer();
-      alert("Congratulations! You've won the game!");
       updateEndScreen();
       wins++; // Increment wins
       save.stats.incrementWin(team_name); // Save the new win count
@@ -120,13 +119,13 @@ $(function () {
   function notMatch() {
     misses++;
     $("#moves").text(`moves: ${misses + corrects}`);
-    if (misses >= misses_max) {
-      stopTimer();
-      alert("Game Over! You've exceeded the maximum number of moves.");
-      updateEndScreen();
-      resetGame();
-      showScreen("end-screen");
-    }
+    // if (misses >= misses_max) {
+    //   stopTimer();
+    //   alert("Game Over! You've exceeded the maximum number of moves.");
+    //   updateEndScreen();
+    //   resetGame();
+    //   showScreen("end-screen");
+    // }
   }
 
   // Event delegation för dynamiskt skapade kort
