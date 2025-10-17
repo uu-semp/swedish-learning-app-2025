@@ -243,3 +243,62 @@ Owned by Team 05
   font-size: 22px;
 }
 
+
+
+#progress-indicator {
+  margin-top: -15px;
+  margin-bottom: 25px;
+  font-size: 18px;
+  color: #eee;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.7);
+  min-height: 25px;
+}
+
+#modal-body {
+  margin: 20px 0;
+  text-align: left;
+  line-height: 1.6;
+}
+
+#modal-body h3 {
+  color: #dc143c;
+  border-bottom: 1px solid #dc143c;
+  padding-bottom: 5px;
+}
+
+#modal-body ul {
+  list-style-type: none;
+  padding: 0;
+  margin-top: 15px;
+  max-height: 60vh;
+  overflow-y: auto;
+  padding-right: 15px; /* for scrollbar */
+}
+
+#modal-body li {
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #555;
+}
+
+#modal-body li:last-child {
+  border-bottom: none;
+}
+
+#modal-body img {
+  max-width: 120px;
+  border-radius: 8px;
+  border: 2px solid #dc143c;
+  display: block;
+  margin-bottom: 10px;
+}
+
+#modal-body .copyright-text {
+  font-size: 0.85em;
+  color: #ccc;
+  font-style: italic;
+}
+
+#modal-body .copyright-text a {
+  color: #ff5555;
+}
