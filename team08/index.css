@@ -4,9 +4,248 @@ Owned by Team 08
 =================================================
 */
 
+/* Design tokens and responsive sizes */
+:root {
+  --app-width: 50rem; /* 800px */
+  --app-height: 37.5rem; /* 600px */
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 2rem;
+  --radius: 0.75rem; /* 12px */
+  --color-primary: #d2132a; /* heading red */
+  --color-text: #010101;
+  --color-card: #d9d8d9; /* tutorial card */
+  --color-cta: #0168aa; /* start button blue */
+  --outline: #222222;
+  --font-sans: "Work Sans", system-ui, sans-serif;
+}
+
+/* Page baseline */
+
 body {
-    font-family: Arial, sans-serif;
-    width: 1000px;
-    margin-left: auto;
-    margin-right: auto;
+  /* Typography */
+  font-family: var(--font-sans), serif;
+
+  /* Visual */
+  background: #eaf6ff;
+  color: var(--color-text);
+}
+/* Main welcome container centered vertically and horizontally */
+.welcome {
+  /* Positioning */
+  position: relative;
+
+  /* Box model */
+  width: var(--app-width);
+  max-width: 100%;
+  min-height: 100vh;
+  margin: 0 auto;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2.5rem 1.25rem;
+
+  /* Typography */
+  text-align: center;
+}
+
+/* Title */
+.welcome__title {
+  /* Box model */
+  margin: 0 0 var(--spacing-sm) 0;
+
+  /* Typography */
+  font-size: clamp(2.25rem, 6vw, 4rem);
+  line-height: 1.03;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+
+  /* Visual */
+  color: var(--color-primary);
+}
+
+/* Welcome styles moved to team08/welcome/index.css */
+/* Subtitle / description */
+.welcome__subtitle {
+  /* Box model */
+  margin: 0 0 var(--spacing-lg) 0;
+  max-width: 36rem;
+
+  /* Typography */
+  font-size: clamp(1rem, 1.6vw, 1.5rem);
+  line-height: 1.35;
+
+  /* Visual */
+  color: rgba(17, 17, 17, 0.92);
+}
+
+/* Tutorial button */
+.welcome__tutorial-btn {
+  /* Positioning */
+  position: relative;
+
+  /* Box model */
+  width: min(30rem, 92%);
+  height: 25%;
+  margin: 0 auto var(--spacing-lg) auto;
+  box-sizing: border-box;
+  border-radius: var(--radius);
+  border: none;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  /* Typography */
+  font-family: inherit;
+
+  /* Visual */
+  background: var(--color-card);
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.1s;
+}
+
+.welcome__tutorial-btn:hover {
+  /* Visual */
+  background-color: #cecece;
+}
+
+.welcome__tutorial-btn:focus {
+  /* Visual */
+  outline: 3px solid rgba(43, 102, 168, 0.16);
+  outline-offset: 0.125rem;
+}
+
+.welcome__tutorial-btn:active {
+  /* Visual */
+  transform: translateY(2px);
+}
+
+.welcome__tutorial-text {
+  /* Box model */
+  padding: 0.25rem 0.5rem;
+
+  /* Typography */
+  font-size: 1.25rem;
+  line-height: 1.2;
+  text-align: center;
+
+  /* Visual */
+  color: rgba(0, 0, 0, 0.85);
+}
+
+/* Start button */
+.welcome__start-btn {
+  /* Box model */
+  display: inline-block;
+  width: min(20rem, 72%);
+  max-width: 22rem;
+  padding: 1rem 2.25rem;
+  margin-top: 1.25rem;
+  border-radius: 0.75rem;
+  border: none;
+  box-sizing: border-box;
+
+  /* Typography */
+  font-size: 1.25rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  text-align: center;
+
+  /* Visual */
+  background: var(--color-cta);
+  color: #fff;
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.06);
+  cursor: pointer;
+}
+
+.welcome__start-btn:hover,
+.welcome__start-btn:focus {
+  /* Visual */
+  filter: brightness(0.98);
+  outline: 3px solid rgba(43, 102, 168, 0.16);
+  outline-offset: 0.125rem;
+}
+
+/* Tutorial dialog */
+#tutorial-modal {
+  /* Box model */
+  padding: 0;
+  border: none;
+  border-radius: var(--radius);
+
+  /* Visual */
+  background: white;
+}
+
+/* Tutorial content wrapper */
+#tutorial-modal-content {
+  /* Box model */
+  position: relative;
+  padding: var(--spacing-lg);
+
+  h2 {
+    text-align: center;
+    font-size: larger;
+    margin: 10px 0;
+  }
+}
+
+/* Close button */
+#close-tutorial {
+  /* Positioning */
+  position: absolute;
+  top: var(--spacing-sm);
+  right: var(--spacing-sm);
+
+  /* Box model */
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border: none;
+  border-radius: var(--radius);
+
+  /* Typography */
+  font-size: 1.5rem;
+  line-height: 1;
+
+  /* Visual */
+  background: transparent;
+  cursor: pointer;
+}
+
+.keybinding-help {
+  /* Box model */
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.keybinding-help table {
+  border-collapse: separate;
+  border-spacing: 20px 5px;
+}
+
+#persistent-popup {
+  display: none;
+  position: absolute;
+  left: 10px;
+  top: 10px;
+  width: 450px;
+  height: 120px;
+  background-color: gray;
+  border: 4px solid black;
+}
+#persistent-popup p {
+  width: 100%;
+  color: white;
+  text-align: left;
+  padding-left: 5px;
+}
+#persistent-popup button {
+  position: absolute;
+  right: 0;
+  border: 1px solid black;
 }

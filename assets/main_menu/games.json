@@ -1,114 +1,170 @@
 [
    {
     "id": "team01",
-    "eng_title": "What Am I?",
-    "sv_title": "Vem är jag?",
-    "eng_desc": "Pictures Meet Swedish Words",
-    "sv_desc": "Bilder möter svenska ord",
+    "title": {
+      "en": "What Am I?",
+      "sv": "Vem är jag?"
+    },
+    "desc": {
+      "en": "Pictures Meet Swedish Words",
+      "sv": "Bilder möter svenska ord"
+    },
     "supported_chapters": [1, 6, 7]
   },
   {
     "id": "team02",
-    "eng_title": "Decorate",
-    "sv_title": "Dekorera",
-    "eng_desc": "Come decorate using Swedish words for furniture and positional info. Using your understanding of Swedish learn how to decorate a room to look as specified according to the requirements.",
-    "sv_desc": "Kom och dekorera med hjälp av svenska ord för möbler och positionsinformation. Använd din förståelse av svenska för att lära dig hur man inreder ett rum så att det ser ut enligt specifikationerna.",
+    "title": {
+      "en": "Decorate",
+      "sv": "Dekorera"
+    },
+    "desc": {
+      "en": "Come decorate using Swedish words for furniture and positional info. Using your understanding of Swedish learn how to decorate a room to look as specified according to the requirements.",
+      "sv": "Kom och dekorera med hjälp av svenska ord för möbler och positionsinformation. Använd din förståelse av svenska för att lära dig hur man inreder ett rum så att det ser ut enligt specifikationerna."
+    },
     "supported_chapters": [6]
   },
   {
     "id": "team04",
-    "eng_title": "Clock it",
-    "sv_title": "Klocka det",
-    "eng_desc": "A game about the clock, containing both multiple choice, free text and drag-and-drop questions.",
-    "sv_desc": "Ett spel för att lära sig klockan, bestående av flervalsfrågor, fri text och \"klicka-drag\" frågor. ",
+    "title": {
+      "en": "Clock it",
+      "sv": "Klocka det"
+    },
+    "desc": {
+      "en": "A game about the clock, containing both multiple choice, free text and drag-and-drop questions.",
+      "sv": "Ett spel för att lära sig klockan, bestående av flervalsfrågor, fri text och \"klicka-drag\" frågor."
+    },
     "supported_chapters": [1, 2]
   },
   {
     "id": "team05",
-    "eng_title": "Red Room",
-    "sv_title": "Röda rummet",
-    "eng_desc": "A game that teaches furniture words through picture–word matching, typing practice, and drag-and-drop room placement. Progress through nine levels, use hints when stuck, and track your completion ratio.",
-    "sv_desc": "Ett spel som lär ut möbelrelaterade ord genom bild-till-ordmatchning, skrivövningnar och dra-och-släpp-placering i rum. Ta dig genom nio nivåer, använd ledtrådar när du fastnar, och följ dina framsteg genom nivåerna.",
+    "title": {
+      "en": "Red Room",
+      "sv": "Röda rummet"
+    },
+    "desc": {
+      "en": "A game that teaches furniture words through picture–word matching, typing practice, and drag-and-drop room placement. Progress through nine levels, use hints when stuck, and track your completion ratio.",
+      "sv": "Ett spel som lär ut möbelrelaterade ord genom bild-till-ordmatchning, skrivövningnar och dra-och-släpp-placering i rum. Ta dig genom nio nivåer, använd ledtrådar när du fastnar, och följ dina framsteg genom nivåerna."
+    },
     "supported_chapters": [6]
   },
   {
     "id": "team06",
-      "eng_title": "Tick-Tock Time",
-    "sv_title": "Klockkul",
-    "eng_desc": "Ready to race the clock? Practice Swedish time expressions while clicking, typing, and laughing at your mistakes. You’ll master time step by step — and fast!",
-    "sv_desc": "Är du redo för klockracet? Träna svenska tidsuttryck genom att klicka, skriva och skratta åt dina misstag. Du blir tidsmästare steg för steg!",
+    "title": {
+      "en": "Tick-Tock Time",
+      "sv": "Klockkul"
+    },
+    "desc": {
+      "en": "Ready to race the clock? Practice Swedish time expressions while clicking, typing, and laughing at your mistakes. You’ll master time step by step — and fast!",
+      "sv": "Är du redo för klockracet? Träna svenska tidsuttryck genom att klicka, skriva och skratta åt dina misstag. Du blir tidsmästare steg för steg!"
+    },
     "supported_chapters": [1]
   },
   {
     "id": "team07",
-    "eng_title": "Say What?",
-    "sv_title": "Vad Sägs?",
-    "eng_desc": "A game where you will hear words spoken in Swedish, and then match the word heard with the right picture",
-    "sv_desc": "Ett spel där ord uttalas, och du behöver välja rätt bilder som matchar orden",
+    "title": {
+      "en": "Say What?",
+      "sv": "Vad Sägs?"
+    },
+    "desc": {
+      "en": "A game where you will hear words spoken in Swedish, and then match the word heard with the right picture",
+      "sv": "Ett spel där ord uttalas, och du behöver välja rätt bilder som matchar orden"
+    },
     "supported_chapters": [4, 6, 7]
   },
   {
     "id": "team08",
-    "eng_title": "Say What?",
-    "sv_title": "Vad sa du?",
-    "eng_desc": "In this game you have to listen to words in Swedish and find the matching illustration.",
-    "sv_desc": "I det här spelet ska du lyssna på ord på svenska och hitta den bild som passar.",
+    "title": {
+      "en": "Say What?",
+      "sv": "Vad sa du?"
+    },
+    "desc": {
+      "en": "In this game you have to listen to words in Swedish and find the matching illustration.",
+      "sv": "I det här spelet ska du lyssna på ord på svenska och hitta den bild som passar."
+    },
     "supported_chapters": [1, 2, 3, 3, 4, 5, 6, 7, 8]
   },
   {
     "id": "team09",
-    "eng_title": "Which garment am I?",
-    "sv_title": "Vilket plagg är jag?",
-    "eng_desc": "A game where you get to learn normal clothing items and their specific articles. You will pair pictures with the correct word or the other way around.",
-    "sv_desc": "Ett spel där du får lära dig vanliga klädesplagg och deras bestämda artiklar. Du kommer att para ihop bilder med rätt ord – eller tvärtom.",
+    "title": {
+      "en": "Which garment am I?",
+      "sv": "Vilket plagg är jag?"
+    },
+    "desc": {
+      "en": "A game where you get to learn normal clothing items and their specific articles. You will pair pictures with the correct word or the other way around.",
+      "sv": "Ett spel där du får lära dig vanliga klädesplagg och deras bestämda artiklar. Du parar ihop bilder med rätt ord eller tvärtom."
+    },
     "supported_chapters": [7]
   },
   {
     "id": "team10",
-    "eng_title": "Eat and Learn",
-    "sv_title": "Ät och lär",
-    "eng_desc": "The primary objective of this game is to support learners in acquiring Swedish vocabulary related to food and fruits. It utilizes a three-level progression system (True/False, Matching, Spelling) emphasizing recognition, comprehension, and spelling. \n\n Prior to starting a level, users can access Learning Mode to study the upcoming vocabulary without affecting their game score. The three main levels then guide the user through increasing levels of difficulty:\n\nLevel 1 (True/False): Focuses on basic recognition \nLevel 2 (Matching): Tests comprehension and association \nLevel 3 (Spelling): Requires recognition and comprehension to present accurate spelling ",
-    "sv_desc": "Huvudsyftet med detta spel är att stödja inlärare i att förvärva ett svenskt ordförråd relaterat till mat och frukter. Det använder ett progressionssystem med tre nivåer (Sant/Falskt, Matchning, Stavning) som betonar igenkänning, förståelse och stavning.\n\nFöre start av en nivå kan användare få tillgång till Inlärningsläget för att studera det kommande ordförrådet utan att påverka deras spelpoäng. De tre huvudnivåerna vägleder sedan användaren genom ökande svårighetsgrader:\n\nNivå 1 (Sant/Falskt): Fokuserar på grundläggande igenkänning\nNivå 2 (Matchning): Testar förståelse och association\nNivå 3 (Stavning): Kräver igenkänning och förståelse för att presentera korrekt stavning",
+    "title": {
+      "en": "Eat and Learn", 
+      "sv": "Ät och lär"
+    },
+    "desc": {
+      "en": "The primary objective of this game is to support learners in acquiring Swedish vocabulary related to food and fruits. It utilizes a three-level progression system (True/False, Matching, Spelling) emphasizing recognition, comprehension, and spelling. \n\n Prior to starting a level, users can access Learning Mode to study the upcoming vocabulary without affecting their game score. The three main levels then guide the user through increasing levels of difficulty:\n\nLevel 1 (True/False): Focuses on basic recognition \nLevel 2 (Matching): Tests comprehension and association \nLevel 3 (Spelling): Requires recognition and comprehension to present accurate spelling ",
+      "sv": "Huvudsyftet med detta spel är att stödja inlärare i att förvärva ett svenskt ordförråd relaterat till mat och frukter. Det använder ett progressionssystem med tre nivåer (Sant/Falskt, Matchning, Stavning) som betonar igenkänning, förståelse och stavning.\n\nFöre start av en nivå kan användare få tillgång till Inlärningsläget för att studera det kommande ordförrådet utan att påverka deras spelpoäng. De tre huvudnivåerna vägleder sedan användaren genom ökande svårighetsgrader:\n\nNivå 1 (Sant/Falskt): Fokuserar på grundläggande igenkänning\nNivå 2 (Matchning): Testar förståelse och association\nNivå 3 (Stavning): Kräver igenkänning och förståelse för att presentera korrekt stavning" 
+    },
     "supported_chapters": [4]
   },
   {
     "id": "team11",
-    "eng_title": "ICA West",
-    "sv_title": "ICA Väst",
-    "eng_desc": "ICA West is an educational grocery shopping game designed to help  players learn Swedish food vocabulary in a fun and interactive way. Players receive a shopping list and must find and select the correct food items from the shelf to place in their cart.",
-    "sv_desc": "ICA Väst är ett pedagogiskt spel som hjälper spelare att lära sig svenska ord för matvaror på ett roligt och interaktivt sätt. Spelaren får en inköpslista och ska hitta och välja rätt varor från hyllan för att lägga dem i sin kundvagn.",
+    "title": {
+      "en": "ICA West",
+      "sv": "ICA Väst"
+    },
+    "desc": {
+      "en": "ICA West is an educational grocery shopping game designed to help  players learn Swedish food vocabulary in a fun and interactive way. Players receive a shopping list and must find and select the correct food items from the shelf to place in their cart.",
+      "sv": "ICA Väst är ett pedagogiskt spel som hjälper spelare att lära sig svenska ord för matvaror på ett roligt och interaktivt sätt. Spelaren får en inköpslista och ska hitta och välja rätt varor från hyllan för att lägga dem i sin kundvagn."
+    },
     "supported_chapters": [4]
   },
   {
     "id": "team13",
-    "eng_title": "House selection game (short HSG)",
-    "sv_title": "Hitta rätt hus",
-    "eng_desc": "This game is all about numbers. You will see a few houses with different numbers on your screen and your mission is too click on the house with the correct number. ",
-    "sv_desc": "Det här spelet fokuserar på siffror. Du kommer att se några hus med olika siffror på din skärm och ditt uppdrag är att klicka på huset med rätt siffra.",
+    "title": {
+      "en": "House selection game (short HSG)",
+      "sv": "Hitta rätt hus"
+    },
+    "desc": {
+      "en": "This game is all about numbers. You will see a few houses with different numbers on your screen and your mission is too click on the house with the correct number. ",
+      "sv": "Det här spelet fokuserar på siffror. Du kommer att se några hus med olika siffror på din skärm och ditt uppdrag är att klicka på huset med rätt siffra." 
+    },
     "supported_chapters": [1, 3]
   },
   {
     "id": "team14",
-    "eng_title": "Paper Pelle",
-    "sv_title": "Pappers Pelle",
-    "eng_desc": "In this game the player is tasked with dressing a cat named Pelle with different clothing items. The player is given instructions for how to dress Pelle and win the game if they can dress Pelle correctly.",
-    "sv_desc": "I det här spelet är det spelarens uppgift att klä på katten Pappers-Pelle med olika klädesplagg. Spelaren får instruktioner för hur detta ska göras och spelaren vinner spelet om de kan klä Pelle korrekt.",
+    "title": {
+      "en": "Paper Pelle",
+      "sv": "Pappers Pelle"
+    },
+    "desc": {
+      "en": "In this game the player is tasked with dressing a cat named Pelle with different clothing items. The player is given instructions for how to dress Pelle and win the game if they can dress Pelle correctly.",
+      "sv": "I det här spelet är det spelarens uppgift att klä på katten Pappers-Pelle med olika klädesplagg. Spelaren får instruktioner för hur detta ska göras och spelaren vinner spelet om de kan klä Pelle korrekt."
+    },
     "supported_chapters": [7]
   },
   {
     "id": "team15",
-    "eng_title": " Dressing Pelle",
-    "sv_title": "Klä på Pelle",
-    "eng_desc": "Learn common clothing words by dressing Pelle in this interactive, beginner-friendly exercise!",
-    "sv_desc": "Lär dig vanliga ord för kläder genom att klä på Pelle i denna interaktiva övning för nybörjare!",
+    "title": {
+      "en": " Dressing Pelle",
+      "sv": "Klä på Pelle"
+    },
+    "desc": {
+      "en": "Learn common clothing words by dressing Pelle in this interactive, beginner-friendly exercise!",
+      "sv": "Lär dig vanliga ord för kläder genom att klä på Pelle i denna interaktiva övning för nybörjare!"
+    },
     "supported_chapters": [7]
   },
   {
     "id": "team16",
-    "eng_title": "Where does Kevin live?",
-    "sv_title": "Var bor Kevin?",
-    "eng_desc": "In this game, you have to choose the correct house on a street based on an instruction from \"Kevin\". Kevin will tell you where he lives, and your task is to figure out where that is. The game gets harder as you progress, and as Kevin gives you more complex swedish sentences.",
-    "sv_desc": "I det här spelet ska du hitta det rätta huset på en väg baserat på instruktioner från \"Kevin\". Kevin berätter för dig var han bor, och din uppgift är att förstå vart det är. Spelet blir svårare ju längre du kommer, allt eftersom Kevin berättar svårare instruktioner på svenska. ",
+    "title": {
+      "en": "Where does Kevin live?",
+      "sv": "Var bor Kevin?"
+    },
+    "desc": {
+      "en": "In this game, you have to choose the correct house on a street based on an instruction from Kevin. Kevin will tell you where he lives, and your task is to figure out where that is. The game gets harder as you progress, as Kevin gives you more complex Swedish sentences.",
+      "sv": "I det här spelet ska du hitta det rätta huset på en väg baserat på instruktioner från Kevin. Kevin berättar för dig var han bor, och din uppgift är att förstå vart det är. Spelet blir svårare ju längre du kommer, allt eftersom Kevin berättar svårare instruktioner på svenska."
+    },
     "supported_chapters": [1, 3]
   } 
 ]

@@ -33,6 +33,14 @@ header {
     color: rgb(255, 255, 255);
 }
 
+#lang-sv {
+    margin-right: 1.5rem;
+}
+
+#settings-btn {
+    width: 7rem;
+}
+
 .header-btn:hover {
     background: white;
     color: rgb(55, 54, 54);

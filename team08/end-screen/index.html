@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="../../scripts/save.js"></script>
+  <title>Say What? - Scoreboard</title>
+  <link rel="stylesheet" href="index.css">
+  <script type="module" src="index.js"></script>
+</head>
+
+<body>
+  <div class="scoreboard">
+    <header class="scoreboard__header">
+      <h1 class="scoreboard__title">Scoreboard</h1>
+    </header>
+
+    <main class="scoreboard__content">
+      <section class="score-section">
+        <div class="score-section__item">
+          <label class="score-section__label">Correct answers: <span id="scoreText"></span></label>
+          <div class="progress-bar">
+            <div class="progress-bar__fill progress-bar__fill--score" id="scoreBar"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="category-section">
+        <h2 class="category-section__label">Category(s):</h2>
+        <div class="category-section__content">
+          <div class="category-badge" id="categoryName"></div>
+          <button class="show-words-btn" id="showWordsBtn">View Details</button>
+        </div>
+      </section>
+
+    </main>
+
+    <footer class="scoreboard__footer">
+      <button class="btn btn--primary" id="playAgainBtn">Play Again</button>
+    </footer>
+  </div>
+
+</body>
+
+</html>

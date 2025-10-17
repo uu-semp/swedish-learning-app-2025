@@ -17,6 +17,25 @@ document.title = `Level ${levelIndex}`;
 const header = document.querySelector("header h1");
 if (header) header.textContent = `Welcome to Level ${levelIndex}`;
 
+// Add 6th and 7th tiles only for level 3
+if (levelIndex === "3") {
+    document.addEventListener('DOMContentLoaded', function() {
+        const floor = document.querySelector('.floor');
+        
+        // Add 6th tile
+        const sixthTile = document.createElement('div');
+        sixthTile.className = 'floor-tile';
+        sixthTile.setAttribute('data-index', '5');
+        floor.appendChild(sixthTile);
+        
+        // Add 7th tile
+        const seventhTile = document.createElement('div');
+        seventhTile.className = 'floor-tile';
+        seventhTile.setAttribute('data-index', '6');
+        floor.appendChild(seventhTile);
+    });
+}
+
 function loadLevelQuestions(level) {
     return new Promise((resolve, reject) => {
         const script = document.createElement("script");
@@ -35,7 +54,8 @@ function showRandomQuestion() {
         console.log('Game completed! Final score:', totalScore);
         window.save.stats.incrementWin(TEAM_NAME);
         localStorage.setItem('gameScore', totalScore);
-        if (totalScore === 5) {
+        const requiredScore = levelIndex === "3" ? 7 : 5; // Level 3 has 7 questions, others have 5
+        if (totalScore === requiredScore) {
             // Mark this level as passed
             window.save.set(TEAM_NAME, `level${levelIndex}Passed`, 1);
         }
@@ -81,8 +101,8 @@ document.addEventListener('DOMContentLoaded', function () {
         console.error(err);
     });
 
-    const floorTiles = document.querySelectorAll('.floor-tile');
-    floorTiles.forEach(tile => {
+    // Function to set up drag and drop for floor tiles
+    function setupFloorTileDragDrop(tile) {
         tile.addEventListener('dragover', e => {
             e.preventDefault();
             tile.classList.add('highlight-drop');
@@ -107,7 +127,25 @@ document.addEventListener('DOMContentLoaded', function () {
                 document.getElementById('workspace').dispatchEvent(dropEvent);
             }
         });
+    }
+
+    // Set up drag and drop for existing floor tiles
+    const floorTiles = document.querySelectorAll('.floor-tile');
+    floorTiles.forEach(setupFloorTileDragDrop);
+
+    // Set up drag and drop for 6th and 7th tiles if they get added for level 3
+    const observer = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+            if (mutation.type === 'childList') {
+                mutation.addedNodes.forEach(function(node) {
+                    if (node.nodeType === 1 && node.classList && node.classList.contains('floor-tile') && (node.dataset.index === '5' || node.dataset.index === '6')) {
+                        setupFloorTileDragDrop(node);
+                    }
+                });
+            }
+        });
     });
+    observer.observe(document.querySelector('.floor'), { childList: true });
 
     document.addEventListener('AnswerCorrect', e => {
         console.log("Answer is correct!. Showing next question...");
