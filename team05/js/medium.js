@@ -116,7 +116,7 @@ $(function() {
 
     const currentItem = GameState.items[GameState.currentItemIndex];
     $("#medium-feedback").text("");
-    $("#medium-progress").text(`${GameState.currentItemIndex} / ${GameState.items.length}`);
+    $("#medium-progress").text(`${GameState.currentItemIndex + 1}/${GameState.items.length}`);
 
     const $imageWrap = $("#medium-image-wrap").empty();
     const altText = currentItem.en || "Swedish vocabulary object";
