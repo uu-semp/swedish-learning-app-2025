@@ -71,11 +71,13 @@ main h2 {
   opacity: 0;
   transform: translateY(100%);
   transition: transform 0.2s ease;
+  pointer-events: none;
 }
 .figure:hover .caption,
 .figure:focus-within .caption {
   transform: translateY(0);
   opacity: 1;
+  pointer-events: auto;
 }
 .caption a {
   color: #fff;
