@@ -1,39 +1,30 @@
-/*
-=================================================
-Owned by Team 05
-=================================================
-*/
-
 html, body {
-  height: 100%; /* Ensure body can fill the iframe height */
+  height: 100%;
 }
 
 body {
   font-family: Arial, sans-serif;
   margin: 0;
-  background: #000;         /* black */
+  background: #000;
   min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  /* REMOVED: padding: 40px 0; This padding was pushing content down in a small frame */
+
 }
 
-
-/* force hidden (avoid conflicts) */
 .hidden { display: none !important; }
 
-/* Game Area styles (red and black theme) */
 .start-screen {
-  /* --- RESTORED FOR CENTERING --- */
+
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  /* --- End of restored properties --- */
+
 
   text-align: center;
-  padding: 20px 10px; /* Keep the reduced padding */
+  padding: 20px 10px;
 
   background: linear-gradient(135deg, #dc143c, #8b0000, #000000);
   color: #fff;
@@ -43,12 +34,12 @@ body {
 
   max-width: 1000px;
   width: min(100%, 600px);
-  /*margin: 0 16px;*/
+
 }
 
 .game-title {
-  font-size: 36px; /* REDUCED: Font size */
-  margin-bottom: 20px; /* REDUCED: Margin */
+  font-size: 36px;
+  margin-bottom: 20px;
   color: #fff;
   text-shadow: 0 6px 20px rgba(220,20,60,0.8);
   letter-spacing: 1px;
@@ -57,7 +48,7 @@ body {
 .menu {
   display: flex;
   flex-direction: column;
-  gap: 12px; /* REDUCED: Gap between buttons */
+  gap: 12px;
   max-width: 360px;
   margin: 0 auto;
 }
@@ -67,13 +58,13 @@ body {
   align-items: center;
   justify-content: center;
   gap: 12px;
-  padding: 10px 15px; /* REDUCED: Padding */
-  font-size: 16px; /* REDUCED: Font size */
+  padding: 10px 15px;
+  font-size: 16px;
   border-radius: 12px;
   border: 2px solid #dc143c;
   cursor: pointer;
   color: #fff;
-  /* black and red button */
+
   background: linear-gradient(135deg, #8b0000 0%, #000000 50%, #dc143c 100%);
   box-shadow: 0 6px 18px rgba(220,20,60,0.3);
   transition: transform .18s ease, box-shadow .18s ease;
@@ -99,7 +90,6 @@ body {
   background: linear-gradient(135deg, #4d0000, #333333);
 }
 
-/* Game area */
 #game-content {
   text-align: center;
   padding: 36px;
@@ -108,11 +98,10 @@ body {
   color: #fff;
   border-radius: 12px;
   box-shadow: 0 10px 30px rgba(139,0,0,0.5);
-  /*border: 2px solid #dc143c;*/
+
   margin: 20px auto;
 }
 
-/* word */
 #word-display {
   font-size: 34px;
   margin: 18px 0 22px;
@@ -120,7 +109,6 @@ body {
   text-shadow: 0 6px 28px rgba(220,20,60,0.8);
 }
 
-/* answer row */
 .answer-row {
   display: flex;
   gap: 10px;
@@ -151,7 +139,6 @@ body {
   color: #ccc;
 }
 
-/* check button */
 .primary-btn {
   padding: 12px 18px;
   font-size: 16px;
@@ -169,7 +156,6 @@ body {
   background: linear-gradient(180deg, #ff1744 0%, #dc143c 100%);
 }
 
-/* feedback */
 #feedback {
   margin-top: 12px;
   font-size: 18px;
@@ -178,7 +164,6 @@ body {
   text-shadow: 0 2px 10px rgba(220,20,60,0.5);
 }
 
-/* back button - only visible inside game-content */
 .back-btn {
   margin-top: 22px;
   padding: 10px 18px;
@@ -196,7 +181,6 @@ body {
   background: linear-gradient(180deg, #dc143c 0%, #8b0000 100%);
 }
 
-/* modal */
 .modal {
   position: fixed;
   inset: 0;
@@ -217,15 +201,14 @@ body {
   box-shadow: 0 14px 60px rgba(220,20,60,0.4);
   border: 2px solid #dc143c;
 
-  /* --- FIX FOR MODAL OVERFLOW --- */
-  max-height: 90vh; /* Set a maximum height relative to the viewport */
-  display: flex; /* Use flexbox to manage internal layout */
+
+  max-height: 90vh;
+  display: flex;
   flex-direction: column;
 }
 
-/* --- ADDED: Style to override inline style and shrink title --- */
 #modal-title {
-  font-size: 28px !important; /* REDUCED: Font size */
+  font-size: 28px !important;
 }
 
 .close-btn {
@@ -244,7 +227,6 @@ body {
   background: linear-gradient(180deg, #ff1744 0%, #dc143c 100%);
 }
 
-
 .level-group {
   margin-top: 20px;
   border-top: 2px solid #dc143c;
@@ -258,12 +240,10 @@ body {
   font-size: 22px;
 }
 
-
-
 #progress-indicator {
   margin-top: -15px;
   margin-bottom: 25px;
-  font-size: 16px; /* REDUCED: Font size */
+  font-size: 16px;
   color: #eee;
   text-shadow: 0 2px 8px rgba(0,0,0,0.7);
   min-height: 25px;
@@ -272,9 +252,9 @@ body {
 #modal-body {
   margin: 20px 0;
   text-align: left;
-  line-height: 1.5; /* REDUCED: Line height */
-  overflow-y: auto; /* --- ADDED: Make this section scrollable --- */
-  padding-right: 15px; /* Add padding for the scrollbar */
+  line-height: 1.5;
+  overflow-y: auto;
+  padding-right: 15px;
 }
 
 #modal-body h3 {
@@ -287,12 +267,12 @@ body {
   list-style-type: none;
   padding: 0;
   margin-top: 15px;
-  /* REMOVED: max-height and overflow-y, as the parent #modal-body now handles scrolling */
+
 }
 
 #modal-body li {
-  margin-bottom: 15px; /* REDUCED: Margin */
-  padding-bottom: 15px; /* REDUCED: Padding */
+  margin-bottom: 15px;
+  padding-bottom: 15px;
   border-bottom: 1px solid #555;
 }
 
@@ -301,7 +281,7 @@ body {
 }
 
 #modal-body img {
-  max-width: 80px; /* REDUCED: Image size */
+  max-width: 80px;
   border-radius: 8px;
   border: 2px solid #dc143c;
   display: block;
@@ -320,9 +300,9 @@ body {
 
 .button-group {
   display: flex;
-  gap: 18px; /* Spacing between the buttons */
+  gap: 18px;
 }
 
 .button-group .menu-btn {
-  flex: 1; /* Makes both buttons share the space equally */
+  flex: 1;
 }
