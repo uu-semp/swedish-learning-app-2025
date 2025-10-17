@@ -49,6 +49,45 @@ This project is an interactive Swedish language-learning game designed to make v
     http://localhost:8000
 
 
+
+## 📂 Project Structure
+
+```
+
+team15/
+├── components/                     # Reusable UI and functional modules
+│   ├── elements/                   # Reusable UI components and logic units
+│   │   ├── buttons.js              # Defines various button components used inside app
+│   │   ├── correctAnswerFeedback.js# Displays feedback for correct answers
+│   │   ├── dressPellePrompt.js     # Manages prompts instructions for dressing Pelle
+│   │   ├── incorrectAnswerFeedback.js# Handles feedback for incorrect answers
+│   │   ├── pelleContainer.js       # Container for Pelle character, related state, and event handlers
+│   │   ├── scoreCounter.js         # Tracks and updates the player’s score
+│   │   ├── statisticsPopUp.js      # Displays player statistics in a pop-up modal
+│   │   └── wardrobeContainer.js    # Manages the wardrobe UI, event handlers, game logic
+│   ├── styling/                    # CSS styles for views and components
+│   │   ├── chooseLevelStyles.css   # Styles for the "Choose Level" screen
+│   │   ├── pelle.css               # Styles related to the Pelle character visuals
+│   │   ├── score.css               # Styles for score display
+│   │   └── wardrobe.css            # Styles for wardrobe
+│   └── views/                      # screens of the application
+│       ├── chooseLevelView.js      # Screen where the user selects difficulty/level
+│       ├── helpView.js             # Displays help and game instructions
+│       ├── levelOneView.js         # Game logic and layout for Level 1
+│       ├── levelTwoView.js         # Game logic and layout for Level 2
+│       ├── levelThreeView.js       # Game logic and layout for Level 3
+│       ├── startView.js            # Starting menu and navigation to levels
+│       └── index.js                # Entry point for managing and exporting views
+├── language/                       # Localization files for multi-language support
+│   ├── english.json                # English text translations
+│   └── swedish.json                # Swedish text translations
+├── app.js                          # Main JavaScript file initializing the app logic
+├── clothing-items-info.js          # Contains data about clothing items (local db)
+├── index.css                       # Global styling for the entire application
+├── index.html                      # Main HTML entry point of the app
+├── index.js                        # Root JS file linking HTML, views, and app logic
+└── README.md                       # Project documentation (this file)
+```
 ## 👥 Team Members / Contributors
 - Abdur Rehman Khalid  
 - Anton Sördal  
