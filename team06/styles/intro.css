@@ -1,0 +1,129 @@
+/*
+=================================================
+Intro View Styles - Team 06
+=================================================
+*/
+
+.intro-container {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 20px;
+    padding: 30px 40px 35px 40px;
+    max-width: 650px;
+    margin: 20px auto;
+    text-align: center;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    color: white;
+}
+
+.game-icon {
+    font-size: 50px;
+    margin-bottom: 12px;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+}
+
+.game-title {
+    font-size: 36px;
+    font-weight: bold;
+    margin: 8px 0;
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.game-title-sv {
+    font-size: 24px;
+    font-weight: 300;
+    margin: 5px 0 15px 0;
+    color: rgba(255, 255, 255, 0.9);
+    font-style: italic;
+}
+
+.chapter-badge {
+    display: inline-block;
+    background: rgba(255, 255, 255, 0.2);
+    padding: 8px 18px;
+    border-radius: 25px;
+    font-size: 13px;
+    margin: 12px 0;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.chapter-badge i {
+    margin-right: 6px;
+}
+
+.game-description {
+    font-size: 16px;
+    line-height: 1.5;
+    margin: 18px auto;
+    color: rgba(255, 255, 255, 0.95);
+    text-align: center;
+    max-width: 550px;
+}
+
+.start-btn {
+    background: white;
+    color: #667eea;
+    border: none;
+    padding: 14px 40px;
+    font-size: 18px;
+    font-weight: bold;
+    border-radius: 50px;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: all 0.3s ease;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.start-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+    background: #f0f0f0;
+}
+
+.start-btn:active {
+    transform: translateY(-1px);
+}
+
+.start-btn i {
+    margin-right: 8px;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .intro-container {
+        padding: 25px 20px;
+        margin: 15px;
+    }
+    
+    .game-title {
+        font-size: 28px;
+    }
+    
+    .game-title-sv {
+        font-size: 20px;
+    }
+    
+    .game-description {
+        font-size: 14px;
+        line-height: 1.4;
+    }
+    
+    .game-icon {
+        font-size: 40px;
+    }
+    
+    .start-btn {
+        padding: 12px 35px;
+        font-size: 16px;
+    }
+}
