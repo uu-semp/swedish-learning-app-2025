@@ -1,12 +1,12 @@
 ## Project Overview
 
-This educational game targets two distinct user groups and provides an engaging way to practice Swedish vocabulary recognition. Players listen to audio files and select the matching image from multiple options, reinforcing word-picture associations.
+This educational game targets exchange students wanting to learn Swedish and provides an engaging way to practice Swedish vocabulary recognition. Players listen to audio files and select the matching image from multiple options, reinforcing word-meaning associations.
 
 ## Architecture
 
 ### Display Components
 
-**Root Directory Components**
+**Root Directory**
 
 - **Welcome Page**: Introduction and tutorial for new users
 - **Select Page**: Category selection menu for customizing learning sessions
@@ -57,20 +57,21 @@ Current testing is conducted through an HTML test page in the selection componen
 ### Guidelines
 
 1. **Architecture Compliance**: Follow the established project architecture (refer to D3 hand-in for details)
-2. **Licensing**: Ensure all images have traceable licensing information
+2. **Licensing**: Ensure all images have traceable licensing information or created by maintainers.
 3. **Accessibility**: Maintain keyboard navigation support throughout the application
-4. **User Experience**: Prioritize accessible design patterns
+4. **User Experience**: Prioritize accessible design patterns and consistent visual feedback and design theme.
 
 ### Future Development Opportunities
 
-| Priority | Area                   | Description                                               |
-| -------- | ---------------------- | --------------------------------------------------------- |
-| Urgent   | Code Modularity        | Refactor JavaScript for better modularity and reusability |
-| High     | Testing Enhancement    | Implement comprehensive stress and security testing       |
-| High     | Accessibility          | Fix HTML structure for screen reader compatibility        |
-| Medium   | Progress Visualization | Display player progress metrics within the game interface |
-| Medium   | Design Refinement      | Improve visual consistency across all pages               |
-| Medium   | Documentation          | Create detailed documentation for display components      |
+| Priority | Area                   | Description                                                                |
+| -------- | ---------------------- | -------------------------------------------------------------------------- |
+| Urgent   | Code Modularity        | Refactor JavaScript for better modularity and reusability                  |
+| High     | Testing Enhancement    | Implement comprehensive stress and security testing                        |
+| High     | Accessibility          | Fix HTML structure for screen reader compatibility                         |
+| High     | DB and Image Loading   | Provide animations for loading and make loading faster and less noticeable |
+| Medium   | Progress Visualization | Display player progress metrics within the game interface                  |
+| Medium   | Design Refinement      | Improve visual consistency across all pages                                |
+| Medium   | Documentation          | Create detailed documentation for display components                       |
 
 ---
 
