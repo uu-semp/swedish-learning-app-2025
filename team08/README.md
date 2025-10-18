@@ -40,24 +40,28 @@ This educational game targets exchange students wanting to learn Swedish and pro
 The app is organized into self-contained component directories, enabling clear separation of concerns.
 
 ```mermaid
-flowchart TD
-    A[User] --> B[index.html\n(Welcome)]
-    B --> C[options/select.html\n(Category Selection)]
-    C --> D[selection/selection.js\n(Session & Word Logic)]
-    D --> E[main_game/main_game_script.js\n(Gameplay Loop)]
-    E --> F[store/store.js\n(Data Persistence)]
-    E --> G[end-screen/index.html\n(Results & Review)]
-    F -->|Saves| H[(localStorage)]
-    G -->|Uses| F
-    C -->|Shares| I[options/settings.js\n(Global Settings)]
-    E -->|Uses| I
-    G -->|Uses| I
+graph TD
+    A[User] --> B[Welcome Page]
+    B --> C[Category Selection]
+    C --> D[Selection Logic]
+    D --> E[Main Game]
+    E --> F[Store / localStorage]
+    E --> G[End Screen]
+    C --> H[Global Settings]
+    E --> H
+    G --> H
+    F --> G
 
-    classDef component fill:#e6f3ff,stroke:#333;
-    classDef data fill:#f0f9e8,stroke:#333;
-    class B,C,E,G,I component;
-    class F,H data;
-    
+    style A fill:#ffe4b5,stroke:#333
+    style B fill:#e6f3ff,stroke:#333
+    style C fill:#e6f3ff,stroke:#333
+    style E fill:#e6f3ff,stroke:#333
+    style G fill:#e6f3ff,stroke:#333
+    style H fill:#e6f3ff,stroke:#333
+    style D fill:#d0f0c0,stroke:#333
+    style F fill:#f0f9e8,stroke:#333
+```
+
 #### 🖼️ Display Components
 
 **Root Directory**
