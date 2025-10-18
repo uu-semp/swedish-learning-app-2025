@@ -34,12 +34,12 @@ This educational game targets exchange students wanting to learn Swedish and pro
 ### Onboarding & Navigation
 | Main Screen | Welcome | Tutorial | Settings | Category Select |
 |:-----------:|:-------:|:--------:|:--------:|:---------------:|
-| ![Main](screenshots/main.jpg) | ![Welcome](screenshots/welcome.jpg) | ![Tutorial](screenshots/tutorial.jpg) | ![Settings](screenshots/settings.jpg) | ![Category](screenshots/category.jpg) |
+| ![Main](screenshots/Main.jpg) | ![Welcome](screenshots/welcome.jpg) | ![Tutorial](screenshots/tutorial.jpg) | ![Settings](screenshots/settings.jpg) | ![Category](screenshots/category.jpg) |
 
 ### Gameplay & Feedback
 | Neutral | Correct Answer | Incorrect Answer | End Screen |
 |:-------:|:--------------:|:----------------:|:----------:|
-| ![Gameplay](screenshots/gameplay-normal.jpg) | ![Right](screenshots/gameplay-right.jpg) | ![Wrong](screenshots/gameplay-wrong.jpg) | ![End](screenshots/endscreen.jpg) |
+| ![Gameplay](screenshots/gameplay-normal.jpg) | ![Right](screenshots/gameplay-right.jpg) | ![Wrong](screenshots/gameplay-wrong.jpg) | ![End](screenshots/endScreen.jpg) |
 
 ---
 ## ✨ Features
