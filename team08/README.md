@@ -39,6 +39,25 @@ This educational game targets exchange students wanting to learn Swedish and pro
 ### ⚒️ Architecture
 The app is organized into self-contained component directories, enabling clear separation of concerns.
 
+```mermaid
+flowchart TD
+    A[User] --> B[index.html\n(Welcome)]
+    B --> C[options/select.html\n(Category Selection)]
+    C --> D[selection/selection.js\n(Session & Word Logic)]
+    D --> E[main_game/main_game_script.js\n(Gameplay Loop)]
+    E --> F[store/store.js\n(Data Persistence)]
+    E --> G[end-screen/index.html\n(Results & Review)]
+    F -->|Saves| H[(localStorage)]
+    G -->|Uses| F
+    C -->|Shares| I[options/settings.js\n(Global Settings)]
+    E -->|Uses| I
+    G -->|Uses| I
+
+    classDef component fill:#e6f3ff,stroke:#333;
+    classDef data fill:#f0f9e8,stroke:#333;
+    class B,C,E,G,I component;
+    class F,H data;
+    
 #### 🖼️ Display Components
 
 **Root Directory**
@@ -176,7 +195,7 @@ We welcome contributions! Please follow these guidelines:
 ---
 
 ## 📄 License
-This project is licensed under ⚖️ the MIT License — see LICENSE [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT).
+This project is licensed under ⚖️ the MIT License — see [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT).
 
-`` 🎵 All audio and image assets must be original or openly licensed (e.g., CC0, Unsplash, Freesound). ``
+`🎵 All audio and image assets must be original or openly licensed (e.g., CC0, Unsplash, Freesound).`
 ---
