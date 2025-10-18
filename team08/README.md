@@ -25,6 +25,20 @@ Link
 ``` https://uu-semp.github.io/swedish-learning-app-2025/ ```
 
 ---
+
+## 📸 Screenshots
+
+### Onboarding & Navigation
+| Main Screen | Welcome | Tutorial | Settings | Category Select |
+|:-----------:|:-------:|:--------:|:--------:|:---------------:|
+| ![Main](screenshots/main.jpg) | ![Welcome](screenshots/welcome.jpg) | ![Tutorial](screenshots/tutorial.jpg) | ![Settings](screenshots/settings.jpg) | ![Category](screenshots/category.jpg) |
+
+### Gameplay & Feedback
+| Neutral | Correct Answer | Incorrect Answer | End Screen |
+|:-------:|:--------------:|:----------------:|:----------:|
+| ![Gameplay](screenshots/gameplay-normal.jpg) | ![Right](screenshots/gameplay-right.jpg) | ![Wrong](screenshots/gameplay-wrong.jpg) | ![End](screenshots/endscreen.jpg) |
+
+---
 ## ✨ Features
 
 - **Audio-to-image matching**: Listen to Swedish words and select the correct picture.
