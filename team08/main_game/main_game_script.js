@@ -97,7 +97,9 @@ document.getElementById("confirmBtn").addEventListener("click", () => {
 
   if (local_get_sound_effects()) {
     const fx = new Audio(
-      isCorrect ? "soundEffects/right.mp3" : "soundEffects/wrong.mp3"
+      isCorrect
+        ? "../../assets/team08/soundEffects/right.mp3"
+        : "../../assets/team08/soundEffects/wrong.mp3"
     );
     fx.volume = local_get_volume() / 100;
     fx.play();
