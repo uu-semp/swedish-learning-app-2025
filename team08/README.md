@@ -1,4 +1,8 @@
-## ![Logo](screenshots/logo.png) Vad sa du? (Say What?) (Swedish Vocabulary Game)
+<p align="center">
+  <img src="screenshots/logo.png" alt="Say What? – Swedish Vocabulary Game" width="150">
+</p>
+
+## Vad sa du? ( Say What?) (Swedish Vocabulary Game)
 
 ## Project Overview
 
@@ -21,8 +25,7 @@ This educational game targets exchange students wanting to learn Swedish and pro
 
 ## Try It Yourself
 
-Link 
-``` https://uu-semp.github.io/swedish-learning-app-2025/ ```
+**Link :** [https://uu-semp.github.io/swedish-learning-app-2025/](https://uu-semp.github.io/swedish-learning-app-2025/) 
 
 ---
 
