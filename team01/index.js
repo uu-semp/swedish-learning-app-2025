@@ -102,7 +102,6 @@ $(function () {
       save.stats.incrementWin(team_name); // Save the new win count
       $("#wins-count").text(wins); // Update wins display
       setTimeout(() => {
-        $("#wins-count").text(wins); // Update wins display
         resetGame();
         showScreen("end-screen");
       }, 600);
@@ -227,7 +226,6 @@ $(function () {
 });
 
 function getRandomPairs(data, numPairs) {
-  console.log(data);
   const shuffled = [...data].sort(() => 0.5 - Math.random());
   return shuffled.slice(0, numPairs);
 }
