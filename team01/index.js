@@ -110,7 +110,6 @@ $(function () {
   }
 
   function limit_test() {
-    $("#moves").text(`moves: ${misses + corrects}`);
     if (misses >= misses_max) {
       stopTimer();
       alert("Game Over! You've exceeded the maximum number of moves.");
@@ -172,6 +171,7 @@ $(function () {
         allowFlipBack = true;
         isChecking = false;
         misses++;
+        $("#moves").text(`moves: ${misses + corrects}`);
         if (misses_max > 0) limit_test(); // check for game over if there's a miss limit
       }
     }
