@@ -63,6 +63,7 @@ graph TD
     style H fill:#e6f3ff,stroke:#333
     style D fill:#d0f0c0,stroke:#333
     style F fill:#f0f9e8,stroke:#333
+    style I fill:#CF9FFF,stroke:#333
 ```
 
 #### 🖼️ Display Components
