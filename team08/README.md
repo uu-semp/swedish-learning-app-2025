@@ -1,4 +1,4 @@
-## Name : Say What? (Swedish Vocabulary Game)
+## Say What? (Swedish Vocabulary Game)
 
 ## Project Overview
 
@@ -64,6 +64,8 @@ The app is organized into self-contained component directories, enabling clear s
 
 #### ⚙️ Data & Logic Layer
 
+For Data used in the game check the asset folder. 
+
 **Store Component**
 
 - API interface for local storage and database operations
@@ -99,7 +101,7 @@ The app is organized into self-contained component directories, enabling clear s
 
 ## 🚀 Getting Started
 1. Clone or download this repository.
-2. Open `index.html` (folder: *team8*) in any modern browser:
+2. Open `index.html` in any modern browser:
 
     open bash
     ```
@@ -112,7 +114,7 @@ The app is organized into self-contained component directories, enabling clear s
 
 Open the project in VScode and install extension ``Live Server``. 
 
-3. Play through the flow: Welcome → Select Category → Play → Review Results.
+3. Play through the flow: Game → Catalog Welcome → Select Category → Play → Review Results.
 
 ---
 
@@ -124,9 +126,9 @@ Current testing is conducted through an HTML test page in the selection componen
 
 - Enable specific test scripts (e.g.,
 
-    - `store/store.tests.js`-> unit tests for data operations, 
+    - `store/store.tests.js`→ unit tests for data operations, 
 
-    - `selection/SelectionTest.html` ->`selection_system_test`)
+    - `selection/SelectionTest.html` → `selection_system_test`)
 
 - Manual testing done by openning the HTML files for each component.
 - **Future Improvement**: Migrate to JEST framework for enhanced testing capabilities
@@ -146,8 +148,10 @@ Current testing is conducted through an HTML test page in the selection componen
 ### Guidelines
 We welcome contributions! Please follow these guidelines:
 
-1. **Architecture Compliance**: Follow the established project architecture, keep logic in selection/, UI in main_game/, etc. 
+1. **Architecture Compliance**: Follow the established project architecture, keep logic in selection/, UI in main_game/, etc.
+
 ``📌 Refer to the D3 hand-in document for detailed architectural rules. ``
+
 2. **Licensing**: Ensure all images have traceable licensing information or created by maintainers.
 3. **Accessibility**: Maintain keyboard navigation support throughout the application
 4. **User Experience**: Prioritize accessible design patterns and consistent visual feedback and design theme.
@@ -172,7 +176,7 @@ We welcome contributions! Please follow these guidelines:
 ---
 
 ## 📄 License
-This project is licensed under the MIT License — see LICENSE for details.
+This project is licensed under ⚖️ the MIT License — see LICENSE [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT).
 
-``` 🎵 All audio and image assets must be original or openly licensed (e.g., CC0, Unsplash, Freesound). ```
+`` 🎵 All audio and image assets must be original or openly licensed (e.g., CC0, Unsplash, Freesound). ``
 ---
