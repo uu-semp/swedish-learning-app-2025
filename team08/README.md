@@ -5,6 +5,7 @@
 This educational game targets exchange students wanting to learn Swedish and provides an engaging way to practice Swedish vocabulary recognition. Players listen to audio files and select the matching image from multiple options, reinforcing word-meaning associations.
 
 ## 📖 Table of Contents
+- [Try It Yourself](#try-it-yourself)
 - [Features](#-features)
 - [How It Works](#-how-it-works)
     - [User Flow](#user-flow)
@@ -18,9 +19,12 @@ This educational game targets exchange students wanting to learn Swedish and pro
 
 ---
 
-## DEM
+## Try It Yourself
+
 Link 
 ``` https://uu-semp.github.io/swedish-learning-app-2025/ ```
+
+---
 ## ✨ Features
 
 - **Audio-to-image matching**: Listen to Swedish words and select the correct picture.
