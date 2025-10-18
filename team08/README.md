@@ -82,6 +82,7 @@ The app is organized into self-contained component directories, enabling clear s
 ```mermaid
 %%{init: {'theme': 'base', 'themeVariables': {
   'primaryTextColor': '#000000',
+  'lineColor': '#ffffff',
   'fontFamily': 'Arial'
 }}}%%
 graph TD
