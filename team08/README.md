@@ -7,8 +7,8 @@ This educational game targets exchange students wanting to learn Swedish and pro
 ## 📖 Table of Contents
 - [Features](#-features)
 - [How It Works](#-how-it-works)
- - [User Flow](#user-flow)
- - [Architecture](#️-architecture)
+    - [User Flow](#user-flow)
+    - [Architecture](#️-architecture)
 - [Tech Stack](#️-tech-stack)
 - [Getting Started](#-getting-started)
 - [Testing](#-testing)
