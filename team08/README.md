@@ -109,6 +109,7 @@ The app is organized into self-contained component directories, enabling clear s
     It can now be accessed from the browser under: <http://localhost:8000/index.html>
 
 *Alternatively*
+
 Open the project in VScode and install extension ``Live Server``. 
 
 3. Play through the flow: Welcome → Select Category → Play → Review Results.
@@ -121,9 +122,12 @@ Open the project in VScode and install extension ``Live Server``.
 
 Current testing is conducted through an HTML test page in the selection component:
 
-- Enable specific test scripts (e.g., 
-    -- `store/store.tests.js`-> unit tests for data operations, 
-    -- `selection/SelectionTest.html` ->`selection_system_test`)
+- Enable specific test scripts (e.g.,
+
+    - `store/store.tests.js`-> unit tests for data operations, 
+
+    - `selection/SelectionTest.html` ->`selection_system_test`)
+
 - Manual testing done by openning the HTML files for each component.
 - **Future Improvement**: Migrate to JEST framework for enhanced testing capabilities
 
