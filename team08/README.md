@@ -43,6 +43,7 @@ The app is organized into self-contained component directories, enabling clear s
 graph TD
     A[User] --> B[Welcome Page]
     B --> I[Tutorial] 
+    I --> B
     B --> C[Category Selection]
     C --> D[Selection Logic]
     D --> E[Main Game]
@@ -52,7 +53,6 @@ graph TD
     D --> H
     E --> H
     G --> H
-    I --> H
     F --> G
 
     style A fill:#ffe4b5,stroke:#333
