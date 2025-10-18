@@ -1,27 +1,57 @@
+## Name : Say What? (Swedish Vocabulary Game)
+
 ## Project Overview
 
 This educational game targets exchange students wanting to learn Swedish and provides an engaging way to practice Swedish vocabulary recognition. Players listen to audio files and select the matching image from multiple options, reinforcing word-meaning associations.
 
-## Architecture
+## 📖 Table of Contents
+- [Features](#-features)
+- [How It Works](#-how-it-works)
+    - [Architecture] (#-architecture)
+- [Tech Stack](#-tech-stack)
+- [Getting Started](#-getting-started)
+- [Testing](#-testing)
+- [Contributing](#-contributing)
+- [Future Improvements](#-future-improvements)
+- [License](#-license)
 
-### Display Components
+---
+
+## ✨ Features
+
+- **Audio-to-image matching**: Listen to Swedish words and select the correct picture.
+- **Category-based learning**: Choose topics (e.g., food, transport, animals) to customize your session.
+- **Progress tracking**: Review correct/incorrect answers on the end screen.
+- **Fully accessible**: Supports keyboard navigation and screen readers.
+- **Offline-ready**: Uses local storage for session data.
+
+---
+
+## 🧠 How It Works
+
+### User Flow
+1. **Welcome Page** – Quick tutorial for first-time users.
+2. **Category Selection** – Pick a vocabulary theme.
+3. **Gameplay** – Hear a word, choose the matching image from 4 options.
+4. **Results Screen** – See your score and review mistakes.
+
+## ⚒️ Architecture
+
+#### 🖼️ Display Components
 
 **Root Directory**
-
 - **Welcome Page**: Introduction and tutorial for new users
 - **Select Page**: Category selection menu for customizing learning sessions
 
 **Options Directory**
-
 - **Options Component**: Consistent UI settings interface across all game pages
 - Provides uniform user experience for configuration and preferences
 
 **Game Components**
-
 - **Main Game**: Core gameplay loop handling image selection, guess confirmation, and progress tracking
 - **End Screen**: Results analysis with filtering capabilities to review correct/incorrect answers and identify areas needing practice
 
-### Data and Logic Layer
+#### ⚙️ Data & Logic Layer
 
 **Store Component**
 
@@ -34,6 +64,8 @@ This educational game targets exchange students wanting to learn Swedish and pro
 - Session management and word randomization
 - Controls game progression logic and word selection algorithms
 - Extensible design for future complexity enhancements
+
+---
 
 ## Testing
 
