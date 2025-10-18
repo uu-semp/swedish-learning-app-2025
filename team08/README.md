@@ -38,9 +38,9 @@ This educational game targets exchange students wanting to learn Swedish and pro
 | ![Main](screenshots/Main.jpg) | ![Welcome](screenshots/welcome.jpg) | ![Tutorial](screenshots/tutorial.jpg) | ![Settings](screenshots/settings.jpg) | ![Category](screenshots/category.jpg) |
 
 ### Gameplay & Feedback
-| Neutral | Correct Answer | Incorrect Answer | End Screen |
-|:-------:|:--------------:|:----------------:|:----------:|
-| ![Gameplay](screenshots/gameplay-normal.jpg) | ![Right](screenshots/gameplay-right.jpg) | ![Wrong](screenshots/gameplay-wrong.jpg) | ![End](screenshots/endScreen.jpg) |
+| Neutral | Correct Answer | Incorrect Answer | Scoreboard | Wordlist |
+|:-------:|:--------------:|:----------------:|:----------:|:----------:|
+| ![Gameplay](screenshots/gameplay-normal.jpg) | ![Right](screenshots/gameplay-right.jpg) | ![Wrong](screenshots/gameplay-wrong.jpg) | ![Score](screenshots/endScreen-scoreboard.jpg) | ![word](screenshots/endScreen-wordlist.jpg)
 
 ---
 ## ✨ Features
@@ -80,14 +80,14 @@ graph TD
     G --> H
     F --> G
 
-    style A fill:#ffe4b5,stroke:#333
-    style B fill:#e6f3ff,stroke:#333
-    style C fill:#e6f3ff,stroke:#333
-    style E fill:#e6f3ff,stroke:#333
-    style G fill:#e6f3ff,stroke:#333
-    style H fill:#e6f3ff,stroke:#333
-    style D fill:#d0f0c0,stroke:#333
-    style F fill:#f0f9e8,stroke:#333
+    style A fill:#ffe4b5,stroke:#0a0a0a
+    style B fill:#e6f3ff,stroke:#0a0a0a
+    style C fill:#e6f3ff,stroke:#0a0a0a
+    style E fill:#e6f3ff,stroke:#0a0a0a
+    style G fill:#e6f3ff,stroke:#0a0a0a
+    style H fill:#e6f3ff,stroke:#0a0a0a
+    style D fill:#d0f0c0,stroke:#0a0a0a
+    style F fill:#f0f9e8,stroke:#0a0a0a
 ```
 
 #### 🖼️ Display Components
@@ -142,7 +142,6 @@ For Data used in the game check the asset folder.
 
 - **HTML5** + **CSS3** (responsive, semantic markup)
 - **Vanilla JavaScript** (ES6+ modules via script organization)
-- **Jquery** (version 3.7.1 for interective frontend)
 - **Font Awesome** (version 6 for icon and button styling)
 - **Web Audio API** for pronunciation playback
 - **localStorage** (no additiona storage is used.)
