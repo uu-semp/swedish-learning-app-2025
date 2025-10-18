@@ -1,4 +1,4 @@
-## Vad sa du? (Say What?) (Swedish Vocabulary Game)
+## ![Logo](screenshots/logo.png) Vad sa du? (Say What?) (Swedish Vocabulary Game)
 
 ## Project Overview
 
