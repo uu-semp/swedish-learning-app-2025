@@ -63,7 +63,6 @@ graph TD
     style H fill:#e6f3ff,stroke:#333
     style D fill:#d0f0c0,stroke:#333
     style F fill:#f0f9e8,stroke:#333
-    style I fill:#CF9FFF,stroke:#333
 ```
 
 #### 🖼️ Display Components
@@ -205,5 +204,6 @@ We welcome contributions! Please follow these guidelines:
 ## 📄 License
 This project is licensed under ⚖️ the MIT License — see [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT).
 
-`🎵 All audio and image assets must be original or openly licensed (e.g., CC0, Unsplash, Freesound).`
+``🎵 All audio and image assets must be original or openly licensed (e.g., CC0, Unsplash, Freesound).``
+
 ---
