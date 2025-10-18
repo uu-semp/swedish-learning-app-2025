@@ -48,6 +48,7 @@ graph TD
     E --> F[Store / localStorage]
     E --> G[End Screen]
     C --> H[Global Settings]
+    D --> H
     E --> H
     G --> H
     F --> G
