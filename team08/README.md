@@ -80,6 +80,10 @@ This educational game targets exchange students wanting to learn Swedish and pro
 The app is organized into self-contained component directories, enabling clear separation of concerns.
 
 ```mermaid
+%%{init: {'theme': 'base', 'themeVariables': {
+  'primaryTextColor': '#000000',
+  'fontFamily': 'Arial'
+}}}%%
 graph TD
     A[User] --> B[Welcome Page]
     B --> I[Tutorial]
