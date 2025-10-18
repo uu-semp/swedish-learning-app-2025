@@ -4,24 +4,25 @@
 
 "use strict";
 
+// constants
+const team_name = "team01"; // Team name for saving data
+const corrects_needed = 8; // number of correct pairs needed to win
+const misses_max = 0; // number of misses allowed before losing (0 = unlimited)
+
+
+// variables
+let corrects = 0;
+let misses = 0;
+let wins = save.stats.get(team_name).wins; // Load wins from storage
+$("#wins-count").text(wins); // Update the display with the loaded win count
+let flippedCards = []; // array of currently flipped cards
+let elapsedTime = 0;
+// timer variables
+let startTime = null;
+let timerInterval = null;
+
+
 $(function () {
-  // constants
-  const team_name = "team01"; // Team name for saving data
-  const time_delay = 2000; // 2 seconds delay after every match
-  const corrects_needed = 8; // number of correct pairs needed to win
-  const misses_max = 20; // number of misses allowed before losing
-
-  // variables
-  let corrects = 0;
-  let misses = 0;
-  let wins = save.stats.get(team_name).wins; // Load wins from storage
-  $("#wins-count").text(wins); // Update the display with the loaded win count
-
-  let flippedCards = []; // array of currently flipped cards
-  let elapsedTime = 0;
-  // timer variables
-  let startTime = null;
-  let timerInterval = null;
 
   // Function to show only one screen at a time
   function showScreen(screenId) {
@@ -74,13 +75,6 @@ $(function () {
   // Game logic
   mapCards();
 
-  function resetFlipState() {
-    // when no pair is found, card flips back
-    flippedCards[0]?.removeClass("flipped");
-    flippedCards[1]?.removeClass("flipped");
-    flippedCards = [];
-  }
-
   function resetGame() {
     corrects = 0;
     misses = 0;
@@ -108,7 +102,6 @@ $(function () {
       save.stats.incrementWin(team_name); // Save the new win count
       $("#wins-count").text(wins); // Update wins display
       setTimeout(() => {
-        $("#wins-count").text(wins); // Update wins display
         resetGame();
         showScreen("end-screen");
       }, 600);
@@ -116,16 +109,14 @@ $(function () {
     resetFlipState();
   }
 
-  function notMatch() {
-    misses++;
-    $("#moves").text(`moves: ${misses + corrects}`);
-    // if (misses >= misses_max) {
-    //   stopTimer();
-    //   alert("Game Over! You've exceeded the maximum number of moves.");
-    //   updateEndScreen();
-    //   resetGame();
-    //   showScreen("end-screen");
-    // }
+  function limit_test() {
+    if (misses >= misses_max) {
+      stopTimer();
+      alert("Game Over! You've exceeded the maximum number of moves.");
+      updateEndScreen();
+      resetGame();
+      showScreen("end-screen");
+    }
   }
 
   // Event delegation för dynamiskt skapade kort
@@ -176,12 +167,12 @@ $(function () {
           isChecking = false;
         }, 1000); // Wait 1 second before fading out
       } else {
-        // No match - allow flip back after 0.5s
-        setTimeout(() => {
-          allowFlipBack = true;
-          isChecking = false;
-          notMatch();
-        }, 500);
+        // No match - allow flip
+        allowFlipBack = true;
+        isChecking = false;
+        misses++;
+        $("#moves").text(`moves: ${misses + corrects}`);
+        if (misses_max > 0) limit_test(); // check for game over if there's a miss limit
       }
     }
   }
@@ -235,7 +226,6 @@ $(function () {
 });
 
 function getRandomPairs(data, numPairs) {
-  console.log(data);
   const shuffled = [...data].sort(() => 0.5 - Math.random());
   return shuffled.slice(0, numPairs);
 }
