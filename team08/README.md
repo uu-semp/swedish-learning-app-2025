@@ -10,6 +10,7 @@ This educational game targets exchange students wanting to learn Swedish and pro
 
 ## 📖 Table of Contents
 - [Try It Yourself](#try-it-yourself)
+- [Screenshots](#-screenshots)
 - [Features](#-features)
 - [How It Works](#-how-it-works)
     - [User Flow](#user-flow)
