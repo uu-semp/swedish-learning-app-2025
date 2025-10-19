@@ -4,6 +4,21 @@
 
 "use strict";
 
+import {
+  loaddb,
+  get_category,
+  get_vocab,
+} from "../scripts/vocabulary_await.js";
+
+let loaded_before = false;
+
+async function init_db(reload = false) {
+  if (!loaded_before || reload) {
+    loaded_before = true;
+    await loaddb();
+  }
+}
+
 $(function () {
   // constants
   const team_name = "team01"; // Team name for saving data
@@ -293,42 +308,45 @@ function renderGrid(cards) {
 let currentPairs = [];
 let numPairs = 8; // number of pairs of cards
 
-// Modify mapCards() slightly to store the fetched pairs
-function mapCards() {
-  fetch("../words.csv")
-    .then((response) => response.text())
-    .then((csv) => {
-      const data = csv
-        .split("\n")
-        .slice(1)
-        .map((row) => {
-          const [
-            id,
-            english,
-            article,
-            swedish,
-            swedish_plural,
-            literal,
-            category,
-            image_url,
-          ] = row.split(",");
+// Modify mapCards() to use the API instead of CSV
+async function mapCards() {
+  try {
+    await init_db();
+    
+    // Get all vocabulary IDs belonging to the category `furniture`
+    const furnitureIds = get_category("furniture");
+    
+    if (!furnitureIds) {
+      console.error("No furniture category found in database");
+      return;
+    }
+    
+    // Convert to the format expected by getRandomPairs
+    const furnitureData = furnitureIds
+      .map(id => {
+        const vocab = get_vocab(id);
+        if (vocab && vocab.img) {
           return {
-            id,
-            english,
-            article,
-            swedish,
-            swedish_plural,
-            literal,
-            category,
-            image_url,
+            id: id,
+            english: vocab.en,
+            article: vocab.article || "",
+            swedish: vocab.sv,
+            swedish_plural: "", // Not available in new API
+            literal: vocab.literal || "",
+            category: "furniture",
+            image_url: vocab.img
           };
-        });
-      const furnitureOnly = data.filter(
-        (item) => item.category === "furniture" && item.image_url
-      );
-      const pairs = getRandomPairs(furnitureOnly, numPairs);
-      currentPairs = pairs; // store globally for hint use
-      const cards = prepareGridItems(pairs);
-      renderGrid(cards);
-    });
+        }
+        return null;
+      })
+      .filter(item => item !== null);
+    
+    const pairs = getRandomPairs(furnitureData, numPairs);
+    currentPairs = pairs; // store globally for hint use
+    const cards = prepareGridItems(pairs);
+    renderGrid(cards);
+    
+  } catch (error) {
+    console.error("Error loading data:", error);
+  }
 }
