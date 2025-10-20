@@ -112,29 +112,27 @@ graph TD
 
 #### 🖼️ Display Components
 
-**Root Directory**
+**Start game component**
 
+- Root directory
 - **Welcome Page**: Introduction and tutorial for new users
 - **Select Page**: Category selection menu for customizing learning sessions
 
-**Options Directory**
+**Options Component**
 
-- **Options Component**: Consistent UI settings interface across all game pages
+- `options/`
+- Consistent UI settings interface across all game pages
 - Provides uniform user experience for configuration and preferences
 
-**Game Components**
+**Main Game Component**:
 
-- **Main Game**: Core gameplay loop handling image selection, guess confirmation, and progress tracking
-- **End Screen**: Results analysis with filtering capabilities to review correct/incorrect answers and identify areas needing practice
+- `main_game/`
+- Core gameplay loop handling image selection, guess confirmation, and progress tracking
 
-_Summary_
+**End Screen Component**:
 
-| Directory         | Purpose                                                                              |
-| ----------------- | ------------------------------------------------------------------------------------ |
-| **Root** (`/`)    | `index.html` (welcome/tutorial) and global assets (`index.css`, `index.js`).         |
-| **`options/`**    | Shared settings UI (e.g., reset progress, sound toggle) used across all pages.       |
-| **`main_game/`**  | Core gameplay: audio playback, image choices, scoring, and guess validation.         |
-| **`end-screen/`** | Results display with filters for correct/incorrect answers and practice suggestions. |
+- `end-screen/`
+- Results analysis with filtering capabilities to review correct/incorrect answers and identify areas needing practice
 
 #### ⚙️ Data & Logic Layer
 
@@ -142,22 +140,17 @@ For Data used in the game check the asset folder.
 
 **Store Component**
 
+- `store/`
 - API interface for local storage and database operations
 - Formats data for easy consumption by other components
 - Centralized data management solution
 
 **Selection Component**
 
+- `selection/`
 - Session management and word randomization
 - Controls game progression logic and word selection algorithms
 - Extensible design for future complexity enhancements
-
-_Summary_
-
-| Component        | Role                                                                                                                          |
-| ---------------- | ----------------------------------------------------------------------------------------------------------------------------- |
-| **`selection/`** | Manages session state, category selection, and randomized word delivery. Includes test harness (`SelectionTest.html`).        |
-| **`store/`**     | Unified interface for data persistence (currently `localStorage`). Abstracted via `backend_interface/` for future DB support. |
 
 ---
 
