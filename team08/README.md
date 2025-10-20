@@ -25,6 +25,8 @@ This educational game targets exchange students wanting to learn Swedish and pro
     - [⚙️ Data \& Logic Layer](#️-data--logic-layer)
 - [🛠️ Tech Stack](#️-tech-stack)
 - [🚀 Getting Started](#-getting-started)
+  - [Starting Game](#starting-game)
+  - [Playing Game](#playing-game)
 - [🧪 Testing](#-testing)
   - [Test Coverage](#test-coverage)
 - [🤝 Contributing](#-contributing)
@@ -167,22 +169,17 @@ For Data used in the game check the asset folder.
 
 ## 🚀 Getting Started
 
-1. Clone or download this repository.
-2. Open `index.html` in any modern browser:
+### Starting Game
 
-   open bash
-
-   ```
-   python3 -m http.server 8000
-   ```
-
-   It can now be accessed from the browser under: <http://localhost:8000/index.html>
+For detailed instructions, check the external [README](../README.md).
 
 _Alternatively_
 
-Open the project in VScode and install extension `Live Server`.
+Install extension `Live Server` in VSCODE and with it open the [external root](../index.html).
 
-3. Play through the flow: Game → Catalog Welcome → Select Category → Play → Review Results.
+### Playing Game
+
+Play through the flow: Main Menu -> Select the game with our logo -> Welcome → Select Category → Play → Review Results.
 
 ---
 
