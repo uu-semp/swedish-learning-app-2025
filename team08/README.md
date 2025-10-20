@@ -179,7 +179,7 @@ Install extension `Live Server` in VSCODE and with it open the [external root](.
 
 ### Playing Game
 
-Play through the flow: Main Menu -> Select the game with our logo -> Welcome → Select Category → Play → Review Results.
+Play through the flow: Main Menu → Select the game with our logo → Welcome → Select Category → Play → Review Results.
 
 ---
 
