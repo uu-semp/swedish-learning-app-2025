@@ -1,0 +1,150 @@
+/*
+=================================================
+Summary / Finish View Styles - Team 06
+=================================================
+*/
+
+/* ---------- Main Container ---------- */
+.summary-container {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 20px;
+  max-width: 680px;
+  width: 90%;
+  margin: 40px auto;
+  padding: 50px 40px;
+  text-align: center;
+  color: white;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  animation: fadeIn 0.5s ease-in;
+}
+
+/* ---------- Title Section ---------- */
+.summary-title {
+  font-size: 42px;
+  font-weight: 800;
+  margin: 0 0 12px 0;
+  color: #ffffff;
+  text-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+  letter-spacing: 0.5px;
+}
+
+.summary-text {
+  font-size: 20px;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.95);
+  margin: 0 0 30px 0;
+  line-height: 1.4;
+}
+
+/* ---------- Score Section ---------- */
+.summary-score-box {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 18px;
+  padding: 25px 0 30px 0;
+  width: 80%;
+  max-width: 360px;
+  margin: 0 auto 35px auto;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+  border: 2px solid rgba(255, 255, 255, 0.25);
+}
+
+.summary-label {
+  font-size: 18px;
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 10px;
+}
+
+#final-score {
+  font-size: 58px;
+  font-weight: 900;
+  color: #ffffff;
+  margin: 0;
+  text-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+/* ---------- Buttons Section ---------- */
+.summary-buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 28px; /* spacing between buttons */
+  margin-top: 25px;
+}
+
+/* Unified button style */
+.summary-btn {
+  background: #ffffff;
+  color: #4f5ed9;
+  border: none;
+  border-radius: 50px;
+  font-size: 18px;
+  font-weight: 700;
+  height: 56px;           /* ✅ Fixed height */
+  width: 240px;           /* ✅ Fixed width for perfect alignment */
+  cursor: pointer;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+  transition: all 0.25s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Optional: ensure emoji/icons don't break alignment */
+.summary-btn i,
+.summary-btn span {
+  vertical-align: middle;
+  line-height: 1;
+}
+
+/* Hover & active effects */
+.summary-btn:hover {
+  background: #f1f3ff;
+  color: #3b49b6;
+  transform: translateY(-3px);
+  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.25);
+}
+
+.summary-btn:active {
+  transform: translateY(-1px);
+}
+
+/* ---------- Animation ---------- */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ---------- Responsive Design ---------- */
+@media (max-width: 768px) {
+  .summary-container {
+    margin: 20px;
+    padding: 35px 25px;
+  }
+
+  .summary-score-box {
+    width: 85%;
+    padding: 20px 10px;
+  }
+
+  #final-score {
+    font-size: 44px;
+  }
+
+  .summary-buttons {
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .summary-btn {
+    width: 200px;
+    height: 50px;
+    font-size: 16px;
+  }
+}

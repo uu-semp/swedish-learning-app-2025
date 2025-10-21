@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Say What? - Words Detail</title>
   <script src="../../scripts/save.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <link rel="stylesheet" href="words-detail.css">
   <script type="module" src="words-detail.js"></script>
 </head>
@@ -47,6 +48,11 @@
     </footer>
   </div>
 
+  <!-- Copyright Button -->
+  <button id="copyrightBtn" title="Copyright Information" aria-label="Copyright">
+    <i class="fas fa-copyright fa-2x"></i>
+  </button>
+
   <!-- Image Modal -->
   <div class="image-modal" id="imageModal">
     <div class="image-modal__overlay" id="imageModalOverlay"></div>
@@ -61,6 +67,17 @@
       <div class="image-modal__caption" id="imageModalCaption"></div>
     </div>
   </div>
+
+  <!-- Copyright Modal -->
+  <section id="copyright">
+    <div>
+      <button id="close-copyright">&times;</button>
+      <h2>Image Licenses</h2>
+      <div id="copyrightContent">
+        <!-- License information will be populated here dynamically -->
+      </div>
+    </div>
+  </section>
 
 </body>
 
