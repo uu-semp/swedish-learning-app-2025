@@ -22,7 +22,11 @@ class WordsDetail {
       imageModalOverlay: document.getElementById('imageModalOverlay'),
       imageModalClose: document.getElementById('imageModalClose'),
       imageModalImage: document.getElementById('imageModalImage'),
-      imageModalCaption: document.getElementById('imageModalCaption')
+      imageModalCaption: document.getElementById('imageModalCaption'),
+      copyrightBtn: document.getElementById('copyrightBtn'),
+      copyrightModal: document.getElementById('copyright'),
+      copyrightClose: document.getElementById('close-copyright'),
+      copyrightContent: document.getElementById('copyrightContent')
     };
   }
 
@@ -94,6 +98,16 @@ class WordsDetail {
         this.closeImageModal();
       }
     });
+
+    // Copyright button
+    this.elements.copyrightBtn?.addEventListener('click', () => {
+      this.openCopyrightModal();
+    });
+
+    // Copyright modal close
+    this.elements.copyrightClose?.addEventListener('click', () => {
+      this.closeCopyrightModal();
+    });
   }
 
   async loadGameResults() {
@@ -107,6 +121,7 @@ class WordsDetail {
         imageUrl: vocab?.img ?? null,
         userAnswer: undefined,
         feedback: guessed_correct ? "Correct" : "Try again next time",
+        vocab: vocab, // Include full vocab object for license information
       })),
     };
   }
@@ -281,6 +296,74 @@ class WordsDetail {
       this.elements.imageModal.classList.remove('show');
       document.body.style.overflow = ''; // Restore scrolling
     }
+  }
+
+  openCopyrightModal() {
+    if (this.elements.copyrightModal && this.elements.copyrightContent) {
+      this.updateCopyrightContent();
+      this.elements.copyrightModal.style.display = 'block';
+    }
+  }
+
+  closeCopyrightModal() {
+    if (this.elements.copyrightModal) {
+      this.elements.copyrightModal.style.display = 'none';
+    }
+  }
+
+  updateCopyrightContent() {
+    if (!this.elements.copyrightContent || !this.gameData?.words) return;
+
+    // Get unique images and their licenses from the current words
+    const imageLicenses = new Map();
+    
+    this.gameData.words.forEach((word, index) => {
+      if (word.imageUrl && word.vocab?.img_copyright) {
+        const imagePath = word.imageUrl;
+        const license = word.vocab.img_copyright;
+        
+        // Use image path as key to avoid duplicates
+        if (!imageLicenses.has(imagePath)) {
+          imageLicenses.set(imagePath, {
+            word: word.word,
+            translation: word.translation,
+            license: license,
+            index: index + 1
+          });
+        }
+      }
+    });
+
+    // Create table HTML
+    let tableHTML = '';
+    if (imageLicenses.size > 0) {
+      tableHTML = `
+        <table>
+          <tr>
+            <th>Image</th>
+            <th>Word</th>
+            <th>License</th>
+          </tr>
+      `;
+      
+      let counter = 1;
+      for (const [imagePath, data] of imageLicenses) {
+        tableHTML += `
+          <tr>
+            <td>${counter}</td>
+            <td>${this.escapeHtml(data.word)} (${this.escapeHtml(data.translation)})</td>
+            <td>${data.license}</td>
+          </tr>
+        `;
+        counter++;
+      }
+      
+      tableHTML += '</table>';
+    } else {
+      tableHTML = '<p>No image license information available.</p>';
+    }
+
+    this.elements.copyrightContent.innerHTML = tableHTML;
   }
 }
 

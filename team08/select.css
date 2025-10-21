@@ -48,10 +48,42 @@ main h2 {
   height: 70px;
 }
 
-.category-container img {
+.category-container figure {
+  position: relative;
   margin-left: 40px;
   width: 70px;
 }
+.category-container figure img {
+  display: block;
+  width: 70px;
+}
+
+.caption {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 10px;
+  width: 80px;
+  background: rgba(0, 0, 0, 0.6);
+  color: white;
+  font-size: 14px;
+  opacity: 0;
+  transform: translateY(100%);
+  transition: transform 0.2s ease;
+  pointer-events: none;
+}
+.figure:hover .caption,
+.figure:focus-within .caption {
+  transform: translateY(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+.caption a {
+  color: #fff;
+  text-decoration: underline;
+}
+
 .category-container label {
   margin-left: 10px;
 }
