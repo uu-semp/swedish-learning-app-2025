@@ -26,28 +26,12 @@ Owned by Team 13
   <!-- Site specific scripts and styles -->
   <link rel="stylesheet" href="game.css" />
   <script type="module" src="game.js"></script>
-  <script src="houses.js" defer></script>
+  <script src="./helpers/houses.js" defer></script>
 
 </head>
 <body>
   <div id="app">
-    <!-- <header class="main-header">
-      <div class="header-content">
-        <h1>Game Title</h1>
-        <button v-if="currentScreen === 'game'" @click="backToMenu" class="header-button">Start page</button>
-      </div>
-    </header> -->
     <main class="game-frame">
-      <!-- Implement your game inside this tag. test test test -->
-
-      <!-- <section v-if="currentScreen === 'menu'" id="menu-screen">
-        <div class="game-box">
-          <h2>Welcome to the House Selection game</h2>
-          <p>Practice Swedish numbers by choosing the correct house!</p>
-          <button @click="startGame" :disabled="isLoading" class="start-button">{{startButtonText}}</button>
-        </div>
-      </section> -->
-
       <section v-if="currentScreen === 'game'" id="game-screen" >
         <div class="game-box">
           <a href="index.html" class="start-page-button">⬅ Tillbaka</a>

@@ -2,7 +2,7 @@
 // Owned by Team 13
 // ==============================================
 
-import './translation.js'
+import './helpers/translation.js'
 "use strict";
 
 const app = Vue.createApp({
