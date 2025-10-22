@@ -25,8 +25,9 @@ Owned by Team 13
 
   <!-- Site specific scripts and styles -->
   <link rel="stylesheet" href="game.css" />
-  <script src="game.js" defer></script>
+  <script type="module" src="game.js"></script>
   <script src="houses.js" defer></script>
+
 </head>
 <body>
   <div id="app">
@@ -47,7 +48,7 @@ Owned by Team 13
         </div>
       </section> -->
 
-      <section v-else-if="currentScreen === 'game'" id="game-screen" >
+      <section v-if="currentScreen === 'game'" id="game-screen" >
         <div class="game-box">
           <a href="index.html" class="start-page-button">⬅ Tillbaka</a>
           <div class="progress-wrap">

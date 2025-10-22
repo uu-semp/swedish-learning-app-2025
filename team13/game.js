@@ -2,13 +2,16 @@
 // Owned by Team 13
 // ==============================================
 
-
+import './translation.js'
 "use strict";
 
 const app = Vue.createApp({
+  
   data() {
+    
     return {
-tempStreets: [],
+      
+      tempStreets: [],
 
       isLoading: true,
       currentScreen: 'game',
@@ -16,7 +19,7 @@ tempStreets: [],
       progress: 0,
       progressMax: 10,
       progressMin: 0,
-      houseOptions: [],
+      houseOptions: [], //used in game.html
       correctHouseIndex: -1,
       currentQuestion: null,
       currentStreet: '',
@@ -24,7 +27,7 @@ tempStreets: [],
 
       showTranslation: false,
       swedishSentence: ["Jag", "bor", "på", "-street", "-int"],
-      englishSentence: ["I", "live", "on", "-street", "-int"],
+      englishSentence: ["I", "live", "on", "", ""],
       prompt: [],
       translatedIndexes: [],
 
@@ -47,7 +50,7 @@ tempStreets: [],
 
   methods: {
     startNewRound() {
-        // Remove any leftover "✔ Correct!" / "✖ Wrong..." messages
+      
       document.querySelectorAll(".house-message").forEach(n => n.remove());
       this.translatedIndexes = [];
       this.prompt = [...this.swedishSentence];
@@ -114,40 +117,14 @@ tempStreets: [],
     },
 
     toggleTranslation() {
-      this.showTranslation = !this.showTranslation;
+      translate.toggleTranslation(this);
     },
-
-
     translateWord(wordIndex) {
-
-      if (this.prompt[wordIndex] === '-int' || 
-          this.prompt[wordIndex] === '-street') {
-        return;
-      }
-      let newWord = ""
-      if (this.translatedIndexes[wordIndex]){
-        newWord = this.swedishSentence[wordIndex];  
-      }else{
-        newWord = this.englishSentence[wordIndex];
-      }
-      this.translatedIndexes[wordIndex] = !this.translatedIndexes[wordIndex];
-      const newPrompt = [...this.prompt];
-      newPrompt[wordIndex] = newWord;
-      this.prompt = newPrompt;
+      translate.translateWord(this, wordIndex);
     },
-
-      renderWord(word) {
-        switch (word) {
-          case 
-            "-street": return this.currentStreet;
-
-          case 
-            "-int": return this.currentQuestion ? this.currentQuestion.sv : '';
-
-          default: 
-            return word;
-        }
-      },
+    renderWord(word) {
+      return translate.renderWord(this, word)
+    },
   },
 
   mounted() {
