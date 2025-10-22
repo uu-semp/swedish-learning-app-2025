@@ -1,0 +1,215 @@
+/* --- Basic Setup & Variables --- */
+:root {
+  --primary-bg: #f4f7f6;
+  --secondary-bg: #ffffff;
+  --border-color: #e0e0e0;
+  --prompt-bg: #e74c3c;
+  --level-bg: #4a5568;
+  --done-button-bg: #2ecc71;
+  --done-button-hover: #27ae60;
+}
+
+/* --- Game Frame & Container --- */
+.game-frame {
+  width: 800px;
+  height: 600px;
+  margin: auto;
+  border: 1px solid var(--border-color);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+  user-select: none;
+}
+
+#game-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--primary-bg);
+}
+
+/* --- Top & Bottom Bars --- */
+#top-bar {
+  display: flex;
+  align-items: center;
+  padding: 8px;
+  background-color: var(--secondary-bg);
+  border-bottom: 1px solid var(--border-color);
+}
+
+#level-indicator {
+  background-color: var(--level-bg);
+  color: white;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-weight: bold;
+  margin-right: 16px;
+}
+
+#prompt-bar {
+  flex-grow: 1;
+  background-color: var(--prompt-bg);
+  color: white;
+  padding: 8px 16px;
+  border-radius: 8px;
+  text-align: center;
+}
+
+#bottom-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  border-top: 1px solid var(--border-color);
+}
+
+#menu-button, #levels-button {
+  background-color: #7b808e;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+#back-button:hover {
+  background-color: #718096;
+}
+
+#done-button {
+  background-color: var(--done-button-bg);
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+#done-button:hover {
+  background-color: var(--done-button-hover);
+}
+
+/* --- Main Game Area --- */
+#game-area {
+  flex-grow: 1;
+  display: flex;
+  overflow: hidden;
+}
+
+#item-list {
+  width: 130px;
+  background-color: var(--secondary-bg);
+  border-right: 1px solid var(--border-color);
+  padding: 10px;
+  overflow-y: auto;
+  /* Hide scrollbar */
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+#item-list::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
+
+
+.draggable-item-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f9f9f9;
+  border: 1px dashed var(--border-color);
+  border-radius: 8px;
+  margin-bottom: 10px;
+  padding: 5px;
+}
+
+.draggable-item {
+  cursor: grab;
+  max-width: 90%;
+  max-height: 90%;
+  transition: transform 0.2s;
+}
+
+.draggable-item:active {
+  cursor: grabbing;
+  transform: scale(1.1);
+}
+
+/* --- Room Container --- */
+#room-container {
+  flex-grow: 1;
+  position: relative;
+  overflow: hidden; /* Hides parts of the background that are too wide */
+}
+
+#room-background {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+}
+
+.placed-item, .static-item {
+  position: absolute;
+  z-index: 1;
+}
+
+.placed-item {
+  cursor: grab;
+}
+
+.placed-item:active {
+  cursor: grabbing;
+}
+
+
+/* --- Modal for Hints --- */
+#modal-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+}
+
+#modal-overlay.hidden {
+  display: none;
+}
+
+#modal-content {
+  background-color: white;
+  padding: 30px;
+  border-radius: 12px;
+  text-align: center;
+  max-width: 400px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+#modal-content h3 {
+  margin-top: 0;
+  color: var(--level-bg);
+}
+
+#modal-close-button {
+  margin-top: 20px;
+  background-color: var(--level-bg);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+}

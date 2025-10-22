@@ -1,0 +1,246 @@
+{
+    "name": "clock-game",
+    "modules": [
+        {
+            "difficulty": "easy",
+            "questions": [
+                {
+                    "type": "clock",
+                    "id": "clock-001",
+                    "question": "Vad är klockan?",
+                    "hour": 8,
+                    "minute": 0,
+                    "answer": "Hon är åtta.",
+                    "alternatives": [
+                        "Hon är nio.",
+                        "Hon är tio.",
+                        "Hon är halv nio."
+                    ],
+                    "hint": "eight = åtta, nine = nio",
+                    "feedback": "Good try, mistakes are how you learn!"
+                },
+                {
+                    "type": "clock",
+                    "id": "clock-002",
+                    "question": "Hur mycket är klockan?",
+                    "hour": 3,
+                    "minute": 0,
+                    "answer": "Klockan är tre.",
+                    "alternatives": [
+                        "Klockan är fyra.",
+                        "Klockan är fem.",
+                        "Klockan är halv tre."
+                    ],
+                    "hint": "five = fem, three = tre, Use över for \"past\" and i for \"to\"",
+                    "feedback": "Close one, give it another try!"
+                },
+                {
+                    "type": "clock",
+                    "id": "clock-003",
+                    "question": "Hur mycket är klockan?",
+                    "hour": 10,
+                    "minute": 30,
+                    "answer": "Den är halv elva.",
+                    "alternatives": [
+                        "Den är tio.",
+                        "Den är halv tio.",
+                        "Den är kvart i tio."
+                    ],
+                    "hint": "Use över for \"past\" and i for \"to\"",
+                    "feedback": "You are doing great, don't give up!"
+                },
+                {
+                    "type": "clock",
+                    "id": "clock-004",
+                    "question": "Hur mycket är klockan?",
+                    "hour": 7,
+                    "minute": 0,
+                    "answer": "Hon är sju.",
+                    "alternatives": [
+                        "Hon är sex.",
+                        "Hon är åtta.",
+                        "Hon är fem."
+                    ],
+                    "hint": "Kvart = Quarter. Use över for \"past\" and i for \"to\"",
+                    "feedback": "So close! You will get the next one!"
+                },
+                {
+                    "type": "clock",
+                    "id": "clock-005",
+                    "question": "Vad är klockan?",
+                    "hour": 12,
+                    "minute": 30,
+                    "answer": "Klockan är halv ett.",
+                    "alternatives": [
+                        "Klockan är ett.",
+                        "Klockan är halv tolv.",
+                        "Klockan är halv elva."
+                    ],
+                    "hint": "halv tre = 02:30. Use över for \"past\" and i for \"to\"",
+                    "feedback": "Good try, mistakes are how you learn!"
+                }
+            ]
+        },
+        {
+            "difficulty": "medium",
+            "questions": [
+                {
+                    "type": "clock",
+                    "id": "clock-006",
+                    "question": "Vad är klockan?",
+                    "hour": 11,
+                    "minute": 45,
+                    "answer": "Klockan är kvart i tolv",
+                    "alternatives": [
+                        "Klockan är kvart över elva",
+                        "Klockan är kvart över tolv",
+                        "Klockan är kvart i elva"
+                    ],
+                    "hint": "quarter to = kvart i, quarter past = kvart över",
+                    "feedback": "Good try, mistakes are how you learn!"
+                },
+                {
+                    "type": "clock",
+                    "id": "clock-007",
+                    "question": "Hur mycket är klockan?",
+                    "hour": 6,
+                    "minute": 35,
+                    "answer": "Klockan är fem över halv sju.",
+                    "alternatives": [
+                        "Klockan är kvart i sju.",
+                        "Klockan är fem över halv sex.",
+                        "Klockan är kvart i sju."
+                    ],
+                    "hint": "With half times in Swedish, the time refers to the following full hour. (eg. halv två = 01:30)",
+                    "feedback": "You are doing great, don't give up!"
+                },
+                {
+                    "type": "clock",
+                    "id": "clock-008",
+                    "question": "Hur mycket är klockan?",
+                    "hour": 1,
+                    "minute": 15,
+                    "answer": "Hon är kvart över ett.",
+                    "alternatives": [
+                        "Hon är kvart i ett.",
+                        "Hon är kvart över två.",
+                        "Hon är kvart i tolv."
+                    ],
+                    "hint": "With half times in Swedish, the time refers to the following full hour. (eg. halv två = 01:30)",
+                    "feedback": "So close! You will get the next one!"
+                },
+                {
+                    "type": "clock",
+                    "id": "clock-009",
+                    "question": "Vad är klockan?",
+                    "hour": 2,
+                    "minute": 40,
+                    "answer": "Den är tjugo i tre.",
+                    "alternatives": [
+                        "Den är tjugo i två.",
+                        "Den tjugo över tre.",
+                        "Den är kvart i två."
+                    ],
+                    "hint": "Use över for \"past\" and i for \"to\"",
+                    "feedback": "Good try, mistakes are how you learn!"
+                },
+                {
+                    "type": "clock",
+                    "id": "clock-010",
+                    "question": "Vad är klockan?",
+                    "hour": 4,
+                    "minute": 25,
+                    "answer": "Klockan är fem i halv fem.",
+                    "alternatives": [
+                        "Klockan är kvart över fyra.",
+                        "Klockan är fem över halv fem.",
+                        "Klockan är fem i halv fyra."
+                    ],
+                    "hint": "With half times in Swedish, the time refers to the following full hour. (eg. halv två = 01:30)",
+                    "feedback": "You are doing great, don't give up!"
+                }
+            ]
+        },
+        {
+            "difficulty": "hard",
+            "questions": [
+                {
+                    "type": "regular",
+                    "id": "reg-dial-001",
+                    "question": "Anna, hur dags stiger du upp?",
+                    "answer": "jag stiger upp klockan halv åtta",
+                    "alternatives": [
+                        "klockan halv åtta",
+                        "???klockan halv åtta stiger jag upp???"
+                    ],
+                    "hint": "hur dags = what time? Answer with: klockan ...",
+                    "feedback": "Good try, mistakes are how you learn!"
+                },
+                {
+                    "type": "regular",
+                    "id": "reg-dial-002",
+                    "question": "Anna, när ätter du frukost?",
+                    "answer": "jag äter frukost klockan åtta",
+                    "alternatives": [
+                        "klockan åtta",
+                        "klockan åtta äter jag frukost"
+                    ],
+                    "hint": "när = when? Answer with: klockan ...",
+                    "feedback": "You are doing great, don't give up!"
+                },
+                {
+                    "type": "regular",
+                    "id": "reg-dial-003",
+                    "question": "Anna, när går du till bussen?",
+                    "answer": "jag går till bussen klockan halv nio",
+                    "alternatives": [
+                        "klockan halv nio",
+                        "klockan klockan halv nio går jag till bussen"
+                    ],
+                    "hint": "när = when? Answer with: klockan ...",
+                    "feedback": "So close! You will get the next one!"
+                },
+                {
+                    "type": "regular",
+                    "id": "reg-text-004",
+                    "question": "hur dags går du hem?",
+                    "answer": "jag går hem klockan 19",
+                    "alternatives": [
+                        "klockan 19",
+                        "klockan 19 går jag hem"
+                    ],
+                    "hint": "In texting, we use 24-hour time and write the number to show if we mean daytime or nightime.",
+                    "feedback": "That was a tricky one, you are doing great!"
+                },
+                {
+                    "type": "regular",
+                    "id": "reg-text-005",
+                    "question": "När lägger du sig? halv elva går hon och lägger sig",
+                    "answer": "jag lägger mig klockan 1030",
+                    "alternatives": [
+                        "klockan 10:30",
+                        "klockan 1030",
+                        "klockan 10:30 lägger jag mig",
+                        "klockan 1030 lägger jag mig",
+                        "jag lägger mig klockan 1030"
+                    ],
+                    "hint": "In texting, we use 24-hour time and write the number to show if we mean daytime or nightime.",
+                    "feedback": "Good try, mistakes are how you learn!"
+                },
+                {
+                    "type": "regular",
+                    "id": "reg-dial-006",
+                    "question": "Anna, vad gör du klockan elva?",
+                    "answer": "jag sover",
+                    "alternatives": [
+                        "klockan elva sover jag",
+                        "jag sover klockan elva",
+                        "sover"
+                    ],
+                    "hint": "sover = to sleep, somnar = to fall sleep",
+                    "feedback": "That was a tricky one, you are doing great!"
+                }
+            ]
+        }
+    ]
+}

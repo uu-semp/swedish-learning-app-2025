@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Easy Levels</title>
   <link rel="stylesheet" href="../styles/main_menu.css" />
+  <script src="../../scripts/save.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
 </head>
 <body>
@@ -12,12 +13,30 @@
   <div class="start-screen">
     <h2 class="game-title">Easy Levels</h2>
     <div class="menu">
-      <button class="menu-btn" onclick="location.href='placeholder_game.html?level=1'">Level 1</button>
-      <button class="menu-btn" onclick="location.href='placeholder_game.html?level=2'">Level 2</button>
-      <button class="menu-btn" onclick="location.href='placeholder_game.html?level=3'">Level 3</button>
+      <button class="menu-btn" data-level="1" onclick="location.href='../easy?level=1'">Level 1</button>
+      <button class="menu-btn" data-level="2" onclick="location.href='../easy?level=2'">Level 2</button>
+      <button class="menu-btn" data-level="3" onclick="location.href='../easy?level=3'">Level 3</button>
     </div>
-    <button class="back-btn" onclick="location.href='../index.html'"><i class="fa-solid fa-arrow-left"></i> Back</button>
+    <button class="back-btn" onclick="location.href='../index.html'"><i class="fa-solid fa-arrow-left"></i>Back</button>
   </div>
 </main>
+
+<script>
+  $(function() {
+    const stats = save.stats.get("team05");
+    const wins = stats ? stats.wins : 0;
+    const unlockedLevel = wins + 1;
+
+    $('.menu .menu-btn').each(function() {
+      const button = $(this);
+      const buttonLevel = parseInt(button.data('level'), 10);
+
+      if (buttonLevel > unlockedLevel) {
+        button.prop('disabled', true);
+      }
+    });
+  });
+</script>
+
 </body>
 </html>

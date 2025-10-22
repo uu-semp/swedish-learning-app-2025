@@ -1,0 +1,68 @@
+{
+  "background": {
+    "path": "../assets/backgrounds/bedroom.svg"
+  },
+  "vocabs": [
+    {
+      "id": "383b2052",
+      "maxWidth": 0.25,
+      "note": "armchair"
+    },
+    {
+      "id": "54016a6f",
+      "maxWidth": 0.25,
+      "note": "drawer"
+    },
+    {
+      "id": "031e117b",
+      "maxWidth": 0.25,
+      "note": "chair"
+    },
+    {
+      "id": "7a0a7964",
+      "maxWidth": 0.25,
+      "note": "desk"
+    },
+    {
+      "id": "1b2d5670",
+      "maxWidth": 0.25,
+      "note": "door"
+    },
+    {
+      "id": "310d5d0b",
+      "maxWidth": 0.25,
+      "note": "flower"
+    },
+    {
+      "id": "766d2079",
+      "maxWidth": 0.25,
+      "note": "bed"
+    }
+  ],
+  "staticVocabs": [
+    {
+      "index": 5,
+      "x": 0.8,
+      "y": 0.5
+    },
+    {
+      "index": 2,
+      "x": 0.2,
+      "y": 0.5
+    }
+  ],
+  "proximityRequirements": [
+    {
+      "indexA": 7,
+      "indexB": 5,
+      "proximity": 0.3
+    },
+    {
+      "indexA": 6,
+      "indexB": 2,
+      "proximity": 0.3
+    }
+  ],
+  "prompt": "Place \"@7 $7\" close to the \"$5\", and also \"@6 $6\" on top of the \"$2\".",
+  "hint": "There should also be something you can rest on close to the door, and the drawer needs something that fits on top of it."
+}

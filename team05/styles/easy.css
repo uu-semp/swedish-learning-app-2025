@@ -1,0 +1,148 @@
+/*
+=================================================
+Owned by Team 05
+=================================================
+*/
+
+
+
+#image-container, #word-container {
+  position: relative;
+  width: 45%;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.game-frame {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 90%;
+  margin-top: 10px;
+  margin-bottom: 10px; /* smaller gap before the images */
+}
+
+#level-text {
+  font-size: 1.3em; /* smaller and cleaner */
+  font-weight: bold;
+  margin: 0;
+}
+
+.instructions {
+  font-size: 1.1em;
+  color: #444;
+  margin: 0;
+}
+
+/* 🧩 New container for horizontal layout */
+.game-area {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 60px; /* space between columns */
+  width: 90%;
+  margin-top: 10px; /* tighter spacing */
+  overflow: hidden; /* prevent arrows pushing out */
+}
+
+/* Images on the left */
+.images {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+}
+
+/* Words in the middle */
+.words {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 15px;
+}
+
+.right-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 20px;
+  width: 450px
+}
+
+/* Buttons on the right */
+.buttons {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 15px;
+}
+
+.item.selected {
+  border-color: #007bff;
+}
+
+/* 🧩 Match word boxes to image size */
+.item,
+.word {
+  width: 120px;
+  height: 120px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  border-radius: 10px;
+  border: 2px solid transparent;
+  background-color: #f8f8f8;
+  cursor: pointer;
+  transition: transform 0.2s, border-color 0.2s;
+  box-sizing: border-box;
+}
+
+.word {
+  font-size: 16px;
+}
+
+.item:hover,
+.word:hover {
+  transform: scale(1.05);
+}
+
+.word.selected {
+  border-color: #007bff;
+}
+
+.message {
+  font-size: 1em;
+  color: #222;
+  text-align: left;
+  max-width: 450px; /* ✅ matches panel width */
+  line-height: 1.4em;
+  word-wrap: break-word;
+}
+
+button {
+  padding: 8px 16px;
+  cursor: pointer;
+  border-radius: 8px;
+  border: none;
+  background-color: #007bff;
+  color: white;
+  transition: background-color 0.2s;
+  width: 140px;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
