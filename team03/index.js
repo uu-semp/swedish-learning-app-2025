@@ -23,6 +23,10 @@ class VocabularyManager {
     const data = window.save.get(this.STORAGE_KEY);
     data.customWords = this.words;
     window.save.set(this.STORAGE_KEY, data);
+
+    if (window.team03_mergeToGlobal) {
+      window.team03_mergeToGlobal();
+    }
   }
 
   generateId() {
@@ -65,8 +69,14 @@ class VocabularyManager {
     const count = this.words.length;
     if (window.save.clear(this.STORAGE_KEY)) {
       this.words = [];
+      if(window.team03_clearFromGlobal) {
+        window.team03_clearFromGlobal();
+      }
       return {success: true, count: count};
     }
+
+    
+
     return {success: false, error: 'Failed to clear storage'};
   }
 
@@ -86,6 +96,20 @@ class VocabularyManager {
     if (found) {
       this.words = newWords;
       this.saveWords();
+      const globalId = `team03-${id}`;
+
+      if (window._vocabulary && window._vocabulary.vocab && window._vocabulary.vocab[globalId]) {
+        delete window._vocabulary.vocab[globalId];
+
+    // Also remove from all categories
+        for (const cat in window._vocabulary.categories) {
+          window._vocabulary.categories[cat] = window._vocabulary.categories[cat].filter(
+            w => w !== globalId
+          );
+    }
+
+    console.log(`🗑️ Team03: Deleted ${globalId} from global vocabulary`);
+  }
       return {success: true, word: remove};
     }
     return {success: false, error: "Word not found"};
@@ -411,4 +435,73 @@ $(function() {
     populateCategoryDropdown();
     displayWords();
   });
+
+  
 });
+
+window.team03_mergeToGlobal = function () {
+    // Get custom words directly from localStorage
+    const team03Data = window.save.get("team03");
+    const words = team03Data.customWords || [];
+    
+    if (words.length === 0) {
+      console.log("Team03: No custom words to merge");
+      return;
+    }
+
+    words.forEach(word => {
+      const id = `team03-${word.id}`;
+      
+      // Add to global vocab object
+      window._vocabulary.vocab[id] = {
+        en: word.en,
+        sv: word.sv,
+        sv_pl: word.sv_pl,
+        article: word.article,
+        literal: word.literal,
+        img: word.img,
+        img_copyright: word.img_copyright,
+        audio: word.audio
+      };
+
+      // Add to categories
+      if (word.category) {
+        const categories = word.category.split(",").map(c => c.trim().toLowerCase());
+        categories.forEach(cat => {
+          if (!window._vocabulary.categories[cat]) {
+            window._vocabulary.categories[cat] = [];
+          }
+          if (!window._vocabulary.categories[cat].includes(id)) {
+            window._vocabulary.categories[cat].push(id);
+          }
+        });
+      }
+    });
+
+    console.log(`✅ Team03: Merged ${words.length} custom words into global vocabulary`);
+  };
+
+  window.team03_clearFromGlobal = function () {
+
+  // Find all vocab keys
+  const team03Keys = Object.keys(window._vocabulary.vocab)
+    .filter(id => id.startsWith("team03-"));
+
+  if (team03Keys.length === 0) {
+    console.log("Team03: No entries to clear from global vocabulary");
+    return;
+  }
+
+  // Remove from global vocab
+  team03Keys.forEach(id => delete window._vocabulary.vocab[id]);
+
+  // Remove from categories
+  for (const cat in window._vocabulary.categories) {
+    window._vocabulary.categories[cat] =
+      window._vocabulary.categories[cat].filter(id => !id.startsWith("team03-"));
+  }
+
+  console.log(`Team03: Cleared ${team03Keys.length} entries from global vocabulary`);
+};
+
+
