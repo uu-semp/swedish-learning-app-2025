@@ -1,48 +1,48 @@
 # Save.js API Documentation
-This API allows teams to save and retrieve data using the browser's localStorage. It's designed to be simple and flexible for all game teams.
-It also enables teams to share data if that is something needed.
+This API allows games to save and retrieve data using the browser's localStorage. It's designed to be simple and flexible for all games.
+It also enables games to share data if that is something needed.
 
-## IMPORTANT: Team Name Convention
-**All teams MUST use their assigned team name as the first parameter.** This prevents teams from accidentally overwriting each other's data.
+## IMPORTANT: Game Name Convention
+**Every game MUST use its own folder name as the first parameter.** This prevents games from accidentally overwriting each other's data.
 
 ---
 
 ## API Methods
 
-### `save.get(team_name, key)`
-Retrieves saved data for a team.
+### `save.get(game_name, key)`
+Retrieves saved data for a game.
 
 **Parameters:**
-- `team_name` (string): Your team identifier (e.g., "team08", "team02")
-- `key` (string, optional): Specific data key to retrieve. If omitted, returns all data for the team.
+- `game_name` (string): Your game identifier, matching your folder name (e.g., "game08", "game03")
+- `key` (string, optional): Specific data key to retrieve. If omitted, returns all data for the game.
 
 **Returns:**
 - If `key` is provided: the value associated with that key, or `null` if not found
-- If `key` is omitted: an object containing all team data, or `{}` if no data exists
+- If `key` is omitted: an object containing all game data, or `{}` if no data exists
 
 **Example:**
 ```js
-const score = save.get("team05", "score");      // Get specific value
-const allData = save.get("team05");             // Get all team data
+const score = save.get("game05", "score");      // Get specific value
+const allData = save.get("game05");             // Get all game data
 ```
 
 ---
 
-### `save.set(team_name, key_or_data, value)`
-Saves data for a team. Has two usage patterns:
+### `save.set(game_name, key_or_data, value)`
+Saves data for a game. Has two usage patterns:
 
 **Pattern 1: Set a single key-value pair**
 ```js
-save.set("team05", "score", 1500);
+save.set("game05", "score", 1500);
 ```
 
 **Pattern 2: Merge an object with existing data**
 ```js
-save.set("team05", { level: 3, score: 1500 });
+save.set("game05", { level: 3, score: 1500 });
 ```
 
 **Parameters:**
-- `team_name` (string): Your team identifier
+- `game_name` (string): Your game identifier
 - `key_or_data` (string | object): Either a key name or an object to merge
 - `value` (any, optional): The value to save (only used with Pattern 1)
 
@@ -52,11 +52,11 @@ save.set("team05", { level: 3, score: 1500 });
 
 ---
 
-### `save.clear(team_name)`
-Removes all saved data for a team, including stats.
+### `save.clear(game_name)`
+Removes all saved data for a game, including stats.
 
 **Parameters:**
-- `team_name` (string): Your team identifier
+- `game_name` (string): Your game identifier
 
 **Returns:**
 - `true` if successful
@@ -64,7 +64,7 @@ Removes all saved data for a team, including stats.
 
 **Example:**
 ```js
-save.clear("team05");  // Removes all data for team05
+save.clear("game05");  // Removes all data for game05
 ```
 
 ---
@@ -73,11 +73,11 @@ save.clear("team05");  // Removes all data for team05
 
 The stats API provides a standardized way to track wins and completion percentage (0-100).
 
-### `save.stats.set(team_name, wins, completion)`
-Sets the win count and completion percentage for a team.
+### `save.stats.set(game_name, wins, completion)`
+Sets the win count and completion percentage for a game.
 
 **Parameters:**
-- `team_name` (string): Your team identifier
+- `game_name` (string): Your game identifier
 - `wins` (number): Number of wins (will be floored and clamped to minimum 0)
 - `completion` (number): Completion percentage 0-100 (will be floored and clamped to 0-100 range)
 
@@ -87,16 +87,16 @@ Sets the win count and completion percentage for a team.
 
 **Example:**
 ```js
-save.stats.set("team05", 10, 75);  // 10 wins, 75% completion
+save.stats.set("game05", 10, 75);  // 10 wins, 75% completion
 ```
 
 ---
 
-### `save.stats.get(team_name)`
-Retrieves the stats for a team.
+### `save.stats.get(game_name)`
+Retrieves the stats for a game.
 
 **Parameters:**
-- `team_name` (string): Your team identifier
+- `game_name` (string): Your game identifier
 
 **Returns:**
 - An object with `{ wins: number, completion: number }`
@@ -104,17 +104,17 @@ Retrieves the stats for a team.
 
 **Example:**
 ```js
-const stats = save.stats.get("team05");
+const stats = save.stats.get("game05");
 console.log(`Wins: ${stats.wins}, Completion: ${stats.completion}%`);
 ```
 
 ---
 
-### `save.stats.incrementWin(team_name)`
+### `save.stats.incrementWin(game_name)`
 Increases the win count by 1 while keeping completion unchanged.
 
 **Parameters:**
-- `team_name` (string): Your team identifier
+- `game_name` (string): Your game identifier
 
 **Returns:**
 - `true` if successful
@@ -122,16 +122,16 @@ Increases the win count by 1 while keeping completion unchanged.
 
 **Example:**
 ```js
-save.stats.incrementWin("team05");  // Adds 1 to wins
+save.stats.incrementWin("game05");  // Adds 1 to wins
 ```
 
 ---
 
-### `save.stats.setCompletion(team_name, completion)`
+### `save.stats.setCompletion(game_name, completion)`
 Updates only the completion percentage while keeping wins unchanged.
 
 **Parameters:**
-- `team_name` (string): Your team identifier
+- `game_name` (string): Your game identifier
 - `completion` (number): New completion percentage 0-100 (will be floored and clamped)
 
 **Returns:**
@@ -140,16 +140,16 @@ Updates only the completion percentage while keeping wins unchanged.
 
 **Example:**
 ```js
-save.stats.setCompletion("team05", 85);  // Set completion to 85%
+save.stats.setCompletion("game05", 85);  // Set completion to 85%
 ```
 
 ---
 
-### `save.stats.clear(team_name)`
+### `save.stats.clear(game_name)`
 Resets stats to zero (0 wins, 0% completion).
 
 **Parameters:**
-- `team_name` (string): Your team identifier
+- `game_name` (string): Your game identifier
 
 **Returns:**
 - `true` if successful
@@ -157,7 +157,7 @@ Resets stats to zero (0 wins, 0% completion).
 
 **Example:**
 ```js
-save.stats.clear("team05");  // Resets to { wins: 0, completion: 0 }
+save.stats.clear("game05");  // Resets to { wins: 0, completion: 0 }
 ```
 
 ---
@@ -167,16 +167,16 @@ save.stats.clear("team05");  // Resets to { wins: 0, completion: 0 }
 ### Basic Usage
 ```js
 // Save a single value
-save.set("team05", "score", 1500);
+save.set("game05", "score", 1500);
 
 // Get a single value
-let score = save.get("team05", "score");
+let score = save.get("game05", "score");
 
-// Get all team data
-let allData = save.get("team05");
+// Get all game data
+let allData = save.get("game05");
 
 // Save multiple values at once
-save.set("team05", {
+save.set("game05", {
     level: 3,
     score: 1500,
     settings: { volume: 0.8 }
@@ -186,38 +186,38 @@ save.set("team05", {
 ### Stats Example
 ```js
 // Initialize stats: 0 wins and 0% completion
-save.stats.set("team05", 0, 0);
+save.stats.set("game05", 0, 0);
 
-// Get all team stats data
-const stats = save.stats.get("team05");
+// Get all game stats data
+const stats = save.stats.get("game05");
 console.log(`Wins: ${stats.wins}, Completion: ${stats.completion}%`);
 
 // Increment wins by 1
-save.stats.incrementWin("team05");
+save.stats.incrementWin("game05");
 
 // Update completion to new value
-save.stats.setCompletion("team05", 40);
+save.stats.setCompletion("game05", 40);
 
-// Clear all stats for team
-save.stats.clear("team05");
+// Clear all stats for the game
+save.stats.clear("game05");
 ```
 
 ### Learned Words Example
 ```js
 // Initialize learned words array (only needed once)
-if (!save.get("team05", "learnedWords")) {
-    save.set("team05", "learnedWords", []);
+if (!save.get("game05", "learnedWords")) {
+    save.set("game05", "learnedWords", []);
 }
 
 // Add a learned word
-let learnedWords = save.get("team05", "learnedWords");
+let learnedWords = save.get("game05", "learnedWords");
 if (!learnedWords.includes("hund")) {
     learnedWords.push("hund");
-    save.set("team05", "learnedWords", learnedWords);
+    save.set("game05", "learnedWords", learnedWords);
 }
 
 // Check if a word is learned
-let isLearned = save.get("team05", "learnedWords").includes("katt");
+let isLearned = save.get("game05", "learnedWords").includes("katt");
 ```
 
 ### Settings Example
@@ -236,7 +236,7 @@ let volume = save.get("team03", "settings").volume;
 ### Game Progress Example
 ```js
 // Save player progress
-save.set("team07", {
+save.set("game07", {
     currentLevel: 5,
     score: 2300,
     lives: 3,
@@ -244,7 +244,7 @@ save.set("team07", {
 });
 
 // Load game state
-let gameState = save.get("team07");
+let gameState = save.get("game07");
 if (gameState.currentLevel) {
     // Continue existing game
 } else {
@@ -256,7 +256,7 @@ if (gameState.currentLevel) {
 
 ## Error Handling
 The API includes built-in error handling:
-- Returns empty object `{}` if no data exists for a team
+- Returns empty object `{}` if no data exists for a game
 - Returns `null` for specific keys that don't exist
 - Logs warnings to console if localStorage fails
 - `set()` and `clear()` return `true`/`false` to indicate success

@@ -1,0 +1,45 @@
+<!doctype html>
+
+<!--
+=================================================
+Owned by Game 10
+=================================================
+-->
+
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Basic Static Site</title>
+  <link rel="stylesheet" href="../../style.css" />
+
+  <link rel="stylesheet" href="../index.css" />
+  <link rel="stylesheet" href="game_page.css" />
+  
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" 
+  />
+
+  <!-- Site specific scripts and styles -->
+  <link rel="stylesheet" href="../index.css" />
+
+  <script src="../../scripts/vocabulary.js"></script>
+  <script src="../../scripts/save.js"></script>
+  <script type="module" src="../dev-tools/cookies.js"></script>
+  <script src="game_logic.js"></script>
+  <script type="module" src="game_page.js" defer></script>
+</head>
+<body>
+  <header>
+    <h1>Game 10</h1>
+  </header>
+
+  <main id="app" class="game-frame"></main>
+
+  <footer>
+    <small>Created as part of the "Software Engineering and Project Management" course 2025</small>
+  </footer>
+</body>
+</html>

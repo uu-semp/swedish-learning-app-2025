@@ -5,7 +5,7 @@ import {
 } from "./database_config.js";
 import * as DB from "./database_type.js"
 // ==============================================
-// Owned by the Data Team and Team08
+// Owned by the Data Team and Game08
 // ==============================================
 
 /**
@@ -36,29 +36,29 @@ import * as DB from "./database_type.js"
  * @property {string} Literal - Literal translation (can be empty).
  * @property {string} Swedish - Swedish word (e.g., "fönster").
  * @property {string} Swedish_plural - Swedish plural form (may be empty).
- * @property {string} Team01
- * @property {string} Team02
+ * @property {string} Game02
+ * @property {string} Game03
  * @property {string} Team03
- * @property {string} Team04
- * @property {string} Team05
- * @property {string} Team06
- * @property {string} Team07
- * @property {string} Team08
- * @property {string} Team09
- * @property {string} Team10
- * @property {string} Team11
+ * @property {string} Game04
+ * @property {string} Game05
+ * @property {string} Game06
+ * @property {string} Game07
+ * @property {string} Game08
+ * @property {string} Game09
+ * @property {string} Game10
+ * @property {string} Game11
  * @property {string} Team12
- * @property {string} Team13
- * @property {string} Team14
- * @property {string} Team15
- * @property {string} Team16
+ * @property {string} Game12
+ * @property {string} Game13
+ * @property {string} Game14
+ * @property {string} Game15
  */
 
 /**
  * @typedef {Object} Database
  * @property {RowItem[]} rows
  * @property {VocabMap} vocab
- * @property {IdList} team
+ * @property {IdList} game
  * @property {number} vocabLength
  * @property {CategoryMap} categories
  */
@@ -67,14 +67,22 @@ import * as DB from "./database_type.js"
 let db;
 
 async function fetch_sheets() {
-  const RESP = await fetch(FETCH_EXTERNAL ? EXTERNAL_URL : INTERNAL_URL);
+  const SRC = FETCH_EXTERNAL
+    ? EXTERNAL_URL
+    : new URL(INTERNAL_URL, import.meta.url);
+  const RESP = await fetch(SRC);
+  // Without this a 404 body gets handed to the CSV parser and silently
+  // becomes an empty database.
+  if (!RESP.ok) {
+    throw new Error(`Vocabulary: HTTP ${RESP.status} fetching ${SRC}`);
+  }
   return await RESP.text();
 }
 
 /**
- * @param {int} team_id The number of your team, if team specific data should be loaded
+ * @param {int} game_id The number of your game, if game specific data should be loaded
  */
-export async function loaddb(team_id = -1) {
+export async function loaddb(game_id = -1) {
   // Fetching a parser
   const papa_promise = new Promise((resolve, reject) => {
     const script = document.createElement("script");
@@ -96,12 +104,12 @@ export async function loaddb(team_id = -1) {
   const rows = parsed.data;
 
   // Stringify incase this get a number
-  const team_id_str = String(team_id).padStart(2, "0");
-  const team_column = `Team${team_id_str}`;
+  const game_id_str = String(game_id).padStart(2, "0");
+  const game_column = `Game${game_id_str}`;
 
   // Creating two alternative access patterns based on rows
   const idToMeta = {};
-  const teamIds = [];
+  const gameIds = [];
   const catToIds = {};
 
   for (const row of rows) {
@@ -125,10 +133,10 @@ export async function loaddb(team_id = -1) {
       catToIds[cat].push(id);
     }
 
-    // Team data
-    if (row[team_column]) {
-      meta.team = row[team_column].trim();
-      teamIds.push(id);
+    // Game data
+    if (row[game_column]) {
+      meta.game = row[game_column].trim();
+      gameIds.push(id);
     };
   }
 
@@ -136,7 +144,7 @@ export async function loaddb(team_id = -1) {
     vocab: idToMeta,
     categories: catToIds,
     rows: rows,
-    team: teamIds,
+    game: gameIds,
     vocabLength: Object.keys(idToMeta).length,
   };
 }
@@ -190,43 +198,43 @@ export function get_random() {
   return db.vocab[ids[randomIndex]];
 }
 
-export function deprecated_load_team_data(team_id) {
+export function deprecated_load_game_data(game_id) {
   if (db == undefined) {
     console.error("Database has not been loaded");
     return null;
   }
 
   // Stringify incase this get a number
-  const team_id_str = String(team_id).padStart(2, "0");
-  const team_column = `Team${team_id_str}`;
+  const game_id_str = String(game_id).padStart(2, "0");
+  const game_column = `Game${game_id_str}`;
 
-  const teamIds = [];
+  const gameIds = [];
 
   for (const row of db.rows) {
     const id = row["ID"]?.trim();
     if (!id) continue;
 
-    // Team data
-    if (team_column && row[team_column]) {
-      db.vocab[id].team = row[team_column].trim();
-      teamIds.push(id);
+    // Game data
+    if (game_column && row[game_column]) {
+      db.vocab[id].game = row[game_column].trim();
+      gameIds.push(id);
     };
   }
 
-  db.team = teamIds;
+  db.game = gameIds;
 }
 
 /**
- * Returns a list of IDs which have team specific data attached to them
+ * Returns a list of IDs which have game specific data attached to them
  * @returns {IdList}
  */
-export function vocab_with_team_data() {
+export function vocab_with_game_data() {
   if (db == undefined) {
     console.error("Database has not been loaded");
     return null;
   }
 
-  return db.team;
+  return db.game;
 }
 
 export function test() {
@@ -240,22 +248,22 @@ export function test() {
   console.log(db.rows[0].English != null);
   console.log(db.rows[0].Swedish != null);
   console.log(db.rows[0].Swedish_plural != null);
-  console.log(db.rows[0].Team01 != null);
-  console.log(db.rows[0].Team02 != null);
+  console.log(db.rows[0].Game02 != null);
+  console.log(db.rows[0].Game03 != null);
   console.log(db.rows[0].Team03 != null);
-  console.log(db.rows[0].Team04 != null);
-  console.log(db.rows[0].Team05 != null);
-  console.log(db.rows[0].Team06 != null);
-  console.log(db.rows[0].Team07 != null);
-  console.log(db.rows[0].Team08 != null);
-  console.log(db.rows[0].Team09 != null);
-  console.log(db.rows[0].Team10 != null);
-  console.log(db.rows[0].Team11 != null);
+  console.log(db.rows[0].Game04 != null);
+  console.log(db.rows[0].Game05 != null);
+  console.log(db.rows[0].Game06 != null);
+  console.log(db.rows[0].Game07 != null);
+  console.log(db.rows[0].Game08 != null);
+  console.log(db.rows[0].Game09 != null);
+  console.log(db.rows[0].Game10 != null);
+  console.log(db.rows[0].Game11 != null);
   console.log(db.rows[0].Team12 != null);
-  console.log(db.rows[0].Team13 != null);
-  console.log(db.rows[0].Team14 != null);
-  console.log(db.rows[0].Team15 != null);
-  console.log(db.rows[0].Team16 != null);
+  console.log(db.rows[0].Game12 != null);
+  console.log(db.rows[0].Game13 != null);
+  console.log(db.rows[0].Game14 != null);
+  console.log(db.rows[0].Game15 != null);
 
   let result = true;
 
@@ -269,22 +277,22 @@ export function test() {
         el.English == null ||
         el.Swedish == null ||
         el.Swedish_plural == null ||
-        el.Team01 == null ||
-        el.Team02 == null ||
+        el.Game02 == null ||
+        el.Game03 == null ||
         el.Team03 == null ||
-        el.Team04 == null ||
-        el.Team05 == null ||
-        el.Team06 == null ||
-        el.Team07 == null ||
-        el.Team08 == null ||
-        el.Team09 == null ||
-        el.Team10 == null ||
-        el.Team11 == null ||
+        el.Game04 == null ||
+        el.Game05 == null ||
+        el.Game06 == null ||
+        el.Game07 == null ||
+        el.Game08 == null ||
+        el.Game09 == null ||
+        el.Game10 == null ||
+        el.Game11 == null ||
         el.Team12 == null ||
-        el.Team13 == null ||
-        el.Team14 == null ||
-        el.Team15 == null ||
-        el.Team16 == null
+        el.Game12 == null ||
+        el.Game13 == null ||
+        el.Game14 == null ||
+        el.Game15 == null
       );
   });
 

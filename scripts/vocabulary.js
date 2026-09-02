@@ -1,4 +1,4 @@
-// This file is a hack, while teams are migrating to the async API
+// This file is a hack, while games are migrating to the async API
 
 const async_methods = import("./vocabulary_await.js").then();
 let resolved_methods = null;
@@ -7,12 +7,25 @@ let resolved_methods = null;
 
 window._vocabulary = {
     pending: 1,
-    team: null,
+    game: null,
 };
 
 (async () => {
-    resolved_methods = await async_methods;
-    await resolved_methods.loaddb();
+    try {
+        resolved_methods = await async_methods;
+        await resolved_methods.loaddb();
+    } catch (error) {
+        // `pending` deliberately stays above 0 so `when_ready()` callbacks never
+        // run against an empty database. Log loudly, or the only symptom is a
+        // game that renders nothing.
+        console.error(
+            "Vocabulary: could not load the database. Games depending on it " +
+            "will render no content. Check scripts/database_config.js and " +
+            "that the page is served over http(s), not opened as a file.",
+            error
+        );
+        return;
+    }
 
     window._vocabulary.pending -= 1;
     checkCallbacks();
@@ -47,29 +60,29 @@ window.vocabulary = {
 
     when_ready(callback) {
         if (window._vocabulary !== undefined && window._vocabulary.pending == 0) {
-            resolved_methods.deprecated_load_team_data(window._vocabulary.team);
+            resolved_methods.deprecated_load_game_data(window._vocabulary.game);
             callback();
         } else {
             this.callbacks.push(callback);
         }
     },
 
-    load_team_data(team_id) {
+    load_game_data(game_id) {
         if (window._vocabulary !== undefined) {
-            window._vocabulary.team = team_id;
+            window._vocabulary.game = game_id;
         }
     },
 
-    // This returns the team metadata belonging to the given ID.
-    get_team_data(id) {
-        return resolved_methods.get_vocab(id).team ?? null;
+    // This returns the game metadata belonging to the given ID.
+    get_game_data(id) {
+        return resolved_methods.get_vocab(id).game ?? null;
     },
 
-    // Returns all keys available in the loaded team data. Note that
-    // `load_team_data()` has to be called first and should be done before
+    // Returns all keys available in the loaded game data. Note that
+    // `load_game_data()` has to be called first and should be done before
     // `when_ready()`
-    get_team_data_keys() {
-        return resolved_methods.vocab_with_team_data();
+    get_game_data_keys() {
+        return resolved_methods.vocab_with_game_data();
     }
 };
 
@@ -90,7 +103,7 @@ function checkCallbacks() {
     // Clear the list again
     window.vocabulary.callbacks = []
 
-    resolved_methods.deprecated_load_team_data(window._vocabulary.team);
+    resolved_methods.deprecated_load_game_data(window._vocabulary.game);
 
     // Call all callbacks
     for (const cb of cbs) {
