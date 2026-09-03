@@ -40,8 +40,8 @@ Owned by the Menu Team
 
             test("set() with key and value should update correctly", () => {
                 resetStorage();
-                window.save.set("team12", "score", 12);
-                const result = window.save.get("team12");
+                window.save.set("test_game", "score", 12);
+                const result = window.save.get("test_game");
                 assertEquals(result, {
                     "score": 12
                 });
@@ -49,13 +49,13 @@ Owned by the Menu Team
 
             test("set() with object should merge data", () => {
                 resetStorage();
-                window.save.set("team12", {
+                window.save.set("test_game", {
                     score: 12
                 });
-                window.save.set("team12", {
+                window.save.set("test_game", {
                     difficulty: "easy"
                 });
-                const result = window.save.get("team12");
+                const result = window.save.get("test_game");
                 assertEquals(result, {
                     "score": 12,
                     "difficulty": "easy"
@@ -70,10 +70,10 @@ Owned by the Menu Team
 
             test("get() should return stored object", () => {
                 resetStorage();
-                window.save.set("team12", {
+                window.save.set("test_game", {
                     score: 10
                 });
-                const result = window.save.get("team12");
+                const result = window.save.get("test_game");
                 assertEquals(result, {
                     "score": 10
                 });
@@ -82,25 +82,25 @@ Owned by the Menu Team
 
             test("get(group, key) should return specific value", () => {
                 resetStorage();
-                window.save.set("team12", "score", 12);
-                const result = window.save.get("team12", "score");
+                window.save.set("test_game", "score", 12);
+                const result = window.save.get("test_game", "score");
                 assertEquals(result, 12);
             });
 
             test("clear() should remove group data", () => {
                 resetStorage();
-                window.save.set("team12", {
+                window.save.set("test_game", {
                     score: 12
                 });
-                window.save.clear("team12");
-                const result = window.save.get("team12");
+                window.save.clear("test_game");
+                const result = window.save.get("test_game");
                 assertEquals(result, {});
             });
 
             test("should handle invalid JSON gracefully", () => {
                 resetStorage();
-                localStorage.setItem("team12", "{invalid json}");
-                const result = window.save.get("team12");
+                localStorage.setItem("test_game", "{invalid json}");
+                const result = window.save.get("test_game");
                 assertEquals(result, {});
             });
 
@@ -110,7 +110,7 @@ Owned by the Menu Team
                 localStorage.getItem = () => {
                     throw new Error("getItem failed");
                 };
-                const result = window.save.get("team12");
+                const result = window.save.get("test_game");
                 assertEquals(result, {});
                 localStorage.getItem = original;
             });
@@ -121,7 +121,7 @@ Owned by the Menu Team
                 localStorage.getItem = () => {
                     throw new Error("getItem failed");
                 };
-                const result = window.save.get("team12", "score");
+                const result = window.save.get("test_game", "score");
                 assertEquals(result, null);
                 localStorage.getItem = original;
             });
@@ -132,7 +132,7 @@ Owned by the Menu Team
                 localStorage.setItem = () => {
                     throw new Error("setItem failed");
                 };
-                const result = window.save.set("team12", "score", 12);
+                const result = window.save.set("test_game", "score", 12);
                 assertEquals(result, false);
                 localStorage.setItem = original;
             });
@@ -143,16 +143,16 @@ Owned by the Menu Team
                 localStorage.removeItem = () => {
                     throw new Error("removeItem failed");
                 };
-                const result = window.save.clear("team12");
+                const result = window.save.clear("test_game");
                 assertEquals(result, false);
                 localStorage.removeItem = original;
             });
 
             test("stats.set with valid values", () => {
                 resetStorage();
-                const result = window.save.stats.set("team12", 5, 75);
+                const result = window.save.stats.set("test_game", 5, 75);
                 assertEquals(result, true);
-                const stats = window.save.stats.get("team12");
+                const stats = window.save.stats.get("test_game");
                 assertEquals(stats, {
                     wins: 5,
                     completion: 75
@@ -161,8 +161,8 @@ Owned by the Menu Team
 
             test("stats.set floors decimal values", () => {
                 resetStorage();
-                window.save.stats.set("team12", 3.7, 82.9);
-                const stats = window.save.stats.get("team12");
+                window.save.stats.set("test_game", 3.7, 82.9);
+                const stats = window.save.stats.get("test_game");
                 assertEquals(stats, {
                     wins: 3,
                     completion: 82
@@ -171,40 +171,40 @@ Owned by the Menu Team
 
             test("stats.set clamps negative wins to 0", () => {
                 resetStorage();
-                window.save.stats.set("team12", -5, 50);
-                const stats = window.save.stats.get("team12");
+                window.save.stats.set("test_game", -5, 50);
+                const stats = window.save.stats.get("test_game");
                 assertEquals(stats.wins, 0);
             });
 
             test("stats.set clamps completion to 0-100 range (too high)", () => {
                 resetStorage();
-                window.save.stats.set("team12", 2, 150);
-                const stats = window.save.stats.get("team12");
+                window.save.stats.set("test_game", 2, 150);
+                const stats = window.save.stats.get("test_game");
                 assertEquals(stats.completion, 100);
             });
 
             test("stats.set clamps completion to 0-100 range (too low)", () => {
                 resetStorage();
-                window.save.stats.set("team12", 2, -10);
-                const stats = window.save.stats.get("team12");
+                window.save.stats.set("test_game", 2, -10);
+                const stats = window.save.stats.get("test_game");
                 assertEquals(stats.completion, 0);
             });
 
             test("stats.set rejects non-number wins", () => {
                 resetStorage();
-                const result = window.save.stats.set("team12", "5", 50);
+                const result = window.save.stats.set("test_game", "5", 50);
                 assertEquals(result, false);
             });
 
             test("stats.set rejects non-number completion", () => {
                 resetStorage();
-                const result = window.save.stats.set("team12", 5, "50");
+                const result = window.save.stats.set("test_game", 5, "50");
                 assertEquals(result, false);
             });
 
-            test("stats.get returns default values for new team", () => {
+            test("stats.get returns default values for new game", () => {
                 resetStorage();
-                const stats = window.save.stats.get("team12");
+                const stats = window.save.stats.get("test_game");
                 assertEquals(stats, {
                     wins: 0,
                     completion: 0
@@ -213,19 +213,19 @@ Owned by the Menu Team
 
             test("stats.incrementWin increases win count", () => {
                 resetStorage();
-                window.save.stats.set("team12", 5, 60);
-                window.save.stats.incrementWin("team12");
-                const stats = window.save.stats.get("team12");
+                window.save.stats.set("test_game", 5, 60);
+                window.save.stats.incrementWin("test_game");
+                const stats = window.save.stats.get("test_game");
                 assertEquals(stats, {
                     wins: 6,
                     completion: 60
                 });
             });
 
-            test("stats.incrementWin on new team", () => {
+            test("stats.incrementWin on new game", () => {
                 resetStorage();
-                window.save.stats.incrementWin("team12");
-                const stats = window.save.stats.get("team12");
+                window.save.stats.incrementWin("test_game");
+                const stats = window.save.stats.get("test_game");
                 assertEquals(stats, {
                     wins: 1,
                     completion: 0
@@ -234,11 +234,11 @@ Owned by the Menu Team
 
             test("stats.incrementWin multiple times", () => {
                 resetStorage();
-                window.save.stats.set("team12", 0, 25);
-                window.save.stats.incrementWin("team12");
-                window.save.stats.incrementWin("team12");
-                window.save.stats.incrementWin("team12");
-                const stats = window.save.stats.get("team12");
+                window.save.stats.set("test_game", 0, 25);
+                window.save.stats.incrementWin("test_game");
+                window.save.stats.incrementWin("test_game");
+                window.save.stats.incrementWin("test_game");
+                const stats = window.save.stats.get("test_game");
                 assertEquals(stats, {
                     wins: 3,
                     completion: 25
@@ -247,9 +247,9 @@ Owned by the Menu Team
 
             test("stats.setCompletion updates completion only", () => {
                 resetStorage();
-                window.save.stats.set("team12", 10, 50);
-                window.save.stats.setCompletion("team12", 85);
-                const stats = window.save.stats.get("team12");
+                window.save.stats.set("test_game", 10, 50);
+                window.save.stats.setCompletion("test_game", 85);
+                const stats = window.save.stats.get("test_game");
                 assertEquals(stats, {
                     wins: 10,
                     completion: 85
@@ -258,17 +258,17 @@ Owned by the Menu Team
 
             test("stats.setCompletion validates range", () => {
                 resetStorage();
-                window.save.stats.set("team12", 5, 50);
-                window.save.stats.setCompletion("team12", 200);
-                const stats = window.save.stats.get("team12");
+                window.save.stats.set("test_game", 5, 50);
+                window.save.stats.setCompletion("test_game", 200);
+                const stats = window.save.stats.get("test_game");
                 assertEquals(stats.completion, 100);
             });
 
             test("stats.clear resets to zeros", () => {
                 resetStorage();
-                window.save.stats.set("team12", 20, 95);
-                window.save.stats.clear("team12");
-                const stats = window.save.stats.get("team12");
+                window.save.stats.set("test_game", 20, 95);
+                window.save.stats.clear("test_game");
+                const stats = window.save.stats.get("test_game");
                 assertEquals(stats, {
                     wins: 0,
                     completion: 0
@@ -277,9 +277,9 @@ Owned by the Menu Team
 
             test("stats persists with regular save data", () => {
                 resetStorage();
-                window.save.set("team12", "key", "value");
-                window.save.stats.set("team12", 7, 80);
-                const allData = window.save.get("team12");
+                window.save.set("test_game", "key", "value");
+                window.save.stats.set("test_game", 7, 80);
+                const allData = window.save.get("test_game");
                 assertEquals(allData.key, "value", "Regular data should persist");
                 assertEquals(allData.stats, {
                     wins: 7,
@@ -289,10 +289,10 @@ Owned by the Menu Team
 
             test("regular save.clear removes stats too", () => {
                 resetStorage();
-                window.save.set("team12", "data", "value");
-                window.save.stats.set("team12", 5, 50);
-                window.save.clear("team12");
-                const stats = window.save.stats.get("team12");
+                window.save.set("test_game", "data", "value");
+                window.save.stats.set("test_game", 5, 50);
+                window.save.clear("test_game");
+                const stats = window.save.stats.get("test_game");
                 assertEquals(stats, {
                     wins: 0,
                     completion: 0

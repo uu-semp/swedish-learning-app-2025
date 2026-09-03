@@ -1,6 +1,6 @@
 [
    {
-    "id": "team01",
+    "id": "game02",
     "title": {
       "en": "What Am I?",
       "sv": "Vem är jag?"
@@ -12,7 +12,7 @@
     "supported_chapters": [1, 6, 7]
   },
   {
-    "id": "team02",
+    "id": "game03",
     "title": {
       "en": "Decorate",
       "sv": "Dekorera"
@@ -24,7 +24,7 @@
     "supported_chapters": [6]
   },
   {
-    "id": "team04",
+    "id": "game04",
     "title": {
       "en": "Clock it",
       "sv": "Klocka det"
@@ -36,7 +36,7 @@
     "supported_chapters": [1, 2]
   },
   {
-    "id": "team05",
+    "id": "game05",
     "title": {
       "en": "Red Room",
       "sv": "Röda rummet"
@@ -48,7 +48,7 @@
     "supported_chapters": [6]
   },
   {
-    "id": "team06",
+    "id": "game06",
     "title": {
       "en": "Tick-Tock Time",
       "sv": "Klockkul"
@@ -60,7 +60,7 @@
     "supported_chapters": [1]
   },
   {
-    "id": "team07",
+    "id": "game07",
     "title": {
       "en": "Say What?",
       "sv": "Vad Sägs?"
@@ -72,7 +72,7 @@
     "supported_chapters": [4, 6, 7]
   },
   {
-    "id": "team08",
+    "id": "game08",
     "title": {
       "en": "Say What?",
       "sv": "Vad sa du?"
@@ -84,7 +84,7 @@
     "supported_chapters": [1, 2, 3, 3, 4, 5, 6, 7, 8]
   },
   {
-    "id": "team09",
+    "id": "game09",
     "title": {
       "en": "Which garment am I?",
       "sv": "Vilket plagg är jag?"
@@ -96,7 +96,7 @@
     "supported_chapters": [7]
   },
   {
-    "id": "team10",
+    "id": "game10",
     "title": {
       "en": "Eat and Learn", 
       "sv": "Ät och lär"
@@ -108,7 +108,7 @@
     "supported_chapters": [4]
   },
   {
-    "id": "team11",
+    "id": "game11",
     "title": {
       "en": "ICA West",
       "sv": "ICA Väst"
@@ -120,7 +120,7 @@
     "supported_chapters": [4]
   },
   {
-    "id": "team13",
+    "id": "game12",
     "title": {
       "en": "House selection game (short HSG)",
       "sv": "Hitta rätt hus"
@@ -132,7 +132,7 @@
     "supported_chapters": [1, 3]
   },
   {
-    "id": "team14",
+    "id": "game13",
     "title": {
       "en": "Paper Pelle",
       "sv": "Pappers Pelle"
@@ -144,7 +144,7 @@
     "supported_chapters": [7]
   },
   {
-    "id": "team15",
+    "id": "game14",
     "title": {
       "en": " Dressing Pelle",
       "sv": "Klä på Pelle"
@@ -156,7 +156,7 @@
     "supported_chapters": [7]
   },
   {
-    "id": "team16",
+    "id": "game15",
     "title": {
       "en": "Where does Kevin live?",
       "sv": "Var bor Kevin?"

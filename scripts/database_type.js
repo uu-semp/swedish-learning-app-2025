@@ -6,7 +6,7 @@
  * @property {string} img - image url.
  * @property {string} img_copyright - Copyright or license information for the image.
  * @property {string} audio - URL or path to audio pronunciation.
- * @property {string} team - Specific data for this team, if loaded.
+ * @property {string} game - Specific data for this game, if loaded.
  */
 
 /**

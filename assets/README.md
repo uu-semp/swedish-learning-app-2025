@@ -95,34 +95,34 @@ async function first_english_word() {
 }
 ```
 
-#### Adding team specific data
+#### Adding game specific data
 
-Each team has its own column in the sheet. Only edit your team’s column. The column can contain any string, such as:
+Each game has its own column in the sheet, named after its folder (`Game02`, `Game03`, …). Only edit your game’s column. The column can contain any string, such as:
 
 Here are three possible examples:
-* Team 17 might want to store a path to an image which is specific for their game. The data could look like this:
+* Game 17 might want to store a path to an image which is specific for their game. The data could look like this:
 
-    `/team17/assets/image.png`
+    `/game17/assets/image.png`
 
-* Team 17 might need a description and an image which is specific to their game, then they could store a JSON string like this:
+* Game 17 might need a description and an image which is specific to their game, then they could store a JSON string like this:
 
-    `{"img": "/team17/assets/chair.png", "description": "something you can sit on"}`
+    `{"img": "/game17/assets/chair.png", "description": "something you can sit on"}`
 
-* Team 17 might want to store a score for how difficult a word is. Then they can simply store a number to represent this:
+* Game 17 might want to store a score for how difficult a word is. Then they can simply store a number to represent this:
 
     `12`
 
-#### Access team specific data
+#### Access game specific data
 
-Before accessing team specific metadata you need to load it into memory. For this you need to specify your team number when calling `loaddb()`
+Before accessing game specific metadata you need to load it into memory. For this you need to specify your game number when calling `loaddb()`
 
 ```js
-loaddb(<team_id>);
+loaddb(<game_id>);
 ```
 
-This will attach the team specific data of your team to the vocabulary entries.
+This will attach the game specific data of your game to the vocabulary entries.
 
-You can use `get_team_data_keys()` to get all IDs which have custom data attached to them for your team.
+You can use `get_game_data_keys()` to get all IDs which have custom data attached to them for your game.
 
 ## Fetching the local CSV file
 
@@ -143,7 +143,7 @@ Done — the website now loads vocabulary from the local CSV file.
 
   Refresh the page or check for typos in the ID.
 
-* **Invalid JSON in team column?**
+* **Invalid JSON in game column?**
 
   Ensure proper formatting (wrap keys/values in quotes).
 

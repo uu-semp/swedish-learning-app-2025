@@ -133,7 +133,7 @@ function renderGrid(games) {
     card.innerHTML = `
       <img src="assets/main_menu/images/game_logos/${g.id}_logo.png" 
            alt="${g.title[currentLanguage]}"
-           onerror="this.onerror=null; this.src='assets/main_menu/images/games/default_image.png';">
+           onerror="this.onerror=null; this.src='assets/main_menu/images/game_logos/default_image.png';">
       <div class="card-body">
         <h3>${g.title[currentLanguage]}</h3>
         <p>${g.desc[currentLanguage].replace(/\n/g, '<br>')}</p>
@@ -202,11 +202,8 @@ function renderGrid(games) {
       box.appendChild(confirmBox);
       
       confirmBox.querySelector('#_confirm_clear').onclick = () => {
-        // Clear data for all teams
-        for (let i = 1; i <= 16; i++) {
-          const teamName = `team${String(i).padStart(2, '0')}`;
-          window.save.clear(teamName);
-        }
+        // Clear data for every game, plus the vocabulary extension
+        [...allGames.map(g => g.id), 'team03'].forEach(name => window.save.clear(name));
         confirmBox.remove();
         
         // Show success message
