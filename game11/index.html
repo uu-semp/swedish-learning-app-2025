@@ -1,79 +1,115 @@
 <!doctype html>
 <html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Grocery shopping!</title>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Grocery shopping!</title>
 
-  <link rel="stylesheet" href="../style.css" />
-  <link rel="icon" type="image/png" href="../game11/assets/favicon.png">
+    <link rel="stylesheet" href="../style.css" />
+    <link rel="icon" type="image/png" href="../game11/assets/favicon.png">
 
-  <script src="../scripts/vocabulary.js"></script>
-  <script src="../scripts/save.js"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css"> 
-  <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
-  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="../scripts/vocabulary.js"></script>
+    <script src="../scripts/save.js"></script>
+    <link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css">
+    <script
+      src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 
-  <link rel="stylesheet" href="index.css" />
-  <script>window.vocabulary.load_game_data(11);</script>
+    <link rel="stylesheet" href="index.css" />
+    <script>window.vocabulary.load_game_data(11);</script>
 
-  <script type="module" src="data.js" defer></script>
-  <script type="module" src="main.js" defer></script>
-  <script type="module" src="ui.js" defer></script>
-</head>
-<body>
-  <header>
-    <h1>Game 11</h1>
-  </header>
+    <script type="module" src="data.js" defer></script>
+    <script type="module" src="main.js" defer></script>
+    <script type="module" src="ui.js" defer></script>
+  </head>
+  <body>
+    <header>
+      <h1>Game 11</h1>
+    </header>
 
-  <main class="game-frame">
-    <img src="../game11/assets/paper.png" alt="Paper" class="paper">
-    <img src="../game11/assets/character.png" alt="Character" class="character">
-    <img src="../game11/assets/shoppingcart.png" alt="Shopping Cart" class="cart">
-    <img src="../game11/assets/shelf.png" alt="Shelf" class="shelf">
-    <div class="instructions" role="note" aria-label="Game instructions">
-  <p>
-    <strong>Hur du spelar</strong><br>
-    Hitta objekten från inköpslistan på hyllan,<br>
-    klicka eller dra och släpp den i varukorgen.
-  </p>
-</div>
+    <div id="settings-modal" class="modal-overlay hidden">
+      <div class="modal-box">
+        <h2>Inställningar</h2>
 
-    <div class="shelf_items"></div>
-    <div class="shopping_list"></div>
+        <div class="setting-row">
+          <span>Stor text</span>
+          <button id="toggle-text-btn" class="toggle-btn">AV</button>
+        </div>
 
-    <section class="popup-frame-wrap">
-      <iframe
-        src="./popup.html"
-        title="Popup UI"
-        class="popup-frame"
-        loading="lazy"
-        referrerpolicy="no-referrer"
-        id="popupFrame">
-      </iframe>
-    </section>
+        <div class="setting-row">
+          <span>Hög kontrast</span>
+          <button id="toggle-contrast-btn" class="toggle-btn">AV</button>
+        </div>
 
-    <div class="top-right-controls">
-      <div class="status-bar" id="statusBar">
-        <span id="progressPill">0 / 10 klara</span> |
-        <span id="firstTryPill">Rätt: 0</span> |
-        <span id="mistakesPill">Misstag: 0</span> |
-        <span id="targetPill">Tröskel: 8 / 10</span>
+        <button id="close-settings-btn" class="close-btn">Stäng</button>
       </div>
     </div>
 
-    <div class="chatbubble-toasts"></div>
+    <main class="game-frame">
+      <img src="../game11/assets/paper.png" alt="Paper" class="paper">
+      <img src="../game11/assets/character.png" alt="Character"
+        class="character">
+      <img src="../game11/assets/shoppingcart.png" alt="Shopping Cart"
+        class="cart">
+      <img src="../game11/assets/shelf.png" alt="Shelf" class="shelf">
+      <div class="instructions" role="note" aria-label="Game instructions">
+        <p>
+          <strong>Hur du spelar</strong><br>
+          Hitta objekten från inköpslistan på hyllan,<br>
+          klicka eller dra och släpp den i varukorgen.
+        </p>
+      </div>
 
-    <div class="cart-dropzone" aria-label="Varukorg droppzon">
-      <div class="cart_items" aria-live="polite"></div>
-    </div>
-  </main>
+      <div class="shelf_items"></div>
+      <div class="shopping_list"></div>
 
-  <footer>
-    <small>Created as part of the "Software Engineering and Project Management" course 2025</small>
-  </footer>
+      <section class="popup-frame-wrap">
+        <iframe
+          src="./popup.html"
+          title="Popup UI"
+          class="popup-frame"
+          loading="lazy"
+          referrerpolicy="no-referrer"
+          id="popupFrame">
+        </iframe>
+      </section>
 
-  <script>
+      <div class="top-left-controls">
+        <div class="status-bar" id="statusBar">
+          <span id="progressPill">0 / 10 klara</span> |
+          <span id="firstTryPill">Rätt: 0</span> |
+          <span id="mistakesPill">Misstag: 0</span> |
+          <span id="targetPill">Tröskel: 8 / 10</span>
+        </div>
+      </div>
+
+      <div class="top-right-controls">
+        <div class="menu-wrapper">
+          <button id="main-menu-btn" class="menu-btn">Menu ☰</button>
+
+          <div id="dropdown-menu" class="dropdown-area hidden">
+            <button class="sub-btn">Info</button>
+            <button id="restart-btn" class="sub-btn">Börja om</button>
+            <button class="sub-btn">Svårighetsgrad</button>
+            <button id="settings-btn" class="sub-btn">Inställningar</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="chatbubble-toasts"></div>
+
+      <div class="cart-dropzone" aria-label="Varukorg droppzon">
+        <div class="cart_items" aria-live="polite"></div>
+      </div>
+    </main>
+
+    <footer>
+      <small>Created as part of the
+        "Software Engineering and Project Management" course 2025</small>
+    </footer>
+
+    <script>
     function setIframeInteractive(on) {
       const wrap  = document.querySelector('.popup-frame-wrap');
       const frame = document.querySelector('.popup-frame');
@@ -149,12 +185,68 @@
     window.addEventListener('game11:ready', () => { tryInitPopupOnce(); });
 
     window.addEventListener('DOMContentLoaded', () => {
+      
+
       popupFrame?.addEventListener('load', () => tryInitPopupOnce());
       let attempts = 0;
       const timer = setInterval(() => {
         if (tryInitPopupOnce()) { clearInterval(timer); }
         else if (++attempts > 100) clearInterval(timer);
       }, 100);
+
+      const menuBtn = document.getElementById('main-menu-btn');
+      const dropdownMenu = document.getElementById('dropdown-menu');
+
+    if (menuBtn && dropdownMenu) {
+      menuBtn.addEventListener('click', () => {
+        dropdownMenu.classList.toggle('hidden');
+    });
+
+    }
+
+    const restartBtn = document.getElementById('restart-btn');
+      if (restartBtn) {
+        restartBtn.addEventListener('click', () => {
+          window.location.reload();
+        });
+      }
+
+
+
+      const settingsBtn = document.getElementById('settings-btn');
+      const settingsModal = document.getElementById('settings-modal');
+      const closeSettingsBtn = document.getElementById('close-settings-btn');
+
+      if (settingsBtn && settingsModal && closeSettingsBtn) {
+        settingsBtn.addEventListener('click', () => {
+          settingsModal.classList.remove('hidden');
+          document.getElementById('dropdown-menu').classList.add('hidden'); 
+        });
+
+        closeSettingsBtn.addEventListener('click', () => {
+          settingsModal.classList.add('hidden');
+        });
+      }
+
+      const toggleTextBtn = document.getElementById('toggle-text-btn');
+      if (toggleTextBtn) {
+        toggleTextBtn.addEventListener('click', () => {
+          document.body.classList.toggle('large-text-mode');
+          const isActive = document.body.classList.contains('large-text-mode');
+          toggleTextBtn.textContent = isActive ? 'PÅ' : 'AV';
+          toggleTextBtn.classList.toggle('active', isActive);
+        });
+      }
+
+      const toggleContrastBtn = document.getElementById('toggle-contrast-btn');
+      if (toggleContrastBtn) {
+        toggleContrastBtn.addEventListener('click', () => {
+          document.body.classList.toggle('high-contrast-mode');
+          const isActive = document.body.classList.contains('high-contrast-mode');
+          toggleContrastBtn.textContent = isActive ? 'PÅ' : 'AV';
+          toggleContrastBtn.classList.toggle('active', isActive);
+        });
+      } 
     });
 
     window.addEventListener('message', (event) => {
@@ -175,42 +267,154 @@
       }
     });
   </script>
-</body>
+  </body>
 </html>
 
 <style>
-  .game-frame { position: relative; }
-  .cart-dropzone {
-    position: absolute;
-    top: 450px;
-    left: 220px;
-    width: 18%;
-    height: 18%;
-    z-index: 5;
-  }
-  .cart-dropzone .cart_items {
-    position: absolute;
-    inset: 0;
-    z-index: 6;
-    pointer-events: none;
-    display: grid;
-    grid-template-columns: repeat(5, 28px);
-    grid-template-rows: repeat(2, 28px);
-    gap: 2px;
-    justify-content: start;
-    align-content: start;
-  }
-  .cart-dropzone .cart_items img {
-    width: 34px;
-    height: 34px;
-    margin: -3px;
-    object-fit: contain;
-    pointer-events: none;
-  }
-  .shelf_items img.is-picked {
-    opacity: .35;
-    filter: grayscale(25%);
-    pointer-events: none;
-  }
- 
+      .game-frame { position: relative; }
+      
+      .cart-dropzone {
+        position: absolute;
+        top: 450px;
+        left: 220px;
+        width: 18%;
+        height: 18%;
+        z-index: 5;
+      }
+      .top-left-controls {
+        position: absolute;
+        top: 1rem;
+        left: 1rem; 
+        z-index: 20; 
+      }
+      .cart-dropzone .cart_items {
+        position: absolute;
+        inset: 0;
+        z-index: 6;
+        pointer-events: none;
+        display: grid;
+        grid-template-columns: repeat(5, 28px);
+        grid-template-rows: repeat(2, 28px);
+        gap: 2px;
+        justify-content: start;
+        align-content: start;
+      }
+      
+      .cart-dropzone .cart_items img {
+        width: 34px;
+        height: 34px;
+        margin: -3px;
+        object-fit: contain;
+        pointer-events: none;
+      }
+      
+      .shelf_items img.is-picked {
+        opacity: .35;
+        filter: grayscale(25%);
+        pointer-events: none;
+      }
+      
+     .top-left-controls {
+      position: absolute;
+      top: 1rem;
+      left: 1rem;
+      z-index: 20;
+    }
+
+    .menu-btn, .sub-btn {
+      background-color: white;
+      color: black;
+      border: 2px solid black;
+      border-radius: 8px;
+      padding: 4px 10px;
+      font-weight: bold;
+      font-size: 0.8rem;
+      cursor: pointer;
+      box-shadow: 2px 2px 0px black;
+      transition: transform 0.1s, box-shadow 0.1s;
+    }
+
+    .menu-btn:hover, .sub-btn:hover {
+      background-color: #f8f9fa;
+      transform: translate(1px, 1px);
+      box-shadow: 1px 1px 0px black;
+    }
+
+    .dropdown-area {
+      display: flex;
+      flex-direction: row; 
+      gap: 6px;
+      background: white;
+      padding: 6px;
+      border: 2px solid black;
+      border-radius: 8px;
+      box-shadow: 3px 3px 0px black;
+      position: absolute;
+      right: 100%;       
+      top: 50%;
+      transform: translateY(-50%);
+      margin-right: 8px;
+      white-space: nowrap;
+      z-index: 100;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+
+    .modal-overlay {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10000;
+    }
+
+    .modal-box {
+      background: white;
+      border: 3px solid black;
+      border-radius: 12px;
+      padding: 24px;
+      width: 320px;
+      box-shadow: 6px 6px 0px black;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .setting-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: bold;
+    }
+
+    .toggle-btn, .close-btn {
+      background: white; border: 2px solid black;
+      border-radius: 8px; padding: 6px 12px;
+      cursor: pointer; font-weight: bold;
+      box-shadow: 2px 2px 0px black;
+    }
+    .toggle-btn.active { background: #38bdf8; color: white; }
+    .close-btn { margin-top: 10px; background: #f87171; color: white; }
+
+
+    body.large-text-mode .shopping-list li {
+      font-size: 1.3em;
+      font-weight: bold;
+    }
+    body.large-text-mode .instructions {
+      font-size: 0.9em;
+    }
+
+    body.high-contrast-mode {
+      background-color: #121212;
+    }
+    body.high-contrast-mode .game-frame img {
+      filter: contrast(1.5) saturate(1.2); 
+    }
+
 </style>
