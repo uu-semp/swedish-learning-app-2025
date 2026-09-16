@@ -17,6 +17,14 @@ const STORAGE_KEY = "game11_game_state";
  */
 function initGameState() {
   // Pull all items (each item has at least: { id, sv, en, img, ... })
+
+  // Check if there's a saved state in localStorage, in this case refresh will not reset the game state
+  const savedState = loadState();
+  if (savedState) {
+    return savedState;
+  }
+
+
   const vocab = getItems(); // <-- important: do NOT overwrite window.vocabulary
 
   // Build lists
@@ -29,7 +37,8 @@ function initGameState() {
     currentIndex: 0,
     correctFirstTry: [], // bools per solved item (true if first try)
     mistakes: {},        // { [targetId]: numberOfMistakes }
-    finished: false
+    finished: false,
+    mode: 1
   };
 
   // Optional: persist initial state (safe no-op if storage blocked)
@@ -47,6 +56,7 @@ function getGameState(state) {
     currentWord: state.shoppingList?.[state.currentIndex] || null,
     progress: state.correctFirstTry.length,
     finished: !!state.finished,
+    mode: state.mode,
   };
 }
 

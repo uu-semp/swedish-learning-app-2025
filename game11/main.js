@@ -10,8 +10,8 @@ function startGame() {
     window.__game11GameState = gameState;
 
     console.log(gameState.shelf);
-    displayShelf(gameState.shelf);
-    displayShoppingList(gameState.shoppingList);
+    displayShelf(gameState.shelf, gameState.mode);
+    displayShoppingList(gameState.shoppingList, gameState.mode);
   });
   
   window.__game11GameState = gameState;

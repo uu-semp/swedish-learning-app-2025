@@ -26,7 +26,7 @@ function sendPick(key) {
   }
 }
 
-export function displayShelf(shelf) {
+export function displayShelf(shelf, mode) {
   const shelfContainer = document.querySelector('.shelf_items');
   if (!shelfContainer) {
     console.error('[ui] .shelf_items not found in DOM');
@@ -37,41 +37,56 @@ export function displayShelf(shelf) {
   _shelfImgByKey.clear();
 
   shelf.forEach(item => {
-    const img = document.createElement('img');
-    img.src = "../" + item.img;
-    img.alt = item.sv || item.en || '';
     const key = keyFromImgPath(item.img) || String(item.id || '').toLowerCase();
-    img.dataset.key = key;
+
+    let element;
+
+    if (mode === 2) {
+      // Mode 2: show Swedish word
+      element = document.createElement('div');
+      // Todo, move it to css file
+      element.style.backgroundColor = 'white';
+      element.style.color = 'black';
+      element.style.width = '80px';
+
+      element.textContent = item.sv;
+    } else {
+      // Mode 1: show image
+      element = document.createElement('img');
+      element.src = "../" + item.img;
+      element.alt = item.sv || item.en || '';
+    }
+    element.dataset.key = key;
 
     // Click/keyboard -> same path as drop
-    img.tabIndex = 0;
-  img.addEventListener('click', (e) => { e.stopPropagation(); sendPick(key); });
-    img.addEventListener('keydown', (e) => {
+    element.tabIndex = 0;
+    element.addEventListener('click', (e) => { e.stopPropagation(); sendPick(key); });
+    element.addEventListener('keydown', (e) => {
       if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); sendPick(key); }
     });
 
     // Drag & drop payload
-    img.draggable = true;
-    img.addEventListener('dragstart', (e) => {
-      if (img.classList.contains('is-picked')) { e.preventDefault(); return; }
+    element.draggable = true;
+    element.addEventListener('dragstart', (e) => {
+      if (element.classList.contains('is-picked')) { e.preventDefault(); return; }
       if (e.dataTransfer) {
         e.dataTransfer.setData('text/plain', key);
         e.dataTransfer.effectAllowed = 'copy';
-        try { e.dataTransfer.setDragImage(img, img.width / 2, img.height / 2); } catch {}
+        try { e.dataTransfer.setDragImage(element, element.width / 2, element.height / 2); } catch {}
       }
       console.debug('[ui] dragstart', key);
     });
 
-    shelfContainer.appendChild(img);
-    _shelfImgByKey.set(key, img);
-  });
+      shelfContainer.appendChild(element);
+      _shelfImgByKey.set(key, element);
+    });
 
   setupCartDropzone();
 
   console.log('[ui] Displaying shelf; items:', shelf.length);
 }
 
-export function displayShoppingList(list) {
+export function displayShoppingList(list, mode) {
   const listWrap = document.querySelector('.shopping_list');
   if (!listWrap) {
     console.error('[ui] .shopping_list not found in DOM');
@@ -84,7 +99,12 @@ export function displayShoppingList(list) {
 
   _listEls = list.map(item => {
     const li = document.createElement('li');
-    li.textContent = item.sv || item.en || '';
+
+    if (mode === 2) {
+      li.textContent = item.en;
+    } else {
+      li.textContent = item.sv;
+    }
     ul.appendChild(li);
     return li;
   });
@@ -110,13 +130,15 @@ function highlightListIndex(idx) {
 
   _listEls.forEach((li, i) => {
     if (i === n) {
-      li.style.fontWeight = '700';
+      li.style.fontWeight = '0';
+      li.style.fontSize = '30px';
       li.style.textDecoration = 'underline';
       li.style.opacity = '1';
     } else {
       li.style.fontWeight = '400';
       li.style.textDecoration = 'none';
-      li.style.opacity = '0.75';
+      li.style.opacity = '0.35';
+      li.style.fontSize = '12px';
     }
   });
 }
@@ -174,24 +196,40 @@ function setupCartDropzone() {
 function placeItemInCart(key) {
   const cart = document.querySelector('.cart-dropzone .cart_items')
             || document.querySelector('.cart_items'); // fallback
-  const shelfImg = _shelfImgByKey.get(String(key));
-  if (!cart || !shelfImg) return;
+  const shelfElement = _shelfImgByKey.get(String(key));
+  if (!cart || !shelfElement) return;
 
   // Skip if already placed
-  if (shelfImg.classList.contains('is-picked')) return;
+  if (shelfElement.classList.contains('is-picked')) return;
 
   // Clone a lightweight visual into the cart
-  const clone = document.createElement('img');
-  clone.src = shelfImg.src;
-  clone.alt = shelfImg.alt;
+  let clone ;
+
+    if (shelfElement.tagName === 'IMG') {
+    // Mode 1: copy the image
+    clone = document.createElement('img');
+    clone.src = shelfElement.src;
+    clone.alt = shelfElement.alt;
+  } else {
+    // Mode 2: copy the Swedish word
+    clone = document.createElement('div');
+    clone.textContent = shelfElement.textContent;
+
+    clone.style.backgroundColor = 'white';
+    clone.style.color = 'black';
+    clone.style.fontSize = '10px';
+    clone.style.width = '20px';
+
+  }
+
   cart.appendChild(clone);
 
   // Disable the shelf image
-  shelfImg.classList.add('is-picked');
-  shelfImg.draggable = false;
-  shelfImg.tabIndex = -1;
-  shelfImg.onclick = null;
-  shelfImg.onkeydown = null;
+  shelfElement.classList.add('is-picked');
+  shelfElement.draggable = false;
+  shelfElement.tabIndex = -1;
+  shelfElement.onclick = null;
+  shelfElement.onkeydown = null;
 
   console.debug('[ui] placed in cart:', key);
 }

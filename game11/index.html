@@ -34,7 +34,7 @@
 
         <button class="modal-btn">Info</button>
         <button id="restart-btn" class="modal-btn">Börja om</button>
-        <button class="modal-btn">Svårighetsgrad</button>
+        <button id = "mode2-btn" class="modal-btn">Mode 2</button>
 
         <hr style="margin: 12px 0; border: 1px dashed #ccc;">
 
@@ -207,9 +207,27 @@
       const restartBtn = document.getElementById('restart-btn');
       if (restartBtn) {
         restartBtn.addEventListener('click', () => {
+          localStorage.removeItem('game11_game_state');
           window.location.reload();
         });
       }
+
+      // This is the mode 2 button, which reloads the page and make the shopping list only show english words.
+      // while the shelf only swedish words
+      const Mode2Btn = document.getElementById('mode2-btn');
+      if (Mode2Btn) {
+        Mode2Btn.addEventListener('click', () => {
+          const state = window.__game11GameState;
+          state.mode = 2;
+
+          localStorage.setItem(
+            'game11_game_state',
+            JSON.stringify(state)
+          );
+          window.location.reload();
+        });
+      }
+
 
       const toggleContrastBtn = document.getElementById('toggle-contrast-btn');
       if (toggleContrastBtn) {
