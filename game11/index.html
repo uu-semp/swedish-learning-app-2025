@@ -30,12 +30,13 @@
 
     <div id="settings-modal" class="modal-overlay hidden">
       <div class="modal-box">
-        <h2>Inställningar</h2>
+        <h2 style="margin: 0 0 10px 0; text-align: center;">Meny</h2>
 
-        <div class="setting-row">
-          <span>Stor text</span>
-          <button id="toggle-text-btn" class="toggle-btn">AV</button>
-        </div>
+        <button class="modal-btn">Info</button>
+        <button id="restart-btn" class="modal-btn">Börja om</button>
+        <button class="modal-btn">Svårighetsgrad</button>
+
+        <hr style="margin: 12px 0; border: 1px dashed #ccc;">
 
         <div class="setting-row">
           <span>Hög kontrast</span>
@@ -88,12 +89,6 @@
         <div class="menu-wrapper">
           <button id="main-menu-btn" class="menu-btn">Menu ☰</button>
 
-          <div id="dropdown-menu" class="dropdown-area hidden">
-            <button class="sub-btn">Info</button>
-            <button id="restart-btn" class="sub-btn">Börja om</button>
-            <button class="sub-btn">Svårighetsgrad</button>
-            <button id="settings-btn" class="sub-btn">Inställningar</button>
-          </div>
         </div>
       </div>
 
@@ -184,8 +179,7 @@
 
     window.addEventListener('game11:ready', () => { tryInitPopupOnce(); });
 
-    window.addEventListener('DOMContentLoaded', () => {
-      
+   window.addEventListener('DOMContentLoaded', () => {
 
       popupFrame?.addEventListener('load', () => tryInitPopupOnce());
       let attempts = 0;
@@ -195,46 +189,25 @@
       }, 100);
 
       const menuBtn = document.getElementById('main-menu-btn');
-      const dropdownMenu = document.getElementById('dropdown-menu');
-
-    if (menuBtn && dropdownMenu) {
-      menuBtn.addEventListener('click', () => {
-        dropdownMenu.classList.toggle('hidden');
-    });
-
-    }
-
-    const restartBtn = document.getElementById('restart-btn');
-      if (restartBtn) {
-        restartBtn.addEventListener('click', () => {
-          window.location.reload();
-        });
-      }
-
-
-
-      const settingsBtn = document.getElementById('settings-btn');
       const settingsModal = document.getElementById('settings-modal');
       const closeSettingsBtn = document.getElementById('close-settings-btn');
 
-      if (settingsBtn && settingsModal && closeSettingsBtn) {
-        settingsBtn.addEventListener('click', () => {
+      if (menuBtn && settingsModal && closeSettingsBtn) {
+        menuBtn.addEventListener('click', (e) => {
+          e.preventDefault();
           settingsModal.classList.remove('hidden');
-          document.getElementById('dropdown-menu').classList.add('hidden'); 
         });
 
-        closeSettingsBtn.addEventListener('click', () => {
+        closeSettingsBtn.addEventListener('click', (e) => {
+          e.preventDefault();
           settingsModal.classList.add('hidden');
         });
       }
 
-      const toggleTextBtn = document.getElementById('toggle-text-btn');
-      if (toggleTextBtn) {
-        toggleTextBtn.addEventListener('click', () => {
-          document.body.classList.toggle('large-text-mode');
-          const isActive = document.body.classList.contains('large-text-mode');
-          toggleTextBtn.textContent = isActive ? 'PÅ' : 'AV';
-          toggleTextBtn.classList.toggle('active', isActive);
+      const restartBtn = document.getElementById('restart-btn');
+      if (restartBtn) {
+        restartBtn.addEventListener('click', () => {
+          window.location.reload();
         });
       }
 
@@ -246,7 +219,8 @@
           toggleContrastBtn.textContent = isActive ? 'PÅ' : 'AV';
           toggleContrastBtn.classList.toggle('active', isActive);
         });
-      } 
+      }
+
     });
 
     window.addEventListener('message', (event) => {
@@ -321,7 +295,7 @@
       z-index: 20;
     }
 
-    .menu-btn, .sub-btn {
+    .menu-btn {
       background-color: white;
       color: black;
       border: 2px solid black;
@@ -340,23 +314,6 @@
       box-shadow: 1px 1px 0px black;
     }
 
-    .dropdown-area {
-      display: flex;
-      flex-direction: row; 
-      gap: 6px;
-      background: white;
-      padding: 6px;
-      border: 2px solid black;
-      border-radius: 8px;
-      box-shadow: 3px 3px 0px black;
-      position: absolute;
-      right: 100%;       
-      top: 50%;
-      transform: translateY(-50%);
-      margin-right: 8px;
-      white-space: nowrap;
-      z-index: 100;
-    }
 
     .hidden {
       display: none !important;
@@ -364,25 +321,75 @@
 
 
     .modal-overlay {
-      position: fixed;
-      top: 0; left: 0; width: 100%; height: 100%;
-      background: rgba(0, 0, 0, 0.6);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 10000;
+  position: fixed;
+  top: 0; 
+  left: 0; 
+  width: 100%; 
+  height: 100%;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+}
+
+.modal-box {
+  background-color: white;
+  border: 3px solid black;
+  border-radius: 12px;
+  padding: 24px;
+  width: 320px;
+  box-shadow: 6px 6px 0px black;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  text-align: center;
+}
+
+   .modal-btn {
+      background-color: white;
+      color: black;
+      border: 2px solid black;
+      border-radius: 8px;
+      padding: 10px;
+      font-weight: bold;
+      font-size: 1rem;
+      cursor: pointer;
+      box-shadow: 2px 2px 0px black;
+      margin-bottom: 8px;
+      transition: transform 0.1s, box-shadow 0.1s; 
+    }
+    
+    .modal-btn:hover {
+      background-color: #f8f9fa;
+      transform: translate(1px, 1px); 
+      box-shadow: 1px 1px 0px black;  
     }
 
-    .modal-box {
-      background: white;
-      border: 3px solid black;
-      border-radius: 12px;
-      padding: 24px;
-      width: 320px;
-      box-shadow: 6px 6px 0px black;
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
+    .toggle-btn, .close-btn {
+      background: white; 
+      border: 2px solid black;
+      border-radius: 8px; 
+      padding: 6px 12px;
+      cursor: pointer; 
+      font-weight: bold;
+      box-shadow: 2px 2px 0px black;
+      transition: transform 0.1s, box-shadow 0.1s; 
+    }
+
+    .toggle-btn:hover, .close-btn:hover {
+      transform: translate(1px, 1px);
+      box-shadow: 1px 1px 0px black;
+    }
+    
+    .toggle-btn.active { background: #38bdf8; color: white; }
+    
+    .close-btn { 
+      margin-top: 16px; 
+      background: #f87171; 
+      color: white; 
+      padding: 10px;
+      font-size: 1rem;
     }
 
     .setting-row {
@@ -392,23 +399,12 @@
       font-weight: bold;
     }
 
-    .toggle-btn, .close-btn {
-      background: white; border: 2px solid black;
-      border-radius: 8px; padding: 6px 12px;
-      cursor: pointer; font-weight: bold;
-      box-shadow: 2px 2px 0px black;
-    }
+    
     .toggle-btn.active { background: #38bdf8; color: white; }
     .close-btn { margin-top: 10px; background: #f87171; color: white; }
 
 
-    body.large-text-mode .shopping-list li {
-      font-size: 1.3em;
-      font-weight: bold;
-    }
-    body.large-text-mode .instructions {
-      font-size: 0.9em;
-    }
+   
 
     body.high-contrast-mode {
       background-color: #121212;
