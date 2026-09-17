@@ -111,6 +111,7 @@
       if (!wrap || !frame) return;
       wrap.style.pointerEvents  = on ? 'auto' : 'none';
       frame.style.pointerEvents = on ? 'auto' : 'none';
+      wrap.classList.toggle('is-endgame', on);
     }
 
     const popupFrame = document.getElementById('popupFrame');
@@ -135,10 +136,10 @@
       return words;
     }
 
-    window.sendPickToPopup = function(idKey) {
+    window.sendPickToPopup = function(idKey, label) {
       if (!popupFrame || !popupFrame.contentWindow) return;
       console.log('[parent] sending pick (key):', idKey);
-      popupFrame.contentWindow.postMessage({ type: 'pick', id: String(idKey) }, '*');
+      popupFrame.contentWindow.postMessage({ type: 'pick', id: String(idKey), label }, '*');
     };
 
     let popupIsReady = false;

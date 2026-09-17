@@ -19,7 +19,8 @@ function sendPick(key) {
   if (img && img.classList.contains('is-picked')) return;
 
   if (typeof window.sendPickToPopup === 'function') {
-    window.sendPickToPopup(key);   // ✅ triggers popup pick(id): updates counters + toasts
+    const label = img?.dataset.sv || key;
+    window.sendPickToPopup(key, label);   // ✅ triggers popup pick(id): updates counters + toasts
     console.debug('[ui] sendPick -> popup', key);
   } else {
     console.warn('[ui] sendPickToPopup not available');
@@ -57,6 +58,7 @@ export function displayShelf(shelf, mode) {
       element.alt = item.sv || item.en || '';
     }
     element.dataset.key = key;
+    element.dataset.sv = item.sv || item.en || key;
 
     // Click/keyboard -> same path as drop
     element.tabIndex = 0;
