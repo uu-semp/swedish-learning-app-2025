@@ -208,8 +208,8 @@ const GamePage = {
         },
         currentImg() {
             return  this.currentWord?.img
-                ? "../../" + this.currentWord.img
-                : "../../" + this.defaultImg;
+                ? "../../../" + this.currentWord.img
+                : "../../../" + this.defaultImg;
         }
     },
     async mounted() {

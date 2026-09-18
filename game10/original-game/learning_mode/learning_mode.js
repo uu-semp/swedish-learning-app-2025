@@ -47,10 +47,10 @@ function createFlashcardApp(options = { showDebug: true }) {
                 const wordData = window.vocabulary.get_vocab(id);
                 return {
                   id: id,
-                  front: `<img src="../../${wordData.img}" alt="${wordData.en}" style="max-width:200px;max-height:200px;">`,
+                  front: `<img src="../../../${wordData.img}" alt="${wordData.en}" style="max-width:200px;max-height:200px;">`,
                   back: wordData.sv,
                   gotIt: false,
-                  audio: `../../${wordData.audio}`,
+                  audio: `../../../${wordData.audio}`,
                   english: wordData.en
                 };
               });

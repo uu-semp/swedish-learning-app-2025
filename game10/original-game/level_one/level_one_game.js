@@ -29,7 +29,7 @@ $(function() {
                 const randomId = foodIds[Math.floor(Math.random() * foodIds.length)];
                 const vocab = window.vocabulary.get_vocab(randomId);
                 
-                $('.item-image').attr('src', `../../${vocab.img}`); // Make sure image path is correct
+                $('.item-image').attr('src', `../../../${vocab.img}`); // Make sure image path is correct
                 $('.item-word').text(vocab.sv);
                 currentCorrectAnswer = true;
 
@@ -44,7 +44,7 @@ $(function() {
                 const vocab1 = window.vocabulary.get_vocab(id1); // For the image
                 const vocab2 = window.vocabulary.get_vocab(id2); // For the word
 
-                $('.item-image').attr('src', `../../${vocab1.img}`);
+                $('.item-image').attr('src', `../../../${vocab1.img}`);
                 $('.item-word').text(vocab2.sv);
                 currentCorrectAnswer = false;
             }
