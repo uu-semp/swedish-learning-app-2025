@@ -16,34 +16,33 @@ const STORAGE_KEY = "game11_game_state";
  * - shelf: shoppingList + distractors, shuffled
  */
 function initGameState() {
+
   // Pull all items (each item has at least: { id, sv, en, img, ... })
 
   // Check if there's a saved state in localStorage, in this case refresh will not reset the game state
   const savedState = loadState();
   if (savedState) {
     return savedState;
+  } else {
+    const vocab = getItems(); // <-- important: do NOT overwrite window.vocabulary
+
+    // Build lists
+    const shoppingList = generateShoppingList(vocab);      // 10 items by default
+    const shelf = generateShelf(shoppingList, vocab);      // 10 + distractors
+
+    const state = {
+      shoppingList: shoppingList,
+      shelf: shelf,
+      currentIndex: 0,
+      correctFirstTry: [], // bools per solved item (true if first try)
+      mistakes: {},        // { [targetId]: numberOfMistakes }
+      finished: false,
+      mode: 1, //
+    };
+    saveState(state); // Optional: persist initial state (safe no-op if storage blocked)
+    return state;
   }
 
-
-  const vocab = getItems(); // <-- important: do NOT overwrite window.vocabulary
-
-  // Build lists
-  const shoppingList = generateShoppingList(vocab);      // 10 items by default
-  const shelf = generateShelf(shoppingList, vocab);      // 10 + distractors
-
-  const state = {
-    shoppingList,
-    shelf,
-    currentIndex: 0,
-    correctFirstTry: [], // bools per solved item (true if first try)
-    mistakes: {},        // { [targetId]: numberOfMistakes }
-    finished: false,
-    mode: 1
-  };
-
-  // Optional: persist initial state (safe no-op if storage blocked)
-  saveState(state);
-  return state;
 }
 
 /**

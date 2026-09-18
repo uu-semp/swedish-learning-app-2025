@@ -34,7 +34,7 @@
 
         <button class="modal-btn">Info</button>
         <button id="restart-btn" class="modal-btn">Börja om</button>
-        <button id = "mode2-btn" class="modal-btn">Mode 2</button>
+        <button id = "mode2-btn" class="modal-btn">växla läge</button>
 
         <hr style="margin: 12px 0; border: 1px dashed #ccc;">
 
@@ -213,6 +213,7 @@
       if (restartBtn) {
         restartBtn.addEventListener('click', () => {
           localStorage.removeItem('game11_game_state');
+
           window.location.reload();
         });
       }
@@ -223,8 +224,11 @@
       if (Mode2Btn) {
         Mode2Btn.addEventListener('click', () => {
           const state = window.__game11GameState;
-          state.mode = 2;
-
+          if(state.mode == 1) {
+            state.mode = 2;
+          } else {
+            state.mode = 1;
+          }
           localStorage.setItem(
             'game11_game_state',
             JSON.stringify(state)
@@ -257,10 +261,13 @@
       }
     });
 
+    //same as resart ? what is the difference between restart and playAgain?
+
     window.addEventListener('message', (event) => {
       if (event.data?.type === 'playAgain') {
         document.querySelector('.popup-frame-wrap').style.display = 'none';
-        window.location.reload();
+          localStorage.removeItem('game11_game_state');
+          window.location.reload();
       }
     });
   </script>
