@@ -2,8 +2,8 @@
 // Owned by Game 10
 // ==============================================
 
-import { getLang, recordLevelScore, SCORE_TO_PASS } from "../dev-tools/cookies.js";
-import { t, applyI18n } from "../dev-tools/i18n.js";
+import { getLang, recordLevelScore } from "../dev-tools/cookies.js";
+import { t, applyI18n, roundSummary } from "../dev-tools/i18n.js";
 import { vocabUrl } from "../dev-tools/util.js";
 
 const PAIR_COUNT = 4;
@@ -85,12 +85,13 @@ function render() {
     const { progress, total, unlockedNext } = recordLevelScore(2, roundScore);
     document.getElementById("done-score").textContent = String(roundScore);
     document.getElementById("next-level").style.display = progress.currentLevel >= 3 ? "flex" : "none";
-    const note = lang === "sv"
-      ? `Den här omgången: ${roundScore}/${PAIR_COUNT}. Totalt för nivå 2: ${Math.min(total, SCORE_TO_PASS)}/${SCORE_TO_PASS}.`
-      : `This round: ${roundScore}/${PAIR_COUNT}. Level 2 total: ${Math.min(total, SCORE_TO_PASS)}/${SCORE_TO_PASS}.`;
-    document.getElementById("done-note").textContent = unlockedNext
-      ? (lang === "sv" ? "Nivå 3 är nu upplåst. " : "Level 3 is now unlocked. ") + note
-      : note;
+    document.getElementById("done-note").textContent = roundSummary(lang, {
+      round: roundScore,
+      max: PAIR_COUNT,
+      level: 2,
+      total,
+      unlockedNext
+    });
     show("done");
   });
 }

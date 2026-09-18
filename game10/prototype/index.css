@@ -428,7 +428,11 @@ body {
 .al-level-score {
   margin-top: 5px;
   font: 500 12px "Work Sans", sans-serif;
-  color: var(--al-muted);
+  color: var(--al-ink);
+}
+
+.al-level-card.is-locked .al-level-score {
+  color: var(--al-red);
 }
 
 .al-level-card img {
@@ -443,8 +447,8 @@ body {
 }
 
 .al-menu-foot span {
-  font: 400 11.5px "Work Sans", sans-serif;
-  color: var(--al-muted);
+  font: 500 12.5px "Work Sans", sans-serif;
+  color: var(--al-ink);
 }
 
 .al-link {

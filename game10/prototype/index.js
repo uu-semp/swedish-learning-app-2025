@@ -36,9 +36,13 @@ function renderMenu() {
     const score = Math.min(progress.levelScores[level] || 0, SCORE_TO_PASS);
     const locked = progress.currentLevel < level;
     if (locked) {
-      el.innerHTML = `<i class="fa-regular fa-circle" style="color:#6b625a;font-size:10px;margin-right:5px"></i>${t(lang, "notYet")}`;
+      el.innerHTML = `<i class="fa-solid fa-lock" style="color:#9d0000;font-size:10px;margin-right:5px"></i>${t(lang, "needTen", { n: level - 1 })}`;
+    } else if (score >= SCORE_TO_PASS) {
+      const done = level < 3 ? t(lang, "nextOpen") : t(lang, "gameWon");
+      el.innerHTML = `<i class="fa-solid fa-check" style="color:#1f6b3a;font-size:10px;margin-right:5px"></i>${t(lang, "best")} ${score}/${SCORE_TO_PASS} — ${done}`;
     } else {
-      el.innerHTML = `<i class="fa-solid fa-star" style="color:#9d0000;font-size:10px;margin-right:5px"></i>${t(lang, "best")} ${score}/${SCORE_TO_PASS}`;
+      const goal = level < 3 ? t(lang, "toUnlockNext", { n: level + 1 }) : t(lang, "toFinish");
+      el.innerHTML = `<i class="fa-solid fa-star" style="color:#9d0000;font-size:10px;margin-right:5px"></i>${t(lang, "best")} ${score}/${SCORE_TO_PASS} — ${goal}`;
     }
   });
 
@@ -68,7 +72,7 @@ whenReady(() => {
       const progress = loadProgress();
       const level = Number(card.dataset.level);
       if (progress.currentLevel < level) {
-        alert(t(lang, "locked"));
+        alert(t(lang, "locked", { n: level - 1 }));
         return;
       }
       window.location.href = LEVEL_HREF[level];

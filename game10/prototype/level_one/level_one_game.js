@@ -2,8 +2,8 @@
 // Owned by Game 10
 // ==============================================
 
-import { getLang, recordLevelScore, SCORE_TO_PASS } from "../dev-tools/cookies.js";
-import { t } from "../dev-tools/i18n.js";
+import { getLang, recordLevelScore } from "../dev-tools/cookies.js";
+import { t, roundSummary } from "../dev-tools/i18n.js";
 import { whenReady, foodItems, vocabUrl, playAudio, renderPips } from "../dev-tools/util.js";
 
 const TOTAL = 10;
@@ -115,12 +115,13 @@ function finishRound() {
   } else {
     next.style.display = "none";
   }
-  const note = lang === "sv"
-    ? `Den här omgången: ${roundScore}/10. Totalt för nivå 1: ${Math.min(total, SCORE_TO_PASS)}/${SCORE_TO_PASS}.`
-    : `This round: ${roundScore}/10. Level 1 total: ${Math.min(total, SCORE_TO_PASS)}/${SCORE_TO_PASS}.`;
-  document.getElementById("done-note").textContent = unlockedNext
-    ? (lang === "sv" ? "Nivå 2 är nu upplåst." : "Level 2 is now unlocked.") + " " + note
-    : note;
+  document.getElementById("done-note").textContent = roundSummary(lang, {
+    round: roundScore,
+    max: TOTAL,
+    level: 1,
+    total,
+    unlockedNext
+  });
   show("done");
 }
 

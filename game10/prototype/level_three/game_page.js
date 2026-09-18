@@ -2,8 +2,8 @@
 // Owned by Game 10
 // ==============================================
 
-import { getLang, recordLevelScore, SCORE_TO_PASS } from "../dev-tools/cookies.js";
-import { t, applyI18n as fillText } from "../dev-tools/i18n.js";
+import { getLang, recordLevelScore } from "../dev-tools/cookies.js";
+import { t, applyI18n as fillText, roundSummary } from "../dev-tools/i18n.js";
 import {
   whenReady,
   foodItems,
@@ -115,12 +115,13 @@ function finishRound() {
   const { progress, total } = recordLevelScore(3, roundScore);
   document.getElementById("done-score").textContent = String(roundScore);
   renderPips(document.getElementById("pips-done"), results, -1, TOTAL);
-  const note = lang === "sv"
-    ? `Den här omgången: ${roundScore}/10. Totalt för nivå 3: ${Math.min(total, SCORE_TO_PASS)}/${SCORE_TO_PASS}.`
-    : `This round: ${roundScore}/10. Level 3 total: ${Math.min(total, SCORE_TO_PASS)}/${SCORE_TO_PASS}.`;
-  document.getElementById("done-note").textContent = progress.game_completed
-    ? (lang === "sv" ? "Du har klarat spelet. " : "You finished the game. ") + note
-    : note;
+  document.getElementById("done-note").textContent = roundSummary(lang, {
+    round: roundScore,
+    max: TOTAL,
+    level: 3,
+    total,
+    finished: progress.game_completed
+  });
   show("done");
 }
 

@@ -10,15 +10,27 @@ export const STR = {
     noScore: "No score, no timer",
     learningDesc: "Flip cards, hear the word, keep the ones you know.",
     openCards: "Open the cards",
-    best: "Best",
+    best: "Total",
     notYet: "Not played yet",
+    needTen: "Locked — score 10 on Level {n} first",
+    toUnlockNext: "get 10 to unlock Level {n}",
+    toFinish: "get 10 to finish the game",
+    nextOpen: "next level unlocked",
+    gameWon: "game finished",
+    stillNeed: "You still need {n} more on this level to unlock the next one.",
+    stillNeedWin: "You still need {n} more on this level to finish the game.",
+    unlockedN: "Level {n} is now unlocked.",
+    youFinished: "You finished the game.",
+    roundNote: "This round: {round}/{max}. Level {level} total: {total}/10.",
+    passRule: "Correct answers add to your total. Reach 10 on this level to unlock the next one.",
+    passRuleWin: "Correct answers add to your total. Reach 10 on this level to finish the game.",
     l1: "Picture to Swedish word",
     l1Desc: "Does the word match the picture? True or false.",
     l2: "Match the pairs",
     l2Desc: "Drag a line from each picture to its Swedish word.",
     l3: "Spell it yourself",
     l3Desc: "Type the Swedish word for the food you see.",
-    footnote: "Finish a level with 10 points to unlock the next one.",
+    footnote: "Correct answers add up. Reach a total of 10 on a level to unlock the next one.",
     reset: "Reset progress",
     resetTitle: "Reset all progress?",
     resetBody: "This clears your best scores and the words you have learned. It cannot be undone.",
@@ -61,7 +73,7 @@ export const STR = {
     doneTitle: "Round finished",
     playAgain: "Play again",
     nextLevel: "Next level",
-    locked: "Complete the previous level to unlock this.",
+    locked: "This level is locked. Score a total of 10 points on Level {n} first.",
     loading: "Loading…",
     equals: "means"
   },
@@ -72,15 +84,27 @@ export const STR = {
     noScore: "Inga poäng, ingen tidtagning",
     learningDesc: "Vänd korten, lyssna på uttalet och behåll orden du redan kan.",
     openCards: "Öppna ordkorten",
-    best: "Bästa resultat",
+    best: "Totalt",
     notYet: "Inte spelad ännu",
+    needTen: "Låst — få 10 poäng på nivå {n} först",
+    toUnlockNext: "få 10 för att låsa upp nivå {n}",
+    toFinish: "få 10 för att klara spelet",
+    nextOpen: "nästa nivå upplåst",
+    gameWon: "spelet är klart",
+    stillNeed: "Du behöver {n} poäng till på den här nivån för att låsa upp nästa.",
+    stillNeedWin: "Du behöver {n} poäng till på den här nivån för att klara spelet.",
+    unlockedN: "Nivå {n} är nu upplåst.",
+    youFinished: "Du har klarat spelet.",
+    roundNote: "Den här omgången: {round}/{max}. Totalt för nivå {level}: {total}/10.",
+    passRule: "Rätta svar läggs till din totalsumma. Nå 10 på den här nivån för att låsa upp nästa.",
+    passRuleWin: "Rätta svar läggs till din totalsumma. Nå 10 på den här nivån för att klara spelet.",
     l1: "Från bild till svenskt ord",
     l1Desc: "Stämmer ordet med bilden? Sant eller falskt.",
     l2: "Matcha ihop paren",
     l2Desc: "Dra en linje från varje bild till rätt svenskt ord.",
     l3: "Stava ordet själv",
     l3Desc: "Skriv det svenska ordet för maten du ser på bilden.",
-    footnote: "Klara en nivå med 10 poäng för att låsa upp nästa.",
+    footnote: "Rätta svar läggs ihop. Nå totalt 10 på en nivå för att låsa upp nästa.",
     reset: "Återställ framsteg",
     resetTitle: "Vill du återställa alla framsteg?",
     resetBody: "Detta tar bort dina bästa resultat och orden du har lärt dig. Det går inte att ångra.",
@@ -123,14 +147,32 @@ export const STR = {
     doneTitle: "Omgången är klar",
     playAgain: "Spela igen",
     nextLevel: "Nästa nivå",
-    locked: "Klara föregående nivå för att låsa upp den här.",
+    locked: "Den här nivån är låst. Få totalt 10 poäng på nivå {n} först.",
     loading: "Laddar…",
     equals: "betyder"
   }
 };
 
-export function t(lang, key) {
-  return (STR[lang] || STR.en)[key] || STR.en[key] || key;
+export function t(lang, key, vars = {}) {
+  let text = (STR[lang] || STR.en)[key] || STR.en[key] || key;
+  Object.entries(vars).forEach(([name, value]) => {
+    text = text.replaceAll("{" + name + "}", String(value));
+  });
+  return text;
+}
+
+export function roundSummary(lang, { round, max, level, total, unlockedNext, finished }) {
+  const note = t(lang, "roundNote", {
+    round,
+    max,
+    level,
+    total: Math.min(total, 10)
+  });
+  if (unlockedNext) return t(lang, "unlockedN", { n: level + 1 }) + " " + note;
+  if (finished) return t(lang, "youFinished") + " " + note;
+  const remaining = Math.max(0, 10 - total);
+  const needKey = level === 3 ? "stillNeedWin" : "stillNeed";
+  return t(lang, needKey, { n: remaining }) + " " + note;
 }
 
 export function applyI18n(lang) {
