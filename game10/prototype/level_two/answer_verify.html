@@ -1,0 +1,68 @@
+<!doctype html>
+
+<!--
+=================================================
+Owned by Game 10
+=================================================
+-->
+
+<html lang="en" data-root="../../.." data-images="../images">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Ät och lär — Level 2 results</title>
+  <link rel="stylesheet" href="../../../style.css" />
+  <!-- You are allowed to use JQuery and Vue.js but don't have to. They just make a
+  lot of things easier
+  -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <link rel="stylesheet" href="../index.css" />
+  <link rel="stylesheet" href="answer_verify.css" />
+  <script src="../../../scripts/vocabulary.js"></script>
+  <script src="../../../scripts/save.js"></script>
+  <script type="module" src="answer_verify.js"></script>
+</head>
+<body>
+  <header><h1>Game 10</h1></header>
+  <main class="game-frame">
+    <section class="al-screen is-on" id="results">
+      <div style="padding:16px 40px 11px;display:flex;align-items:flex-end;justify-content:space-between;border-bottom:1px solid #efeae2">
+        <div>
+          <h2 style="margin:0;font:600 23px/1.1 'Work Sans',sans-serif;color:#14100e" data-i18n="l2Results"></h2>
+          <p style="margin:5px 0 0;font:400 13.5px 'Work Sans',sans-serif" data-i18n="resultLine"></p>
+        </div>
+        <div style="display:flex;gap:16px">
+          <span id="res-ok" style="display:inline-flex;align-items:center;gap:7px;font:600 14px 'Work Sans',sans-serif;color:#154d2a"></span>
+          <span id="res-no" style="display:inline-flex;align-items:center;gap:7px;font:600 14px 'Work Sans',sans-serif;color:#9d0000"></span>
+        </div>
+      </div>
+      <div class="al-match" id="result-stage">
+        <svg id="result-wires"></svg>
+        <div class="al-match-grid">
+          <div class="al-col" id="res-left"></div>
+          <div class="al-col" id="res-right"></div>
+        </div>
+      </div>
+      <div class="al-match-foot" style="justify-content:flex-end;gap:12px">
+        <a class="al-btn al-btn-ghost" href="../index.html" data-i18n="menuBtn" style="display:flex;align-items:center"></a>
+        <button type="button" class="al-btn al-btn-primary" id="continue" data-i18n="continueBtn"></button>
+      </div>
+    </section>
+
+    <section class="al-screen al-done" id="done">
+      <span class="al-kicker"><span data-i18n="levelWord"></span> 2</span>
+      <h1 style="margin:12px 0 0;font:600 36px/1.12 'Work Sans',sans-serif;color:#14100e" data-i18n="doneTitle"></h1>
+      <div class="al-big-score"><b id="done-score">0</b><span>/ 4</span></div>
+      <p id="done-note" style="margin:16px 0 0;max-width:470px"></p>
+      <div class="al-done-actions">
+        <a class="al-btn al-btn-ghost" href="../index.html" data-i18n="menuBtn" style="display:flex;align-items:center"></a>
+        <a class="al-btn al-btn-ghost" href="level_two.html"><i class="fa-solid fa-rotate-left" style="margin-right:9px"></i><span data-i18n="playAgain"></span></a>
+        <a class="al-btn al-btn-primary" id="next-level" href="../level_three/level_three.html" style="display:none;align-items:center"><span data-i18n="nextLevel"></span><i class="fa-solid fa-arrow-right" style="margin-left:10px"></i></a>
+      </div>
+    </section>
+  </main>
+  <footer><small>Created as part of the "Software Engineering and Project Management" course 2025</small></footer>
+</body>
+</html>

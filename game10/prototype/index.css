@@ -1,0 +1,1104 @@
+/*
+=================================================
+Owned by Game 10
+=================================================
+*/
+@font-face {
+  font-family: "Work Sans";
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("fonts/work-sans.woff2") format("woff2");
+}
+
+:root {
+  --al-red: #9d0000;
+  --al-red-press: #7a0000;
+  --al-ink: #14100e;
+  --al-body: #555;
+  --al-muted: #6b625a;
+  --al-paper: #fbf8f3;
+  --al-rule: #e0d8cc;
+  --al-green: #1f6b3a;
+  --al-green-ink: #154d2a;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: #fff;
+  font: 400 1rem/1.4 "Work Sans", sans-serif;
+  color: var(--al-body);
+}
+
+.game-frame {
+  width: var(--frame-width, 800px);
+  height: var(--frame-height, 600px);
+  margin: 0 auto;
+  background: #fff;
+  position: relative;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.al-screen {
+  position: absolute;
+  inset: 0;
+  display: none;
+  flex-direction: column;
+  background: #fff;
+}
+
+.al-screen.is-on {
+  display: flex;
+}
+
+.al-btn {
+  font-family: "Work Sans", sans-serif;
+  cursor: pointer;
+  border-radius: 8px;
+}
+
+.al-btn-ghost {
+  min-height: 44px;
+  padding: 11px 16px;
+  border: 1.5px solid #cfc7bb;
+  background: #fff;
+  color: var(--al-ink);
+  font: 500 13px "Work Sans", sans-serif;
+}
+
+.al-btn-ghost:hover {
+  border-color: var(--al-red);
+  color: var(--al-red);
+}
+
+.al-btn-icon {
+  width: 44px;
+  height: 44px;
+  border: 1.5px solid #cfc7bb;
+  background: #fff;
+  color: var(--al-ink);
+  flex: none;
+}
+
+.al-btn-icon:hover {
+  border-color: var(--al-red);
+  color: var(--al-red);
+}
+
+.al-btn-primary {
+  min-height: 52px;
+  padding: 14px 28px;
+  border: none;
+  background: var(--al-red);
+  color: #fff;
+  font: 600 16px "Work Sans", sans-serif;
+  box-shadow: 0 3px 0 var(--al-red-press);
+}
+
+.al-btn-primary:hover {
+  background: #8a0000;
+}
+
+.al-btn-primary:active {
+  transform: translateY(2px);
+  box-shadow: 0 1px 0 var(--al-red-press);
+}
+
+.al-btn-primary:disabled {
+  background: #f4f1ec;
+  color: #a49a90;
+  box-shadow: none;
+  cursor: not-allowed;
+}
+
+.al-btn-green {
+  min-height: 52px;
+  padding: 14px 24px;
+  border: none;
+  background: var(--al-green);
+  color: #fff;
+  font: 600 16px "Work Sans", sans-serif;
+}
+
+.al-btn-green:hover {
+  background: #18542d;
+}
+
+.al-btn-choice {
+  flex: 1;
+  min-height: 64px;
+  font: 600 20px "Work Sans", sans-serif;
+  border: 2px solid var(--al-ink);
+  background: #fff;
+  color: var(--al-ink);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 11px;
+}
+
+.al-btn-choice:hover {
+  background: #f4f1ec;
+}
+
+.al-lang {
+  display: flex;
+  border: 1.5px solid var(--al-red);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.al-lang button {
+  font: 600 12px "Work Sans", sans-serif;
+  padding: 7px 13px;
+  border: none;
+  cursor: pointer;
+  background: #fff;
+  color: var(--al-red);
+}
+
+.al-lang button + button {
+  border-left: 1.5px solid var(--al-red);
+}
+
+.al-lang button.is-on {
+  background: var(--al-red);
+  color: #fff;
+}
+
+.al-hud {
+  padding: 15px 26px 11px;
+  border-bottom: 1px solid #efeae2;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.al-hud-main {
+  flex: 1;
+}
+
+.al-hud-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 7px;
+}
+
+.al-hud-label {
+  font: 600 13px "Work Sans", sans-serif;
+  color: var(--al-ink);
+}
+
+.al-hud-score {
+  font: 500 13px "Work Sans", sans-serif;
+  color: var(--al-body);
+}
+
+.al-pips {
+  display: flex;
+  gap: 5px;
+}
+
+.al-pip {
+  flex: 1;
+  height: 16px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f4f1ec;
+  border: 1.5px solid var(--al-rule);
+  color: #f4f1ec;
+  font-size: 9px;
+}
+
+.al-pip-ok {
+  background: var(--al-green);
+  border-color: var(--al-green);
+  color: #fff;
+}
+
+.al-pip-no {
+  background: var(--al-red);
+  border-color: var(--al-red);
+  color: #fff;
+}
+
+.al-pip-now {
+  background: #fff;
+  border-color: var(--al-ink);
+  color: var(--al-ink);
+}
+
+/* Menu */
+.al-menu {
+  padding: 24px 30px;
+}
+
+.al-menu-top {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  position: relative;
+}
+
+.al-deco {
+  position: absolute;
+  opacity: 0.1;
+  pointer-events: none;
+}
+
+.al-title {
+  margin: 0;
+  font: 600 33px/1 "Work Sans", sans-serif;
+  color: var(--al-ink);
+  letter-spacing: -0.4px;
+}
+
+.al-tagline {
+  margin: 7px 0 0;
+  font: 400 14px/1.3 "Work Sans", sans-serif;
+  color: var(--al-body);
+}
+
+.al-menu-meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 7px;
+}
+
+.al-learned {
+  font: 500 12px "Work Sans", sans-serif;
+  color: var(--al-body);
+}
+
+.al-learned strong {
+  color: var(--al-red);
+  font-weight: 600;
+}
+
+.al-bar {
+  width: 148px;
+  height: 7px;
+  background: #efeae2;
+  border-radius: 99px;
+  overflow: hidden;
+}
+
+.al-bar > span {
+  display: block;
+  height: 100%;
+  background: var(--al-red);
+}
+
+.al-rule-line {
+  height: 1.5px;
+  background: rgba(20, 16, 14, 0.12);
+  margin: 16px 0 14px;
+}
+
+.al-menu-grid {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 284px 1fr;
+  gap: 15px;
+  min-height: 0;
+}
+
+.al-learn-card,
+.al-level-card {
+  border: 1.5px solid var(--al-rule);
+  border-radius: 10px;
+  cursor: pointer;
+  text-align: left;
+  font-family: inherit;
+  color: inherit;
+}
+
+.al-learn-card {
+  background: var(--al-paper);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+}
+
+.al-learn-card:hover,
+.al-level-card:hover {
+  border-color: var(--al-red);
+}
+
+.al-badge {
+  align-self: flex-start;
+  font: 600 10.5px/1 "Work Sans", sans-serif;
+  letter-spacing: 0.9px;
+  text-transform: uppercase;
+  color: #fff;
+  background: var(--al-red);
+  padding: 5px 8px;
+  border-radius: 4px;
+}
+
+.al-learn-card h2,
+.al-intro h1 {
+  margin: 11px 0 5px;
+  font: 600 21px/1.15 "Work Sans", sans-serif;
+  color: var(--al-ink);
+}
+
+.al-learn-card p {
+  margin: 0;
+  font: 400 12.5px/1.45 "Work Sans", sans-serif;
+  color: var(--al-body);
+}
+
+.al-learn-art {
+  flex: 1;
+  position: relative;
+  min-height: 92px;
+}
+
+.al-learn-art img {
+  position: absolute;
+  bottom: 0;
+}
+
+.al-learn-go {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font: 600 13.5px "Work Sans", sans-serif;
+  color: var(--al-red);
+  border-top: 1px dashed #ddd3c4;
+  padding-top: 10px;
+}
+
+.al-learn-go i:last-child {
+  margin-left: auto;
+}
+
+.al-levels {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.al-level-card {
+  flex: 1;
+  padding: 12px 15px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background-image: repeating-linear-gradient(#fff, #fff 25px, #f4efe7 25px, #f4efe7 26px);
+}
+
+.al-level-card.is-locked {
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.al-level-n {
+  font: 600 25px/1 "Work Sans", sans-serif;
+  color: var(--al-red);
+  width: 28px;
+}
+
+.al-level-card h3 {
+  margin: 0;
+  font: 600 16px/1.2 "Work Sans", sans-serif;
+  color: var(--al-ink);
+}
+
+.al-level-card p {
+  margin: 3px 0 0;
+  font: 400 12.5px/1.35 "Work Sans", sans-serif;
+  color: var(--al-body);
+}
+
+.al-level-score {
+  margin-top: 5px;
+  font: 500 12px "Work Sans", sans-serif;
+  color: var(--al-muted);
+}
+
+.al-level-card img {
+  width: 56px;
+}
+
+.al-menu-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 12px;
+}
+
+.al-menu-foot span {
+  font: 400 11.5px "Work Sans", sans-serif;
+  color: var(--al-muted);
+}
+
+.al-link {
+  font: 500 12.5px "Work Sans", sans-serif;
+  color: var(--al-body);
+  background: none;
+  border: none;
+  text-decoration: underline;
+  cursor: pointer;
+  padding: 8px 2px;
+}
+
+.al-link:hover {
+  color: var(--al-red);
+}
+
+.al-modal {
+  position: absolute;
+  inset: 0;
+  background: rgba(20, 16, 14, 0.5);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 5;
+}
+
+.al-modal.is-on {
+  display: flex;
+}
+
+.al-dialog {
+  width: 420px;
+  background: #fff;
+  border-radius: 12px;
+  padding: 28px;
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.3);
+}
+
+.al-dialog h2 {
+  margin: 0;
+  font: 600 21px/1.15 "Work Sans", sans-serif;
+  color: var(--al-ink);
+}
+
+.al-dialog p {
+  margin: 14px 0 0;
+  font: 400 14.5px/1.5 "Work Sans", sans-serif;
+}
+
+.al-dialog-row {
+  display: flex;
+  gap: 10px;
+  margin-top: 22px;
+}
+
+.al-dialog-row .al-btn {
+  flex: 1;
+}
+
+/* Intro */
+.al-intro {
+  padding: 26px 30px;
+}
+
+.al-intro-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 0 54px;
+}
+
+.al-kicker {
+  font: 600 12px/1 "Work Sans", sans-serif;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+  color: var(--al-red);
+}
+
+.al-intro-body h1 {
+  margin: 11px 0 0;
+  font: 600 34px/1.12 "Work Sans", sans-serif;
+  color: var(--al-ink);
+}
+
+.al-intro-body p {
+  margin: 13px 0 0;
+  font: 400 16px/1.5 "Work Sans", sans-serif;
+  max-width: 540px;
+}
+
+.al-example {
+  display: flex;
+  gap: 12px;
+  margin: 22px 0 0;
+  align-items: center;
+  border: 1.5px dashed var(--al-rule);
+  border-radius: 10px;
+  padding: 10px 16px;
+  background: var(--al-paper);
+}
+
+.al-example img {
+  width: 70px;
+}
+
+.al-example strong {
+  font: 600 22px "Work Sans", sans-serif;
+  color: var(--al-ink);
+}
+
+.al-chip-ok {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font: 600 13px "Work Sans", sans-serif;
+  color: var(--al-green);
+  border: 1.5px solid var(--al-green);
+  border-radius: 99px;
+  padding: 6px 11px;
+}
+
+.al-hint {
+  margin: 16px 0 0;
+  font: 400 13px "Work Sans", sans-serif;
+  color: var(--al-muted);
+}
+
+/* Level 1 play */
+.al-play {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 34px;
+  padding: 0 40px;
+}
+
+.al-pic {
+  width: 262px;
+  height: 262px;
+  border: 1.5px solid var(--al-rule);
+  border-radius: 12px;
+  background: var(--al-paper);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 22px;
+  flex: none;
+  box-sizing: border-box;
+}
+
+.al-pic img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.al-word-block {
+  text-align: center;
+}
+
+.al-word-block small {
+  display: block;
+  font: 500 12.5px "Work Sans", sans-serif;
+  color: var(--al-muted);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+
+.al-word-block strong {
+  font: 600 48px/1.1 "Work Sans", sans-serif;
+  color: var(--al-ink);
+}
+
+.al-word-rule {
+  width: 66px;
+  height: 3px;
+  background: var(--al-red);
+  margin: 15px auto 0;
+}
+
+.al-actions {
+  padding: 0 40px 24px;
+  display: flex;
+  gap: 16px;
+}
+
+.al-fb-ok {
+  background: #e8f2ec;
+  border-top: 4px solid var(--al-green);
+  padding: 20px 32px 22px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.al-fb-no {
+  flex: 1;
+  padding: 18px 32px 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.al-mark {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 27px;
+  flex: none;
+  color: #fff;
+}
+
+.al-mark-ok {
+  background: var(--al-green);
+}
+
+.al-mark-no {
+  width: 52px;
+  height: 52px;
+  background: var(--al-red);
+  font-size: 23px;
+}
+
+.al-fb-title {
+  font: 600 25px/1.1 "Work Sans", sans-serif;
+}
+
+.al-ok-title {
+  color: var(--al-green-ink);
+}
+
+.al-no-title {
+  color: var(--al-red);
+}
+
+.al-pair-card {
+  border: 1.5px solid var(--al-rule);
+  border-left: 6px solid var(--al-green);
+  border-radius: 10px;
+  background: var(--al-paper);
+  padding: 15px 18px;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.al-pair-card img {
+  width: 106px;
+  height: 106px;
+  object-fit: contain;
+  background: #fff;
+  border: 1px solid #e6e0d6;
+  border-radius: 8px;
+  padding: 9px;
+  box-sizing: border-box;
+}
+
+.al-audio {
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  border: none;
+  background: var(--al-red);
+  color: #fff;
+  font-size: 19px;
+  cursor: pointer;
+  flex: none;
+}
+
+.al-audio-ok {
+  border: 2px solid var(--al-green);
+  background: #fff;
+  color: var(--al-green);
+}
+
+.al-dim {
+  opacity: 0.32;
+}
+
+.al-foot-next {
+  padding: 16px 32px 22px;
+  display: flex;
+  justify-content: flex-end;
+  border-top: 1px solid #efeae2;
+}
+
+/* Matching */
+.al-match {
+  flex: 1;
+  position: relative;
+  padding: 14px 40px 0;
+  touch-action: none;
+}
+
+.al-match svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: visible;
+}
+
+.al-match-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 120px;
+  align-content: start;
+}
+
+.al-col {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.al-pair {
+  height: 74px;
+  border: 1.5px solid var(--al-rule);
+  border-radius: 10px;
+  background: var(--al-paper);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 12px;
+  cursor: grab;
+  position: relative;
+  box-sizing: border-box;
+}
+
+.al-pair img {
+  height: 54px;
+  width: 54px;
+  object-fit: contain;
+}
+
+.al-word {
+  height: 74px;
+  border: 1.5px solid var(--al-rule);
+  border-radius: 10px;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  padding: 8px 16px;
+  position: relative;
+  cursor: pointer;
+  box-sizing: border-box;
+  font: 600 21px "Work Sans", sans-serif;
+  color: var(--al-ink);
+}
+
+.al-node {
+  position: absolute;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: #fff;
+  border: 3px solid var(--al-red);
+}
+
+.al-node-r {
+  right: -8px;
+  top: 29px;
+}
+
+.al-node-l {
+  left: -8px;
+  top: 29px;
+}
+
+.al-linked {
+  border-color: var(--al-red);
+}
+
+.al-match-foot {
+  padding: 12px 40px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid #efeae2;
+}
+
+.al-result-word {
+  height: 74px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 16px;
+  box-sizing: border-box;
+}
+
+.al-result-ok {
+  border: 1.5px solid var(--al-green);
+  border-left: 6px solid var(--al-green);
+  background: #e8f2ec;
+}
+
+.al-result-no {
+  border: 1.5px solid var(--al-red);
+  border-left: 6px solid var(--al-red);
+  background: #fbeceb;
+}
+
+/* Spelling */
+.al-spell {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0 40px;
+}
+
+.al-spell .al-pic {
+  width: 196px;
+  height: 196px;
+}
+
+.al-spell-q {
+  margin: 18px 0 0;
+  font: 400 19px/1.35 "Work Sans", sans-serif;
+  text-align: center;
+}
+
+.al-chars {
+  display: flex;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.al-chars button {
+  width: 52px;
+  height: 48px;
+  font: 500 19px "Work Sans", sans-serif;
+  border: 1.5px solid #cfc7bb;
+  background: #fff;
+  color: var(--al-ink);
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.al-chars button:hover {
+  border-color: var(--al-red);
+  color: var(--al-red);
+}
+
+.al-spell-row {
+  display: flex;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.al-spell-row input {
+  width: 320px;
+  min-height: 56px;
+  font: 500 20px "Work Sans", sans-serif;
+  color: var(--al-ink);
+  text-align: center;
+  border: 2px solid #cfc7bb;
+  border-radius: 8px;
+  padding: 12px 16px;
+  background: #fff;
+  font-family: "Work Sans", sans-serif;
+}
+
+.al-spell-row input:focus {
+  border-color: var(--al-red);
+  outline: 3px solid rgba(157, 0, 0, 0.18);
+}
+
+.al-popup {
+  position: absolute;
+  inset: 0;
+  background: rgba(20, 16, 14, 0.42);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 4;
+}
+
+.al-popup.is-on {
+  display: flex;
+}
+
+.al-card {
+  width: 490px;
+  max-width: calc(100% - 48px);
+  background: #fff;
+  border-radius: 14px;
+  padding: 24px 28px 22px;
+  box-shadow: 0 16px 44px rgba(0, 0, 0, 0.28);
+}
+
+.al-card-ok {
+  border-top: 6px solid var(--al-green);
+  text-align: center;
+}
+
+.al-card-no {
+  border-top: 6px solid var(--al-red);
+}
+
+/* Flashcards */
+.al-cards {
+  padding: 20px 30px 26px;
+}
+
+.al-cards-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.al-flip {
+  flex: 1;
+  margin-top: 16px;
+  border: 1.5px solid var(--al-rule);
+  border-radius: 16px;
+  background: var(--al-paper);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  position: relative;
+  min-height: 0;
+}
+
+.al-flip:hover {
+  border-color: var(--al-red);
+}
+
+.al-flip img {
+  max-height: 280px;
+  max-width: 80%;
+  object-fit: contain;
+}
+
+.al-flip-hint {
+  position: absolute;
+  bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font: 500 13.5px "Work Sans", sans-serif;
+  color: var(--al-muted);
+}
+
+.al-flip-back {
+  flex-direction: row;
+  align-items: center;
+  gap: 26px;
+  padding: 22px 30px;
+  background: #fff;
+}
+
+.al-flip-back img {
+  height: 180px;
+  max-width: 40%;
+  flex: none;
+}
+
+.al-sv-label {
+  font: 500 13px "Work Sans", sans-serif;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--al-muted);
+}
+
+.al-sv-word {
+  font: 600 54px/1.05 "Work Sans", sans-serif;
+  color: var(--al-ink);
+  margin-top: 6px;
+}
+
+.al-listen {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  margin-top: 16px;
+  min-height: 64px;
+  padding: 14px 24px 14px 16px;
+  border: none;
+  border-radius: 99px;
+  background: var(--al-red);
+  color: #fff;
+  font: 600 17px "Work Sans", sans-serif;
+  cursor: pointer;
+  box-shadow: 0 3px 0 var(--al-red-press);
+}
+
+.al-card-pips {
+  display: flex;
+  gap: 4px;
+  margin-top: 6px;
+}
+
+.al-card-pip {
+  width: 16px;
+  height: 8px;
+  border-radius: 99px;
+  background: #f4f1ec;
+  border: 1.5px solid var(--al-rule);
+}
+
+.al-card-pip.is-on {
+  background: var(--al-red);
+  border-color: var(--al-red);
+}
+
+.al-card-pip.is-now {
+  background: #fff;
+  border-color: var(--al-ink);
+}
+
+/* Done */
+.al-done {
+  padding: 30px;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.al-big-score {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+  margin-top: 20px;
+}
+
+.al-big-score b {
+  font: 600 76px/1 "Work Sans", sans-serif;
+  color: var(--al-red);
+}
+
+.al-big-score span {
+  font: 500 24px/1 "Work Sans", sans-serif;
+  color: var(--al-muted);
+  padding-bottom: 9px;
+}
+
+.al-done-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 24px;
+  flex-wrap: wrap;
+  justify-content: center;
+}

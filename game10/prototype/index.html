@@ -1,744 +1,104 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en" data-root="../.." data-images="images">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Ät och lär</title>
-<script>if (window.parent !== window) document.documentElement.classList.add("dc-embed");</script>
-<script src="./support.js"></script>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Ät och lär</title>
+  <link rel="stylesheet" href="../../style.css" />
+  <!-- You are allowed to use JQuery and Vue.js but don't have to. They just make a
+  lot of things easier
+  -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <link rel="stylesheet" href="index.css" />
+  <script src="../../scripts/vocabulary.js"></script>
+  <script src="../../scripts/save.js"></script>
+  <script type="module" src="index.js"></script>
 </head>
 <body>
-<x-dc>
-<helmet data-dc-atomics><meta name="design_doc_mode" content="canvas"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap"><style>body{margin:0;background:#e9e5de;font-family:'Work Sans',system-ui,sans-serif}a{color:#9d0000}a:hover{color:#7a0000}*{box-sizing:border-box}input{font-family:'Work Sans',sans-serif}html.dc-embed,html.dc-embed body{margin:0;overflow:hidden;width:800px;height:600px;background:#fff}html.dc-embed section{padding:0!important;width:800px;height:600px}html.dc-embed section>:not(#game-stage){display:none!important}html.dc-embed #game-stage{box-shadow:none!important}</style></helmet>
-
-<section style="padding:30px 34px 44px">
-<div style="display:flex;align-items:baseline;gap:11px;margin-bottom:6px">
-<span style="font:600 10px ui-monospace,Menlo,monospace;padding:3px 7px;background:#14100e;color:#fff;border-radius:4px">1a</span>
-<span style="font:600 14px/1.2 'Work Sans',sans-serif;color:#14100e">Ät och lär — clickable prototype, 800 × 600</span>
-</div>
-<p style="margin:0 0 16px;font:400 12.5px/1.5 'Work Sans',sans-serif;color:#6b625a;max-width:660px">Kitchen-table theme, built only from the shipped PNGs, Work Sans, #9d0000 and CSS shapes. Every screen is live — click through, switch language, or jump with the index. Grayscale is a stricter stand-in for deuteranopia: every right/wrong cue survives it because colour is always paired with a glyph and a word.</p>
-
-<div style="display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-bottom:13px;max-width:800px">
-<sc-for list="{{ nav }}" as="n" hint-placeholder-count="14">
-<button onClick="{{ n.go }}" style="font:500 11.5px 'Work Sans',sans-serif;padding:6px 10px;border:1px solid {{ n.bd }};background:{{ n.bg }};color:{{ n.fg }};border-radius:5px;cursor:pointer" style-hover="border-color:#9d0000">{{ n.label }}</button>
-</sc-for>
-<span style="width:10px"></span>
-<button onClick="{{ setEn }}" style="font:600 11.5px 'Work Sans',sans-serif;padding:6px 12px;border:1px solid #9d0000;background:{{ enBg }};color:{{ enFg }};border-radius:5px 0 0 5px;cursor:pointer">EN</button>
-<button onClick="{{ setSv }}" style="font:600 11.5px 'Work Sans',sans-serif;padding:6px 12px;border:1px solid #9d0000;border-left:none;background:{{ svBg }};color:{{ svFg }};border-radius:0 5px 5px 0;cursor:pointer">SV</button>
-<button onClick="{{ toggleCb }}" style="font:500 11.5px 'Work Sans',sans-serif;padding:6px 12px;border:1px solid #cfc7bb;background:{{ cbBg }};color:#14100e;border-radius:5px;cursor:pointer;margin-left:6px"><i class="fa-solid fa-eye" style="margin-right:6px"></i>Grayscale check</button>
-</div>
-
-<div id="game-stage" style="width:800px;height:600px;background:#fff;box-shadow:0 8px 30px rgba(20,16,14,.14);position:relative;overflow:hidden;filter:{{ cbFilter }}">
-
-<sc-if value="{{ sMenu }}" hint-placeholder-val="{{ true }}">
-<div style="position:absolute;inset:0;padding:24px 30px;display:flex;flex-direction:column;background:#fff">
-  <img src="images/coffee.png" alt="" style="position:absolute;top:-26px;right:104px;width:118px;opacity:.1;transform:rotate(-12deg)">
-  <img src="images/cake.png" alt="" style="position:absolute;top:16px;right:-26px;width:128px;opacity:.09;transform:rotate(9deg)">
-  <div style="display:flex;align-items:flex-end;justify-content:space-between;position:relative">
-    <div>
-      <h1 style="margin:0;font:600 33px/1 'Work Sans',sans-serif;color:#14100e;letter-spacing:-.4px">Ät och lär</h1>
-      <p style="margin:7px 0 0;font:400 14px/1.3 'Work Sans',sans-serif;color:#555">{{ t.tagline }}</p>
-    </div>
-    <div style="display:flex;flex-direction:column;align-items:flex-end;gap:7px">
-      <div style="display:flex;border:1.5px solid #9d0000;border-radius:6px;overflow:hidden">
-        <button onClick="{{ setEn }}" style="font:600 12px 'Work Sans',sans-serif;padding:7px 13px;border:none;cursor:pointer;background:{{ enBg }};color:{{ enFg }}">EN</button>
-        <button onClick="{{ setSv }}" style="font:600 12px 'Work Sans',sans-serif;padding:7px 13px;border:none;border-left:1.5px solid #9d0000;cursor:pointer;background:{{ svBg }};color:{{ svFg }}">SV</button>
-      </div>
-      <div style="font:500 12px 'Work Sans',sans-serif;color:#555"><strong style="color:#9d0000;font-weight:600">18</strong> / 64 {{ t.learned }}</div>
-      <div style="width:148px;height:7px;background:#efeae2;border-radius:99px;overflow:hidden"><div style="width:28%;height:100%;background:#9d0000"></div></div>
-    </div>
-  </div>
-  <div style="height:1.5px;background:rgba(20,16,14,.12);margin:16px 0 14px"></div>
-  <div style="flex:1;display:grid;grid-template-columns:284px 1fr;gap:15px;min-height:0">
-    <div onClick="{{ goFf }}" style="border:1.5px solid #e0d8cc;background:#fbf8f3;border-radius:10px;padding:16px;display:flex;flex-direction:column;cursor:pointer;position:relative;overflow:hidden" style-hover="border-color:#9d0000;background:#f9f2ec">
-      <span style="align-self:flex-start;font:600 10.5px/1 'Work Sans',sans-serif;letter-spacing:.9px;text-transform:uppercase;color:#fff;background:#9d0000;padding:5px 8px;border-radius:4px">{{ t.noScore }}</span>
-      <h2 style="margin:11px 0 5px;font:600 21px/1.15 'Work Sans',sans-serif;color:#14100e">{{ t.learning }}</h2>
-      <p style="margin:0;font:400 12.5px/1.45 'Work Sans',sans-serif;color:#555;text-wrap:pretty">{{ t.learningDesc }}</p>
-      <div style="flex:1;position:relative;min-height:92px">
-        <img src="images/cinnamon_roll.png" alt="" style="position:absolute;left:0;bottom:4px;width:96px;transform:rotate(-7deg)">
-        <img src="images/coffee.png" alt="" style="position:absolute;left:74px;bottom:14px;width:84px;transform:rotate(6deg)">
-        <img src="images/cheese.png" alt="" style="position:absolute;right:-6px;bottom:0;width:90px;transform:rotate(-3deg)">
-      </div>
-      <div style="display:flex;align-items:center;gap:8px;font:600 13.5px 'Work Sans',sans-serif;color:#9d0000;border-top:1px dashed #ddd3c4;padding-top:10px">
-        <i class="fa-solid fa-volume-high"></i><span>{{ t.openCards }}</span><i class="fa-solid fa-arrow-right" style="margin-left:auto"></i>
-      </div>
-    </div>
-    <div style="display:flex;flex-direction:column;gap:10px">
-      <sc-for list="{{ levels }}" as="l" hint-placeholder-count="3">
-      <div onClick="{{ l.go }}" style="flex:1;border:1.5px solid #e0d8cc;border-radius:10px;padding:12px 15px;display:flex;align-items:center;gap:14px;cursor:pointer;background-image:repeating-linear-gradient(#fff,#fff 25px,#f4efe7 25px,#f4efe7 26px)" style-hover="border-color:#9d0000">
-        <span style="font:600 25px/1 'Work Sans',sans-serif;color:#9d0000;width:28px">{{ l.n }}</span>
-        <div style="flex:1;min-width:0">
-          <div style="font:600 16px/1.2 'Work Sans',sans-serif;color:#14100e">{{ l.title }}</div>
-          <div style="font:400 12.5px/1.35 'Work Sans',sans-serif;color:#555;margin-top:3px">{{ l.desc }}</div>
-          <div style="font:500 12px 'Work Sans',sans-serif;color:#6b625a;margin-top:5px"><i class="{{ l.icon }}" style="color:{{ l.iconColor }};font-size:10px;margin-right:5px"></i>{{ l.score }}</div>
-        </div>
-        <img src="{{ l.img }}" alt="" style="width:56px;transform:rotate({{ l.rot }})">
-      </div>
-      </sc-for>
-    </div>
-  </div>
-  <div style="display:flex;align-items:center;justify-content:space-between;margin-top:12px">
-    <span style="font:400 11.5px 'Work Sans',sans-serif;color:#6b625a">{{ t.footnote }}</span>
-    <button onClick="{{ goReset }}" style="font:500 12.5px 'Work Sans',sans-serif;color:#555;background:none;border:none;text-decoration:underline;cursor:pointer;padding:8px 2px" style-hover="color:#9d0000">{{ t.reset }}</button>
-  </div>
-</div>
-</sc-if>
-
-<sc-if value="{{ sReset }}" hint-placeholder-val="{{ false }}">
-<div style="position:absolute;inset:0;background:rgba(20,16,14,.5);display:flex;align-items:center;justify-content:center">
-  <div style="width:420px;background:#fff;border-radius:12px;padding:28px;box-shadow:0 14px 40px rgba(0,0,0,.3)">
-    <div style="display:flex;align-items:center;gap:13px">
-      <div style="width:44px;height:44px;border-radius:50%;border:2.5px solid #9d0000;color:#9d0000;display:flex;align-items:center;justify-content:center;font-size:19px;flex:none"><i class="fa-solid fa-triangle-exclamation"></i></div>
-      <h2 style="margin:0;font:600 21px/1.15 'Work Sans',sans-serif;color:#14100e">{{ t.resetTitle }}</h2>
-    </div>
-    <p style="margin:14px 0 0;font:400 14.5px/1.5 'Work Sans',sans-serif;color:#555;text-wrap:pretty">{{ t.resetBody }}</p>
-    <div style="display:flex;gap:10px;margin-top:22px">
-      <button onClick="{{ goMenu }}" style="flex:1;font:500 15px 'Work Sans',sans-serif;min-height:48px;border:1.5px solid #cfc7bb;background:#fff;color:#14100e;border-radius:8px;cursor:pointer" style-hover="border-color:#14100e">{{ t.cancel }}</button>
-      <button onClick="{{ goMenu }}" style="flex:1;font:600 15px 'Work Sans',sans-serif;min-height:48px;border:none;background:#9d0000;color:#fff;border-radius:8px;cursor:pointer" style-hover="background:#7a0000">{{ t.resetConfirm }}</button>
-    </div>
-  </div>
-</div>
-</sc-if>
-
-<sc-if value="{{ sL1i }}" hint-placeholder-val="{{ false }}">
-<div style="position:absolute;inset:0;padding:26px 30px;display:flex;flex-direction:column;background:#fff">
-  <button onClick="{{ goMenu }}" style="align-self:flex-start;font:500 13px 'Work Sans',sans-serif;padding:11px 16px;min-height:44px;border:1.5px solid #cfc7bb;background:#fff;color:#14100e;border-radius:8px;cursor:pointer" style-hover="border-color:#9d0000;color:#9d0000"><i class="fa-solid fa-arrow-left" style="margin-right:8px"></i>{{ t.menuBtn }}</button>
-  <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:0 54px">
-    <span style="font:600 12px/1 'Work Sans',sans-serif;letter-spacing:1.4px;text-transform:uppercase;color:#9d0000">{{ t.levelWord }} 1</span>
-    <h1 style="margin:11px 0 0;font:600 34px/1.12 'Work Sans',sans-serif;color:#14100e;text-wrap:pretty">{{ t.l1 }}</h1>
-    <p style="margin:13px 0 0;font:400 16px/1.5 'Work Sans',sans-serif;color:#555;max-width:540px;text-wrap:pretty">{{ t.l1Long }}</p>
-    <div style="display:flex;gap:12px;margin:22px 0 0;align-items:center;border:1.5px dashed #e0d8cc;border-radius:10px;padding:10px 16px;background:#fbf8f3">
-      <img src="images/bread.png" alt="" style="width:70px;transform:rotate(-6deg)">
-      <span style="font:600 22px 'Work Sans',sans-serif;color:#14100e">bröd</span>
-      <span style="display:inline-flex;align-items:center;gap:6px;font:600 13px 'Work Sans',sans-serif;color:#1f6b3a;border:1.5px solid #1f6b3a;border-radius:99px;padding:6px 11px"><i class="fa-solid fa-check"></i>{{ t.trueBtn }}</span>
-    </div>
-    <button onClick="{{ goL1g }}" style="font:600 16px 'Work Sans',sans-serif;min-height:52px;padding:14px 32px;margin-top:24px;border:none;background:#9d0000;color:#fff;border-radius:8px;cursor:pointer;box-shadow:0 3px 0 #7a0000" style-hover="background:#8a0000" style-active="transform:translateY(2px);box-shadow:0 1px 0 #7a0000">{{ t.start }}</button>
-    <p style="margin:16px 0 0;font:400 13px 'Work Sans',sans-serif;color:#6b625a">{{ t.tenQ }}</p>
-  </div>
-</div>
-</sc-if>
-
-<sc-if value="{{ sL1g }}" hint-placeholder-val="{{ false }}">
-<div style="position:absolute;inset:0;display:flex;flex-direction:column;background:#fff">
-  <div style="padding:15px 26px 11px;border-bottom:1px solid #efeae2;display:flex;align-items:center;gap:18px">
-    <button onClick="{{ goMenu }}" style="width:44px;height:44px;border:1.5px solid #cfc7bb;background:#fff;color:#14100e;border-radius:8px;cursor:pointer;flex:none" style-hover="border-color:#9d0000;color:#9d0000"><i class="fa-solid fa-arrow-left"></i></button>
-    <div style="flex:1">
-      <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:7px">
-        <span style="font:600 13px 'Work Sans',sans-serif;color:#14100e">{{ t.qLabel }}</span>
-        <span style="font:500 13px 'Work Sans',sans-serif;color:#555"><i class="fa-solid fa-check" style="color:#1f6b3a;margin-right:5px"></i>3<span style="color:#cfc7bb;margin:0 8px">|</span><i class="fa-solid fa-xmark" style="color:#9d0000;margin-right:5px"></i>1</span>
-      </div>
-      <div style="display:flex;gap:5px">
-        <sc-for list="{{ pips }}" as="p" hint-placeholder-count="10">
-          <div style="flex:1;height:16px;border-radius:4px;display:flex;align-items:center;justify-content:center;background:{{ p.bg }};border:1.5px solid {{ p.bd }};color:{{ p.fg }};font-size:9px"><i class="{{ p.icon }}"></i></div>
-        </sc-for>
-      </div>
-    </div>
-  </div>
-  <div style="flex:1;display:flex;align-items:center;justify-content:center;gap:34px;padding:0 40px">
-    <div style="width:262px;height:262px;border:1.5px solid #e0d8cc;border-radius:12px;background:#fbf8f3;display:flex;align-items:center;justify-content:center;padding:22px;flex:none">
-      <img src="images/cinnamon_roll.png" alt="Food illustration" style="max-width:100%;max-height:100%">
-    </div>
-    <div style="text-align:center">
-      <div style="font:500 12.5px 'Work Sans',sans-serif;color:#6b625a;letter-spacing:1px;text-transform:uppercase;margin-bottom:10px">{{ t.matchQ }}</div>
-      <div style="font:600 48px/1.1 'Work Sans',sans-serif;color:#14100e">kanelbulle</div>
-      <div style="width:66px;height:3px;background:#9d0000;margin:15px auto 0"></div>
-    </div>
-  </div>
-  <div style="padding:0 40px 24px;display:flex;gap:16px">
-    <button onClick="{{ goL1c }}" style="flex:1;min-height:64px;font:600 20px 'Work Sans',sans-serif;border:2px solid #14100e;background:#fff;color:#14100e;border-radius:10px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:11px" style-hover="background:#f4f1ec" style-active="transform:translateY(2px)"><i class="fa-solid fa-check"></i>{{ t.trueBtn }}</button>
-    <button onClick="{{ goL1w }}" style="flex:1;min-height:64px;font:600 20px 'Work Sans',sans-serif;border:2px solid #14100e;background:#fff;color:#14100e;border-radius:10px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:11px" style-hover="background:#f4f1ec" style-active="transform:translateY(2px)"><i class="fa-solid fa-xmark"></i>{{ t.falseBtn }}</button>
-  </div>
-</div>
-</sc-if>
-
-<sc-if value="{{ sL1c }}" hint-placeholder-val="{{ false }}">
-<div style="position:absolute;inset:0;display:flex;flex-direction:column;background:#fff">
-  <div style="padding:15px 26px 11px;border-bottom:1px solid #efeae2;opacity:.5">
-    <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:7px">
-      <span style="font:600 13px 'Work Sans',sans-serif;color:#14100e">{{ t.qLabel }}</span>
-      <span style="font:500 13px 'Work Sans',sans-serif;color:#555"><i class="fa-solid fa-check" style="color:#1f6b3a;margin-right:5px"></i>4<span style="color:#cfc7bb;margin:0 8px">|</span><i class="fa-solid fa-xmark" style="color:#9d0000;margin-right:5px"></i>1</span>
-    </div>
-    <div style="display:flex;gap:5px">
-      <sc-for list="{{ pipsC }}" as="p" hint-placeholder-count="10">
-        <div style="flex:1;height:16px;border-radius:4px;display:flex;align-items:center;justify-content:center;background:{{ p.bg }};border:1.5px solid {{ p.bd }};color:{{ p.fg }};font-size:9px"><i class="{{ p.icon }}"></i></div>
-      </sc-for>
-    </div>
-  </div>
-  <div style="flex:1;display:flex;align-items:center;justify-content:center;gap:32px;padding:0 40px;opacity:.32">
-    <div style="width:186px;height:186px;border:1.5px solid #e0d8cc;border-radius:12px;background:#fbf8f3;display:flex;align-items:center;justify-content:center;padding:18px;flex:none"><img src="images/cinnamon_roll.png" alt="" style="max-width:100%;max-height:100%"></div>
-    <div style="font:600 40px 'Work Sans',sans-serif;color:#14100e">kanelbulle</div>
-  </div>
-  <div style="background:#e8f2ec;border-top:4px solid #1f6b3a;padding:20px 32px 22px;display:flex;align-items:center;gap:20px">
-    <div style="width:60px;height:60px;border-radius:50%;background:#1f6b3a;color:#fff;display:flex;align-items:center;justify-content:center;font-size:27px;flex:none"><i class="fa-solid fa-check"></i></div>
-    <div style="flex:1;min-width:0">
-      <div style="font:600 25px/1.1 'Work Sans',sans-serif;color:#154d2a">{{ t.correct }}</div>
-      <div style="font:400 15px/1.4 'Work Sans',sans-serif;color:#2c5c3d;margin-top:5px"><strong style="font-weight:600">kanelbulle</strong> = {{ t.cinnamonRoll }}</div>
-    </div>
-    <button style="width:54px;height:54px;border-radius:50%;border:2px solid #1f6b3a;background:#fff;color:#1f6b3a;font-size:19px;cursor:pointer;flex:none" style-hover="background:#dcecdf" aria-label="Play pronunciation"><i class="fa-solid fa-volume-high"></i></button>
-    <button onClick="{{ goL1g }}" style="font:600 16px 'Work Sans',sans-serif;min-height:52px;padding:14px 24px;border:none;background:#1f6b3a;color:#fff;border-radius:8px;cursor:pointer;display:flex;align-items:center;gap:10px;flex:none" style-hover="background:#18542d">{{ t.next }}<i class="fa-solid fa-arrow-right"></i></button>
-  </div>
-</div>
-</sc-if>
-
-<sc-if value="{{ sL1w }}" hint-placeholder-val="{{ false }}">
-<div style="position:absolute;inset:0;display:flex;flex-direction:column;background:#fff">
-  <div style="padding:15px 26px 11px;border-bottom:1px solid #efeae2;opacity:.5">
-    <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:7px">
-      <span style="font:600 13px 'Work Sans',sans-serif;color:#14100e">{{ t.qLabel }}</span>
-      <span style="font:500 13px 'Work Sans',sans-serif;color:#555"><i class="fa-solid fa-check" style="color:#1f6b3a;margin-right:5px"></i>3<span style="color:#cfc7bb;margin:0 8px">|</span><i class="fa-solid fa-xmark" style="color:#9d0000;margin-right:5px"></i>2</span>
-    </div>
-    <div style="display:flex;gap:5px">
-      <sc-for list="{{ pipsW }}" as="p" hint-placeholder-count="10">
-        <div style="flex:1;height:16px;border-radius:4px;display:flex;align-items:center;justify-content:center;background:{{ p.bg }};border:1.5px solid {{ p.bd }};color:{{ p.fg }};font-size:9px"><i class="{{ p.icon }}"></i></div>
-      </sc-for>
-    </div>
-  </div>
-  <div style="flex:1;padding:18px 32px 0;display:flex;flex-direction:column;justify-content:center">
-    <div style="display:flex;align-items:center;gap:15px;margin-bottom:16px">
-      <div style="width:52px;height:52px;border-radius:50%;background:#9d0000;color:#fff;display:flex;align-items:center;justify-content:center;font-size:23px;flex:none"><i class="fa-solid fa-xmark"></i></div>
-      <div>
-        <div style="font:600 25px/1.1 'Work Sans',sans-serif;color:#9d0000">{{ t.incorrect }}</div>
-        <div style="font:400 14px/1.4 'Work Sans',sans-serif;color:#555;margin-top:4px">{{ t.wrongHint }}</div>
-      </div>
-    </div>
-    <div style="border:1.5px solid #e0d8cc;border-left:6px solid #1f6b3a;border-radius:10px;background:#fbf8f3;padding:15px 18px;display:flex;align-items:center;gap:18px">
-      <div style="width:106px;height:106px;background:#fff;border:1px solid #e6e0d6;border-radius:8px;display:flex;align-items:center;justify-content:center;padding:9px;flex:none"><img src="images/cinnamon_roll.png" alt="" style="max-width:100%;max-height:100%"></div>
-      <div style="flex:1;min-width:0">
-        <div style="display:inline-flex;align-items:center;gap:7px;font:600 11.5px 'Work Sans',sans-serif;letter-spacing:.8px;text-transform:uppercase;color:#154d2a;background:#dcecdf;border-radius:4px;padding:5px 9px"><i class="fa-solid fa-check"></i>{{ t.rightPair }}</div>
-        <div style="font:600 32px/1.1 'Work Sans',sans-serif;color:#14100e;margin-top:9px">kanelbulle</div>
-        <div style="font:400 15px 'Work Sans',sans-serif;color:#555;margin-top:3px">{{ t.cinnamonRoll }}</div>
-      </div>
-      <button style="width:56px;height:56px;border-radius:50%;border:none;background:#9d0000;color:#fff;font-size:20px;cursor:pointer;flex:none" style-hover="background:#7a0000" aria-label="Play pronunciation"><i class="fa-solid fa-volume-high"></i></button>
-    </div>
-    <div style="display:flex;align-items:center;gap:9px;margin-top:13px;font:400 13.5px 'Work Sans',sans-serif;color:#6b625a">
-      <i class="fa-solid fa-xmark" style="color:#9d0000"></i><span>{{ t.youSaw }} <strong style="color:#14100e;font-weight:600">smörgås</strong></span>
-    </div>
-  </div>
-  <div style="padding:16px 32px 22px;margin-top:16px;display:flex;justify-content:flex-end;border-top:1px solid #efeae2">
-    <button onClick="{{ goL1g }}" style="font:600 16px 'Work Sans',sans-serif;min-height:52px;padding:14px 26px;border:none;background:#9d0000;color:#fff;border-radius:8px;cursor:pointer;display:flex;align-items:center;gap:10px;box-shadow:0 3px 0 #7a0000" style-hover="background:#8a0000">{{ t.next }}<i class="fa-solid fa-arrow-right"></i></button>
-  </div>
-</div>
-</sc-if>
-
-<sc-if value="{{ sL2g }}" hint-placeholder-val="{{ false }}">
-<div style="position:absolute;inset:0;display:flex;flex-direction:column;background:#fff">
-  <div style="padding:15px 26px 11px;border-bottom:1px solid #efeae2;display:flex;align-items:center;gap:18px">
-    <button onClick="{{ goMenu }}" style="width:44px;height:44px;border:1.5px solid #cfc7bb;background:#fff;color:#14100e;border-radius:8px;cursor:pointer;flex:none" style-hover="border-color:#9d0000;color:#9d0000"><i class="fa-solid fa-arrow-left"></i></button>
-    <div style="flex:1">
-      <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:7px">
-        <span style="font:600 13px 'Work Sans',sans-serif;color:#14100e">{{ t.roundLabel }}</span>
-        <span style="font:500 13px 'Work Sans',sans-serif;color:#555">{{ t.dragHint }}</span>
-      </div>
-      <div style="display:flex;gap:5px">
-        <sc-for list="{{ pips2 }}" as="p" hint-placeholder-count="10">
-          <div style="flex:1;height:16px;border-radius:4px;display:flex;align-items:center;justify-content:center;background:{{ p.bg }};border:1.5px solid {{ p.bd }};color:{{ p.fg }};font-size:9px"><i class="{{ p.icon }}"></i></div>
-        </sc-for>
-      </div>
-    </div>
-  </div>
-  <div ref="{{ stageRef }}" onPointerMove="{{ onMove }}" onPointerUp="{{ onUp }}" style="flex:1;position:relative;padding:14px 40px 0;touch-action:none">
-    <svg width="100%" height="100%" style="position:absolute;inset:0;pointer-events:none;overflow:visible">
-      <sc-for list="{{ wires }}" as="w" hint-placeholder-count="0">
-        <line x1="{{ w.x1 }}" y1="{{ w.y1 }}" x2="{{ w.x2 }}" y2="{{ w.y2 }}" stroke="#9d0000" stroke-width="3" stroke-linecap="round"></line>
-      </sc-for>
-      <sc-if value="{{ dragging }}" hint-placeholder-val="{{ false }}">
-        <line x1="{{ dx1 }}" y1="{{ dy1 }}" x2="{{ dx2 }}" y2="{{ dy2 }}" stroke="#9d0000" stroke-width="3" stroke-dasharray="7 6" stroke-linecap="round"></line>
-      </sc-if>
-    </svg>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:120px;align-content:start">
-      <div style="display:flex;flex-direction:column;gap:10px">
-        <sc-for list="{{ picks }}" as="it" hint-placeholder-count="4">
-          <div onPointerDown="{{ it.onDown }}" style="height:74px;border:1.5px solid {{ it.bd }};border-radius:10px;background:#fbf8f3;display:flex;align-items:center;gap:12px;padding:8px 12px;cursor:grab;position:relative" style-hover="border-color:#9d0000">
-            <img src="{{ it.img }}" alt="" style="height:54px">
-            <span style="font:500 13px 'Work Sans',sans-serif;color:#555">{{ it.en }}</span>
-            <span style="position:absolute;right:-8px;top:29px;width:15px;height:15px;border-radius:50%;background:#fff;border:3px solid #9d0000"></span>
-          </div>
-        </sc-for>
-      </div>
-      <div style="display:flex;flex-direction:column;gap:10px">
-        <sc-for list="{{ words }}" as="w" hint-placeholder-count="4">
-          <div onPointerUp="{{ w.onDrop }}" style="height:74px;border:1.5px solid {{ w.bd }};border-radius:10px;background:#fff;display:flex;align-items:center;padding:8px 16px;position:relative;cursor:pointer" style-hover="border-color:#9d0000">
-            <span style="position:absolute;left:-8px;top:29px;width:15px;height:15px;border-radius:50%;background:#fff;border:3px solid #9d0000"></span>
-            <span style="font:600 21px 'Work Sans',sans-serif;color:#14100e">{{ w.sv }}</span>
-          </div>
-        </sc-for>
-      </div>
-    </div>
-  </div>
-  <div style="padding:12px 40px 20px;display:flex;align-items:center;justify-content:space-between;border-top:1px solid #efeae2">
-    <button onClick="{{ clearWires }}" style="font:500 13.5px 'Work Sans',sans-serif;min-height:44px;padding:11px 18px;border:1.5px solid #cfc7bb;background:#fff;color:#555;border-radius:8px;cursor:pointer" style-hover="border-color:#9d0000;color:#9d0000"><i class="fa-solid fa-rotate-left" style="margin-right:8px"></i>{{ t.clear }}</button>
-    <div style="display:flex;align-items:center;gap:16px">
-      <span style="font:500 13px 'Work Sans',sans-serif;color:#6b625a">{{ linkCount }} / 4</span>
-      <button onClick="{{ goL2r }}" style="font:600 16px 'Work Sans',sans-serif;min-height:52px;padding:14px 30px;border:none;border-radius:8px;cursor:{{ submitCursor }};background:{{ submitBg }};color:{{ submitFg }};box-shadow:{{ submitShadow }}">{{ t.submit }}</button>
-    </div>
-  </div>
-</div>
-</sc-if>
-
-<sc-if value="{{ sL2r }}" hint-placeholder-val="{{ false }}">
-<div style="position:absolute;inset:0;display:flex;flex-direction:column;background:#fff">
-  <div style="padding:16px 40px 11px;display:flex;align-items:flex-end;justify-content:space-between;border-bottom:1px solid #efeae2">
-    <div>
-      <h2 style="margin:0;font:600 23px/1.1 'Work Sans',sans-serif;color:#14100e">{{ t.l2Results }}</h2>
-      <p style="margin:5px 0 0;font:400 13.5px 'Work Sans',sans-serif;color:#555">{{ t.resultLine }}</p>
-    </div>
-    <div style="display:flex;gap:16px">
-      <span style="display:inline-flex;align-items:center;gap:7px;font:600 14px 'Work Sans',sans-serif;color:#154d2a"><i class="fa-solid fa-check"></i>3 {{ t.rightWord }}</span>
-      <span style="display:inline-flex;align-items:center;gap:7px;font:600 14px 'Work Sans',sans-serif;color:#9d0000"><i class="fa-solid fa-xmark"></i>1 {{ t.wrongWord }}</span>
-    </div>
-  </div>
-  <div style="flex:1;position:relative;padding:14px 40px 0">
-    <svg width="100%" height="100%" style="position:absolute;inset:0;pointer-events:none">
-      <line x1="340" y1="51" x2="460" y2="51" stroke="#1f6b3a" stroke-width="3.5" stroke-linecap="round"></line>
-      <line x1="340" y1="135" x2="460" y2="219" stroke="#9d0000" stroke-width="3.5" stroke-dasharray="8 7" stroke-linecap="round"></line>
-      <line x1="340" y1="219" x2="460" y2="135" stroke="#9d0000" stroke-width="3.5" stroke-dasharray="8 7" stroke-linecap="round"></line>
-      <line x1="340" y1="303" x2="460" y2="303" stroke="#1f6b3a" stroke-width="3.5" stroke-linecap="round"></line>
-    </svg>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:120px;align-content:start">
-      <div style="display:flex;flex-direction:column;gap:10px">
-        <sc-for list="{{ picks }}" as="it" hint-placeholder-count="4">
-          <div style="height:74px;border:1.5px solid #e0d8cc;border-radius:10px;background:#fbf8f3;display:flex;align-items:center;gap:12px;padding:8px 12px">
-            <img src="{{ it.img }}" alt="" style="height:54px">
-            <span style="font:500 13px 'Work Sans',sans-serif;color:#555">{{ it.en }}</span>
-          </div>
-        </sc-for>
-      </div>
-      <div style="display:flex;flex-direction:column;gap:10px">
-        <sc-for list="{{ resWords }}" as="w" hint-placeholder-count="4">
-          <div style="height:74px;border:1.5px solid {{ w.bd }};border-left:6px solid {{ w.bd }};border-radius:10px;background:{{ w.bg }};display:flex;align-items:center;gap:12px;padding:8px 16px">
-            <i class="{{ w.icon }}" style="color:{{ w.bd }};font-size:17px"></i>
-            <div style="min-width:0">
-              <div style="font:600 19px/1.1 'Work Sans',sans-serif;color:#14100e">{{ w.sv }}</div>
-              <div style="font:400 12.5px 'Work Sans',sans-serif;color:#555;margin-top:2px">{{ w.note }}</div>
-            </div>
-          </div>
-        </sc-for>
-      </div>
-    </div>
-  </div>
-  <div style="padding:12px 40px 20px;display:flex;gap:12px;justify-content:flex-end;border-top:1px solid #efeae2">
-    <button onClick="{{ goMenu }}" style="font:500 14.5px 'Work Sans',sans-serif;min-height:52px;padding:14px 22px;border:1.5px solid #cfc7bb;background:#fff;color:#14100e;border-radius:8px;cursor:pointer" style-hover="border-color:#9d0000;color:#9d0000">{{ t.menuBtn }}</button>
-    <button onClick="{{ goDone }}" style="font:600 16px 'Work Sans',sans-serif;min-height:52px;padding:14px 28px;border:none;background:#9d0000;color:#fff;border-radius:8px;cursor:pointer;box-shadow:0 3px 0 #7a0000" style-hover="background:#8a0000">{{ t.continueBtn }}<i class="fa-solid fa-arrow-right" style="margin-left:10px"></i></button>
-  </div>
-</div>
-</sc-if>
-
-<sc-if value="{{ sL3g }}" hint-placeholder-val="{{ false }}">
-<div style="position:absolute;inset:0;display:flex;flex-direction:column;background:#fff">
-  <div style="padding:15px 26px 11px;border-bottom:1px solid #efeae2;display:flex;align-items:center;gap:18px">
-    <button onClick="{{ goMenu }}" style="width:44px;height:44px;border:1.5px solid #cfc7bb;background:#fff;color:#14100e;border-radius:8px;cursor:pointer;flex:none" style-hover="border-color:#9d0000;color:#9d0000"><i class="fa-solid fa-arrow-left"></i></button>
-    <div style="flex:1">
-      <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:7px">
-        <span style="font:600 13px 'Work Sans',sans-serif;color:#14100e">{{ t.qLabel3 }}</span>
-        <span style="font:500 13px 'Work Sans',sans-serif;color:#555"><i class="fa-solid fa-check" style="color:#1f6b3a;margin-right:5px"></i>5<span style="color:#cfc7bb;margin:0 8px">|</span><i class="fa-solid fa-xmark" style="color:#9d0000;margin-right:5px"></i>2</span>
-      </div>
-      <div style="display:flex;gap:5px">
-        <sc-for list="{{ pips3 }}" as="p" hint-placeholder-count="10">
-          <div style="flex:1;height:16px;border-radius:4px;display:flex;align-items:center;justify-content:center;background:{{ p.bg }};border:1.5px solid {{ p.bd }};color:{{ p.fg }};font-size:9px"><i class="{{ p.icon }}"></i></div>
-        </sc-for>
-      </div>
-    </div>
-  </div>
-  <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 40px">
-    <div style="width:196px;height:196px;border:1.5px solid #e0d8cc;border-radius:12px;background:#fbf8f3;display:flex;align-items:center;justify-content:center;padding:18px"><img src="images/carrot.png" alt="Food illustration" style="max-width:100%;max-height:100%"></div>
-    <p style="margin:18px 0 0;font:400 19px/1.35 'Work Sans',sans-serif;color:#555;text-align:center">{{ t.spellQ }} <strong style="color:#14100e;font-weight:600">{{ t.carrot }}</strong>?</p>
-    <div style="display:flex;gap:8px;margin-top:16px">
-      <button style="width:52px;height:48px;font:500 19px 'Work Sans',sans-serif;border:1.5px solid #cfc7bb;background:#fff;color:#14100e;border-radius:8px;cursor:pointer" style-hover="border-color:#9d0000;color:#9d0000">å</button>
-      <button style="width:52px;height:48px;font:500 19px 'Work Sans',sans-serif;border:1.5px solid #cfc7bb;background:#fff;color:#14100e;border-radius:8px;cursor:pointer" style-hover="border-color:#9d0000;color:#9d0000">ä</button>
-      <button style="width:52px;height:48px;font:500 19px 'Work Sans',sans-serif;border:1.5px solid #cfc7bb;background:#fff;color:#14100e;border-radius:8px;cursor:pointer" style-hover="border-color:#9d0000;color:#9d0000">ö</button>
-    </div>
-    <div style="display:flex;gap:12px;margin-top:12px">
-      <input value="{{ typed }}" onChange="{{ onType }}" placeholder="{{ t.typeHere }}" style="width:320px;min-height:56px;font:500 20px 'Work Sans',sans-serif;color:#14100e;text-align:center;border:2px solid #cfc7bb;border-radius:8px;padding:12px 16px;background:#fff" style-focus="border-color:#9d0000;outline:3px solid rgba(157,0,0,.18)">
-      <button onClick="{{ goL3c }}" style="font:600 16px 'Work Sans',sans-serif;min-height:56px;padding:14px 28px;border:none;background:#9d0000;color:#fff;border-radius:8px;cursor:pointer;box-shadow:0 3px 0 #7a0000" style-hover="background:#8a0000" style-active="transform:translateY(2px);box-shadow:0 1px 0 #7a0000">{{ t.submit }}</button>
-    </div>
-    <button onClick="{{ goL3w }}" style="margin-top:14px;font:500 12.5px 'Work Sans',sans-serif;color:#6b625a;background:none;border:none;text-decoration:underline;cursor:pointer">{{ t.seeWrong }}</button>
-  </div>
-</div>
-</sc-if>
-
-<sc-if value="{{ sL3c }}" hint-placeholder-val="{{ false }}">
-<div style="position:absolute;inset:0;background:#fff">
-  <div style="position:absolute;inset:0;padding:70px 40px 0;display:flex;flex-direction:column;align-items:center;opacity:.3">
-    <div style="width:180px;height:180px;border:1.5px solid #e0d8cc;border-radius:12px;background:#fbf8f3;display:flex;align-items:center;justify-content:center;padding:16px"><img src="images/carrot.png" alt="" style="max-width:100%;max-height:100%"></div>
-    <p style="margin:16px 0 0;font:400 18px 'Work Sans',sans-serif;color:#555">{{ t.spellQ }} <strong>{{ t.carrot }}</strong>?</p>
-  </div>
-  <div style="position:absolute;inset:0;background:rgba(20,16,14,.42);display:flex;align-items:center;justify-content:center">
-    <div style="width:470px;background:#fff;border-radius:14px;border-top:6px solid #1f6b3a;padding:26px 28px 24px;box-shadow:0 16px 44px rgba(0,0,0,.28);text-align:center">
-      <div style="width:70px;height:70px;border-radius:50%;background:#1f6b3a;color:#fff;display:flex;align-items:center;justify-content:center;font-size:31px;margin:0 auto"><i class="fa-solid fa-check"></i></div>
-      <h2 style="margin:15px 0 0;font:600 27px/1.1 'Work Sans',sans-serif;color:#154d2a">{{ t.correct }}</h2>
-      <p style="margin:8px 0 0;font:400 15px/1.45 'Work Sans',sans-serif;color:#555">{{ t.correctPraise }}</p>
-      <div style="display:flex;align-items:center;justify-content:center;gap:14px;margin-top:18px;padding:13px 16px;background:#f4f8f5;border:1.5px solid #cfe0d4;border-radius:10px">
-        <img src="images/carrot.png" alt="" style="height:52px">
-        <span style="font:600 27px 'Work Sans',sans-serif;color:#14100e">morot</span>
-        <button style="width:48px;height:48px;border-radius:50%;border:2px solid #1f6b3a;background:#fff;color:#1f6b3a;font-size:17px;cursor:pointer" style-hover="background:#dcecdf" aria-label="Play pronunciation"><i class="fa-solid fa-volume-high"></i></button>
-      </div>
-      <button onClick="{{ goL3g }}" style="width:100%;margin-top:18px;font:600 16px 'Work Sans',sans-serif;min-height:52px;border:none;background:#1f6b3a;color:#fff;border-radius:8px;cursor:pointer" style-hover="background:#18542d">{{ t.next }}<i class="fa-solid fa-arrow-right" style="margin-left:10px"></i></button>
-      <p style="margin:10px 0 0;font:400 12px 'Work Sans',sans-serif;color:#6b625a">{{ t.enterHint }}</p>
-    </div>
-  </div>
-</div>
-</sc-if>
-
-<sc-if value="{{ sL3w }}" hint-placeholder-val="{{ false }}">
-<div style="position:absolute;inset:0;background:#fff">
-  <div style="position:absolute;inset:0;padding:70px 40px 0;display:flex;flex-direction:column;align-items:center;opacity:.3">
-    <div style="width:180px;height:180px;border:1.5px solid #e0d8cc;border-radius:12px;background:#fbf8f3;display:flex;align-items:center;justify-content:center;padding:16px"><img src="images/carrot.png" alt="" style="max-width:100%;max-height:100%"></div>
-    <p style="margin:16px 0 0;font:400 18px 'Work Sans',sans-serif;color:#555">{{ t.spellQ }} <strong>{{ t.carrot }}</strong>?</p>
-  </div>
-  <div style="position:absolute;inset:0;background:rgba(20,16,14,.42);display:flex;align-items:center;justify-content:center">
-    <div style="width:490px;background:#fff;border-radius:14px;border-top:6px solid #9d0000;padding:24px 28px 22px;box-shadow:0 16px 44px rgba(0,0,0,.28)">
-      <div style="display:flex;align-items:center;gap:14px">
-        <div style="width:54px;height:54px;border-radius:50%;background:#9d0000;color:#fff;display:flex;align-items:center;justify-content:center;font-size:24px;flex:none"><i class="fa-solid fa-xmark"></i></div>
+  <header><h1>Game 10</h1></header>
+  <main class="game-frame">
+    <section class="al-screen is-on al-menu" id="menu">
+      <img class="al-deco" src="images/coffee.png" alt="" style="top:-26px;right:104px;width:118px;transform:rotate(-12deg)">
+      <img class="al-deco" src="images/cake.png" alt="" style="top:16px;right:-26px;width:128px;transform:rotate(9deg)">
+      <div class="al-menu-top">
         <div>
-          <h2 style="margin:0;font:600 24px/1.1 'Work Sans',sans-serif;color:#9d0000">{{ t.incorrect }}</h2>
-          <p style="margin:4px 0 0;font:400 13.5px 'Work Sans',sans-serif;color:#555">{{ t.youTyped }} <strong style="color:#14100e;font-weight:600;text-decoration:line-through">morrot</strong></p>
+          <h1 class="al-title">Ät och lär</h1>
+          <p class="al-tagline" data-i18n="tagline"></p>
         </div>
-      </div>
-      <div style="margin-top:16px;border:1.5px solid #cfe0d4;border-left:6px solid #1f6b3a;border-radius:10px;background:#f4f8f5;padding:14px 16px;display:flex;align-items:center;gap:16px">
-        <img src="images/carrot.png" alt="" style="height:74px;flex:none">
-        <div style="flex:1;min-width:0">
-          <div style="display:inline-flex;align-items:center;gap:7px;font:600 11px 'Work Sans',sans-serif;letter-spacing:.8px;text-transform:uppercase;color:#154d2a;background:#dcecdf;border-radius:4px;padding:4px 8px"><i class="fa-solid fa-check"></i>{{ t.rightPair }}</div>
-          <div style="font:600 30px/1.1 'Work Sans',sans-serif;color:#14100e;margin-top:7px">morot <span style="font-size:15px;font-weight:400;color:#555">— {{ t.carrot }}</span></div>
-        </div>
-        <button style="width:54px;height:54px;border-radius:50%;border:none;background:#9d0000;color:#fff;font-size:19px;cursor:pointer;flex:none" style-hover="background:#7a0000" aria-label="Play pronunciation"><i class="fa-solid fa-volume-high"></i></button>
-      </div>
-      <div style="display:flex;gap:10px;margin-top:16px">
-        <button onClick="{{ goL3g }}" style="flex:1;font:500 15px 'Work Sans',sans-serif;min-height:52px;border:1.5px solid #cfc7bb;background:#fff;color:#14100e;border-radius:8px;cursor:pointer" style-hover="border-color:#9d0000;color:#9d0000"><i class="fa-solid fa-rotate-left" style="margin-right:9px"></i>{{ t.tryAgain }}</button>
-        <button onClick="{{ goL3g }}" style="flex:1;font:600 16px 'Work Sans',sans-serif;min-height:52px;border:none;background:#9d0000;color:#fff;border-radius:8px;cursor:pointer" style-hover="background:#7a0000">{{ t.next }}<i class="fa-solid fa-arrow-right" style="margin-left:9px"></i></button>
-      </div>
-    </div>
-  </div>
-</div>
-</sc-if>
-
-<sc-if value="{{ sFf }}" hint-placeholder-val="{{ false }}">
-<div style="position:absolute;inset:0;display:flex;flex-direction:column;background:#fff;padding:20px 30px 26px">
-  <div style="display:flex;align-items:center;justify-content:space-between">
-    <button onClick="{{ goMenu }}" style="font:500 13px 'Work Sans',sans-serif;min-height:44px;padding:11px 16px;border:1.5px solid #cfc7bb;background:#fff;color:#14100e;border-radius:8px;cursor:pointer" style-hover="border-color:#9d0000;color:#9d0000"><i class="fa-solid fa-arrow-left" style="margin-right:8px"></i>{{ t.exit }}</button>
-    <div style="text-align:right">
-      <div style="font:600 13px 'Work Sans',sans-serif;color:#14100e">{{ t.cardLabel }}</div>
-      <div style="display:flex;gap:4px;margin-top:6px">
-        <sc-for list="{{ cardPips }}" as="p" hint-placeholder-count="10">
-          <div style="width:16px;height:8px;border-radius:99px;background:{{ p.bg }};border:1.5px solid {{ p.bd }}"></div>
-        </sc-for>
-      </div>
-    </div>
-  </div>
-  <div onClick="{{ goFb }}" style="flex:1;margin-top:16px;border:1.5px solid #e0d8cc;border-radius:16px;background:#fbf8f3;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;position:relative" style-hover="border-color:#9d0000">
-    <img src="images/milk.png" alt="Food illustration" style="max-height:300px;max-width:80%">
-    <div style="position:absolute;bottom:16px;display:flex;align-items:center;gap:9px;font:500 13.5px 'Work Sans',sans-serif;color:#6b625a"><i class="fa-solid fa-hand-pointer"></i>{{ t.tapToFlip }}</div>
-  </div>
-</div>
-</sc-if>
-
-<sc-if value="{{ sFb }}" hint-placeholder-val="{{ false }}">
-<div style="position:absolute;inset:0;display:flex;flex-direction:column;background:#fff;padding:20px 30px 26px">
-  <div style="display:flex;align-items:center;justify-content:space-between">
-    <button onClick="{{ goMenu }}" style="font:500 13px 'Work Sans',sans-serif;min-height:44px;padding:11px 16px;border:1.5px solid #cfc7bb;background:#fff;color:#14100e;border-radius:8px;cursor:pointer" style-hover="border-color:#9d0000;color:#9d0000"><i class="fa-solid fa-arrow-left" style="margin-right:8px"></i>{{ t.exit }}</button>
-    <div style="text-align:right">
-      <div style="font:600 13px 'Work Sans',sans-serif;color:#14100e">{{ t.cardLabel }}</div>
-      <div style="display:flex;gap:4px;margin-top:6px">
-        <sc-for list="{{ cardPips }}" as="p" hint-placeholder-count="10">
-          <div style="width:16px;height:8px;border-radius:99px;background:{{ p.bg }};border:1.5px solid {{ p.bd }}"></div>
-        </sc-for>
-      </div>
-    </div>
-  </div>
-  <div onClick="{{ goFf }}" style="flex:1;margin-top:16px;border:1.5px solid #e0d8cc;border-radius:16px;background:#fff;display:flex;align-items:center;gap:26px;padding:22px 30px;cursor:pointer" style-hover="border-color:#9d0000">
-    <img src="images/milk.png" alt="" style="height:180px;flex:none">
-    <div style="flex:1;min-width:0">
-      <div style="font:500 13px 'Work Sans',sans-serif;letter-spacing:1px;text-transform:uppercase;color:#6b625a">{{ t.swedish }}</div>
-      <div style="font:600 54px/1.05 'Work Sans',sans-serif;color:#14100e;margin-top:6px">mjölk</div>
-      <div style="font:400 17px 'Work Sans',sans-serif;color:#555;margin-top:8px">{{ t.milk }}</div>
-      <button style="display:flex;align-items:center;gap:13px;margin-top:16px;min-height:64px;padding:14px 24px 14px 16px;border:none;border-radius:99px;background:#9d0000;color:#fff;font:600 17px 'Work Sans',sans-serif;cursor:pointer;box-shadow:0 3px 0 #7a0000" style-hover="background:#8a0000" style-active="transform:translateY(2px);box-shadow:0 1px 0 #7a0000">
-        <span style="width:36px;height:36px;border-radius:50%;background:#fff;color:#9d0000;display:flex;align-items:center;justify-content:center;font-size:15px"><i class="fa-solid fa-play"></i></span>{{ t.listen }}
-      </button>
-    </div>
-  </div>
-  <div style="display:flex;gap:12px;margin-top:14px">
-    <button onClick="{{ goFf }}" style="flex:1;min-height:60px;font:600 17px 'Work Sans',sans-serif;border:2px solid #14100e;background:#fff;color:#14100e;border-radius:10px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:11px" style-hover="background:#f4f1ec"><i class="fa-solid fa-rotate-left"></i>{{ t.repeat }}</button>
-    <button onClick="{{ goDone }}" style="flex:1;min-height:60px;font:600 17px 'Work Sans',sans-serif;border:none;background:#1f6b3a;color:#fff;border-radius:10px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:11px;box-shadow:0 3px 0 #164d29" style-hover="background:#18542d"><i class="fa-solid fa-check"></i>{{ t.gotIt }}</button>
-  </div>
-</div>
-</sc-if>
-
-<sc-if value="{{ sDone }}" hint-placeholder-val="{{ false }}">
-<div style="position:absolute;inset:0;background:#fff;padding:30px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;position:relative;overflow:hidden">
-  <img src="images/apple.png" alt="" style="position:absolute;left:-20px;top:30px;width:110px;opacity:.1;transform:rotate(-14deg)">
-  <img src="images/fish.png" alt="" style="position:absolute;right:-14px;bottom:40px;width:130px;opacity:.1;transform:rotate(10deg)">
-  <span style="font:600 12px/1 'Work Sans',sans-serif;letter-spacing:1.4px;text-transform:uppercase;color:#9d0000">{{ t.levelWord }} 2</span>
-  <h1 style="margin:12px 0 0;font:600 36px/1.12 'Work Sans',sans-serif;color:#14100e;max-width:560px;text-wrap:pretty">{{ t.doneTitle }}</h1>
-  <div style="display:flex;align-items:flex-end;gap:8px;margin-top:20px">
-    <span style="font:600 76px/1 'Work Sans',sans-serif;color:#9d0000">8</span>
-    <span style="font:500 24px/1 'Work Sans',sans-serif;color:#6b625a;padding-bottom:9px">/ 10</span>
-  </div>
-  <div style="display:flex;gap:5px;margin-top:16px;width:420px">
-    <sc-for list="{{ pipsDone }}" as="p" hint-placeholder-count="10">
-      <div style="flex:1;height:20px;border-radius:4px;display:flex;align-items:center;justify-content:center;background:{{ p.bg }};border:1.5px solid {{ p.bd }};color:{{ p.fg }};font-size:10px"><i class="{{ p.icon }}"></i></div>
-    </sc-for>
-  </div>
-  <p style="margin:16px 0 0;font:400 15px/1.5 'Work Sans',sans-serif;color:#555;max-width:470px;text-wrap:pretty">{{ t.doneBody }}</p>
-  <div style="display:flex;gap:12px;margin-top:24px">
-    <button onClick="{{ goMenu }}" style="font:500 15px 'Work Sans',sans-serif;min-height:52px;padding:14px 22px;border:1.5px solid #cfc7bb;background:#fff;color:#14100e;border-radius:8px;cursor:pointer" style-hover="border-color:#9d0000;color:#9d0000">{{ t.menuBtn }}</button>
-    <button onClick="{{ goL2g }}" style="font:500 15px 'Work Sans',sans-serif;min-height:52px;padding:14px 22px;border:1.5px solid #cfc7bb;background:#fff;color:#14100e;border-radius:8px;cursor:pointer" style-hover="border-color:#9d0000;color:#9d0000"><i class="fa-solid fa-rotate-left" style="margin-right:9px"></i>{{ t.playAgain }}</button>
-    <button onClick="{{ goL3g }}" style="font:600 16px 'Work Sans',sans-serif;min-height:52px;padding:14px 28px;border:none;background:#9d0000;color:#fff;border-radius:8px;cursor:pointer;box-shadow:0 3px 0 #7a0000" style-hover="background:#8a0000">{{ t.nextLevel }}<i class="fa-solid fa-arrow-right" style="margin-left:10px"></i></button>
-  </div>
-</div>
-</sc-if>
-
-</div>
-
-<div style="display:flex;align-items:baseline;gap:11px;margin:38px 0 6px">
-<span style="font:600 10px ui-monospace,Menlo,monospace;padding:3px 7px;background:#14100e;color:#fff;border-radius:4px">1b</span>
-<span style="font:600 14px/1.2 'Work Sans',sans-serif;color:#14100e">Style tile</span>
-</div>
-<div style="width:800px;background:#fff;box-shadow:0 8px 30px rgba(20,16,14,.14);padding:26px 30px 30px">
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:30px">
-    <div>
-      <div style="font:600 11px 'Work Sans',sans-serif;letter-spacing:1.1px;text-transform:uppercase;color:#6b625a">Palette</div>
-      <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:11px">
-        <sc-for list="{{ swatches }}" as="s" hint-placeholder-count="7">
-          <div style="width:96px">
-            <div style="height:52px;border-radius:6px;background:{{ s.hex }};border:1px solid rgba(20,16,14,.12)"></div>
-            <div style="font:600 11px 'Work Sans',sans-serif;color:#14100e;margin-top:5px">{{ s.name }}</div>
-            <div style="font:400 10.5px ui-monospace,Menlo,monospace;color:#6b625a">{{ s.hex }}</div>
+        <div class="al-menu-meta">
+          <div class="al-lang">
+            <button type="button" data-lang="en">EN</button>
+            <button type="button" data-lang="sv">SV</button>
           </div>
-        </sc-for>
-      </div>
-      <div style="font:600 11px 'Work Sans',sans-serif;letter-spacing:1.1px;text-transform:uppercase;color:#6b625a;margin-top:22px">Feedback tokens</div>
-      <div style="display:flex;gap:10px;margin-top:11px">
-        <div style="flex:1;border:1.5px solid #1f6b3a;border-left:6px solid #1f6b3a;border-radius:8px;background:#e8f2ec;padding:11px 13px;display:flex;align-items:center;gap:10px">
-          <i class="fa-solid fa-check" style="color:#1f6b3a"></i><span style="font:600 13.5px 'Work Sans',sans-serif;color:#154d2a">Correct</span>
-        </div>
-        <div style="flex:1;border:1.5px solid #9d0000;border-left:6px solid #9d0000;border-radius:8px;background:#fbeceb;padding:11px 13px;display:flex;align-items:center;gap:10px">
-          <i class="fa-solid fa-xmark" style="color:#9d0000"></i><span style="font:600 13.5px 'Work Sans',sans-serif;color:#9d0000">Incorrect</span>
+          <div class="al-learned"><strong id="learned-count">0</strong> / <span id="learned-total">0</span> <span data-i18n="learned"></span></div>
+          <div class="al-bar"><span id="learned-bar"></span></div>
         </div>
       </div>
-      <p style="margin:9px 0 0;font:400 12px/1.45 'Work Sans',sans-serif;color:#6b625a">Colour never carries the message alone: solid fill + glyph + word, plus a dashed stroke for wrong wires and a solid stroke for right ones.</p>
-    </div>
-    <div>
-      <div style="font:600 11px 'Work Sans',sans-serif;letter-spacing:1.1px;text-transform:uppercase;color:#6b625a">Work Sans scale</div>
-      <div style="margin-top:9px;border-top:1px solid #efeae2">
-        <sc-for list="{{ typeScale }}" as="ty" hint-placeholder-count="6">
-          <div style="display:flex;align-items:baseline;gap:14px;padding:7px 0;border-bottom:1px solid #efeae2">
-            <span style="width:112px;flex:none;font:400 10.5px ui-monospace,Menlo,monospace;color:#6b625a">{{ ty.spec }}</span>
-            <span style="font-family:'Work Sans',sans-serif;font-size:{{ ty.size }};font-weight:{{ ty.weight }};color:{{ ty.color }};line-height:1.1">{{ ty.sample }}</span>
+      <div class="al-rule-line"></div>
+      <div class="al-menu-grid">
+        <button type="button" class="al-learn-card" id="open-learn">
+          <span class="al-badge" data-i18n="noScore"></span>
+          <h2 data-i18n="learning"></h2>
+          <p data-i18n="learningDesc"></p>
+          <div class="al-learn-art">
+            <img src="images/cinnamon_roll.png" alt="" style="left:0;bottom:4px;width:96px;transform:rotate(-7deg)">
+            <img src="images/coffee.png" alt="" style="left:74px;bottom:14px;width:84px;transform:rotate(6deg)">
+            <img src="images/cheese.png" alt="" style="right:-6px;bottom:0;width:90px;transform:rotate(-3deg)">
           </div>
-        </sc-for>
+          <div class="al-learn-go"><i class="fa-solid fa-volume-high"></i><span data-i18n="openCards"></span><i class="fa-solid fa-arrow-right"></i></div>
+        </button>
+        <div class="al-levels">
+          <button type="button" class="al-level-card" data-level="1">
+            <span class="al-level-n">1</span>
+            <div style="flex:1;min-width:0">
+              <h3 data-i18n="l1"></h3>
+              <p data-i18n="l1Desc"></p>
+              <div class="al-level-score" data-score="1"></div>
+            </div>
+            <img src="images/apple.png" alt="" style="transform:rotate(5deg)">
+          </button>
+          <button type="button" class="al-level-card" data-level="2">
+            <span class="al-level-n">2</span>
+            <div style="flex:1;min-width:0">
+              <h3 data-i18n="l2"></h3>
+              <p data-i18n="l2Desc"></p>
+              <div class="al-level-score" data-score="2"></div>
+            </div>
+            <img src="images/fish.png" alt="" style="transform:rotate(-6deg)">
+          </button>
+          <button type="button" class="al-level-card" data-level="3">
+            <span class="al-level-n">3</span>
+            <div style="flex:1;min-width:0">
+              <h3 data-i18n="l3"></h3>
+              <p data-i18n="l3Desc"></p>
+              <div class="al-level-score" data-score="3"></div>
+            </div>
+            <img src="images/potato.png" alt="" style="transform:rotate(8deg)">
+          </button>
+        </div>
       </div>
-      <div style="font:600 11px 'Work Sans',sans-serif;letter-spacing:1.1px;text-transform:uppercase;color:#6b625a;margin-top:20px">Button states</div>
-      <div style="display:flex;flex-wrap:wrap;gap:9px;margin-top:11px">
-        <div><button style="min-height:48px;padding:13px 20px;font:600 15px 'Work Sans',sans-serif;border:none;background:#9d0000;color:#fff;border-radius:8px;box-shadow:0 3px 0 #7a0000">Submit</button><div style="font:400 10.5px 'Work Sans',sans-serif;color:#6b625a;margin-top:5px">default</div></div>
-        <div><button style="min-height:48px;padding:13px 20px;font:600 15px 'Work Sans',sans-serif;border:none;background:#8a0000;color:#fff;border-radius:8px;box-shadow:0 3px 0 #7a0000">Submit</button><div style="font:400 10.5px 'Work Sans',sans-serif;color:#6b625a;margin-top:5px">hover</div></div>
-        <div><button style="min-height:48px;padding:13px 20px;font:600 15px 'Work Sans',sans-serif;border:none;background:#7a0000;color:#fff;border-radius:8px;box-shadow:0 1px 0 #7a0000;transform:translateY(2px)">Submit</button><div style="font:400 10.5px 'Work Sans',sans-serif;color:#6b625a;margin-top:7px">pressed</div></div>
-        <div><button style="min-height:48px;padding:13px 20px;font:600 15px 'Work Sans',sans-serif;border:1.5px solid #ded7cd;background:#f4f1ec;color:#a49a90;border-radius:8px">Submit</button><div style="font:400 10.5px 'Work Sans',sans-serif;color:#6b625a;margin-top:5px">disabled</div></div>
-        <div><button style="min-height:48px;padding:13px 20px;font:600 15px 'Work Sans',sans-serif;border:2px solid #9d0000;background:#fff;color:#9d0000;border-radius:8px;outline:3px solid rgba(157,0,0,.22)">Submit</button><div style="font:400 10.5px 'Work Sans',sans-serif;color:#6b625a;margin-top:5px">keyboard focus</div></div>
+      <div class="al-menu-foot">
+        <span data-i18n="footnote"></span>
+        <button type="button" class="al-link" id="reset-open" data-i18n="reset"></button>
+      </div>
+    </section>
+
+    <div class="al-modal" id="reset-modal">
+      <div class="al-dialog">
+        <div style="display:flex;align-items:center;gap:13px">
+          <div class="al-mark al-mark-no"><i class="fa-solid fa-triangle-exclamation"></i></div>
+          <h2 data-i18n="resetTitle"></h2>
+        </div>
+        <p data-i18n="resetBody"></p>
+        <div class="al-dialog-row">
+          <button type="button" class="al-btn al-btn-ghost" id="reset-cancel" data-i18n="cancel"></button>
+          <button type="button" class="al-btn al-btn-primary" id="reset-confirm" data-i18n="resetConfirm"></button>
+        </div>
       </div>
     </div>
-  </div>
-</div>
-<p style="margin:20px 0 0;font:400 12px/1.5 'Work Sans',sans-serif;color:#6b625a;max-width:660px">Try next: "make the menu cards photographic instead of recipe-lined" · "show the L2 wires in a second colour-blind-safe pair" · "new directions for the feedback bar".</p>
-</section>
-</x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:880,&quot;height&quot;:760}}">
-const STR = {
-  en: {
-    tagline: "Swedish food words — 64 of them, at your own pace",
-    learned: "words learned", learning: "Learning Mode", noScore: "No score, no timer",
-    learningDesc: "Flip cards, hear the word, keep the ones you know.",
-    openCards: "Open the cards", best: "Best", notYet: "Not played yet",
-    l1: "Picture to Swedish word", l1Desc: "Does the word match the picture? True or false.",
-    l2: "Match the pairs", l2Desc: "Drag a line from each picture to its Swedish word.",
-    l3: "Spell it yourself", l3Desc: "Type the Swedish word for the food you see.",
-    footnote: "All levels are open. Pick whichever challenge you want.",
-    reset: "Reset progress",
-    resetTitle: "Reset all progress?", resetBody: "This clears your best scores and the 18 words you have learned. It cannot be undone.",
-    cancel: "Cancel", resetConfirm: "Reset everything",
-    levelWord: "Level", l1Long: "You will see a picture and a Swedish word. Press True if they belong together, False if they do not.",
-    start: "Start level", tenQ: "10 questions · about 2 minutes", menuBtn: "Menu",
-    qLabel: "Question 5 of 10", qLabel3: "Question 8 of 10", roundLabel: "Round 3 of 10",
-    matchQ: "Does this word match?", trueBtn: "TRUE", falseBtn: "FALSE",
-    correct: "Correct", incorrect: "Not quite", next: "Next question",
-    cinnamonRoll: "cinnamon roll", milk: "milk", carrot: "carrot",
-    wrongHint: "Here is the pair to remember.", rightPair: "Correct pair",
-    youSaw: "The word you saw was", dragHint: "Drag from a picture to a word",
-    clear: "Clear lines", submit: "Submit", l2Results: "Round 3 results",
-    resultLine: "Solid line = correct pair. Dashed line = wrong pair.",
-    rightWord: "correct", wrongWord: "wrong", continueBtn: "Continue",
-    spellQ: "What is the Swedish word for", typeHere: "Type the Swedish word",
-    seeWrong: "See the incorrect state", correctPraise: "Spelling and letters both right.",
-    enterHint: "Press Enter to continue", youTyped: "You typed", tryAgain: "Try again",
-    exit: "Exit", cardLabel: "Card 4 of 10", tapToFlip: "Tap the card to see the word",
-    swedish: "Swedish", listen: "Listen", repeat: "Repeat", gotIt: "I got it",
-    doneTitle: "Round finished — matching pairs", doneBody: "Two words are still shaky: fisk and ost. Learning Mode keeps them in the deck for you.",
-    playAgain: "Play again", nextLevel: "Level 3"
-  },
-  sv: {
-    tagline: "Svenska matord — sextiofyra stycken, i din egen takt",
-    learned: "inlärda ord", learning: "Inlärningsläge", noScore: "Inga poäng, ingen tidtagning",
-    learningDesc: "Vänd korten, lyssna på uttalet och behåll orden du redan kan.",
-    openCards: "Öppna ordkorten", best: "Bästa resultat", notYet: "Inte spelad ännu",
-    l1: "Från bild till svenskt ord", l1Desc: "Stämmer ordet med bilden? Sant eller falskt.",
-    l2: "Matcha ihop paren", l2Desc: "Dra en linje från varje bild till rätt svenskt ord.",
-    l3: "Stava ordet själv", l3Desc: "Skriv det svenska ordet för maten du ser på bilden.",
-    footnote: "Alla nivåer är öppna. Välj själv vilken utmaning du vill ta.",
-    reset: "Återställ framsteg",
-    resetTitle: "Vill du återställa alla framsteg?", resetBody: "Detta tar bort dina bästa resultat och de arton orden du har lärt dig. Det går inte att ångra.",
-    cancel: "Avbryt", resetConfirm: "Återställ allting",
-    levelWord: "Nivå", l1Long: "Du får se en bild och ett svenskt ord. Tryck på Sant om de hör ihop och Falskt om de inte gör det.",
-    start: "Starta nivån", tenQ: "10 frågor · cirka två minuter", menuBtn: "Huvudmeny",
-    qLabel: "Fråga 5 av 10", qLabel3: "Fråga 8 av 10", roundLabel: "Omgång 3 av 10",
-    matchQ: "Stämmer det här ordet?", trueBtn: "SANT", falseBtn: "FALSKT",
-    correct: "Helt rätt", incorrect: "Inte riktigt", next: "Nästa fråga",
-    cinnamonRoll: "kanelbulle", milk: "mjölk", carrot: "morot",
-    wrongHint: "Här är paret du ska komma ihåg.", rightPair: "Rätt par",
-    youSaw: "Ordet du såg var", dragHint: "Dra från en bild till ett ord",
-    clear: "Rensa linjerna", submit: "Skicka svaret", l2Results: "Resultat för omgång 3",
-    resultLine: "Heldragen linje betyder rätt par. Streckad linje betyder fel par.",
-    rightWord: "rätt", wrongWord: "fel", continueBtn: "Fortsätt",
-    spellQ: "Vad är det svenska ordet för", typeHere: "Skriv det svenska ordet",
-    seeWrong: "Visa läget för felaktigt svar", correctPraise: "Både stavningen och bokstäverna blev rätt.",
-    enterHint: "Tryck på Enter för att fortsätta", youTyped: "Du skrev", tryAgain: "Försök igen",
-    exit: "Avsluta", cardLabel: "Kort 4 av 10", tapToFlip: "Tryck på kortet för att se ordet",
-    swedish: "Svenska", listen: "Lyssna på uttalet", repeat: "Repetera", gotIt: "Jag kan ordet",
-    doneTitle: "Omgången är klar — matcha ihop paren", doneBody: "Två ord sitter fortfarande löst: fisk och ost. Inlärningsläget behåller dem i kortleken åt dig.",
-    playAgain: "Spela igen", nextLevel: "Nivå 3"
-  }
-};
-const OK = { bg: "#1f6b3a", bd: "#1f6b3a", fg: "#fff", icon: "fa-solid fa-check" };
-const NO = { bg: "#9d0000", bd: "#9d0000", fg: "#fff", icon: "fa-solid fa-xmark" };
-const NOW = { bg: "#fff", bd: "#14100e", fg: "#14100e", icon: "fa-solid fa-circle" };
-const TODO = { bg: "#f4f1ec", bd: "#e0d8cc", fg: "#f4f1ec", icon: "fa-solid fa-minus" };
-const pipRow = (marks, cur) => Array.from({ length: 10 }, (_, i) =>
-  marks[i] === 1 ? OK : marks[i] === 0 ? NO : i === cur ? NOW : TODO);
-
-const PICKS = [
-  { img: "images/fish.png", en: "fish" },
-  { img: "images/cheese.png", en: "cheese" },
-  { img: "images/potato.png", en: "potato" },
-  { img: "images/banana.png", en: "banana" }
-];
-const SVW = ["fisk", "ost", "potatis", "banan"];
-
-class Component extends DCLogic {
-  state = { screen: "menu", lang: "en", cb: false, links: [], drag: null, typed: "morot" };
-
-  go = (s) => () => this.setState({ screen: s });
-  nodeXY(side, i) { return { x: side === "l" ? 340 : 460, y: 51 + i * 84 }; }
-
-  startDrag = (i) => (e) => {
-    const r = this.stage.getBoundingClientRect();
-    this.setState({ drag: { i, x: e.clientX - r.left, y: e.clientY - r.top } });
-  };
-  move = (e) => {
-    if (!this.state.drag) return;
-    const r = this.stage.getBoundingClientRect();
-    this.setState({ drag: { ...this.state.drag, x: e.clientX - r.left, y: e.clientY - r.top } });
-  };
-  drop = (j) => () => {
-    const d = this.state.drag;
-    if (!d) return;
-    const links = this.state.links.filter(l => l.i !== d.i && l.j !== j).concat([{ i: d.i, j }]);
-    this.setState({ links, drag: null });
-  };
-
-  renderVals() {
-    const s = this.state.screen, t = STR[this.state.lang], en = this.state.lang === "en";
-    const scr = (n) => s === n;
-    const navItems = [["Menu","menu"],["L1 intro","l1i"],["L1 game","l1g"],["L1 correct","l1c"],["L1 wrong","l1w"],["L2 match","l2g"],["L2 results","l2r"],["L3 spell","l3g"],["L3 correct","l3c"],["L3 wrong","l3w"],["Card front","ff"],["Card back","fb"],["Complete","done"],["Reset","reset"]];
-    const links = this.state.links, d = this.state.drag;
-
-    return {
-      t,
-      nav: navItems.map(([label, k]) => ({
-        label, go: this.go(k),
-        bg: s === k ? "#14100e" : "#fff",
-        fg: s === k ? "#fff" : "#14100e",
-        bd: s === k ? "#14100e" : "#cfc7bb"
-      })),
-      setEn: () => this.setState({ lang: "en" }),
-      setSv: () => this.setState({ lang: "sv" }),
-      enBg: en ? "#9d0000" : "#fff", enFg: en ? "#fff" : "#9d0000",
-      svBg: en ? "#fff" : "#9d0000", svFg: en ? "#9d0000" : "#fff",
-      toggleCb: () => this.setState({ cb: !this.state.cb }),
-      cbBg: this.state.cb ? "#e9e5de" : "#fff",
-      cbFilter: this.state.cb ? "grayscale(1)" : "none",
-
-      sMenu: scr("menu"), sReset: scr("reset"), sL1i: scr("l1i"), sL1g: scr("l1g"),
-      sL1c: scr("l1c"), sL1w: scr("l1w"), sL2g: scr("l2g"), sL2r: scr("l2r"),
-      sL3g: scr("l3g"), sL3c: scr("l3c"), sL3w: scr("l3w"),
-      sFf: scr("ff"), sFb: scr("fb"), sDone: scr("done"),
-      goMenu: this.go("menu"), goReset: this.go("reset"), goL1i: this.go("l1i"),
-      goL1g: this.go("l1g"), goL1c: this.go("l1c"), goL1w: this.go("l1w"),
-      goL2g: this.go("l2g"), goL2r: this.go("l2r"), goL3g: this.go("l3g"),
-      goL3c: this.go("l3c"), goL3w: this.go("l3w"), goFf: this.go("ff"),
-      goFb: this.go("fb"), goDone: this.go("done"),
-
-      levels: [
-        { n: "1", title: t.l1, desc: t.l1Desc, score: t.best + " 8/10", icon: "fa-solid fa-star", iconColor: "#9d0000", img: "images/apple.png", rot: "5deg", go: this.go("l1i") },
-        { n: "2", title: t.l2, desc: t.l2Desc, score: t.best + " 6/10", icon: "fa-solid fa-star", iconColor: "#9d0000", img: "images/fish.png", rot: "-6deg", go: this.go("l2g") },
-        { n: "3", title: t.l3, desc: t.l3Desc, score: t.notYet, icon: "fa-regular fa-circle", iconColor: "#6b625a", img: "images/potato.png", rot: "8deg", go: this.go("l3g") }
-      ],
-
-      pips: pipRow([1, 1, 0, 1], 4),
-      pipsC: pipRow([1, 1, 0, 1, 1], 5),
-      pipsW: pipRow([1, 1, 0, 1, 0], 5),
-      pips2: pipRow([1, 0], 2),
-      pips3: pipRow([1, 1, 0, 1, 1, 0, 1], 7),
-      pipsDone: pipRow([1, 1, 0, 1, 1, 1, 0, 1, 1, 1], -1),
-      cardPips: [OK, OK, OK, NOW, TODO, TODO, TODO, TODO, TODO, TODO],
-
-      stageRef: (el) => { if (el) this.stage = el; },
-      onMove: this.move, onUp: () => this.setState({ drag: null }),
-      clearWires: () => this.setState({ links: [] }),
-      picks: PICKS.map((p, i) => ({
-        ...p, onDown: this.startDrag(i),
-        bd: links.some(l => l.i === i) ? "#9d0000" : "#e0d8cc"
-      })),
-      words: SVW.map((sv, j) => ({
-        sv, onDrop: this.drop(j),
-        bd: links.some(l => l.j === j) ? "#9d0000" : "#e0d8cc"
-      })),
-      wires: links.map(l => {
-        const a = this.nodeXY("l", l.i), b = this.nodeXY("r", l.j);
-        return { x1: a.x, y1: a.y, x2: b.x, y2: b.y };
-      }),
-      dragging: !!d,
-      dx1: d ? this.nodeXY("l", d.i).x : 0, dy1: d ? this.nodeXY("l", d.i).y : 0,
-      dx2: d ? d.x : 0, dy2: d ? d.y : 0,
-      linkCount: links.length,
-      submitBg: links.length === 4 ? "#9d0000" : "#f4f1ec",
-      submitFg: links.length === 4 ? "#fff" : "#a49a90",
-      submitShadow: links.length === 4 ? "0 3px 0 #7a0000" : "none",
-      submitCursor: links.length === 4 ? "pointer" : "not-allowed",
-
-      resWords: [
-        { sv: "fisk", note: en ? "fish — your line was right" : "fisk — din linje var rätt", bd: "#1f6b3a", bg: "#e8f2ec", icon: "fa-solid fa-check" },
-        { sv: "ost", note: en ? "cheese — you linked this to potato" : "ost — du kopplade den till potatis", bd: "#9d0000", bg: "#fbeceb", icon: "fa-solid fa-xmark" },
-        { sv: "potatis", note: en ? "potato — you linked this to cheese" : "potatis — du kopplade den till ost", bd: "#9d0000", bg: "#fbeceb", icon: "fa-solid fa-xmark" },
-        { sv: "banan", note: en ? "banana — your line was right" : "banan — din linje var rätt", bd: "#1f6b3a", bg: "#e8f2ec", icon: "fa-solid fa-check" }
-      ],
-
-      typed: this.state.typed,
-      onType: (e) => this.setState({ typed: e.target.value }),
-
-      swatches: [
-        { name: "Primary red", hex: "#9d0000" }, { name: "Red pressed", hex: "#7a0000" },
-        { name: "Ink", hex: "#14100e" }, { name: "Body gray", hex: "#555555" },
-        { name: "Paper", hex: "#FBF8F3" }, { name: "Rule", hex: "#E0D8CC" },
-        { name: "Correct green", hex: "#1F6B3A" }
-      ],
-      typeScale: [
-        { spec: "600 · 34/36px", sample: "Ät och lär", size: "34px", weight: "600", color: "#14100e" },
-        { spec: "600 · 24px", sample: "Round 3 results", size: "24px", weight: "600", color: "#14100e" },
-        { spec: "600 · 48px word", sample: "kanelbulle", size: "40px", weight: "600", color: "#14100e" },
-        { spec: "400 · 16px body", sample: "Press True if they belong together.", size: "16px", weight: "400", color: "#555" },
-        { spec: "600 · 13px label", sample: "Question 5 of 10", size: "13px", weight: "600", color: "#14100e" },
-        { spec: "600 · 11px caps", sample: "CORRECT PAIR", size: "11px", weight: "600", color: "#9d0000" }
-      ]
-    };
-  }
-}
-</script>
+  </main>
+  <footer><small>Created as part of the "Software Engineering and Project Management" course 2025</small></footer>
 </body>
 </html>

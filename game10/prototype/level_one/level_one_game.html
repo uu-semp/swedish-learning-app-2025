@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en" data-root="../../.." data-images="../images">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Ät och lär — Level 1</title>
+  <link rel="stylesheet" href="../../../style.css" />
+  <!-- You are allowed to use JQuery and Vue.js but don't have to. They just make a
+  lot of things easier
+  -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <link rel="stylesheet" href="../index.css" />
+  <link rel="stylesheet" href="level_one_game.css" />
+  <script src="../../../scripts/vocabulary.js"></script>
+  <script src="../../../scripts/save.js"></script>
+  <script type="module" src="level_one_game.js"></script>
+</head>
+<body>
+  <header><h1>Game 10</h1></header>
+  <main class="game-frame">
+    <section class="al-screen is-on" id="play">
+      <div class="al-hud">
+        <button type="button" class="al-btn al-btn-icon js-menu"><i class="fa-solid fa-arrow-left"></i></button>
+        <div class="al-hud-main">
+          <div class="al-hud-row">
+            <span class="al-hud-label" id="q-label"></span>
+            <span class="al-hud-score" id="live-score"></span>
+          </div>
+          <div class="al-pips" id="pips"></div>
+        </div>
+      </div>
+      <div class="al-play">
+        <div class="al-pic"><img id="play-img" alt=""></div>
+        <div class="al-word-block">
+          <small data-i18n="matchQ"></small>
+          <strong id="play-word"></strong>
+          <div class="al-word-rule"></div>
+        </div>
+      </div>
+      <div class="al-actions">
+        <button type="button" class="al-btn al-btn-choice" id="true-btn"><i class="fa-solid fa-check"></i><span data-i18n="trueBtn"></span></button>
+        <button type="button" class="al-btn al-btn-choice" id="false-btn"><i class="fa-solid fa-xmark"></i><span data-i18n="falseBtn"></span></button>
+      </div>
+    </section>
+
+    <section class="al-screen" id="correct">
+      <div class="al-hud" style="opacity:.5">
+        <div class="al-hud-main">
+          <div class="al-hud-row">
+            <span class="al-hud-label" id="q-label-ok"></span>
+            <span class="al-hud-score" id="live-score-ok"></span>
+          </div>
+          <div class="al-pips" id="pips-ok"></div>
+        </div>
+      </div>
+      <div class="al-play al-dim">
+        <div class="al-pic" style="width:186px;height:186px"><img id="ok-img" alt=""></div>
+        <div class="al-word-block"><strong id="ok-word" style="font-size:40px"></strong></div>
+      </div>
+      <div class="al-fb-ok">
+        <div class="al-mark al-mark-ok"><i class="fa-solid fa-check"></i></div>
+        <div style="flex:1">
+          <div class="al-fb-title al-ok-title" data-i18n="correct"></div>
+          <div id="ok-meaning" style="font:400 15px/1.4 'Work Sans',sans-serif;color:#2c5c3d;margin-top:5px"></div>
+        </div>
+        <button type="button" class="al-audio al-audio-ok js-audio" aria-label="Play"><i class="fa-solid fa-volume-high"></i></button>
+        <button type="button" class="al-btn al-btn-green js-next"><span data-i18n="next"></span><i class="fa-solid fa-arrow-right"></i></button>
+      </div>
+    </section>
+
+    <section class="al-screen" id="wrong">
+      <div class="al-hud" style="opacity:.5">
+        <div class="al-hud-main">
+          <div class="al-hud-row">
+            <span class="al-hud-label" id="q-label-no"></span>
+            <span class="al-hud-score" id="live-score-no"></span>
+          </div>
+          <div class="al-pips" id="pips-no"></div>
+        </div>
+      </div>
+      <div class="al-fb-no">
+        <div style="display:flex;align-items:center;gap:15px;margin-bottom:16px">
+          <div class="al-mark al-mark-no"><i class="fa-solid fa-xmark"></i></div>
+          <div>
+            <div class="al-fb-title al-no-title" data-i18n="incorrect"></div>
+            <div style="font:400 14px/1.4 'Work Sans',sans-serif;margin-top:4px" data-i18n="wrongHint"></div>
+          </div>
+        </div>
+        <div class="al-pair-card">
+          <img id="no-img" alt="">
+          <div style="flex:1">
+            <div class="al-chip-ok" style="background:#dcecdf;border:none"><i class="fa-solid fa-check"></i><span data-i18n="rightPair"></span></div>
+            <div id="no-sv" style="font:600 32px/1.1 'Work Sans',sans-serif;color:#14100e;margin-top:9px"></div>
+            <div id="no-en" style="font:400 15px 'Work Sans',sans-serif;margin-top:3px"></div>
+          </div>
+          <button type="button" class="al-audio js-audio" aria-label="Play"><i class="fa-solid fa-volume-high"></i></button>
+        </div>
+        <div id="no-saw" style="display:flex;align-items:center;gap:9px;margin-top:13px;font:400 13.5px 'Work Sans',sans-serif;color:#6b625a"></div>
+      </div>
+      <div class="al-foot-next">
+        <button type="button" class="al-btn al-btn-primary js-next"><span data-i18n="next"></span><i class="fa-solid fa-arrow-right"></i></button>
+      </div>
+    </section>
+
+    <section class="al-screen al-done" id="done">
+      <span class="al-kicker"><span data-i18n="levelWord"></span> 1</span>
+      <h1 style="margin:12px 0 0;font:600 36px/1.12 'Work Sans',sans-serif;color:#14100e" data-i18n="doneTitle"></h1>
+      <div class="al-big-score"><b id="done-score">0</b><span>/ 10</span></div>
+      <div class="al-pips" id="pips-done" style="width:420px;margin-top:16px"></div>
+      <p id="done-note" style="margin:16px 0 0;max-width:470px"></p>
+      <div class="al-done-actions">
+        <a class="al-btn al-btn-ghost" href="../index.html" data-i18n="menuBtn" style="display:flex;align-items:center"></a>
+        <a class="al-btn al-btn-ghost" href="level_one.html" id="again"><i class="fa-solid fa-rotate-left" style="margin-right:9px"></i><span data-i18n="playAgain"></span></a>
+        <a class="al-btn al-btn-primary" id="next-level" href="../level_two/level_two.html" style="display:none;align-items:center"><span data-i18n="nextLevel"></span><i class="fa-solid fa-arrow-right" style="margin-left:10px"></i></a>
+      </div>
+    </section>
+  </main>
+  <footer><small>Created as part of the "Software Engineering and Project Management" course 2025</small></footer>
+</body>
+</html>

@@ -1,0 +1,121 @@
+<!doctype html>
+
+<!--
+=================================================
+Owned by Game 10
+=================================================
+-->
+
+<html lang="en" data-root="../../.." data-images="../images">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Ät och lär — Level 3</title>
+  <link rel="stylesheet" href="../../../style.css" />
+  <!-- You are allowed to use JQuery and Vue.js but don't have to. They just make a
+  lot of things easier
+  -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <link rel="stylesheet" href="../index.css" />
+  <link rel="stylesheet" href="game_page.css" />
+  <script src="../../../scripts/vocabulary.js"></script>
+  <script src="../../../scripts/save.js"></script>
+  <script src="game_logic.js"></script>
+  <script type="module" src="game_page.js"></script>
+</head>
+<body>
+  <header><h1>Game 10</h1></header>
+  <main class="game-frame" id="app">
+    <section class="al-screen is-on al-intro" id="intro">
+      <a class="al-btn al-btn-ghost" href="../index.html" style="align-self:flex-start"><i class="fa-solid fa-arrow-left" style="margin-right:8px"></i><span data-i18n="menuBtn"></span></a>
+      <div class="al-intro-body">
+        <span class="al-kicker"><span data-i18n="levelWord"></span> 3</span>
+        <h1 data-i18n="l3"></h1>
+        <p data-i18n="l3Desc"></p>
+        <button type="button" class="al-btn al-btn-primary" id="start" style="margin-top:24px" data-i18n="start"></button>
+        <p class="al-hint" data-i18n="tenQ"></p>
+      </div>
+    </section>
+
+    <section class="al-screen" id="play">
+      <div class="al-hud">
+        <button type="button" class="al-btn al-btn-icon js-menu"><i class="fa-solid fa-arrow-left"></i></button>
+        <div class="al-hud-main">
+          <div class="al-hud-row">
+            <span class="al-hud-label" id="q-label"></span>
+            <span class="al-hud-score" id="live-score"></span>
+          </div>
+          <div class="al-pips" id="pips"></div>
+        </div>
+      </div>
+      <div class="al-spell">
+        <div class="al-pic"><img id="play-img" alt=""></div>
+        <p class="al-spell-q"><span data-i18n="spellQ"></span> <strong id="play-en"></strong>?</p>
+        <div class="al-chars">
+          <button type="button" data-char="å">å</button>
+          <button type="button" data-char="ä">ä</button>
+          <button type="button" data-char="ö">ö</button>
+        </div>
+        <form class="al-spell-row" id="spell-form">
+          <input id="answer" autocomplete="off" spellcheck="false">
+          <button type="submit" class="al-btn al-btn-primary" data-i18n="submit"></button>
+        </form>
+      </div>
+    </section>
+
+    <div class="al-popup" id="popup-ok">
+      <div class="al-card al-card-ok">
+        <div class="al-mark al-mark-ok" style="margin:0 auto"><i class="fa-solid fa-check"></i></div>
+        <h2 class="al-fb-title al-ok-title" style="margin-top:15px" data-i18n="correct"></h2>
+        <p style="margin:8px 0 0" data-i18n="correctPraise"></p>
+        <div style="display:flex;align-items:center;justify-content:center;gap:14px;margin-top:18px;padding:13px 16px;background:#f4f8f5;border:1.5px solid #cfe0d4;border-radius:10px">
+          <img id="ok-img" alt="" style="height:52px">
+          <span id="ok-sv" style="font:600 27px 'Work Sans',sans-serif;color:#14100e"></span>
+          <button type="button" class="al-audio al-audio-ok js-audio"><i class="fa-solid fa-volume-high"></i></button>
+        </div>
+        <button type="button" class="al-btn al-btn-green js-next" style="width:100%;margin-top:18px"><span data-i18n="next"></span><i class="fa-solid fa-arrow-right" style="margin-left:10px"></i></button>
+        <p style="margin:10px 0 0;font:400 12px 'Work Sans',sans-serif;color:#6b625a" data-i18n="enterHint"></p>
+      </div>
+    </div>
+
+    <div class="al-popup" id="popup-no">
+      <div class="al-card al-card-no">
+        <div style="display:flex;align-items:center;gap:14px">
+          <div class="al-mark al-mark-no"><i class="fa-solid fa-xmark"></i></div>
+          <div>
+            <h2 class="al-fb-title al-no-title" data-i18n="incorrect"></h2>
+            <p style="margin:4px 0 0"><span data-i18n="youTyped"></span> <strong id="typed" style="color:#14100e;text-decoration:line-through"></strong></p>
+          </div>
+        </div>
+        <div class="al-pair-card" style="margin-top:16px;background:#f4f8f5;border-color:#cfe0d4">
+          <img id="no-img" alt="" style="height:74px;width:auto">
+          <div style="flex:1">
+            <div class="al-chip-ok" style="background:#dcecdf;border:none"><i class="fa-solid fa-check"></i><span data-i18n="rightPair"></span></div>
+            <div id="no-sv" style="font:600 30px/1.1 'Work Sans',sans-serif;color:#14100e;margin-top:7px"></div>
+          </div>
+          <button type="button" class="al-audio js-audio"><i class="fa-solid fa-volume-high"></i></button>
+        </div>
+        <div style="display:flex;gap:10px;margin-top:16px">
+          <button type="button" class="al-btn al-btn-ghost" id="try-again" style="flex:1"><i class="fa-solid fa-rotate-left" style="margin-right:9px"></i><span data-i18n="tryAgain"></span></button>
+          <button type="button" class="al-btn al-btn-primary js-next" style="flex:1"><span data-i18n="next"></span><i class="fa-solid fa-arrow-right" style="margin-left:9px"></i></button>
+        </div>
+      </div>
+    </div>
+
+    <section class="al-screen al-done" id="done">
+      <span class="al-kicker"><span data-i18n="levelWord"></span> 3</span>
+      <h1 style="margin:12px 0 0;font:600 36px/1.12 'Work Sans',sans-serif;color:#14100e" data-i18n="doneTitle"></h1>
+      <div class="al-big-score"><b id="done-score">0</b><span>/ 10</span></div>
+      <div class="al-pips" id="pips-done" style="width:420px;margin-top:16px"></div>
+      <p id="done-note" style="margin:16px 0 0;max-width:470px"></p>
+      <div class="al-done-actions">
+        <a class="al-btn al-btn-ghost" href="../index.html" data-i18n="menuBtn" style="display:flex;align-items:center"></a>
+        <button type="button" class="al-btn al-btn-primary" id="again"><i class="fa-solid fa-rotate-left" style="margin-right:9px"></i><span data-i18n="playAgain"></span></button>
+      </div>
+    </section>
+  </main>
+  <footer><small>Created as part of the "Software Engineering and Project Management" course 2025</small></footer>
+</body>
+</html>

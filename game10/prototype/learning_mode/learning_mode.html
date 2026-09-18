@@ -1,0 +1,46 @@
+<!doctype html>
+
+<!--
+=================================================
+Owned by Game 10
+=================================================
+-->
+
+<html lang="en" data-root="../../.." data-images="../images">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Ät och lär — Learning Mode</title>
+  <link rel="stylesheet" href="../../../style.css" />
+  <!-- You are allowed to use JQuery and Vue.js but don't have to. They just make a
+  lot of things easier
+  -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <link rel="stylesheet" href="../index.css" />
+  <link rel="stylesheet" href="learning_mode.css" />
+  <script src="../../../scripts/vocabulary.js"></script>
+  <script src="../../../scripts/save.js"></script>
+  <script type="module">
+    import { getLang } from "../dev-tools/cookies.js";
+    import { applyI18n } from "../dev-tools/i18n.js";
+    applyI18n(getLang());
+  </script>
+</head>
+<body>
+  <header><h1>Game 10</h1></header>
+  <main class="game-frame">
+    <section class="al-screen is-on al-intro">
+      <a class="al-btn al-btn-ghost" href="../index.html" style="align-self:flex-start"><i class="fa-solid fa-arrow-left" style="margin-right:8px"></i><span data-i18n="menuBtn"></span></a>
+      <div class="al-intro-body">
+        <span class="al-kicker" data-i18n="noScore"></span>
+        <h1 data-i18n="learning"></h1>
+        <p data-i18n="learningDesc"></p>
+        <a class="al-btn al-btn-primary" href="game_page.html" style="margin-top:24px" data-i18n="openCards"></a>
+      </div>
+    </section>
+  </main>
+  <footer><small>Created as part of the "Software Engineering and Project Management" course 2025</small></footer>
+</body>
+</html>

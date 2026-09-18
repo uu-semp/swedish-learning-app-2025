@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en" data-root="../../.." data-images="../images">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Ät och lär — Learning Mode</title>
+  <link rel="stylesheet" href="../../../style.css" />
+  <!-- You are allowed to use JQuery and Vue.js but don't have to. They just make a
+  lot of things easier
+  -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <link rel="stylesheet" href="../index.css" />
+  <link rel="stylesheet" href="learning_mode.css" />
+  <script src="../../../scripts/vocabulary.js"></script>
+  <script src="../../../scripts/save.js"></script>
+  <script type="module" src="learning_mode.js"></script>
+</head>
+<body>
+  <header><h1>Game 10</h1></header>
+  <main class="game-frame">
+    <section class="al-screen is-on al-cards" id="card-front">
+      <div class="al-cards-top">
+        <button type="button" class="al-btn al-btn-ghost js-exit"><i class="fa-solid fa-arrow-left" style="margin-right:8px"></i><span data-i18n="exit"></span></button>
+        <div style="text-align:right">
+          <div class="al-hud-label" id="card-label"></div>
+          <div class="al-card-pips" id="card-pips"></div>
+        </div>
+      </div>
+      <button type="button" class="al-flip" id="flip-front">
+        <img id="front-img" alt="">
+        <div class="al-flip-hint"><i class="fa-solid fa-hand-pointer"></i><span data-i18n="tapToFlip"></span></div>
+      </button>
+    </section>
+
+    <section class="al-screen al-cards" id="card-back">
+      <div class="al-cards-top">
+        <button type="button" class="al-btn al-btn-ghost js-exit"><i class="fa-solid fa-arrow-left" style="margin-right:8px"></i><span data-i18n="exit"></span></button>
+        <div style="text-align:right">
+          <div class="al-hud-label" id="card-label-back"></div>
+          <div class="al-card-pips" id="card-pips-back"></div>
+        </div>
+      </div>
+      <button type="button" class="al-flip al-flip-back" id="flip-back">
+        <img id="back-img" alt="">
+        <div>
+          <div class="al-sv-label" data-i18n="swedish"></div>
+          <div class="al-sv-word" id="back-sv"></div>
+          <div id="back-en" style="font:400 17px 'Work Sans',sans-serif;color:#555;margin-top:8px"></div>
+          <span class="al-listen" id="listen"><span style="width:36px;height:36px;border-radius:50%;background:#fff;color:#9d0000;display:flex;align-items:center;justify-content:center;font-size:15px"><i class="fa-solid fa-play"></i></span><span data-i18n="listen"></span></span>
+        </div>
+      </button>
+      <div class="al-actions" style="padding:14px 0 0">
+        <button type="button" class="al-btn al-btn-choice" id="repeat"><i class="fa-solid fa-rotate-left"></i><span data-i18n="repeat"></span></button>
+        <button type="button" class="al-btn al-btn-choice" id="got-it" style="border:none;background:#1f6b3a;color:#fff;box-shadow:0 3px 0 #164d29"><i class="fa-solid fa-check"></i><span data-i18n="gotIt"></span></button>
+      </div>
+    </section>
+
+    <section class="al-screen al-done" id="done">
+      <span class="al-kicker" data-i18n="learning"></span>
+      <h1 class="al-intro-body" style="margin-top:12px;font:600 36px/1.12 'Work Sans',sans-serif;color:#14100e" data-i18n="doneTitle"></h1>
+      <div class="al-big-score"><b id="done-score">10</b><span>/ 10</span></div>
+      <div class="al-done-actions">
+        <a class="al-btn al-btn-ghost" href="../index.html" data-i18n="menuBtn" style="display:flex;align-items:center"></a>
+        <button type="button" class="al-btn al-btn-primary" id="again"><i class="fa-solid fa-rotate-left" style="margin-right:9px"></i><span data-i18n="playAgain"></span></button>
+      </div>
+    </section>
+  </main>
+  <footer><small>Created as part of the "Software Engineering and Project Management" course 2025</small></footer>
+</body>
+</html>

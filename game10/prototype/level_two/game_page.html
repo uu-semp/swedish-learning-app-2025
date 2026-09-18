@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en" data-root="../../.." data-images="../images">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Ät och lär — Level 2</title>
+  <link rel="stylesheet" href="../../../style.css" />
+  <!-- You are allowed to use JQuery and Vue.js but don't have to. They just make a
+  lot of things easier
+  -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <link rel="stylesheet" href="../index.css" />
+  <link rel="stylesheet" href="game_page.css" />
+  <script src="../../../scripts/vocabulary.js"></script>
+  <script src="../../../scripts/save.js"></script>
+  <script type="module" src="game_page.js"></script>
+</head>
+<body>
+  <header><h1>Game 10</h1></header>
+  <main class="game-frame">
+    <section class="al-screen is-on" id="play">
+      <div class="al-hud">
+        <button type="button" class="al-btn al-btn-icon js-menu"><i class="fa-solid fa-arrow-left"></i></button>
+        <div class="al-hud-main">
+          <div class="al-hud-row">
+            <span class="al-hud-label" id="round-label"></span>
+            <span class="al-hud-score" data-i18n="dragHint"></span>
+          </div>
+          <div class="al-pips" id="pips"></div>
+        </div>
+      </div>
+      <div class="al-match" id="stage">
+        <svg id="wires"></svg>
+        <div class="al-match-grid">
+          <div class="al-col" id="left-col"></div>
+          <div class="al-col" id="right-col"></div>
+        </div>
+      </div>
+      <div class="al-match-foot">
+        <button type="button" class="al-btn al-btn-ghost" id="clear"><i class="fa-solid fa-rotate-left" style="margin-right:8px"></i><span data-i18n="clear"></span></button>
+        <div style="display:flex;align-items:center;gap:16px">
+          <span id="link-count" style="font:500 13px 'Work Sans',sans-serif;color:#6b625a">0 / 4</span>
+          <button type="button" class="al-btn al-btn-primary" id="submit" disabled data-i18n="submit"></button>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer><small>Created as part of the "Software Engineering and Project Management" course 2025</small></footer>
+</body>
+</html>
