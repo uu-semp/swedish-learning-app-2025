@@ -111,6 +111,7 @@
       if (!wrap || !frame) return;
       wrap.style.pointerEvents  = on ? 'auto' : 'none';
       frame.style.pointerEvents = on ? 'auto' : 'none';
+      wrap.classList.toggle('is-endgame', on);
     }
 
     const popupFrame = document.getElementById('popupFrame');
@@ -135,10 +136,10 @@
       return words;
     }
 
-    window.sendPickToPopup = function(idKey) {
+    window.sendPickToPopup = function(idKey, label) {
       if (!popupFrame || !popupFrame.contentWindow) return;
       console.log('[parent] sending pick (key):', idKey);
-      popupFrame.contentWindow.postMessage({ type: 'pick', id: String(idKey) }, '*');
+      popupFrame.contentWindow.postMessage({ type: 'pick', id: String(idKey), label }, '*');
     };
 
     let popupIsReady = false;
@@ -149,13 +150,15 @@
       return !!(gs && Array.isArray(gs.shoppingList) && gs.shoppingList.length > 0);
     }
 
+    // Returns true only once the popup has confirmed with initDone, so the
+    // retry loop keeps going if the initWords message never lands
     function tryInitPopupOnce() {
-      if (initSent || !popupIsReady || !haveShoppingList()) return false;
+      if (initSent) return true;
+      if (!popupIsReady || !haveShoppingList()) return false;
       const gs = window.__game11GameState;
       const words = mapWordsFromState(gs);
       popupFrame?.contentWindow?.postMessage({ type: 'initWords', words }, '*');
-      initSent = true;
-      return true;
+      return false;
     }
 
     window.addEventListener('message', (event) => {
@@ -172,6 +175,8 @@
       } else if (data.type === 'popupReady') {
         popupIsReady = true;
         tryInitPopupOnce();
+      } else if (data.type === 'initDone') {
+        initSent = true;
       }
       if (data.type === 'endgameOpen') { setIframeInteractive(true); return; }
       if (data.type === 'endgameClose') { setIframeInteractive(false); return; }

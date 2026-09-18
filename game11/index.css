@@ -114,15 +114,25 @@ body {
 
 
 .popup-frame-wrap {
-  position: fixed;           /* fäster elementet mot viewporten */
-  top: 40%;                  /* placerar vertikalt */
-  left: 40%;                 /* placerar horisontellt */
-  transform: translate(-50%, -50%); /* centrerar exakt */
-  width: min(420px, 40%);
-  height: min(60%, 580px);
+  position: absolute;
+  top: 300px;
+  left: 115px;
+  width: 355px;
+  height: 350px;
   border: 0;
   overflow: hidden;
   z-index: 9999;             /* mycket högt så att den hamnar över allt */
+  pointer-events: none;
+}
+
+.popup-frame-wrap.is-endgame {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: min(420px, 90vw);
+  height: min(480px, 80vh);
+  pointer-events: auto;      /* slutmodalen ska gå att klicka i */
 }
 
 
@@ -132,6 +142,11 @@ body {
   border: none;
   display: block;
   background: transparent;
+  pointer-events: none;
+}
+
+.popup-frame-wrap.is-endgame .popup-frame {
+  pointer-events: auto;
 }
 
 .top-right-controls {
