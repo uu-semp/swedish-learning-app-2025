@@ -17,7 +17,6 @@ async function initializeGame() {
       el: '#app',
       data: {
         character: { name: 'Kevin' },
-        lives: 3, 
         score: 0, 
         level: 1,
         textAnswer: "",
@@ -108,7 +107,6 @@ async function initializeGame() {
 
           if (this.correctAnswersThisLevel >= 10) {
             console.log(`Level ${this.level} complete with ${this.correctAnswersThisLevel} correct answers!`);
-            this.updateGameProgressMethod();
             this.completeLevel();
             return;
           }
@@ -150,12 +148,13 @@ async function initializeGame() {
         updateGameProgressMethod() {
           const gameProgress = getGameProgress();
           const levelKey = `level${this.level}`;
-          
-          const timeSpent = Math.round((Date.now() - this.startTime) / 60000);
+          const levelCompleted = this.correctAnswersThisLevel >= 10;
           
           gameProgress[levelKey].completed = this.correctAnswersThisLevel;
-          gameProgress[levelKey].attempts++;
-          gameProgress[levelKey].timeSpent += timeSpent;
+          if (levelCompleted) {
+            const timeSpent = Math.round((Date.now() - this.startTime) / 60000);
+            gameProgress[levelKey].timeSpent += timeSpent;
+          }
           gameProgress[levelKey].lastPlayed = new Date().toISOString().split('T')[0];
 
           if (this.level === 1 && this.correctAnswersThisLevel >= 10) {
@@ -167,8 +166,17 @@ async function initializeGame() {
           updateGameProgress(gameProgress);
         },
 
+        recordAttempt() {
+          const gameProgress = getGameProgress();
+          const levelKey = `level${this.level}`;
+          gameProgress[levelKey].attempts++;
+          updateGameProgress(gameProgress);
+        },
+
         checkHouseClick(house) {
           if (this.currentQuestion.type !== "map") return;
+
+          this.recordAttempt();
           
           const correctLiteral = this.currentQuestion.correct.number;
           const houseLiteral = house.number.cardinal.literal;
@@ -188,9 +196,12 @@ async function initializeGame() {
 
         checkTextAnswer() {
           if (this.currentQuestion.type !== "text") return;
+
+          this.recordAttempt();
           
           const ans = this.textAnswer.trim().toLowerCase().replace(/\s+/g," ");
-          if (ans === this.currentQuestion.correct) {
+          const parts = this.currentQuestion.correct.split(" ");
+          if (ans === parts[1]) {
             this.score += 10;
             this.correctAnswersThisLevel++;
             this.updateGameProgressMethod();
@@ -199,28 +210,20 @@ async function initializeGame() {
             setTimeout(() => this.pickNextQuestion(), 1000);
           } else { 
             this.fail(); 
+            this.textAnswer = "";
           }
         },
 
         fail() {
-          this.lives--; 
           this.feedback = "❌ Fel svar! Försök igen.";
           this.feedbackClass = "wrong";
-          
-          if (this.lives <= 0) { 
-            this.feedback = `💀 Du förlorade alla liv i nivå ${this.level}. Försök igen!`;
-            this.feedbackClass = "wrong";
-            setTimeout(() => this.restartLevel(), 2000); 
-          } else {
-            setTimeout(() => {
+          setTimeout(() => {
               this.feedback = "";
               this.feedbackClass = "";
             }, 1500);
-          }
         },
 
         restartLevel() {
-          this.lives = 3;
           this.feedback = "";
           this.feedbackClass = "";
           this.startTime = Date.now();
