@@ -39,6 +39,31 @@
       white-space: normal;
       word-wrap: break-word;
     }
+    .toast.bubble {
+      min-height: 120px;
+      padding: 0;
+    }
+    .toast .content {
+      position: absolute;
+      top: 16%;
+      left: 22%;
+      right: 26%;
+      bottom: 33%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    /* One single flex item: the message is inline content with <strong> in it,
+       and each run between the tags would otherwise become its own flex item
+       and be laid out separately. break-word (not anywhere) so only words that
+       do not fit on a line of their own are split. */
+    .toast .content > span {
+      display: block;
+      width: 100%;
+      text-align: center;
+      overflow-wrap: break-word;
+      hyphens: auto;
+    }
     .toast { transition: opacity .25s ease, transform .25s ease; }
     .toast.is-hiding { opacity:0; transform: translateY(6px); }
     .toast strong { font-weight:700; }
@@ -135,12 +160,18 @@
 (function(){
   const TARGET_TOTAL = 10; // only used as a fallback
   const WIN_THRESHOLD = n => Math.ceil(n * 0.8);
-  // ✅ Announce to parent that popup can receive initWords
-  try {
-    if (window.parent && window.parent !== window) {
-      window.parent.postMessage({ type: 'popupReady' }, '*');
-    }
-  } catch (_) {}
+  // ✅ Announce to parent that popup can receive initWords.
+  // Repeated until the parent answers with initWords: a single announcement can
+  // be lost if the iframe script runs before the parent installs its listener,
+  // which left the popup running the fallback bank (wrong target words).
+  const isEmbedded = window.parent && window.parent !== window;
+  let initedFromParent = false;
+  let readyTimer = null;
+
+  function announceReady() {
+    if (!isEmbedded) return;
+    try { window.parent.postMessage({ type: 'popupReady' }, '*'); } catch (_) {}
+  }
   // Fallback bank (kept, but we'll usually get real words from parent)
   const FOOD_BANK = [
     {id:'apple',sv:'äpple'}, {id:'banana',sv:'banan'}, {id:'bread',sv:'bröd'},
@@ -194,7 +225,7 @@
 
     const el=document.createElement('div');
     el.className='toast bubble '+(type==='error'?'error':'success');
-    el.innerHTML=`<div class="content">${html}</div><button class="x" type="button" aria-label="Stäng">×</button>`;
+    el.innerHTML=`<div class="content"><span>${html}</span></div><button class="x" type="button" aria-label="Stäng">×</button>`;
     toastsEl.replaceChildren(el);
 
     currentToast = el;
@@ -334,7 +365,10 @@
 
     if (data.type === 'initWords' && Array.isArray(data.words) && data.words.length) {
       // Expecting [{id, sv}, ...] in target order (first is the current target)
+      initedFromParent = true;
+      if (readyTimer) { clearInterval(readyTimer); readyTimer = null; }
       initWithWords(data.words);
+      try { window.parent.postMessage({ type: 'initDone' }, '*'); } catch (_) {}
       return;
     }
 
@@ -359,8 +393,23 @@
     }
   });
 
-  // Start with a safe fallback; parent will usually override via initWords
-  startFallback();
+  // Ask the parent for the real word list; only fall back to FOOD_BANK when
+  // embedded standalone or when the parent never answers.
+  if (!isEmbedded) {
+    startFallback();
+  } else {
+    announceReady();
+    let tries = 0;
+    readyTimer = setInterval(() => {
+      if (initedFromParent) { clearInterval(readyTimer); readyTimer = null; return; }
+      announceReady();
+      if (++tries > 20) {                 // ~5 s
+        clearInterval(readyTimer); readyTimer = null;
+        console.warn('[popup] no initWords from parent, using fallback bank');
+        startFallback();
+      }
+    }, 250);
+  }
 })();
 </script>
 
