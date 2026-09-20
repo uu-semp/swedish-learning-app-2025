@@ -10,6 +10,7 @@ function keyFromImgPath(p) {
 let _listEls = [];                          // <li> refs for highlight
 const _shelfImgByKey = new Map();           // key -> <img> on the shelf
 let _dropzoneWired = false;                 // ensure we wire the dropzone once
+let _currentIndex = 0;                      // Is there to track which is the current item, this is used for sound.
 
 // Single unified path: both click and drop call this.
 function sendPick(key) {
@@ -59,6 +60,8 @@ export function displayShelf(shelf, mode) {
     }
     element.dataset.key = key;
     element.dataset.sv = item.sv || item.en || key;
+    element.dataset.audio = item.audio || ''; // adding audio in dataset
+    
 
     // Click/keyboard -> same path as drop
     element.tabIndex = 0;
@@ -88,6 +91,20 @@ export function displayShelf(shelf, mode) {
   console.log('[ui] Displaying shelf; items:', shelf.length);
 }
 
+// functions that plays the sound when button is pressed of the current item
+function playCurrentSound() {
+  const state = window.__game11GameState;
+  const item = state?.shoppingList?.[_currentIndex];
+
+  const audioPath = item?.audio;
+  if (!audioPath) {
+    console.warn('[ui] No audio available for current item');
+    return;
+  }
+  const audio = new Audio("../" + audioPath);
+  audio.play().catch(err => console.warn('[ui] audio play failed:', err));
+}
+
 export function displayShoppingList(list, mode) {
   const listWrap = document.querySelector('.shopping_list');
   if (!listWrap) {
@@ -112,6 +129,14 @@ export function displayShoppingList(list, mode) {
   });
 
   listWrap.appendChild(ul);
+  
+  // Create soundbutton and run function to play sound
+  const soundBtn = document.createElement('button');
+  soundBtn.className = 'play-sound-btn';
+  soundBtn.innerHTML = '<i class="fa-solid fa-headphones"></i>'
+  soundBtn.type = 'button';
+  soundBtn.addEventListener('click', playCurrentSound); 
+  listWrap.appendChild(soundBtn);
 
   // Default highlight first row
   highlightListIndex(0);
@@ -129,6 +154,7 @@ export function displayShoppingList(list, mode) {
 function highlightListIndex(idx) {
   if (!_listEls || !_listEls.length) return;
   const n = Number(idx);
+  _currentIndex = n; // Update current index
 
   _listEls.forEach((li, i) => {
     if (i === n) {
