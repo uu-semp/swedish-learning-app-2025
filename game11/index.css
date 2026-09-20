@@ -181,6 +181,13 @@ body {
   z-index: 10;
 }
 
+/* Sound button*/
+.play-sound-btn {
+  position: absolute;
+  top: 200px;
+  left: 130px;
+}
+
 /* --- Food image hover / focus / current-target --- */
 .shelf_items img {
   transition: transform .18s ease, filter .18s ease;
