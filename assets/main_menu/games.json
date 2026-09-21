@@ -26,8 +26,8 @@
   {
     "id": "game04",
     "title": {
-      "en": "Clock it",
-      "sv": "Klocka det"
+      "en": "A year in Uppsala",
+      "sv": "Ett år i Uppsala"
     },
     "desc": {
       "en": "A game about the clock, containing both multiple choice, free text and drag-and-drop questions.",

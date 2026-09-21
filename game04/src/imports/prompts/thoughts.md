@@ -1,0 +1,1 @@
+1. Remove emoji for the options in game, ex fall etc. 
