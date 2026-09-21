@@ -45,7 +45,8 @@ function getLabel(vocab) {
 }
 function normalizeAssetUrl(url) {
   if (!url) return "";
-  return url.startsWith("/") ? url : "/" + url;
+  if (/^https?:\/\//.test(url)) return url;   // leave external URLs alone
+  return "../../" + url;                       // relative to game09/Views/
 }
 
 
