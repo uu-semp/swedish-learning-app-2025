@@ -5,20 +5,21 @@
 "use strict";
 
 document.addEventListener("DOMContentLoaded", () => {
-  const words = JSON.parse(localStorage.getItem("game_words") || "[]");
-  if (!words.length) return;
+  const state = JSON.parse(localStorage.getItem("game_state") || "null");
+  if (!state) return;
 
-  const highscore = words[words.length - 2]; // fix here
-  const rounds = Object.keys(highscore).length - 1;
-  const totalCorrect = highscore.total;
+  const totalCorrect = state.total;
+  const roundsPlayed = state.history.length;
 
   // Display score
   document.getElementById(
     "total-result"
-  ).textContent = `You got ${totalCorrect}/${rounds} words correct!`;
+  ).textContent = `You got ${totalCorrect}/${roundsPlayed} words correct!`;
 
   // Percentage of correct answers
-  const percentage = Math.round((totalCorrect / rounds) * 100);
+  const percentage = roundsPlayed
+    ? Math.round((totalCorrect / roundsPlayed) * 100)
+    : 0;
 
   // Message to show based on percentage of correct answers
   let message = "";
@@ -33,84 +34,68 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("message").textContent = message;
 });
 
-// Try again button
+// Try again button — same category, fresh lives and score.
+// Note: this page does NOT generate the next round itself, because
+// window.vocabulary may not be loaded/ready here. We just reset the
+// state and clear currentRoundWords; game07.js generates the first
+// round as soon as game-page.html loads.
 document.getElementById("tryagain-button").addEventListener("click", () => {
-  // Words from the previous round
-  let words = JSON.parse(localStorage.getItem("game_words") || "[]");
-
-  if (words.length) {
-    let highscore = words[words.length - 2];
-
-    // Reset highscore
-    for (let key in highscore) {
-      highscore[key] = 0;
-    }
-    words[words.length - 2] = highscore;
-    localStorage.setItem("game_words", JSON.stringify(words));
-  }
-
-  // Back to game page
-  window.location.href = "game-page.html";
-});
-
-
-// Try missed rounds again button
-document.getElementById("try-missed-words-button").addEventListener("click", () => {
-  const words = JSON.parse(localStorage.getItem("game_words") || "[]");
-  if (!words.length) return;
-
-  const highscore = words[words.length - 2];
-  const wrong_words = words[words.length - 1];
-
-  // Calculate how many total rounds there were
-  const totalRounds = Object.keys(highscore).length - 1; // exclude "total"
-
-  // Identify which rounds had mistakes
-  const missedRounds = [];
-  for (let i = 0; i < totalRounds; i++) {
-    if (wrong_words[`round${i + 1}`] && wrong_words[`round${i + 1}`].length > 0) {
-      missedRounds.push(i);
-    }
-  }
-
-  if (!missedRounds.length) {
-    alert("You didn’t miss any rounds!");
+  const state = JSON.parse(localStorage.getItem("game_state") || "null");
+  if (!state) {
+    window.location.href = "game-page.html";
     return;
   }
 
-  // Build a clean new game array with only the missed rounds (4 words each)
-  const new_game_words = [];
-  missedRounds.forEach((roundIndex) => {
-    const start = roundIndex * 4;
-    const roundWords = words.slice(start, start + 4);
+  state.ids = state.fullIds.slice();
+  state.lives = 3; // keep in sync with STARTING_LIVES in game07.js
+  state.round = 0;
+  state.total = 0;
+  state.history = [];
+  state.currentRoundWords = null;
 
-    // Deep clone to avoid reference issues
-    const clonedRound = roundWords.map((word) => ({ ...word }));
-    new_game_words.push(...clonedRound);
+  localStorage.setItem("game_state", JSON.stringify(state));
+  window.location.href = "game-page.html";
+});
+
+// Try missed words again button — replay only the words gotten wrong this game
+document.getElementById("try-missed-words-button").addEventListener("click", () => {
+  const state = JSON.parse(localStorage.getItem("game_state") || "null");
+  if (!state) return;
+
+  // Collect unique missed words across the whole game (dedupe by Swedish word)
+  const missedWords = [];
+  const seen = new Set();
+  state.history.forEach((entry) => {
+    entry.wrong.forEach((word) => {
+      if (!seen.has(word.sv)) {
+        seen.add(word.sv);
+        missedWords.push(word);
+      }
+    });
   });
 
-  // Recalculate the number of rounds
-  const newRounds = missedRounds.length;
-
-  // Create fresh highscore tracker
-  const new_highscore = {};
-  for (let i = 0; i < newRounds; i++) {
-    new_highscore[`round${i + 1}`] = 0;
+  if (!missedWords.length) {
+    alert("You didn't miss any words!");
+    return;
   }
-  new_highscore["total"] = 0;
 
-  // Create fresh wrong_words tracker
-  const new_wrong_words = {};
-  for (let i = 0; i < newRounds; i++) {
-    new_wrong_words[`round${i + 1}`] = [];
-  }
-  new_wrong_words["all"] = [];
+  // generate_round() (run on game-page.html) needs vocab ids, so pull the id
+  // off each missed word. (Assumes each word object carries its own id —
+  // adjust the field name below if your vocabulary objects use something
+  // other than "id".)
+  const missedIds = missedWords.map((word) => word.id);
 
-  // Append the trackers to the array
-  new_game_words.push(new_highscore);
-  new_game_words.push(new_wrong_words);
+  const newState = {
+    category: state.category,
+    fullIds: missedIds,
+    ids: missedIds.slice(),
+    lives: 3,
+    round: 0,
+    total: 0,
+    history: [],
+    currentRoundWords: null, // game07.js generates the first round on load
+  };
 
-  // Save new structure and restart the game
-  localStorage.setItem("game_words", JSON.stringify(new_game_words));
+  localStorage.setItem("game_state", JSON.stringify(newState));
   window.location.href = "game-page.html";
 });
