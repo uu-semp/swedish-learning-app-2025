@@ -5,20 +5,21 @@
 "use strict";
 
 document.addEventListener("DOMContentLoaded", () => {
-  const words = JSON.parse(localStorage.getItem("game_words") || "[]");
-  if (!words.length) return;
+  const state = JSON.parse(localStorage.getItem("game_state") || "null");
+  if (!state) return;
 
-  const highscore = words[words.length - 2]; // fix here
-  const rounds = Object.keys(highscore).length - 1;
-  const totalCorrect = highscore.total;
+  const totalCorrect = state.total || 0;
+  const roundsPlayed = (state.history && state.history.length) || 0;
 
   // Display score
   document.getElementById(
     "total-result"
-  ).textContent = `You got ${totalCorrect}/${rounds} words correct!`;
+  ).textContent = `You got ${totalCorrect}/${roundsPlayed} words correct!`;
 
   // Percentage of correct answers
-  const percentage = Math.round((totalCorrect / rounds) * 100);
+  const percentage = roundsPlayed
+    ? Math.round((totalCorrect / roundsPlayed) * 100)
+    : 0;
 
   // Message to show based on percentage of correct answers
   let message = "";
@@ -34,9 +35,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Cross-session data persistence using save.js
   if (window.save) {
-    const currentCategory = window.save.get("game07", "current_category") || "mixed";
+    const currentCategory = state.category || window.save.get("game07", "current_category") || "mixed";
     const catKey = (currentCategory === "all" || currentCategory === "mixed") ? "mixed" : currentCategory;
-    
+
     // 1. High Score Persistence
     const highscores = window.save.get("game07", "highscores") || {};
     const hasExistingScore = typeof highscores[catKey] === "number";
@@ -47,10 +48,10 @@ document.addEventListener("DOMContentLoaded", () => {
       highscores[catKey] = totalCorrect;
       window.save.set("game07", "highscores", highscores);
       if (noticeEl) {
-        noticeEl.textContent = `🏆 High Score for ${currentCategory}: ${totalCorrect}/${rounds}`;
+        noticeEl.textContent = `🏆 High Score for ${currentCategory}: ${totalCorrect}`;
       }
     } else if (noticeEl) {
-      noticeEl.textContent = `High Score (${currentCategory}): ${previousBest}/${rounds}`;
+      noticeEl.textContent = `High Score (${currentCategory}): ${previousBest}`;
     }
 
     // Update global main menu stats (Issue #172 compliance)
@@ -61,9 +62,17 @@ document.addEventListener("DOMContentLoaded", () => {
     window.save.stats.set("game07", updatedWins, updatedCompletion);
 
     // 2. Missed Words Persistence (Cross-Session)
-    const wrongWordsObj = words[words.length - 1];
-    const sessionMisses = (wrongWordsObj && Array.isArray(wrongWordsObj.all)) ? wrongWordsObj.all : [];
-    
+    const sessionMisses = [];
+    if (Array.isArray(state.history)) {
+      state.history.forEach((entry) => {
+        if (Array.isArray(entry.wrong)) {
+          entry.wrong.forEach((w) => {
+            if (w) sessionMisses.push(w);
+          });
+        }
+      });
+    }
+
     let persistentMisses = window.save.get("game07", "wrong_words");
     if (!Array.isArray(persistentMisses)) {
       persistentMisses = [];
@@ -96,7 +105,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (missedContainer && missedList && sessionMisses.length > 0) {
       missedList.innerHTML = "";
       // Unique missed words in this session
-      const uniqueSessionMisses = sessionMisses.filter((w, i, arr) => 
+      const uniqueSessionMisses = sessionMisses.filter((w, i, arr) =>
         arr.findIndex(t => (w.id && t.id === w.id) || t.sv === w.sv) === i
       );
 
@@ -111,89 +120,72 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
-// Try again button
+// Try again button — same category, fresh lives and score.
+// Note: this page does NOT generate the next round itself, because
+// window.vocabulary may not be loaded/ready here. We just reset the
+// state and clear currentRoundWords; game-page.js generates the first
+// round as soon as game-page.html loads.
 document.getElementById("tryagain-button").addEventListener("click", () => {
-  // Words from the previous round
-  let words = JSON.parse(localStorage.getItem("game_words") || "[]");
-
-  if (words.length) {
-    let highscore = words[words.length - 2];
-
-    // Reset highscore
-    for (let key in highscore) {
-      highscore[key] = 0;
-    }
-    words[words.length - 2] = highscore;
-    localStorage.setItem("game_words", JSON.stringify(words));
-  }
-
-  // Back to game page
-  window.location.href = "game-page.html";
-});
-
-
-// Try missed rounds again button
-document.getElementById("try-missed-words-button").addEventListener("click", () => {
-  const words = JSON.parse(localStorage.getItem("game_words") || "[]");
-  if (!words.length) return;
-
-  const highscore = words[words.length - 2];
-  const wrong_words = words[words.length - 1];
-
-  // Calculate how many total rounds there were
-  const totalRounds = Object.keys(highscore).length - 1; // exclude "total"
-
-  // Identify which rounds had mistakes
-  const missedRounds = [];
-  for (let i = 0; i < totalRounds; i++) {
-    if (wrong_words[`round${i + 1}`] && wrong_words[`round${i + 1}`].length > 0) {
-      missedRounds.push(i);
-    }
-  }
-
-  if (!missedRounds.length) {
-    const persistent = window.save ? window.save.get("game07", "wrong_words") : [];
-    if (persistent && persistent.length > 0) {
-      alert(`You didn't miss any rounds in this session! You have ${persistent.length} saved missed word(s) you can practice in the Word List.`);
-    } else {
-      alert("Great job! You didn’t miss any rounds!");
-    }
+  const state = JSON.parse(localStorage.getItem("game_state") || "null");
+  if (!state) {
+    window.location.href = "game-page.html";
     return;
   }
 
-  // Build a clean new game array with only the missed rounds (4 words each)
-  const new_game_words = [];
-  missedRounds.forEach((roundIndex) => {
-    const start = roundIndex * 4;
-    const roundWords = words.slice(start, start + 4);
+  state.ids = state.fullIds.slice();
+  state.lives = 3; // keep in sync with STARTING_LIVES in game-page.js
+  state.round = 0;
+  state.total = 0;
+  state.history = [];
+  state.currentRoundWords = null;
 
-    // Deep clone to avoid reference issues
-    const clonedRound = roundWords.map((word) => ({ ...word }));
-    new_game_words.push(...clonedRound);
-  });
+  localStorage.setItem("game_state", JSON.stringify(state));
+  window.location.href = "game-page.html";
+});
 
-  // Recalculate the number of rounds
-  const newRounds = missedRounds.length;
+// Try missed words again button — replay only the words gotten wrong this game
+document.getElementById("try-missed-words-button").addEventListener("click", () => {
+  const state = JSON.parse(localStorage.getItem("game_state") || "null");
+  if (!state) return;
 
-  // Create fresh highscore tracker
-  const new_highscore = {};
-  for (let i = 0; i < newRounds; i++) {
-    new_highscore[`round${i + 1}`] = 0;
+  // Collect unique missed words across the whole game (dedupe by Swedish word)
+  const missedWords = [];
+  const seen = new Set();
+  if (Array.isArray(state.history)) {
+    state.history.forEach((entry) => {
+      if (Array.isArray(entry.wrong)) {
+        entry.wrong.forEach((word) => {
+          if (word && word.sv && !seen.has(word.sv)) {
+            seen.add(word.sv);
+            missedWords.push(word);
+          }
+        });
+      }
+    });
   }
-  new_highscore["total"] = 0;
 
-  // Create fresh wrong_words tracker
-  const new_wrong_words = {};
-  for (let i = 0; i < newRounds; i++) {
-    new_wrong_words[`round${i + 1}`] = [];
+  if (!missedWords.length) {
+    alert("You didn't miss any words!");
+    return;
   }
-  new_wrong_words["all"] = [];
 
-  // Append the trackers to the array
-  new_game_words.push(new_highscore);
-  new_game_words.push(new_wrong_words);
+  // generate_round() (run on game-page.html) needs vocab ids, so pull the id
+  // off each missed word.
+  const missedIds = missedWords.map((word) => word.id);
 
-  // Save new structure and restart the game
-  localStorage.setItem("game_words", JSON.stringify(new_game_words));
+  const newState = {
+    category: state.category,
+    fullIds: missedIds,
+    ids: missedIds.slice(),
+    lives: 3,
+    livesEnabled: state.livesEnabled !== undefined ? state.livesEnabled : true,
+    timerEnabled: state.timerEnabled !== undefined ? state.timerEnabled : true,
+    round: 0,
+    total: 0,
+    history: [],
+    currentRoundWords: null, // game-page.js generates the first round on load
+  };
+
+  localStorage.setItem("game_state", JSON.stringify(newState));
   window.location.href = "game-page.html";
 });

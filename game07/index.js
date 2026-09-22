@@ -6,20 +6,27 @@
 
 $(function() {window.vocabulary.when_ready(function () {
 
-  // These are only dummy functions and can be removed.
-  $("#check-jquery").on("click", () => {
-    alert("JavaScript and jQuery are working.");
-  });
+  function saveSettings() {
+    const settings = {
+      timerEnabled: document.getElementById("timer-toggle").checked,
+      livesEnabled: document.getElementById("lives-toggle").checked
+    };
+    localStorage.setItem("game_settings", JSON.stringify(settings));
+  }
 
-  $("#display-vocab").text(JSON.stringify(window.vocabulary.get_random()));
+  // Save on toggle change
+  document.getElementById("timer-toggle").addEventListener("change", saveSettings);
+  document.getElementById("lives-toggle").addEventListener("change", saveSettings);
 
-  $("#check-saving").on("click", () => {
-    var data = window.save.get("game07");
-    data.counter = data.counter ?? 0;
-    data.counter += 1;
-    $("#check-saving").text(`This button has been pressed ${data.counter} times`);
-    window.save.set("game07", data);
-  });
+  // Load existing settings on page load
+  const existingSettings = JSON.parse(localStorage.getItem("game_settings") || "{}");
+  if (existingSettings.timerEnabled !== undefined) {
+    document.getElementById("timer-toggle").checked = existingSettings.timerEnabled;
+  }
+  if (existingSettings.livesEnabled !== undefined) {
+    document.getElementById("lives-toggle").checked = existingSettings.livesEnabled;
+  }
+  
 
 })});
 
