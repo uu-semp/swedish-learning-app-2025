@@ -152,7 +152,12 @@ document.getElementById("try-missed-words-button").addEventListener("click", () 
   }
 
   if (!missedRounds.length) {
-    alert("You didn’t miss any rounds!");
+    const persistent = window.save ? window.save.get("game07", "wrong_words") : [];
+    if (persistent && persistent.length > 0) {
+      alert(`You didn't miss any rounds in this session! You have ${persistent.length} saved missed word(s) you can practice in the Word List.`);
+    } else {
+      alert("Great job! You didn’t miss any rounds!");
+    }
     return;
   }
 

@@ -115,6 +115,9 @@ function gameplay() {
     return;
   }
 
+  // Calculate actual number of rounds in this game session (dynamic, supports replay of 1..N rounds)
+  const totalRounds = Math.max(1, Math.floor((words.length - 2) / 4));
+
   let correctImage = null;
   let currentRound = 0;
   let selectionLock = false; // Lock selection if user has clicked image
@@ -151,8 +154,8 @@ function gameplay() {
 
     wordSet.forEach((word, index) => {
       const image = imageElements[index];
-        image.src = "../" + word.img;
-        image.title = word.en || "Hint unavailable";
+      image.src = "../" + word.img;
+      image.title = word.en || "Hint unavailable";
 
       if (word.answer) {
         correctImage = image;
@@ -160,7 +163,7 @@ function gameplay() {
     });
 
     // Update Next button text if current round number is same as total amount of rounds
-    if (roundNumber === rounds - 1) {
+    if (roundNumber === totalRounds - 1) {
       updateNextButtonText("Finish");
     } else {
       updateNextButtonText("Next");
@@ -222,7 +225,7 @@ function gameplay() {
     if (!selectionLock) {
       return;
     }
-    if (currentRound < rounds - 1) {
+    if (currentRound < totalRounds - 1) {
       currentRound++;
       startNewRound(currentRound);
     } else {
@@ -232,12 +235,16 @@ function gameplay() {
   });
 
   soundIcon.addEventListener("click", () => {
-    // TODO: Does not work yet, there is no sound played when clicking
     const wordSet = currentRoundWords(currentRound);
     const correctAnswer = wordSet.find((word) => word.answer === true);
-    audioSrc.src = "../" + correctAnswer.audio;
+    if (!correctAnswer || !correctAnswer.audio) return;
+
+    const audioPath = correctAnswer.audio.startsWith("http") ? correctAnswer.audio : "../" + correctAnswer.audio;
+    audio.src = audioPath;
     audio.load();
-    audio.play();
+    audio.play().catch((err) => {
+      console.warn("Could not play sound:", err);
+    });
   });
 
   // First round
