@@ -151,7 +151,9 @@ function gameplay() {
 
     wordSet.forEach((word, index) => {
       const image = imageElements[index];
-      image.src = "../" + word.img;
+        image.src = "../" + word.img;
+        image.title = word.en || "Hint unavailable";
+
       if (word.answer) {
         correctImage = image;
       }
