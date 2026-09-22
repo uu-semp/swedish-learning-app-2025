@@ -37,16 +37,21 @@ Owned by Game 07
   </header>
 
   <main class="game-frame">
-    <div class = "resultbox">
-    <h1 id="message"></h1>
-    <p id="total-result"></p>
-    </body>
-    <div>
+    <div class="resultbox">
+      <h1 id="message"></h1>
+      <p id="total-result"></p>
+      <div id="highscore-notice" style="font-weight: 600; color: #2e7d32; margin-bottom: 8px;"></div>
+      <div id="missed-words-container" style="display: none; width: 100%; max-width: 420px; background: #fdfdfd; border: 1px solid #ddd; border-radius: 8px; padding: 10px; margin: 10px 0; text-align: left; max-height: 150px; overflow-y: auto;">
+        <h4 style="margin: 0 0 8px 0; color: #b71c1c; font-size: 15px;">Words to Practice:</h4>
+        <ul id="missed-words-list" style="margin: 0; padding-left: 20px; font-size: 14px;"></ul>
+      </div>
+      <div>
         <button id="tryagain-button" class="resultbutton">Try again</button>
         <button id="try-missed-words-button" class="resultbutton">Try missed words again</button>
+        <button class="resultbutton" onclick="window.location.href='highscore-page.html'">High Scores</button>
         <button class="resultbutton" onclick="window.location.href='index.html'">Back to main menu</button>
+      </div>
     </div>
-</div>
   </main>
 
   <footer>

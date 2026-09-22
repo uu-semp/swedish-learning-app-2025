@@ -39,6 +39,11 @@ function game_start(category, timerEnabled, livesEnabled) {
   const useTimer = timerEnabled !== undefined ? timerEnabled : settings.timerEnabled;
   const useLives = livesEnabled !== undefined ? livesEnabled : settings.livesEnabled;
 
+  // Store active category for cross-session high scores and tracking
+  if (window.save) {
+    window.save.set("game07", "current_category", category);
+  }
+
   const state = {
     category: category,
     fullIds: fullIds,
@@ -219,8 +224,8 @@ function gameplay() {
 
     state.currentRoundWords.forEach((word, index) => {
       const image = imageElements[index];
-        image.src = "../" + word.img;
-        image.title = word.en || "Hint unavailable";
+      image.src = "../" + word.img;
+      image.title = word.en || "Hint unavailable";
 
       if (word.answer) {
         correctImage = image;
@@ -244,6 +249,7 @@ function gameplay() {
     const correctAnswer = wordSet.find((word) => word.answer === true);
     const wrongThisRound = [];
     const timedOut = clickedImage === null;
+    const articlePrefix = correctAnswer && correctAnswer.article ? correctAnswer.article + " " : "";
 
     imageElements.forEach((image, index) => {
       const word = wordSet[index];
@@ -254,20 +260,20 @@ function gameplay() {
 
       if (!timedOut && image === clickedImage && image === correctImage) {
         document.getElementById("instruction").textContent =
-          "Correct answer! The correct answer was: " + correctAnswer.sv;
+          "Correct answer! The correct answer was: " + articlePrefix + correctAnswer.sv;
         state.total += 1;
       } else if (!timedOut && image === clickedImage && image !== correctImage) {
         document.getElementById("instruction").textContent =
-          "Wrong answer! The correct answer was: " + correctAnswer.sv;
+          "Wrong answer! The correct answer was: " + articlePrefix + correctAnswer.sv;
         markIncorrectAnswer(image);
-        wrongThisRound.push(word);
+        wrongThisRound.push(correctAnswer);
         if (state.livesEnabled) state.lives -= 1;
       }
     });
 
     if (timedOut) {
       document.getElementById("instruction").textContent =
-        "Time's up! The correct answer was: " + correctAnswer.sv;
+        "Time's up! The correct answer was: " + articlePrefix + correctAnswer.sv;
       wrongThisRound.push(correctAnswer);
       if (state.livesEnabled) state.lives -= 1;
     }
@@ -293,7 +299,7 @@ function gameplay() {
       return;
     }
 
-    if (state.lives <= 0) {
+    if (state.livesEnabled && state.lives <= 0) {
       // Game over — go show results
       window.location.href = "results-page.html";
       return;
@@ -306,13 +312,19 @@ function gameplay() {
   });
 
   soundIcon.addEventListener("click", () => {
-    // TODO: Does not work yet, there is no sound played when clicking
     const correctAnswer = state.currentRoundWords.find(
       (word) => word.answer === true
     );
-    audioSrc.src = "../" + correctAnswer.audio;
+    if (!correctAnswer || !correctAnswer.audio) return;
+
+    const audioPath = correctAnswer.audio.startsWith("http")
+      ? correctAnswer.audio
+      : "../" + correctAnswer.audio;
+    audio.src = audioPath;
     audio.load();
-    audio.play();
+    audio.play().catch((err) => {
+      console.warn("Could not play sound:", err);
+    });
   });
 
   // First round
