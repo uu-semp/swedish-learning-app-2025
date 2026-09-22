@@ -102,3 +102,9 @@ Owned by Game 07
     font-size: 1.5rem;
     cursor: pointer;
 }
+
+.lives {
+  font-size: 2rem;
+  color: #e63946;
+  letter-spacing: 4px;
+}
