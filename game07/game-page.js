@@ -24,6 +24,11 @@ function game_start(category) {
     ids = window.vocabulary.get_category(category);
   }
 
+  // Store active category for cross-session high scores and tracking
+  if (window.save) {
+    window.save.set("game07", "current_category", category);
+  }
+  
   //Loop through once for each round
   for (let i = 0; i < rounds; i++) {
     // Generate a random number between 1 and 4, this will be the answer for that round
@@ -174,6 +179,8 @@ function gameplay() {
         const wordSet = currentRoundWords(currentRound); // get current round's 4 words
         const correctAnswer = wordSet.find((word) => word.answer === true);
   
+        const articlePrefix = correctAnswer.article ? correctAnswer.article + " " : "";
+
         imageElements.forEach((image, index) => {
             const word = wordSet[index]; // ✅ this defines the word for each image
             
@@ -183,17 +190,17 @@ function gameplay() {
       
             if (image === clickedImage && image === correctImage) {
                 document.getElementById('instruction').textContent = 
-                    "Correct answer! The correct answer was: " + correctAnswer.sv;
+                    "Correct answer! The correct answer was: " + articlePrefix + correctAnswer.sv;
                 // Update high score  
                 highscore["round" + (currentRound + 1)] += 1;
                 highscore["total"] += 1;
             } else if (image === clickedImage && image !== correctImage) {
                 document.getElementById('instruction').textContent =
-                    "Wrong answer! The correct answer was: " + correctAnswer.sv;
+                    "Wrong answer! The correct answer was: " + articlePrefix + correctAnswer.sv;
                 markIncorrectAnswer(image);
-                 // Add wrong word to tracking
-                wrong_words["round" + (currentRound + 1)].push(word);
-                wrong_words["all"].push(word);
+                 // Add wrong word to tracking (track the target word the user missed)
+                wrong_words["round" + (currentRound + 1)].push(correctAnswer);
+                wrong_words["all"].push(correctAnswer);
             }
         });
 

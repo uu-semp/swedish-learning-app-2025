@@ -22,7 +22,8 @@ document.addEventListener("DOMContentLoaded", function () {
         const word = window.vocabulary.get_vocab(ids[i]);
         const new_paragraph = document.createElement("p");
         new_paragraph.className = "paragraph";
-        new_paragraph.innerHTML = word.en + " = " + word.sv;
+        const swedishFormatted = word.article ? `${word.article} ${word.sv}` : word.sv;
+        new_paragraph.innerHTML = `${word.en} = <b>${swedishFormatted}</b>`;
         const line_break = document.createElement("hr");
         list.appendChild(new_paragraph);
         list.appendChild(line_break);

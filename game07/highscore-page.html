@@ -76,10 +76,32 @@ Owned by Game 07
 </body>
 
 <script>
-  // Funktionalitet av tillbaka knapp till startsidan
+  // Return to game menu
   document.getElementById('back-button').addEventListener('click', function () {
     window.location.href = 'index.html';
   });
+
+  // Load and populate high scores from save.js
+  function renderScores() {
+    if (window.save) {
+      const highscores = window.save.get('game07', 'highscores') || {};
+
+      function formatScore(score) {
+        return typeof score === 'number' ? `${score} / 5` : '-';
+      }
+
+      document.getElementById('clothing-scores').textContent = formatScore(highscores.clothing);
+      document.getElementById('food-scores').textContent = formatScore(highscores.food);
+      document.getElementById('furniture-scores').textContent = formatScore(highscores.furniture);
+      document.getElementById('all-scores').textContent = formatScore(highscores.mixed ?? highscores.all);
+    }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', renderScores);
+  } else {
+    renderScores();
+  }
 </script>
 
 </html>
