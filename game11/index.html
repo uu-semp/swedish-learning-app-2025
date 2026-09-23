@@ -97,6 +97,94 @@
       <div class="cart-dropzone" aria-label="Varukorg droppzon">
         <div class="cart_items" aria-live="polite"></div>
       </div>
+
+      <button id="copyrightBtn" title="Copyright Information" aria-label="Copyright">
+        <i class="fas fa-copyright fa-2x"></i>
+      </button>
+        
+      <section id="copyright">
+        <div>
+          <button id="close-copyright">&times;</button>
+          <h2>Licenses <i class="fas fa-minus"></i> numbered left to right, top to bottom <i class="fas fa-minus"></i> scroll to see more
+          </h2>
+          <div class="table_wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th>Image</th>
+                  <th>License</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>1</td>
+                  <td id="image1"></td>
+                </tr>
+                <tr>
+                  <td>2</td>
+                  <td id="image2"></td>
+                </tr>
+                <tr>
+                  <td>3</td>
+                  <td id="image3"></td>
+                </tr>
+                <tr>
+                  <td>4</td>
+                  <td id="image4"></td>
+                </tr>
+                <tr>
+                  <td>5</td>
+                  <td id="image5"></td>
+                </tr>
+                <tr>
+                  <td>6</td>
+                  <td id="image6"></td>
+                </tr>
+                <tr>
+                  <td>7</td>
+                  <td id="image7"></td>
+                </tr>
+                <tr>
+                  <td>8</td>
+                  <td id="image8"></td>
+                </tr>
+                <tr>
+                  <td>9</td>
+                  <td id="image9"></td>
+                </tr>
+                <tr>
+                  <td>10</td>
+                  <td id="image10"></td>
+                </tr>
+                <tr>
+                  <td>11</td>
+                  <td id="image11"></td>
+                </tr>
+                <tr>
+                  <td>12</td>
+                  <td id="image12"></td>
+                </tr>
+                <tr>
+                  <td>13</td>
+                  <td id="image13"></td>
+                </tr>
+                <tr>
+                  <td>14</td>
+                  <td id="image14"></td>
+                </tr>
+                <tr>
+                  <td>15</td>
+                  <td id="image15"></td>
+                </tr>
+                <tr>
+                  <td>16</td>
+                  <td id="image16"></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
     </main>
 
     <footer>
@@ -441,6 +529,102 @@
     }
     body.high-contrast-mode .game-frame img {
       filter: contrast(1.5) saturate(1.2); 
+    }
+
+    #copyrightBtn {
+      position: absolute;
+      bottom: 30px;
+      left: 5px;
+    }
+    
+    #close-copyright {
+      position: absolute;
+      top: 2px;
+      right: 2px;
+      background-color: transparent;
+      border: none;
+      font-size: 28px;
+      transition: all 0.2s ease;
+      width: 34px;
+      height: 34px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    #close-copyright:hover {
+      cursor: pointer;
+      transform: scale(1.1);
+      background-color: rgba(155, 155, 155, 0.3);
+      border-radius: 50%;
+    }
+    
+    #copyright {
+      z-index: 100;
+      position: fixed;
+      display: none;
+      bottom: 0;
+      left: 0;
+      background-color: white;
+      width: 600px;
+      height: 200px;
+      border: 2px solid black;
+      border-radius: 5px;
+      padding: 10px;
+    }
+    
+    #copyright h2 {
+      margin-bottom: 10px;
+      text-transform: uppercase;
+    }
+    
+    #copyright div {
+      width: 100%;
+      height: 100%;
+    }
+    
+    #copyright table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 10px 5px;
+    }
+    
+    #copyright table td:nth-child(1) {
+      width: 8ch;
+      text-align: left;
+      border-right: 2px solid black;
+      vertical-align: middle;
+      padding-left: 6px;
+    }
+    
+    #copyright table td:nth-child(2) {
+      width: auto;
+      vertical-align: middle;
+    }
+    
+    #copyright table td {
+      height: 30px;
+    }
+    
+    #copyright table th {
+      text-transform: uppercase;
+      background: linear-gradient(90deg, #2c3e50, #4a90e2);
+      color: white;
+      padding: 8px;
+      border-radius: 5px;
+      font-weight: bold;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+    .table_wrapper {
+      overflow-y: auto;
+      padding-bottom: 10px;
+      height: 20px;
+      max-height: 100px;
+    }
+    #copyright table tbody tr:hover {
+      background-color: rgba(60, 144, 241, 0.336);
+      transition: all 0.3s ease;
+      transform: translateX(5px) translateY(-2px);
     }
 
 </style>

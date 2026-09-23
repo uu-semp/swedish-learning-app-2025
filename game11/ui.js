@@ -149,6 +149,48 @@ export function displayShoppingList(list, mode) {
   console.log('[ui] Displaying shopping list');
 }
 
+export function displayCopyright(shelf, mode) {
+  // CopyRight Info
+  /** @type {HTMLElement} */
+  const copyright_modal = document.querySelector("#copyright");
+  if (!copyright_modal) {
+    console.error('[ui] copyright not found in DOM');
+    return;
+  }
+
+  /** @type {HTMLElement} */
+  const copyright_modal_exit = document.querySelector("#close-copyright");
+  if (!copyright_modal_exit) {
+    console.error('[ui] copyright_modal_exit not found in DOM');
+    return;
+  }
+
+  const copyrightBtn = document.querySelector("#copyrightBtn");
+  if (!copyrightBtn) {
+    console.error('[ui] copyrightBtn not found in DOM');
+    return;
+  }
+
+  copyrightBtn.addEventListener("click", () => {
+    copyright_modal.style.display = "block";
+  });
+
+  copyright_modal_exit.addEventListener("click", () => {
+    copyright_modal.style.display = "none";
+  });
+
+  // Add copyright from every item in the shelf
+  shelf.forEach((item, i) => {
+    const IMAGE_ID = `#image${i+1}`;
+    const CURRENT_IMAGE = document.querySelector(IMAGE_ID);
+    if (!CURRENT_IMAGE) {
+      console.error(`[ui] image${i} not found in DOM`);
+      return;
+    }
+    CURRENT_IMAGE.innerHTML = item.img_copyright || "None";
+  });
+}
+
 /* ---------- Helpers ---------- */
 
 function highlightListIndex(idx) {
