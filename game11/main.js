@@ -17,7 +17,13 @@ function startGame() {
   window.__game11GameState = gameState;
   window.dispatchEvent(new CustomEvent('game11:ready', { detail: { gameState } }));
 };
-
+document
+    .getElementById("infoBtn")
+    .addEventListener("click", () => {
+        document
+            .getElementById("infoTooltip")
+            .classList.toggle("hidden");
+    });
 $(startGame);
 
 window.startGame = startGame;

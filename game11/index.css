@@ -203,3 +203,28 @@ body {
   0%, 100% { filter: brightness(1.15) drop-shadow(0 0 4px #38bdf8); }
   50%      { filter: brightness(1.25) drop-shadow(0 0 10px #7dd3fc); }
 }
+.info-wrapper {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+}
+
+#infoTooltip {
+    position: absolute;
+    bottom: 40px;
+    left: 0;
+
+    width: 220px;
+    padding: 10px;
+
+    background: white;
+    border: 1px solid #aaa;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.2);
+
+    z-index: 1000;
+}
+
+.hidden {
+    display: none;
+}

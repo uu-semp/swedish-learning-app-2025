@@ -20,8 +20,10 @@
   <script type="module" src="data.js" defer></script>
   <script type="module" src="main.js" defer></script>
   <script type="module" src="ui.js" defer></script>
+  
 </head>
 <body>
+  
   <header>
     <h1>Game 11</h1>
   </header>
@@ -37,8 +39,18 @@
     Hitta objekten från inköpslistan på hyllan,<br>
     klicka eller dra och släpp den i varukorgen.
   </p>
+  
 </div>
+<div class="info-wrapper">
+    <button id="infoBtn">ⓘ Info</button>
 
+    <div id="infoTooltip" class="hidden">
+        <strong>How to play</strong><br>
+        Match Swedish words with products.<br><br>
+        Goal: 8/10 correct items.<br>
+        Click or drag items into the cart.
+    </div>
+</div>
     <div class="shelf_items"></div>
     <div class="shopping_list"></div>
 
@@ -175,6 +187,7 @@
       }
     });
   </script>
+  
 </body>
 </html>
 
