@@ -1,13 +1,104 @@
-<!DOCTYPE html>
-<html lang="sv">
+<!doctype html>
+<html lang="en" data-root=".." data-images="images">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Ät och lär</title>
-  <script>location.replace("prototype/index.html");</script>
-  <meta http-equiv="refresh" content="0; url=prototype/index.html">
+  <link rel="stylesheet" href="../style.css" />
+  <!-- You are allowed to use JQuery and Vue.js but don't have to. They just make a
+  lot of things easier
+  -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <link rel="stylesheet" href="index.css" />
+  <script src="../scripts/vocabulary.js"></script>
+  <script src="../scripts/save.js"></script>
+  <script type="module" src="index.js"></script>
 </head>
 <body>
-  <p><a href="prototype/index.html">Open Ät och lär</a></p>
+  <header><h1>Game 10</h1></header>
+  <main class="game-frame">
+    <section class="al-screen is-on al-menu" id="menu">
+      <img class="al-deco" src="images/coffee.png" alt="" style="top:-26px;right:104px;width:118px;transform:rotate(-12deg)">
+      <img class="al-deco" src="images/cake.png" alt="" style="top:16px;right:-26px;width:128px;transform:rotate(9deg)">
+      <div class="al-menu-top">
+        <div>
+          <h1 class="al-title">Ät och lär</h1>
+          <p class="al-tagline" data-i18n="tagline"></p>
+        </div>
+        <div class="al-menu-meta">
+          <div class="al-lang">
+            <button type="button" data-lang="en">EN</button>
+            <button type="button" data-lang="sv">SV</button>
+          </div>
+          <div class="al-learned"><strong id="learned-count">0</strong> / <span id="learned-total">0</span> <span data-i18n="learned"></span></div>
+          <div class="al-bar"><span id="learned-bar"></span></div>
+        </div>
+      </div>
+      <div class="al-rule-line"></div>
+      <div class="al-menu-grid">
+        <button type="button" class="al-learn-card" id="open-learn">
+          <span class="al-badge" data-i18n="noScore"></span>
+          <h2 data-i18n="learning"></h2>
+          <p data-i18n="learningDesc"></p>
+          <div class="al-learn-art">
+            <img src="images/cinnamon_roll.png" alt="" style="left:0;bottom:4px;width:96px;transform:rotate(-7deg)">
+            <img src="images/coffee.png" alt="" style="left:74px;bottom:14px;width:84px;transform:rotate(6deg)">
+            <img src="images/cheese.png" alt="" style="right:-6px;bottom:0;width:90px;transform:rotate(-3deg)">
+          </div>
+          <div class="al-learn-go"><i class="fa-solid fa-volume-high"></i><span data-i18n="openCards"></span><i class="fa-solid fa-arrow-right"></i></div>
+        </button>
+        <div class="al-levels">
+          <button type="button" class="al-level-card" data-level="1">
+            <span class="al-level-n">1</span>
+            <div style="flex:1;min-width:0">
+              <h3 data-i18n="l1"></h3>
+              <p data-i18n="l1Desc"></p>
+              <div class="al-level-score" data-score="1"></div>
+            </div>
+            <img src="images/apple.png" alt="" style="transform:rotate(5deg)">
+          </button>
+          <button type="button" class="al-level-card" data-level="2">
+            <span class="al-level-n">2</span>
+            <div style="flex:1;min-width:0">
+              <h3 data-i18n="l2"></h3>
+              <p data-i18n="l2Desc"></p>
+              <div class="al-level-score" data-score="2"></div>
+            </div>
+            <img src="images/fish.png" alt="" style="transform:rotate(-6deg)">
+          </button>
+          <button type="button" class="al-level-card" data-level="3">
+            <span class="al-level-n">3</span>
+            <div style="flex:1;min-width:0">
+              <h3 data-i18n="l3"></h3>
+              <p data-i18n="l3Desc"></p>
+              <div class="al-level-score" data-score="3"></div>
+            </div>
+            <img src="images/potato.png" alt="" style="transform:rotate(8deg)">
+          </button>
+        </div>
+      </div>
+      <div class="al-menu-foot">
+        <span data-i18n="footnote"></span>
+        <button type="button" class="al-link" id="reset-open" data-i18n="reset"></button>
+      </div>
+    </section>
+
+    <div class="al-modal" id="reset-modal">
+      <div class="al-dialog">
+        <div style="display:flex;align-items:center;gap:13px">
+          <div class="al-mark al-mark-no"><i class="fa-solid fa-triangle-exclamation"></i></div>
+          <h2 data-i18n="resetTitle"></h2>
+        </div>
+        <p data-i18n="resetBody"></p>
+        <div class="al-dialog-row">
+          <button type="button" class="al-btn al-btn-ghost" id="reset-cancel" data-i18n="cancel"></button>
+          <button type="button" class="al-btn al-btn-primary" id="reset-confirm" data-i18n="resetConfirm"></button>
+        </div>
+      </div>
+    </div>
+  </main>
+  <footer><small>Created as part of the "Software Engineering and Project Management" course 2025</small></footer>
 </body>
 </html>

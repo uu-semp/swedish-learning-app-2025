@@ -6,12 +6,12 @@ Owned by Game 10
 =================================================
 -->
 
-<html lang="en" data-root="../../.." data-images="../images">
+<html lang="en" data-root="../.." data-images="../images">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Ät och lär — Level 1</title>
-  <link rel="stylesheet" href="../../../style.css" />
+  <title>Ät och lär — Level 2</title>
+  <link rel="stylesheet" href="../../style.css" />
   <!-- You are allowed to use JQuery and Vue.js but don't have to. They just make a
   lot of things easier
   -->
@@ -19,9 +19,9 @@ Owned by Game 10
   <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
   <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
   <link rel="stylesheet" href="../index.css" />
-  <link rel="stylesheet" href="level_one.css" />
-  <script src="../../../scripts/vocabulary.js"></script>
-  <script src="../../../scripts/save.js"></script>
+  <link rel="stylesheet" href="level_two.css" />
+  <script src="../../scripts/vocabulary.js"></script>
+  <script src="../../scripts/save.js"></script>
   <script type="module">
     import { getLang } from "../dev-tools/cookies.js";
     import { applyI18n } from "../dev-tools/i18n.js";
@@ -34,16 +34,10 @@ Owned by Game 10
     <section class="al-screen is-on al-intro">
       <a class="al-btn al-btn-ghost" href="../index.html" style="align-self:flex-start"><i class="fa-solid fa-arrow-left" style="margin-right:8px"></i><span data-i18n="menuBtn"></span></a>
       <div class="al-intro-body">
-        <span class="al-kicker"><span data-i18n="levelWord"></span> 1</span>
-        <h1 data-i18n="l1"></h1>
-        <p data-i18n="l1Long"></p>
-        <div class="al-example">
-          <img src="../images/bread.png" alt="">
-          <strong>bröd</strong>
-          <span class="al-chip-ok"><i class="fa-solid fa-check"></i><span data-i18n="trueBtn"></span></span>
-        </div>
-        <a class="al-btn al-btn-primary" href="level_one_game.html" style="margin-top:24px" data-i18n="start"></a>
-        <p class="al-hint" data-i18n="tenQ"></p>
+        <span class="al-kicker"><span data-i18n="levelWord"></span> 2</span>
+        <h1 data-i18n="l2"></h1>
+        <p data-i18n="l2Desc"></p>
+        <a class="al-btn al-btn-primary" href="game_page.html" style="margin-top:24px" data-i18n="start"></a>
         <p class="al-hint" data-i18n="passRule"></p>
       </div>
     </section>

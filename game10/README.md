@@ -154,8 +154,8 @@ python3 -m http.server 8000
 
 ### Unit tests
 
-http://127.0.0.1:8000/game10/prototype/index.html
-http://127.0.0.1:8000/game10/prototype/learning_mode/learning_mode.html
+http://127.0.0.1:8000/game10/index.html
+http://127.0.0.1:8000/game10/learning_mode/learning_mode.html
 
 
 ## Run Static Website in GitHub Pages
