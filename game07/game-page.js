@@ -133,7 +133,13 @@ function gameplay() {
   const nextBtn = document.getElementById("next-button");
   const soundIcon = document.getElementById("sound-icon");
   const audio = document.getElementById("word-audio");
-  const audioSrc = document.getElementById("audio-src");
+
+  function stopPronunciation() {
+    audio.pause();
+    audio.currentTime = 0;
+  }
+
+  window.addEventListener("pagehide", stopPronunciation);
   // Optional: add an element with this id in your HTML to show remaining lives
   const livesDisplay = document.getElementById("lives-display");
   // Optional: add an element with this id in your HTML to show the countdown
@@ -219,6 +225,7 @@ function gameplay() {
   }
 
   function startNewRound() {
+    stopPronunciation();
     clearSelection();
     updateLivesDisplay();
 
@@ -300,6 +307,7 @@ function gameplay() {
     }
 
     if (state.livesEnabled && state.lives <= 0) {
+      stopPronunciation();
       // Game over — go show results
       window.location.href = "results-page.html";
       return;
@@ -315,16 +323,20 @@ function gameplay() {
     const correctAnswer = state.currentRoundWords.find(
       (word) => word.answer === true
     );
-    if (!correctAnswer || !correctAnswer.audio) return;
+    if (!correctAnswer) return;
 
-    const audioPath = correctAnswer.audio.startsWith("http")
-      ? correctAnswer.audio
-      : "../" + correctAnswer.audio;
-    audio.src = audioPath;
+    stopPronunciation();
+    const article = (correctAnswer.article || "").trim().toLowerCase();
+    const word = (correctAnswer.sv || "").trim();
+    const phrase = (article === "en" || article === "ett") &&
+      !word.toLowerCase().startsWith(article + " ") ? `${article} ${word}` : word;
+    // Static KBLab recordings keep the Swedish voice consistent across browsers.
+    const recording = window.game07Pronunciations?.[phrase];
+    if (!recording && !correctAnswer.audio) return;
+    audio.src = recording || (correctAnswer.audio.startsWith("http")
+      ? correctAnswer.audio : "../" + correctAnswer.audio);
     audio.load();
-    audio.play().catch((err) => {
-      console.warn("Could not play sound:", err);
-    });
+    audio.play().catch((error) => console.warn("Could not play pronunciation", error));
   });
 
   // First round
