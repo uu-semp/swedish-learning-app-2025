@@ -104,6 +104,13 @@ function gameplay() {
   const audio = document.getElementById("word-audio");
   const audioSrc = document.getElementById("audio-src");
 
+  function stopPronunciation() {
+    audio.pause();
+    audio.currentTime = 0;
+  }
+
+  window.addEventListener("pagehide", stopPronunciation);
+
   let words = JSON.parse(localStorage.getItem("game_words") || "[]");
   if (!words.length) {
     console.error("No words");
@@ -141,6 +148,7 @@ function gameplay() {
   }
 
   function startNewRound(roundNumber) {
+    stopPronunciation();
     clearSelection();
     const wordSet = currentRoundWords(roundNumber);
 
@@ -218,17 +226,29 @@ function gameplay() {
       startNewRound(currentRound);
     } else {
       // Game finished
+      stopPronunciation();
       window.location.href = "results-page.html";
     }
   });
 
   soundIcon.addEventListener("click", () => {
-    // TODO: Does not work yet, there is no sound played when clicking
     const wordSet = currentRoundWords(currentRound);
     const correctAnswer = wordSet.find((word) => word.answer === true);
-    audioSrc.src = "../" + correctAnswer.audio;
+    if (!correctAnswer) return;
+
+    stopPronunciation();
+    const article = (correctAnswer.article || "").trim().toLowerCase();
+    const word = (correctAnswer.sv || "").trim();
+
+    const phrase = (article === "en" || article === "ett") &&
+      !word.toLowerCase().startsWith(article + " ") ? `${article} ${word}` : word;
+    // Static KBLab recordings keep the Swedish voice consistent across browsers.
+    const recording = window.game07Pronunciations?.[phrase];
+    if (!recording && !correctAnswer.audio) return;
+    audioSrc.src = recording || "../" + correctAnswer.audio;
+    audioSrc.type = recording ? "audio/wav" : "audio/mpeg";
     audio.load();
-    audio.play();
+    audio.play().catch((error) => console.warn("Could not play pronunciation", error));
   });
 
   // First round
