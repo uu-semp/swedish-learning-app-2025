@@ -1,0 +1,86 @@
+/* Dictionary.css */
+body {
+    background: linear-gradient(135deg, #1e62c8, #1faeae);  
+    min-height: 100vh;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 90px;  
+  }
+  
+  /* HEADER */
+  header {
+      position: fixed;     
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: inline-block;
+      background: rgba(181, 57, 33, 0.8);
+      padding: 8px 16px;
+      border-radius: 8px;
+      z-index: 900;
+      
+  }
+  
+  header h1 {
+      text-align: center;
+      color: #060607;
+      margin: 0;
+      font-size: 1.5rem; 
+      line-height: 1.2;
+      white-space: nowrap;
+  }
+  
+  /* ARROW BUTTON */
+  .backtomainpage-btn {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: none;
+    background: #b08968;
+    color: white;
+    font-size: 30px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.2s ease, background 0.3s ease;
+  }
+  
+  .backtomainpage-btn:hover {
+    transform: scale(1.05);
+    background: #a0785d;
+  }
+  
+  
+  /* DICTIONARY GRID */
+  #dict {
+    max-height: calc(100vh - 96px);
+    overflow: auto;
+    max-width: 1100px;
+    padding: 0px 12px;
+  }
+  
+  .dict-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(160px, 1fr));
+    gap: 10px 16px;
+    align-items: start;
+    
+  }
+  
+  /* cards */
+  .dict-item {
+    font-size: 1.05rem;
+    line-height: 2;
+    background: #f0eff4cc;
+    padding: 10px 12px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,.08);
+    text-align: center;
+  }
+  
+  @media (max-width: 720px) { .dict-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 480px) { .dict-grid { grid-template-columns: 1fr; } }
