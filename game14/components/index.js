@@ -16,6 +16,7 @@ import {
   ClothingItemButton,
   LanguageFlagButton,
   ExitGameButton,
+  CapsuleButton,
 } from "./elements/buttons.js";
 import { CorrectAnswerFeedback } from "./elements/correctAnswerFeedback.js";
 import { IncorrectAnswerFeedback } from "./elements/incorrectAnswerFeedback.js";
@@ -46,6 +47,7 @@ export default {
   ClothingItemButton,
   LanguageFlagButton,
   ExitGameButton,
+  CapsuleButton,
   PelleContainer,
   DressPellePrompt,
   ScoreCounter,

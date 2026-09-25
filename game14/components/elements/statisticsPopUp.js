@@ -35,8 +35,8 @@ export const StatisticsPopUp = {
             <h3>{{$language.translate('num-tries')}} {{ totalNumberTries }}</h3>
             <h3>{{$language.translate('num-right')}} {{ procentCalculator(score, numQuestionsAsked) }}%</h3>
             <div class="popUpButtons">
-                <button class="big-buttons" @click.self="$emit('playAgain')">{{$language.translate('play-again')}}</button>
-                <button class="big-buttons" id="exitButton" @click.self="$emit('exit')">{{$language.translate('exit')}}</button>
+                <capsule-button label="play-again" size="md" @click="$emit('playAgain')"></capsule-button>
+                <capsule-button id="exitButton" label="exit" size="md" @click="$emit('exit')"></capsule-button>
             </div>
         </div>
     </div>

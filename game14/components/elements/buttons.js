@@ -1,35 +1,35 @@
 export const StartGameButton = {
     name: 'start-game-button',
     template: `
-    <button class = "big-buttons" id="start-game-button">{{$language.translate('start-game')}}</button>
+    <button class="capsule-button capsule-button--md" id="start-game-button">{{$language.translate('start-game')}}</button>
   `,
 };
 
 export const HowToPlayButton = {
     name: 'how-to-play-button',
     template: `
-   <button class = "big-buttons" id="how-to-play-button">{{$language.translate('how-to')}}</button>
+   <button class="capsule-button capsule-button--md" id="how-to-play-button">{{$language.translate('how-to')}}</button>
   `,
 };
 
 export const GoBackButton = {
     name: 'go-back-button',
     template: `
-  <button class = "big-buttons" id="go-back-button">{{$language.translate('go-back')}}</button>
+  <button class="capsule-button capsule-button--md" id="go-back-button">{{$language.translate('go-back')}}</button>
   `,
 };
 
 export const InfoButton = {
     name: 'info-button',
     template: `
-  <button class = "info-button">?</button>
+  <button class="info-button">?</button>
   `,
 };
 
 export const LicenseButton = {
     name: 'license-button',
     template: `
-  <button class = "info-button">©</button>
+  <button class="info-button">©</button>
   `,
 };
 
@@ -42,7 +42,7 @@ export const LevelButton = {
         },
     },
     template: `
-  <button class=big-buttons>{{ label }}</button>
+  <button class="capsule-button capsule-button--lg">{{ label }}</button>
   `,
 };
 
@@ -102,7 +102,7 @@ export const CategoryClothingButton = {
 
 export const ExitGameButton = {
     template: `
-    <button class = "big-buttons" id="exit-game-button">{{$language.translate('exit')}}</button>
+    <button class="capsule-button capsule-button--md" id="exit-game-button">{{$language.translate('exit')}}</button>
   `,
 };
 export const LanguageFlagButton = {
@@ -115,17 +115,70 @@ export const LanguageFlagButton = {
     width: { type: String, default: "56px" },
     height: { type: String, default: "36px" },
   },
-  emits: ["select"],
+  emits: ["select", "click"],
+  methods: {
+    handleClick(event) {
+      this.$emit("click", event);
+      this.$emit("select", this.value);
+    },
+  },
   template: `
     <button
       class="flag-button"
       :class="{ selected: selected }"
+      @click="handleClick"
     >
       <img
         :src="src"
         :alt="alt"
         :style="'width: ' + width + '; height: ' + height + ';'"
       />
+    </button>
+  `,
+};
+
+export const CapsuleButton = {
+  name: "capsule-button",
+  props: {
+    label: { type: String, default: "" },
+    translateKey: { type: Boolean, default: true },
+    size: { type: String, default: "md", validator: (v) => ["sm", "md", "lg"].includes(v) },
+    icon: { type: String, default: null, validator: (v) => v === null || ["play"].includes(v) },
+    locked: { type: Boolean, default: false },
+    disabled: { type: Boolean, default: false },
+    title: { type: String, default: "" },
+  },
+  emits: ["click"],
+  computed: {
+    buttonClasses() {
+      const classes = ["capsule-button", `capsule-button--${this.size}`];
+      if (this.locked) classes.push("capsule-button--locked");
+      return classes;
+    },
+    displayLabel() {
+      if (!this.label) return "";
+      return this.translateKey && this.$language && this.$language.translate
+        ? this.$language.translate(this.label)
+        : this.label;
+    },
+  },
+  methods: {
+    handleClick(event) {
+      if (this.locked || this.disabled) return;
+      this.$emit("click", event);
+    },
+  },
+  template: `
+    <button
+      :class="buttonClasses"
+      :disabled="disabled || locked"
+      :title="title || (translateKey && label ? label : '')"
+      @click="handleClick"
+    >
+      <slot :label="displayLabel">
+        <span v-if="displayLabel">{{ displayLabel }}</span>
+        <span v-if="icon === 'play'" class="capsule-button__play-icon"></span>
+      </slot>
     </button>
   `,
 };

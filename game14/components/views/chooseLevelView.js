@@ -30,8 +30,7 @@ export const ChooseLevelView = {
                 alt="Swedish"
                 value="sv"
                 :selected="selectedLanguage === 'sv'"
-                @click="languageSwitch('sv')"
-                @select="selectedLanguage = $event"
+                @select="languageSwitch($event)"
               ></language-flag-button>
 
               <language-flag-button
@@ -39,21 +38,38 @@ export const ChooseLevelView = {
                 alt="English"
                 value="en"
                 :selected="selectedLanguage === 'en'"
-                @click="languageSwitch('en')"
-                @select="selectedLanguage = $event"
+                @select="languageSwitch($event)"
               ></language-flag-button>
           </div>
 
           <h1 class="main-text">{{$language.translate('choose-level')}}</h1>    
           
           <div class="level-buttons-container">
-              <level-button :label="$language.translate('level1')" class="big-buttons" @click="switchTo('LevelOneView')"></level-button>
-              <level-button :label="$language.translate('level2-locked')" class="big-buttons-locked" @click="openLockedPrompt"></level-button>
-              <level-button :label="$language.translate('level3-locked')" class="big-buttons-locked" @click="openLockedPrompt"></level-button>
+              <capsule-button
+                label="level1"
+                size="lg"
+                @click="switchTo('LevelOneView')"
+              ></capsule-button>
+              <capsule-button
+                label="level2-locked"
+                size="lg"
+                :locked="true"
+                @click="openLockedPrompt"
+              ></capsule-button>
+              <capsule-button
+                label="level3-locked"
+                size="lg"
+                :locked="true"
+                @click="openLockedPrompt"
+              ></capsule-button>
           </div>
 
           <div class="go-back-wrapper"> 
-              <go-back-button @click="switchTo('StartView')"></go-back-button>
+              <capsule-button
+                label="go-back"
+                size="md"
+                @click="switchTo('StartView')"
+              ></capsule-button>
           </div>
 
           <!-- Modal prompt -->

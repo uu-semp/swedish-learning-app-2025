@@ -1,7 +1,9 @@
 {
-    "start-message": "WELCOME TO THE DRESSING PELLE GAME!",
+    "start-message": "DRESSING PELLE",
     "how-to": "HOW TO PLAY",
     "start-game": "START GAME",
+    "play": "PLAY",
+    "help": "Help",
     "choose-level":"CHOOSE LEVEL",
     "level1": "LEVEL 1",
     "level2": "LEVEL 2",
