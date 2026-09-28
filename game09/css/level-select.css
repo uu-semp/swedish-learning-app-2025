@@ -104,9 +104,10 @@
 
 .stats-content {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  gap: 10px;
+  gap: 6px 10px;
 }
 
 .stats-text {
@@ -189,6 +190,9 @@
   .stats-panel {
     grid-area: stats;
     padding: 6px 8px 6px 12px;
+  }
+  .stats-content {
+    flex-wrap: nowrap;
   }
   .stats-text {
     flex-direction: row;
