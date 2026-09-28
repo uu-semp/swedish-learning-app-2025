@@ -3,7 +3,7 @@
    Re-uses the shared quiz styles and adds the input layout.
    ========================================================= */
 
-@import url("level-view.css");
+@import url("level-view.css?v=2");
 
 /* #options is a wrapper here, not a grid of buttons */
 .options {
