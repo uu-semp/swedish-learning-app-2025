@@ -5,30 +5,41 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>What garment am I?</title>
 
- 
-  <link rel="stylesheet" href="css/main.css">
-
-  
-  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/main.css">
 </head>
 <body>
 
-  <main class="quiz">
-   
-    <section class="image-area">
-      <img src="assets/logo/game-09-logo.png" alt="Game Logo" class="home-logo" />
-    </section>
+  <main class="quiz home">
+    <div class="home-card">
+      <section class="image-area home-hero">
+        <img src="assets/logo/game-09-logo.png" alt="Game Logo" class="home-logo" />
+      </section>
 
-    
-    <h1 class="game-title">What garment am I?</h1>
+      <span class="eyebrow">Svenska · Kläder</span>
+      <h1 class="game-title">What garment am I?</h1>
+      <p class="game-subtitle">Learn Swedish clothing words and their articles.</p>
 
-    
-    <section class="menu">
-      <button class="menu-btn start" onclick="startGame()">Start game</button>
-      <button class="menu-btn info" onclick="openInfo()">Educational Information</button>
-      <button class="menu-btn dict" onclick="openDictionary()">Dictionary</button>
-    </section>
+      <section class="menu">
+        <button class="menu-btn start" onclick="startGame()">
+          <span class="menu-icon" aria-hidden="true">▶</span>
+          Start game
+          <span class="menu-arrow" aria-hidden="true">›</span>
+        </button>
+        <button class="menu-btn info" onclick="openInfo()">
+          <span class="menu-icon" aria-hidden="true">🎓</span>
+          Educational Information
+          <span class="menu-arrow" aria-hidden="true">›</span>
+        </button>
+        <button class="menu-btn dict" onclick="openDictionary()">
+          <span class="menu-icon" aria-hidden="true">📖</span>
+          Dictionary
+          <span class="menu-arrow" aria-hidden="true">›</span>
+        </button>
+      </section>
+    </div>
   </main>
 
   <script src="js/main.js"></script>

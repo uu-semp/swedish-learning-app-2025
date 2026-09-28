@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Educational Information</title>
 
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/main.css">
   <link rel="stylesheet" href="css/information.css">
 </head>
@@ -13,19 +16,24 @@
   <main class="quiz">
 
     <div class="top-bar">
-      <button class="backtomainpage-btn" onclick="goBacktomainpage()">⬅</button>
+      <button class="backtomainpage-btn" onclick="goBacktomainpage()" aria-label="Back to main menu">←</button>
       <h2>Educational Information</h2>
+      <span></span>
     </div>
 
     <section class="content">
-      <p>This Basic Swedish Language Game is designed to help exchange students at Uppsala University learn Swedish in a fun way.</p>
-      <p>It lets players practice basic vocabulary and grammar through interactive activities and playful exercises.</p>
-      <p>The game mainly focuses on clothing, allowing players to practice common Swedish clothing terms and the correct use of articles (en/ett).</p>
-      <p>Most of the words are taken from the Basic Swedish 1 course.</p>
-      <p>The game includes multiple levels of increasing difficulty, allowing players to follow the instructions and complete exercises step by step.</p>
-      <p>Players receive immediate feedback on their answers and can track their progress while playing.</p>
-      <p>After completing the game, players can review their mistakes to see what to practice next.</p>
-      <p>Have fun and learn Swedish at the same time!</p>
+      <p class="lead">This Basic Swedish Language Game is designed to help exchange students at Uppsala University learn Swedish in a fun way.</p>
+
+      <ul class="info-list">
+        <li><span class="info-icon" aria-hidden="true">🧩</span><p>It lets players practice basic vocabulary and grammar through interactive activities and playful exercises.</p></li>
+        <li><span class="info-icon" aria-hidden="true">👕</span><p>The game mainly focuses on clothing, allowing players to practice common Swedish clothing terms and the correct use of articles (en/ett).</p></li>
+        <li><span class="info-icon" aria-hidden="true">📚</span><p>Most of the words are taken from the Basic Swedish 1 course.</p></li>
+        <li><span class="info-icon" aria-hidden="true">📈</span><p>The game includes multiple levels of increasing difficulty, allowing players to follow the instructions and complete exercises step by step.</p></li>
+        <li><span class="info-icon" aria-hidden="true">⚡</span><p>Players receive immediate feedback on their answers and can track their progress while playing.</p></li>
+        <li><span class="info-icon" aria-hidden="true">🔁</span><p>After completing the game, players can review their mistakes to see what to practice next.</p></li>
+      </ul>
+
+      <p class="closing">Have fun and learn Swedish at the same time! 🇸🇪</p>
     </section>
 
     <div class="page-bottom">

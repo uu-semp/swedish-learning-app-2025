@@ -1,136 +1,207 @@
+/* ---------- Level select ---------- */
 
-  .backtomainpage-btn {
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    border: none;
-    background: #b08968;
-    color: white;
-    font-size: 30px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: transform 0.2s ease, background 0.3s ease;
-  }
-
-  .backtomainpage-btn:hover {
-    transform: scale(1.05);
+.quiz {
+  max-width: 940px;
 }
-  .level-title {
-    font-size: 50px;
-    font-weight: bold;
-    color: white;
-    margin-bottom: 30px;
-    font-family: "Comic Sans MS", cursive;
-  }
-  
+
+.level-title {
+  margin: 0;
+}
 
 .level-grid {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: flex-start;
-  gap: 30px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(10px, 2vh, 16px);
+  width: 100%;
 }
-
 
 .level-block {
-  background: #f3e5ab; 
-  border-radius: 20px;
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
-  width: 260px;
-  height: 140px;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-  padding: 20px 15px;
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  gap: clamp(10px, 2.2vh, 16px);
+  padding: clamp(14px, 2.8vh, 20px);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow);
+  animation: rise 0.45s var(--ease) both;
+  transition: transform 0.2s var(--ease), box-shadow 0.2s;
 }
+
+.level-block:nth-child(2) { animation-delay: 0.06s; }
+.level-block:nth-child(3) { animation-delay: 0.12s; }
 
 .level-block:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 10px 18px rgba(0, 0, 0, 0.25);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(22, 33, 58, 0.08), 0 20px 44px rgba(22, 33, 58, 0.1);
 }
 
+.level-head {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.level-num {
+  display: inline-grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  background: var(--primary-soft);
+  color: var(--primary);
+  font-size: 1.25rem;
+  font-weight: 900;
+}
+
+.level-block:nth-child(2) .level-num { background: #fff4cc; color: var(--accent-ink); }
+.level-block:nth-child(3) .level-num { background: #f1eaff; color: #6b3fd6; }
+
+.level-name {
+  margin: 0 0 2px;
+  font-size: 1.15rem;
+  font-weight: 800;
+}
+
+.level-desc {
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: 0.92rem;
+  line-height: 1.4;
+}
 
 .level-btn {
-  background: #8d6e63;
-  color: white;
-  border: none;
-  border-radius: 15px;
-  padding: 10px 25px;
-  font-size: 20px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: background 0.3s ease, transform 0.2s ease;
-  margin-bottom: 20px;
-}
-
-.level-btn:hover {
-  background: #a1887f;
-  transform: scale(1.05);
-}
-
-
-.stats-panel {
-  background: #d7ccc8;
-  border-radius: 12px;
-  padding-bottom: 30px;
+  margin-top: auto;
   width: 100%;
-  text-align: left;
-  padding-left: 10px;
-  color: #4e342e;
-  font-family: "Comic Sans MS", cursive;
-  font-size: 16px;
-  box-shadow: inset 0 2px 6px rgba(0,0,0,0.15);
-  line-height: 0.5;
-  height: 60px;
-   
+  padding: 12px 16px;
+  border: 0;
+  border-radius: var(--radius);
+  background: var(--primary);
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(36, 89, 214, 0.28);
+  transition: background 0.15s, transform 0.15s var(--ease);
 }
 
+.level-btn:hover { background: var(--primary-hover); }
+.level-btn:active { transform: scale(0.98); }
+
+/* stats (markup injected by level-select.js) */
+.stats-panel {
+  padding: 12px 14px;
+  background: var(--surface-muted);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  font-size: 0.9rem;
+  color: var(--ink-soft);
+}
+
+.stats-panel:empty {
+  display: none;
+}
 
 .stats-content {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 100%;
+  gap: 10px;
 }
-
 
 .stats-text {
   display: flex;
   flex-direction: column;
-  text-align: left;
-  font-weight: bold;
-  gap: 10px;
+  gap: 2px;
 }
 
+.stats-text p {
+  margin: 0;
+  white-space: nowrap;
+}
+
+.stats-text b {
+  color: var(--ink);
+  font-weight: 900;
+}
 
 .reset-btn {
-  background: #b66a50;
-  color: white;
-  border: none;
-  border-radius: 10px;
-  padding: 10px 10px;
-  font-size: 14px;
-  font-weight: bold;
+  flex: 0 0 auto;
+  padding: 6px 12px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--ink-soft);
+  font-size: 0.8rem;
+  font-weight: 700;
   cursor: pointer;
-  transition: background 0.3s ease, transform 0.2s ease;
-  height: fit-content;
-  margin-right: 20px;
+  transition: color 0.15s, border-color 0.15s, background 0.15s;
 }
 
 .reset-btn:hover {
-  background: #d17c62;
-  transform: scale(1.05);
+  color: var(--danger);
+  border-color: #f5c2c3;
+  background: var(--danger-soft);
 }
 
+/* narrow screens: compact row cards so all three fit without scrolling */
+@media (max-width: 720px) {
+  .level-grid {
+    grid-template-columns: 1fr;
+  }
+  .level-block {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas:
+      "head  btn"
+      "stats stats";
+    align-items: center;
+    column-gap: 12px;
+    row-gap: 10px;
+  }
+  .level-head {
+    grid-area: head;
+    flex-direction: row;
+    align-items: center;
+    gap: 12px;
+  }
+  .level-num {
+    flex: 0 0 auto;
+    width: 38px;
+    height: 38px;
+    border-radius: 12px;
+    font-size: 1.1rem;
+  }
+  .level-name {
+    font-size: 1.05rem;
+  }
+  .level-desc {
+    font-size: 0.85rem;
+  }
+  .level-btn {
+    grid-area: btn;
+    width: auto;
+    margin-top: 0;
+    padding: 10px 16px;
+    font-size: 0.9rem;
+    white-space: nowrap;
+  }
+  .stats-panel {
+    grid-area: stats;
+    padding: 6px 8px 6px 12px;
+  }
+  .stats-text {
+    flex-direction: row;
+    flex-wrap: wrap;
+    column-gap: 16px;
+  }
+}
 
-
-
-  
-  
-  
+@media (max-width: 480px) {
+  .level-desc {
+    display: none;
+  }
+  .level-btn {
+    padding: 9px 12px;
+  }
+}

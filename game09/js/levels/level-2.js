@@ -69,21 +69,21 @@ function renderRound() {
     }
   
     const correctPhrase = `${correct.article} ${correct.sv}`;
-    const wrongArticle = correct.article === "en" ? "ett" : "en";
-    const wrongPhrase = `${wrongArticle} ${correct.sv}`;
-  
-    
-    const distractorIds = sampleDistinct(allIds, 6, new Set([currentCorrectId]));
-    const distractors = distractorIds
-      .map(id => window.vocabulary.get_vocab(id))
-      .filter(v => v.article)
-      .slice(0, 2)
-      .map(v => `${v.article} ${v.sv}`);
-  
-   
+
+    // 3 other words (each with its own correct article), never the same word as the answer
+    const distractorIds = sampleDistinct(allIds, allIds.length, new Set([currentCorrectId]));
+    const distractors = [];
+    for (const id of distractorIds) {
+      const v = window.vocabulary.get_vocab(id);
+      if (!v || !v.article || !v.sv || v.sv === correct.sv) continue;
+      const phrase = `${v.article} ${v.sv}`;
+      if (phrase === correctPhrase || distractors.includes(phrase)) continue;
+      distractors.push(phrase);
+      if (distractors.length === 3) break;
+    }
+
     const options = shuffled([
       { text: correctPhrase, correct: true },
-      { text: wrongPhrase, correct: false },
       ...distractors.map(d => ({ text: d, correct: false }))
     ]);
   

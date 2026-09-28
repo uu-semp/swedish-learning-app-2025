@@ -4,63 +4,64 @@
   <meta charset="utf-8" />
   <title>Clothing Quiz</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  
-  
-    <link rel="stylesheet" href="css/main.css">
 
-    
-    <link rel="stylesheet" href="css/advanced-level-view.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/advanced-level-view.css">
 </head>
 <body>
-  <main class="quiz">
-  <button class="backtoLevelSelect-btn" onclick="goBacktoLevelSelectpage()">⬅</button>
-  <button id="helpBtn" class="help-btn">?</button>
+  <main class="quiz play">
 
-  <div id="resultPopup" class="result-Popup hidden">
-  <button id="closeResult" class="close-btn">✕</button>
-  <h2 id="resultTitle" ></h2>
-  <div class="stars" id="starContainer">⭐ ⭐ ⭐</div>
-  <p id="mistakeInfo"></p>
-  <div class="popup-actions">
-    <button id="playAgainBtn" class="btn red">Play again</button>
-    <button id="homeBtn" class="btn brown" onclick="goBacktomainpage()">🏠</button>
-    <button id="nextLevelBtn" class="btn green">Next level</button>
-  </div>
-</div>
-
-      
-  <div id="helpPopup" class="help-popup hidden">
-    <button id="closeHelp" class="close-btn">✕</button>
-    <p>Enter the correct article and word!!</p>
-  </div>
-
-
-    <section class="image-area">
-      <img id="vocabImg" alt="vocab image" />
-    </section>
-   
-    <section id="options" class="options">
-        <div class="input-area">
-          <input id="articleInput" type="text" placeholder=" (en / ett)" maxlength="4" />
-          <input id="wordInput" type="text" placeholder="words" />
-          <button id="submitBtn" class="btn green">Submit</button>
-        </div>
-        <p id="gameFeedback" class="feedback-text"></p>
-      </section>
-      
-  
-    <section class="bottom">
-      <div class="progress-wrap">
+    <header class="play-top">
+      <button class="backtoLevelSelect-btn" onclick="goBacktoLevelSelectpage()" aria-label="Back to levels">←</button>
+      <div class="progress-wrap" aria-label="Progress">
         <div id="progress" class="progress"></div>
       </div>
-      <button id="nextBtn" class="next hidden">➡</button>
+      <button id="helpBtn" class="help-btn" aria-label="How to play">?</button>
+    </header>
+
+    <div id="resultPopup" class="result-Popup hidden" role="dialog" aria-modal="true">
+      <button id="closeResult" class="close-btn" aria-label="Close">✕</button>
+      <div class="stars" id="starContainer">⭐ ⭐ ⭐</div>
+      <h2 id="resultTitle"></h2>
+      <p id="mistakeInfo"></p>
+      <div class="popup-actions">
+        <button id="playAgainBtn" class="btn red">Play again</button>
+        <button id="homeBtn" class="btn brown" onclick="goBacktomainpage()" aria-label="Main menu">🏠</button>
+        <button id="nextLevelBtn" class="btn green">Next level →</button>
+      </div>
+    </div>
+
+    <div id="helpPopup" class="help-popup hidden" role="dialog" aria-modal="true">
+      <button id="closeHelp" class="close-btn" aria-label="Close">✕</button>
+      <span class="help-icon" aria-hidden="true">💡</span>
+      <h3>How to play</h3>
+      <p>Enter the correct article and word!!</p>
+    </div>
+
+    <section class="stage">
+      <section class="image-area">
+        <img id="vocabImg" alt="vocab image" />
+      </section>
+
+      <section id="options" class="options">
+        <p id="gameFeedback" class="feedback-text"></p>
+        <div class="input-area">
+          <input id="articleInput" type="text" placeholder="en / ett" maxlength="4" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Article" />
+          <input id="wordInput" type="text" placeholder="Swedish word" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Word" />
+          <button id="submitBtn" class="btn green">Check</button>
+        </div>
+      </section>
+    </section>
+
+    <section class="bottom">
+      <button id="nextBtn" class="next hidden">Continue</button>
     </section>
   </main>
-  
-  
 
   <script src="../scripts/vocabulary.js"></script>
-  
   <script src="../scripts/save.js"></script>
   <script>
     const params = new URLSearchParams(window.location.search);
