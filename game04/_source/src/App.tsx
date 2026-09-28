@@ -90,6 +90,7 @@ const SEASON_PLACEHOLDER_TEXT: Record<Season, string> = {
 };
 
 const SEASON_IMAGES: Partial<Record<Season, string>> = {
+  vinter: summerImg,
   sommar: summerImg,
   höst: fallImg,
 };
@@ -300,7 +301,7 @@ function MonthBar({ completed, current }: { completed: boolean[]; current: numbe
 function SeasonPlaceholder({
   season,
   label,
-  minH = 90,
+  minH = 120,
 }: {
   season: Season;
   label: string;
@@ -321,7 +322,7 @@ function SeasonPlaceholder({
         <img
           src={image}
           alt={label}
-          className="absolute inset-0 w-full h-full object-cover"
+          className="absolute inset-0 w-full h-full object-cover object-center"
         />
       ) : (
         <>
@@ -460,7 +461,7 @@ function SeasonMCQuestion({ q, answerState, onSelect }: { q: Question; answerSta
 
   return (
     <div className="flex flex-col gap-2">
-      <SeasonPlaceholder season={s} label={q.imagelabel!} minH={90} />
+      <SeasonPlaceholder season={s} label={q.imagelabel!} minH={240} />
       <div className="grid grid-cols-2 gap-2">
         {q.options!.map((opt) => {
           const state = optionState(opt);
@@ -881,10 +882,10 @@ function MonthCompleteScreen({
 
   return (
     <div className="h-full flex flex-col items-center justify-center p-4 fade-in overflow-y-auto" style={{ backgroundColor: '#F5F3F0' }}>
-      <div className="w-full max-w-lg bg-white rounded-2xl shadow-sm overflow-hidden">
+      <div className="w-full max-w-2xl bg-white rounded-2xl shadow-sm overflow-hidden">
         {/* Season banner */}
         <div
-          className="px-6 py-5 flex flex-col items-center gap-1.5"
+          className="px-6 py-7 flex flex-col items-center gap-1.5"
           style={{ backgroundColor: c.placeholder }}
         >
           <span style={{ fontSize: 36 }}>{SEASON_ICON[season]}</span>
@@ -894,7 +895,7 @@ function MonthCompleteScreen({
         </div>
 
         {/* Progress */}
-        <div className="px-6 py-3 flex flex-col gap-3">
+        <div className="px-6 py-5 flex flex-col gap-3">
           <MonthBar completed={completedMonths} current={-1} />
 
           <div className="flex gap-2 justify-center">
@@ -933,7 +934,7 @@ function YearCompleteScreen({
 
   return (
     <div className="h-full flex flex-col items-center justify-center p-3 fade-in overflow-y-auto" style={{ backgroundColor: '#F5F3F0' }}>
-      <div className="w-full max-w-lg bg-white rounded-2xl shadow-sm overflow-hidden">
+      <div className="w-full max-w-3xl bg-white rounded-2xl shadow-sm overflow-hidden">
         {/* Celebration banner */}
         <div className="px-6 py-4 text-center" style={{ background: 'linear-gradient(135deg, #C2D9EE 0%, #B8E4CA 33%, #F5E0A0 66%, #F0C0A0 100%)' }}>
           <div className="flex justify-center gap-2 text-2xl mb-2">
