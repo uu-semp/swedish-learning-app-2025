@@ -27,7 +27,7 @@ closeHelp.addEventListener("click", () => {
 
 function goBacktoLevelSelectpage() {
     
-  window.location.href = "../Views/levelSelect.html";
+  window.location.href = "level-select.html";
 }
 
 function shuffled(arr) {
@@ -45,43 +45,63 @@ function getLabel(vocab) {
 }
 function normalizeAssetUrl(url) {
   if (!url) return "";
-  return url.startsWith("/") ? url : "/" + url;
+  if (url.startsWith("http://") || url.startsWith("https://")) return url;
+  
+  const cleanUrl = url.startsWith("/") ? url.slice(1) : url;
+  
+  return `../${cleanUrl}`;
 }
 
 
 function renderRound() {
-  if (progress >= TOTAL_QUESTIONS) {
-    showResult();
-    return;
+    if (progress >= TOTAL_QUESTIONS) {
+      showResult();
+      return;
+    }
+  
+    if (unusedIds.length === 0) unusedIds = shuffled(allIds.slice());
+    currentCorrectId = unusedIds.pop();
+  
+    const correct = window.vocabulary.get_vocab(currentCorrectId);
+    if (!correct.article || !correct.sv) {
+      renderRound(); 
+      return;
+    }
+  
+    const correctPhrase = `${correct.article} ${correct.sv}`;
+    const wrongArticle = correct.article === "en" ? "ett" : "en";
+    const wrongPhrase = `${wrongArticle} ${correct.sv}`;
+  
+    
+    const distractorIds = sampleDistinct(allIds, 6, new Set([currentCorrectId]));
+    const distractors = distractorIds
+      .map(id => window.vocabulary.get_vocab(id))
+      .filter(v => v.article)
+      .slice(0, 2)
+      .map(v => `${v.article} ${v.sv}`);
+  
+   
+    const options = shuffled([
+      { text: correctPhrase, correct: true },
+      { text: wrongPhrase, correct: false },
+      ...distractors.map(d => ({ text: d, correct: false }))
+    ]);
+  
+    imgEl.src = normalizeAssetUrl(correct.img);
+    imgEl.alt = correct.en || correct.sv;
+  
+    optsEl.innerHTML = "";
+    for (const opt of options) {
+      const btn = document.createElement("button");
+      btn.className = "option";
+      btn.textContent = opt.text;
+      btn.addEventListener("click", () => onPick(btn, opt.correct));
+      optsEl.appendChild(btn);
+    }
+  
+    nextBtn.classList.add("hidden");
   }
-
-  if (unusedIds.length === 0) unusedIds = shuffled(allIds.slice());
-  currentCorrectId = unusedIds.pop();
-
-  const correct = window.vocabulary.get_vocab(currentCorrectId);
-  const distractorIds = sampleDistinct(allIds, 3, new Set([currentCorrectId]));
-  const options = [
-    { id: currentCorrectId, text: getLabel(correct), correct: true },
-    ...distractorIds.map(id => {
-      const v = window.vocabulary.get_vocab(id);
-      return { id, text: getLabel(v), correct: false };
-    })
-  ];
-
-  imgEl.src = normalizeAssetUrl(correct.img);
-  imgEl.alt = correct.en || correct.sv;
-
-  optsEl.innerHTML = "";
-  for (const opt of shuffled(options)) {
-    const btn = document.createElement("button");
-    btn.className = "option";
-    btn.textContent = opt.text;
-    btn.addEventListener("click", () => onPick(btn, opt.correct));
-    optsEl.appendChild(btn);
-  }
-
-  nextBtn.classList.add("hidden");
-}
+  
 
 
 function onPick(clickedBtn, isCorrect) {
@@ -151,21 +171,17 @@ function showResult() {
   const params = new URLSearchParams(window.location.search);
   const currentLevel = parseInt(params.get("level") || "1");
   const TEAM_KEY = `Game09-Level${currentLevel}`;
-  
- 
   const completion = Math.round((correctAnswers / TOTAL_QUESTIONS) * 100);
   
-  
+ 
   window.save.stats.setCompletion(TEAM_KEY, completion);
   window.save.stats.incrementWin(TEAM_KEY);
   
-  
+ 
   const oldBest = window.save.get(TEAM_KEY, "bestScore") || 0;
   if (correctAnswers > oldBest) {
     window.save.set(TEAM_KEY, "bestScore", correctAnswers);
   }
-  
-
 
   document.getElementById("playAgainBtn").onclick = () => {
     resultPopup.classList.add("hidden");
@@ -174,22 +190,21 @@ function showResult() {
   document.getElementById("closeResult").onclick = () => {
     resultPopup.classList.add("hidden");
   };
-
- 
-  document.getElementById("nextLevelBtn").onclick = () => {
-    const params = new URLSearchParams(window.location.search);
-    const currentLevel = parseInt(params.get("level") || "1");
-    const nextLevel = currentLevel + 1;
-    window.location.href = `../Views/Levelview.html?level=${nextLevel}`;
-  };
   
+  
+document.getElementById("nextLevelBtn").onclick = () => {
+  
+  const params = new URLSearchParams(window.location.search);
+  const currentLevel = parseInt(params.get("level") || "1");
+  const nextLevel = currentLevel + 1;
+  window.location.href = `advanced-level-view.html?level=${nextLevel}`;
+};
+
 }
-
-
 
 function goBacktomainpage() {
     
-  window.location.href = "../index.html";
+  window.location.href = "index.html";
 }
 function start() {
   progress = 0;
@@ -212,4 +227,3 @@ if (document.readyState === "loading") {
 } else {
   start();
 }
-
