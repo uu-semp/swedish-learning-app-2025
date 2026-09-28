@@ -8,7 +8,7 @@ const instructionGroups = [
     { question: "Dra 'skrivbord' höger om 'dator'.", answer: "desk", swedish: "skrivbord", index: [4, 5] },
     { question: "Dra 'bokhylla' höger om 'stol'.", answer: "bookshelf", swedish: "bokhylla", index: [1] },
     { question: "Dra 'kudde' längst till höger.", answer: "pillow", swedish: "kudde", index: [6] },
-    { question: "Dra 'klocka' höger om 'dator'.", answer: "clock", swedish: "klocka", index: [2] }
+    { question: "Dra 'spegel' vänster om 'dator'.", answer: "mirror", swedish: "spegel", index: [2] }
   ],
   
   // Group 2: Living room setup
@@ -30,7 +30,7 @@ const instructionGroups = [
     { question: "Dra 'matta' höger om 'lampa'.", answer: "carpet", swedish: "matta", index: [4] },
     { question: "Dra 'kudde' höger om 'säng'.", answer: "pillow", swedish: "kudde", index: [1] },
     { question: "Dra 'spegel' höger om 'lampa'.", answer: "mirror", swedish: "spegel", index: [5] },
-    { question: "Dra 'klocka' längst till höger.", answer: "clock", swedish: "klocka", index: [2] }
+    { question: "Dra 'garderob' vänster om 'lampa'.", answer: "wardrobe", swedish: "garderob", index: [2] }
   ],
   
   // Group 4: Kitchen setup
@@ -40,8 +40,8 @@ const instructionGroups = [
     { question: "Dra 'bord' höger om 'kylskåp'.", answer: "table", swedish: "bord", index: [4, 5] },
     { question: "Dra 'stol' vänster om 'bord'.", answer: "chair", swedish: "stol", index: [0, 1] },
     { question: "Dra 'dörr' höger om 'kylskåp'.", answer: "door", swedish: "dörr", index: [0, 1] },
-    { question: "Dra 'diskho' längst till höger.", answer: "sink", swedish: "diskho", index: [6] },
-    { question: "Dra 'kopp' längst till höger.", answer: "cup", swedish: "kopp", index: [2] }
+    { question: "Dra 'skåp' längst till höger.", answer: "cupboard", swedish: "skåp", index: [6] },
+    { question: "Dra 'blomma' vänster om 'kylskåp'.", answer: "flower", swedish: "blomma", index: [2] }
   ]
 ];
 
