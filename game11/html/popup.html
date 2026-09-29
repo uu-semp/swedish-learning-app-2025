@@ -23,7 +23,7 @@
       width: 100%;
       box-sizing: border-box;
       min-height: 90px;
-      background: url('./assets/chatbubble.png') no-repeat 0 0 / 100% 100%;
+      background: url('../assets/chatbubble.png') no-repeat 0 0 / 100% 100%;
       border: none;
       box-shadow: none;
       display: flex;
@@ -331,8 +331,8 @@
     // Tell parent to make the iframe clickable while end screen is shown
     try { window.parent.postMessage({ type: 'endgameOpen' }, '*'); } catch (_) {}
 
-    // ✅ Navigate **inside this iframe** to the end screen (NO full-page redirect)
-    window.location.href = './endgame.html';   // NOTE: filename is lower-case here
+    // Navigate **inside this iframe** to the end screen (NO full-page redirect)
+    window.location.href = './endGame.html';   // NOTE: filename is lower-case here
 
     return;
   }

@@ -20,13 +20,15 @@ for (const r of rows) {
 }
 globalThis.window = { vocabulary: { get_category: c => categories[c], get_vocab: id => vocab[id] } };
 const store = new Map();
-Object.defineProperty(globalThis, 'localStorage', { configurable: true, value: {
-  getItem: k => store.get(k) ?? null, setItem: (k, v) => store.set(k, String(v)), removeItem: k => store.delete(k),
-} });
+Object.defineProperty(globalThis, 'localStorage', {
+  configurable: true, value: {
+    getItem: k => store.get(k) ?? null, setItem: (k, v) => store.set(k, String(v)), removeItem: k => store.delete(k),
+  }
+});
 
-const { getItemsIds, getItems } = await import('../data.js');
-const { generateShoppingList, generateShelf } = await import('../gameLogic.js');
-const { initGameState, saveState, loadState } = await import('../state.js');
+const { getItemsIds, getItems } = await import('../js/data.js');
+const { generateShoppingList, generateShelf } = await import('../js/gameLogic.js');
+const { initGameState, saveState, loadState } = await import('../js/state.js');
 
 const EXCLUDED = ['567f323c', '2f373051', '32191560', '440d3157', '75387a51', '19263071', '6a701276'];
 const keyOf = item => path.basename(item.img).split('.')[0].toLowerCase(); // same key as ui.js / index.html
