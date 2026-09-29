@@ -103,6 +103,19 @@ test('corrupted saved state is discarded', () => {
 
 // popup.html's end-screen link must match the real file name (GitHub Pages is case-sensitive).
 test('popup links to an existing end screen file', () => {
-  const target = fs.readFileSync(path.join(GAME, 'popup.html'), 'utf8').match(/location\.href\s*=\s*['"]\.\/([^'"]+)/)[1];
-  assert.ok(fs.readdirSync(GAME).includes(target), `popup opens "${target}", not found (case-sensitive)`);
+  const popup = fs.readFileSync(
+    path.join(GAME, 'js', 'popup.js'),
+    'utf8'
+  );
+
+  const match = popup.match(/location\.href\s*=\s*['"]\.\/([^'"]+)['"]/);
+
+  assert.ok(match, 'popup.js does not contain a location.href link');
+
+  const target = match[1];
+
+  assert.ok(
+    fs.existsSync(path.join(GAME, 'html', target)),
+    `popup opens "${target}", but the file does not exist`
+  );
 });
