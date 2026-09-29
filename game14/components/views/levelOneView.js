@@ -1,4 +1,4 @@
-import clothingItems from "/game14/clothing-items-info.js";
+import clothingItems from "../../clothing-items-info.js";
 
 export const LevelOneView = {
     name: 'level-one-view',
@@ -254,7 +254,7 @@ export const LevelOneView = {
             </div>
 
             <div>
-                <exit-game-button @click="openModal"></exit-game-button>
+                <capsule-button label="exit" size="md" @click="openModal"></capsule-button>
                 <info-button @click="this.showInfo=true"></info-button>
                 <license-button @click="this.showLicense=true"></license-button>
             </div>
@@ -262,8 +262,8 @@ export const LevelOneView = {
                 <div class="modal-content" @click.stop>
                     <h2>{{$language.translate('exit-confirmation')}}</h2>
                     <div class="modal-buttons">
-                        <button class="big-buttons" @click="confirmExit">{{$language.translate('yes')}}</button>
-                        <button class="big-buttons" @click="closeModal">{{$language.translate('no')}}</button>
+                        <capsule-button label="yes" size="md" @click="confirmExit"></capsule-button>
+                        <capsule-button label="no" size="md" @click="closeModal"></capsule-button>
                     </div>
                 </div>
             </div>
@@ -272,7 +272,7 @@ export const LevelOneView = {
                 <div class="modal-content" @click="this.showInfo=false">
                     <h2>{{$language.translate('information-message')}}</h2>
                     <div class="modal-buttons">
-                        <button class="big-buttons" id="info-back-button" @click="this.showInfo=false">{{$language.translate('okay-continue')}}</button>
+                        <capsule-button id="info-back-button" label="okay-continue" size="md" @click="this.showInfo=false"></capsule-button>
                     </div>
                 </div>
             </div>
@@ -288,7 +288,7 @@ export const LevelOneView = {
                         </div>
                     </div>
                     <div class="modal-buttons">
-                        <button class="big-buttons" @click="this.showLicense=false">{{$language.translate('okay-continue')}}</button>
+                        <capsule-button label="okay-continue" size="md" @click="this.showLicense=false"></capsule-button>
                     </div>
                 </div>
             </div>

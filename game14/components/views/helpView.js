@@ -24,7 +24,7 @@ export const HelpView = {
       </div>
 
       <div class = button-container> 
-        <go-back-button @click="switchTo('StartView')"></go-back-button>
+        <capsule-button label="go-back" size="md" @click="switchTo('StartView')"></capsule-button>
       </div>
     </div>
     `,

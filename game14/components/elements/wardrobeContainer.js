@@ -1,4 +1,4 @@
-import clothingItems from "/game14/clothing-items-info.js"
+import clothingItems from "../../clothing-items-info.js"
 
 export const WardrobeContainer = {
   name: "wardrobe-container",
@@ -61,7 +61,7 @@ export const WardrobeContainer = {
           <clothing-item-button 
           v-for="item in categoryItems"
           :itemID="item.ID"
-          :label="\`../../../\${item.Image_url}\`"
+          :label="item.Image_url"
           :title="item.label"
           ></clothing-item-button>
         </div>

@@ -1,7 +1,9 @@
 {
-    "start-message": "VÄLKOMMEN TILL KLÄ PÅ PELLE SPELET!",
+    "start-message": "KLÄ PÅ PELLE",
     "how-to": "HUR DU SPELAR",
     "start-game": "STARTA SPEL",
+    "play": "SPELA",
+    "help": "Hjälp",
     "choose-level":"VÄLJ NIVÅ",
     "level1": "NIVÅ 1",
     "level2": "NIVÅ 2",
