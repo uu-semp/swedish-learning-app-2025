@@ -5,6 +5,8 @@
 const COOKIE = "eatAndLearnProgress";
 const LANG_KEY = "eatAndLearnLang";
 export const SCORE_TO_PASS = 10;
+export const PLATEAU = 2;
+const COLUMNS = { recognition: 0, spelling: 1 };
 
 function setCookie(name, value, days) {
   let expires = "";
@@ -32,7 +34,8 @@ function defaults() {
     game_completed: false,
     currentLevel: 1,
     levelScores: { 1: 0, 2: 0, 3: 0 },
-    learnedIds: []
+    learnedIds: [],
+    weights: {}
   };
 }
 
@@ -50,7 +53,8 @@ export function loadProgress() {
       ...base,
       ...data,
       levelScores: { ...base.levelScores, ...(data.levelScores || {}) },
-      learnedIds: Array.isArray(data.learnedIds) ? data.learnedIds : []
+      learnedIds: Array.isArray(data.learnedIds) ? data.learnedIds : [],
+      weights: data.weights && typeof data.weights === "object" ? data.weights : {}
     };
   } catch {
     return defaults();
@@ -72,13 +76,20 @@ export function setLang(lang) {
   localStorage.setItem(LANG_KEY, lang);
 }
 
-export function addLearned(id) {
+export function getWeight(progress, id, mode) {
+  return (progress.weights[id] || [0, 0])[COLUMNS[mode]] || 0;
+}
+
+export function changeWeight(id, mode, delta) {
   const progress = loadProgress();
-  if (!progress.learnedIds.includes(id)) {
+  const weights = (progress.weights[id] || [0, 0]).slice();
+  const col = COLUMNS[mode];
+  weights[col] = Math.max(0, Math.min(PLATEAU, (weights[col] || 0) + delta));
+  progress.weights[id] = weights;
+  if (weights[0] >= PLATEAU && weights[1] >= PLATEAU && !progress.learnedIds.includes(id)) {
     progress.learnedIds.push(id);
-    saveProgress(progress);
   }
-  return progress.learnedIds.length;
+  saveProgress(progress);
 }
 
 export function recordLevelScore(level, roundScore) {

@@ -2,9 +2,9 @@
 // Owned by Game 10
 // ==============================================
 
-import { getLang, addLearned } from "../dev-tools/cookies.js";
+import { getLang, changeWeight } from "../dev-tools/cookies.js";
 import { t } from "../dev-tools/i18n.js";
-import { whenReady, foodItems, pickN, vocabUrl, playAudio } from "../dev-tools/util.js";
+import { whenReady, getBatch, vocabUrl, playAudio } from "../dev-tools/util.js";
 
 const FRONT = document.getElementById("card-front");
 const BACK = document.getElementById("card-back");
@@ -73,8 +73,7 @@ function finish() {
 function start() {
   lang = getLang();
   applyI18n();
-  const pool = foodItems().filter((item) => item.img);
-  cards = pickN(pool.length ? pool : foodItems(), DECK_SIZE);
+  cards = getBatch(DECK_SIZE, "recognition");
   index = 0;
   known = [];
   if (!cards.length) return;
@@ -106,7 +105,7 @@ whenReady(() => {
   });
   document.getElementById("got-it").addEventListener("click", () => {
     known.push(index);
-    addLearned(cards[index].id);
+    changeWeight(cards[index].id, "recognition", 1);
     nextUnknown();
   });
   document.getElementById("again").addEventListener("click", start);

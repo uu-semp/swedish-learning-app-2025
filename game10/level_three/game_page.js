@@ -2,12 +2,11 @@
 // Owned by Game 10
 // ==============================================
 
-import { getLang, recordLevelScore } from "../dev-tools/cookies.js";
+import { getLang, recordLevelScore, changeWeight } from "../dev-tools/cookies.js";
 import { t, applyI18n as fillText, roundSummary } from "../dev-tools/i18n.js";
 import {
   whenReady,
-  foodItems,
-  pickN,
+  getBatch,
   vocabUrl,
   playAudio,
   renderPips,
@@ -71,8 +70,7 @@ function renderPlay() {
 }
 
 function startRound() {
-  const pool = foodItems().filter((item) => item.img && item.sv);
-  words = pickN(pool.length ? pool : foodItems(), TOTAL);
+  words = getBatch(TOTAL, "spelling");
   qIndex = 0;
   results = [];
   renderPlay();
@@ -112,6 +110,7 @@ function nextQuestion() {
 function finishRound() {
   hidePopups();
   const roundScore = results.filter((r) => r === true).length;
+  words.forEach((w, i) => changeWeight(w.id, "spelling", results[i] ? 1 : -1));
   const { progress, total } = recordLevelScore(3, roundScore);
   document.getElementById("done-score").textContent = String(roundScore);
   renderPips(document.getElementById("pips-done"), results, -1, TOTAL);

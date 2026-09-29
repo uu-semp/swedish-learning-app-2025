@@ -2,7 +2,7 @@
 // Owned by Game 10
 // ==============================================
 
-import { getLang, recordLevelScore } from "../dev-tools/cookies.js";
+import { getLang, recordLevelScore, changeWeight } from "../dev-tools/cookies.js";
 import { t, applyI18n, roundSummary } from "../dev-tools/i18n.js";
 import { vocabUrl } from "../dev-tools/util.js";
 
@@ -82,6 +82,7 @@ function render() {
   });
 
   document.getElementById("continue").addEventListener("click", () => {
+    graded.forEach((g) => changeWeight(g.leftItem.id, "recognition", g.correct ? 1 : -1));
     const { progress, total, unlockedNext } = recordLevelScore(2, roundScore);
     document.getElementById("done-score").textContent = String(roundScore);
     document.getElementById("next-level").style.display = progress.currentLevel >= 3 ? "flex" : "none";

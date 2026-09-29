@@ -2,6 +2,8 @@
 // Owned by Game 10
 // ==============================================
 
+import { loadProgress, getWeight, PLATEAU } from "./cookies.js";
+
 export function rootPath() {
   return document.documentElement.dataset.root || "../..";
 }
@@ -37,6 +39,16 @@ export function foodItems() {
 
 export function pickN(list, n) {
   return shuffle(list).slice(0, Math.min(n, list.length));
+}
+
+export function getBatch(number, mode) {
+  const progress = loadProgress();
+  const pool = foodItems().filter((item) => item.img);
+  const words = pool.length ? pool : foodItems();
+  const open = words.filter((item) => getWeight(progress, item.id, mode) < PLATEAU);
+  const known = words.filter((item) => getWeight(progress, item.id, mode) >= PLATEAU);
+  const batch = pickN(open, number);
+  return shuffle(batch.concat(pickN(known, number - batch.length)));
 }
 
 export function playAudio(rel) {

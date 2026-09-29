@@ -2,9 +2,9 @@
 // Owned by Game 10
 // ==============================================
 
-import { getLang, setLang, loadProgress, resetProgress, SCORE_TO_PASS } from "./dev-tools/cookies.js";
+import { getLang, setLang, loadProgress, resetProgress, getWeight, SCORE_TO_PASS, PLATEAU } from "./dev-tools/cookies.js";
 import { t, applyI18n as fillText } from "./dev-tools/i18n.js";
-import { whenReady, foodItems } from "./dev-tools/util.js";
+import { whenReady, foodItems, vocabUrl } from "./dev-tools/util.js";
 
 const LEVEL_HREF = {
   1: "level_one/level_one.html",
@@ -52,6 +52,42 @@ function renderMenu() {
   });
 }
 
+let wordSort = "az";
+
+function renderWords() {
+  const lang = getLang();
+  const progress = loadProgress();
+  document.querySelector('[data-i18n="masteredRule"]').textContent = t(lang, "masteredRule", { n: PLATEAU });
+  document.querySelectorAll("[data-sort]").forEach((btn) => {
+    btn.classList.toggle("is-on", btn.dataset.sort === wordSort);
+  });
+  const bar = (label, weight) => {
+    const cls = weight >= PLATEAU ? "is-full" : weight > 0 ? "is-half" : "";
+    return `<div class="al-word-score">${label} ${weight}/${PLATEAU}<div class="al-bar"><span class="${cls}" style="width:${(weight / PLATEAU) * 100}%"></span></div></div>`;
+  };
+  const score = (id, mode) => bar(t(lang, mode), getWeight(progress, id, mode));
+  document.getElementById("words-list").innerHTML = foodItems()
+    .map((item) => ({
+      item,
+      points: getWeight(progress, item.id, "recognition") + getWeight(progress, item.id, "spelling")
+    }))
+    .sort((a, b) => {
+      if (wordSort === "most" && a.points !== b.points) return b.points - a.points;
+      if (wordSort === "least" && a.points !== b.points) return a.points - b.points;
+      return a.item.sv.localeCompare(b.item.sv, "sv");
+    })
+    .map(({ item }) => item)
+    .map((item) => {
+      return `<div class="al-word-row">
+        <img src="${vocabUrl(item.img)}" alt="">
+        <div class="al-word-name">${item.sv}<span>${item.en || ""}</span></div>
+        ${score(item.id, "recognition")}
+        ${score(item.id, "spelling")}
+      </div>`;
+    })
+    .join("");
+}
+
 whenReady(() => {
   renderMenu();
 
@@ -78,6 +114,19 @@ whenReady(() => {
       window.location.href = LEVEL_HREF[level];
     });
   });
+
+  const wordsModal = document.getElementById("words-modal");
+  document.getElementById("words-open").addEventListener("click", () => {
+    renderWords();
+    wordsModal.classList.add("is-on");
+  });
+  document.querySelectorAll("[data-sort]").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      wordSort = btn.dataset.sort;
+      renderWords();
+    });
+  });
+  document.getElementById("words-close").addEventListener("click", () => wordsModal.classList.remove("is-on"));
 
   const modal = document.getElementById("reset-modal");
   document.getElementById("reset-open").addEventListener("click", () => modal.classList.add("is-on"));

@@ -32,7 +32,7 @@
             <button type="button" data-lang="en">EN</button>
             <button type="button" data-lang="sv">SV</button>
           </div>
-          <div class="al-learned"><strong id="learned-count">0</strong> / <span id="learned-total">0</span> <span data-i18n="learned"></span></div>
+          <div class="al-learned"><strong id="learned-count">0</strong> / <span id="learned-total">0</span> <span data-i18n="learned"></span><button type="button" class="al-words-open" id="words-open"><i class="fa-solid fa-list"></i></button></div>
           <div class="al-bar"><span id="learned-bar"></span></div>
         </div>
       </div>
@@ -95,6 +95,22 @@
         <div class="al-dialog-row">
           <button type="button" class="al-btn al-btn-ghost" id="reset-cancel" data-i18n="cancel"></button>
           <button type="button" class="al-btn al-btn-primary" id="reset-confirm" data-i18n="resetConfirm"></button>
+        </div>
+      </div>
+    </div>
+
+    <div class="al-modal" id="words-modal">
+      <div class="al-dialog al-words-dialog">
+        <h2 data-i18n="wordsTitle"></h2>
+        <p data-i18n="masteredRule"></p>
+        <div class="al-lang al-words-sort">
+          <button type="button" data-sort="az" data-i18n="sortAz" class="is-on"></button>
+          <button type="button" data-sort="most" data-i18n="sortMost"></button>
+          <button type="button" data-sort="least" data-i18n="sortLeast"></button>
+        </div>
+        <div class="al-words" id="words-list"></div>
+        <div class="al-dialog-row">
+          <button type="button" class="al-btn al-btn-ghost" id="words-close" data-i18n="close"></button>
         </div>
       </div>
     </div>

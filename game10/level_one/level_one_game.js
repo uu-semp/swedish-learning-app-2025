@@ -2,9 +2,9 @@
 // Owned by Game 10
 // ==============================================
 
-import { getLang, recordLevelScore } from "../dev-tools/cookies.js";
+import { getLang, recordLevelScore, changeWeight } from "../dev-tools/cookies.js";
 import { t, roundSummary } from "../dev-tools/i18n.js";
-import { whenReady, foodItems, vocabUrl, playAudio, renderPips } from "../dev-tools/util.js";
+import { whenReady, foodItems, getBatch, vocabUrl, playAudio, renderPips } from "../dev-tools/util.js";
 
 const TOTAL = 10;
 const screens = {
@@ -59,10 +59,11 @@ function updateHud() {
 
 function makeQuestions() {
   const pool = foods.filter((item) => item.img) || foods;
+  const batch = getBatch(TOTAL, "recognition");
   questions = [];
-  for (let i = 0; i < TOTAL; i++) {
+  for (let i = 0; i < batch.length; i++) {
     const isTrue = Math.random() > 0.5;
-    const shown = pool[Math.floor(Math.random() * pool.length)];
+    const shown = batch[i];
     if (isTrue) {
       questions.push({ shown, word: shown, isTrue: true });
     } else {
@@ -106,6 +107,7 @@ function answer(userTrue) {
 
 function finishRound() {
   const roundScore = results.filter((r) => r === true).length;
+  questions.forEach((q, i) => changeWeight(q.shown.id, "recognition", results[i] ? 1 : -1));
   const { progress, total, unlockedNext } = recordLevelScore(1, roundScore);
   document.getElementById("done-score").textContent = String(roundScore);
   renderPips(document.getElementById("pips-done"), results, -1, TOTAL);
