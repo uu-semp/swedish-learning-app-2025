@@ -6,10 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   
   
-    <link rel="stylesheet" href="../Global.css">
+    <link rel="stylesheet" href="css/main.css">
 
     
-    <link rel="stylesheet" href="../Styles/AdvancedLevelview.css">
+    <link rel="stylesheet" href="css/advanced-level-view.css">
 </head>
 <body>
   <main class="quiz">
@@ -59,15 +59,15 @@
   
   
 
-  <script src="../../scripts/vocabulary.js"></script>
+  <script src="../scripts/vocabulary.js"></script>
   
-  <script src="../../scripts/save.js"></script>
+  <script src="../scripts/save.js"></script>
   <script>
     const params = new URLSearchParams(window.location.search);
     const level = params.get("level") || "3";
 
     const script = document.createElement("script");
-    script.src = `../JS/GameLevel${level}.js`;
+    script.src = `js/levels/level-${level}.js`;
     document.head.appendChild(script);
   </script>
 </body>
