@@ -1,27 +1,36 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>Grocery shopping!</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link rel="stylesheet" href="../style.css" />
+    <title>Grocery Shopping!</title>
+
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="./index.css">
+
     <link rel="icon" type="image/png" href="../game11/assets/favicon.png">
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css"
+    >
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 
     <script src="../scripts/vocabulary.js"></script>
     <script src="../scripts/save.js"></script>
-    <link rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css">
-    <script
-      src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
-    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 
-    <link rel="stylesheet" href="index.css" />
-    <script>window.vocabulary.load_game_data(11);</script>
+    <script>
+      window.vocabulary.load_game_data(11);
+    </script>
 
-    <script type="module" src="data.js" defer></script>
-    <script type="module" src="main.js" defer></script>
-    <script type="module" src="ui.js" defer></script>
+    <!-- Game modules -->
+    <script type="module" src="./data.js" defer></script>
+    <script type="module" src="./main.js" defer></script>
+    <script type="module" src="./ui.js" defer></script>
+    <script type="module" src="./index.js" defer></script>
   </head>
   <body>
     <header>
@@ -34,7 +43,7 @@
 
         <button class="modal-btn">Info</button>
         <button id="restart-btn" class="modal-btn">Börja om</button>
-        <button id = "mode2-btn" class="modal-btn">växla läge</button>
+        <button id="mode2-btn" class="modal-btn">växla läge</button>
 
         <hr style="margin: 12px 0; border: 1px dashed #ccc;">
 
@@ -98,14 +107,16 @@
         <div class="cart_items" aria-live="polite"></div>
       </div>
 
-      <button id="copyrightBtn" title="Copyright Information" aria-label="Copyright">
+      <button id="copyrightBtn" title="Copyright Information"
+        aria-label="Copyright">
         <i class="fas fa-copyright fa-2x"></i>
       </button>
-        
+
       <section id="copyright">
         <div>
           <button id="close-copyright">&times;</button>
-          <h2>Licenses <i class="fas fa-minus"></i> numbered left to right, top to bottom <i class="fas fa-minus"></i> scroll to see more
+          <h2>Licenses <i class="fas fa-minus"></i> numbered left to right, top
+            to bottom <i class="fas fa-minus"></i> scroll to see more
           </h2>
           <div class="table_wrapper">
             <table>
@@ -192,439 +203,5 @@
         "Software Engineering and Project Management" course 2025</small>
     </footer>
 
-    <script>
-    function setIframeInteractive(on) {
-      const wrap  = document.querySelector('.popup-frame-wrap');
-      const frame = document.querySelector('.popup-frame');
-      if (!wrap || !frame) return;
-      wrap.style.pointerEvents  = on ? 'auto' : 'none';
-      frame.style.pointerEvents = on ? 'auto' : 'none';
-      wrap.classList.toggle('is-endgame', on);
-    }
-
-    const popupFrame = document.getElementById('popupFrame');
-
-    const keyFromImgPath = (p) => {
-      if (!p) return undefined;
-      const base = p.split('/').pop() || '';
-      return base.split('.')[0].toLowerCase();
-    };
-
-    function mapWordsFromState(gs) {
-      const raw = Array.isArray(gs?.shoppingList) ? gs.shoppingList : [];
-      const words = raw.map(item => {
-        const idKey =
-          keyFromImgPath(item?.img) ||
-          (item?.id != null ? String(item.id).toLowerCase() : undefined) ||
-          (item?.en ? String(item.en).toLowerCase() : undefined) ||
-          (item?.sv ? String(item.sv).toLowerCase() : undefined);
-        const svLabel = item?.sv ?? item?.en ?? '';
-        return { id: idKey, sv: svLabel };
-      }).filter(w => !!w.id);
-      return words;
-    }
-
-    window.sendPickToPopup = function(idKey, label) {
-      if (!popupFrame || !popupFrame.contentWindow) return;
-      console.log('[parent] sending pick (key):', idKey);
-      popupFrame.contentWindow.postMessage({ type: 'pick', id: String(idKey), label }, '*');
-    };
-
-    let popupIsReady = false;
-    let initSent = false;
-
-    function haveShoppingList() {
-      const gs = window.__game11GameState;
-      return !!(gs && Array.isArray(gs.shoppingList) && gs.shoppingList.length > 0);
-    }
-
-    // Returns true only once the popup has confirmed with initDone, so the
-    // retry loop keeps going if the initWords message never lands
-    function tryInitPopupOnce() {
-      if (initSent) return true;
-      if (!popupIsReady || !haveShoppingList()) return false;
-      const gs = window.__game11GameState;
-      const words = mapWordsFromState(gs);
-      popupFrame?.contentWindow?.postMessage({ type: 'initWords', words }, '*');
-      return false;
-    }
-
-    window.addEventListener('message', (event) => {
-      const data = event.data || {};
-      if (data.type === 'statusUpdate') {
-        const s = data.status; if (!s) return;
-        document.getElementById('progressPill').textContent = s.progress;
-        document.getElementById('firstTryPill').textContent = s.firstTry;
-        document.getElementById('mistakesPill').textContent = s.mistakes;
-        document.getElementById('targetPill').textContent = s.target;
-        if (typeof s.index === 'number' || typeof s.index === 'string') {
-          window.Game11UI?.highlightListIndex?.(s.index);
-        }
-      } else if (data.type === 'popupReady') {
-        popupIsReady = true;
-        tryInitPopupOnce();
-      } else if (data.type === 'initDone') {
-        initSent = true;
-      }
-      if (data.type === 'endgameOpen') { setIframeInteractive(true); return; }
-      if (data.type === 'endgameClose') { setIframeInteractive(false); return; }
-    });
-
-    window.addEventListener('game11:ready', () => { tryInitPopupOnce(); });
-
-   window.addEventListener('DOMContentLoaded', () => {
-
-      popupFrame?.addEventListener('load', () => tryInitPopupOnce());
-      let attempts = 0;
-      const timer = setInterval(() => {
-        if (tryInitPopupOnce()) { clearInterval(timer); }
-        else if (++attempts > 100) clearInterval(timer);
-      }, 100);
-
-      const menuBtn = document.getElementById('main-menu-btn');
-      const settingsModal = document.getElementById('settings-modal');
-      const closeSettingsBtn = document.getElementById('close-settings-btn');
-
-      if (menuBtn && settingsModal && closeSettingsBtn) {
-        menuBtn.addEventListener('click', (e) => {
-          e.preventDefault();
-          settingsModal.classList.remove('hidden');
-        });
-
-        closeSettingsBtn.addEventListener('click', (e) => {
-          e.preventDefault();
-          settingsModal.classList.add('hidden');
-        });
-      }
-
-      const restartBtn = document.getElementById('restart-btn');
-      if (restartBtn) {
-        restartBtn.addEventListener('click', () => {
-          localStorage.removeItem('game11_game_state');
-
-          window.location.reload();
-        });
-      }
-
-      // This is the mode 2 button, which reloads the page and make the shopping list only show english words.
-      // while the shelf only swedish words
-      const Mode2Btn = document.getElementById('mode2-btn');
-      if (Mode2Btn) {
-        Mode2Btn.addEventListener('click', () => {
-          const state = window.__game11GameState;
-          if(state.mode == 1) {
-            state.mode = 2;
-          } else {
-            state.mode = 1;
-          }
-          localStorage.setItem(
-            'game11_game_state',
-            JSON.stringify(state)
-          );
-          window.location.reload();
-        });
-      }
-
-
-      const toggleContrastBtn = document.getElementById('toggle-contrast-btn');
-      if (toggleContrastBtn) {
-        toggleContrastBtn.addEventListener('click', () => {
-          document.body.classList.toggle('high-contrast-mode');
-          const isActive = document.body.classList.contains('high-contrast-mode');
-          toggleContrastBtn.textContent = isActive ? 'PÅ' : 'AV';
-          toggleContrastBtn.classList.toggle('active', isActive);
-        });
-      }
-
-    });
-
-    window.addEventListener('message', (event) => {
-      const data = event.data || {};
-      if (data.type === 'pickResult' && typeof data.id === 'string') {
-        if (data.ok) {
-          window.Game11UI?.placeItemInCart?.(data.id);
-        } else {
-          // document.querySelector('.cart-dropzone')?.animate([...],{duration:180});
-        }
-      }
-    });
-
-    //same as resart ? what is the difference between restart and playAgain?
-
-    window.addEventListener('message', (event) => {
-      if (event.data?.type === 'playAgain') {
-        document.querySelector('.popup-frame-wrap').style.display = 'none';
-          localStorage.removeItem('game11_game_state');
-          window.location.reload();
-      }
-    });
-  </script>
   </body>
 </html>
-
-<style>
-      .game-frame { position: relative; }
-      
-      .cart-dropzone {
-        position: absolute;
-        top: 450px;
-        left: 220px;
-        width: 18%;
-        height: 18%;
-        z-index: 5;
-      }
-      .top-left-controls {
-        position: absolute;
-        top: 1rem;
-        left: 1rem; 
-        z-index: 20; 
-      }
-      .cart-dropzone .cart_items {
-        position: absolute;
-        inset: 0;
-        z-index: 6;
-        pointer-events: none;
-        display: grid;
-        grid-template-columns: repeat(5, 28px);
-        grid-template-rows: repeat(2, 28px);
-        gap: 2px;
-        justify-content: start;
-        align-content: start;
-      }
-      
-      .cart-dropzone .cart_items img {
-        width: 34px;
-        height: 34px;
-        margin: -3px;
-        object-fit: contain;
-        pointer-events: none;
-      }
-      
-      .shelf_items img.is-picked {
-        opacity: .35;
-        filter: grayscale(25%);
-        pointer-events: none;
-      }
-      
-     .top-left-controls {
-      position: absolute;
-      top: 1rem;
-      left: 1rem;
-      z-index: 20;
-    }
-
-    .menu-btn {
-      background-color: white;
-      color: black;
-      border: 2px solid black;
-      border-radius: 8px;
-      padding: 4px 10px;
-      font-weight: bold;
-      font-size: 0.8rem;
-      cursor: pointer;
-      box-shadow: 2px 2px 0px black;
-      transition: transform 0.1s, box-shadow 0.1s;
-    }
-
-    .menu-btn:hover, .sub-btn:hover {
-      background-color: #f8f9fa;
-      transform: translate(1px, 1px);
-      box-shadow: 1px 1px 0px black;
-    }
-
-
-    .hidden {
-      display: none !important;
-    }
-
-
-    .modal-overlay {
-  position: fixed;
-  top: 0; 
-  left: 0; 
-  width: 100%; 
-  height: 100%;
-  background: transparent;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 10000;
-}
-
-.modal-box {
-  background-color: white;
-  border: 3px solid black;
-  border-radius: 12px;
-  padding: 24px;
-  width: 320px;
-  box-shadow: 6px 6px 0px black;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  text-align: center;
-}
-
-   .modal-btn {
-      background-color: white;
-      color: black;
-      border: 2px solid black;
-      border-radius: 8px;
-      padding: 10px;
-      font-weight: bold;
-      font-size: 1rem;
-      cursor: pointer;
-      box-shadow: 2px 2px 0px black;
-      margin-bottom: 8px;
-      transition: transform 0.1s, box-shadow 0.1s; 
-    }
-    
-    .modal-btn:hover {
-      background-color: #f8f9fa;
-      transform: translate(1px, 1px); 
-      box-shadow: 1px 1px 0px black;  
-    }
-
-    .toggle-btn, .close-btn {
-      background: white; 
-      border: 2px solid black;
-      border-radius: 8px; 
-      padding: 6px 12px;
-      cursor: pointer; 
-      font-weight: bold;
-      box-shadow: 2px 2px 0px black;
-      transition: transform 0.1s, box-shadow 0.1s; 
-    }
-
-    .toggle-btn:hover, .close-btn:hover {
-      transform: translate(1px, 1px);
-      box-shadow: 1px 1px 0px black;
-    }
-    
-    .toggle-btn.active { background: #38bdf8; color: white; }
-    
-    .close-btn { 
-      margin-top: 16px; 
-      background: #f87171; 
-      color: white; 
-      padding: 10px;
-      font-size: 1rem;
-    }
-
-    .setting-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-weight: bold;
-    }
-
-    
-    .toggle-btn.active { background: #38bdf8; color: white; }
-    .close-btn { margin-top: 10px; background: #f87171; color: white; }
-
-
-   
-
-    body.high-contrast-mode {
-      background-color: #121212;
-    }
-    body.high-contrast-mode .game-frame img {
-      filter: contrast(1.5) saturate(1.2); 
-    }
-
-    #copyrightBtn {
-      position: absolute;
-      bottom: 30px;
-      left: 5px;
-    }
-    
-    #close-copyright {
-      position: absolute;
-      top: 2px;
-      right: 2px;
-      background-color: transparent;
-      border: none;
-      font-size: 28px;
-      transition: all 0.2s ease;
-      width: 34px;
-      height: 34px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    
-    #close-copyright:hover {
-      cursor: pointer;
-      transform: scale(1.1);
-      background-color: rgba(155, 155, 155, 0.3);
-      border-radius: 50%;
-    }
-    
-    #copyright {
-      z-index: 100;
-      position: fixed;
-      display: none;
-      bottom: 0;
-      left: 0;
-      background-color: white;
-      width: 600px;
-      height: 200px;
-      border: 2px solid black;
-      border-radius: 5px;
-      padding: 10px;
-    }
-    
-    #copyright h2 {
-      margin-bottom: 10px;
-      text-transform: uppercase;
-    }
-    
-    #copyright div {
-      width: 100%;
-      height: 100%;
-    }
-    
-    #copyright table {
-      width: 100%;
-      border-collapse: separate;
-      border-spacing: 10px 5px;
-    }
-    
-    #copyright table td:nth-child(1) {
-      width: 8ch;
-      text-align: left;
-      border-right: 2px solid black;
-      vertical-align: middle;
-      padding-left: 6px;
-    }
-    
-    #copyright table td:nth-child(2) {
-      width: auto;
-      vertical-align: middle;
-    }
-    
-    #copyright table td {
-      height: 30px;
-    }
-    
-    #copyright table th {
-      text-transform: uppercase;
-      background: linear-gradient(90deg, #2c3e50, #4a90e2);
-      color: white;
-      padding: 8px;
-      border-radius: 5px;
-      font-weight: bold;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-    }
-    .table_wrapper {
-      overflow-y: auto;
-      padding-bottom: 10px;
-      height: 20px;
-      max-height: 100px;
-    }
-    #copyright table tbody tr:hover {
-      background-color: rgba(60, 144, 241, 0.336);
-      transition: all 0.3s ease;
-      transform: translateX(5px) translateY(-2px);
-    }
-
-</style>
