@@ -182,12 +182,28 @@ export function displayCopyright(shelf, mode) {
   // Add copyright from every item in the shelf
   shelf.forEach((item, i) => {
     const IMAGE_ID = `#image${i+1}`;
-    const CURRENT_IMAGE = document.querySelector(IMAGE_ID);
-    if (!CURRENT_IMAGE) {
+    const currentImage = document.querySelector(IMAGE_ID);
+    if (!currentImage) {
       console.error(`[ui] image${i} not found in DOM`);
       return;
     }
-    CURRENT_IMAGE.innerHTML = item.img_copyright || "None";
+    
+    let copyrightInfo = item.img_copyright || "None";
+
+    // NOTE: If the database changes the HTML to fix "broken" link, remove this.
+    // NOTE: This fix also only works with items from "papunet.net".
+    if (copyrightInfo.includes("Papunet")) {
+      const REF_START = 29;
+      const URL_START = 35;
+      const CC_REF_START = 133;
+      copyrightInfo = item.img_copyright.slice(0, REF_START) 
+        + 'target="_blank" href="https://'
+        + item.img_copyright.slice(URL_START, CC_REF_START)
+        + 'target="_blank" '
+        + item.img_copyright.slice(CC_REF_START);
+    }
+
+    currentImage.innerHTML = copyrightInfo;
   });
 }
 
