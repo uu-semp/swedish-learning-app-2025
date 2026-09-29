@@ -107,6 +107,11 @@ export const StartView = {
             ></capsule-button>
           </div>
         </div>
+        <img
+          src="./components/assets/pelleimg.png"
+          alt="Pelle"
+          class="pelle-start-right"
+        />
       </div>
     </div>
   `,
