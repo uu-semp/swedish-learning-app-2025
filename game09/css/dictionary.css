@@ -1,0 +1,56 @@
+/* ---------- Dictionary ---------- */
+
+.game-frame {
+  max-width: 1000px;
+}
+
+.game-frame .top-bar {
+  margin-bottom: 4px;
+}
+
+.dict-subtitle {
+  margin: 0 0 22px;
+  color: var(--ink-soft);
+  font-weight: 600;
+  text-align: center;
+}
+
+#dict {
+  width: 100%;
+}
+
+.dict-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.dict-item {
+  padding: 14px 16px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--primary);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-sm);
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.4;
+  animation: rise 0.35s var(--ease) both;
+  transition: transform 0.15s var(--ease), box-shadow 0.15s;
+}
+
+.dict-item:nth-child(3n + 2) { border-left-color: var(--accent); }
+.dict-item:nth-child(3n + 3) { border-left-color: #8b5cf6; }
+
+.dict-item:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow);
+}
+
+@media (max-width: 760px) {
+  .dict-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 480px) {
+  .dict-grid { grid-template-columns: 1fr; }
+}

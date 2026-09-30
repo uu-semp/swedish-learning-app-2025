@@ -1,0 +1,83 @@
+/* ---------- Educational information ---------- */
+
+.content {
+  width: 100%;
+  padding: 28px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow);
+  animation: rise 0.45s var(--ease) both;
+}
+
+.content p {
+  margin: 0;
+}
+
+.lead {
+  margin-bottom: 22px !important;
+  font-size: 1.2rem;
+  font-weight: 800;
+  line-height: 1.45;
+  letter-spacing: -0.01em;
+}
+
+.info-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.info-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 14px;
+  background: var(--surface-muted);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  color: var(--ink-soft);
+  font-size: 0.95rem;
+  line-height: 1.45;
+}
+
+.info-icon {
+  display: inline-grid;
+  place-items: center;
+  flex: 0 0 auto;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  font-size: 1.1rem;
+}
+
+.closing {
+  margin-top: 22px !important;
+  padding: 14px 16px;
+  border-radius: var(--radius);
+  background: var(--primary-soft);
+  color: var(--primary);
+  font-weight: 800;
+  text-align: center;
+}
+
+.page-bottom {
+  width: 100%;
+  margin-top: 24px;
+  text-align: center;
+  color: var(--ink-faint);
+}
+
+@media (max-width: 620px) {
+  .content {
+    padding: 20px 18px;
+  }
+  .info-list {
+    grid-template-columns: 1fr;
+  }
+}

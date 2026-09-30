@@ -1,0 +1,211 @@
+/* ---------- Level select ---------- */
+
+.quiz {
+  max-width: 940px;
+}
+
+.level-title {
+  margin: 0;
+}
+
+.level-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(10px, 2vh, 16px);
+  width: 100%;
+}
+
+.level-block {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(10px, 2.2vh, 16px);
+  padding: clamp(14px, 2.8vh, 20px);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow);
+  animation: rise 0.45s var(--ease) both;
+  transition: transform 0.2s var(--ease), box-shadow 0.2s;
+}
+
+.level-block:nth-child(2) { animation-delay: 0.06s; }
+.level-block:nth-child(3) { animation-delay: 0.12s; }
+
+.level-block:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(22, 33, 58, 0.08), 0 20px 44px rgba(22, 33, 58, 0.1);
+}
+
+.level-head {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.level-num {
+  display: inline-grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  background: var(--primary-soft);
+  color: var(--primary);
+  font-size: 1.25rem;
+  font-weight: 900;
+}
+
+.level-block:nth-child(2) .level-num { background: #fff4cc; color: var(--accent-ink); }
+.level-block:nth-child(3) .level-num { background: #f1eaff; color: #6b3fd6; }
+
+.level-name {
+  margin: 0 0 2px;
+  font-size: 1.15rem;
+  font-weight: 800;
+}
+
+.level-desc {
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: 0.92rem;
+  line-height: 1.4;
+}
+
+.level-btn {
+  margin-top: auto;
+  width: 100%;
+  padding: 12px 16px;
+  border: 0;
+  border-radius: var(--radius);
+  background: var(--primary);
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(36, 89, 214, 0.28);
+  transition: background 0.15s, transform 0.15s var(--ease);
+}
+
+.level-btn:hover { background: var(--primary-hover); }
+.level-btn:active { transform: scale(0.98); }
+
+/* stats (markup injected by level-select.js) */
+.stats-panel {
+  padding: 12px 14px;
+  background: var(--surface-muted);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  font-size: 0.9rem;
+  color: var(--ink-soft);
+}
+
+.stats-panel:empty {
+  display: none;
+}
+
+.stats-content {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px 10px;
+}
+
+.stats-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.stats-text p {
+  margin: 0;
+  white-space: nowrap;
+}
+
+.stats-text b {
+  color: var(--ink);
+  font-weight: 900;
+}
+
+.reset-btn {
+  flex: 0 0 auto;
+  padding: 6px 12px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--ink-soft);
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: color 0.15s, border-color 0.15s, background 0.15s;
+}
+
+.reset-btn:hover {
+  color: var(--danger);
+  border-color: #f5c2c3;
+  background: var(--danger-soft);
+}
+
+/* narrow screens: compact row cards so all three fit without scrolling */
+@media (max-width: 720px) {
+  .level-grid {
+    grid-template-columns: 1fr;
+  }
+  .level-block {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas:
+      "head  btn"
+      "stats stats";
+    align-items: center;
+    column-gap: 12px;
+    row-gap: 10px;
+  }
+  .level-head {
+    grid-area: head;
+    flex-direction: row;
+    align-items: center;
+    gap: 12px;
+  }
+  .level-num {
+    flex: 0 0 auto;
+    width: 38px;
+    height: 38px;
+    border-radius: 12px;
+    font-size: 1.1rem;
+  }
+  .level-name {
+    font-size: 1.05rem;
+  }
+  .level-desc {
+    font-size: 0.85rem;
+  }
+  .level-btn {
+    grid-area: btn;
+    width: auto;
+    margin-top: 0;
+    padding: 10px 16px;
+    font-size: 0.9rem;
+    white-space: nowrap;
+  }
+  .stats-panel {
+    grid-area: stats;
+    padding: 6px 8px 6px 12px;
+  }
+  .stats-content {
+    flex-wrap: nowrap;
+  }
+  .stats-text {
+    flex-direction: row;
+    flex-wrap: wrap;
+    column-gap: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .level-desc {
+    display: none;
+  }
+  .level-btn {
+    padding: 9px 12px;
+  }
+}

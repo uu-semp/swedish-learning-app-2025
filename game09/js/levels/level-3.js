@@ -32,10 +32,10 @@ closeHelp.addEventListener("click", () => {
 
 // === Navigation ===
 function goBacktoLevelSelectpage() {
-  window.location.href = "../Views/levelSelect.html";
+  window.location.href = "level-select.html";
 }
 function goBacktomainpage() {
-  window.location.href = "../index.html";
+  window.location.href = "index.html";
 }
 
 // === Utils ===
@@ -47,8 +47,11 @@ function shuffled(arr) {
 
 function normalizeAssetUrl(url) {
   if (!url) return "";
-  if (url.startsWith("http")) return url; // 網址不動
-  return url.startsWith("/") ? url : "/" + url;
+  if (url.startsWith("http://") || url.startsWith("https://")) return url;
+  
+  const cleanUrl = url.startsWith("/") ? url.slice(1) : url;
+  
+  return `../${cleanUrl}`;
 }
 
 
@@ -196,7 +199,7 @@ function showResult() {
     } else {
      
       const nextLevel = currentLevel + 1;
-      window.location.href = `../Views/Levelview.html?level=${nextLevel}`;
+      window.location.href = `level-view.html?level=${nextLevel}`;
     }
   };
 }

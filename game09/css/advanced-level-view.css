@@ -1,0 +1,134 @@
+/* =========================================================
+   Level 3 — typing screen
+   Re-uses the shared quiz styles and adds the input layout.
+   ========================================================= */
+
+@import url("level-view.css?v=3");
+
+/* #options is a wrapper here, not a grid of buttons */
+.options {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(8px, 2vh, 14px);
+}
+
+.feedback-text {
+  order: -1;
+  margin: 0;
+  min-height: 1.6em;
+  font-size: clamp(1.1rem, 3vw, 1.3rem);
+  font-weight: 700;
+  text-align: center;
+  color: var(--ink);
+}
+
+.feedback-text b {
+  font-weight: 900;
+  color: var(--primary);
+}
+
+/* colour the feedback line from the input state the game sets */
+.options:has(#wordInput[style*="rgb(92, 184, 92)"]) .feedback-text {
+  color: #0f6b33;
+}
+.options:has(#articleInput[style*="rgb(217, 83, 79)"]) .feedback-text,
+.options:has(#wordInput[style*="rgb(217, 83, 79)"]) .feedback-text {
+  color: #a3262a;
+}
+.options:has(#articleInput[style*="rgb(217, 83, 79)"]) .feedback-text b,
+.options:has(#wordInput[style*="rgb(217, 83, 79)"]) .feedback-text b {
+  color: var(--success);
+}
+
+.input-area {
+  display: flex;
+  align-items: stretch;
+  gap: 10px;
+  width: 100%;
+  max-width: 560px;
+}
+
+.input-area input {
+  min-width: 0;
+  padding: clamp(9px, 1.9vh, 14px) 16px;
+  background: var(--surface);
+  border: 2px solid var(--line);
+  border-radius: var(--radius);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--ink);
+  text-align: left;
+  outline: none;
+  transition: border-color 0.15s, box-shadow 0.15s, background 0.15s;
+}
+
+.input-area input::placeholder {
+  color: var(--ink-faint);
+  font-weight: 600;
+}
+
+#articleInput {
+  flex: 0 0 110px;
+  text-align: center;
+}
+
+#wordInput {
+  flex: 1 1 auto;
+}
+
+.input-area input:focus {
+  border-color: var(--primary) !important;
+  box-shadow: 0 0 0 4px rgba(36, 89, 214, 0.15);
+}
+
+/*
+  level-3.js writes inline border colours:
+  black = neutral, #5cb85c = correct, #d9534f = wrong.
+  Map them onto the new palette without touching the JS.
+*/
+.input-area input[style*="rgb(0, 0, 0)"] {
+  border-color: var(--line) !important;
+}
+.input-area input[style*="rgb(92, 184, 92)"] {
+  border-color: var(--success) !important;
+  background: var(--success-soft);
+  color: #0f6b33;
+}
+.input-area input[style*="rgb(217, 83, 79)"] {
+  border-color: var(--danger) !important;
+  background: var(--danger-soft);
+  color: #a3262a;
+}
+
+.input-area input:disabled {
+  opacity: 1;
+  -webkit-text-fill-color: currentColor;
+}
+
+#submitBtn {
+  flex: 0 0 auto;
+  padding: 0 24px;
+}
+
+#submitBtn:disabled {
+  background: #cfd6e3;
+  box-shadow: none;
+  cursor: default;
+}
+
+@media (max-width: 520px) {
+  .input-area {
+    flex-wrap: wrap;
+  }
+  #articleInput {
+    flex-basis: 96px;
+  }
+  #wordInput {
+    flex-basis: calc(100% - 106px);
+  }
+  #submitBtn {
+    flex: 1 1 100%;
+    padding: clamp(9px, 1.9vh, 14px);
+  }
+}

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Select Level</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/theme.css?v=3">
+  <link rel="stylesheet" href="css/level-select.css?v=3">
+</head>
+<body>
+  <main class="quiz">
+
+    <div class="top-bar">
+      <button class="backtomainpage-btn" onclick="goBacktomainpage()" aria-label="Back to main menu">←</button>
+      <h1 class="level-title">Choose your level</h1>
+      <span></span>
+    </div>
+
+    <section class="level-grid">
+      <div class="level-block">
+        <div class="level-head">
+          <span class="level-num">1</span>
+          <div>
+            <h2 class="level-name">Pick the word</h2>
+            <p class="level-desc">Match the picture to the right Swedish word.</p>
+          </div>
+        </div>
+        <div id="level1Stats" class="stats-panel"></div>
+        <button class="level-btn level1" onclick="startLevel(1)">Play level 1</button>
+      </div>
+
+      <div class="level-block">
+        <div class="level-head">
+          <span class="level-num">2</span>
+          <div>
+            <h2 class="level-name">En or ett?</h2>
+            <p class="level-desc">Choose the word with the correct article.</p>
+          </div>
+        </div>
+        <div id="level2Stats" class="stats-panel"></div>
+        <button class="level-btn level2" onclick="startLevel(2)">Play level 2</button>
+      </div>
+
+      <div class="level-block">
+        <div class="level-head">
+          <span class="level-num">3</span>
+          <div>
+            <h2 class="level-name">Type it</h2>
+            <p class="level-desc">Write the article and the word yourself.</p>
+          </div>
+        </div>
+        <div id="level3Stats" class="stats-panel"></div>
+        <button class="level-btn level3" onclick="startLevel(3)">Play level 3</button>
+      </div>
+    </section>
+
+  </main>
+
+  <script src="../scripts/save.js"></script>
+  <script src="js/level-select.js"></script>
+</body>
+</html>
