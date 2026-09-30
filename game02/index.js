@@ -148,8 +148,16 @@ $(function () {
   }
 
   // Button handlers
-  $("#start-game").on("click", function () {
-    showScreen("game-screen");
+  $("#start-game").on("click", async function () {
+    const mode = $(".mode-btn.selected").data("mode"); // "picture", "spelling", "listening" or "dialect"
+
+    if (mode === "spelling") {
+      showScreen("spelling-screen");
+    } else {
+      await mapCards(mode); // picture, listening and dialect all use the card board
+      showScreen("game-screen");
+    }
+
     startTimer((elapsed) => $("#elapsed-time").text(`Time: ${elapsed}s`));
   });
 
@@ -164,6 +172,14 @@ $(function () {
     resetGame();
     mapCards(); // Load new random cards
     showScreen("menu-screen");
+  });
+
+    // Show the info for the clicked game mode
+  $(".mode-btn").on("click", function () {
+    $(".mode-btn").removeClass("selected");
+    $(this).addClass("selected");
+    $(".mode-info").hide();
+    $("#info-" + $(this).data("mode")).show();
   });
 
   // Event delegation för dynamiskt skapade kort

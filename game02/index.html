@@ -36,18 +36,65 @@ Owned by Game 02
 
   <main class="game-frame">
 
-    <!-- Menu Screen -->
+        <!-- Menu Screen -->
     <section id="menu-screen">
       <h2>WHO AM I - FURNITURE MEMORY</h2>
-      <div id="info-box">
-        <h3>How to Play</h3>
-        <ol>
-          <li>Click on a card to reveal its image or text.</li>
-          <li>Then, click on another card.</li>
-          <li>If image and description match, the pair is removed from the game board.</li>
-        </ol>
 
-        <p>Once all pairs are removed, the game is won.</p>
+      <div id="menu-body">
+        <!-- Game modes -->
+        <div id="mode-buttons">
+          <button class="mode-btn selected" data-mode="picture">Picture</button>
+          <button class="mode-btn" data-mode="spelling">Spelling</button>
+          <button class="mode-btn" data-mode="listening">Listening</button>
+          <button class="mode-btn" data-mode="dialect">Dialect</button>
+        </div>
+
+        <!-- Info about the selected game mode -->
+        <div id="info-box">
+          <div id="info-picture" class="mode-info">
+            <h3>How to Play</h3>
+            <ol>
+              <li>Click on a card to reveal its image or text.</li>
+              <li>Then, click on another card.</li>
+              <li>If image and description match, the pair is removed from the game board.</li>
+            </ol>
+
+            <p>Once all pairs are removed, the game is won.</p>
+          </div>
+
+          <div id="info-spelling" class="mode-info" style="display: none;">
+            <h3>How to Play</h3>
+            <ol>
+              <li>A picture is shown.</li>
+              <li>Type the Swedish word for it.</li>
+              <li>If the spelling is wrong, try again or ask for a hint.</li>
+            </ol>
+
+            <p>Spell 8 words to finish.</p>
+          </div>
+
+          <div id="info-listening" class="mode-info" style="display: none;">
+            <h3>How to Play</h3>
+            <ol>
+              <li>Click on a card to hear a word or see a picture.</li>
+              <li>Then, click on another card.</li>
+              <li>If the sound and the picture match, the pair is removed from the game board.</li>
+            </ol>
+
+            <p>Once all pairs are removed, the game is won.</p>
+          </div>
+          
+          <div id="info-dialect" class="mode-info" style="display: none;">
+            <h3>How to Play</h3>
+            <ol>
+              <li>Click on a card to hear a word in a dialect or see a picture.</li>
+              <li>Then, click on another card.</li>
+              <li>If the sound and the picture match, the pair is removed from the game board.</li>
+            </ol>
+
+            <p>Once all pairs are removed, the game is won.</p>
+          </div>
+        </div>
       </div>
 
       <button id="start-game">Start Game</button>

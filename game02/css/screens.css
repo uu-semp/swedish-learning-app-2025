@@ -60,3 +60,22 @@
     font-size: 1.5em;
     border-radius: 10px;
 }
+
+/* Menu: game mode buttons on the left, info box on the right */
+#menu-body {
+    display: flex;
+    gap: 20px;
+    width: 100%;
+    min-height: 280px;
+}
+
+#mode-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* The selected game mode gets the same color as the info box */
+.mode-btn.selected {
+    background-color: #FFCAE9;
+}
