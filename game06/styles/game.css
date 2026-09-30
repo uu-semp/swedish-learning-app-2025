@@ -383,4 +383,49 @@ Game View Styles - Game 06
     .hint-text {
         font-size: 12px;
     }
+
+    .tile-area {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  min-height: 65px;
+  margin-bottom: 20px;
+  padding: 12px;
+  border: 2px dashed white;
+  border-radius: 12px;
+}
+
+    .word-tile,
+    .answer-slot {
+    min-height: 44px;
+    padding: 10px 16px;
+    border: 2px solid transparent;
+    border-radius: 8px;
+    font: inherit;
+    cursor: pointer;
+    }
+
+    .word-tile {
+    background: white;
+    color: #28304a;
+    }
+
+    .word-tile.selected {
+    background: #ffe082;
+    border-color: #28304a;
+    }
+
+    .answer-slot {
+    min-width: 110px;
+    background: #eef0ff;
+    color: #28304a;
+    border-color: #b6bde5;
+    }
+
+    .word-tile:focus-visible,
+    .answer-slot:focus-visible {
+    outline: 3px solid #ffdf70;
+    outline-offset: 3px;
+    }
 }

@@ -36,6 +36,35 @@ let selectedButton = null;
 let score = 0;
 
 /**
+ * All tiles for the current question, including tiles placed in answer slots.
+ * Each tile has a unique ID and the text displayed on its button.
+ * @type {Array<{id: string, text: string}>}
+ */
+let tiles = [];
+
+/**
+ * ID of the tile currently selected from the bank.
+ * Null when no tile is selected.
+ * @type {string|null}
+ */
+let selectedTileId = null;
+
+/**
+ * Answer slots in left-to-right order.
+ * Each entry contains a tile ID, or null if the slot is empty.
+ * @type {Array<string|null>}
+ */
+let answerSlots = [];
+
+/**
+ * Whether the current answer has been submitted.
+ * Used to prevent further tile changes and duplicate submissions.
+ * Reset to false when a new question loads.
+ * @type {boolean}
+ */
+let answerSubmitted = false;
+
+/**
  * Hides all view containers in the game interface
  * Used to ensure only one view is visible at a time
  */
@@ -211,23 +240,106 @@ function showFinish() {
  * @param {Function} fn - Callback function to execute with clock document and window
  */
 function withClockDoc(fn) {
-	const clockObj =
-		document.getElementById("clock-object") ||
-		document.getElementById("clock-frame") ||
-		document.querySelector("object[data*='clock.html']");
+  const clockObj = document.getElementById("clock-object");
+  if (!clockObj) return;
 
-	if (!clockObj) {
-		console.error("Clock object not found");
-		return;
-	}
+  function run() {
+    const doc = clockObj.contentDocument;
+    const win = doc?.defaultView;
 
-	if (clockObj.contentDocument) {
-		fn(clockObj.contentDocument, clockObj.contentWindow);
-	} else {
-		clockObj.addEventListener("load", () =>
-			fn(clockObj.contentDocument, clockObj.contentWindow)
-		);
-	}
+    if (typeof win?.setAnalogTime !== "function") {
+      return false;
+    }
+
+    fn(doc, win);
+    return true;
+  }
+
+  // Update immediately if ready; otherwise wait for the clock to load.
+  if (!run()) {
+    clockObj.addEventListener("load", run, { once: true });
+  }
+}
+
+function setupTileQuestion(q) {
+  tiles = shuffleArray(
+    q.tiles.map((text, index) => ({
+      id: `${q.id}-tile-${index}`,
+      text
+    }))
+  );
+
+  selectedTileId = null;
+  answerSlots = Array(q.answerTiles.length).fill(null);
+  answerSubmitted = false;
+
+  document.getElementById("tile-feedback").textContent = "";
+  renderTileInterface();
+}
+
+function selectTile(tileId) {
+  if (answerSubmitted) return;
+
+  // Clicking the selected tile again cancels selection.
+  selectedTileId = selectedTileId === tileId ? null : tileId;
+  renderTileInterface();
+}
+
+function handleSlotClick(slotIndex) {
+  if (answerSubmitted) return;
+
+  if (selectedTileId !== null) {
+    // Put the selected tile into this slot.
+    answerSlots[slotIndex] = selectedTileId;
+    selectedTileId = null;
+  } else {
+    // Without a selection, empty the clicked slot.
+    answerSlots[slotIndex] = null;
+  }
+
+  renderTileInterface();
+}
+
+
+
+function renderTileInterface() {
+  const bank = document.getElementById("tile-bank");
+  const row = document.getElementById("answer-row");
+
+  bank.replaceChildren();
+  row.replaceChildren();
+
+  // Show tiles that have not been placed in the answer row.
+  tiles.forEach((tile) => {
+    if (answerSlots.includes(tile.id)) return;
+
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "word-tile";
+    button.textContent = tile.text;
+
+	button.onclick = () => selectTile(tile.id);
+	button.classList.toggle("selected", selectedTileId === tile.id);
+	button.disabled = answerSubmitted;
+
+    bank.appendChild(button);
+  });
+
+  // Show one button for each answer slot.
+  answerSlots.forEach((tileId, index) => {
+    const tile = tiles.find((item) => item.id === tileId);
+
+    const slot = document.createElement("button");
+    slot.type = "button";
+    slot.className = "answer-slot";
+    slot.textContent = tile ? tile.text : `${index + 1}. ___`;
+    slot.setAttribute("aria-label", `Answer slot ${index + 1}`);
+
+	slot.onclick = () => handleSlotClick(index);
+	slot.disabled = answerSubmitted;
+
+    row.appendChild(slot);
+  });
 }
 
 // ==============================================
@@ -282,19 +394,32 @@ function updateQuestion() {
 	// Render question text
 	document.getElementById("question").innerText = q.question;
 
-	// Build MCQ choices using the util, then shuffle
-	const allChoices = questionUtils.choicesForEasy(q);
-	const shuffled = shuffleArray([...allChoices]);
+const isAdvanced = currentDifficulty === "hard";
+const answerContainer = document.getElementById("answers-container");
+const tileGame = document.getElementById("tile-game");
 
-	const answerContainer = document.getElementById("answers-container");
-	answerContainer.innerHTML = "";
-	shuffled.forEach((choice) => {
-		const btn = document.createElement("button");
-		btn.innerText = choice;
-		btn.className = "answer-btn";
-		btn.onclick = () => selectAnswer(choice, btn);
-		answerContainer.appendChild(btn);
-	});
+// Show the appropriate answer interface for the selected level.
+answerContainer.replaceChildren();
+answerContainer.style.display = isAdvanced ? "none" : "grid";
+tileGame.hidden = !isAdvanced;
+
+if (isAdvanced) {
+  // Advanced: display word blocks and answer slots.
+  setupTileQuestion(q);
+} else {
+  // Beginner and Intermediate: keep multiple-choice answers.
+  const choices = shuffleArray(questionUtils.choicesForEasy(q));
+
+  choices.forEach((choice) => {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.textContent = choice;
+    button.className = "answer-btn";
+    button.onclick = () => selectAnswer(choice, button);
+
+    answerContainer.appendChild(button);
+  });
+}
 
 	// Show/hide the analog clock via <object> when needed
 	const clockObject = document.getElementById("clock-object");

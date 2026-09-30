@@ -165,80 +165,22 @@
             "difficulty": "hard",
             "questions": [
                 {
-                    "type": "regular",
-                    "id": "reg-dial-001",
-                    "question": "Anna, hur dags stiger du upp?",
-                    "answer": "jag stiger upp klockan halv åtta",
-                    "alternatives": [
-                        "klockan halv åtta",
-                        "???klockan halv åtta stiger jag upp???"
-                    ],
-                    "hint": "hur dags = what time? Answer with: klockan ...",
-                    "feedback": "Good try, mistakes are how you learn!"
-                },
-                {
-                    "type": "regular",
-                    "id": "reg-dial-002",
-                    "question": "Anna, när ätter du frukost?",
-                    "answer": "jag äter frukost klockan åtta",
-                    "alternatives": [
-                        "klockan åtta",
-                        "klockan åtta äter jag frukost"
-                    ],
-                    "hint": "när = when? Answer with: klockan ...",
-                    "feedback": "You are doing great, don't give up!"
-                },
-                {
-                    "type": "regular",
-                    "id": "reg-dial-003",
-                    "question": "Anna, när går du till bussen?",
-                    "answer": "jag går till bussen klockan halv nio",
-                    "alternatives": [
-                        "klockan halv nio",
-                        "klockan klockan halv nio går jag till bussen"
-                    ],
-                    "hint": "när = when? Answer with: klockan ...",
-                    "feedback": "So close! You will get the next one!"
-                },
-                {
-                    "type": "regular",
-                    "id": "reg-text-004",
-                    "question": "hur dags går du hem?",
-                    "answer": "jag går hem klockan 19",
-                    "alternatives": [
-                        "klockan 19",
-                        "klockan 19 går jag hem"
-                    ],
-                    "hint": "In texting, we use 24-hour time and write the number to show if we mean daytime or nightime.",
-                    "feedback": "That was a tricky one, you are doing great!"
-                },
-                {
-                    "type": "regular",
-                    "id": "reg-text-005",
-                    "question": "När lägger du sig? halv elva går hon och lägger sig",
-                    "answer": "jag lägger mig klockan 1030",
-                    "alternatives": [
-                        "klockan 10:30",
-                        "klockan 1030",
-                        "klockan 10:30 lägger jag mig",
-                        "klockan 1030 lägger jag mig",
-                        "jag lägger mig klockan 1030"
-                    ],
-                    "hint": "In texting, we use 24-hour time and write the number to show if we mean daytime or nightime.",
-                    "feedback": "Good try, mistakes are how you learn!"
-                },
-                {
-                    "type": "regular",
-                    "id": "reg-dial-006",
-                    "question": "Anna, vad gör du klockan elva?",
-                    "answer": "jag sover",
-                    "alternatives": [
-                        "klockan elva sover jag",
-                        "jag sover klockan elva",
-                        "sover"
-                    ],
-                    "hint": "sover = to sleep, somnar = to fall sleep",
-                    "feedback": "That was a tricky one, you are doing great!"
+                "type": "clock",
+                "id": "hard-blocks-001",
+                "question": "Vad är klockan?",
+                "hour": 7,
+                "minute": 30,
+                "answer": "Klockan är halv åtta",
+                "tiles": [
+                    "Klockan är",
+                    "i",
+                    "över",
+                    "kvart",
+                    "halv",
+                    "sju",
+                    "åtta"
+                ],
+                "answerTiles": ["Klockan är", "halv", "åtta"]
                 }
             ]
         }

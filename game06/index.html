@@ -150,6 +150,17 @@ Owned by Game 06
         <div class="answers-container" id="answers-container">
           <!-- Answer buttons will be populated by JavaScript -->
         </div>
+        <div id="tile-game" hidden>
+          <p>Click a block, then click where it belongs in the sentence.</p>
+
+          <p>Your answer:</p>
+          <div id="answer-row" class="tile-area"></div>
+
+          <p>Available blocks:</p>
+          <div id="tile-bank" class="tile-area"></div>
+
+          <p id="tile-feedback" aria-live="polite"></p>
+        </div>
         <!-- <button id="hint-btn" class="hint-btn" style="display:none;" onclick="
           (function(){
             const q = window.currentQuestion;
