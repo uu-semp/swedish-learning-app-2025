@@ -172,6 +172,34 @@ body {
   opacity: 0.4;
 }
 
+/* Dragging: vertical swipes still scroll the wardrobe on touchscreens,
+   sideways pulls start a drag. Also stop text/image selection while dragging. */
+.thumb {
+  touch-action: pan-y;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-user-drag: none;
+}
+
+.thumb.is-worn {
+  touch-action: auto;
+}
+
+/* Floating copy that follows the pointer while dragging */
+.drag-ghost {
+  position: fixed;
+  z-index: 1000;
+  pointer-events: none;
+  opacity: 0.85;
+  transform: scale(1.05);
+  cursor: grabbing;
+}
+
+/* Drop highlight: Pelle glows while an item is dragged over him */
+.stage.drop-target .cat-image {
+  filter: drop-shadow(0 0 6px #4caf50) drop-shadow(0 0 14px #4caf50);
+}
+
 /* Stage layering so Pelle stays visible; zones above him */
 .stage { position: relative; }
 .cat-image { z-index: 1; }
@@ -206,6 +234,7 @@ body {
   align-items: center;
   font-size: 16px;
   justify-content: space-between;
+  gap: 16px; /* keep long descriptions from touching the buttons */
 }
 
 .instructions p {
@@ -276,6 +305,33 @@ body {
 .confirmBtn:active {
   transform: translate(1px, 1px);
   box-shadow: 1px 1px 0px rgba(0,0,0,0.3);
+}
+
+/* Undo sits next to Confirm; same shape, calmer color */
+.footer-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.undoBtn {
+  width: 100px;
+  background-color: #607d8b;
+}
+
+.undoBtn:hover {
+  background-color: #455a64;
+}
+
+/* Remove all: same style as Undo, a bit wider for the label */
+.clearBtn {
+  width: 110px;
+}
+
+.undoBtn:disabled {
+  background-color: #b0bec5;
+  box-shadow: none;
+  transform: none;
+  cursor: default;
 }
 
 /* Buttons */
