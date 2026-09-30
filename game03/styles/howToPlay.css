@@ -1,0 +1,154 @@
+.how-to-play-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 14px 0;
+    font-size: 1.08rem;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    background: #ecad26;
+    color: #fff;
+    font-weight: 600;
+    box-shadow: 0 2px 8px rgba(44, 62, 80, 0.08);
+    transition: background 0.15s, transform 0.15s;
+}
+
+.how-to-play-button.menu-btn:hover,
+.how-to-play-button.menu-btn:focus,
+.how-to-play-button.menu-btn:focus-visible,
+.how-to-play-button.menu-btn:active {
+    background: #ecad26;
+    transform: none;
+    outline: none;
+}
+
+.how-to-play-button.menu-btn:hover {
+    background: #bd891b;
+    transform: translateY(-1px) scale(1.03);
+}
+
+.how-to-play-button.menu-btn:focus,
+.how-to-play-button.menu-btn:focus-visible,
+.how-to-play-button.menu-btn:active {
+    background: #ecad26;
+    transform: translateY(1px);
+}
+
+.how-to-play-button i {
+    font-size: 1.2rem;
+    line-height: 1;
+}
+
+.how-to-play-button.icon-only {
+    width: 72px;
+    height: 72px;
+    padding: 0;
+    border-radius: 50%;
+    gap: 0;
+}
+
+.header-help-btn {
+    position: absolute;
+    top: 12px;
+    right: 16px;
+    width: 30px;
+    height: 30px;
+    border: none;
+    border-radius: 50%;
+    background: #ecad26;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    line-height: 1;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(44, 62, 80, 0.08);
+    transition: background 0.15s, transform 0.15s;
+}
+
+.header-help-btn:hover,
+.header-help-btn:focus {
+    background: #bd891b;
+    transform: scale(1.04);
+    outline: none;
+}
+
+.header-help-btn span {
+    display: inline-block;
+    transform: translateY(-1px);
+}
+
+.how-to-play-dialog {
+    position: relative;
+    width: min(90vw, 420px);
+    border: none;
+    border-radius: 18px;
+    background: #fff;
+    box-shadow: 0 12px 36px rgba(31, 38, 135, 0.18);
+    padding: 28px 24px 24px;
+    color: #111;
+}
+
+.how-to-play-dialog::backdrop {
+    background: rgba(44, 62, 80, 0.18);
+}
+
+.how-to-play-text {
+    margin: 0 0 20px;
+    font-size: 1.05rem;
+    line-height: 1.5;
+    color: #111;
+    text-align: left;
+}
+
+.how-to-play-text strong {
+    display: block;
+    margin-bottom: 12px;
+    font-weight: 700;
+    text-align: center;
+}
+
+.how-to-play-text ul {
+    margin: 0;
+    padding-left: 1.2rem;
+}
+
+.how-to-play-text li {
+    margin-bottom: 8px;
+}
+
+.how-to-play-dialog .close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 25px;
+    height: 25px;
+    padding: 0;
+    border: none;
+    border-radius: 50%;
+    background: #ecad26;
+    color: #fff;
+    font-size: 1.6rem;
+    line-height: 1;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 8px rgba(44, 62, 80, 0.08);
+    transition: background 0.15s, transform 0.15s;
+}
+
+.how-to-play-dialog .close-btn:hover,
+.how-to-play-dialog .close-btn:focus {
+    background: #bd891b;
+    transform: translateY(-1px) scale(1.02);
+    outline: none;
+}
+
+.how-to-play-dialog .close-btn:active {
+    transform: translateY(1px);
+}

@@ -95,6 +95,11 @@ const questionsLoaded = loadLevelQuestions(levelIndex).then(() => {
 });
 
 document.addEventListener('DOMContentLoaded', function () {
+    const header = document.querySelector('header');
+    if (header && typeof createHowToPlayModal === 'function') {
+        createHowToPlayModal(false, header);
+    }
+
     questionsLoaded.then(() => {
         showRandomQuestion();
     }).catch(err => {
