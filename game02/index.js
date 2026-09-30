@@ -32,10 +32,10 @@ $(function () {
     $("#" + screenId).show();
   }
 
-  async function mapCards() {
+  async function mapCards(mode) {
     try {
       currentPairs = await loadFurniturePairs(numPairs);
-      buildGrid(currentPairs);
+      buildGrid(currentPairs, mode);
     } catch (error) {
       console.error("Error loading data:", error);
     }
@@ -113,6 +113,10 @@ $(function () {
     if (flippedCards.length < 2 && !$(card).hasClass("flipped")) {
       $(card).addClass("flipped");
       flippedCards.push(card);
+      // Sound cards play their word when flipped
+      if ($(card).data("type") === "sound") {
+        new Audio("../" + $(card).data("content")).play();
+      }
     }
 
     // After flipping 2 cards, check for match
@@ -170,7 +174,6 @@ $(function () {
 
   $("#restart-game").on("click", function () {
     resetGame();
-    mapCards(); // Load new random cards
     showScreen("menu-screen");
   });
 
@@ -189,7 +192,4 @@ $(function () {
 
   // Initialize on menu screen
   showScreen("menu-screen");
-
-  // Game logic
-  mapCards();
 });

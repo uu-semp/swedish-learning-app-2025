@@ -45,6 +45,7 @@ export async function loadFurniturePairs(numPairs) {
           literal: vocab.literal || "",
           category: "furniture",
           image_url: vocab.img,
+          audio_url: vocab.audio,
         };
       }
       return null;
@@ -54,7 +55,7 @@ export async function loadFurniturePairs(numPairs) {
   return getRandomPairs(furnitureData, numPairs);
 }
 
-export function buildGrid(pairs) {
-  const cards = prepareGridItems(pairs);
+export function buildGrid(pairs, mode) {
+  const cards = prepareGridItems(pairs, mode);
   renderGrid(cards);
 }
