@@ -2,46 +2,46 @@
 const instructionGroups = [
   // Group 1: Office setup
   [
-    { question: "Dra 'dator' mitten.", answer: "computer", swedish: "dator" , index: [3] },
-    { question: "Dra 'stol' längst till vänster", answer: "chair", swedish: "stol" , index: [0] },
-    { question: "Dra 'lampa' höger om 'dator'.", answer: "lamp", swedish: "lampa", index: [4, 5] },
-    { question: "Dra 'skrivbord' höger om 'dator'.", answer: "desk", swedish: "skrivbord", index: [4, 5] },
-    { question: "Dra 'bokhylla' höger om 'stol'.", answer: "bookshelf", swedish: "bokhylla", index: [1] },
-    { question: "Dra 'kudde' längst till höger.", answer: "pillow", swedish: "kudde", index: [6] },
-    { question: "Dra 'spegel' vänster om 'dator'.", answer: "mirror", swedish: "spegel", index: [2] }
+    { question: "Dra datorn till mitten.", answer: "computer", swedish: "dator" , index: [3] },
+    { question: "Dra stolen längst till vänster.", answer: "chair", swedish: "stol" , index: [0] },
+    { question: "Dra lampan direkt till höger om datorn.", answer: "lamp", swedish: "lampa", index: [4] },
+    { question: "Dra skrivbordet direkt till höger om lampan.", answer: "desk", swedish: "skrivbord", index: [5] },
+    { question: "Dra bokhyllan direkt till höger om stolen.", answer: "bookshelf", swedish: "bokhylla", index: [1] },
+    { question: "Dra kudden längst till höger.", answer: "pillow", swedish: "kudde", index: [6] },
+    { question: "Dra spegeln direkt till vänster om datorn.", answer: "mirror", swedish: "spegel", index: [2] }
   ],
   
   // Group 2: Living room setup
   [
-    { question: "Dra 'soffa' längst till höger.", answer: "couch", swedish: "soffa", index: [6] },
-    { question: "Dra 'tv' mitten.", answer: "tv", swedish: "tv", index: [3]},
-    { question: "Dra 'bord' vänster om 'tv'.", answer: "table", swedish: "bord", index: [0, 1] },
-    { question: "Dra 'lampa' höger om 'tv'.", answer: "lamp", swedish: "lampa", index: [4] },
-    { question: "Dra 'matta' vänster om 'tv'.", answer: "carpet", swedish: "matta", index: [0, 1] },
-    { question: "Dra 'kudde' höger om 'tv'.", answer: "pillow", swedish: "kudde", index: [5] },
-    { question: "Dra 'blomma' längst till höger.", answer: "flower", swedish: "blomma", index: [2] }
+    { question: "Dra soffan längst till höger.", answer: "couch", swedish: "soffa", index: [6] },
+    { question: "Dra tv:n till mitten.", answer: "tv", swedish: "tv", index: [3]},
+    { question: "Dra bordet längst till vänster.", answer: "table", swedish: "bord", index: [0] },
+    { question: "Dra lampan direkt till höger om tv:n.", answer: "lamp", swedish: "lampa", index: [4] },
+    { question: "Dra mattan direkt till höger om bordet.", answer: "carpet", swedish: "matta", index: [1] },
+    { question: "Dra kudden direkt till höger om lampan.", answer: "pillow", swedish: "kudde", index: [5] },
+    { question: "Dra blomman direkt till vänster om tv:n.", answer: "flower", swedish: "blomma", index: [2] }
   ],
   
   // Group 3: Bedroom setup
   [
-    { question: "Dra 'säng' längst till vänster.", answer: "bed", swedish: "säng", index: [0] },
-    { question: "Dra 'bokhylla' längst till höger.", answer: "bookshelf", swedish: "bokhylla", index: [6] },
-    { question: "Dra 'lampa' mitten.", answer: "lamp", swedish: "lampa", index: [3] },
-    { question: "Dra 'matta' höger om 'lampa'.", answer: "carpet", swedish: "matta", index: [4] },
-    { question: "Dra 'kudde' höger om 'säng'.", answer: "pillow", swedish: "kudde", index: [1] },
-    { question: "Dra 'spegel' höger om 'lampa'.", answer: "mirror", swedish: "spegel", index: [5] },
-    { question: "Dra 'garderob' vänster om 'lampa'.", answer: "wardrobe", swedish: "garderob", index: [2] }
+    { question: "Dra sängen längst till vänster.", answer: "bed", swedish: "säng", index: [0] },
+    { question: "Dra bokhyllan längst till höger.", answer: "bookshelf", swedish: "bokhylla", index: [6] },
+    { question: "Dra lampan till mitten.", answer: "lamp", swedish: "lampa", index: [3] },
+    { question: "Dra mattan direkt till höger om lampan.", answer: "carpet", swedish: "matta", index: [4] },
+    { question: "Dra kudden direkt till höger om sängen.", answer: "pillow", swedish: "kudde", index: [1] },
+    { question: "Dra spegeln direkt till höger om mattan.", answer: "mirror", swedish: "spegel", index: [5] },
+    { question: "Dra garderoben direkt till vänster om lampan.", answer: "wardrobe", swedish: "garderob", index: [2] }
   ],
   
   // Group 4: Kitchen setup
   [
-    { question: "Dra 'kylskåp' mitten.", answer: "refrigerator", swedish: "kylskåp", index: [3] },
-    { question: "Dra 'spis' höger om 'kylskåp'.", answer: "stove", swedish: "spis", index: [4, 5] },
-    { question: "Dra 'bord' höger om 'kylskåp'.", answer: "table", swedish: "bord", index: [4, 5] },
-    { question: "Dra 'stol' vänster om 'bord'.", answer: "chair", swedish: "stol", index: [0, 1] },
-    { question: "Dra 'dörr' höger om 'kylskåp'.", answer: "door", swedish: "dörr", index: [0, 1] },
-    { question: "Dra 'skåp' längst till höger.", answer: "cupboard", swedish: "skåp", index: [6] },
-    { question: "Dra 'blomma' vänster om 'kylskåp'.", answer: "flower", swedish: "blomma", index: [2] }
+    { question: "Dra kylskåpet till mitten.", answer: "refrigerator", swedish: "kylskåp", index: [3] },
+    { question: "Dra spisen direkt till höger om kylskåpet.", answer: "stove", swedish: "spis", index: [4] },
+    { question: "Dra bordet direkt till höger om spisen.", answer: "table", swedish: "bord", index: [5] },
+    { question: "Dra stolen längst till vänster.", answer: "chair", swedish: "stol", index: [0] },
+    { question: "Dra dörren direkt till höger om stolen.", answer: "door", swedish: "dörr", index: [1] },
+    { question: "Dra skåpet längst till höger.", answer: "cupboard", swedish: "skåp", index: [6] },
+    { question: "Dra blomman direkt till vänster om kylskåpet.", answer: "flower", swedish: "blomma", index: [2] }
   ]
 ];
 
