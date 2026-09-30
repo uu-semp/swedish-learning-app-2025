@@ -1,66 +1,72 @@
 
-# 🇸🇪 Swedish Learning App 🕰️
+# Game 04 · Ett år i Uppsala 🇸🇪
 
-Welcome to the Swedish Learning App! This interactive application is designed to help you master the art of telling time in Swedish.
+A calendar-based Swedish learning game: the player moves through a year in Uppsala,
+practising weekdays, months, dates, seasons and weather through mixed question types
+(multiple choice, click-the-days, drag-to-order, calendar picks).
 
-## ✨ Features
-
-*   **Interactive Clock**: A visual clock face to help you learn.
-*   **Multiple Choice Questions**: Test your knowledge with card-based quizzes.
-*   **Statistics**: Track your progress and see how you're improving.
-*   **Modern UI**: A clean and intuitive user interface.
+This is the team's second design iteration and intentionally replaces the earlier
+clock/time-telling prototype.
 
 ## 🚀 Tech Stack
 
-*   **Frontend**: HTML5, CSS3, JavaScript
-*   **Framework**: Vue.js
+* **Framework**: React 19 + TypeScript
+* **Build tool**: Vite 6
+* **Styling**: Tailwind CSS v4
 
-## 🏁 Getting Started
-
-Follow these instructions to get a copy of the project up and running on your local machine.
-
-### Prerequisites
-
-You need a modern web browser to run this application.
-
-### Installation
-
-1.  Clone the repository:
-    ```bash
-    git clone https://github.com/uu-group4/swedish-learning-app-2025.git
-    ```
-2.  Navigate to the project directory:
-    ```bash
-    cd game04
-    ```
-3.  Open `index.html` in your browser.
+The site as a whole still has to be a static, buildless deployment (see the repo's root
+[README](../README.md)) — this game just uses a build step *during development* and
+commits its compiled output, so the shared menu can load `game04/index.html` exactly as
+it always has.
 
 ## 📂 Folder Structure
 
 ```
-.
-├── app.js              # Main Vue app setup
-├── index.html          # Main HTML file
-├── index.css           # Global styles
-├── index.js            # Main entry point for JS
-├── assets/
-│   └── images/         # Images and assets
-├── components/         # Vue components
-│   ├── cards.js
-│   ├── clock.js
-│   ├── navigation.js
-│   └── statistics.js
-└── styles/             # Component-specific styles
-    ├── cards.css
-    ├── clock.css
-    ├── navigation.css
-    └── statistics.css
+game04/
+├── index.html          # BUILT output — loaded directly by the site menu's iframe
+├── assets/              # BUILT output — JS/CSS/images, do not hand-edit
+├── README.md            # this file (kept across builds)
+└── _source/              # actual source code — edit here
+    ├── package.json
+    ├── vite.config.ts
+    ├── index.html         # Vite HTML template
+    └── src/
+        ├── main.tsx
+        ├── App.tsx        # all game screens/logic live here
+        ├── index.css
+        └── assets/seasons/  # season placeholder photos
 ```
 
-## 🤝 Contributing
+`index.html` and `assets/` at the top of `game04/` are **generated** — every `npm run
+build` inside `_source/` wipes and regenerates them. Don't edit them directly.
 
-Contributions, issues, and feature requests are welcome!
+## 🏁 Developing
 
----
+```bash
+cd game04/_source
+npm install
+npm run dev        # Vite dev server with hot reload, standalone (not inside the site menu)
+```
 
-Happy Learning! 🎉
+## 📦 Building / deploying your changes
+
+```bash
+cd game04/_source
+npm run build       # vite build, then copies dist/ up into game04/
+```
+
+After that, `game04/index.html` is up to date and you can verify it the same way the
+site menu does: serve the *repo root* (`python3 -m http.server 8000` per the root
+README) and open the game from the home screen, rather than opening `game04/index.html`
+directly — some things (like the shared save API below) only work when it's loaded that
+way.
+
+## 💾 Progress saving
+
+Uses the shared `window.save` API ([../scripts/SAVE.MD](../scripts/SAVE.MD)), keyed as
+`"game04"`. Completing a full year records a win and 100% completion via
+`save.stats.incrementWin` / `save.stats.setCompletion`.
+
+This game doesn't use the shared `window.vocabulary`/`words.csv` system — its Swedish
+content (weekdays, months, seasons, weather phrases) is self-contained in `App.tsx`,
+scoped to Basic Swedish 1 level.
