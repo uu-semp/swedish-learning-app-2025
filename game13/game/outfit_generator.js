@@ -1,4 +1,5 @@
 //import { ImgObject } from "./clothing/ImgObject.js";
+import { CLOTHING_CATEGORIES } from "./clothing/categories.js";
 // Helper function to get random item from array
 export function getRandomItem(array) {
     return array[Math.floor(Math.random() * array.length)];
@@ -12,7 +13,7 @@ export class SwedishClothingDescriptionGenerator {
     this.shirts = [];
     this.pants = [];
     this.extraCategories = {};
-    this.requiredCategories = ["hat", "shirt", "pants"];
+    this.requiredCategories = [...CLOTHING_CATEGORIES];
     this.descriptionPrefixes = [
       "Idag tar Pelle på sig",
       "Kläderna Pelle har valt idag är",

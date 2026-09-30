@@ -1,4 +1,5 @@
 import { ImgObject } from "./imgObject.js";
+import { CLOTHING_CATEGORIES } from "./categories.js";
 import { createHtmlObjects } from "../ui/clothing_ui.js";
 import { injectHtmlObjects } from "../ui/wardrobe_ui.js";
 /**
@@ -8,7 +9,7 @@ import { injectHtmlObjects } from "../ui/wardrobe_ui.js";
  * ImgObject instances before being passed to the UI components.
  */
 export function loadClothes() {
-    const CATEGORIES = ["hat", "shirt", "pants"];
+    const CATEGORIES = CLOTHING_CATEGORIES;
     const imgArray = [];
 
     window.vocabulary.load_game_data(13);

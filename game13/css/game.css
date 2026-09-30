@@ -166,6 +166,12 @@ body {
   cursor: pointer;
 }
 
+/* Menu item currently worn by Pelle: stays in place, grayed out */
+.thumb.is-worn {
+  filter: grayscale(100%);
+  opacity: 0.4;
+}
+
 /* Stage layering so Pelle stays visible; zones above him */
 .stage { position: relative; }
 .cat-image { z-index: 1; }
