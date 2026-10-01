@@ -4,7 +4,7 @@
 
 "use strict";
 
-import { loadFurniturePairs, buildGrid } from "./js/game-data.js";
+import { loadFurniturePairs, buildGrid, initDb } from "./js/game-data.js";
 import { startTimer, stopTimer, resetTimer, getElapsedTime } from "./js/timer.js";
 import { initHints } from "./js/hints.js";
 
@@ -155,13 +155,11 @@ $(function () {
   $("#start-game").on("click", async function () {
     const mode = $(".mode-btn.selected").data("mode"); // "picture", "spelling", "listening" or "dialect"
 
-    if (mode === "spelling") {
-      showScreen("spelling-screen");
-    } else {
-      await mapCards(mode); // picture, listening and dialect all use the card board
-      showScreen("game-screen");
-    }
+    $(this).prop("disabled", true).text("Loading...");
+    await mapCards(mode);
+    $(this).prop("disabled", false).text("Start Game");
 
+    showScreen("game-screen");
     startTimer((elapsed) => $("#elapsed-time").text(`Time: ${elapsed}s`));
   });
 
@@ -192,4 +190,6 @@ $(function () {
 
   // Initialize on menu screen
   showScreen("menu-screen");
+  // Start downloading the word list while the player reads the menu
+  initDb();
 });

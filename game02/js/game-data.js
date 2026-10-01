@@ -11,13 +11,14 @@ import {
 } from "../../scripts/vocabulary_await.js";
 import { getRandomPairs, prepareGridItems, renderGrid } from "./cards.js";
 
-let loaded_before = false;
+let dbLoading = null;
 
-export async function initDb(reload = false) {
-  if (!loaded_before || reload) {
-    loaded_before = true;
-    await loaddb();
+// Starts the download the first time, then lets every caller wait for that same download
+export function initDb() {
+  if (!dbLoading) {
+    dbLoading = loaddb();
   }
+  return dbLoading;
 }
 
 export async function loadFurniturePairs(numPairs) {
