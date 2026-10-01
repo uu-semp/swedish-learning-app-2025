@@ -181,6 +181,24 @@
                     "åtta"
                 ],
                 "answerTiles": ["Klockan är", "halv", "åtta"]
+                },
+                {
+                "type": "clock",
+                "id": "hard-blocks-002",
+                "question": "Vad är klockan?",
+                "hour": 7,
+                "minute": 45,
+                "answer": "Klockan är kvart i åtta",
+                "tiles": [
+                    "Klockan är",
+                    "i",
+                    "över",
+                    "kvart",
+                    "halv",
+                    "sju",
+                    "åtta"
+                ],
+                "answerTiles": ["Klockan är", "kvart", "i", "åtta"]
                 }
             ]
         }

@@ -301,12 +301,16 @@ function handleSlotClick(slotIndex) {
 }
 
 /**
- * Enable Submit button only when all answer slots are filled.
+ * Enable Submit button only when all answer slots are filled
+ * and the answer has not already been submitted.
  */
 function updateTileSubmitState() {
-	const allFilled = answerSlots.every(slot => slot !== null);
+	const allFilled = 
+	answerSlots.length > 0 && answerSlots.every(slot => slot !== null);
+	
 	const submitBtn = document.getElementById("submit-btn");
-	if (submitBtn) submitBtn.disabled = !allFilled;
+	
+	if (submitBtn) submitBtn.disabled = answerSubmitted || !allFilled;
 }
 
 /**
@@ -575,12 +579,16 @@ function submitAnswer() {
 
 	// --- Hard mode: tile game validation ---
 	if (currentDifficulty === "hard") {
+		if(answerSubmitted) return;
+
 		if (answerSlots.some(slot => slot === null)) {
 			alert("Please fill all slots before submitting.");
 			return;
 		}
 
 		answerSubmitted = true;
+
+		updateTileSubmitState();
 
 		const q = window.currentQuestion;
 		const userAnswer = answerSlots.map(tileId => {

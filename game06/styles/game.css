@@ -228,7 +228,13 @@ Game View Styles - Game 06
 }
 
 .game-container.hard-mode .action-buttons {
-    transform: translateY(-25px);
+    margin-top: 16px;
+    flex-wrap: wrap;
+}
+
+.game-container.hard-mode {
+    height: auto;
+    min-height: 580px;
 }
 
 /* Submit Button */
