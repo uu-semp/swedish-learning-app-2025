@@ -197,7 +197,6 @@
     window.Game = { pick, reset, toast, state: () => game, initWithWords };
 
     // Buttons inside modal
-    document.getElementById('btnPlayAgain').onclick = () => { closeEndModal(); reset(); };
 
     // ⬇️ Message bridge with parent
     window.addEventListener('message', function (event) {
