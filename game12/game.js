@@ -23,6 +23,20 @@ const app = Vue.createApp({
       progressMin: 0,
 
       houseOptions: [],
+      housePositions: [
+        {col: 1, row: 1},
+        {col: 2, row: 1},
+        {col: 4, row: 1},
+        {col: 5, row: 1},
+        {col: 1, row: 3},
+        {col: 2, row: 3},
+        {col: 4, row: 3},
+        {col: 5, row: 3},
+        {col: 2, row: 4},
+        {col: 2, row: 5},
+        {col: 4, row: 4},
+        {col: 4, row: 5}
+      ],
       correctHouseIndex: -1,
       currentQuestion: null,
       currentStreet: '',
