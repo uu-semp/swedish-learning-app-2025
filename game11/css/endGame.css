@@ -1,0 +1,77 @@
+ html,
+ body {
+   margin: 0;
+   padding: 0;
+   height: 100%;
+   width: 100%;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   background: transparent;
+ }
+
+ .stage {
+   background: url('../assets/chatbubble.png') no-repeat center / 150% auto;
+   width: 100%;
+   height: 100%;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+ }
+
+ .result-box {
+   width: clamp(360px, 90%, 700px);
+   padding: clamp(16px, 3vw, 28px);
+   /* tighter */
+   text-align: center;
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   gap: 0.4rem;
+   /* small consistent spacing */
+ }
+
+ .result-box h1 {
+   font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+   margin: 0.2em 0 0.1em 0;
+   /* reduced spacing */
+ }
+
+ .result-box p {
+   font-size: clamp(.85rem, 1.8vw, 1rem);
+   margin: 0.1em 0;
+ }
+
+ .stats {
+   font-size: clamp(.8rem, 1.5vw, .95rem);
+   line-height: 1;
+   /* tighter line spacing */
+   margin: 0.2em 0;
+ }
+
+ .actions {
+   margin-top: 0.4em;
+   /* smaller gap above button */
+   display: flex;
+   flex-wrap: wrap;
+   justify-content: center;
+   gap: 6px;
+   /* tighter button spacing if more buttons later */
+ }
+
+ .actions button {
+   background: #0f172a;
+   color: #fff;
+   border: none;
+   border-radius: 999px;
+   padding: 6px 14px;
+   /* smaller button */
+   font-size: 0.9rem;
+   font-weight: 600;
+   cursor: pointer;
+   transition: opacity 0.2s ease;
+ }
+
+ .actions button:hover {
+   opacity: 0.85;
+ }

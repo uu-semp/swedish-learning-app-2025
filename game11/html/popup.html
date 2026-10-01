@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="sv">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Ica Väst</title>
+
+    <link rel="stylesheet" href="../css/popup.css" />
+    <script type="module" src="../js/popup.js"></script>
+
+  </head>
+  <body>
+
+    <div></div>
+    <!-- Toasts -->
+    <div class="toasts" id="toasts"></div>
+    <!-- Endgame modal -->
+    <div class="modal" id="endModal" role="dialog" aria-modal="true"
+      aria-labelledby="endTitle">
+      <div class="box bubble endgame-box">
+        <button class="x" id="endClose" type="button"
+          aria-label="Stäng resultat">×</button>
+        <div class="endgame-inner">
+          <div class="endgame-icon" aria-hidden="true">
+            <svg id="endIcon" width="48" height="48" viewBox="0 0 48 48"
+              fill="none"></svg>
+          </div>
+          <h3 id="endTitle" class="endgame-title">Klart!</h3>
+          <p id="endMsg" class="endgame-msg">&nbsp;</p>
+          <div class="actions endgame-actions">
+            <button id="btnPlayAgain" class="endgame-btn">Spela igen</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </body>
+</html>
