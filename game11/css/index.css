@@ -219,9 +219,17 @@ body {
 
 .popup-frame-wrap.is-endgame {
   position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  transform: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: auto;
+}
+
+.popup-frame-wrap.is-endgame .popup-frame {
   width: min(420px, 90vw);
   height: min(480px, 80vh);
   pointer-events: auto;

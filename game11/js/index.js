@@ -4,7 +4,15 @@
 window.addEventListener('DOMContentLoaded', () => {
 
     window.vocabulary.load_game_data(11);
+
+
     const popupFrame = document.getElementById('popupFrame');
+    const popupWrap = document.querySelector('.popup-frame-wrap');
+
+    if (popupWrap) {
+        popupWrap.classList.remove('is-endgame');
+        popupWrap.style.pointerEvents = 'none';
+    }
 
 
     /**
@@ -326,14 +334,28 @@ window.addEventListener('message', (event) => {
     }
 });
 
-
-// Handle the "Play Again" message from the popup.
-// Hide the popup, clear the saved game state, and restart the game 
-// (This is the restart functionality after you finished the game).
 window.addEventListener('message', (event) => {
-    if (event.data?.type === 'playAgain') {
-        document.querySelector('.popup-frame-wrap').style.display = 'none';
-        localStorage.removeItem('game11_game_state');
-        window.location.reload();
+    if (event.data?.type !== 'playAgain') return;
+
+    console.log('[parent] playAgain');
+
+    localStorage.removeItem('game11_game_state');
+    sessionStorage.removeItem('game11_end_stats');
+
+    const popupWrap = document.querySelector('.popup-frame-wrap');
+    const popupFrame = document.getElementById('popupFrame');
+
+    if (popupWrap) {
+        popupWrap.classList.remove('is-endgame');
+        popupWrap.style.pointerEvents = 'none';
     }
+
+    if (popupFrame) {
+        popupFrame.style.pointerEvents = 'none';
+        popupFrame.src = './html/popup.html';
+    }
+
+    setTimeout(() => {
+        window.location.reload();
+    }, 100);
 });

@@ -246,8 +246,6 @@
     // Expose for debugging if needed
     window.Game = { pick, reset, toast, state: () => game, initWithWords };
 
-    // Buttons inside modal
-    document.getElementById('btnPlayAgain').onclick = () => { closeEndModal(); reset(); };
 
     // Handles communication with the parent page and initializes the popup game.
     window.addEventListener('message', function (event) {
