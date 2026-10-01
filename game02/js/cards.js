@@ -54,7 +54,9 @@ export function renderGrid(cards) {
 
     cardElement.innerHTML = `
       <div class="card-inner">
-        <div class="card-face card-front">${index + 1}</div>
+        <div class="card-face card-front">
+          <span class="card-title">What<br>Am I?</span>
+        </div>
         <div class="card-face card-back">${backContent}</div>
       </div>
     `;

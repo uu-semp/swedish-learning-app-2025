@@ -44,6 +44,12 @@
 .card-front {
     background-color: #FBCAEF;
     color: black;
+    font-family: "Times New Roman", Times, serif;
+}
+
+.card-title {
+    line-height: 1.2;
+    text-align: left;
 }
 
 .card-back {
