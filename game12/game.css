@@ -179,21 +179,57 @@ hr {
     color: #666;
 }
 
-/* Container for house buttons */
-#house-buttons {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 2rem;
-    margin-top: 2.5rem;
-    /* margin-bottom: 2.5rem; */
+/* Road styling */
+.road{
+    background-color: rgb(71, 71, 71);
+}
+
+.horizontal-road{
+    grid-column: 1 / 6;
+    grid-row: 2;
+}
+
+.vertical-road{
+    grid-column: 3;
+    grid-row: 3 / 6;
+    display:grid;
+    place-items: center;
+}
+
+.street-text{
+    color:white;
+    padding:0;
+    margin:0;
+}
+
+.vertical-road .street-text {
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    top: 50%;
+    margin-right:0;
+}
+
+.dotted-line{
+    border: 2px dashed white;
+}
+
+.vertical-road .dotted-line {
+    height: 35%;
+    position:absolute;
 }
 
 /* Base house button styling */
-#house-buttons button {
+#house-grid{
+    display:grid;
+    grid-template-columns: 100px 100px 40px 100px 100px;
+    grid-template-rows: 80px 40px 80px 80px 80px;
+    justify-content: center;
+}
+
+#house-grid button {
     position: relative;
-    width: 120px;
-    height: 120px;
+    width: 70px;
+    height: 70px;
     background: #ffcc80; /* warm orange walls */
     border: 3px solid #d17a22;
     border-radius: 0 0 10px 10px;
@@ -202,11 +238,11 @@ hr {
     font-weight: bold;
     color: #4a2c00;
     transition: transform 0.2s, box-shadow 0.2s;
-    padding-top: 30px;
+    justify-self: center;
 }
 
 /* Little roof using a pseudo-element */
-#house-buttons button::before {
+#house-grid button::before {
     content: "";
     position: absolute;
     top: -40px;
@@ -214,20 +250,20 @@ hr {
     transform: translateX(-50%);
     width: 0;
     height: 0;
-    border-left: 63px solid transparent;
-    border-right: 63px solid transparent;
+    border-left: 41px solid transparent;
+    border-right: 41px solid transparent;
     border-bottom: 40px solid #d17a22; /* roof color */
 }
 
 /* Hover effect for interactivity */
-#house-buttons button:hover {
+#house-grid button:hover {
     transform: translateY(-5px);
     box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
     background: #ffe0b2;
 }
 
 /* Optional: pressed state */
-#house-buttons button:active {
+#house-grid button:active {
     transform: translateY(2px);
 }
 

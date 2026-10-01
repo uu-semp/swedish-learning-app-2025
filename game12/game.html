@@ -66,12 +66,35 @@ Owned by Game 12
                 {{renderWord(word)}}
             </button>
           </div>
-          <div id="house-buttons">
+
+          <!--<div id="house-buttons">
             <button v-for="(houseNum, index) in houseOptions"
                     :key="index"
                     @click="checkAnswer(index)">
                   Hus {{houseNum}}
             </button>
+          </div>-->
+
+          <div id="house-grid">
+            <div class="road vertical-road">
+              <p class="street-text">Street 1</p>
+              <div class="dotted-line"></div>
+            </div>
+            <div class="road horizontal-road">
+              <p class="street-text">Street 2</p>
+              <div class="dotted-line"></div>
+            </div>
+
+            <button v-for="(houseNum, index) in houseOptions"
+                    :key="index"
+                    :style="{
+                      gridColumn: housePositions[index].col,
+                      gridRow: housePositions[index].row
+                    }"
+                    @click="checkAnswer(index)">
+                  {{houseNum}}
+            </button> 
+            <!--Place in the for loop on the correct positions-->
           </div>
           <hr>
           <button @click="toggleTranslation"> {{translationButtonText}}</button>
