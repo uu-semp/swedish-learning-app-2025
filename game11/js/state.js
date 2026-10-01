@@ -1,24 +1,21 @@
-// state.js
-// =================================================
-// Game 11 – Game state helpers
-// =================================================
-
+// This file contains the game state management logic 
+// It provides functions to initialize, retrieve, save, and load the game state.
 import { generateShelf, generateShoppingList } from "./gameLogic.js";
 import { getItems } from "./data.js";
 
-// Keep a local storage key in this module (don't rely on other files)
+// The local storage key 
 const STORAGE_KEY = "game11_game_state";
 
+
+
 /**
- * Build a fresh game state from the current vocabulary.
- * - Does NOT mutate window.vocabulary
- * - shoppingList: 10 items (default in gamelogic)
- * - shelf: shoppingList + distractors, shuffled
+ * Initializes the game state using the  vocabulary.
+ * Loads a saved state if available; otherwise, creates a new game state.
+ *
+ * @returns {Object} The initialized game state.
  */
 function initGameState() {
-
   // Pull all items (each item has at least: { id, sv, en, img, ... })
-
   // Check if there's a saved state in localStorage, in this case refresh will not reset the game state
   const savedState = loadState();
   if (savedState) {
@@ -27,17 +24,17 @@ function initGameState() {
     const vocab = getItems(); // <-- important: do NOT overwrite window.vocabulary
 
     // Build lists
-    const shoppingList = generateShoppingList(vocab);      // 10 items by default
-    const shelf = generateShelf(shoppingList, vocab);      // 10 + distractors
+    const shoppingList = generateShoppingList(vocab);      
+    const shelf = generateShelf(shoppingList, vocab);     
 
     const state = {
-      shoppingList: shoppingList,
-      shelf: shelf,
-      currentIndex: 0,
+      shoppingList: shoppingList, // items to be found
+      shelf: shelf, // shuffled shelf items (shoppingList + distractors)
+      currentIndex: 0, // index of the current item in shoppingList
       correctFirstTry: [], // bools per solved item (true if first try)
       mistakes: {},        // { [targetId]: numberOfMistakes }
-      finished: false,
-      mode: 1, //
+      finished: false, // true if all items have been solved
+      mode: 1, //The mode of the game
     };
     saveState(state); // Optional: persist initial state (safe no-op if storage blocked)
     return state;
@@ -45,8 +42,12 @@ function initGameState() {
 
 }
 
+
 /**
- * A trimmed snapshot for UI/consumers.
+ * Creates a simplified snapshot of the game state for the UI and other consumers.
+ *
+ * @param {Object} state - The current game state.
+ * @returns {Object} A simplified game state containing the shopping list, shelf, current item, progress, finished status, and game mode.
  */
 function getGameState(state) {
   return {
@@ -59,8 +60,12 @@ function getGameState(state) {
   };
 }
 
+
+
 /**
- * Persist the state safely.
+ * Saves the current game state to local storage.
+ *
+ * @param {Object} state - The  game state.
  */
 function saveState(state) {
   try {
@@ -71,8 +76,12 @@ function saveState(state) {
   }
 }
 
+
+
 /**
- * Load a previously saved state. Returns null if none/invalid.
+ * Loads a previously saved state from local storage. Returns null if none/invalid.
+ *
+ * @returns {Object|null} The loaded game state or null if no valid state is found.
  */
 function loadState() {
   try {

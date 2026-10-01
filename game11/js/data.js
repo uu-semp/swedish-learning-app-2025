@@ -1,7 +1,12 @@
-// Returns an array with all ids for this teams items.
+//This file contains functions to get the grocery items from the vocabulary data.
+
+/**
+ * Gets the IDs of valid grocery items from the food and fruit categories.
+ * Exclude some ids that are not food/fruits that you can buy in a grocery store
+ * which is : breakfast, dinner, food, fruit, lunch, vegan, vegetarian
+ * @returns {string[]} An array of item IDs that can be used in the game.
+ */
 export function getItemsIds() {
-  // Exclude some ids that are not food/fruits that you can buy in a grocery store
-  // which is : breakfast, dinner, food, fruit, lunch, vegan, vegetarian
   const excludedIds = ["567f323c", "2f373051","32191560", "440d3157", "75387a51", "19263071", "6a701276"];
   const Ids = [];
   const foods = window.vocabulary.get_category("food") || [];
@@ -19,15 +24,18 @@ export function getItemsIds() {
   return Ids;
 }
 
-// Returns an array of Items.
-// Returns an array of Items.
+
+
+/**
+ * Gets the vocabulary data for all valid grocery items
+ * @returns {Object[]} An array of grocery item objects containing their IDs and vocabulary data.
+ */
 export function getItems() {
   const items = [];
   const ids = getItemsIds();
   ids.forEach(id => {
     const v = window.vocabulary.get_vocab(id);
     if (v) {
-      // Attach the id so downstream UI/logic can use it
       items.push({ id, ...v });
     }
   });
