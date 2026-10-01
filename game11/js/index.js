@@ -2,7 +2,14 @@ window.addEventListener('DOMContentLoaded', () => {
 
     window.vocabulary.load_game_data(11);
 
+
     const popupFrame = document.getElementById('popupFrame');
+    const popupWrap = document.querySelector('.popup-frame-wrap');
+
+    if (popupWrap) {
+        popupWrap.classList.remove('is-endgame');
+        popupWrap.style.pointerEvents = 'none';
+    }
 
 
     function setIframeInteractive(on) {
@@ -290,15 +297,28 @@ window.addEventListener('message', (event) => {
     }
 });
 
-
 window.addEventListener('message', (event) => {
+    if (event.data?.type !== 'playAgain') return;
 
-    if (event.data?.type === 'playAgain') {
+    console.log('[parent] playAgain');
 
-        document.querySelector('.popup-frame-wrap').style.display = 'none';
+    localStorage.removeItem('game11_game_state');
+    sessionStorage.removeItem('game11_end_stats');
 
-        localStorage.removeItem('game11_game_state');
+    const popupWrap = document.querySelector('.popup-frame-wrap');
+    const popupFrame = document.getElementById('popupFrame');
 
-        window.location.reload();
+    if (popupWrap) {
+        popupWrap.classList.remove('is-endgame');
+        popupWrap.style.pointerEvents = 'none';
     }
+
+    if (popupFrame) {
+        popupFrame.style.pointerEvents = 'none';
+        popupFrame.src = './html/popup.html';
+    }
+
+    setTimeout(() => {
+        window.location.reload();
+    }, 100);
 });
