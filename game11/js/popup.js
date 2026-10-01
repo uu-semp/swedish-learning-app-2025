@@ -196,9 +196,8 @@
     // Expose for debugging if needed
     window.Game = { pick, reset, toast, state: () => game, initWithWords };
 
-    // Buttons inside modal
 
-    // ⬇️ Message bridge with parent
+    // Message bridge with parent
     window.addEventListener('message', function (event) {
         const data = event.data || {};
         if (!data.type) return;

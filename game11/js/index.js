@@ -315,8 +315,6 @@ window.addEventListener('message', (event) => {
 
     if (popupFrame) {
         popupFrame.style.pointerEvents = 'none';
-
-   
         popupFrame.src = './html/popup.html';
     }
 
