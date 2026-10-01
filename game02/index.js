@@ -4,7 +4,7 @@
 
 "use strict";
 
-import { loadFurniturePairs, buildGrid } from "./js/game-data.js";
+import { loadFurniturePairs, buildGrid, initDb } from "./js/game-data.js";
 import { startTimer, stopTimer, resetTimer, getElapsedTime } from "./js/timer.js";
 import { initHints } from "./js/hints.js";
 
@@ -32,10 +32,10 @@ $(function () {
     $("#" + screenId).show();
   }
 
-  async function mapCards() {
+  async function mapCards(mode) {
     try {
       currentPairs = await loadFurniturePairs(numPairs);
-      buildGrid(currentPairs);
+      buildGrid(currentPairs, mode);
     } catch (error) {
       console.error("Error loading data:", error);
     }
@@ -113,6 +113,10 @@ $(function () {
     if (flippedCards.length < 2 && !$(card).hasClass("flipped")) {
       $(card).addClass("flipped");
       flippedCards.push(card);
+      // Sound cards play their word when flipped
+      if ($(card).data("type") === "sound") {
+        new Audio("../" + $(card).data("content")).play();
+      }
     }
 
     // After flipping 2 cards, check for match
@@ -148,7 +152,13 @@ $(function () {
   }
 
   // Button handlers
-  $("#start-game").on("click", function () {
+  $("#start-game").on("click", async function () {
+    const mode = $(".mode-btn.selected").data("mode"); // "picture", "spelling", "listening" or "dialect"
+
+    $(this).prop("disabled", true).text("Loading...");
+    await mapCards(mode);
+    $(this).prop("disabled", false).text("Start Game");
+
     showScreen("game-screen");
     startTimer((elapsed) => $("#elapsed-time").text(`Time: ${elapsed}s`));
   });
@@ -162,8 +172,15 @@ $(function () {
 
   $("#restart-game").on("click", function () {
     resetGame();
-    mapCards(); // Load new random cards
     showScreen("menu-screen");
+  });
+
+    // Show the info for the clicked game mode
+  $(".mode-btn").on("click", function () {
+    $(".mode-btn").removeClass("selected");
+    $(this).addClass("selected");
+    $(".mode-info").hide();
+    $("#info-" + $(this).data("mode")).show();
   });
 
   // Event delegation för dynamiskt skapade kort
@@ -173,7 +190,6 @@ $(function () {
 
   // Initialize on menu screen
   showScreen("menu-screen");
-
-  // Game logic
-  mapCards();
+  // Start downloading the word list while the player reads the menu
+  initDb();
 });

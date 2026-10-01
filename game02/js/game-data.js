@@ -11,13 +11,14 @@ import {
 } from "../../scripts/vocabulary_await.js";
 import { getRandomPairs, prepareGridItems, renderGrid } from "./cards.js";
 
-let loaded_before = false;
+let dbLoading = null;
 
-export async function initDb(reload = false) {
-  if (!loaded_before || reload) {
-    loaded_before = true;
-    await loaddb();
+// Starts the download the first time, then lets every caller wait for that same download
+export function initDb() {
+  if (!dbLoading) {
+    dbLoading = loaddb();
   }
+  return dbLoading;
 }
 
 export async function loadFurniturePairs(numPairs) {
@@ -45,6 +46,7 @@ export async function loadFurniturePairs(numPairs) {
           literal: vocab.literal || "",
           category: "furniture",
           image_url: vocab.img,
+          audio_url: vocab.audio,
         };
       }
       return null;
@@ -54,7 +56,7 @@ export async function loadFurniturePairs(numPairs) {
   return getRandomPairs(furnitureData, numPairs);
 }
 
-export function buildGrid(pairs) {
-  const cards = prepareGridItems(pairs);
+export function buildGrid(pairs, mode) {
+  const cards = prepareGridItems(pairs, mode);
   renderGrid(cards);
 }
