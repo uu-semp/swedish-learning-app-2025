@@ -140,11 +140,11 @@ export async function loaddb(game_id = -1) {
       meta.subCat = row["Subcategory"];
     }
 
-    if(row["Image_is_plural"]?.trim()){ 
+    if(row["Image_is_plural"]?.trim() && row["Image_url"]?.trim()){ 
       meta.img_is_plural = row["Image_is_plural"];
     }
     
-    if(row["Audio_is_plural"]?.trim()){ 
+    if(row["Audio_is_plural"]?.trim() && row["Audio_url"]?.trim()){ 
       meta.audio_is_plural = row["Audio_is_plural"];
     }
 
