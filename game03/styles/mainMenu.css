@@ -204,18 +204,12 @@ body::before {
     display: flex;
     align-items: center;
     gap: 10px;
-    font-size: 0.62rem;
+    font-size: 1.12rem;
     font-weight: 700;
     letter-spacing: 0.22em;
     text-transform: uppercase;
     color: var(--ink-soft);
     margin-bottom: 8px;
-}
-.sidebar .menu-label::before {
-    content: "";
-    width: 26px; height: 4px;
-    background: var(--yellow);
-    border-radius: 2px;
 }
 
 /* the three buttons, vertically centred in the sidebar */
@@ -318,9 +312,19 @@ body::before {
     font-weight: 600;
     color: var(--yellow-dark);
     transform: rotate(-2deg);
-    text-align: center;
-    margin: -14px 0 26px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 2px;
+    margin: -16px 0 36px;
 }
+/* curved pencil arrow: its tip reaches up to the play button */
+.play-annotation .curly-arrow {
+    width: 40px;
+    height: 36px;
+    flex-shrink: 0;
+}
+.play-annotation span { padding-bottom: 2px; }
 
 .sidebar .legend {
     margin-top: auto;
@@ -463,7 +467,8 @@ body::before {
     .menu-btn.primary .icon svg { width: 26px; height: 26px; }
     .menu-btn.primary .title { font-size: 1.28rem; }
     .menu-btn.primary .hint { font-size: 0.7rem; white-space: normal; }
-    .play-annotation { font-size: 1.05rem; margin: -12px 0 20px; }
+    .play-annotation { font-size: 1.1rem; margin: -14px 0 45px; }
+    .play-annotation .curly-arrow { width: 34px; height: 31px; }
     .sidebar .legend { font-size: 0.66rem; padding-top: 12px; line-height: 1.5; }
     .sidebar .scale { margin-top: 10px; }
 }
