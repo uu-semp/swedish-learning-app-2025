@@ -1,41 +1,46 @@
+/* =================================================
+Owned by Game 07
+================================================= */
+body {
+    background-color: #F9FDFF;
+    font-family: 'Nunito', 'Varela Round', Arial, sans-serif;
+}
 .list-item {
-    border: 2px solid #000000;
+    border: 2px solid #E5E5E5;
+    border-bottom: 6px solid #E5E5E5;
     margin-bottom: 5px;
     margin-left: 10px;
     margin-right: 10px;
-    background-color: #f9f9f9;
-    color: gray;
+    background-color: #ffffff;
+    color: #4B4B4B;
     transition: background-color 0.3s ease;
-    border-radius: 10px;
+    border-radius: 20px;
+    padding: 10px;
 }
-
-
 .paragraph {
     font-size: 15px;
-    font-family: Arial, sans-serif;
-    font-weight: bold;
+    font-family: 'Nunito', Arial, sans-serif;
+    font-weight: 800;
     line-height: 1.6;
-    color: black;
+    color: #89CFF0;
     margin-bottom: 15px;
     text-align: justify;
     margin-left: 2px;
 }
-
 .list-item hr {
-    margin: 4px 0 10px;      
-    color: black;                  
+    margin: 4px 0 10px;
+    border: 1px solid #E5E5E5;
 }
-
 .fa-solid.fa-arrow-left {
     font-size: 2rem;
-    color: #333;
+    color: #FFB6C1;
     cursor: pointer;
+    position: absolute;
     top: 20px;
     left: 20px;
     margin-top: 20px;
     margin-left: 20px;
 }
-
 .word-list-header {
     display: flex;
     flex-direction: column;
@@ -44,86 +49,90 @@
     margin-top: 10px;
     gap: 8px;
 }
-
 .word-list-header h1 {
     margin: 0;
-    font-size: 2.2rem;
+    font-size: 2.5rem;
+    font-weight: 900;
+    color: #FFB6C1;
+    text-shadow: 0 4px 0 #FF8DA1;
 }
-
 .view-toggle {
     display: flex;
     gap: 12px;
     margin: 8px 0 12px 0;
 }
-
 .toggle-btn {
-    padding: 8px 20px;
-    border: 1px solid #ccc;
-    background: #f1f3f4;
-    color: #333;
-    border-radius: 20px;
+    padding: 10px 24px;
+    border: 2px solid #E5E5E5;
+    border-bottom: 4px solid #E5E5E5;
+    background: #ffffff;
+    color: #AFAFAF;
+    border-radius: 16px;
     font-size: 14px;
-    font-weight: 600;
+    font-weight: 800;
+    text-transform: uppercase;
     cursor: pointer;
     transition: all 0.2s ease;
 }
-
 .toggle-btn:hover {
-    background: #e0e0e0;
+    background: #f0f0f0;
 }
-
 .toggle-btn.active {
-    background: #4caf50;
+    background: #89CFF0;
     color: #ffffff;
-    border-color: #388e3c;
-    box-shadow: 0 2px 5px rgba(76, 175, 80, 0.3);
+    border-color: #5AB2E6;
+    border-bottom: 4px solid #5AB2E6;
 }
-
+.toggle-btn:active {
+    transform: translateY(2px);
+    border-bottom-width: 2px;
+}
 .word-row {
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 10px 16px;
     transition: background-color 0.15s ease;
+    border-radius: 12px;
 }
-
 .word-row:hover {
-    background-color: #f0f4f8;
+    background-color: #E1F5FE;
 }
-
 .word-text {
-    font-size: 15px;
-    font-family: Arial, sans-serif;
-    color: #222;
+    font-size: 16px;
+    font-family: 'Nunito', Arial, sans-serif;
+    font-weight: 700;
+    color: #4B4B4B;
     margin: 0;
     text-align: left;
 }
-
+.word-text b {
+    color: #89CFF0;
+}
 .word-audio-btn {
-    background: #e8f5e9;
-    border: 1px solid #c8e6c9;
+    background: #FFB6C1;
+    border: 2px solid #FF8DA1;
+    border-bottom: 4px solid #FF8DA1;
     border-radius: 50%;
-    width: 36px;
-    height: 36px;
-    min-width: 36px;
+    width: 40px;
+    height: 40px;
+    min-width: 40px;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    color: #2e7d32;
-    font-size: 15px;
-    transition: all 0.2s ease;
+    color: white;
+    font-size: 16px;
+    transition: all 0.1s ease;
 }
-
-.word-audio-btn:hover {
-    background: #c8e6c9;
-    transform: scale(1.08);
+.word-audio-btn:active {
+    transform: translateY(2px);
+    border-bottom-width: 2px;
 }
-
 .empty-state {
     text-align: center;
     padding: 30px 20px;
-    color: #666;
-    font-size: 16px;
-    font-style: italic;
+    color: #AFAFAF;
+    font-size: 18px;
+    font-weight: 700;
 }

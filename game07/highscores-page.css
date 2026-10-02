@@ -1,53 +1,65 @@
-/*
-=================================================
+/* =================================================
 Owned by Game 07
-=================================================
-*/
-
+================================================= */
+body {
+    background-color: #F9FDFF;
+    font-family: 'Nunito', 'Varela Round', Arial, sans-serif;
+}
 .game-frame {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
 }
-
 .game-frame h1 {
     font-size: 4.5rem;
     margin-bottom: 1rem;
     text-align: center;
-    font-family: 'Times New Roman', Times, serif;
+    font-family: 'Nunito', 'Varela Round', Arial, sans-serif;
+    font-weight: 900;
+    color: #FFB6C1;
+    text-shadow: 0 6px 0 #FF8DA1;
     margin-top: 5rem;
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
 }
-
 .game-frame .fa-solid.fa-arrow-left {
     position: absolute;
     top: 20px;
     left: 20px;
     font-size: 2rem;
+    color: #89CFF0;
     cursor: pointer;
+    transition: transform 0.2s;
 }
-
+.game-frame .fa-solid.fa-arrow-left:hover {
+    transform: scale(1.1);
+}
 #highscore-table {
-    border-collapse: separate;        
-    border-spacing: 32px 10px;       
-    font-family: 'Times New Roman', Times, serif;
+    border-collapse: separate;
+    border-spacing: 32px 10px;
+    font-family: 'Nunito', 'Varela Round', Arial, sans-serif;
     margin-top: 5rem;
+    background: white;
+    padding: 20px;
+    border-radius: 24px;
+    border: 2px solid #E5E5E5;
+    border-bottom: 8px solid #E5E5E5;
 }
-
 #highscore-table th {
-    font-size: 2.5rem;               
-    font-weight: 600;
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: #89CFF0;
     padding: 0;
     position: relative;
+    text-align: left;
 }
-
 #highscore-table td {
     font-size: 2.5rem;
-    font-weight: 600;
+    font-weight: 800;
+    color: #FFB6C1;
     padding: 0;
+    text-align: center;
 }
-
