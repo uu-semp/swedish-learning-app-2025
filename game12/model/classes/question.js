@@ -1,4 +1,4 @@
-class Question {
+export class Question {
     constructor(difficulty, street, number, direction, place, transport, text_swe, text_eng) {
         this.difficulty = difficulty
         this.street = street
