@@ -29,7 +29,7 @@ function createHowToPlayModal(showText = true, target = null) {
         <ul>
             <li>The goal is to match the image of furniture with their correct Swedish names and the place where they belong in the room.</li>
             <li>Drag and drop the image into the correct place.</li>
-            <li>If you get stuck, there is a hint button that will show you the correct answer.</li>
+            <li>The hint button shows the English translation of the furniture word.</li>
         </ul>
     `;
 
