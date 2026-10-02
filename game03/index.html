@@ -1,39 +1,276 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="sv">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Swedish Learning App - Menu</title>
-    <link rel="stylesheet" href="../style.css?v=20251009">
-    <link rel="stylesheet" href="styles/mainMenu.css?v=20251009">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css">
-    <link rel="stylesheet" href="styles/howToPlay.css">
-    <script src="scripts/howToPlay.js" defer></script>
+    <link rel="stylesheet" href="styles/mainMenu.css?v=20261002">
 </head>
 <body>
-<main class="game-frame">
-    <main class="menu-main">
-        <section class="menu-card">
-            <h1><i class="fas fa-paint-brush"></i> Decorate</h1>
-            <div class="menu-buttons">
-                <button class="menu-btn" onclick="window.location.href='levelSelection.html'">
-                    <i class="fas fa-layer-group"></i> Level Selection
-                </button>
+    <main class="layout" aria-label="Hemplanering – Decorate home">
 
-                <!-- New User Statistics Button -->
-                <button class="menu-btn" onclick="window.location.href='userStatistics.html'">
-                    <i class="fas fa-chart-bar"></i> User Statistics
-                </button>
+        <!-- ================= The plan (left) ================= -->
+        <section class="plan">
 
+            <header class="sheet-header">
+                <span class="kicker">Projekt 01 · Ritning</span>
+                <h1>DECORATE</h1>
+                <div class="subtitle">Hemplanering &mdash; plan your home, learn Svenska</div>
+                <div class="rule"></div>
+            </header>
 
+            <!-- Hand-drawn floor plan: Kontor, Sovrum, Vardagsrum, Kök -->
+            <div class="plan-drawing" aria-label="Handritad planritning med kontor, sovrum, vardagsrum och kök">
+                <span class="margin-note">beh&ouml;ver fler m&ouml;bler!</span>
+
+                <svg class="plan-svg" viewBox="10 10 632 394" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                    <defs>
+                        <!-- wobbles every line a little, like a pencil sketch -->
+                        <filter id="sketchy" x="-3%" y="-3%" width="106%" height="106%">
+                            <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="4" result="noise"/>
+                            <feDisplacementMap in="SourceGraphic" in2="noise" scale="3.2" xChannelSelector="R" yChannelSelector="G"/>
+                        </filter>
+                        <filter id="sketchy2" x="-3%" y="-3%" width="106%" height="106%">
+                            <feTurbulence type="fractalNoise" baseFrequency="0.05" numOctaves="2" seed="11" result="noise"/>
+                            <feDisplacementMap in="SourceGraphic" in2="noise" scale="4" xChannelSelector="G" yChannelSelector="R"/>
+                        </filter>
+                        <!-- kitchen floor tiles -->
+                        <pattern id="tiles" width="16" height="16" patternUnits="userSpaceOnUse">
+                            <path d="M16 0 L0 0 L0 16" stroke="currentColor" stroke-width="0.6"/>
+                        </pattern>
+                        <!-- wooden floor boards -->
+                        <pattern id="boards" width="60" height="12" patternUnits="userSpaceOnUse">
+                            <path d="M0 12 L60 12 M22 0 L22 12" stroke="currentColor" stroke-width="0.5"/>
+                        </pattern>
+                    </defs>
+
+                    <!-- ---------- floors ---------- -->
+                    <g opacity="0.28">
+                        <rect x="383" y="188" width="224" height="179" fill="url(#tiles)" stroke="none"/>
+                        <rect x="263" y="33" width="344" height="149" fill="url(#boards)" stroke="none"/>
+                        <rect x="33" y="33" width="224" height="149" fill="url(#boards)" stroke="none"/>
+                        <rect x="33" y="188" width="347" height="179" fill="url(#boards)" stroke="none"/>
+                    </g>
+
+                    <!-- ---------- construction lines (overshoot at corners) ---------- -->
+                    <g stroke-width="0.9" opacity="0.55">
+                        <path d="M14 30 L44 30 M30 14 L30 44"/>
+                        <path d="M596 30 L626 30 M610 14 L610 44"/>
+                        <path d="M14 370 L44 370 M30 356 L30 386"/>
+                        <path d="M596 370 L626 370 M610 356 L610 386"/>
+                        <path d="M260 16 L260 30 M380 370 L380 384 M16 185 L30 185 M610 185 L624 185"/>
+                    </g>
+
+                    <!-- ---------- walls (drawn hollow: dark stroke + paper core) ---------- -->
+                    <g id="walls">
+                        <!-- outer walls, gaps for windows and the front door -->
+                        <path d="M95 30 L30 30 L30 240"/>
+                        <path d="M30 320 L30 370 L200 370"/>
+                        <path d="M280 370 L300 370"/>
+                        <path d="M344 370 L470 370"/>
+                        <path d="M550 370 L610 370 L610 310"/>
+                        <path d="M610 240 L610 140"/>
+                        <path d="M610 80 L610 30 L580 30"/>
+                        <path d="M500 30 L165 30"/>
+                        <!-- interior walls with door openings -->
+                        <path d="M30 185 L190 185"/>
+                        <path d="M228 185 L280 185"/>
+                        <path d="M318 185 L610 185"/>
+                        <path d="M260 30 L260 185"/>
+                        <path d="M380 185 L380 245"/>
+                        <path d="M380 315 L380 370"/>
+                    </g>
+                    <g filter="url(#sketchy)">
+                        <use href="#walls" stroke="#8d8375" stroke-width="7" stroke-linecap="square" stroke-linejoin="miter"/>
+                        <use href="#walls" stroke="#fffdf7" stroke-width="3.2" stroke-linecap="butt" stroke-linejoin="miter"/>
+                    </g>
+
+                    <!-- ---------- windows, doors ---------- -->
+                    <g filter="url(#sketchy)" stroke="#8d8375" stroke-width="1.2">
+                        <!-- windows: frame + glass line -->
+                        <path d="M95 26.5 L165 26.5 M95 33.5 L165 33.5 M95 30 L165 30 M95 26.5 L95 33.5 M165 26.5 L165 33.5"/>
+                        <path d="M500 26.5 L580 26.5 M500 33.5 L580 33.5 M500 30 L580 30 M500 26.5 L500 33.5 M580 26.5 L580 33.5"/>
+                        <path d="M606.5 80 L606.5 140 M613.5 80 L613.5 140 M610 80 L610 140 M606.5 80 L613.5 80 M606.5 140 L613.5 140"/>
+                        <path d="M606.5 240 L606.5 310 M613.5 240 L613.5 310 M610 240 L610 310 M606.5 240 L613.5 240 M606.5 310 L613.5 310"/>
+                        <path d="M26.5 240 L26.5 320 M33.5 240 L33.5 320 M30 240 L30 320 M26.5 240 L33.5 240 M26.5 320 L33.5 320"/>
+                        <path d="M200 366.5 L280 366.5 M200 373.5 L280 373.5 M200 370 L280 370 M200 366.5 L200 373.5 M280 366.5 L280 373.5"/>
+                        <path d="M470 366.5 L550 366.5 M470 373.5 L550 373.5 M470 370 L550 370 M470 366.5 L470 373.5 M550 366.5 L550 373.5"/>
+
+                        <!-- doors: leaf + dashed swing -->
+                        <path d="M190 185 L190 148" stroke-width="1.6"/>
+                        <path d="M190 148 A37 37 0 0 1 227 185" stroke-dasharray="3 3" opacity="0.7"/>
+                        <path d="M318 185 L318 148" stroke-width="1.6"/>
+                        <path d="M318 148 A37 37 0 0 0 281 185" stroke-dasharray="3 3" opacity="0.7"/>
+                        <path d="M344 370 L344 327" stroke-width="1.6"/>
+                        <path d="M344 327 A43 43 0 0 0 301 370" stroke-dasharray="3 3" opacity="0.7"/>
+                        <!-- open passage living room → kitchen -->
+                        <path d="M380 249 L380 311" stroke-dasharray="2 5" opacity="0.6"/>
+                    </g>
+
+                    <!-- ---------- furniture ---------- -->
+                    <g fill="#fffdf7" stroke-width="1.5" filter="url(#sketchy)">
+                    <g id="furniture">
+                        <!-- KONTOR: desk, monitor, keyboard, desk lamp, chair, bookshelf, plant, bin -->
+                        <rect x="82" y="38" width="130" height="40" rx="2"/>
+                        <path d="M118 47 L170 47 L170 53 L118 53 Z M144 53 L144 58"/>
+                        <rect x="126" y="62" width="36" height="9" rx="1.5"/>
+                        <circle cx="96" cy="52" r="6"/>
+                        <circle cx="96" cy="52" r="2"/>
+                        <rect x="183" y="58" width="16" height="12" rx="1"/>
+                        <rect x="129" y="86" width="30" height="26" rx="8"/>
+                        <path d="M127 108 Q144 124 161 108"/>
+                        <rect x="36" y="92" width="22" height="86" rx="1"/>
+                        <path d="M36 109 L58 109 M36 126 L58 126 M36 143 L58 143 M36 160 L58 160"/>
+                        <path d="M40 95 L40 106 M44 95 L44 106 M49 96 L47 106 M40 129 L40 140 M45 129 L45 140 M41 146 L41 157 M46 146 L46 157 M51 147 L53 157"/>
+                        <circle cx="238" cy="54" r="11"/>
+                        <path d="M238 54 L231 45 M238 54 L247 47 M238 54 L229 59 M238 54 L246 62 M238 54 L238 43"/>
+                        <circle cx="226" cy="108" r="6"/>
+
+                        <!-- SOVRUM: rug, double bed, pillows, duvet, nightstands, wardrobe, dresser, plant -->
+                        <rect x="335" y="128" width="110" height="46" rx="5" stroke-dasharray="5 4"/>
+                        <rect x="345" y="36" width="90" height="112" rx="3"/>
+                        <rect x="345" y="36" width="90" height="8" rx="2"/>
+                        <rect x="351" y="49" width="36" height="17" rx="7"/>
+                        <rect x="393" y="49" width="36" height="17" rx="7"/>
+                        <path d="M345 76 L435 76"/>
+                        <path d="M345 82 Q390 88 435 82" opacity="0.6"/>
+                        <path d="M410 148 L435 124" opacity="0.7"/>
+                        <rect x="318" y="38" width="24" height="22" rx="2"/>
+                        <circle cx="330" cy="49" r="6"/>
+                        <rect x="438" y="38" width="24" height="22" rx="2"/>
+                        <circle cx="450" cy="49" r="6"/>
+                        <rect x="482" y="157" width="112" height="25" rx="1"/>
+                        <path d="M538 157 L538 182 M486 170 L590 170"/>
+                        <path d="M482 157 L538 182 M538 157 L482 182" opacity="0.35"/>
+                        <rect x="560" y="92" width="44" height="22" rx="2"/>
+                        <path d="M560 103 L604 103"/>
+                        <circle cx="590" cy="54" r="11"/>
+                        <path d="M590 54 L582 46 M590 54 L599 47 M590 54 L581 61 M590 54 L598 62 M590 54 L590 43"/>
+
+                        <!-- VARDAGSRUM: rug, sofa, coffee table, armchair, TV bench, floor lamp, plant, side table -->
+                        <rect x="56" y="236" width="128" height="66" rx="4" stroke-dasharray="5 4"/>
+                        <rect x="44" y="191" width="134" height="42" rx="5"/>
+                        <path d="M44 202 L178 202"/>
+                        <path d="M54 202 L54 233 M168 202 L168 233"/>
+                        <path d="M92 202 L92 233 M130 202 L130 233" opacity="0.7"/>
+                        <rect x="82" y="252" width="62" height="32" rx="3"/>
+                        <circle cx="100" cy="266" r="4"/>
+                        <rect x="208" y="238" width="38" height="40" rx="6"/>
+                        <path d="M236 238 L236 278 M212 238 L236 238 M212 278 L236 278"/>
+                        <rect x="68" y="350" width="108" height="16" rx="2"/>
+                        <path d="M88 346 L156 346" stroke-width="3"/>
+                        <circle cx="192" cy="208" r="8"/>
+                        <path d="M186 202 L198 214 M198 202 L186 214" opacity="0.6"/>
+                        <circle cx="361" cy="207" r="12"/>
+                        <path d="M361 207 L352 198 M361 207 L371 199 M361 207 L351 213 M361 207 L370 216 M361 207 L361 195"/>
+                        <circle cx="48" cy="340" r="9"/>
+
+                        <!-- KÖK: L-counter, stove, sink, fridge, dining table + chairs -->
+                        <path d="M440 189 L606 189 L606 330 L582 330 L582 213 L440 213 Z"/>
+                        <rect x="455" y="191" width="38" height="20" rx="1"/>
+                        <circle cx="464" cy="196" r="3.5"/>
+                        <circle cx="484" cy="196" r="3.5"/>
+                        <circle cx="464" cy="206" r="3.5"/>
+                        <circle cx="484" cy="206" r="3.5"/>
+                        <rect x="586" y="256" width="17" height="32" rx="3"/>
+                        <rect x="589" y="260" width="11" height="24" rx="2"/>
+                        <circle cx="601" cy="272" r="1.5"/>
+                        <rect x="398" y="189" width="34" height="32" rx="1"/>
+                        <path d="M398 213 L432 213 M402 217 L408 217"/>
+                        <rect x="462" y="250" width="16" height="12" rx="3"/>
+                        <rect x="492" y="250" width="16" height="12" rx="3"/>
+                        <rect x="462" y="310" width="16" height="12" rx="3"/>
+                        <rect x="492" y="310" width="16" height="12" rx="3"/>
+                        <rect x="438" y="276" width="12" height="16" rx="3"/>
+                        <rect x="520" y="276" width="12" height="16" rx="3"/>
+                        <rect x="452" y="264" width="66" height="44" rx="3"/>
+                        <circle cx="485" cy="286" r="5" opacity="0.6"/>
+                    </g>
+                    </g>
+                    <!-- second, offset pencil pass for the sketchy double-line look -->
+                    <use href="#furniture" fill="none" stroke-width="0.8" opacity="0.35" transform="translate(1.2 0.8)" filter="url(#sketchy2)"/>
+
+                    <!-- ---------- dimension lines ---------- -->
+                    <g stroke-width="1" filter="url(#sketchy)">
+                        <path d="M30 392 L610 392 M30 386 L30 398 M610 386 L610 398"/>
+                        <path d="M630 30 L630 370 M624 30 L636 30 M624 370 L636 370"/>
+                    </g>
+                    <text class="dim-label" x="160" y="388" text-anchor="middle">10,2 m</text>
+                    <text class="dim-label" x="626" y="110" text-anchor="middle" transform="rotate(90 626 110)">6,0 m</text>
+
+                    <!-- ---------- room labels ---------- -->
+                    <text class="room-label" x="76" y="164">Kontor</text>
+                    <text class="room-label" x="478" y="134">Sovrum</text>
+                    <text class="room-label" x="200" y="326">Vardagsrum</text>
+                    <text class="room-label" x="400" y="352">K&ouml;k</text>
+
+                    <!-- small hand note at the front door -->
+                    <text class="note-label" x="322" y="389" text-anchor="middle">entr&eacute; &uarr;</text>
+
+                    <!-- yellow highlight ring: here is where you decorate next -->
+                    <!-- <ellipse class="highlight" cx="128" cy="248" rx="104" ry="68" stroke="#ecad26" stroke-width="2.5" fill="none" filter="url(#sketchy)"/> -->
+                </svg>
+
+                <div class="drawing-caption">
+                    <span>Ritning A2 &middot; skala 1:50</span>
+                    <span>4 rum &middot; 61 m&sup2;</span>
+                </div>
             </div>
+
         </section>
 
+        <!-- ================= Menu (right) ================= -->
+        <aside class="sidebar" aria-label="Huvudmeny">
+            <div class="menu-label">Main Menu</div>
+
+            <div class="menu-stack">
+                <button class="menu-btn primary" onclick="window.location.href='levelSelection.html'">
+                    <span class="icon">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    </span>
+                    <span>
+                        <span class="title">Spela Nu</span>
+                        <span class="hint">V&auml;lj din niv&aring; &middot; choose your level</span>
+                    </span>
+                </button>
+                <div class="play-annotation">&darr; b&ouml;rja h&auml;r!</div>
+
+                <button class="menu-btn" onclick="window.location.href='userStatistics.html'">
+                    <span class="icon">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+                    </span>
+                    <span>
+                        <span class="title">Statistik</span>
+                        <span class="hint">Statistics</span>
+                    </span>
+                </button>
+
+                <button class="menu-btn" id="helpBtn">
+                    <span class="icon">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    </span>
+                    <span>
+                        <span class="title">Hj&auml;lp</span>
+                        <span class="hint">How to play</span>
+                    </span>
+                </button>
+            </div>
+
+            <!-- <div class="legend">
+                <span class="dot"></span>Gula ringen p&aring; ritningen &auml;r ditt n&auml;sta rum att dekorera.
+            </div> -->
+            <div class="scale" aria-hidden="true"></div>
+        </aside>
     </main>
-    <script>
-        window.addEventListener('DOMContentLoaded', () => {
-            createHowToPlayModal();
-        });
-    </script>
-</main>
+
+    <!-- Help modal -->
+    <div class="modal-overlay" id="helpOverlay">
+        <div class="modal" role="dialog" aria-modal="true" aria-labelledby="helpTitle">
+            <h2 id="helpTitle">S&aring; spelar du</h2>
+            <p>Dra och sl&auml;pp dekorationerna p&aring; r&auml;tt plats i rummet. Varje dekoration l&auml;r dig ett nytt svenskt ord &ndash; ju mer du dekorerar, desto mer l&auml;r du dig!</p>
+            <button class="close-btn" id="closeHelp">Jag f&ouml;rst&aring;r!</button>
+        </div>
+    </div>
+    <script src="scripts/mainMenu.js"></script>
 </body>
 </html>

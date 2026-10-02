@@ -1,131 +1,488 @@
-/* Main Menu Styles - Clean, static, accessible, and consistent with global style */
+/* Main menu */
 
-body {
-    font-family: 'Work Sans', Arial, sans-serif;
-    background: #f7fafc;
-    margin: 0;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+    --yellow: #ecad26;
+    --yellow-dark: #bd891b;
+    --ink: #3d372e;
+    --ink-soft: #8d8375;
+    --pencil: #b3a894;
+    --paper: #fffdf7;
+    --sheet-line: #eae4d6;
+    --red-pencil: #c0392b;
 }
 
-.menu-main {
+body {
+    font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+    color: var(--ink);
     min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: #f7fafc;
+    padding: 40px 24px;
+    /* drafting desk: warm wood-tone paper under the sheet */
+    background:
+        radial-gradient(110% 70% at 50% -10%, rgba(255, 250, 238, 0.8), rgba(255, 250, 238, 0) 60%),
+        linear-gradient(165deg, #e7e0d2 0%, #d9d0bd 55%, #c9bfa8 100%);
 }
 
-.menu-card {
-    background: #fff;
-    border-radius: 18px;
-    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.10);
-    padding: 44px 32px 32px 32px;
-    max-width: 350px;
-    width: 90vw;
+/* faint desk grain */
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.45;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='0.07'/%3E%3C/svg%3E");
+}
+
+/* ============ The drafting sheet ============ */
+.layout {
+    position: relative;
     display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.menu-card h1 {
-    margin-bottom: 24px;
-    font-size: 2rem;
-    color: #000;
-    text-align: center;
-    letter-spacing: 0.5px;
-    font-weight: 700;
-}
-
-.menu-buttons {
-    display: flex;
-    flex-direction: column;
-    gap: 18px;
     width: 100%;
+    max-width: 1180px;
+    background: var(--paper);
+    border-radius: 3px;
+    box-shadow:
+        0 1px 2px rgba(61, 45, 20, 0.10),
+        0 18px 30px -12px rgba(61, 45, 20, 0.22),
+        0 50px 90px -20px rgba(61, 45, 20, 0.35);
 }
 
-.menu-btn {
+/* faint drafting grid on the sheet */
+.layout::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.55;
+    background-image:
+        linear-gradient(to right, var(--sheet-line) 1px, transparent 1px),
+        linear-gradient(to bottom, var(--sheet-line) 1px, transparent 1px);
+    background-size: 36px 36px;
+}
+
+.layout > * { position: relative; }
+
+/* ------------ Left: the plan ------------- */
+.plan {
+    flex: 1;
+    padding: 44px 40px 40px;
+    min-width: 0;
+}
+
+.sheet-header { margin-bottom: 8px; }
+
+.sheet-header .kicker {
+    display: inline-block;
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    border: 1px solid var(--pencil);
+    border-radius: 2px;
+    padding: 4px 10px;
+    margin-bottom: 12px;
+}
+
+.sheet-header h1 {
+    font-size: 2.4rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1;
+}
+
+.sheet-header .subtitle {
+    font-family: 'Segoe Script', 'Bradley Hand', 'Comic Sans MS', cursive;
+    font-size: 1.35rem;
+    font-weight: 600;
+    color: var(--yellow-dark);
+    margin-top: 4px;
+}
+
+/* title underline: hand-drawn double stroke */
+.sheet-header .rule {
+    position: relative;
+    height: 8px;
+    margin-top: 10px;
+    max-width: 320px;
+}
+.sheet-header .rule::before,
+.sheet-header .rule::after {
+    content: "";
+    position: absolute;
+    left: 0; right: 8px;
+    height: 2px;
+    background: var(--pencil);
+    border-radius: 2px;
+}
+.sheet-header .rule::after { top: 4px; right: 0; opacity: 0.5; transform: rotate(-0.4deg); }
+
+/* the floor plan drawing */
+.plan-drawing {
+    position: relative;
+    margin: 26px 0 10px;
+}
+
+.plan-drawing svg.plan-svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    color: var(--pencil);
+}
+
+/* red pencil margin note, tilted */
+.margin-note {
+    position: absolute;
+    top: -14px;
+    right: 2px;
+    transform: rotate(3deg);
+    font-family: 'Segoe Script', 'Bradley Hand', 'Comic Sans MS', cursive;
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--red-pencil);
+    opacity: 0.85;
+}
+
+/* yellow highlight ring – "you are here" on the plan */
+.plan-drawing .highlight {
+    animation: gentle 3.2s ease-in-out infinite;
+    transform-origin: center;
+}
+@keyframes gentle {
+    0%, 100% { opacity: 0.55; }
+    50%      { opacity: 0.95; }
+}
+
+/* handwritten labels inside the plan */
+.plan-svg .room-label {
+    font-family: 'Segoe Script', 'Bradley Hand', 'Comic Sans MS', cursive;
+    font-size: 20px;
+    font-weight: 700;
+    fill: var(--ink);
+    opacity: 0.72;
+    stroke: none;
+}
+.plan-svg .dim-label,
+.plan-svg .note-label {
+    font-family: 'Segoe Script', 'Bradley Hand', 'Comic Sans MS', cursive;
+    font-size: 13px;
+    fill: var(--ink-soft);
+    stroke: none;
+}
+.plan-svg .note-label { fill: var(--red-pencil); opacity: 0.8; }
+
+.drawing-caption {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    font-size: 0.62rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-top: 2px;
+}
+
+
+/* ------------ Right: menu sidebar ------------- */
+.sidebar {
+    width: 340px;
+    flex-shrink: 0;
+    border-left: 1px solid var(--sheet-line);
+    background: #fbf9f3;
+    border-radius: 0 3px 3px 0;
+    padding: 44px 34px 30px;
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar .menu-label {
     display: flex;
     align-items: center;
     gap: 10px;
-    justify-content: center;
-    padding: 14px 0;
-    font-size: 1.08rem;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-    background: #ecad26;
-    color: #fff;
-    font-weight: 600;
-    box-shadow: 0 2px 8px rgba(44, 62, 80, 0.08);
-    transition: background 0.15s, transform 0.15s;
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-bottom: 8px;
 }
-.menu-btn:hover, .menu-btn:focus {
-    background: #bd891b;
-    transform: translateY(-1px) scale(1.03);
-    outline: none;
+.sidebar .menu-label::before {
+    content: "";
+    width: 26px; height: 4px;
+    background: var(--yellow);
+    border-radius: 2px;
 }
-.menu-btn:active { transform: translateY(1px); }
 
-.modal {
+/* the three buttons, vertically centred in the sidebar */
+.menu-stack {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 28px 0 24px;
+}
+
+/* menu buttons: taped onto the drafting sheet */
+.menu-btn {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    width: 100%;
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+    text-align: left;
+    background: #fff;
+    border-radius: 2px;
+    padding: 20px 22px;
+    margin-bottom: 30px;
+    color: var(--ink);
+    box-shadow: 0 1px 2px rgba(61, 45, 20, 0.10), 0 8px 16px rgba(61, 45, 20, 0.12);
+    transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+/* tape strip on top of each button */
+.menu-btn::before {
+    content: "";
+    position: absolute;
+    width: 70px; height: 20px;
+    top: -10px; left: 50%;
+    background: linear-gradient(180deg, rgba(255, 252, 240, 0.92), rgba(238, 226, 198, 0.82));
+    box-shadow: 0 2px 3px rgba(61, 45, 20, 0.16);
+    transform: translateX(-50%) rotate(-2deg);
+    pointer-events: none;
+}
+
+/* each button hangs slightly crooked, like a real taped note */
+.menu-btn.primary        { transform: rotate(-1.2deg); }
+.sidebar .menu-btn:nth-of-type(2) { transform: rotate(0.9deg); }
+.sidebar .menu-btn:nth-of-type(3) { transform: rotate(-0.7deg); }
+.sidebar .menu-btn:nth-of-type(2)::before { transform: translateX(-50%) rotate(2deg); }
+
+.menu-btn .icon {
+    width: 48px; height: 48px;
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    background: rgba(236, 173, 38, 0.14);
+    color: var(--yellow-dark);
+    flex-shrink: 0;
+}
+.menu-btn .icon svg { width: 25px; height: 25px; }
+
+.menu-btn .title { display: block; font-weight: 700; font-size: 1.18rem; line-height: 1.15; }
+.menu-btn .hint  { display: block; font-size: 0.8rem; font-weight: 500; color: var(--ink-soft); margin-top: 3px; }
+
+.menu-btn:hover {
+    transform: rotate(0deg) translateY(-2px);
+    box-shadow: 0 2px 3px rgba(61, 45, 20, 0.10), 0 14px 24px rgba(61, 45, 20, 0.16);
+    z-index: 4;
+}
+.menu-btn:active { transform: rotate(0deg) translateY(0); }
+
+.menu-btn.primary {
+    background: linear-gradient(180deg, #f3bb3e, #e5a41e);
+    color: #fff;
+    padding: 26px 22px;
+    box-shadow: 0 1px 2px rgba(157, 111, 15, 0.4), 0 12px 22px rgba(157, 111, 15, 0.30);
+    margin-bottom: 26px;
+}
+.menu-btn.primary .icon { background: rgba(255, 255, 255, 0.22); color: #fff; }
+.menu-btn.primary .hint { color: rgba(255, 255, 255, 0.88); }
+.menu-btn.primary .title { font-size: 1.4rem; }
+.menu-btn.primary .hint { font-size: 0.76rem; white-space: nowrap; }
+.menu-btn.primary .icon { width: 54px; height: 54px; }
+.menu-btn.primary .icon svg { width: 30px; height: 30px; }
+.sidebar .menu-btn:last-of-type { margin-bottom: 0; }
+
+.menu-btn.primary:hover {
+    transform: rotate(0deg) translateY(-2px);
+    box-shadow: 0 2px 3px rgba(157, 111, 15, 0.4), 0 18px 30px rgba(157, 111, 15, 0.34);
+    background: linear-gradient(180deg, #f6c14b, #eaac26);
+}
+.menu-btn.primary:active {
+    transform: rotate(0deg) translateY(1px);
+    box-shadow: 0 1px 2px rgba(157, 111, 15, 0.4), 0 8px 14px rgba(157, 111, 15, 0.24);
+}
+
+
+/* Caveat annotation next to the primary button */
+.play-annotation {
+    font-family: 'Segoe Script', 'Bradley Hand', 'Comic Sans MS', cursive;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--yellow-dark);
+    transform: rotate(-2deg);
+    text-align: center;
+    margin: -14px 0 26px;
+}
+
+.sidebar .legend {
+    margin-top: auto;
+    border-top: 1px dashed var(--pencil);
+    padding-top: 16px;
+    font-size: 0.74rem;
+    font-weight: 500;
+    color: var(--ink-soft);
+    line-height: 1.6;
+}
+.sidebar .legend .dot {
+    display: inline-block;
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--yellow);
+    margin-right: 6px;
+}
+
+/* scale mark decoration in the sidebar corner */
+.sidebar .scale {
+    margin-top: 14px;
+    height: 8px;
+    background-image: repeating-linear-gradient(to right, var(--pencil) 0 1px, transparent 1px 10px);
+    opacity: 0.6;
+}
+
+/* ============ Help modal ============ */
+.modal-overlay {
     display: none;
     position: fixed;
-    z-index: 1000;
-    left: 0; top: 0; right: 0; bottom: 0;
-    background: rgba(44,62,80,0.10);
+    inset: 0;
+    z-index: 50;
+    background: rgba(45, 32, 16, 0.45);
+    backdrop-filter: blur(2px);
     align-items: center;
     justify-content: center;
+    padding: 24px;
 }
+.modal-overlay.open { display: flex; }
 
-.modal-content {
-    background: #fff;
-    border-radius: 14px;
-    padding: 28px 20px 20px 20px;
-    box-shadow: 0 8px 32px rgba(44,62,80,0.10);
-    max-width: 340px;
-    width: 90vw;
+.modal {
+    background: var(--paper);
+    border-radius: 4px;
+    padding: 30px 28px 26px;
+    max-width: 400px;
+    width: 100%;
     text-align: center;
+    box-shadow: 0 35px 70px rgba(45, 32, 16, 0.45);
+    position: relative;
 }
 
-.modal-content h2 {
-    margin-top: 0;
-    color: var(--primary-color, #9d0000);
-    font-size: 1.25rem;
-    margin-bottom: 14px;
+.modal::before {
+    content: "";
+    position: absolute;
+    top: -12px; left: 50%;
+    transform: translateX(-50%) rotate(-2deg);
+    width: 84px; height: 24px;
+    background: linear-gradient(180deg, rgba(255, 252, 240, 0.9), rgba(238, 226, 198, 0.8));
+    box-shadow: 0 2px 4px rgba(61, 45, 20, 0.2);
+}
+
+.modal h2 {
+    color: var(--yellow-dark);
+    font-size: 1.2rem;
     font-weight: 700;
+    margin-bottom: 14px;
 }
-
-.close-btn {
-    margin-top: 16px;
-    background: #ca2828;
+.modal p {
+    font-size: 0.88rem;
+    line-height: 1.55;
+    color: #6b5d4b;
+}
+.modal .close-btn {
+    margin-top: 18px;
+    background: var(--yellow);
     color: #fff;
     border: none;
-    border-radius: 8px;
-    padding: 9px 20px;
-    font-size: 1rem;
+    border-radius: 10px;
+    padding: 10px 26px;
+    font-family: inherit;
+    font-size: 0.9rem;
+    font-weight: 600;
     cursor: pointer;
-    font-weight: 500;
-    transition: background 0.15s;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
+    box-shadow: 0 3px 0 rgba(157, 111, 15, 0.85);
+    transition: transform 0.15s ease, background 0.15s ease;
 }
-.close-btn:hover, .close-btn:focus {
-    background: #9d0000;
-    outline: none;
+.modal .close-btn:hover { background: #f0b534; transform: translateY(-1px); }
+.modal .close-btn:active { transform: translateY(1px); box-shadow: 0 1px 0 rgba(157, 111, 15, 0.85); }
+
+/* ============ Responsive ============ */
+/* Inside the hub's fixed 800 × 600 game iframe (see ../../style.css):
+   the sheet fills the frame edge to edge, plan left, menu right, no scrolling. */
+@media (max-width: 900px) {
+    body {
+        height: 100vh;
+        min-height: 0;
+        padding: 0;
+        overflow: hidden;
+    }
+    .layout {
+        height: 100%;
+        max-width: none;
+        border-radius: 0;
+        box-shadow: none;
+    }
+    .plan {
+        display: flex;
+        flex-direction: column;
+        padding: 20px 14px 14px 18px;
+    }
+    .sheet-header { margin-bottom: 0; }
+    .sheet-header .kicker { margin-bottom: 8px; padding: 3px 8px; font-size: 0.56rem; }
+    .sheet-header h1 { font-size: 1.75rem; }
+    .sheet-header .subtitle { font-size: 1.02rem; margin-top: 2px; }
+    .sheet-header .rule { margin-top: 6px; max-width: 260px; }
+
+    /* drawing sits right under the header, caption at the foot of the sheet */
+    .plan-drawing {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        margin-top: 14px;
+    }
+    .margin-note { top: -20px; right: 8px; font-size: 0.88rem; }
+    .drawing-caption { font-size: 0.54rem; margin-top: auto; }
+
+    .sidebar {
+        width: 240px;
+        border-radius: 0;
+        padding: 26px 20px 18px;
+    }
+    .menu-stack { padding: 14px 0 10px; }
+    .menu-btn { gap: 12px; padding: 15px 16px; margin-bottom: 24px; }
+    .menu-btn .icon { width: 42px; height: 42px; border-radius: 10px; }
+    .menu-btn .icon svg { width: 22px; height: 22px; }
+    .menu-btn .title { font-size: 1.08rem; }
+    .menu-btn .hint { font-size: 0.72rem; }
+    .menu-btn.primary { padding: 18px 16px; margin-bottom: 22px; }
+    .menu-btn.primary .icon { width: 46px; height: 46px; }
+    .menu-btn.primary .icon svg { width: 26px; height: 26px; }
+    .menu-btn.primary .title { font-size: 1.28rem; }
+    .menu-btn.primary .hint { font-size: 0.7rem; white-space: normal; }
+    .play-annotation { font-size: 1.05rem; margin: -12px 0 20px; }
+    .sidebar .legend { font-size: 0.66rem; padding-top: 12px; line-height: 1.5; }
+    .sidebar .scale { margin-top: 10px; }
 }
 
-@media (max-width: 500px) {
-    .menu-card, .modal-content {
-        padding: 14px 4vw 14px 4vw;
-    }
-    .menu-card h1 {
-        font-size: 1.15rem;
-    }
-    .menu-btn {
-        font-size: 0.98rem;
-        padding: 10px 0;
+/* real phones: stack plan above menu and allow scrolling again */
+@media (max-width: 640px) {
+    body { height: auto; min-height: 100vh; overflow: auto; }
+    .layout { flex-direction: column; height: auto; }
+    .plan { padding: 24px 20px 20px; }
+    .plan-drawing { flex: none; }
+    .sidebar {
+        width: 100%;
+        border-left: none;
+        border-top: 1px solid var(--sheet-line);
+        padding: 24px 20px 22px;
     }
 }
 
+@media (max-width: 560px) {
+    .margin-note { font-size: 0.9rem; }
+    .menu-btn.primary .hint { white-space: normal; }
+}
