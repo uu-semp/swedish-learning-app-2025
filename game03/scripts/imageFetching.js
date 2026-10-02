@@ -8,89 +8,48 @@ export async function loadImages() {
             // Get level from URL first
             const urlParams = new URLSearchParams(window.location.search);
             const levelIndex = urlParams.get("level") || "1";
-            
+
             const requiredImages = selectedQuestions.map(q => q.answer);
-            
-            // console.log('Selected questions:', selectedQuestions);
-            // console.log('Required images:', requiredImages);
 
             const sidebar = document.getElementById('sidebar');
-            const imageElements = [];
 
-            // Load required images (5 images)
+            // All furniture image paths from the vocabulary
             const ids = window.vocabulary.get_category("furniture");
             const vocabularies = ids.map(id => window.vocabulary.get_vocab(id));
             const allImages = vocabularies.filter(v => v.img).map(v => v.img);
+            const nameOf = path => path.split('/').pop().replace('.png', '');
 
-            allImages.forEach(path => {
-                // Extract the image name from the path (e.g., "chair" from "/assets/images/furniture/chair.png")
-                const imageName = path.split('/').pop().replace('.png', '');
-                
-                // console.log('Checking image:', imageName, 'Required:', requiredImages, 'Match:', requiredImages.includes(imageName));
-                
-                // Only load images that are needed for the questions
-                if (requiredImages.includes(imageName)) {
-                    const img = document.createElement('img');
-                    img.src = "../" + path;
-                    img.draggable = true;
-                    img.className = 'image-item';
-                    img.dataset.name = imageName;
-                    sidebar.appendChild(img);
-                    imageElements.push(img);
-                    // console.log('Added required image:', imageName);
-                }
-            });
+            // Collect the images to show: the required ones plus any distractors
+            const trayPaths = allImages.filter(path => requiredImages.includes(nameOf(path)));
 
-            // Load additional random distractor images
+            // Level 2: add 3 random distractors
             if (levelIndex === "2" && window.getRandomDistractorImages) {
                 try {
                     const distractorPaths = await window.getRandomDistractorImages();
-                    // console.log('Distractor paths:', distractorPaths);
-                    
-                    distractorPaths.forEach(path => {
-                        const imageName = path.split('/').pop().replace('.png', '');
-                        const img = document.createElement('img');
-                        img.src = "../" + path;
-                        img.draggable = true;
-                        img.className = 'image-item';
-                        img.dataset.name = imageName;
-                        sidebar.appendChild(img);
-                        imageElements.push(img);
-                        // console.log('Added distractor image:', imageName);
-                    });
+                    trayPaths.push(...distractorPaths);
                 } catch (error) {
                     console.log('Could not load distractor images:', error);
                 }
             }
-            
-            // For level 3, add 8 additional random images (total 15: 7 required + 8 random)
+
+            // Level 3: add up to 8 random extra images
             if (levelIndex === "3") {
-                const remainingImages = allImages.filter(path => {
-                    const imageName = path.split('/').pop().replace('.png', '');
-                    return !requiredImages.includes(imageName);
-                });
-                
-                console.log('Available images for random selection:', remainingImages.length);
-                
-                // Shuffle and take 8 random images (or as many as available)
-                const shuffled = remainingImages.sort(() => 0.5 - Math.random());
-                const randomImages = shuffled.slice(0, Math.min(8, remainingImages.length));
-                
-                console.log('Adding random images:', randomImages.length);
-                
-                randomImages.forEach(path => {
-                    const imageName = path.split('/').pop().replace('.png', '');
-                    const img = document.createElement('img');
-                    img.src = "../" + path;
-                    img.draggable = true;
-                    img.className = 'image-item';
-                    img.dataset.name = imageName;
-                    sidebar.appendChild(img);
-                    imageElements.push(img);
-                });
+                const extras = allImages.filter(path => !requiredImages.includes(nameOf(path)));
+                trayPaths.push(...window.shuffle(extras).slice(0, Math.min(8, extras.length)));
             }
 
-            // console.log('Total images loaded:', imageElements.length);
+            // Shuffle everything together so the tray order isn't predictable
+            const imageElements = [];
+            window.shuffle(trayPaths).forEach(path => {
+                const img = document.createElement('img');
+                img.src = "../" + path;
+                img.draggable = true;
+                img.className = 'image-item';
+                img.dataset.name = nameOf(path);
+                sidebar.appendChild(img);
+                imageElements.push(img);
+            });
+
             resolve(imageElements);
         });
     });
