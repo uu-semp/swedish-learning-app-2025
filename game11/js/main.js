@@ -9,6 +9,9 @@ function startGame() {
     // Expose for index.html's initWords bridge
     window.__game11GameState = gameState;
 
+    // Preload shelf images so they are cached before rendering
+    if (gameState.mode !== 2) gameState.shelf.forEach(item => { new Image().src = "../" + item.img; });
+
     console.log(gameState.shelf);
     displayShelf(gameState.shelf, gameState.mode);
     displayShoppingList(gameState.shoppingList, gameState.mode);
