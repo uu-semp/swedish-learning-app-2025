@@ -356,8 +356,12 @@ function renderTileInterface() {
 		slot.type = "button";
 		slot.className = "answer-slot";
 		slot.textContent = tile ? tile.text : `${index + 1}. ___`;
-		slot.setAttribute("aria-label", `Answer slot ${index + 1}`);
-
+		slot.setAttribute(
+		    "aria-label",
+ 			   tile
+       			 ? `Answer slot ${index + 1}: ${tile.text}`
+       			 : `Answer slot ${index + 1}: empty`
+		);	
 		slot.onclick = () => handleSlotClick(index);
 		slot.disabled = answerSubmitted;
 
