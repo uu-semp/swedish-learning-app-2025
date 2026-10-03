@@ -149,9 +149,8 @@ function renderGrid(games) {
 
 //// Settings Feature ////
  // Creates a settings overlay with the following features:
- // (1) a slider for the global volume control
- // (2) a button to the 'add vocabulary' form, managed by team03
- // (3) a 'clear saved data' button
+ // (1) a slider for the global volume control (not yet implemented)
+ // (2) a 'clear saved data' button
 (() => {
   const settingsBtn = document.getElementById('settings-btn');
   if (!settingsBtn) return;
@@ -170,7 +169,6 @@ function renderGrid(games) {
         <button id="_close_settings" class="settings-btn close">${translations["close"][currentLanguage]}</button>
       </div>
       <div class="settings-actions">
-        <button id="_open_add" class="settings-btn primary">${translations["add-word"][currentLanguage]}</button>
         <button id="_clear_save" class="settings-btn secondary">${translations["clear-data"][currentLanguage]}</button>
       </div>
     `;
@@ -202,7 +200,7 @@ function renderGrid(games) {
       box.appendChild(confirmBox);
       
       confirmBox.querySelector('#_confirm_clear').onclick = () => {
-        // Clear data for every game, plus the vocabulary extension
+        // Clear data for every game; 'team03' removes legacy custom-vocabulary localStorage
         [...allGames.map(g => g.id), 'team03'].forEach(name => window.save.clear(name));
         confirmBox.remove();
         
@@ -213,13 +211,6 @@ function renderGrid(games) {
         box.appendChild(msg);
         setTimeout(() => msg.remove(), 3000);
       };
-    });  // Add vocabulary button - will open the form once present, for now opens a new tab to team03
-  overlay.querySelector('#_open_add').addEventListener('click', () => {
-      const candidate = './team03/index.html';
-      fetch(candidate, { method: 'HEAD' }).then(res => {
-        if (res.ok) window.open(candidate, '_blank');
-        else window.open('about:blank', '_blank');
-      }).catch(() => window.open('about:blank', '_blank'));
     });
 
     return overlay;
