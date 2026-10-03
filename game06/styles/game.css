@@ -8,9 +8,11 @@ Game View Styles - Game 06
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     border-radius: 20px;
     max-width: 750px;
-    min-height: 550px;
-    margin: 15px auto;
-    padding: 20px 30px;
+    height: 580px;
+    box-sizing: border-box;
+
+    margin: 5px auto;
+    padding: 12px 25px;
     text-align: center;
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
     color: white;
@@ -101,6 +103,7 @@ Game View Styles - Game 06
 .answer-btn:active {
     transform: translateY(-1px);
 }
+
 .answer-btn.selected {
     border: 1px solid #3c607e;
     background: #2c6f80;
@@ -215,19 +218,36 @@ Game View Styles - Game 06
     line-height: 1.3;
 }
 
+/* Action Buttons Row */
+.action-buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin: 10px auto 6px;
+}
+
+.game-container.hard-mode .action-buttons {
+    margin-top: 16px;
+    flex-wrap: wrap;
+}
+
+.game-container.hard-mode {
+    height: auto;
+    min-height: 580px;
+}
+
 /* Submit Button */
 .submit-btn {
     background: white;
     color: #667eea;
     border: 2px solid white;
-    padding: 12px 40px;
-    font-size: 16px;
+    padding: 10px 32px;
+    font-size: 15px;
     font-weight: 600;
     border-radius: 25px;
     cursor: pointer;
     transition: all 0.3s ease;
-    margin: 12px auto 8px;
-    display: block;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
@@ -235,15 +255,32 @@ Game View Styles - Game 06
     background: white;
     color: #667eea;
     border: 2px solid white;
-    padding: 12px 40px;
-    font-size: 16px;
+    padding: 10px 32px;
+    font-size: 15px;
     font-weight: 600;
     border-radius: 25px;
     cursor: pointer;
     transition: all 0.3s ease;
-    margin: 15px auto 10px;
-    display: block;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Reset Button */
+.reset-btn {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    padding: 10px 24px;
+    font-size: 15px;
+    font-weight: 600;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.reset-btn:hover {
+    background: rgba(255, 255, 255, 0.35);
+    transform: translateY(-2px);
 }
 
 .next-btn:hover {
@@ -300,23 +337,94 @@ Game View Styles - Game 06
     margin-top: 15px;
 }
 
+/* Tile Game (Hard Mode) */
+.tile-area {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    min-height: 50px;
+    margin-bottom: 6px;
+    padding: 8px;
+    border: 2px dashed rgba(255, 255, 255, 0.5);
+    border-radius: 12px;
+}
+
+.word-tile,
+.answer-slot {
+    min-height: 40px;
+    padding: 8px 14px;
+    border: 2px solid transparent;
+    border-radius: 8px;
+    font: inherit;
+    font-size: 15px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.word-tile {
+    background: white;
+    color: #28304a;
+}
+
+.word-tile:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.word-tile:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.answer-slot {
+    min-width: 100px;
+    background: rgba(255, 255, 255, 0.15);
+    color: white;
+    border-color: rgba(255, 255, 255, 0.4);
+}
+
+.answer-slot:hover:not(:disabled) {
+    background: rgba(255, 255, 255, 0.25);
+}
+
+.word-tile:focus-visible,
+.answer-slot:focus-visible {
+    outline: 3px solid #ffdf70;
+    outline-offset: 3px;
+}
+
+#tile-game p {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 14px;
+    margin: 6px 0;
+}
+
+#tile-feedback {
+    font-weight: 600;
+    font-size: 16px;
+    min-height: 24px;
+}
+
+
+
 /* Responsive Design */
 @media (max-width: 768px) {
     .game-container {
         padding: 18px 20px;
         margin: 10px;
     }
-    
+
     #game-view .clock {
         width: 180px;
         height: 180px;
         padding: 10px;
     }
-    
+
     #game-view .number {
         font-size: 1.1em;
     }
-    
+
     #game-view .number1,
     #game-view .number2,
     #game-view .number3,
@@ -331,54 +439,54 @@ Game View Styles - Game 06
     #game-view .number12 {
         transform: translate(-15px, -15px) rotate(var(--rotation)) translate(0, -80px) rotate(calc(-1 * var(--rotation)));
     }
-    
+
     .answers-container {
         grid-template-columns: 1fr;
         gap: 8px;
     }
-    
+
     .question-text {
         font-size: 18px;
     }
-    
+
     .game-header {
         flex-direction: column;
         gap: 8px;
         margin-bottom: 12px;
     }
-    
+
     .answer-btn {
         padding: 10px 15px;
         font-size: 14px;
     }
-    
+
     .submit-btn {
         padding: 10px 35px;
         font-size: 15px;
         margin: 12px auto 8px;
     }
-    
+
     .answer-input {
         padding: 11px 14px;
         font-size: 15px;
     }
-    
+
     .swedish-letters {
         gap: 5px;
         margin: 6px 0;
     }
-    
+
     .letter-btn {
         padding: 5px 10px;
         font-size: 14px;
         min-width: 32px;
     }
-    
+
     .hint-section {
         padding: 8px 10px;
         margin-top: 8px;
     }
-    
+
     .hint-label,
     .hint-text {
         font-size: 12px;
