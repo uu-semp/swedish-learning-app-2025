@@ -1,7 +1,10 @@
+// This file contains the logic for the game
+
 (function () {
     const TARGET_TOTAL = 10; // only used as a fallback
     const WIN_THRESHOLD = n => Math.ceil(n * 0.8);
-    // ✅ Announce to parent that popup can receive initWords.
+
+    // Announce to parent that popup can receive initWords.
     // Repeated until the parent answers with initWords: a single announcement can
     // be lost if the iframe script runs before the parent installs its listener,
     // which left the popup running the fallback bank (wrong target words).
@@ -9,6 +12,7 @@
     let initedFromParent = false;
     let readyTimer = null;
 
+    // Tell the parent page that the popup is ready to receive the word list.
     function announceReady() {
         if (!isEmbedded) return;
         try { window.parent.postMessage({ type: 'popupReady' }, '*'); } catch (_) { }
@@ -35,6 +39,8 @@
     let currentToast = null;
     let currentToastTimer = null;
 
+
+    // Send the current game status and progress to the parent page.
     function renderStatus() {
         if (window.parent && window.parent !== window && game) {
             const cur = game.words[game.orderIndex] || null;
@@ -54,7 +60,15 @@
     }
 
 
-    // ✅ Only one toast at a time
+
+    /**
+     * Displays a temporary message to the player and removes any existing message.
+     *
+     * @param {string} html - The message content to display.
+     * @param {string} type - The type of message, such as success or error.
+     * @param {number} duration - The time in milliseconds before the message is removed.
+     * @returns {void}
+     */
     function toast(html, type = 'success', duration = 4000) {
         if (currentToast) {
             try { currentToast.classList.add('is-hiding'); } catch (e) { }
@@ -83,6 +97,14 @@
         x.onclick = () => { if (currentToastTimer) clearTimeout(currentToastTimer); close(); };
     }
 
+
+    /**
+     * Updates the end-game icon based on whether the player won or lost.
+     * It removes the existing icon and replaces it with the corresponding SVG icon.
+     *
+     * @param {boolean} win - Whether the player completed the game successfully.
+     * @returns {void}
+     */
     function setEndIcon(win) {
         const icon = document.getElementById('endIcon');
         while (icon.firstChild) icon.removeChild(icon.firstChild);
@@ -93,6 +115,14 @@
         }
     }
 
+
+    /**
+     * Opens the end-game modal and displays the given title and message.
+     * It also sets up the close button and allows the modal to be closed with Escape.
+     *
+     * @param {string} title - The title displayed in the end-game modal.
+     * @param {string} message - The message displayed in the end-game modal.
+     */
     function openEndModal(title, message) {
         document.getElementById('endTitle').textContent = title;
         endMsg.innerHTML = message;
@@ -105,7 +135,14 @@
     }
     function closeEndModal() { endModal.classList.remove('open'); if (endModal._esc) { document.removeEventListener('keydown', endModal._esc); endModal._esc = null; } }
 
-    /** Initialize/Reset the internal game state with a specific word order */
+
+
+    /**
+     * Initializes or resets the internal game state.
+     * It creates the progress data and resets the counters for a new game.
+     *
+     * @param {Object[]} words - The words used in the game.
+     */    
     function initWithWords(words) {
         const total = words.length;
         game = {
@@ -126,6 +163,14 @@
         const picked = FOOD_BANK.slice(0, TARGET_TOTAL);
         initWithWords(picked);
     }
+
+    /**
+     * Checks the selected item against the current target item and updates the game state.
+     * It notifies the parent page of the result, displays feedback, and updates the player's progress.
+     *
+     * @param {string} id - The ID of the selected item.
+     * @param {string} label - The label of the selected item used in the feedback message.
+     */
 
     function pick(id, label) {
         if (!game) return;
@@ -154,6 +199,11 @@
         renderStatus();
     }
 
+
+    /**
+     * Moves the game to the next unfinished item.
+     * When all items are completed, it saves the results and opens the end-game screen.
+     */
     function nextItem() {
         if (game.completed >= game.total) {
             const win = game.firstTryCorrectCount >= game.winThreshold;
@@ -197,7 +247,7 @@
     window.Game = { pick, reset, toast, state: () => game, initWithWords };
 
 
-    // Message bridge with parent
+    // Handles communication with the parent page and initializes the popup game.
     window.addEventListener('message', function (event) {
         const data = event.data || {};
         if (!data.type) return;
