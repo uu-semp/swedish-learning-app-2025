@@ -183,11 +183,13 @@ export function displayShoppingList(list, mode) {
 
   _listEls = list.map(item => {
     const li = document.createElement('li');
-
     if (mode === 2) {
       li.textContent = item.en;
-    } else {
+    } else  if (mode === 1 ) {
       li.textContent = item.sv;
+    } else {
+      ul.classList.add('no-bullets');
+      li.textContent = "";
     }
     ul.appendChild(li);
     return li;
@@ -196,13 +198,39 @@ export function displayShoppingList(list, mode) {
   listWrap.appendChild(ul);
   
   // Create soundbutton and run function to play sound
-  const soundBtn = document.createElement('button');
-  soundBtn.className = 'play-sound-btn';
-  soundBtn.innerHTML = '<i class="fa-solid fa-headphones"></i>'
-  soundBtn.type = 'button';
-  soundBtn.addEventListener('click', playCurrentSound); 
-  listWrap.appendChild(soundBtn);
+  // only create sound button for mode 1 and mode 3 (mode 1 is image-based, mode 3 is audio-based)
+  if(mode === 3) {
+      const soundBtn = document.createElement('button');
+      soundBtn.className = 'play-sound-larger-btn';
+      soundBtn.innerHTML = '<i class="fa-solid fa-headphones"></i>'
+      soundBtn.type = 'button';
+      soundBtn.addEventListener('click', () => {
+        soundBtn.classList.add('playing');
+        playCurrentSound();
+        soundBtn.disabled = true;
+         setTimeout(() => {
+          soundBtn.classList.remove('playing');
+          soundBtn.disabled = false;
 
+        }, 1500);
+      });      
+      listWrap.appendChild(soundBtn);
+  } else if (mode === 1) {
+      const soundBtn = document.createElement('button');
+      soundBtn.className = 'play-sound-btn';
+      soundBtn.innerHTML = '<i class="fa-solid fa-headphones"></i>'
+      soundBtn.type = 'button';
+      soundBtn.addEventListener('click', () => {
+        soundBtn.classList.add('playing');
+        playCurrentSound();
+        soundBtn.disabled = true;
+        setTimeout(() => {
+          soundBtn.classList.remove('playing');
+          soundBtn.disabled = false;
+        }, 1500);
+      });      
+      listWrap.appendChild(soundBtn);
+  }
   // Default highlight first row
   highlightListIndex(0);
 
