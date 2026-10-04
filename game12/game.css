@@ -179,7 +179,6 @@ hr {
     color: #666;
 }
 
-/* Road styling */
 .road{
     background-color: rgb(71, 71, 71);
 }
@@ -187,38 +186,103 @@ hr {
 .horizontal-road{
     grid-column: 1 / 6;
     grid-row: 2;
+    position: relative;
 }
 
 .vertical-road{
     grid-column: 3;
     grid-row: 3 / 6;
-    display:grid;
+    display: grid;
     place-items: center;
+    position: relative;
 }
 
-.street-text{
-    color:white;
-    padding:0;
-    margin:0;
+.street-text {
+    position: absolute;
+    width: 145px;
+    height: 22px;
+    margin: 0;
+    padding: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+
+    background: white;
+
+    clip-path: polygon(
+        0 0,
+        calc(100% - 18px) 0,
+        100% 50%,
+        calc(100% - 18px) 100%,
+        0 100%
+    );
+
+    z-index: 2;
+    isolation: isolate;
+}
+
+.street-text::before {
+    content: "";
+    position: absolute;
+    inset: 2px;
+
+    background: #006aa7;
+
+    clip-path: polygon(
+        0 0,
+        calc(100% - 16px) 0,
+        100% 50%,
+        calc(100% - 16px) 100%,
+        0 100%
+    );
+
+    z-index: -1;
+}
+
+.horizontal-road .street-text {
+    left: 20%;
+    top: 50%;
+    transform: translate(-50%, -50%);
 }
 
 .vertical-road .street-text {
-    writing-mode: vertical-rl;
-    text-orientation: mixed;
-    top: 50%;
-    margin-right:0;
+    left: 50%;
+    top: 32%;
+    transform: translate(-50%, -50%) rotate(90deg);
 }
 
-.dotted-line{
-    border: 2px dashed white;
+.dotted-line {
+    position: absolute;
+    box-sizing: border-box;
+}
+
+
+.horizontal-road .dotted-line {
+    left: 0;
+    right: 0;
+    top: 50%;
+    border: none;
+    border-top: 2px dashed white;
 }
 
 .vertical-road .dotted-line {
-    height: 35%;
-    position:absolute;
+    top: -16px;
+    left: 50%;
+    height: calc(100% + 16px);
+
+    border: none;
+    border-left: 2px dashed white;
+
+    z-index: 1;
 }
 
-/* Base house button styling */
 #house-grid{
     display:grid;
     grid-template-columns: 100px 100px 40px 100px 100px;
