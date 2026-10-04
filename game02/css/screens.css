@@ -79,3 +79,14 @@
 .mode-btn.selected {
     background-color: #FFCAE9;
 }
+
+/* Menu: dialect buttons below Start Game (shown when Dialect is selected) */
+#dialect-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+/* The selected dialect gets the same color as the selected game mode */
+.dialect-btn.selected {
+    background-color: #FFCAE9;
+}

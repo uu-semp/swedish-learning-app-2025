@@ -188,6 +188,12 @@ $(function () {
     $(this).addClass("selected");
     $(".mode-info").hide();
     $("#info-" + $(this).data("mode")).show();
+    $("#dialect-buttons").toggle($(this).data("mode") === "dialect");
+  });
+
+  $(".dialect-btn").on("click", function () {
+    $(".dialect-btn").removeClass("selected");
+    $(this).addClass("selected");
   });
 
   // Event delegation för dynamiskt skapade kort
