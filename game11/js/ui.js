@@ -20,7 +20,8 @@ function keyFromImgPath(p) {
 let _listEls = [];                          // <li> refs for highlight
 const _shelfImgByKey = new Map();           // key -> <img> on the shelf
 let _dropzoneWired = false;                 // ensure we wire the dropzone once
-let _currentIndex = 0;                      // Is there to track which is the current item, this is used for sound.
+let _imgErrorAlerted = false;               // show the image error alert only once
+let _currentIndex = 0;                     // Is there to track which is the current item, this is used for sound.
 
 
 
@@ -74,23 +75,51 @@ export function displayShelf(shelf, mode) {
 
     if (mode === 2) {
       // Mode 2: show Swedish word
-      element = document.createElement('div');
-      // Todo, move it to css file
-      element.style.backgroundColor = 'white';
-      element.style.color = 'black';
-      element.style.width = '80px';
-
-      element.textContent = item.sv;
+      element = createTextItem(item.sv);
     } else {
       // Mode 1: show image
       element = document.createElement('img');
       element.src = "../" + item.img;
       element.alt = item.sv || item.en || '';
+      // Fallback: replace a broken image with a text placeholder so the game keeps working
+      element.onerror = () => {
+        console.error('[ui] Image failed to load:', item.img);
+        const fallback = createTextItem('⚠ ' + (item.sv || item.en || key));
+        Object.assign(fallback.dataset, element.dataset);
+        wireShelfItem(fallback, key);
+        element.replaceWith(fallback);
+        _shelfImgByKey.set(key, fallback);
+        if (!_imgErrorAlerted) {
+          _imgErrorAlerted = true;
+          alert('Some images failed to load; showing text instead.');
+        }
+      };
     }
     element.dataset.key = key;
     element.dataset.sv = item.sv || item.en || key;
     element.dataset.audio = item.audio || ''; // adding audio in dataset
 
+    wireShelfItem(element, key);
+    shelfContainer.appendChild(element);
+    _shelfImgByKey.set(key, element);
+  });
+
+  setupCartDropzone();
+
+  console.log('[ui] Displaying shelf; items:', shelf.length);
+}
+
+function createTextItem(text) {
+  const element = document.createElement('div');
+  // Todo, move it to css file
+  element.style.backgroundColor = 'white';
+  element.style.color = 'black';
+  element.style.width = '80px';
+  element.textContent = text;
+  return element;
+}
+
+function wireShelfItem(element, key) {
     // Click-> same path as drop
     element.tabIndex = 0;
     element.addEventListener('click', (e) => { e.stopPropagation(); sendPick(key); });
@@ -110,14 +139,6 @@ export function displayShelf(shelf, mode) {
       }
       console.debug('[ui] dragstart', key);
     });
-
-      shelfContainer.appendChild(element);
-      _shelfImgByKey.set(key, element);
-    });
-
-  setupCartDropzone();
-
-  console.log('[ui] Displaying shelf; items:', shelf.length);
 }
 
 
