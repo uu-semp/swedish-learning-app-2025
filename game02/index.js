@@ -53,8 +53,13 @@ $(function () {
     allowFlipBack = false;
   }
 
+  function updateProgress() {
+    $("#progress-fill").css("width", (corrects / corrects_needed) * 100 + "%");
+  }
+
   function resetGame() {
     corrects = 0;
+    updateProgress();
     misses = 0;
     $("#moves").text(`moves: 0`);
     resetFlipState();
@@ -73,6 +78,7 @@ $(function () {
 
   function foundMatch() {
     corrects++;
+    updateProgress();
     $("#moves").text(`moves: ${misses + corrects}`);
 
     if (corrects >= corrects_needed) {
