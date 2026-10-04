@@ -86,7 +86,9 @@
     gap: 10px;
 }
 
-/* The selected dialect gets the same color as the selected game mode */
+/* Selected mode/dialect: a dark outline too, so it is not shown by colour alone */
+.mode-btn.selected,
 .dialect-btn.selected {
+    box-shadow: inset 0 0 0 3px #000;
     background-color: #FFCAE9;
 }

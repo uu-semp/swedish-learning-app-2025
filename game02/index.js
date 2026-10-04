@@ -15,10 +15,10 @@ $(function () {
   const misses_max = 20; // number of misses allowed before losing
   const numPairs = 8; // number of pairs of cards
   const mode_titles = {
-    picture: "Match the image to the description to clear the board",
+    picture: "Match each picture to its Swedish word",
     spelling: "Type the Swedish word for each picture",
-    listening: "Match the sound to the description to clear the board",
-    dialect: "Match the dialect sound to the description to clear the board",
+    listening: "Match each sound to its Swedish word",
+    dialect: "Match each dialect sound to its Swedish word",
   }; // heading above the board for each mode
 
   // variables
@@ -55,6 +55,7 @@ $(function () {
 
   function updateProgress() {
     $("#progress-fill").css("width", (corrects / corrects_needed) * 100 + "%");
+    $("#progress-text").text(`${corrects} / ${corrects_needed} pairs`);
   }
 
   function resetGame() {
