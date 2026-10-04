@@ -316,6 +316,32 @@ window.addEventListener('DOMContentLoaded', () => {
     }
 
 
+    // LANGUAGE
+
+    const languageBtn =
+        document.getElementById('toggle-language-btn');
+
+    if (languageBtn) {
+        languageBtn.addEventListener('click', async () => {
+            // NOTE: This check is quite fragile to changes
+            const isSwedish = languageBtn.textContent == "Engelska";
+            const res = await fetch("assets/translations.json");
+            // const res = await fetch("assets/traslations.json", { cache: "no-store" });
+            if (!res.ok) throw new Error("Failed to load translations.json");
+            const translationTable = new Map(Object.entries(await res.json()));
+
+            if (translationTable.size == 0) throw new Error("Failed to load translations.json");
+            translationTable.forEach((value, key) => {
+                const currentElement = document.getElementById(key);
+
+                if (currentElement) {
+                    currentElement.innerHTML = isSwedish ? value.en : value.sv;
+                }
+            });
+        });
+
+    }
+
     // COPYRIGHT
 
     const copyrightBtn =

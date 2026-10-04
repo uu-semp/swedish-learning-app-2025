@@ -1,0 +1,62 @@
+{
+    "toggle-language-btn": {
+        "sv": "Engelska",
+        "en": "Swedish"
+    },
+    "toggle-language-text": {
+        "sv": "Byt språk",
+        "en": "Change language"
+    },
+    "toggle-contrast-btn": {
+        "sv": "AV",
+        "en": "ON"
+    },
+    "toggle-contrast-text": {
+        "sv": "Hög kontrast",
+        "en": "High contrast"
+    },
+    "restart-btn": {
+        "sv": "Börja om",
+        "en": "Restart"
+    },
+    "mode1-btn": {
+        "sv": "Bildinlärning",
+        "en": "Image matching"
+    },
+    "mode2-btn": {
+        "sv": "Ordmatchning",
+        "en": "Word matching"
+    },
+    "mode3-btn": {
+        "sv": "Lyssningsövning",
+        "en": "Listening practice"
+    },
+    "close-settings-btn": {
+        "sv": "Stäng",
+        "en": "Close"
+    },
+    "instructions": {
+        "sv": "<p><strong>Hur du spelar</strong><br>Hitta objekten från inköpslistan på hyllan,<br>klicka eller dra och släpp den i varukorgen.</p>",
+        "en": "<p><strong>How to play</strong><br>Find the items in the shopping list on the shelf,<br>click or drag and drop the items into the cart.</p>"
+    },
+    "menu-header-text": {
+        "sv": "Meny",
+        "en": "Menu"
+    },
+    "copyright-header-text": {
+        "sv": "Licenser <i class=\"fas fa-minus\"></i>numrerad vänster till höger, uppifrån och ner <i class=\"fas fa-minus\"></i> skrolla för att se mer",
+        "en": "Licenses <i class=\"fas fa-minus\"></i>numbered left to right, top to bottom <i class=\"fas fa-minus\"></i> scroll to see more"
+    },
+    "copyright-table-image-text": {
+        "sv": "Bild",
+        "en": "Image"
+    },
+    "copyright-table-license-text": {
+        "sv": "Licens",
+        "en": "License"
+    },
+    "main-menu-btn": {
+        "sv": "Meny ☰",
+        "en": "Menu ☰"
+    }
+}
