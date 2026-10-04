@@ -527,3 +527,44 @@ body.high-contrast-mode .game-frame img {
   transition: all 0.3s ease;
   transform: translateX(5px) translateY(-2px);
 }
+
+
+/* =================================================
+   SPACED REPETITION
+   ================================================= */
+
+.sr-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.sr-title {
+  font-weight: bold;
+  margin-bottom: 2px;
+}
+
+.danger-btn {
+  background-color: #f87171;
+  color: white;
+}
+
+.modal-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.modal-actions .modal-btn,
+.modal-actions .close-btn {
+  margin-bottom: 0;
+}
+
+.sr-toggle-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.sr-toggle-buttons .modal-btn {
+  flex: 1;
+}

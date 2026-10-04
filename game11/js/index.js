@@ -105,7 +105,7 @@ window.addEventListener('DOMContentLoaded', () => {
     let popupIsReady = false;
     let initSent = false;
 
-    
+
 
     /**
      * Checks whether the current game state contains a non-empty shopping list.
@@ -236,6 +236,7 @@ window.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+  
 
     // RESTART
 

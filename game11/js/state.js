@@ -5,6 +5,8 @@ import { getItems } from "./data.js";
 
 // The local storage key 
 const STORAGE_KEY = "game11_game_state";
+const SR_ENABLED_KEY = "game11_spaced_repetition_enabled";
+const SR_CONSENT_KEY = "game11_spaced_repetition_consent";
 
 
 
@@ -24,8 +26,8 @@ function initGameState() {
     const vocab = getItems(); // <-- important: do NOT overwrite window.vocabulary
 
     // Build lists
-    const shoppingList = generateShoppingList(vocab);      
-    const shelf = generateShelf(shoppingList, vocab);     
+    const shoppingList = generateShoppingList(vocab);
+    const shelf = generateShelf(shoppingList, vocab);
 
     const state = {
       shoppingList: shoppingList, // items to be found
@@ -97,9 +99,45 @@ function loadState() {
     return state;
   } catch (e) {
     console.warn("[state] Invalid saved state discarded:", e);
-    try { localStorage.removeItem(STORAGE_KEY); } catch {}
+    try { localStorage.removeItem(STORAGE_KEY); } catch { }
     return null;
   }
 }
 
-export { initGameState, getGameState, saveState, loadState };
+function isSpacedRepetitionEnabled() {
+  return localStorage.getItem(SR_ENABLED_KEY) === "true";
+}
+
+function enableSpacedRepetition() {
+  localStorage.setItem(SR_ENABLED_KEY, "true");
+}
+
+function disableSpacedRepetition() {
+  localStorage.setItem(SR_ENABLED_KEY, "false");
+}
+
+function hasSpacedRepetitionConsent() {
+  return localStorage.getItem(SR_CONSENT_KEY) === "true";
+}
+
+function giveSpacedRepetitionConsent() {
+  localStorage.setItem(SR_CONSENT_KEY, "true");
+}
+
+function deleteSpacedRepetitionMemory() {
+  localStorage.removeItem(SR_ENABLED_KEY);
+  localStorage.removeItem(SR_CONSENT_KEY);
+}
+
+export {
+  initGameState,
+  getGameState,
+  saveState,
+  loadState,
+  isSpacedRepetitionEnabled,
+  enableSpacedRepetition,
+  disableSpacedRepetition,
+  hasSpacedRepetitionConsent,
+  giveSpacedRepetitionConsent,
+  deleteSpacedRepetitionMemory
+};

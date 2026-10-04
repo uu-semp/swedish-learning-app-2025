@@ -11,7 +11,7 @@ let gameState = {};
  */
 function startGame() {
   // Wait until the vocabulary data has finished loading.
-  window.vocabulary.when_ready(function() {
+  window.vocabulary.when_ready(function () {
     console.log("main.js is running");
     // Initialize the game state.
     gameState = initGameState();
@@ -22,7 +22,7 @@ function startGame() {
     displayShoppingList(gameState.shoppingList, gameState.mode);
     displayCopyright(gameState.shelf, gameState.mode);
   });
-  
+
   // Looks redundant assignment to window.__game11GameState. 
   // TODO: remove this and ensure that it do not cause problem.
   window.__game11GameState = gameState;
