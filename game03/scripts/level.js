@@ -103,6 +103,17 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     questionsLoaded.then(() => {
+        // A room without questions yet (e.g. bathroom): explain instead of counting an instant win
+        if (remainingQuestions.length === 0) {
+            document.getElementById('questions-container').innerHTML = `
+                <div class="question-block">
+                    <div class="question-content">
+                        <p>Inga fr&aring;gor f&ouml;r det h&auml;r rummet &auml;n &ndash; no questions for this room yet.</p>
+                        <a class="btn" href="./index.html">&larr; Tillbaka till menyn</a>
+                    </div>
+                </div>`;
+            return;
+        }
         showRandomQuestion();
     }).catch(err => {
         console.error(err);

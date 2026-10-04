@@ -491,3 +491,71 @@ body::before {
     .margin-note { font-size: 0.9rem; }
     .menu-btn.primary .hint { white-space: normal; }
 }
+
+/* ============ Play flow: room + level views in the sidebar ============ */
+.menu-view {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+}
+.menu-view[hidden] { display: none; }
+
+/* smaller taped notes so five rooms fit */
+.menu-btn.compact {
+    gap: 12px;
+    padding: 11px 14px;
+    margin-bottom: 16px;
+}
+.menu-btn.compact::before { width: 52px; height: 15px; top: -8px; }
+.menu-btn.compact .icon { width: 36px; height: 36px; border-radius: 9px; }
+.menu-btn.compact .icon svg { width: 20px; height: 20px; }
+.menu-btn.compact .title { font-size: 1rem; }
+.menu-btn.compact .hint { font-size: 0.68rem; }
+
+/* every note hangs a little crooked, alternating */
+.room-stack .menu-btn:nth-of-type(odd),
+.level-stack .menu-btn:nth-of-type(odd)  { transform: rotate(-0.8deg); }
+.room-stack .menu-btn:nth-of-type(even),
+.level-stack .menu-btn:nth-of-type(even) { transform: rotate(0.7deg); }
+.room-stack .menu-btn:hover,
+.level-stack .menu-btn:hover { transform: rotate(0deg) translateY(-2px); }
+
+/* handwritten "back" link under the stack */
+.back-link {
+    align-self: center;
+    margin-top: 4px;
+    padding: 6px 12px;
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-family: 'Segoe Script', 'Bradley Hand', 'Comic Sans MS', cursive;
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--ink-soft);
+    transition: color 0.15s ease;
+}
+.back-link:hover,
+.back-link:focus-visible { color: var(--yellow-dark); }
+
+/* yellow pencil ring on the plan: drawn on when its room is hovered or chosen */
+.room-ring ellipse {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+    transition: stroke-dashoffset 0.45s ease;
+}
+.room-ring ellipse + ellipse { transition-delay: 0.12s; }
+.room-ring.is-active ellipse { stroke-dashoffset: 0; }
+
+@media (max-width: 900px) {
+    .menu-btn.compact { gap: 10px; padding: 9px 12px; margin-bottom: 13px; }
+    .menu-btn.compact .icon { width: 32px; height: 32px; }
+    .menu-btn.compact .icon svg { width: 18px; height: 18px; }
+    .menu-btn.compact .title { font-size: 0.95rem; }
+    .menu-btn.compact .hint { font-size: 0.64rem; }
+    .back-link { font-size: 0.98rem; margin-top: 2px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .room-ring ellipse { transition: none; }
+}

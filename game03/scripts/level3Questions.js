@@ -42,17 +42,35 @@ const instructionGroups = [
     { question: "Dra dörren direkt till höger om stolen.", answer: "door", swedish: "dörr", index: [1] },
     { question: "Dra skåpet längst till höger.", answer: "cupboard", swedish: "skåp", index: [6] },
     { question: "Dra blomman direkt till vänster om kylskåpet.", answer: "flower", swedish: "blomma", index: [2] }
-  ]
+  ],
+
+  // Group 5: Bathroom setup (questions still to be written)
+  []
 ];
+
+// Room picked in the main menu (level.html?level=N&room=…) selects its group directly
+const ROOM_GROUP_INDEX = { office: 0, livingroom: 1, bedroom: 2, kitchen: 3, bathroom: 4 };
+function getRoomGroup() {
+  const room = new URLSearchParams(window.location.search).get("room");
+  return room in ROOM_GROUP_INDEX ? instructionGroups[ROOM_GROUP_INDEX[room]] : null;
+}
 
 // Store the selected group globally so both scripts use the same group
 let selectedGroup = null;
 
 // Function to get 1 random group (7 connected questions) - returns a copy
 function getRandomQuestions() {
+  const roomGroup = getRoomGroup();
+  if (roomGroup) {
+    selectedGroup = roomGroup;
+    return [...selectedGroup];
+  }
+
   if (!selectedGroup) {
-    const randomGroupIndex = Math.floor(Math.random() * instructionGroups.length);
-    selectedGroup = instructionGroups[randomGroupIndex];
+    // Rooms without questions yet (e.g. bathroom) are never picked at random
+    const playableGroups = instructionGroups.filter(group => group.length > 0);
+    const randomGroupIndex = Math.floor(Math.random() * playableGroups.length);
+    selectedGroup = playableGroups[randomGroupIndex];
     console.log('Selected group index:', randomGroupIndex);
     console.log('Selected group questions:', selectedGroup);
   }

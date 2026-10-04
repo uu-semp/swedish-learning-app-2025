@@ -20,7 +20,7 @@
             </header>
 
             <!-- Hand-drawn floor plan: Kontor, Sovrum, Vardagsrum, Kök -->
-            <div class="plan-drawing" aria-label="Handritad planritning med kontor, sovrum, vardagsrum och kök">
+            <div class="plan-drawing" aria-label="Handritad planritning med kontor, badrum, sovrum, vardagsrum och kök">
                 <span class="margin-note">beh&ouml;ver fler m&ouml;bler!</span>
 
                 <svg class="plan-svg" viewBox="10 10 640 484" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
@@ -46,10 +46,11 @@
 
                     <!-- ---------- floors ---------- -->
                     <g opacity="0.28">
-                        <rect x="383" y="223" width="224" height="234" fill="url(#tiles)" stroke="none"/>
-                        <rect x="263" y="33" width="344" height="184" fill="url(#boards)" stroke="none"/>
-                        <rect x="33" y="33" width="224" height="184" fill="url(#boards)" stroke="none"/>
-                        <rect x="33" y="223" width="347" height="234" fill="url(#boards)" stroke="none"/>
+                        <rect x="243" y="33" width="124" height="184" fill="url(#tiles)" stroke="none"/>
+                        <rect x="423" y="223" width="184" height="234" fill="url(#tiles)" stroke="none"/>
+                        <rect x="373" y="33" width="234" height="184" fill="url(#boards)" stroke="none"/>
+                        <rect x="33" y="33" width="204" height="184" fill="url(#boards)" stroke="none"/>
+                        <rect x="33" y="223" width="387" height="234" fill="url(#boards)" stroke="none"/>
                     </g>
 
                     <!-- ---------- construction lines (overshoot at corners) ---------- -->
@@ -58,7 +59,7 @@
                         <path d="M596 30 L626 30 M610 14 L610 44"/>
                         <path d="M14 460 L44 460 M30 446 L30 476"/>
                         <path d="M596 460 L626 460 M610 446 L610 476"/>
-                        <path d="M260 16 L260 30 M380 460 L380 474 M16 220 L30 220 M610 220 L624 220"/>
+                        <path d="M240 16 L240 30 M370 16 L370 30 M420 460 L420 474 M16 220 L30 220 M610 220 L624 220"/>
                     </g>
 
                     <!-- ---------- walls (drawn hollow: dark stroke + paper core) ---------- -->
@@ -71,14 +72,17 @@
                         <path d="M550 460 L610 460 L610 382"/>
                         <path d="M610 291 L610 165"/>
                         <path d="M610 91 L610 30 L580 30"/>
-                        <path d="M500 30 L165 30"/>
+                        <path d="M500 30 L325 30"/>
+                        <path d="M285 30 L165 30"/>
                         <!-- interior walls with door openings -->
-                        <path d="M30 220 L190 220"/>
-                        <path d="M228 220 L280 220"/>
-                        <path d="M318 220 L610 220"/>
-                        <path d="M260 30 L260 220"/>
-                        <path d="M380 220 L380 298"/>
-                        <path d="M380 388 L380 460"/>
+                        <path d="M30 220 L186 220"/>
+                        <path d="M224 220 L285 220"/>
+                        <path d="M319 220 L382 220"/>
+                        <path d="M418 220 L610 220"/>
+                        <path d="M240 30 L240 220"/>
+                        <path d="M370 30 L370 220"/>
+                        <path d="M420 220 L420 298"/>
+                        <path d="M420 388 L420 460"/>
                     </g>
                     <g filter="url(#sketchy)">
                         <use href="#walls" stroke="#8d8375" stroke-width="7" stroke-linecap="square" stroke-linejoin="miter"/>
@@ -87,8 +91,8 @@
 
                     <!-- ---------- windows, doors ---------- -->
                     <g filter="url(#sketchy)" stroke="#8d8375" stroke-width="1.2">
-                        <!-- windows: frame + glass line -->
                         <path d="M95 26.5 L165 26.5 M95 33.5 L165 33.5 M95 30 L165 30 M95 26.5 L95 33.5 M165 26.5 L165 33.5"/>
+                        <path d="M285 26.5 L325 26.5 M285 33.5 L325 33.5 M285 30 L325 30 M285 26.5 L285 33.5 M325 26.5 L325 33.5"/>
                         <path d="M500 26.5 L580 26.5 M500 33.5 L580 33.5 M500 30 L580 30 M500 26.5 L500 33.5 M580 26.5 L580 33.5"/>
                         <path d="M606.5 91 L606.5 165 M613.5 91 L613.5 165 M610 91 L610 165 M606.5 91 L613.5 91 M606.5 165 L613.5 165"/>
                         <path d="M606.5 291 L606.5 382 M613.5 291 L613.5 382 M610 291 L610 382 M606.5 291 L613.5 291 M606.5 382 L613.5 382"/>
@@ -96,28 +100,30 @@
                         <path d="M200 456.5 L280 456.5 M200 463.5 L280 463.5 M200 460 L280 460 M200 456.5 L200 463.5 M280 456.5 L280 463.5"/>
                         <path d="M470 456.5 L550 456.5 M470 463.5 L550 463.5 M470 460 L550 460 M470 456.5 L470 463.5 M550 456.5 L550 463.5"/>
 
-                        <!-- doors: leaf + dashed swing -->
-                        <path d="M190 220 L190 183" stroke-width="1.6"/>
-                        <path d="M190 183 A37 37 0 0 1 227 220" stroke-dasharray="3 3" opacity="0.7"/>
-                        <path d="M318 220 L318 183" stroke-width="1.6"/>
-                        <path d="M318 183 A37 37 0 0 0 281 220" stroke-dasharray="3 3" opacity="0.7"/>
+                        <path d="M186 220 L186 183" stroke-width="1.6"/>
+                        <path d="M186 183 A37 37 0 0 1 223 220" stroke-dasharray="3 3" opacity="0.7"/>
+                        <path d="M319 220 L319 186" stroke-width="1.6"/>
+                        <path d="M319 186 A34 34 0 0 0 285 220" stroke-dasharray="3 3" opacity="0.7"/>
+                        <path d="M418 220 L418 184" stroke-width="1.6"/>
+                        <path d="M418 184 A36 36 0 0 0 382 220" stroke-dasharray="3 3" opacity="0.7"/>
                         <path d="M344 460 L344 417" stroke-width="1.6"/>
                         <path d="M344 417 A43 43 0 0 0 301 460" stroke-dasharray="3 3" opacity="0.7"/>
-                        <!-- open passage living room → kitchen -->
-                        <path d="M380 302 L380 384" stroke-dasharray="2 5" opacity="0.6"/>
+                        <path d="M420 302 L420 384" stroke-dasharray="2 5" opacity="0.6"/>
                     </g>
 
-                    <!-- ---------- furniture (each piece shifted to fit the deeper rooms) ---------- -->
+                    <!-- ---------- furniture ---------- -->
                     <g fill="#fffdf7" stroke-width="1.5" filter="url(#sketchy)">
                     <g id="furniture">
-                        <!-- KONTOR: desk, monitor, keyboard, desk lamp, chair, bookshelf, plant, bin -->
+                        <!-- KONTOR -->
+                        <g transform="translate(-12 0)">
                         <rect x="82" y="38" width="130" height="40" rx="2"/>
                         <path d="M118 47 L170 47 L170 53 L118 53 Z M144 53 L144 58"/>
                         <rect x="126" y="62" width="36" height="9" rx="1.5"/>
                         <circle cx="96" cy="52" r="6"/>
                         <circle cx="96" cy="52" r="2"/>
                         <rect x="183" y="58" width="16" height="12" rx="1"/>
-                        <g transform="translate(0 12)">
+                        </g>
+                        <g transform="translate(-12 12)">
                         <rect x="129" y="86" width="30" height="26" rx="8"/>
                         <path d="M127 108 Q144 124 161 108"/>
                         </g>
@@ -126,16 +132,33 @@
                         <path d="M36 109 L58 109 M36 126 L58 126 M36 143 L58 143 M36 160 L58 160"/>
                         <path d="M40 95 L40 106 M44 95 L44 106 M49 96 L47 106 M40 129 L40 140 M45 129 L45 140 M41 146 L41 157 M46 146 L46 157 M51 147 L53 157"/>
                         </g>
+                        <g transform="translate(-16 0)">
                         <circle cx="238" cy="54" r="11"/>
                         <path d="M238 54 L231 45 M238 54 L247 47 M238 54 L229 59 M238 54 L246 62 M238 54 L238 43"/>
-                        <g transform="translate(0 15)">
+                        </g>
+                        <g transform="translate(-12 15)">
                         <circle cx="226" cy="108" r="6"/>
                         </g>
-
-                        <!-- SOVRUM: rug, double bed, pillows, duvet, nightstands, wardrobe, dresser, plant -->
-                        <g transform="translate(0 10)">
+                        <!-- BADRUM: bathtub, sink, toilet, washing machine, bath mat -->
+                        <rect x="246" y="36" width="44" height="100" rx="6"/>
+                        <rect x="251" y="41" width="34" height="90" rx="14"/>
+                        <circle cx="268" cy="122" r="2.5"/>
+                        <path d="M262 40 L274 40" stroke-width="2"/>
+                        <rect x="296" y="62" width="22" height="44" rx="4" stroke-dasharray="4 3"/>
+                        <rect x="343" y="46" width="22" height="36" rx="3"/>
+                        <ellipse cx="353" cy="64" rx="6" ry="11"/>
+                        <circle cx="361" cy="64" r="1.5"/>
+                        <rect x="352" y="118" width="13" height="30" rx="2"/>
+                        <ellipse cx="339" cy="133" rx="14" ry="11"/>
+                        <ellipse cx="341" cy="133" rx="8" ry="6" opacity="0.6"/>
+                        <rect x="246" y="174" width="34" height="34" rx="3"/>
+                        <circle cx="263" cy="191" r="11"/>
+                        <circle cx="263" cy="191" r="6" opacity="0.6"/>
+                        <!-- SOVRUM -->
+                        <g transform="translate(110 10)">
                         <rect x="335" y="128" width="110" height="46" rx="5" stroke-dasharray="5 4"/>
                         </g>
+                        <g transform="translate(110 0)">
                         <rect x="345" y="36" width="90" height="112" rx="3"/>
                         <rect x="345" y="36" width="90" height="8" rx="2"/>
                         <rect x="351" y="49" width="36" height="17" rx="7"/>
@@ -147,7 +170,8 @@
                         <circle cx="330" cy="49" r="6"/>
                         <rect x="438" y="38" width="24" height="22" rx="2"/>
                         <circle cx="450" cy="49" r="6"/>
-                        <g transform="translate(0 35)">
+                        </g>
+                        <g transform="translate(-10 35)">
                         <rect x="482" y="157" width="112" height="25" rx="1"/>
                         <path d="M538 157 L538 182 M486 170 L590 170"/>
                         <path d="M482 157 L538 182 M538 157 L482 182" opacity="0.35"/>
@@ -156,10 +180,11 @@
                         <rect x="560" y="92" width="44" height="22" rx="2"/>
                         <path d="M560 103 L604 103"/>
                         </g>
+                        <g transform="translate(2 22)">
                         <circle cx="590" cy="54" r="11"/>
                         <path d="M590 54 L582 46 M590 54 L599 47 M590 54 L581 61 M590 54 L598 62 M590 54 L590 43"/>
-
-                        <!-- VARDAGSRUM: rug, sofa, coffee table, armchair, TV bench, floor lamp, plant, side table -->
+                        </g>
+                        <!-- VARDAGSRUM -->
                         <g transform="translate(0 35)">
                         <rect x="44" y="191" width="134" height="42" rx="5"/>
                         <path d="M44 202 L178 202"/>
@@ -169,9 +194,11 @@
                         <g transform="translate(0 60)">
                         <rect x="56" y="236" width="128" height="66" rx="4" stroke-dasharray="5 4"/>
                         </g>
-                        <g transform="translate(0 60)">
+                        <g transform="translate(20 60)">
                         <rect x="82" y="252" width="62" height="32" rx="3"/>
                         <circle cx="100" cy="266" r="4"/>
+                        </g>
+                        <g transform="translate(30 60)">
                         <rect x="208" y="238" width="38" height="40" rx="6"/>
                         <path d="M236 238 L236 278 M212 238 L236 238 M212 278 L236 278"/>
                         </g>
@@ -182,16 +209,17 @@
                         <g transform="translate(0 35)">
                         <circle cx="192" cy="208" r="8"/>
                         <path d="M186 202 L198 214 M198 202 L186 214" opacity="0.6"/>
+                        </g>
+                        <g transform="translate(40 35)">
                         <circle cx="361" cy="207" r="12"/>
                         <path d="M361 207 L352 198 M361 207 L371 199 M361 207 L351 213 M361 207 L370 216 M361 207 L361 195"/>
                         </g>
                         <g transform="translate(0 90)">
                         <circle cx="48" cy="340" r="9"/>
                         </g>
-
-                        <!-- KÖK: L-counter, stove, sink, fridge, dining table + chairs -->
-                        <path d="M440 224 L606 224 L606 395 L582 395 L582 248 L440 248 Z"/>
-                        <g transform="translate(0 35)">
+                        <!-- KÖK -->
+                        <path d="M484 224 L606 224 L606 395 L582 395 L582 248 L484 248 Z"/>
+                        <g transform="translate(40 35)">
                         <rect x="455" y="191" width="38" height="20" rx="1"/>
                         <circle cx="464" cy="196" r="3.5"/>
                         <circle cx="484" cy="196" r="3.5"/>
@@ -203,11 +231,11 @@
                         <rect x="589" y="260" width="11" height="24" rx="2"/>
                         <circle cx="601" cy="272" r="1.5"/>
                         </g>
-                        <g transform="translate(0 35)">
+                        <g transform="translate(40 35)">
                         <rect x="398" y="189" width="34" height="32" rx="1"/>
                         <path d="M398 213 L432 213 M402 217 L408 217"/>
                         </g>
-                        <g transform="translate(0 65)">
+                        <g transform="translate(40 65)">
                         <rect x="462" y="250" width="16" height="12" rx="3"/>
                         <rect x="492" y="250" width="16" height="12" rx="3"/>
                         <rect x="462" y="310" width="16" height="12" rx="3"/>
@@ -219,10 +247,8 @@
                         </g>
                     </g>
                     </g>
-                    <!-- second, offset pencil pass for the sketchy double-line look -->
                     <use href="#furniture" fill="none" stroke-width="0.8" opacity="0.35" transform="translate(1.2 0.8)" filter="url(#sketchy2)"/>
 
-                    <!-- ---------- dimension lines ---------- -->
                     <g stroke-width="1" filter="url(#sketchy)">
                         <path d="M30 482 L610 482 M30 476 L30 488 M610 476 L610 488"/>
                         <path d="M630 30 L630 460 M624 30 L636 30 M624 460 L636 460"/>
@@ -230,22 +256,45 @@
                     <text class="dim-label" x="160" y="478" text-anchor="middle">10,2 m</text>
                     <text class="dim-label" x="636" y="130" text-anchor="middle" transform="rotate(90 636 130)">7,6 m</text>
 
-                    <!-- ---------- room labels ---------- -->
-                    <text class="room-label" x="76" y="196">Kontor</text>
-                    <text class="room-label" x="478" y="162">Sovrum</text>
+                    <text class="room-label" x="70" y="196">Kontor</text>
+                    <text class="room-label" x="249" y="162" style="font-size:18px">Badrum</text>
+                    <text class="room-label" x="377" y="174" style="font-size:18px">Sovrum</text>
                     <text class="room-label" x="200" y="400">Vardagsrum</text>
-                    <text class="room-label" x="400" y="440">K&ouml;k</text>
+                    <text class="room-label" x="440" y="440">K&ouml;k</text>
 
-                    <!-- small hand note at the front door -->
                     <text class="note-label" x="322" y="479" text-anchor="middle">entr&eacute; &uarr;</text>
 
+
+                    <!-- yellow pencil rings, shown on the room hovered/chosen in the menu -->
+                    <g class="room-rings" fill="none" stroke="#ecad26" stroke-linecap="round" filter="url(#sketchy)">
+                        <g class="room-ring" data-room="office">
+                            <ellipse cx="135" cy="125" rx="96" ry="84" pathLength="1" stroke-width="2.6"/>
+                            <ellipse cx="135" cy="125" rx="101" ry="80" pathLength="1" stroke-width="1.3" opacity="0.55" transform="rotate(-4 135 125)"/>
+                        </g>
+                        <g class="room-ring" data-room="bathroom">
+                            <ellipse cx="305" cy="125" rx="58" ry="86" pathLength="1" stroke-width="2.6"/>
+                            <ellipse cx="305" cy="125" rx="63" ry="82" pathLength="1" stroke-width="1.3" opacity="0.55" transform="rotate(-4 305 125)"/>
+                        </g>
+                        <g class="room-ring" data-room="bedroom">
+                            <ellipse cx="490" cy="125" rx="112" ry="84" pathLength="1" stroke-width="2.6"/>
+                            <ellipse cx="490" cy="125" rx="117" ry="80" pathLength="1" stroke-width="1.3" opacity="0.55" transform="rotate(-4 490 125)"/>
+                        </g>
+                        <g class="room-ring" data-room="livingroom">
+                            <ellipse cx="225" cy="340" rx="178" ry="104" pathLength="1" stroke-width="2.6"/>
+                            <ellipse cx="225" cy="340" rx="183" ry="100" pathLength="1" stroke-width="1.3" opacity="0.55" transform="rotate(-4 225 340)"/>
+                        </g>
+                        <g class="room-ring" data-room="kitchen">
+                            <ellipse cx="515" cy="340" rx="86" ry="104" pathLength="1" stroke-width="2.6"/>
+                            <ellipse cx="515" cy="340" rx="91" ry="100" pathLength="1" stroke-width="1.3" opacity="0.55" transform="rotate(-4 515 340)"/>
+                        </g>
+                    </g>
                     <!-- yellow highlight ring: here is where you decorate next -->
                     <!-- <ellipse class="highlight" cx="128" cy="248" rx="104" ry="68" stroke="#ecad26" stroke-width="2.5" fill="none" filter="url(#sketchy)"/> -->
                 </svg>
 
                 <div class="drawing-caption">
                     <span>Ritning A2 &middot; skala 1:50</span>
-                    <span>4 rum &middot; 77 m&sup2;</span>
+                    <span>5 rum &middot; 77 m&sup2;</span>
                 </div>
             </div>
 
@@ -253,46 +302,143 @@
 
         <!-- ================= Menu (right) ================= -->
         <aside class="sidebar" aria-label="Huvudmeny">
-            <div class="menu-label">Main Menu</div>
+            <!-- view 1: main menu -->
+            <div class="menu-view" data-view="main">
+    <div class="menu-label">Main Menu</div>
 
-            <div class="menu-stack">
-                <button class="menu-btn primary" onclick="window.location.href='levelSelection.html'">
-                    <span class="icon">
-                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                    </span>
-                    <span>
-                        <span class="title">Spela Nu</span>
-                        <span class="hint">V&auml;lj din niv&aring; &middot; choose your level</span>
-                    </span>
-                </button>
-                <div class="play-annotation">
-                    <!-- hand-drawn curved arrow pointing up at the play button -->
-                    <svg class="curly-arrow" viewBox="0 0 44 40" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                        <path d="M40 31 C 28 36, 12 30, 13 6"/>
-                        <path d="M7 13 L13 5 L19 12"/>
-                    </svg>
-                    <span>b&ouml;rja h&auml;r!</span>
+                <div class="menu-stack">
+                    <button class="menu-btn primary" id="playBtn">
+                        <span class="icon">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                        </span>
+                        <span>
+                            <span class="title">Spela Nu</span>
+                            <span class="hint">V&auml;lj din niv&aring; &middot; choose your level</span>
+                        </span>
+                    </button>
+                    <div class="play-annotation">
+                        <!-- hand-drawn curved arrow pointing up at the play button -->
+                        <svg class="curly-arrow" viewBox="0 0 44 40" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <path d="M40 31 C 28 36, 12 30, 13 6"/>
+                            <path d="M7 13 L13 5 L19 12"/>
+                        </svg>
+                        <span>b&ouml;rja h&auml;r!</span>
+                    </div>
+
+                    <button class="menu-btn" onclick="window.location.href='userStatistics.html'">
+                        <span class="icon">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+                        </span>
+                        <span>
+                            <span class="title">Statistik</span>
+                            <span class="hint">Statistics</span>
+                        </span>
+                    </button>
+
+                    <button class="menu-btn" id="helpBtn">
+                        <span class="icon">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                        </span>
+                        <span>
+                            <span class="title">Hj&auml;lp</span>
+                            <span class="hint">How to play</span>
+                        </span>
+                    </button>
                 </div>
+            </div>
 
-                <button class="menu-btn" onclick="window.location.href='userStatistics.html'">
-                    <span class="icon">
-                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
-                    </span>
-                    <span>
-                        <span class="title">Statistik</span>
-                        <span class="hint">Statistics</span>
-                    </span>
-                </button>
+            <!-- view 2: pick a room (hover rings the room on the plan) -->
+            <div class="menu-view" data-view="rooms" hidden>
+                <div class="menu-label">V&auml;lj rum</div>
+                <div class="menu-stack room-stack">
+                    <button class="menu-btn compact room-btn" data-room="office">
+                        <span class="icon">
+                            <svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M4 13h16M6 13v7M18 13v7M9 4h6v6H9zM12 10v3"/></svg>
+                        </span>
+                        <span>
+                            <span class="title">Kontor</span>
+                            <span class="hint">Office</span>
+                        </span>
+                    </button>
 
-                <button class="menu-btn" id="helpBtn">
-                    <span class="icon">
-                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                    </span>
-                    <span>
-                        <span class="title">Hj&auml;lp</span>
-                        <span class="hint">How to play</span>
-                    </span>
-                </button>
+                    <button class="menu-btn compact room-btn" data-room="livingroom">
+                        <span class="icon">
+                            <svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M5 11V8a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v3M3 13a2 2 0 0 1 4 0v2h10v-2a2 2 0 0 1 4 0v4H3zM5 17v2M19 17v2"/></svg>
+                        </span>
+                        <span>
+                            <span class="title">Vardagsrum</span>
+                            <span class="hint">Living room</span>
+                        </span>
+                    </button>
+
+                    <button class="menu-btn compact room-btn" data-room="bedroom">
+                        <span class="icon">
+                            <svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M3 6v13M21 19v-6a3 3 0 0 0-3-3h-7v4M3 14h18M7 12.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"/></svg>
+                        </span>
+                        <span>
+                            <span class="title">Sovrum</span>
+                            <span class="hint">Bedroom</span>
+                        </span>
+                    </button>
+
+                    <button class="menu-btn compact room-btn" data-room="kitchen">
+                        <span class="icon">
+                            <svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M4 11h16v5a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4zM2 11h2M20 11h2M9 8c0-1.5 1-1.5 1-3M14 8c0-1.5 1-1.5 1-3"/></svg>
+                        </span>
+                        <span>
+                            <span class="title">K&ouml;k</span>
+                            <span class="hint">Kitchen</span>
+                        </span>
+                    </button>
+
+                    <button class="menu-btn compact room-btn" data-room="bathroom">
+                        <span class="icon">
+                            <svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M3 12h18v3a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4zM6 12V6a2 2 0 0 1 4 0M7 19l-1 2M17 19l1 2"/></svg>
+                        </span>
+                        <span>
+                            <span class="title">Badrum</span>
+                            <span class="hint">Bathroom</span>
+                        </span>
+                    </button>
+                </div>
+                <button class="back-link" data-back="main">&larr; Tillbaka</button>
+            </div>
+
+            <!-- view 3: pick a level for the chosen room -->
+            <div class="menu-view" data-view="levels" hidden>
+                <div class="menu-label"><span><span id="levelRoomName">Rum</span> &middot; niv&aring;</span></div>
+                <div class="menu-stack level-stack">
+                    <button class="menu-btn level-btn" data-level="1">
+                        <span class="icon">
+                            <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><circle cx="5" cy="12" r="3.2" fill="currentColor"/><circle cx="12" cy="12" r="3.2"/><circle cx="19" cy="12" r="3.2"/></svg>
+                        </span>
+                        <span>
+                            <span class="title">Niv&aring; 1</span>
+                            <span class="hint">L&auml;tt &middot; easy</span>
+                        </span>
+                    </button>
+
+                    <button class="menu-btn level-btn" data-level="2">
+                        <span class="icon">
+                            <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><circle cx="5" cy="12" r="3.2" fill="currentColor"/><circle cx="12" cy="12" r="3.2" fill="currentColor"/><circle cx="19" cy="12" r="3.2"/></svg>
+                        </span>
+                        <span>
+                            <span class="title">Niv&aring; 2</span>
+                            <span class="hint">Medel &middot; medium</span>
+                        </span>
+                    </button>
+
+                    <button class="menu-btn level-btn" data-level="3">
+                        <span class="icon">
+                            <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><circle cx="5" cy="12" r="3.2" fill="currentColor"/><circle cx="12" cy="12" r="3.2" fill="currentColor"/><circle cx="19" cy="12" r="3.2" fill="currentColor"/></svg>
+                        </span>
+                        <span>
+                            <span class="title">Niv&aring; 3</span>
+                            <span class="hint">Sv&aring;r &middot; hard</span>
+                        </span>
+                    </button>
+                </div>
+                <button class="back-link" data-back="rooms">&larr; Alla rum</button>
             </div>
 
             <!-- <div class="legend">
@@ -313,3 +459,7 @@
     <script src="scripts/mainMenu.js"></script>
 </body>
 </html>
+
+
+
+

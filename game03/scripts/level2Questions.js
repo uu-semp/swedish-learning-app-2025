@@ -34,24 +34,43 @@ const instructionGroups = [
     { question: "Placera spisen mellan kylskåpet och bordet.", answer: "stove", swedish: "spis", index: [3] },
     { question: "Placera stolen längst till vänster.", answer: "chair", swedish: "stol", index: [0] },
     { question: "Placera dörren mellan stolen och kylskåpet.", answer: "door", swedish: "dörr", index: [1] }
-  ]
+  ],
+
+  // Group 5: Bathroom setup (questions still to be written)
+  []
 ];
 
+
+// Room picked in the main menu (level.html?level=N&room=…) selects its group directly
+const ROOM_GROUP_INDEX = { office: 0, livingroom: 1, bedroom: 2, kitchen: 3, bathroom: 4 };
+function getRoomGroup() {
+  const room = new URLSearchParams(window.location.search).get("room");
+  return room in ROOM_GROUP_INDEX ? instructionGroups[ROOM_GROUP_INDEX[room]] : null;
+}
 
 // Store the selected group globally so both scripts use the same group
 let selectedGroup = null;
 
 // Function to get 1 random group with least learned words (5 connected questions) - returns a copy
 function getRandomQuestions() {
+  const roomGroup = getRoomGroup();
+  if (roomGroup) {
+    selectedGroup = roomGroup;
+    return [...selectedGroup];
+  }
+
   const learnedWords = save.get("game03", "learnedWords") || [];
 
-  const learnedCounts = instructionGroups.map(group =>
+  // Rooms without questions yet (e.g. bathroom) are never picked at random
+  const playableGroups = instructionGroups.filter(group => group.length > 0);
+
+  const learnedCounts = playableGroups.map(group =>
     group.filter(item => learnedWords.includes(item.swedish)).length
   );
 
   const minLearnedCount = Math.min(...learnedCounts);
 
-  const leastLearnedGroups = instructionGroups.filter((_, i) => learnedCounts[i] === minLearnedCount);
+  const leastLearnedGroups = playableGroups.filter((_, i) => learnedCounts[i] === minLearnedCount);
 
   const randomIndex = Math.floor(Math.random() * leastLearnedGroups.length);
   selectedGroup = leastLearnedGroups[randomIndex];
