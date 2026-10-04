@@ -16,8 +16,6 @@ function showView(name) {
     views.forEach(v => { v.hidden = v.dataset.view !== name; });
     if (name === 'main') chosenRoom = null;
     ringRoom(chosenRoom);
-    const first = document.querySelector(`.menu-view[data-view="${name}"] button`);
-    if (first) first.focus({ preventScroll: true });
 }
 
 function ringRoom(room) {
@@ -32,9 +30,7 @@ document.querySelectorAll('.back-link').forEach(btn =>
 document.querySelectorAll('.room-btn').forEach(btn => {
     const room = btn.dataset.room;
     btn.addEventListener('mouseenter', () => ringRoom(room));
-    btn.addEventListener('focus', () => ringRoom(room));
     btn.addEventListener('mouseleave', () => ringRoom(chosenRoom));
-    btn.addEventListener('blur', () => ringRoom(chosenRoom));
     btn.addEventListener('click', () => {
         chosenRoom = room;
         levelRoomName.innerHTML = btn.querySelector('.title').innerHTML;

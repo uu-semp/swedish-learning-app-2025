@@ -27,16 +27,6 @@ body {
         linear-gradient(165deg, #e7e0d2 0%, #d9d0bd 55%, #c9bfa8 100%);
 }
 
-/* faint desk grain */
-body::before {
-    content: "";
-    position: fixed;
-    inset: 0;
-    pointer-events: none;
-    opacity: 0.45;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='0.07'/%3E%3C/svg%3E");
-}
-
 /* ============ The drafting sheet ============ */
 .layout {
     position: relative;
@@ -132,29 +122,6 @@ body::before {
     width: 100%;
     height: auto;
     color: var(--pencil);
-}
-
-/* red pencil margin note, tilted */
-.margin-note {
-    position: absolute;
-    top: -14px;
-    right: 2px;
-    transform: rotate(3deg);
-    font-family: 'Segoe Script', 'Bradley Hand', 'Comic Sans MS', cursive;
-    font-size: 1.05rem;
-    font-weight: 600;
-    color: var(--red-pencil);
-    opacity: 0.85;
-}
-
-/* yellow highlight ring – "you are here" on the plan */
-.plan-drawing .highlight {
-    animation: gentle 3.2s ease-in-out infinite;
-    transform-origin: center;
-}
-@keyframes gentle {
-    0%, 100% { opacity: 0.55; }
-    50%      { opacity: 0.95; }
 }
 
 /* handwritten labels inside the plan */
@@ -305,7 +272,7 @@ body::before {
 }
 
 
-/* Caveat annotation next to the primary button */
+/* handwritten "börja här!" note with a curved arrow up to the play button */
 .play-annotation {
     font-family: 'Segoe Script', 'Bradley Hand', 'Comic Sans MS', cursive;
     font-size: 1.2rem;
@@ -325,23 +292,6 @@ body::before {
     flex-shrink: 0;
 }
 .play-annotation span { padding-bottom: 2px; }
-
-.sidebar .legend {
-    margin-top: auto;
-    border-top: 1px dashed var(--pencil);
-    padding-top: 16px;
-    font-size: 0.74rem;
-    font-weight: 500;
-    color: var(--ink-soft);
-    line-height: 1.6;
-}
-.sidebar .legend .dot {
-    display: inline-block;
-    width: 7px; height: 7px;
-    border-radius: 50%;
-    background: var(--yellow);
-    margin-right: 6px;
-}
 
 /* scale mark decoration in the sidebar corner */
 .sidebar .scale {
@@ -448,7 +398,6 @@ body::before {
         flex-direction: column;
         margin-top: 14px;
     }
-    .margin-note { top: -20px; right: 8px; font-size: 0.88rem; }
     .drawing-caption { font-size: 0.54rem; margin-top: auto; }
 
     .sidebar {
@@ -469,7 +418,6 @@ body::before {
     .menu-btn.primary .hint { font-size: 0.7rem; white-space: normal; }
     .play-annotation { font-size: 1.1rem; margin: -14px 0 45px; }
     .play-annotation .curly-arrow { width: 34px; height: 31px; }
-    .sidebar .legend { font-size: 0.66rem; padding-top: 12px; line-height: 1.5; }
     .sidebar .scale { margin-top: 10px; }
 }
 
@@ -488,7 +436,6 @@ body::before {
 }
 
 @media (max-width: 560px) {
-    .margin-note { font-size: 0.9rem; }
     .menu-btn.primary .hint { white-space: normal; }
 }
 
