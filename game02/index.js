@@ -14,6 +14,12 @@ $(function () {
   const corrects_needed = 8; // number of correct pairs needed to win
   const misses_max = 20; // number of misses allowed before losing
   const numPairs = 8; // number of pairs of cards
+  const mode_titles = {
+    picture: "Match the image to the description to clear the board",
+    spelling: "Type the Swedish word for each picture",
+    listening: "Match the sound to the description to clear the board",
+    dialect: "Match the dialect sound to the description to clear the board",
+  }; // heading above the board for each mode
 
   // variables
   let corrects = 0;
@@ -154,6 +160,7 @@ $(function () {
   // Button handlers
   $("#start-game").on("click", async function () {
     const mode = $(".mode-btn.selected").data("mode"); // "picture", "spelling", "listening" or "dialect"
+    $("#game-title").text(mode_titles[mode]);
 
     $(this).prop("disabled", true).text("Loading...");
     await mapCards(mode);
