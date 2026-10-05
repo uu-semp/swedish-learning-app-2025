@@ -34,12 +34,11 @@
   <!-- Popup window -->
 <div id="popup" class="popup">
   <div class="popup-content">
-    <span id="closePopup" class="close"></span>
     <h2></h2>
     <p id="result-text"></p> <!-- ✅ added id so JS can update text -->
     <div class="menu-buttons">
-      <a href="game.html" class="btn">Play Again!</a>
-      <a href="index.html" class="btn">Go back to start menu!</a>
+      <button id="playAgainBtn" class="btn">Play Again!</button>
+      <button id="backToMenuBtn" class="btn">Go back to start menu!</button>
     </div>
   </div>
 </div>
@@ -47,22 +46,48 @@
 <script>
   const popup = document.getElementById('popup');
   const confirmBtn = document.getElementById('confirm-btn'); // ✅ make sure your button has this id
+  const playAgainBtn = document.getElementById('playAgainBtn');
+  const backToMenuBtn = document.getElementById('backToMenuBtn');
   const resultText = document.getElementById('result-text');
+  let correct_answer = false;
 
   confirmBtn.addEventListener('click', () => {
     // run your existing checkClothes() function
     const outfit = window.currentOutfit;
+    correct_answer = false; // Reset correct_answer before checking
     if (!outfit) return;
 
+    //Just add more categories here based on level, maybe add an if-statement 
+    // to check appropriate categories
     const correctHat = outfit.items.hat.imgId;
     const correctShirt = outfit.items.shirt.imgId;
     const correctPants = outfit.items.pants.imgId;
+
+
 
     const appliedHat = document.getElementById("hat-box").children[0]?.dataset.id;
     const appliedShirt = document.getElementById("shirt-box").children[0]?.dataset.id;
     const appliedPants = document.getElementById("pants-box").children[0]?.dataset.id;
 
+    const missingItems = [];
+    const wrongItems = [];
+
+    if (!appliedHat) missingItems.push("hat");
+    if (!appliedShirt) missingItems.push("shirt");
+    if (!appliedPants) missingItems.push("pants");
+
+    if (missingItems.length > 0) {
+      resultText.textContent = `❌ Missing items: ${missingItems.join(", ")}, Try again!`;
+      resultText.style.color = "red";
+      popup.style.display = 'flex'; // show popup after checking
+      return;
+    }
+    if (appliedHat !== correctHat) wrongItems.push("hat");
+    if (appliedShirt !== correctShirt) wrongItems.push("shirt");
+    if (appliedPants !== correctPants) wrongItems.push("pants");
+
     if (correctHat === appliedHat && correctShirt === appliedShirt && correctPants === appliedPants) {
+      correct_answer = true;
       resultText.textContent = "✅ Correct!";
       resultText.style.color = "green";
       const stats = window.save.stats.get("game13");
@@ -71,12 +96,21 @@
       const wins = stats.wins;
         window.save.stats.set("game13", wins + 1, 0);
     } else {
-      resultText.textContent = "❌ Incorrect!";
+      resultText.textContent = "❌ Incorrect items: " + wrongItems.join(", ") + ", Try again!";
       resultText.style.color = "red";
     }
 
     popup.style.display = 'flex'; // show popup after checking
   });
+    playAgainBtn.addEventListener('click', () => {
+    popup.style.display = 'none';
+
+    if (correct_answer) {
+        window.clearWardrobe();
+        window.nextInstruction();
+        correct_answer = false;
+    }
+});
 </script>
 
 
