@@ -27,7 +27,24 @@ let all_ranges = [
 
 let available_ranges = []
 
-export function Initialize(difficulty, game) {
+export function Initialize(difficulty) {
+    let game = {
+        difficulty: difficulty,
+        questions: [],
+        boards: [],
+        current_question_index: -1,
+        remaining_questions: [],
+        incorrect_questions: [],
+        finished_questions: [],
+        hint_used: false,
+        selected_answer: null,
+        answer_correct: null,
+        answer_locked: false,
+        answered_in_round: 0,
+        round_total: 0,
+        is_finished: false
+    }
+
     available_ranges = all_ranges
 
     if (difficulty === 1) {
@@ -48,7 +65,12 @@ export function Initialize(difficulty, game) {
     game.remaining_questions = game.questions.map((_, i) => i)
     game.round_total = game.questions.length
 
+    NextRound_GM(game)
+
+    return game
 }
+
+
 
 function StartRepetitionRound() {
     while (game.incorrect_questions.length > 0) {
@@ -98,7 +120,7 @@ export function NextRound_GM(game) {
     game.answer_locked = false
 }
 
-function CheckAnswer(question_index, answer) {
+export function CheckAnswer_GM(question_index, house, game) {
     if (stopped || game.is_finished || game.answer_locked) {
         return
     }
@@ -107,29 +129,28 @@ function CheckAnswer(question_index, answer) {
         return
     }
 
-    const board = game.boards[question_index]
+    const question = game.questions[question_index]
 
     game.answer_locked = true
-    game.selected_answer = answer
-    game.answer_correct = board.correct_answer_building_id === answer
+    game.selected_answer = { street: house.street, houseNumber: house.houseNumber }
+    game.answer_correct = house.street === question.correctStreet && house.houseNumber === question.correctNumber
 
     if (game.answer_correct && !game.hint_used) {
         game.finished_questions.push(question_index)
+        game.answered_in_round += 1
     }
 
     else {
         game.incorrect_questions.push(question_index)
     }
 
-    game.answered_in_round += 1
-
     feedback_timer = setTimeout(function () {
         feedback_timer = null
-        NextRound()
+        NextRound_GM(game)
     }, 2000)
 }
 
-function UseHint() {
+export function UseHint_GM(game) {
     if (stopped || game.is_finished || game.answer_locked) {
         return
     }
@@ -147,7 +168,7 @@ function FinishGame() {
     )
 }
 
-function StopGame() {
+export function StopGame_GM(game) {
     stopped = true
     clearTimeout(feedback_timer)
     feedback_timer = null
