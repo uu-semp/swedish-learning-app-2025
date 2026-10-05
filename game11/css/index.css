@@ -278,7 +278,7 @@ body {
   flex-direction: column;
   align-items: flex-end;
   gap: 0.5rem;
-  z-index: 20;
+  z-index: 10001;
 }
 
 .status-bar {
@@ -377,6 +377,10 @@ body {
   border-radius: 12px;
   padding: 24px;
   width: 320px;
+
+  max-height: 80vh;
+  overflow-y: auto;
+
   box-shadow: 6px 6px 0 black;
   display: flex;
   flex-direction: column;

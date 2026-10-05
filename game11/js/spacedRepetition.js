@@ -21,6 +21,10 @@ async function loadSpacedRepetitionHTML() {
     document.body.insertAdjacentHTML('beforeend', html);
 }
 
+function startSpacedRepetitionGame() {
+    localStorage.removeItem("game11_game_state");
+    window.location.reload();
+}
 
 window.addEventListener('DOMContentLoaded', async () => {
 
@@ -65,9 +69,9 @@ window.addEventListener('DOMContentLoaded', async () => {
     // ACTIVATE
 
     srEnableBtn?.addEventListener('click', () => {
-
         if (hasSpacedRepetitionConsent()) {
             enableSpacedRepetition();
+            startSpacedRepetitionGame();
             return;
         }
 
@@ -78,11 +82,11 @@ window.addEventListener('DOMContentLoaded', async () => {
     // ACCEPT
 
     srAcceptBtn?.addEventListener('click', () => {
-
         giveSpacedRepetitionConsent();
         enableSpacedRepetition();
-
         srInfoModal?.classList.add('hidden');
+
+        startSpacedRepetitionGame();
     });
 
 
@@ -97,8 +101,12 @@ window.addEventListener('DOMContentLoaded', async () => {
     // DEACTIVATE
 
     srDisableBtn?.addEventListener('click', () => {
-
         disableSpacedRepetition();
+        localStorage.removeItem("game11_game_state");
+
+        if (typeof window.startGame === "function") {
+            window.startGame();
+        }
     });
 
 
@@ -113,10 +121,11 @@ window.addEventListener('DOMContentLoaded', async () => {
     // CONFIRM DELETE
 
     srDeleteConfirmBtn?.addEventListener('click', () => {
-
         deleteSpacedRepetitionMemory();
-
         srDeleteModal?.classList.add('hidden');
+
+        localStorage.removeItem("game11_game_state");
+        window.location.reload();
     });
 
 

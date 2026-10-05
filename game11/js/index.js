@@ -227,7 +227,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
         menuBtn.addEventListener('click', (e) => {
             e.preventDefault();
-            settingsModal.classList.remove('hidden');
+            settingsModal.classList.toggle('hidden');
         });
 
         closeSettingsBtn.addEventListener('click', (e) => {
@@ -236,7 +236,7 @@ window.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-  
+
 
     // RESTART
 
@@ -345,13 +345,13 @@ window.addEventListener('DOMContentLoaded', () => {
 // If the selection is correct, place the item in the cart.
 window.addEventListener('message', (event) => {
     const data = event.data || {};
+
     if (
         data.type === 'pickResult' &&
+        data.ok && 
         typeof data.id === 'string'
     ) {
-        if (data.ok) {
-            window.Game11UI?.placeItemInCart?.(data.id);
-        }
+        window.Game11UI?.placeItemInCart?.(data.id);
     }
 });
 

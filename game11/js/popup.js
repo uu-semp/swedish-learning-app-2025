@@ -142,7 +142,7 @@
      * It creates the progress data and resets the counters for a new game.
      *
      * @param {Object[]} words - The words used in the game.
-     */    
+     */
     function initWithWords(words) {
         const total = words.length;
         game = {
@@ -150,8 +150,12 @@
             total,
             winThreshold: WIN_THRESHOLD(total),
             orderIndex: 0,
-            perItemState: words.map(w => ({ id: w.id, firstTry: true, done: false })),
-            firstTryCorrectCount: 0,
+            perItemState: words.map(w => ({
+                id: w.id,
+                firstTry: true,
+                done: false,
+                mistakes: 0
+            })), firstTryCorrectCount: 0,
             mistakes: 0,
             completed: 0
         };
@@ -182,7 +186,12 @@
         // 🔔 Tell parent whether this pick was correct (enables “stick in cart”)
         try {
             if (window.parent && window.parent !== window) {
-                window.parent.postMessage({ type: 'pickResult', id: String(id), ok: !!ok }, '*');
+                window.parent.postMessage({
+                    type: 'pickResult',
+                    id: String(id),
+                    ok: !!ok,
+                    mistakes: st.mistakes
+                }, '*');
             }
         } catch (_) { }
 
@@ -191,11 +200,19 @@
         if (ok) {
             toast(`Bra jobbat, du hittade <strong>${cur.sv}</strong>`);
             if (st.firstTry) game.firstTryCorrectCount++;
-            st.done = true; game.completed++; nextItem();
+            st.done = true;
+            game.completed++;
+            nextItem();
         } else {
             toast(`Fel, <strong>${label || id}</strong> är inte <strong>${cur.sv}</strong>. Försök igen!`, 'error');
             window.parent.postMessage({ type: 'wrongAnswer' }, '*');
-            if (st.firstTry) { st.firstTry = false; game.mistakes++; } else { game.mistakes++; }
+
+            st.mistakes++;
+            game.mistakes++;
+
+            if (st.firstTry) {
+                st.firstTry = false;
+            }
         }
         renderStatus();
     }

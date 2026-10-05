@@ -2,6 +2,11 @@
 // It provides functions to initialize, retrieve, save, and load the game state.
 import { generateShelf, generateShoppingList } from "./gameLogic.js";
 import { getItems } from "./data.js";
+import {
+  loadSpacedRepetitionMemory,
+  initializeSpacedRepetition,
+  getWordsDueToday
+} from "./spacedRepetitionLogic.js";
 
 // The local storage key 
 const STORAGE_KEY = "game11_game_state";
@@ -26,7 +31,31 @@ function initGameState() {
     const vocab = getItems(); // <-- important: do NOT overwrite window.vocabulary
 
     // Build lists
-    const shoppingList = generateShoppingList(vocab);
+    let shoppingList;
+
+    if (isSpacedRepetitionEnabled()) {
+      let memory = loadSpacedRepetitionMemory();
+
+      // Initialize the Spaced Repetition memory if it does not exist
+      if (Object.keys(memory).length === 0) {
+        memory = initializeSpacedRepetition();
+      }
+
+      // Pull the words that are due for review today
+      const dueWords = getWordsDueToday();
+
+      // If there are no words due today, there is nothing to play
+      if (dueWords.length === 0) {
+        return null;
+      }
+
+      // The game uses a maximum of 10 items per round
+      shoppingList = dueWords.slice(0, 10);
+    } else {
+      // Build the normal shopping list
+      shoppingList = generateShoppingList(vocab);
+    }
+
     const shelf = generateShelf(shoppingList, vocab);
 
     const state = {
@@ -127,7 +156,9 @@ function giveSpacedRepetitionConsent() {
 function deleteSpacedRepetitionMemory() {
   localStorage.removeItem(SR_ENABLED_KEY);
   localStorage.removeItem(SR_CONSENT_KEY);
+  localStorage.removeItem("game11_spaced_repetition"); 
 }
+
 
 export {
   initGameState,
