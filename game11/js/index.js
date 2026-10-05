@@ -138,7 +138,8 @@ window.addEventListener('DOMContentLoaded', () => {
         popupFrame?.contentWindow?.postMessage(
             {
                 type: 'initWords',
-                words
+                words,
+                currentIndex: gs.currentIndex || 0 
             },
             '*'
         );
@@ -169,8 +170,14 @@ window.addEventListener('DOMContentLoaded', () => {
                 typeof s.index === 'string'
             ) {
                 window.Game11UI?.highlightListIndex?.(s.index);
-            }
 
+                // Aggiorna e salva l'indice corrente nello storage
+                const gs = window.__game11GameState;
+                if (gs) {
+                    gs.currentIndex = Number(s.index);
+                    save.set("game11", "game_state", gs);
+                }
+            }
         } else if (data.type === 'popupReady') {
             popupIsReady = true;
             tryInitPopupOnce();
@@ -244,7 +251,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
     if (restartBtn) {
         restartBtn.addEventListener('click', () => {
-            localStorage.removeItem('game11_game_state');
+            save.set("game11", "game_state", null);
             window.location.reload();
         });
     }
@@ -256,10 +263,7 @@ window.addEventListener('DOMContentLoaded', () => {
         Mode2Btn.addEventListener('click', () => {
             const state = window.__game11GameState;
             state.mode = 2;
-            localStorage.setItem(
-                'game11_game_state',
-                JSON.stringify(state)
-            );
+            save.set("game11", "game_state", state);
             window.location.reload();
         });
     }
@@ -269,10 +273,7 @@ window.addEventListener('DOMContentLoaded', () => {
         Mode3Btn.addEventListener('click', () => {
             const state = window.__game11GameState;
             state.mode = 3;
-            localStorage.setItem(
-                'game11_game_state',
-                JSON.stringify(state)
-            );
+            save.set("game11", "game_state", state);
             window.location.reload();
         });
     }
@@ -283,11 +284,7 @@ window.addEventListener('DOMContentLoaded', () => {
         Mode1Btn.addEventListener('click', () => {
             const state = window.__game11GameState;
             state.mode = 1;
-            localStorage.setItem(
-                'game11_game_state',
-                JSON.stringify(state)
-            );
-
+            save.set("game11", "game_state", state);
             window.location.reload();
         });
     }
@@ -348,10 +345,30 @@ window.addEventListener('message', (event) => {
 
     if (
         data.type === 'pickResult' &&
-        data.ok && 
+        data.ok &&
         typeof data.id === 'string'
     ) {
         window.Game11UI?.placeItemInCart?.(data.id);
+
+        const gs = window.__game11GameState;
+        if (gs) {
+            if (!gs.pickedIds) gs.pickedIds = [];
+            if (!gs.pickedIds.includes(data.id)) {
+                gs.pickedIds.push(data.id);
+            }
+            save.set("game11", "game_state", gs);
+        }
+    }
+});
+
+// Update stats when game is won
+window.addEventListener('message', (event) => {
+    const data = event.data || {};
+
+    if (data.type === 'gameEnded') {
+        if (data.won) {
+            save.stats.incrementWin("game11");
+        }
     }
 });
 
@@ -360,7 +377,7 @@ window.addEventListener('message', (event) => {
 
     console.log('[parent] playAgain');
 
-    localStorage.removeItem('game11_game_state');
+    save.set("game11", "game_state", null);
     sessionStorage.removeItem('game11_end_stats');
 
     const popupWrap = document.querySelector('.popup-frame-wrap');

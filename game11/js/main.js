@@ -56,6 +56,13 @@ function startGame() {
     displayShelf(gameState.shelf, gameState.mode);
     displayShoppingList(gameState.shoppingList, gameState.mode);
     displayCopyright(gameState.shelf, gameState.mode);
+
+    if (gameState.pickedIds && Array.isArray(gameState.pickedIds)) {
+      gameState.pickedIds.forEach(id => {
+        window.Game11UI?.placeItemInCart?.(id);
+      })
+    }
+
   });
 
   // Looks redundant assignment to window.__game11GameState. 

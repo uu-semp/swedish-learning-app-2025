@@ -8,22 +8,17 @@ import {
   getWordsDueToday
 } from "./spacedRepetitionLogic.js";
 
-// The local storage key 
-const STORAGE_KEY = "game11_game_state";
-const SR_ENABLED_KEY = "game11_spaced_repetition_enabled";
-const SR_CONSENT_KEY = "game11_spaced_repetition_consent";
-
-
+const STORAGE_KEY = "game_state";
+const SR_ENABLED_KEY = "sr_enabled";
+const SR_CONSENT_KEY = "sr_consent";
 
 /**
- * Initializes the game state using the  vocabulary.
+ * Initializes the game state using the vocabulary.
  * Loads a saved state if available; otherwise, creates a new game state.
  *
  * @returns {Object} The initialized game state.
  */
 function initGameState() {
-  // Pull all items (each item has at least: { id, sv, en, img, ... })
-  // Check if there's a saved state in localStorage, in this case refresh will not reset the game state
   const savedState = loadState();
   if (savedState) {
     return savedState;
@@ -63,16 +58,15 @@ function initGameState() {
       shelf: shelf, // shuffled shelf items (shoppingList + distractors)
       currentIndex: 0, // index of the current item in shoppingList
       correctFirstTry: [], // bools per solved item (true if first try)
+      pickedIds: [],
       mistakes: {},        // { [targetId]: numberOfMistakes }
       finished: false, // true if all items have been solved
       mode: 1, //The mode of the game
     };
-    saveState(state); // Optional: persist initial state (safe no-op if storage blocked)
+    saveState(state); 
     return state;
   }
-
 }
-
 
 /**
  * Creates a simplified snapshot of the game state for the UI and other consumers.
@@ -91,74 +85,59 @@ function getGameState(state) {
   };
 }
 
-
-
 /**
- * Saves the current game state to local storage.
+ * Saves the current game state using save.js
  *
- * @param {Object} state - The  game state.
+ * @param {Object} state - The game state.
  */
 function saveState(state) {
-  try {
-    const payload = JSON.stringify(state);
-    localStorage.setItem(STORAGE_KEY, payload);
-  } catch (e) {
-    console.warn("[state] Could not save state:", e);
-  }
+  save.set("game11", STORAGE_KEY, state);
 }
 
-
-
 /**
- * Loads a previously saved state from local storage. Returns null if none/invalid.
+ * Loads a previously saved state using save.js. Returns null if none/invalid.
  *
  * @returns {Object|null} The loaded game state or null if no valid state is found.
  */
 function loadState() {
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if (!raw) return null;
+  const state = save.get("game11", STORAGE_KEY);
+  
+  if (!state) return null;
 
-    const state = JSON.parse(raw);
-
-    // Minimal validation
-    if (!Array.isArray(state.shoppingList) || !Array.isArray(state.shelf)) {
-      throw new Error("Corrupted state");
-    }
-    return state;
-  } catch (e) {
-    console.warn("[state] Invalid saved state discarded:", e);
-    try { localStorage.removeItem(STORAGE_KEY); } catch { }
+  // Minimal validation
+  if (!Array.isArray(state.shoppingList) || !Array.isArray(state.shelf)) {
+    console.warn("[state] Invalid saved state discarded");
+    save.set("game11", STORAGE_KEY, null); // Overwrite corrupted data
     return null;
   }
+  return state;
 }
 
 function isSpacedRepetitionEnabled() {
-  return localStorage.getItem(SR_ENABLED_KEY) === "true";
+  return save.get("game11", SR_ENABLED_KEY) === true;
 }
 
 function enableSpacedRepetition() {
-  localStorage.setItem(SR_ENABLED_KEY, "true");
+  save.set("game11", SR_ENABLED_KEY, true);
 }
 
 function disableSpacedRepetition() {
-  localStorage.setItem(SR_ENABLED_KEY, "false");
+  save.set("game11", SR_ENABLED_KEY, false);
 }
 
 function hasSpacedRepetitionConsent() {
-  return localStorage.getItem(SR_CONSENT_KEY) === "true";
+  return save.get("game11", SR_CONSENT_KEY) === true;
 }
 
 function giveSpacedRepetitionConsent() {
-  localStorage.setItem(SR_CONSENT_KEY, "true");
+  save.set("game11", SR_CONSENT_KEY, true);
 }
 
 function deleteSpacedRepetitionMemory() {
-  localStorage.removeItem(SR_ENABLED_KEY);
-  localStorage.removeItem(SR_CONSENT_KEY);
-  localStorage.removeItem("game11_spaced_repetition"); 
+  save.set("game11", SR_ENABLED_KEY, false);
+  save.set("game11", SR_CONSENT_KEY, false);
+  save.set("game11", "sr_memory", null); // Completely clear the statistics
 }
-
 
 export {
   initGameState,

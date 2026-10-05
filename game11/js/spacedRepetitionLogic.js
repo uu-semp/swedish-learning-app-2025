@@ -1,50 +1,27 @@
 import { getItems } from "./data.js";
 
-const SR_STORAGE_KEY = "game11_spaced_repetition";
+const SR_STORAGE_KEY = "sr_memory";
 
-
+// Interval in days for each level: Level 0 = 1 day, Level 1 = 2 days, etc.
+const SR_INTERVALS = [1, 2, 4, 7, 14, 30, 60, 90, 180];
 
 /**
- * Loads the Spaced Repetition memory from localStorage.
+ * Genera la data in formato YYYY-MM-DD rispettando il fuso orario locale.
  */
-function loadSpacedRepetitionMemory() {
-    try {
-        const raw = localStorage.getItem(SR_STORAGE_KEY);
-
-        if (!raw) {
-            return {};
-        }
-
-        const memory = JSON.parse(raw);
-
-        if (
-            typeof memory !== "object" ||
-            memory === null ||
-            Array.isArray(memory)
-        ) {
-            throw new Error("Invalid Spaced Repetition memory");
-        }
-
-        return memory;
-    } catch (error) {
-        console.warn("[SR] Invalid memory discarded:", error);
-        localStorage.removeItem(SR_STORAGE_KEY);
-        return {};
-    }
+function getLocalISODate(date) {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
 }
 
-/**
- * Saves the Spaced Repetition memory to localStorage.
- */
+function loadSpacedRepetitionMemory() {
+    const memory = save.get("game11", SR_STORAGE_KEY);
+    return memory || {};
+}
+
 function saveSpacedRepetitionMemory(memory) {
-    try {
-        localStorage.setItem(
-            SR_STORAGE_KEY,
-            JSON.stringify(memory)
-        );
-    } catch (error) {
-        console.warn("[SR] Could not save memory:", error);
-    }
+    save.set("game11", SR_STORAGE_KEY, memory);
 }
 
 /**
@@ -67,8 +44,8 @@ function initializeSpacedRepetition() {
     const tomorrow = new Date(today);
     tomorrow.setDate(tomorrow.getDate() + 1);
 
-    const todayString = today.toISOString().slice(0, 10);
-    const tomorrowString = tomorrow.toISOString().slice(0, 10);
+    const todayString = getLocalISODate(today);
+    const tomorrowString = getLocalISODate(tomorrow);
 
     const half = Math.ceil(words.length / 2);
 
@@ -96,7 +73,7 @@ function getWordsDueToday() {
     const memory = loadSpacedRepetitionMemory();
     const words = getItems();
 
-    const today = new Date().toISOString().slice(0, 10);
+    const today = getLocalISODate(new Date());
 
     return words.filter(word => {
         const gameId = getGameId(word); 
@@ -110,6 +87,9 @@ function getWordsDueToday() {
     });
 }
 
+/**
+ * Updates the word's level and calculates the next review date.
+ */
 function updateSpacedRepetitionWord(wordId, mistakes) {
     const memory = loadSpacedRepetitionMemory();
     const wordMemory = memory[wordId];
@@ -118,8 +98,25 @@ function updateSpacedRepetitionWord(wordId, mistakes) {
         return;
     }
 
-    wordMemory.errorsCurrent = mistakes;
     wordMemory.errorsTotal += mistakes;
+
+    // Leveling logic based on performance
+    if (mistakes === 0) {
+        // Correct on first try: increase level (capped at max interval)
+        const maxLevel = SR_INTERVALS.length - 1;
+        wordMemory.level = Math.min((wordMemory.level || 0) + 1, maxLevel);
+    } else {
+        // Wrong answers: decrease level by number of mistakes (minimum level 0)
+        wordMemory.level = Math.max(0, (wordMemory.level || 0) - mistakes);
+    }
+
+    // Calculate next review date based on the new level
+    const intervalInDays = SR_INTERVALS[wordMemory.level];
+    const nextDate = new Date();
+    nextDate.setDate(nextDate.getDate() + intervalInDays);
+    
+    wordMemory.nextReview = getLocalISODate(nextDate);
+    wordMemory.errorsCurrent = 0; // Reset session errors
 
     saveSpacedRepetitionMemory(memory);
 }

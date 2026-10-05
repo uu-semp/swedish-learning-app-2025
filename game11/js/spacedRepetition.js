@@ -22,7 +22,10 @@ async function loadSpacedRepetitionHTML() {
 }
 
 function startSpacedRepetitionGame() {
-    localStorage.removeItem("game11_game_state");
+    // Clear the current game state using the save.js API
+    save.set("game11", "game_state", null);
+
+    // Reload the page to properly initialize vocabulary and UI
     window.location.reload();
 }
 
@@ -35,7 +38,8 @@ window.addEventListener('DOMContentLoaded', async () => {
         return;
     }
 
-
+    const srBackToNormalBtn =
+        document.getElementById('sr-no-words-modal');
     const srEnableBtn =
         document.getElementById('sr-enable-btn');
 
@@ -102,11 +106,10 @@ window.addEventListener('DOMContentLoaded', async () => {
 
     srDisableBtn?.addEventListener('click', () => {
         disableSpacedRepetition();
-        localStorage.removeItem("game11_game_state");
 
-        if (typeof window.startGame === "function") {
-            window.startGame();
-        }
+        // Clear state and reload the page
+        save.set("game11", "game_state", null);
+        window.location.reload();
     });
 
 
@@ -121,10 +124,13 @@ window.addEventListener('DOMContentLoaded', async () => {
     // CONFIRM DELETE
 
     srDeleteConfirmBtn?.addEventListener('click', () => {
+
         deleteSpacedRepetitionMemory();
+
         srDeleteModal?.classList.add('hidden');
 
-        localStorage.removeItem("game11_game_state");
+        // Clear state and reload the page to apply changes
+        save.set("game11", "game_state", null);
         window.location.reload();
     });
 
@@ -136,4 +142,12 @@ window.addEventListener('DOMContentLoaded', async () => {
         srDeleteModal?.classList.add('hidden');
     });
 
+
+    // BACK TO NORMAL MODE FROM "NO WORDS" MODAL
+
+    srBackToNormalBtn?.addEventListener('click', () => {
+        disableSpacedRepetition();
+        save.set("game11", "game_state", null);
+        window.location.reload();
+    });
 });
