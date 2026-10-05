@@ -179,21 +179,121 @@ hr {
     color: #666;
 }
 
-/* Container for house buttons */
-#house-buttons {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 2rem;
-    margin-top: 2.5rem;
-    /* margin-bottom: 2.5rem; */
+.road{
+    background-color: rgb(71, 71, 71);
 }
 
-/* Base house button styling */
-#house-buttons button {
+.horizontal-road{
+    grid-column: 1 / 6;
+    grid-row: 2;
     position: relative;
-    width: 120px;
-    height: 120px;
+}
+
+.vertical-road{
+    grid-column: 3;
+    grid-row: 3 / 6;
+    display: grid;
+    place-items: center;
+    position: relative;
+}
+
+.street-text {
+    position: absolute;
+    width: 145px;
+    height: 22px;
+    margin: 0;
+    padding: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+
+    background: white;
+
+    clip-path: polygon(
+        0 0,
+        calc(100% - 18px) 0,
+        100% 50%,
+        calc(100% - 18px) 100%,
+        0 100%
+    );
+
+    z-index: 2;
+    isolation: isolate;
+}
+
+.street-text::before {
+    content: "";
+    position: absolute;
+    inset: 2px;
+
+    background: #006aa7;
+
+    clip-path: polygon(
+        0 0,
+        calc(100% - 16px) 0,
+        100% 50%,
+        calc(100% - 16px) 100%,
+        0 100%
+    );
+
+    z-index: -1;
+}
+
+.horizontal-road .street-text {
+    left: 20%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.vertical-road .street-text {
+    left: 50%;
+    top: 32%;
+    transform: translate(-50%, -50%) rotate(90deg);
+}
+
+.dotted-line {
+    position: absolute;
+    box-sizing: border-box;
+}
+
+
+.horizontal-road .dotted-line {
+    left: 0;
+    right: 0;
+    top: 50%;
+    border: none;
+    border-top: 2px dashed white;
+}
+
+.vertical-road .dotted-line {
+    top: -16px;
+    left: 50%;
+    height: calc(100% + 16px);
+
+    border: none;
+    border-left: 2px dashed white;
+
+    z-index: 1;
+}
+
+#house-grid{
+    display:grid;
+    grid-template-columns: 100px 100px 40px 100px 100px;
+    grid-template-rows: 80px 40px 80px 80px 80px;
+    justify-content: center;
+}
+
+#house-grid button {
+    position: relative;
+    width: 70px;
+    height: 70px;
     background: #ffcc80; /* warm orange walls */
     border: 3px solid #d17a22;
     border-radius: 0 0 10px 10px;
@@ -202,11 +302,11 @@ hr {
     font-weight: bold;
     color: #4a2c00;
     transition: transform 0.2s, box-shadow 0.2s;
-    padding-top: 30px;
+    justify-self: center;
 }
 
 /* Little roof using a pseudo-element */
-#house-buttons button::before {
+#house-grid button::before {
     content: "";
     position: absolute;
     top: -40px;
@@ -214,20 +314,20 @@ hr {
     transform: translateX(-50%);
     width: 0;
     height: 0;
-    border-left: 63px solid transparent;
-    border-right: 63px solid transparent;
+    border-left: 41px solid transparent;
+    border-right: 41px solid transparent;
     border-bottom: 40px solid #d17a22; /* roof color */
 }
 
 /* Hover effect for interactivity */
-#house-buttons button:hover {
+#house-grid button:hover {
     transform: translateY(-5px);
     box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
     background: #ffe0b2;
 }
 
 /* Optional: pressed state */
-#house-buttons button:active {
+#house-grid button:active {
     transform: translateY(2px);
 }
 

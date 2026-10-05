@@ -5,6 +5,10 @@
 
 "use strict";
 
+//Maybe add these to the vocabulary file instead of hardcoding them here
+const directionVocab = ["Till vänster om", "Till höger om", "Mittemot"]
+const transportVocab = ["Cyklar", "Tar cykeln", "Åker bil", "Tar bilen", "Åker buss", "Tar bussen"]
+
 const app = Vue.createApp({
   data() {
     return {
@@ -19,6 +23,20 @@ const app = Vue.createApp({
       progressMin: 0,
 
       houseOptions: [],
+      housePositions: [
+        {col: 1, row: 1},
+        {col: 2, row: 1},
+        {col: 4, row: 1},
+        {col: 5, row: 1},
+        {col: 1, row: 3},
+        {col: 2, row: 3},
+        {col: 4, row: 3},
+        {col: 5, row: 3},
+        {col: 2, row: 4},
+        {col: 2, row: 5},
+        {col: 4, row: 4},
+        {col: 4, row: 5}
+      ],
       correctHouseIndex: -1,
       currentQuestion: null,
       currentStreet: '',
@@ -31,6 +49,8 @@ const app = Vue.createApp({
 
       vocabNumbers: [],
       // vocabStreets: [],
+      directionVocab: [],
+      transportVocab: []
     }
   },
 
@@ -74,6 +94,7 @@ const app = Vue.createApp({
 
       this.houseOptions = result.houseArray;
       this.correctHouseIndex = result.correctHouse;
+      console.log("Direction", this.directionVocab);
     },
 
     checkAnswer(selectedIndex) {
@@ -141,6 +162,8 @@ const app = Vue.createApp({
       console.log("Vocabulary loaded, vue ready");
       this.vocabNumbers = window.vocabulary.get_category("number");
       this.vocabStreets = window.vocabulary.get_category("street");
+      this.directionVocab = directionVocab;
+      this.transportVocab = transportVocab;
       this.isLoading = false;
       this.startNewRound();
     });
