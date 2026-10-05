@@ -1,13 +1,13 @@
 import { GenerateQuestion } from '../model/services/question_generator.js'
 import { GenerateBoard } from '../model/services/board_generator.js'
 import { reactive } from 'vue'
-
+import { Initialize, NextRound_GM } from '../model/services/game_manager.js'
 
 //
 //  GameController is responsible for tying the views together with the logic
 //
 export function GameController(difficulty) {
-    const game = reactive({
+    let game = reactive({
         difficulty: difficulty,
         questions: [],
         boards: [],
@@ -17,30 +17,16 @@ export function GameController(difficulty) {
         finished_questions: [],
         hint_used: false,
         selected_answer: null,
-        answer_correct:  null,
+        answer_correct: null,
         answer_locked: false,
         answered_in_round: 0,
         round_total: 0,
         is_finished: false
     })
-    
+
     let feedback_timer = null
     let stopped = false
-
-    function InitializeQuestions() {
-        const question_count = 10
-
-        for (let index = 0; index < question_count; index++) {
-            const question = GenerateQuestion(game.difficulty)
-
-            game.questions.push(question)
-            game.boards.push(GenerateBoard(question))
-            game.remaining_questions.push(index)
-        }
-
-        game.round_total = game.remaining_questions.length
-    }
-
+   
     function StartRepetitionRound() {
         while (game.incorrect_questions.length > 0) {
             const random_index = Math.floor(Math.random() * game.incorrect_questions.length)
@@ -54,41 +40,12 @@ export function GameController(difficulty) {
 
         game.answered_in_round = 0
         game.round_total = game.remaining_questions.length
-        
+
     }
 
     function NextRound() {
-
-        if (stopped || game.is_finished) {
-            return
-        }
-
-
-        if (feedback_timer !== null) {
-            return
-        }
-
-        if (game.current_question_index !== -1 && !game.answer_locked) {
-            return
-        }
-
-        if (game.remaining_questions.length === 0) {
-            if (game.incorrect_questions.length > 0) {
-                StartRepetitionRound()
-            } else {
-                FinishGame()
-                return
-            }
-        }
-
-        game.current_question_index = game.remaining_questions.shift()
-
-        game.hint_used = false
-        game.selected_answer = null
-        game.answer_correct = null
-        game.answer_locked = false
+        NextRound_GM(game)
     }
-
 
     function CheckAnswer(question_index, answer) {
         if (stopped || game.is_finished || game.answer_locked) {
@@ -106,8 +63,8 @@ export function GameController(difficulty) {
         game.answer_correct = board.correct_answer_building_id === answer
 
         if (game.answer_correct && !game.hint_used) {
-            game.finished_questions.push(question_index) 
-        } 
+            game.finished_questions.push(question_index)
+        }
 
         else {
             game.incorrect_questions.push(question_index)
@@ -145,8 +102,7 @@ export function GameController(difficulty) {
         feedback_timer = null
     }
 
-
-    InitializeQuestions()
+    Initialize(difficulty, game)
     NextRound()
 
     return {
@@ -157,4 +113,3 @@ export function GameController(difficulty) {
         StopGame
     }
 }
-

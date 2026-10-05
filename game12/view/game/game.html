@@ -7,12 +7,7 @@
     <title>Hitta rätt hus</title>
 
     <link rel="stylesheet" href="./game.css">
-  
-    <script src="../../../scripts/save.js"></script>
-    <script type="module" src="./game_view.js"></script>
-
-    <!-- Allows js files to import from 'vue'. -->
-    <script type="importmap">
+   <script type="importmap">
     {
         "imports": {
             "vue": "https://unpkg.com/vue@3/dist/vue.esm-browser.js"
@@ -20,6 +15,11 @@
     }
     </script>
 
+    <script src="../../../scripts/save.js"></script>
+    <script type="module" src="./game_view.js"></script>
+
+    <!-- Allows js files to import from 'vue'. -->
+   
 </head>
 
 <body>
@@ -113,14 +113,14 @@
                                         game.selected_answer === house.id &&
                                         game.answer_correct === false
                                 }"
-                                :aria-label="house.street + ' ' + house.number"
+                                :aria-label="house.street + ' ' + house.houseNumber"
                                 :aria-pressed="
                                     view.selectedHouse !== null &&
                                     view.selectedHouse.id === house.id
                                 "
                                 @click="SelectHouse(house)"
                             >
-                                {{ house.number }}
+                                {{ house.houseNumber }}
                             </button>
                         </div>
                     </div>

@@ -16,6 +16,7 @@ Also the controller already runs hints, attempts and repition rounds.
 -Oskar
 */
 
+/*
 export class QuestionGenerator {
 
   constructor(vocabularyRepository = null) {
@@ -193,4 +194,51 @@ export class QuestionGenerator {
   }
   return copy;
   }   
+}
+
+*/
+
+export function GenerateQuestion(difficulty, board) {
+  let config = {
+    correctNumber: null,
+    correctStreet: null
+  };
+
+  if (difficulty === 1) {
+    const random_index = Math.floor(Math.random() * 12)
+    const all_houses = board.BuildingsHorizontal.concat(board.BuildingsVertical)
+
+    const correct_house = all_houses[random_index]
+    console.log(correct_house)
+    config.correctNumber = correct_house.houseNumber
+    config.correctStreet = correct_house.street
+
+    config.promptSwedish = `Jag bor på ${correct_house.street} ${correct_house.houseNumber}.`;
+    config.promptEnglish = `I live at ${correct_house.street} ${correct_house.houseNumber}.`;
+
+  }
+   else if (difficulty === 2) {
+
+    // make sure left/right works as intended.
+    const landmark = this.getRandomElement(this.vocab.landmarks);
+    const direction = this.getRandomElement(this.vocab.directions);
+    config.targetLandmark = landmark;
+    config.direction = direction;
+    config.promptSwedish = `Jag bor ${direction.swedish} ${landmark.nameSwedish} ${houseNumber}.`;
+    config.promptEnglish = `I live ${direction.english} ${landmark.nameSwedish} ${houseNumber}.`;
+  }
+   else if (difficulty === 3) {
+
+    const landmark = this.getRandomElement(this.vocab.landmarks);
+    const direction = this.getRandomElement(this.vocab.directions);
+    const transport = this.getRandomElement(this.vocab.transports);
+    const phrase = this.getRandomElement(transport.phrases);
+    config.targetLandmark = landmark;
+    config.direction = direction;
+    config.targetTransport = transport.type;
+    config.promptSwedish = `${phrase.swedish} ${street} ${houseNumber}, som ligger ${direction.swedish} ${landmark.nameSwedish}.`;
+    config.promptEnglish = `${phrase.english} ${street} ${houseNumber}, which is ${direction.english} ${landmark.nameSwedish}.`;
+  }
+
+  return config;
 }

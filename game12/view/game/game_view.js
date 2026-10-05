@@ -12,6 +12,7 @@ createApp({
         }
 
         const controller = GameController(difficulty)
+        //controller.Initialize_Controller(difficulty)
         const game = controller.game
 
         // Traslation display state 
@@ -29,7 +30,12 @@ createApp({
         })
 
         const visibleHouses = computed(function () {
-            return currentBoard.value.buildings
+            if (game.difficulty === 1) {
+                return currentBoard.value.BuildingsHorizontal.concat(currentBoard.value.BuildingsVertical)
+            }
+            else {
+                return currentBoard.value.BuildingsHorizontal
+            }
         })
 
         const progressPercentage = computed(function () {

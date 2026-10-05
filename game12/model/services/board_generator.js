@@ -1,10 +1,111 @@
-export function GenerateBoard(question) {
-    return {
-        Horizontal: GenerateRoad("Horizontal", question),
-        Vertical: GenerateRoad("Vertical", question),
-    };
+export function GenerateBoard(streets, ranges, difficulty) {
+    if (difficulty === 1) {
+        return GenerateT(streets, ranges, difficulty)
+    }
+    else {
+        return GenerateHorizontal(streets, ranges, difficulty)
+    }
 }
 
+function GenerateHorizontal(streets, ranges) {
+    let building_positions_horionztal = [
+        { col: 1, row: 1 },
+        { col: 1, row: 3 },
+        { col: 2, row: 1 },
+        { col: 2, row: 3 },
+        { col: 3, row: 1 },
+        { col: 3, row: 3 },
+        { col: 4, row: 1 },
+        { col: 4, row: 3 },
+        { col: 5, row: 1 },
+        { col: 5, row: 3 },
+    ]
+
+    let chosen_street_1 = streets[Math.floor((Math.random() * streets.length + 1))]
+
+    let buildings_horionztal = []
+    for (let index = 0; index < building_positions_horionztal; index++) {
+        let house_number = chosen_range + index
+        buildings_horionztal[index] = {
+            Type: "HOUSE",
+            Street: chosen_street_1,
+            HouseNumber: house_number,
+            col: building_positions_horionztal[index].col,
+            row: building_positions_horionztal[index].row
+        }
+    }
+
+    return {
+        BuildingsHorizontal: buildings_horionztal,
+        ChosenRange: chosen_range
+    }
+
+}
+
+function GenerateT(streets, ranges) {
+    let building_positions_horionztal = [
+        { col: 1, row: 1 },
+        { col: 1, row: 3 },
+        { col: 2, row: 1 },
+        { col: 2, row: 3 },
+        { col: 4, row: 1 },
+        { col: 4, row: 3 },
+        { col: 5, row: 1 },
+        { col: 5, row: 3 },
+    ]
+
+    let building_positions_vertical = [
+        { col: 4, row: 4 },
+        { col: 2, row: 4 },
+        { col: 4, row: 5 },
+        { col: 2, row: 5 },
+    ]
+
+    let chosen_street_1 = streets[Math.floor((Math.random() * streets.length + 1))]
+    streets = streets.filter(street => street !== chosen_street_1)
+    let chosen_street_2 = streets[Math.floor((Math.random() * streets.length + 1))]
+
+    let chosen_range_index = Math.floor((Math.random() * ranges.length))
+    console.log("index: " + chosen_range_index)
+    let chosen_range = ranges[Math.floor((Math.random() * ranges.length))]
+
+    console.log("ranges: " + ranges)
+    console.log("Chosen range: " + chosen_range)
+
+    let buildings_horionztal = []
+    for (let index = 0; index < building_positions_horionztal.length; index++) {
+        let house_number = chosen_range[0] + index
+        buildings_horionztal[index] = {
+            type: "HOUSE",
+            id: chosen_street_1 + "_" + house_number,
+            street: chosen_street_1,
+            houseNumber: house_number,
+            col: building_positions_horionztal[index].col,
+            row: building_positions_horionztal[index].row
+        }
+    }
+
+    let buildings_vertical = []
+    for (let index = 0; index < building_positions_vertical.length; index++) {
+        let house_number = chosen_range[0] + index
+        buildings_vertical[index] = {
+            type: "HOUSE",
+            id: chosen_street_1 + "_" + house_number,
+            street: chosen_street_1,
+            houseNumber: house_number,
+            col: building_positions_vertical[index].col,
+            row: building_positions_vertical[index].row
+        }
+    }
+
+    return {
+        BuildingsHorizontal: buildings_horionztal,
+        BuildingsVertical: buildings_vertical,
+        ChosenRange: chosen_range
+    }
+}
+
+/*
 function GenerateRoad(road_type, question, street) {
     const correct_answer_building_id = null;
 
@@ -51,8 +152,14 @@ function GenerateRoad(road_type, question, street) {
     }
 
     return {
+        chosen_range: ,
+        chosen_building: ,
+        chosen_vehice: ,
         street: street,
         buildings: buildings,
         correct_answer_building_id: correct_answer_building_id,
     };
 }
+
+
+*/
