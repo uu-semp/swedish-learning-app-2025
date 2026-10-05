@@ -1,6 +1,6 @@
 import { GenerateBoard } from "./board_generator.js"
 import { GenerateQuestion } from "./question_generator.js"
-
+import { get_vocab } from "../../../scripts/vocabulary_await.js"
 
 let feedback_timer = null
 let stopped = false
@@ -16,13 +16,13 @@ let all_streets = [
 let all_ranges = [
     [1, 10],
     [11, 21],
-    [22, 32],
-    [33, 43],
-    [44, 54],
-    [55, 65],
-    [66, 76],
-    [87, 97],
-    [89, 99]
+    //[22, 32], // ADD THESE BACK ONCE THE VOCABULARY IS UPDATED
+    //[33, 43],
+    //[44, 54],
+    //[55, 65],
+    //[66, 76],
+    //[87, 97],
+    //[89, 99]
 ]
 
 let available_ranges = []
@@ -45,16 +45,20 @@ export function Initialize(difficulty) {
         is_finished: false
     }
 
-    available_ranges = all_ranges
+    console.log(get_vocab())
+
+    available_ranges = all_ranges.slice()
 
     if (difficulty === 1) {
         game.difficulty = 1
         for (let index = 0; index < 10; index++) {
             let board = GenerateBoard(all_streets, available_ranges, difficulty)
 
-            console.log(board)
-
-            all_ranges = all_ranges.filter(par => par[0] !== board.ChosenRange[0])
+            available_ranges = available_ranges.filter(par => par[0] !== board.ChosenRange[0])
+            if(available_ranges.length === 0) {
+                // reset ranges
+                available_ranges = all_ranges.slice()
+            }
 
             game.boards[index] = board
 

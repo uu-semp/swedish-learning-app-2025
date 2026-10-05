@@ -67,9 +67,6 @@ function GenerateT(streets, ranges) {
 
     let chosen_range = ranges[Math.floor((Math.random() * ranges.length))]
 
-    console.log("ranges: " + ranges)
-    console.log("Chosen range: " + chosen_range)
-
     let buildings_horionztal = []
     for (let index = 0; index < building_positions_horionztal.length; index++) {
         let house_number = chosen_range[0] + index

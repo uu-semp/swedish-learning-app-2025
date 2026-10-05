@@ -1,4 +1,3 @@
-import { Question } from '../classes/question.js'
 
 /*
 We need to agree on the interface with the contoller and 
@@ -209,7 +208,6 @@ export function GenerateQuestion(difficulty, board) {
     const all_houses = board.BuildingsHorizontal.concat(board.BuildingsVertical)
 
     const correct_house = all_houses[random_index]
-    console.log(correct_house)
     config.correctNumber = correct_house.houseNumber
     config.correctStreet = correct_house.street
 
