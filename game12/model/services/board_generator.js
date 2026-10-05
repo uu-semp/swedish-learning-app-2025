@@ -39,7 +39,6 @@ function GenerateHorizontal(streets, ranges) {
         BuildingsHorizontal: buildings_horionztal,
         ChosenRange: chosen_range
     }
-
 }
 
 function GenerateT(streets, ranges) {
@@ -66,9 +65,6 @@ function GenerateT(streets, ranges) {
     let chosen_street_2 = streets[Math.floor((Math.random() * streets.length))]
 
     let chosen_range = ranges[Math.floor((Math.random() * ranges.length))]
-
-    console.log("ranges: " + ranges)
-    console.log("Chosen range: " + chosen_range)
 
     let buildings_horionztal = []
     for (let index = 0; index < building_positions_horionztal.length; index++) {
