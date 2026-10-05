@@ -52,6 +52,10 @@ header h1 {
   background-color: #ff9d00
 }
 
+.btn.completed{
+    background-color: #4CAF50;
+}
+
 .characters {
   margin-top: 40px;
   display: flex;

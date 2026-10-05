@@ -8,6 +8,8 @@
 
     <link rel="stylesheet" href="./menu.css">
   <script src="./menu.js" defer></script>
+  <script src="../../../scripts/save.js"></script>
+  <script src="../progress/points.js" defer></script>
 </head>
 
 <body>
@@ -16,21 +18,21 @@
         <p>Välj svårighetsgrad:</p>
 
         <div class="buttons">
-            <a href="../game/game.html?difficulty=1" class="btn start">
+            <a href="../game/game.html?difficulty=1" id="lvl1" class="btn start">
                 1 - Adresser och nummer
             </a>
 
-            <a href="../game/game.html?difficulty=2" class="btn start">
+            <a href="../game/game.html?difficulty=2" id="lvl2" class="btn start">
                 2 - Riktningar
             </a>
 
-            <a href="../game/game.html?difficulty=3" class="btn start">
+            <a href="../game/game.html?difficulty=3" id="lvl3" class="btn start">
                 3 - Färdsätt
             </a>
 
-            <a href="../progress/points.html" class="btn score">
+            <!--<a href="../progress/points.html" class="btn score">
                 Visa framsteg
-            </a>
+            </a>-->
         </div>
         <div class="bubble" id="bubble"></div>
         <div class="characters">
