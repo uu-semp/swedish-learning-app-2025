@@ -39,7 +39,6 @@ function GenerateHorizontal(streets, ranges) {
         BuildingsHorizontal: buildings_horionztal,
         ChosenRange: chosen_range
     }
-
 }
 
 function GenerateT(streets, ranges) {
