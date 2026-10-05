@@ -2,8 +2,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // === Speech bubble typewriter ===
   const msgs = {
-    sv: "Starta spelet och hjälp oss hitta rätt!",
-    en: "Start the game and help us find the right place!"
+    sv: "Välj en svårighetsgrad och hjälp oss hitta rätt!",
+    en: "Choose a difficulty leveland help us find the right place!"
   };
 
   let lang = "sv";

@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="sv">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Övningen klar</title>
+
+    <link rel="stylesheet" href="../menu/menu.css">
+</head>
+
+<body>
+    <main>
+        <h1>Bra jobbat!</h1>
+        <p>Du har klarat övningen.</p>
+
+        <div class="buttons">
+            <a
+                href="../game/game.html?difficulty=1"
+                id="play-again"
+                class="btn start"
+            >
+                Spela igen
+            </a>
+
+            <a href="../menu/index.html" class="btn">
+                Välj svårighetsgrad
+            </a>
+
+            <a href="../progress/points.html" class="btn score">
+                Visa framsteg
+            </a>
+        </div>
+    </main>
+
+    <script>
+        const parameters = new URLSearchParams(window.location.search)
+        let difficulty = Number(parameters.get("difficulty"))
+
+        if (difficulty !== 1 && difficulty !== 2 && difficulty !== 3) {
+            difficulty = 1
+        }
+
+        const replayLink = document.getElementById("play-again")
+
+        replayLink.href = "../game/game.html?difficulty=" + difficulty
+    </script>
+</body>
+</html>

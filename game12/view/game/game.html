@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="sv">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Hitta rätt hus</title>
+
+    <link rel="stylesheet" href="./game.css">
+  
+    <script src="../../../scripts/save.js"></script>
+    <script type="module" src="./game_view.js"></script>
+
+    <!-- Allows js files to import from 'vue'. -->
+    <script type="importmap">
+    {
+        "imports": {
+            "vue": "https://unpkg.com/vue@3/dist/vue.esm-browser.js"
+        }
+    }
+    </script>
+
+</head>
+
+<body>
+    <div id="app" v-cloak>
+        <main class="game-frame">
+            <section id="game-screen">
+                <div class="game-box">
+                    <a href="../menu/index.html" class="start-page-button" @click="BackToMenu">
+                        ← Tillbaka till menyn
+                    </a>
+
+    
+                    <div class="progress-wrap">
+                        <div class="progress-label">
+                            Framsteg:
+                            {{ view.progress }} / {{ view.progressMax }}
+                        </div>
+
+                        <div
+                            class="progress-bar"
+                            role="progressbar"
+                            aria-label="Framsteg"
+                            aria-valuemin="0"
+                            :aria-valuemax="view.progressMax"
+                            :aria-valuenow="view.progress"
+                        >
+                            <div
+                                id="progress-fill"
+                                :style="{ width: progressPercentage }"
+                            ></div>
+                        </div>
+                    </div>
+
+                    <hr>
+
+                    <!-- Question with individually translated words -->
+                    <div id="prompt-words">
+                        <button
+                            v-for="(word, index) in view.promptWords"
+                            :key="index"
+                            type="button"
+                            :aria-pressed="word.translated"
+                            :lang="word.translated ? 'en' : 'sv'"
+                            @click="translateWord(word)"
+                            :disabled="!word.canTranslate || game.answer_locked || game.is_finished"
+                        >
+                            {{ word.translated ? word.en : word.sv }}
+                        </button>
+                    </div>
+
+                    <!-- Existing road and house grid -->
+                    <div class="board-scroll">
+                        <div
+                            id="house-grid"
+                            :class="{ 'horizontal-only': view.roadType === 'horizontal' }"
+                        >
+                            <div class="road horizontal-road">
+                                <p class="street-text">
+                                    {{ view.horizontalStreet }}
+                                </p>
+
+                                <div class="dotted-line"></div>
+                            </div>
+
+                            <div
+                                v-if="view.roadType === 't'"
+                                class="road vertical-road"
+                            >
+                                <p class="street-text">
+                                    {{ view.verticalStreet }}
+                                </p>
+
+                                <div class="dotted-line"></div>
+                            </div>
+
+                            <button
+                                v-for="house in visibleHouses"
+                                :key="house.id"
+                                type="button"
+                                :disabled="game.answer_locked || game.is_finished"
+                                :style="{
+                                    gridRow: house.row,
+                                    gridColumn: house.col
+                                }"
+                                :class="{
+                                    'is-selected': game.selected_answer === house.id,
+                                    'is-correct':
+                                        game.selected_answer === house.id &&
+                                        game.answer_correct === true,
+                                    'is-incorrect':
+                                        game.selected_answer === house.id &&
+                                        game.answer_correct === false
+                                }"
+                                :aria-label="house.street + ' ' + house.number"
+                                :aria-pressed="
+                                    view.selectedHouse !== null &&
+                                    view.selectedHouse.id === house.id
+                                "
+                                @click="SelectHouse(house)"
+                            >
+                                {{ house.number }}
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Answer feedback -->
+                    <p class="selection-feedback" role="status">
+                        <template v-if="game.answer_locked">
+                            <span v-if="game.answer_correct">✓ Rätt!</span>
+                            <span v-else>✗ Fel svar.</span>
+
+                            <span v-if="game.answer_correct && game.hint_used">
+                                Du får frågan igen utan ledtråd.
+                            </span>
+                        </template>
+                    </p>
+
+                    <hr>
+
+                    <!-- The Hint -->
+                    <button
+                        type="button"
+                        class="control-button"
+                        :aria-expanded="view.showTranslation"
+                        aria-controls="english-line"
+                        @click="toggleTranslation"
+                        :disabled="game.answer_locked || game.is_finished"
+                    >
+                        {{ view.showTranslation
+                            ? 'Dölj Ledtråd'
+                            : 'Ledtråd' }}
+                    </button>
+
+                    <div
+                        v-if="view.showTranslation"
+                        id="english-line"
+                        lang="en"
+                    >
+                        {{ view.englishSentence }}
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <small>
+                Created as part of the
+                "Software Engineering and Project Management" course 2025
+            </small>
+        </footer>
+    </div>
+</body>
+</html>

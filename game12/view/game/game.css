@@ -6,9 +6,8 @@
 
 body {
     font-family: Arial, sans-serif;
-    max-width: 1000px;
     background-color: #f0f2f5;
-    margin: 0;
+    margin: 0 auto;
 }
 
 .main-header {
@@ -329,6 +328,16 @@ hr {
 /* Optional: pressed state */
 #house-grid button:active {
     transform: translateY(2px);
+}
+
+#house-grid button.is-correct {
+    background-color: #d9f2df;
+    outline: 3px solid #24743b;
+}
+
+#house-grid button.is-incorrect {
+    background-color: #f8dddd;
+    outline: 3px solid #a52a2a;
 }
 
 /* Optional: nice footer */

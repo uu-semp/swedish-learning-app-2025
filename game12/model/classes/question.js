@@ -1,12 +1,47 @@
 export class Question {
-    constructor(difficulty, street, number, direction, place, transport, text_swe, text_eng) {
-        this.difficulty = difficulty
-        this.street = street
-        this.number = number
-        this.direction = direction
-        this.place = place
-        this.transport = transport
-        this.text_swe = text_swe
-        this.text_eng = text_eng
+
+  constructor({
+
+    id,
+    difficulty,
+    targetHouseNumber,
+    targetStreet,
+    targetLandmark = null,
+    direction = null,
+    targetTransport = null,
+    promptSwedish = "",
+    promptEnglish = ""
+  }) {
+
+    this.id = id || `q_${Date.now()}_${Math.random().toString(36).substring(2, 6)}`;
+    this.difficulty = difficulty;
+    this.targetHouseNumber = targetHouseNumber;
+    this.targetStreet = targetStreet;
+    this.targetLandmark = targetLandmark;
+    this.direction = direction;
+    this.targetTransport = targetTransport;
+    this.promptSwedish = promptSwedish;
+    this.promptEnglish = promptEnglish;
+    this.isOddSide = targetHouseNumber % 2 !== 0;
+    this.hintUsed = false;
+    this.isAnsweredCorrectly = false;
+  }
+  checkAnswer(selectedHouseNumber, selectedTransport = null) {
+
+    const houseMatches = Number(selectedHouseNumber) === this.targetHouseNumber;
+    if(this.difficulty === 3 && this.targetTransport) {
+
+      const transportMatches = selectedTransport === this.targetTransport;
+      this.isAnsweredCorrectly = houseMatches && transportMatches;
+    } else {
+
+      this.isAnsweredCorrectly = houseMatches;
     }
+    return this.isAnsweredCorrectly;
+  }
+  useHint() {
+
+    this.hintUsed = true;
+    return this.promptEnglish;
+  }
 }

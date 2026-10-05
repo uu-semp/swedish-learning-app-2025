@@ -1,5 +1,5 @@
-import { GenerateQuestion } from '../model/services/question_generator'
-import { GenerateBoard } from '../model/services/board_generator'
+import { GenerateQuestion } from '../model/services/question_generator.js'
+import { GenerateBoard } from '../model/services/board_generator.js'
 import { reactive } from 'vue'
 
 
