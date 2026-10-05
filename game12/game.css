@@ -184,14 +184,14 @@ hr {
 }
 
 .horizontal-road{
-    grid-column: 1 / 6;
+    grid-column: 1 / 10;
     grid-row: 2;
     position: relative;
 }
 
 .vertical-road{
-    grid-column: 3;
-    grid-row: 3 / 6;
+    grid-column: 5;
+    grid-row: 3 / 7;
     display: grid;
     place-items: center;
     position: relative;
@@ -247,7 +247,7 @@ hr {
 }
 
 .horizontal-road .street-text {
-    left: 20%;
+    left: 21%;
     top: 50%;
     transform: translate(-50%, -50%);
 }
@@ -283,55 +283,61 @@ hr {
     z-index: 1;
 }
 
-#house-grid{
-    display:grid;
-    grid-template-columns: 100px 100px 40px 100px 100px;
-    grid-template-rows: 80px 40px 80px 80px 80px;
+#house-grid {
+    display: grid;
+    grid-template-columns:
+        repeat(4, 50px)
+        40px
+        repeat(4, 50px);
+    grid-template-rows:
+        64px
+        40px
+        repeat(4, 64px);
     justify-content: center;
 }
 
+
 #house-grid button {
     position: relative;
-    width: 70px;
-    height: 70px;
-    background: #ffcc80; /* warm orange walls */
-    border: 3px solid #d17a22;
-    border-radius: 0 0 10px 10px;
+    width: 38px;
+    height: 38px;
+    box-sizing: border-box;
+    margin-top: 22px;
+    background: #ffcc80;
+    border: 2px solid #d17a22;
+    border-radius: 0 0 6px 6px;
     cursor: pointer;
-    font-size: 1.5rem;
+    font-size: 0.95rem;
     font-weight: bold;
     color: #4a2c00;
     transition: transform 0.2s, box-shadow 0.2s;
     justify-self: center;
 }
 
-/* Little roof using a pseudo-element */
+
 #house-grid button::before {
     content: "";
     position: absolute;
-    top: -40px;
+    top: -22px;
     left: 50%;
     transform: translateX(-50%);
     width: 0;
     height: 0;
-    border-left: 41px solid transparent;
-    border-right: 41px solid transparent;
-    border-bottom: 40px solid #d17a22; /* roof color */
+    border-left: 21px solid transparent;
+    border-right: 21px solid transparent;
+    border-bottom: 22px solid #d17a22;
 }
 
-/* Hover effect for interactivity */
 #house-grid button:hover {
     transform: translateY(-5px);
     box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
     background: #ffe0b2;
 }
 
-/* Optional: pressed state */
 #house-grid button:active {
     transform: translateY(2px);
 }
 
-/* Optional: nice footer */
 footer {
     text-align: center;
     margin-top: 3rem;

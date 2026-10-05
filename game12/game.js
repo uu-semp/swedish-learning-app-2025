@@ -24,19 +24,37 @@ const app = Vue.createApp({
 
       houseOptions: [],
       housePositions: [
+        // horisontell uppe
         {col: 1, row: 1},
         {col: 2, row: 1},
+        {col: 3, row: 1},
         {col: 4, row: 1},
         {col: 5, row: 1},
+        {col: 6, row: 1},
+        {col: 7, row: 1},
+        {col: 8, row: 1},
+        {col: 9, row: 1},
+
+        // horisontell höger nere
         {col: 1, row: 3},
         {col: 2, row: 3},
-        {col: 4, row: 3},
-        {col: 5, row: 3},
-        {col: 2, row: 4},
-        {col: 2, row: 5},
+        {col: 3, row: 3},
+
+        // horisontell nere vänster
+        {col: 7, row: 3},
+        {col: 8, row: 3},
+        {col: 9, row: 3},
+
+        // vänster lod
         {col: 4, row: 4},
-        {col: 4, row: 5}
-      ],
+        {col: 4, row: 5},
+        {col: 4, row: 6},
+
+        // höger lod
+        {col: 6, row: 4},
+        {col: 6, row: 5},
+        {col: 6, row: 6}
+        ],
       correctHouseIndex: -1,
       currentQuestion: null,
       currentStreet: '',
@@ -88,7 +106,7 @@ const app = Vue.createApp({
       const vocabStreet = window.vocabulary.get_vocab(this.vocabStreets[randomStreetIndex]);
       this.currentStreet = vocabStreet.sv
 
-      const houseCount = 4;
+      const houseCount = this.housePositions.length;
       const highestNumber = this.vocabNumbers.length - 1;
       const result = generateRandomHouses(vocab.literal, houseCount, highestNumber);
 

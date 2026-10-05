@@ -22,20 +22,27 @@ function renderHouseButtons() {
 //Generates an array of length houseCount of house numbers. The houses are in sequence,
 //increasing by 1 or 2 depending on a random variable. The array will always contain houseNumber
 function generateRandomHouses(houseNumber, houseCount, highestNumber) {
-  const doubleHouses = irandom_range(0, 1);
-  const maxPos = Math.min(Math.floor((houseNumber - 1) / (1 + doubleHouses)), houseCount - 1);
-  const minPos = Math.min(
-    Math.max(Math.ceil((houseCount - 1) - (highestNumber - houseNumber) / (1 + doubleHouses)), 0),
+  const step = irandom_range(1, 2);
+
+  const maxCorrectPosition = Math.min(
+    Math.floor((houseNumber - 1) / step),
     houseCount - 1
   );
-  const relativeHousePosition = irandom_range(Math.max(0, minPos), maxPos);
+
+  const correctHouse = irandom_range(0, maxCorrectPosition);
+
+  const firstHouse = houseNumber - correctHouse * step;
+
   const houses = [];
 
   for (let i = 0; i < houseCount; i++) {
-    houses.push(houseNumber - (relativeHousePosition - i) * (1 + doubleHouses));
+    houses.push(firstHouse + i * step);
   }
 
-  return { houseArray: houses, correctHouse: relativeHousePosition };
+  return {
+    houseArray: houses,
+    correctHouse: correctHouse
+  };
 }
 
 //Alerts correct if correct house
