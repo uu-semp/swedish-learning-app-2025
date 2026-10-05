@@ -44,7 +44,7 @@ function fetchDescription() {
         console.log(outfit.items);
     });
 }
-
+window.nextInstruction = fetchDescription;
 /**
  * Initializes the game once the page has loaded.
  *

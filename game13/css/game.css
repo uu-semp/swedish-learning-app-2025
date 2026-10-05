@@ -333,6 +333,12 @@ body {
   transform: none;
   cursor: default;
 }
+.close {
+    cursor: pointer;
+    font-size: 30px;
+    background: none;
+    border: none;
+}
 
 /* Buttons */
 .btn {

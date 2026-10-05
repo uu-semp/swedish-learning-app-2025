@@ -99,6 +99,10 @@ export function injectHtmlObjects(htmlObjects) {
             if (s.firstElementChild) takeOff(s.firstElementChild);
         });
     }
+    window.clearWardrobe = () => {
+    removeAll();
+    updateButtons();
+    };
 
     const playerWear = recordable(wear);
     const playerTakeOff = recordable(takeOff);
@@ -131,6 +135,7 @@ export function injectHtmlObjects(htmlObjects) {
         menuRoot.appendChild(item);
     });
 }
+
 
 // How far (in px) the pointer must move before a press counts as a drag
 // rather than a click.
