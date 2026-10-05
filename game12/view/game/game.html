@@ -27,34 +27,59 @@
         <main class="game-frame">
             <section id="game-screen">
                 <div class="game-box">
-                    <a href="../menu/index.html" class="start-page-button" @click="BackToMenu">
-                        ← Tillbaka till menyn
-                    </a>
-
-    
-                    <div class="progress-wrap">
-                        <div class="progress-label">
-                            Framsteg:
-                            {{ view.progress }} / {{ view.progressMax }}
+                    <div class="game-top-row">
+                        <div class="progress-wrap">
+                            <div class="progress-label">
+                                {{ display.language === "en" ? "Progress" : "Framsteg" }}:
+                                {{ view.progress }} / {{ view.progressMax }}
+                            </div>
                         </div>
 
-                        <div
-                            class="progress-bar"
-                            role="progressbar"
-                            aria-label="Framsteg"
-                            aria-valuemin="0"
-                            :aria-valuemax="view.progressMax"
-                            :aria-valuenow="view.progress"
-                        >
-                            <div
-                                id="progress-fill"
-                                :style="{ width: progressPercentage }"
-                            ></div>
-                        </div>
+                        <!-- Answer feedback -->
+                        <p class="selection-feedback" role="status"s>
+                            <template v-if="game.answer_locked">
+                                <span v-if="game.answer_correct">
+                                    {{ display.language === "en" ? "✓ Correct!" : "✓ Rätt!" }}
+                                </span>
+
+                                <span v-else>
+                                    {{ display.language === "en"
+                                        ? "✗ Incorrect answer."
+                                        : "✗ Fel svar." }}
+                                </span>
+
+                                <span v-if="game.answer_correct && game.hint_used">
+                                    {{ display.language === "en"
+                                        ? " This question will be repeated."
+                                        : " Frågan kommer igen." }}
+                                </span>
+                            </template>
+                        </p>
+
+                        <a href="../menu/index.html" class="start-page-button" @click="BackToMenu">
+                            {{ display.language === "en"
+                                ? "← Back to menu"
+                                : "← Tillbaka till menyn" }}
+                        </a>
+
                     </div>
 
-                    <hr>
+                    <div
+                                class="progress-bar"
+                                role="progressbar"
+                                :aria-label="display.language === 'en' ? 'Progress' : 'Framsteg'"
+                                aria-valuemin="0"
+                                :aria-valuemax="view.progressMax"
+                                :aria-valuenow="view.progress"
+                            >
+                                <div
+                                    id="progress-fill"    
+                                    :style="{ width: progressPercentage }"
+                                ></div>
+                        </div>
 
+                    <hr>
+                
                     <!-- Question with individually translated words -->
                     <div id="prompt-words">
                         <button
@@ -69,18 +94,6 @@
                             {{ word.translated ? word.en : word.sv }}
                         </button>
                     </div>
-
-                    <!-- Answer feedback -->
-                    <p class="selection-feedback" role="status">
-                        <template v-if="game.answer_locked">
-                            <span v-if="game.answer_correct">✓ Rätt!</span>
-                            <span v-else>✗ Fel svar.</span>
-
-                            <span v-if="game.answer_correct && game.hint_used">
-                                Du får frågan igen utan ledtråd.
-                            </span>
-                        </template>
-                    </p>
 
                     <!-- Existing road and house grid -->
                     <div class="board-scroll">
@@ -137,31 +150,36 @@
 
                     <!--Add only horizontal road here-->
 
-                    
-
                     <hr>
+                    <div class="hint-controls">
 
-                    <!-- The Hint -->
-                    <button
-                        type="button"
-                        class="control-button"
-                        :aria-expanded="view.showTranslation"
-                        aria-controls="english-line"
-                        @click="toggleTranslation"
-                        :disabled="game.answer_locked || game.is_finished"
-                    >
-                        {{ view.showTranslation
-                            ? 'Dölj Ledtråd'
-                            : 'Ledtråd' }}
-                    </button>
+                        <div
+                            v-if="view.showTranslation"
+                            id="english-line"
+                            lang="en"
+                        >
+                            {{ view.englishSentence }}
+                        </div>
 
-                    <div
-                        v-if="view.showTranslation"
-                        id="english-line"
-                        lang="en"
-                    >
-                        {{ view.englishSentence }}
+                        <!-- The Hint -->
+                        <button
+                            type="button"
+                            class="control-button hint-button"
+                            :aria-expanded="view.showTranslation"
+                            aria-controls="english-line"
+                            @click="toggleTranslation"
+                            :disabled="game.answer_locked || game.is_finished"
+                        >
+                            <span v-if="view.showTranslation">
+                                {{ display.language === "en" ? "Hide hint" : "Dölj ledtråd" }}
+                            </span>
+                            <span v-else>
+                                {{ display.language === "en" ? "Hint" : "Ledtråd" }}
+                            </span>
+                        </button>
+                        
                     </div>
+                    
                 </div>
             </section>
         </main>

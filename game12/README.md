@@ -15,7 +15,7 @@ This game is a static website and part of the main app in the repository root. T
 python3 -m http.server 8000
 ```
 
-Then open <http://localhost:8000/game12/index.html>.
+Then open <http://localhost:8000/index.html>.
 
 `index.html` only redirects to `view/menu/index.html`, since the shared project menu links directly to `game12/index.html`.
 

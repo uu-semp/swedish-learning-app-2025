@@ -4,18 +4,18 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Hitta rätt hus</title>
+  <title>Hitta rätt hus</title>
 
     <link rel="stylesheet" href="./menu.css">
-  <script src="./menu.js" defer></script>
+  <script type="module" src="./menu.js"></script>
   <script src="../../../scripts/save.js"></script>
   <script src="../progress/points.js" defer></script>
 </head>
 
 <body>
     <main>
-        <h1>Hitta rätt hus</h1>
-        <p>Välj svårighetsgrad:</p>
+        <h1 id="menu-title" class="translate">Hitta rätt hus</h1>
+        <p id="menu-instruction" class="translate">Välj svårighetsgrad:</p>
 
         <div class="buttons">
             <a href="../game/game.html?difficulty=1" id="lvl1" class="btn start">

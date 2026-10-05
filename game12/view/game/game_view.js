@@ -17,8 +17,40 @@ createApp({
 
         // Traslation display state 
         const display = reactive({
+            language: localStorage.getItem("game12Language") || "sv",
             showTranslation: false,
             promptWords: []
+        })
+
+        function setLanguage(language) {
+            display.language = language
+            localStorage.setItem("game12Language", language)
+            document.documentElement.lang = language
+
+            document.title = language === "en"
+                ? "Find the right house"
+                : "Hitta rätt hus"
+        }
+
+        function useEnglish() {
+            setLanguage("en")
+        }
+
+        function useSwedish() {
+            setLanguage("sv")
+        }
+
+        const englishButton = window.parent.document.getElementById("lang-eng")
+        const swedishButton = window.parent.document.getElementById("lang-sv")
+
+        englishButton.addEventListener("click", useEnglish)
+        swedishButton.addEventListener("click", useSwedish)
+
+        setLanguage(display.language)
+
+        window.addEventListener("pagehide", function () {
+            englishButton.removeEventListener("click", useEnglish)
+            swedishButton.removeEventListener("click", useSwedish)
         })
 
         const currentQuestion = computed(function () {
@@ -95,8 +127,6 @@ createApp({
 
             word.translated = !word.translated
 
-            // Should translation of invididual wordscount as a hint??? -Oskar
-            controller.UseHint()
         }
 
         function BackToMenu() {
@@ -155,6 +185,7 @@ createApp({
         )
 
         return {
+            display,
             game,
             view,
             visibleHouses,
