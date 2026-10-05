@@ -14,6 +14,12 @@ $(function () {
   const corrects_needed = 8; // number of correct pairs needed to win
   const misses_max = 20; // number of misses allowed before losing
   const numPairs = 8; // number of pairs of cards
+  const mode_titles = {
+    picture: "Match each picture to its Swedish word",
+    spelling: "Type the Swedish word for each picture",
+    listening: "Match each sound to its Swedish word",
+    dialect: "Match each dialect sound to its Swedish word",
+  }; // heading above the board for each mode
 
   // variables
   let corrects = 0;
@@ -47,8 +53,14 @@ $(function () {
     allowFlipBack = false;
   }
 
+  function updateProgress() {
+    $("#progress-fill").css("width", (corrects / corrects_needed) * 100 + "%");
+    $("#progress-text").text(`${corrects} / ${corrects_needed} pairs`);
+  }
+
   function resetGame() {
     corrects = 0;
+    updateProgress();
     misses = 0;
     $("#moves").text(`moves: 0`);
     resetFlipState();
@@ -67,6 +79,7 @@ $(function () {
 
   function foundMatch() {
     corrects++;
+    updateProgress();
     $("#moves").text(`moves: ${misses + corrects}`);
 
     if (corrects >= corrects_needed) {
@@ -154,6 +167,7 @@ $(function () {
   // Button handlers
   $("#start-game").on("click", async function () {
     const mode = $(".mode-btn.selected").data("mode"); // "picture", "spelling", "listening" or "dialect"
+    $("#game-title").text(mode_titles[mode]);
 
     $(this).prop("disabled", true).text("Loading...");
     await mapCards(mode);
@@ -181,6 +195,12 @@ $(function () {
     $(this).addClass("selected");
     $(".mode-info").hide();
     $("#info-" + $(this).data("mode")).show();
+    $("#dialect-buttons").toggle($(this).data("mode") === "dialect");
+  });
+
+  $(".dialect-btn").on("click", function () {
+    $(".dialect-btn").removeClass("selected");
+    $(this).addClass("selected");
   });
 
   // Event delegation för dynamiskt skapade kort

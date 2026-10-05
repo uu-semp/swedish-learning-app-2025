@@ -98,13 +98,23 @@ Owned by Game 02
       </div>
 
       <button id="start-game">Start Game</button>
+      <!-- Dialects, only shown when the Dialect mode is selected -->
+      <div id="dialect-buttons" style="display: none;">
+        <button class="dialect-btn selected" data-dialect="standard">Standard Swedish</button>
+        <button class="dialect-btn" data-dialect="malmo">Malmö</button>
+        <button class="dialect-btn" data-dialect="gothenburg">Gothenburg</button>
+        <button class="dialect-btn" data-dialect="ostgota">Östgöta</button>
+      </div>
+
+
     </section>
 
 
 
     <!-- Game Screen -->
     <section id="game-screen" style="display: none;">
-      <h2>Match the image to the description to clear the board</h2>
+      <div id="progress-bar"><div id="progress-fill"></div><span id="progress-text">0 / 8 pairs</span></div>
+      <h2 id="game-title">Match the image to the description to clear the board</h2>
       <div id="game-board">
         <!-- 16 example cards -->
         <div class="card" data-index="1">

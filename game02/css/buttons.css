@@ -71,7 +71,7 @@ button:active {
 #end-game {
     background-color: #9d0000;
     /* red */
-    color: black;
+    color: #fff;
     padding: 12px 20px;
     border-radius: 8px;
     border: none;
@@ -84,4 +84,36 @@ button:active {
     background-color: #c0392b;
     /* darker red on hover */
     transform: translateY(-2px);
+}
+
+/* Progress bar along the top of the game screen (pairs found) */
+#progress-bar {
+    position: absolute;
+    top: 10px;
+    left: 20px;
+    right: 20px;
+    height: 14px;
+    background-color: #FFCAE9;
+    border: 2px solid #555;
+    border-radius: 9px;
+    overflow: hidden;
+}
+
+#progress-fill {
+    width: 0%;
+    height: 100%;
+    background-color: #37855F;
+    transition: width 0.4s ease;
+}
+
+#progress-text {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    text-align: center;
+    font-size: 13px;
+    font-weight: bold;
+    line-height: 14px;
+    color: #000;
 }
