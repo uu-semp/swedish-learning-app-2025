@@ -305,16 +305,72 @@ window.addEventListener('DOMContentLoaded', () => {
             const isActive =
                 document.body.classList.contains('high-contrast-mode');
 
-            toggleContrastBtn.textContent =
-                isActive ? 'PÅ' : 'AV';
+            // NOTE: Needs to know the current langauge to work properly
+            const languageBtn =
+                document.getElementById('toggle-language-btn');
 
-            toggleContrastBtn.classList.toggle(
-                'active',
-                isActive
-            );
+            if (languageBtn) {
+                const isSwedish = languageBtn.textContent == "Engelska";
+                toggleContrastBtn.textContent =
+                    isSwedish 
+                        ? isActive
+                            ? 'PÅ'
+                            : 'AV'
+                        : isActive
+                            ? 'ON'
+                            : 'OFF';
+
+                toggleContrastBtn.classList.toggle(
+                    'active',
+                    isActive
+                );
+            }
         });
     }
 
+
+    // LANGUAGE
+
+    const languageBtn =
+        document.getElementById('toggle-language-btn');
+
+    if (languageBtn) {
+        languageBtn.addEventListener('click', async () => {
+            // NOTE: This check is quite fragile to changes
+            const isSwedish = languageBtn.textContent == "Engelska";
+            const res = await fetch("assets/translations.json");
+            if (!res.ok) {
+                throw new Error("Failed to load translations.json");
+            }
+            const translationTable = new Map(Object.entries(await res.json()));
+            if (translationTable.size == 0) {
+                throw new Error("Failed to convert translations table to JSON");
+            }
+
+            translationTable.forEach((value, key) => {
+                const currentElement = document.getElementById(key);
+                if (!currentElement) {
+                    console.error(`[parent] failed to translate ${key}`);
+                }
+
+                // NOTE: Needs to be handled seperatly because the text can change
+                if (key == "toggle-contrast-btn") {
+                    const isContrastOn =
+                        document.body.classList.contains('high-contrast-mode');
+                    currentElement.textContent = 
+                        isSwedish 
+                            ? isContrastOn
+                                ? 'ON'
+                                : 'OFF'
+                            : isContrastOn
+                                ? 'PÅ'
+                                : 'AV';
+                } else {
+                    currentElement.innerHTML = isSwedish ? value.en : value.sv;
+                }
+            });
+        });
+    }
 
     // COPYRIGHT
 

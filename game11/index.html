@@ -38,7 +38,7 @@
 
     <div id="settings-modal" class="modal-overlay hidden">
       <div class="modal-box">
-        <h2 style="margin: 0 0 10px 0; text-align: center;">Meny</h2>
+        <h2 id="menu-header-text" style="margin: 0 0 10px 0; text-align: center;">Meny</h2>
 
         <button class="modal-btn">Info</button>
         <button id="restart-btn" class="modal-btn">Börja om</button>
@@ -49,8 +49,12 @@
         <hr style="margin: 12px 0; border: 1px dashed #ccc;">
 
         <div class="setting-row">
-          <span>Hög kontrast</span>
+          <span id="toggle-contrast-text">Hög kontrast</span>
           <button id="toggle-contrast-btn" class="toggle-btn">AV</button>
+        </div>
+        <div class="setting-row">
+          <span id="toggle-language-text">Byt språk</span>
+          <button id="toggle-language-btn" class="toggle-btn">Engelska</button>
         </div>
 
         <button id="close-settings-btn" class="close-btn">Stäng</button>
@@ -65,7 +69,7 @@
         class="cart">
       <img src="assets/shelf.png" alt="Shelf" class="shelf">
 
-      <div class="instructions" role="note" aria-label="Game instructions">
+      <div id="instructions" class="instructions" role="note" aria-label="Game instructions">
         <p>
           <strong>Hur du spelar</strong><br>
           Hitta objekten från inköpslistan på hyllan,<br>
@@ -99,7 +103,7 @@
 
       <div class="top-right-controls">
         <div class="menu-wrapper">
-          <button id="main-menu-btn" class="menu-btn">Menu ☰</button>
+          <button id="main-menu-btn" class="menu-btn">Meny ☰</button>
 
         </div>
       </div>
@@ -118,15 +122,15 @@
       <section id="copyright">
         <div>
           <button id="close-copyright">&times;</button>
-          <h2>Licenses <i class="fas fa-minus"></i> numbered left to right, top
-            to bottom <i class="fas fa-minus"></i> scroll to see more
+          <h2 id="copyright-header-text">
+            Licenser <i class="fas fa-minus"></i> numrerad vänster till höger, uppifrån och ner <i class="fas fa-minus"></i> skrolla för att se mer
           </h2>
           <div class="table_wrapper">
             <table>
               <thead>
                 <tr>
-                  <th>Image</th>
-                  <th>License</th>
+                  <th id="copyright-table-image-text">Image</th>
+                  <th id="copyright-table-license-text">License</th>
                 </tr>
               </thead>
               <tbody>
