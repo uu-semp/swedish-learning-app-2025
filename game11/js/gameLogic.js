@@ -5,11 +5,10 @@ import { getItemsIds } from './data.js';
 
 // Number of items in each round.
 const ROUND_SIZE = 10;
-// Number of additional items shown as distractors.
-const DISTRACTOR_COUNT = 6;
+// Total capacity of the shelf (target items + distractors).
+const SHELF_CAPACITY = 16;
 // Key used to store the current game state.
 const STORAGE_KEY = 'game11_game_state';
-
 
 
 /**
@@ -20,7 +19,7 @@ const STORAGE_KEY = 'game11_game_state';
  * @returns {Array} An array containing the requested number of randomly selected items.
  */
 export function generateList(number_of_items, array) {
-    // copy of the array
+  // copy of the array
   const arr = array.slice();
   // Shuffle the order
   for (let i = arr.length - 1; i > 0; i--) {
@@ -30,7 +29,6 @@ export function generateList(number_of_items, array) {
   // take the first number_of_items
   return arr.slice(0, number_of_items);
 }
-
 
 
 /**
@@ -50,39 +48,38 @@ export function generateShoppingList(allItems, listSize = ROUND_SIZE) {
 }
 
 
-
 /**
- * Generates the items displayed on the shelf.
+ * Generates the items displayed on the shelf dynamically filling empty spots.
  *
  * @param {Array} shoppingList - The items that the player needs to find.
  * @param {Array} allItems - All available grocery items.
- * @param {number} distractorCount - The number of additional items to display.
  * @returns {Array} A shuffled array containing the shopping list items and distractors.
  */
-export function generateShelf(shoppingList, allItems, distractorCount = DISTRACTOR_COUNT) {
+export function generateShelf(shoppingList, allItems) {
   // validate that we have a valid shopping list
   if (!shoppingList || shoppingList.length === 0) {
     console.error('generateShelf: Invalid shopping list');
     return [];
   }
-  
- 
-  //ID for items in the shopping list
+
+  // ID for items in the shopping list
   const shoppingListIds = shoppingList.map(item => item.id);
-  
-  //Items which can be distractors
+
+  // Items which can be distractors
   const availableDistractors = allItems.filter(item => !shoppingListIds.includes(item.id));
-  
+
+  // Calculate exactly how many distractors are needed to fill the 16 slots
+  const neededDistractors = SHELF_CAPACITY - shoppingList.length;
+
   // Generate distractors
-  const distractors = generateList(distractorCount, availableDistractors);
-  
+  const distractors = generateList(neededDistractors, availableDistractors);
+
   // Combine shopping list items with distractors
   const shelfItems = [...shoppingList, ...distractors];
-  
+
   // Shuffle the array using generateList
   return generateList(shelfItems.length, shelfItems);
 }
-
 
 
 /**
@@ -96,25 +93,24 @@ function evaluateChoice(state, chosenWord) {
   const target = state.shoppingList[state.currentIndex];
   if (!state.mistakes[target]) state.mistakes[target] = 0;
 
-    if (chosenWord === target) {
-      // Check whether the user selected the correct item on their first attempt.
-      const firstTry = state.mistakes[target] === 0;
-      // Store whether the item was answered correctly on the first attempt.
-      state.correctFirstTry.push(firstTry);
-      
-      // curretIndecx = Position in the shopping list the player is currently working on.
-      state.currentIndex++;
-      // Mark the game as finished when all items have been completed.
-      if (state.currentIndex >= state.shoppingList.length) {
-        state.finished = true;
-      }
-      return {correct: true, firstTry};
-    } else {
-      state.mistakes[target] ++;
-      return {correct: false};
+  if (chosenWord === target) {
+    // Check whether the user selected the correct item on their first attempt.
+    const firstTry = state.mistakes[target] === 0;
+    // Store whether the item was answered correctly on the first attempt.
+    state.correctFirstTry.push(firstTry);
+
+    // curretIndecx = Position in the shopping list the player is currently working on.
+    state.currentIndex++;
+    // Mark the game as finished when all items have been completed.
+    if (state.currentIndex >= state.shoppingList.length) {
+      state.finished = true;
+    }
+    return { correct: true, firstTry };
+  } else {
+    state.mistakes[target]++;
+    return { correct: false };
   }
 }
-
 
 
 /**

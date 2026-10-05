@@ -6,7 +6,7 @@ import {
   loadSpacedRepetitionMemory,
   initializeSpacedRepetition,
   getWordsDueToday
-} from "./spacedRepetitionLogic.js";
+} from "./spacedRepetition/spacedRepetitionLogic.js";
 
 const STORAGE_KEY = "game_state";
 const SR_ENABLED_KEY = "sr_enabled";

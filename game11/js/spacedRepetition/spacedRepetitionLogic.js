@@ -1,4 +1,4 @@
-import { getItems } from "./data.js";
+import { getItems } from "../data.js";
 
 const SR_STORAGE_KEY = "sr_memory";
 
@@ -100,14 +100,13 @@ function updateSpacedRepetitionWord(wordId, mistakes) {
 
     wordMemory.errorsTotal += mistakes;
 
-    // Leveling logic based on performance
+    const maxLevel = SR_INTERVALS.length - 1;
+
+    // Progress on success, total reset on any mistake
     if (mistakes === 0) {
-        // Correct on first try: increase level (capped at max interval)
-        const maxLevel = SR_INTERVALS.length - 1;
         wordMemory.level = Math.min((wordMemory.level || 0) + 1, maxLevel);
     } else {
-        // Wrong answers: decrease level by number of mistakes (minimum level 0)
-        wordMemory.level = Math.max(0, (wordMemory.level || 0) - mistakes);
+        wordMemory.level = 0;
     }
 
     // Calculate next review date based on the new level

@@ -6,7 +6,7 @@ import {
 import { displayShelf, displayShoppingList, displayCopyright } from "./ui.js";
 import {
   updateSpacedRepetitionWord
-} from "./spacedRepetitionLogic.js";
+} from "./spacedRepetition/spacedRepetitionLogic.js";
 
 //The game state is stored in this variable and is exposed to the global window object for access from other scripts.
 let gameState = {};

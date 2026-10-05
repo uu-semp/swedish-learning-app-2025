@@ -4,13 +4,12 @@ import {
     hasSpacedRepetitionConsent,
     giveSpacedRepetitionConsent,
     deleteSpacedRepetitionMemory
-} from './state.js';
+} from '../state.js';
 
 
 async function loadSpacedRepetitionHTML() {
-    const response = await fetch('./html/spacedRepetition.html');
-
-    if (!response.ok) {
+    const htmlUrl = new URL('../../html/spacedRepetition.html', import.meta.url);
+    const response = await fetch(htmlUrl); if (!response.ok) {
         throw new Error(
             `Could not load spacedRepetition.html: ${response.status}`
         );
