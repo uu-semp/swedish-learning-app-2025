@@ -182,13 +182,13 @@ hr {
     background-color: rgb(71, 71, 71);
 }
 
-.horizontal-road{
+.horizontal-road-T{
     grid-column: 1 / 6;
     grid-row: 2;
     position: relative;
 }
 
-.vertical-road{
+.vertical-road-T{
     grid-column: 3;
     grid-row: 3 / 6;
     display: grid;
@@ -245,13 +245,13 @@ hr {
     z-index: -1;
 }
 
-.horizontal-road .street-text {
+.horizontal-road-T .street-text {
     left: 20%;
     top: 50%;
     transform: translate(-50%, -50%);
 }
 
-.vertical-road .street-text {
+.vertical-road-T .street-text {
     left: 50%;
     top: 32%;
     transform: translate(-50%, -50%) rotate(90deg);
@@ -263,7 +263,7 @@ hr {
 }
 
 
-.horizontal-road .dotted-line {
+.horizontal-road-T .dotted-line {
     left: 0;
     right: 0;
     top: 50%;
@@ -271,7 +271,7 @@ hr {
     border-top: 2px dashed white;
 }
 
-.vertical-road .dotted-line {
+.vertical-road-T .dotted-line {
     top: -16px;
     left: 50%;
     height: calc(100% + 16px);
@@ -282,14 +282,14 @@ hr {
     z-index: 1;
 }
 
-#house-grid{
+#house-grid-T{
     display:grid;
     grid-template-columns: 100px 100px 40px 100px 100px;
     grid-template-rows: 80px 40px 80px 80px 80px;
     justify-content: center;
 }
 
-#house-grid button {
+#house-grid-T button {
     position: relative;
     width: 70px;
     height: 70px;
@@ -305,7 +305,7 @@ hr {
 }
 
 /* Little roof using a pseudo-element */
-#house-grid button::before {
+#house-grid-T button::before {
     content: "";
     position: absolute;
     top: -40px;
@@ -319,23 +319,23 @@ hr {
 }
 
 /* Hover effect for interactivity */
-#house-grid button:hover {
+#house-grid-T button:hover {
     transform: translateY(-5px);
     box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
     background: #ffe0b2;
 }
 
 /* Optional: pressed state */
-#house-grid button:active {
+#house-grid-T button:active {
     transform: translateY(2px);
 }
 
-#house-grid button.is-correct {
+#house-grid-T button.is-correct {
     background-color: #d9f2df;
     outline: 3px solid #24743b;
 }
 
-#house-grid button.is-incorrect {
+#house-grid-T button.is-incorrect {
     background-color: #f8dddd;
     outline: 3px solid #a52a2a;
 }

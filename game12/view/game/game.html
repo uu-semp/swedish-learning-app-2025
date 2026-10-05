@@ -73,10 +73,11 @@
                     <!-- Existing road and house grid -->
                     <div class="board-scroll">
                         <div
-                            id="house-grid"
+                            v-if="game.difficulty === 1"
+                            id="house-grid-T"
                             :class="{ 'horizontal-only': view.roadType === 'horizontal' }"
                         >
-                            <div class="road horizontal-road">
+                            <div class="road horizontal-road-T">
                                 <p class="street-text">
                                     {{ view.horizontalStreet }}
                                 </p>
@@ -84,7 +85,7 @@
                                 <div class="dotted-line"></div>
                             </div>
 
-                            <div class="road vertical-road">
+                            <div class="road vertical-road-T">
                                 <p class="street-text">
                                     {{ view.verticalStreet }}
                                 </p>
@@ -121,6 +122,8 @@
                             </button>
                         </div>
                     </div>
+
+                    <!--Add only horizontal road here-->
 
                     <!-- Answer feedback -->
                     <p class="selection-feedback" role="status">
