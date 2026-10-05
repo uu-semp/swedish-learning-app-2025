@@ -70,6 +70,18 @@
                         </button>
                     </div>
 
+                    <!-- Answer feedback -->
+                    <p class="selection-feedback" role="status">
+                        <template v-if="game.answer_locked">
+                            <span v-if="game.answer_correct">✓ Rätt!</span>
+                            <span v-else>✗ Fel svar.</span>
+
+                            <span v-if="game.answer_correct && game.hint_used">
+                                Du får frågan igen utan ledtråd.
+                            </span>
+                        </template>
+                    </p>
+
                     <!-- Existing road and house grid -->
                     <div class="board-scroll">
                         <div
@@ -125,17 +137,7 @@
 
                     <!--Add only horizontal road here-->
 
-                    <!-- Answer feedback -->
-                    <p class="selection-feedback" role="status">
-                        <template v-if="game.answer_locked">
-                            <span v-if="game.answer_correct">✓ Rätt!</span>
-                            <span v-else>✗ Fel svar.</span>
-
-                            <span v-if="game.answer_correct && game.hint_used">
-                                Du får frågan igen utan ledtråd.
-                            </span>
-                        </template>
-                    </p>
+                    
 
                     <hr>
 
