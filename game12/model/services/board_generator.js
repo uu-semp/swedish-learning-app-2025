@@ -21,10 +21,10 @@ function GenerateHorizontal(streets, ranges) {
         { col: 5, row: 3 },
     ]
 
-    let chosen_street_1 = streets[Math.floor((Math.random() * streets.length + 1))]
+    let chosen_street_1 = streets[Math.floor((Math.random() * streets.length))]
 
     let buildings_horionztal = []
-    for (let index = 0; index < building_positions_horionztal; index++) {
+    for (let index = 0; index < building_positions_horionztal.length; index++) {
         let house_number = chosen_range + index
         buildings_horionztal[index] = {
             Type: "HOUSE",
@@ -61,12 +61,10 @@ function GenerateT(streets, ranges) {
         { col: 2, row: 5 },
     ]
 
-    let chosen_street_1 = streets[Math.floor((Math.random() * streets.length + 1))]
+    let chosen_street_1 = streets[Math.floor((Math.random() * streets.length))]
     streets = streets.filter(street => street !== chosen_street_1)
-    let chosen_street_2 = streets[Math.floor((Math.random() * streets.length + 1))]
+    let chosen_street_2 = streets[Math.floor((Math.random() * streets.length))]
 
-    let chosen_range_index = Math.floor((Math.random() * ranges.length))
-    console.log("index: " + chosen_range_index)
     let chosen_range = ranges[Math.floor((Math.random() * ranges.length))]
 
     console.log("ranges: " + ranges)
@@ -90,8 +88,8 @@ function GenerateT(streets, ranges) {
         let house_number = chosen_range[0] + index
         buildings_vertical[index] = {
             type: "HOUSE",
-            id: chosen_street_1 + "_" + house_number,
-            street: chosen_street_1,
+            id: chosen_street_2 + "_" + house_number,
+            street: chosen_street_2,
             houseNumber: house_number,
             col: building_positions_vertical[index].col,
             row: building_positions_vertical[index].row
@@ -101,7 +99,9 @@ function GenerateT(streets, ranges) {
     return {
         BuildingsHorizontal: buildings_horionztal,
         BuildingsVertical: buildings_vertical,
-        ChosenRange: chosen_range
+        ChosenRange: chosen_range,
+        HorizontalStreet: chosen_street_1,
+        VerticalStreet: chosen_street_2
     }
 }
 

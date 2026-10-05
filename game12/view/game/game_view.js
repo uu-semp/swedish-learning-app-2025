@@ -50,16 +50,14 @@ createApp({
 
         // Values displayed by game.html
         const view = computed(function () {
-            const selectedHouse = visibleHouses.value.find(function (house) {
-                return house.id === game.selected_answer
-            })
+            const selectedHouse = visibleHouses.value.find(isSelected)
 
             return {
                 progress: game.answered_in_round,
                 progressMax: game.round_total,
                 roadType: currentBoard.value.type,
-                horizontalStreet: currentBoard.value.horizontalStreet,
-                verticalStreet: currentBoard.value.verticalStreet,
+                horizontalStreet: currentBoard.value.HorizontalStreet,
+                verticalStreet: currentBoard.value.VerticalStreet,
                 selectedHouse: selectedHouse || null,
                 showTranslation: display.showTranslation,
                 englishSentence: currentQuestion.value.promptEnglish,
@@ -70,8 +68,12 @@ createApp({
         function SelectHouse(house) {
             controller.CheckAnswer(
                 game.current_question_index,
-                house.id
+                house
             )
+        }
+
+        function isSelected(house){
+            return game.selected_answer !== null && game.selected_answer.street === house.street && game.selected_answer.houseNumber === house.houseNumber
         }
 
         function toggleTranslation() {
@@ -157,6 +159,7 @@ createApp({
             view,
             visibleHouses,
             progressPercentage,
+            isSelected,
             SelectHouse,
             translateWord,
             toggleTranslation,

@@ -72,7 +72,7 @@ export function Initialize(difficulty) {
 
 
 
-function StartRepetitionRound() {
+function StartRepetitionRound(game) {
     while (game.incorrect_questions.length > 0) {
         const random_index = Math.floor(Math.random() * game.incorrect_questions.length)
 
@@ -105,9 +105,9 @@ export function NextRound_GM(game) {
 
     if (game.remaining_questions.length === 0) {
         if (game.incorrect_questions.length > 0) {
-            StartRepetitionRound()
+            StartRepetitionRound(game)
         } else {
-            FinishGame()
+            FinishGame(game)
             return
         }
     }
@@ -137,12 +137,14 @@ export function CheckAnswer_GM(question_index, house, game) {
 
     if (game.answer_correct && !game.hint_used) {
         game.finished_questions.push(question_index)
-        game.answered_in_round += 1
     }
 
     else {
         game.incorrect_questions.push(question_index)
     }
+
+    game.answered_in_round += 1
+
 
     feedback_timer = setTimeout(function () {
         feedback_timer = null
@@ -158,7 +160,7 @@ export function UseHint_GM(game) {
     game.hint_used = true
 }
 
-function FinishGame() {
+function FinishGame(game) {
     game.is_finished = true
 
     window.save.set(

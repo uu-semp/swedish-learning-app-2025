@@ -84,10 +84,7 @@
                                 <div class="dotted-line"></div>
                             </div>
 
-                            <div
-                                v-if="view.roadType === 't'"
-                                class="road vertical-road"
-                            >
+                            <div class="road vertical-road">
                                 <p class="street-text">
                                     {{ view.verticalStreet }}
                                 </p>
@@ -105,12 +102,12 @@
                                     gridColumn: house.col
                                 }"
                                 :class="{
-                                    'is-selected': game.selected_answer === house.id,
+                                    'is-selected': isSelected(house),
                                     'is-correct':
-                                        game.selected_answer === house.id &&
+                                        isSelected(house) &&
                                         game.answer_correct === true,
                                     'is-incorrect':
-                                        game.selected_answer === house.id &&
+                                        isSelected(house) &&
                                         game.answer_correct === false
                                 }"
                                 :aria-label="house.street + ' ' + house.houseNumber"
