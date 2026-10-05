@@ -16,6 +16,9 @@ function startGame() {
     // Initialize the game state.
     gameState = initGameState();
 
+    // Preload shelf images so they are cached before rendering
+    if (gameState.mode !== 2) gameState.shelf.forEach(item => { new Image().src = "../" + item.img; });
+
     // Display the shelf, shopping list, and copyright information.
     window.__game11GameState = gameState;
     displayShelf(gameState.shelf, gameState.mode);

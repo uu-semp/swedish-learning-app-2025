@@ -251,18 +251,38 @@ window.addEventListener('DOMContentLoaded', () => {
 
 
     // MODE 2
-
     const Mode2Btn = document.getElementById('mode2-btn');
-
     if (Mode2Btn) {
         Mode2Btn.addEventListener('click', () => {
             const state = window.__game11GameState;
-            if (state.mode == 1) {
-                state.mode = 2;
-            } else {
-                state.mode = 1;
-            }
+            state.mode = 2;
+            localStorage.setItem(
+                'game11_game_state',
+                JSON.stringify(state)
+            );
+            window.location.reload();
+        });
+    }
 
+    const Mode3Btn = document.getElementById('mode3-btn');
+    if (Mode3Btn) {
+        Mode3Btn.addEventListener('click', () => {
+            const state = window.__game11GameState;
+            state.mode = 3;
+            localStorage.setItem(
+                'game11_game_state',
+                JSON.stringify(state)
+            );
+            window.location.reload();
+        });
+    }
+
+    // MODE 1
+    const Mode1Btn = document.getElementById('mode1-btn');
+    if (Mode1Btn) {
+        Mode1Btn.addEventListener('click', () => {
+            const state = window.__game11GameState;
+            state.mode = 1;
             localStorage.setItem(
                 'game11_game_state',
                 JSON.stringify(state)
@@ -360,3 +380,19 @@ window.addEventListener('message', (event) => {
         window.location.reload();
     }, 100);
 });
+
+window.addEventListener('message', (event) => {
+    if (event.data.type === 'wrongAnswer') {
+        showWrongAnswer();
+    }
+});
+
+function showWrongAnswer() {
+    const wrongAnswer = document.getElementById('wrongAnswer');
+
+    wrongAnswer.style.display = 'block';
+
+    setTimeout(() => {
+        wrongAnswer.style.display = 'none';
+    }, 800);
+}

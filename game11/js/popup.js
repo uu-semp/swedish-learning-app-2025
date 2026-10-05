@@ -194,11 +194,11 @@
             st.done = true; game.completed++; nextItem();
         } else {
             toast(`Fel, <strong>${label || id}</strong> är inte <strong>${cur.sv}</strong>. Försök igen!`, 'error');
+            window.parent.postMessage({ type: 'wrongAnswer' }, '*');
             if (st.firstTry) { st.firstTry = false; game.mistakes++; } else { game.mistakes++; }
         }
         renderStatus();
     }
-
 
     /**
      * Moves the game to the next unfinished item.
