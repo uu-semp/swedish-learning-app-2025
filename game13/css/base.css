@@ -1,0 +1,152 @@
+:root {
+  --color-primary: #d26019;
+  --color-primary-dark: #913b0c;
+  --color-secondary: #607d8b;
+  --color-secondary-dark: #455a64;
+  --color-disabled: #b0bec5;
+  --color-text: #333;
+  --color-bg: #eceff1;
+  --color-surface: #fff;
+  --color-danger: #d32f2f;
+
+  --screen-width: 800px;
+  --screen-height: 600px;
+
+  --shadow-hard: 4px 4px 0 rgba(0, 0, 0, 0.3);
+  --shadow-hard-hover: 4px 4px 0 rgba(0, 0, 0, 0.4);
+  --shadow-hard-active: 2px 2px 0 rgba(0, 0, 0, 0.3);
+
+  --font-main: 'Work Sans', Arial, sans-serif;
+}
+
+/* Reset border */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-bg);
+  font-family: var(--font-main);
+  color: var(--color-text);
+}
+
+/* game-box */
+.screen {
+  width: var(--screen-width);
+  height: var(--screen-height);
+  background: var(--color-surface);
+  border: 3px solid var(--color-text);
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Landing page */
+.menu-title {
+  margin: 0 0 50px;
+  font-size: 48px;
+}
+
+.menu-image {
+  max-height: 250px;
+  margin-bottom: 40px;
+}
+
+.menu-buttons {
+  display: flex;
+  gap: 40px;
+  width: 100%;
+  max-width: 400px;
+}
+
+/* buttons
+   .confirmBtn är samma knapp som .btn. byt dem i HTML/JS
+   till .btn och ta bort .confirmBtn härifrån. */
+.btn,
+.confirmBtn {
+  background-color: var(--color-primary);
+  color: white;
+  font-family: var(--font-main);
+  font-weight: bold;
+  text-align: center;
+  text-decoration: none;
+  border: none;
+  border-radius: 8px;
+  box-shadow: var(--shadow-hard);
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.1s ease;
+}
+
+.btn:hover,
+.confirmBtn:hover {
+  background-color: var(--color-primary-dark);
+  box-shadow: var(--shadow-hard-hover);
+}
+
+.btn:active,
+.confirmBtn:active {
+  transform: translate(2px, 2px);
+  box-shadow: var(--shadow-hard-active);
+}
+
+/* button landing page */
+.btn {
+  flex: 1;
+  padding: 16px 0;
+  font-size: 20px;
+}
+
+/* focus for keyboard users */
+.btn:focus-visible,
+.confirmBtn:focus-visible,
+.close:focus-visible {
+  outline: 3px solid var(--color-text);
+  outline-offset: 3px;
+}
+
+/* Popup */
+.popup {
+  display: none; 
+  position: fixed;
+  inset: 0; 
+  background: rgba(0, 0, 0, 0.5);
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.popup-content {
+  position: relative;
+  background: var(--color-surface);
+  padding: 30px;
+  border-radius: 12px;
+  max-width: 500px;
+  width: 80%;
+  box-shadow: 6px 6px 0 rgba(0, 0, 0, 0.5);
+  text-align: center;
+}
+
+/* close (X) */
+.close {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  font-size: 28px;
+  font-weight: bold;
+  color: var(--color-text);
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.close:hover {
+  color: var(--color-danger);
+}

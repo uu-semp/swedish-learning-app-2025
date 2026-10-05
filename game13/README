@@ -1,0 +1,62 @@
+# A simple game to learn basic Swedish Words of cloting and collours
+Paper pelle is  agame for students ...
+
+# Overview / Introduction
+menu/landing page
+diffferent levels ...
+
+## Features:
+
+# CSS structure:
+`game.css` depends on `base.css`, so `base.css` shall always be loaded **before** `game.css` in the HTML files:
+
+**css/base.css:**
+- Shared components such as buttons and popups.
+- Design variables (colors, screen size, shadows, font) defined in `:root`, so they can be changed in one place and apply to all components.
+- Styles for the landing page (menu): title, image and the button row.
+
+
+**css/game.css:**
+- Contains the styles for the game screen. It overrides the parts of `base.css` that do not apply to the game.
+
+
+# Tools Used
+- **Frontend**: HTML, CSS, JavaScript
+- **Version Control**: Git, GitHub
+
+# How to run
+1. **Clone the repository:**
+   git clone https://github.com/uu-semp/swedish-learning-app-2025.git
+
+2. **Navigate to the project folder:**
+    cd swedish-learning-app-2025
+
+3. **Start the server:**
+    python3 -m http.server 8000
+
+4. **Open your browser and go to:**
+    http://localhost:8000
+
+-------------
+#old notes
+
+HTMl + JS team: 
+
+- The game logic chack if an answer is correct bypassing the target area, simply 
+reordering the player list of clother and the right ansert list so the comparsion is easier
+
+
+
+# FUNCTION STATUS:
+=================
+
+DONE:
+- getRandomItem(array) -    Helper function to get random item from array
+- SwedishClothingDescriptionGenerator class - Contains clothing data and generates outfits
+- generateOutfit() -        Creates random outfit descriptions with Swedish/English text
+- checkClothes(correctClothesIds, appliedClothesIds) - Compares two arrays of clothing IDs
+
+NOT DONE / EMPTY:
+- applyClothes(id) -        Function to apply clothes to character (empty)
+- undress(id) -             Function to undress clothes from character (basic implementation)
+
