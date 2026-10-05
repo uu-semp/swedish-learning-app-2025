@@ -19,13 +19,12 @@ export function GameController(difficulty) {
         selected_answer: null,
         answer_correct:  null,
         answer_locked: false,
-        answer_in_round: 0,
+        answered_in_round: 0,
         round_total: 0,
         is_finished: false
     })
     
     let feedback_timer = null
-
     let stopped = false
 
     function InitializeQuestions() {
@@ -146,7 +145,7 @@ export function GameController(difficulty) {
         feedback_timer = null
     }
 
-    
+
     InitializeQuestions()
     NextRound()
 
