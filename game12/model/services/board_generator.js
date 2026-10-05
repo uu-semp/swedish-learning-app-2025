@@ -1,6 +1,6 @@
 export function GenerateBoard(streets, ranges, difficulty) {
     if (difficulty === 1) {
-        return GenerateT(streets, ranges, difficulty)
+        return GenerateT(streets)
     }
     else {
         return GenerateHorizontal(streets, ranges, difficulty)
@@ -8,7 +8,7 @@ export function GenerateBoard(streets, ranges, difficulty) {
 }
 
 function GenerateHorizontal(streets, ranges) {
-    let building_positions_horionztal = [
+    let building_positions_horizontal = [
         { col: 1, row: 1 },
         { col: 1, row: 3 },
         { col: 2, row: 1 },
@@ -23,79 +23,123 @@ function GenerateHorizontal(streets, ranges) {
 
     let chosen_street_1 = streets[Math.floor((Math.random() * streets.length))]
 
-    let buildings_horionztal = []
-    for (let index = 0; index < building_positions_horionztal.length; index++) {
+    let buildings_horizontal = []
+    for (let index = 0; index < building_positions_horizontal.length; index++) {
         let house_number = chosen_range + index
-        buildings_horionztal[index] = {
+        buildings_horizontal[index] = {
             Type: "HOUSE",
             Street: chosen_street_1,
             HouseNumber: house_number,
-            col: building_positions_horionztal[index].col,
-            row: building_positions_horionztal[index].row
+            col: building_positions_horizontal[index].col,
+            row: building_positions_horizontal[index].row
         }
     }
 
     return {
-        BuildingsHorizontal: buildings_horionztal,
+        BuildingsHorizontal: buildings_horizontal,
         ChosenRange: chosen_range
     }
 }
 
-function GenerateT(streets, ranges) {
-    let building_positions_horionztal = [
-        { col: 1, row: 1 },
-        { col: 1, row: 3 },
-        { col: 2, row: 1 },
-        { col: 2, row: 3 },
-        { col: 4, row: 1 },
-        { col: 4, row: 3 },
-        { col: 5, row: 1 },
-        { col: 5, row: 3 },
-    ]
+function randomStartPair(maxOffset) {
+    const maxStartPair = 48 - maxOffset;
+    return Math.floor(Math.random() * (maxStartPair + 1));
+}
+
+function getHouseNumber(startPair, offset, useOddNumbers) {
+    const oddNumber = 2 * (startPair + offset) + 1;
+    if (useOddNumbers) {
+        return oddNumber;
+    }
+    return oddNumber + 1;
+}
+
+function GenerateT(streets) {
+    let building_positions_horizontal = [
+    { col: 1, row: 1, offset: 0, side: "top" },
+    { col: 2, row: 1, offset: 1, side: "top" },
+    { col: 3, row: 1, offset: 2, side: "top" },
+    { col: 4, row: 1, offset: 3, side: "top" },
+    { col: 5, row: 1, offset: 4, side: "top" },
+    { col: 6, row: 1, offset: 5, side: "top" },
+    { col: 7, row: 1, offset: 6, side: "top" },
+
+    { col: 1, row: 3, offset: 0, side: "bottom" },
+    { col: 2, row: 3, offset: 1, side: "bottom" },
+    { col: 6, row: 3, offset: 5, side: "bottom" },
+    { col: 7, row: 3, offset: 6, side: "bottom" }
+    ];
 
     let building_positions_vertical = [
-        { col: 4, row: 4 },
-        { col: 2, row: 4 },
-        { col: 4, row: 5 },
-        { col: 2, row: 5 },
-    ]
+        { col: 3, row: 4, offset: 0, side: "left" },
+        { col: 3, row: 5, offset: 1, side: "left" },
+        { col: 3, row: 6, offset: 2, side: "left" },
+
+        { col: 5, row: 4, offset: 0, side: "right" },
+        { col: 5, row: 5, offset: 1, side: "right" },
+        { col: 5, row: 6, offset: 2, side: "right" }
+    ];
 
     let chosen_street_1 = streets[Math.floor((Math.random() * streets.length))]
     streets = streets.filter(street => street !== chosen_street_1)
     let chosen_street_2 = streets[Math.floor((Math.random() * streets.length))]
 
-    let chosen_range = ranges[Math.floor((Math.random() * ranges.length))]
+    const horizontalStartPair = randomStartPair(6)
+    const verticalStartPair = randomStartPair(2)
 
-    let buildings_horionztal = []
-    for (let index = 0; index < building_positions_horionztal.length; index++) {
-        let house_number = chosen_range[0] + index
-        buildings_horionztal[index] = {
+    const topIsOdd = Math.random() < 0.5
+    const leftIsOdd = Math.random() < 0.5
+
+
+    let buildings_horizontal = []
+    for (let index = 0; index < building_positions_horizontal.length; index++) {
+        const position = building_positions_horizontal[index]
+        const useOddNumbers =
+            position.side === "top"
+                ? topIsOdd
+                : !topIsOdd
+        const house_number = getHouseNumber(
+            horizontalStartPair,
+            position.offset,
+            useOddNumbers
+        )
+        buildings_horizontal[index] = {
             type: "HOUSE",
             id: chosen_street_1 + "_" + house_number,
             street: chosen_street_1,
             houseNumber: house_number,
-            col: building_positions_horionztal[index].col,
-            row: building_positions_horionztal[index].row
+            col: position.col,
+            row: position.row
         }
     }
 
     let buildings_vertical = []
+
     for (let index = 0; index < building_positions_vertical.length; index++) {
-        let house_number = chosen_range[0] + index
+        const position = building_positions_vertical[index]
+        const useOddNumbers =
+            position.side === "left"
+                ? leftIsOdd
+                : !leftIsOdd
+        const house_number = getHouseNumber(
+            verticalStartPair,
+            position.offset,
+            useOddNumbers
+        )
+
         buildings_vertical[index] = {
             type: "HOUSE",
             id: chosen_street_2 + "_" + house_number,
             street: chosen_street_2,
             houseNumber: house_number,
-            col: building_positions_vertical[index].col,
-            row: building_positions_vertical[index].row
+            col: position.col,
+            row: position.row
         }
     }
 
     return {
-        BuildingsHorizontal: buildings_horionztal,
+        BuildingsHorizontal: buildings_horizontal,
         BuildingsVertical: buildings_vertical,
-        ChosenRange: chosen_range,
         HorizontalStreet: chosen_street_1,
         VerticalStreet: chosen_street_2
     }

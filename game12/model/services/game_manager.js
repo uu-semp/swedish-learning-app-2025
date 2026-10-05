@@ -10,7 +10,37 @@ let all_streets = [
     "Sysslomansgatan",
     "Drottninggatan",
     "Kungsgatan",
-    "Svartbäcksgatan"
+    "Svartbäcksgatan",
+    "Akademigatan",
+    "Biskopsgatan",
+    "Dragarbrunnsgatan",
+    "Klostergatan",
+    "S:t Olofsgatan",
+    "S:t Persgatan",
+    "S:t Larsgatan",
+    "Trädgårdsgatan",
+    "Västra Ågatan",
+    "Östra Ågatan",
+    "Vaksalagatan",
+    "Storgatan",
+    "Bangårdsgatan",
+    "Skolgatan",
+    "Nedre Slottsgatan",
+    "Övre Slottsgatan",
+    "Kyrkogårdsgatan",
+    "Kungsängsgatan",
+    "Strandbodgatan",
+    "Munkgatan",
+    "Linnégatan",
+    "Götgatan",
+    "Luthagsesplanaden",
+    "Villavägen",
+    "Geijersgatan",
+    "Börjegatan",
+    "Väderkvarnsgatan",
+    "Stationsgatan",
+    "S:t Johannesgatan",
+    "Vasagatan"
 ]
 
 let all_ranges = [
@@ -54,24 +84,17 @@ export function Initialize(difficulty) {
         for (let index = 0; index < 10; index++) {
             let board = GenerateBoard(all_streets, available_ranges, difficulty)
 
-            available_ranges = available_ranges.filter(par => par[0] !== board.ChosenRange[0])
-            if(available_ranges.length === 0) {
-                // reset ranges
-                available_ranges = all_ranges.slice()
-            }
-
             game.boards[index] = board
-
             game.questions[index] = GenerateQuestion(1, board)
+            }
         }
-    }
 
-    game.remaining_questions = game.questions.map((_, i) => i)
-    game.round_total = game.questions.length
+        game.remaining_questions = game.questions.map((_, i) => i)
+        game.round_total = game.questions.length
 
-    NextRound_GM(game)
+        NextRound_GM(game)
 
-    return game
+        return game
 }
 
 
