@@ -183,14 +183,14 @@ hr {
 }
 
 .horizontal-road-T{
-    grid-column: 1 / 8;
+    grid-column: 1 / 6;
     grid-row: 2;
     position: relative;
 }
 
 .vertical-road-T{
-    grid-column: 4;
-    grid-row: 3 / 7;
+    grid-column: 3;
+    grid-row: 3 / 6;
     display: grid;
     place-items: center;
     position: relative;
@@ -282,57 +282,50 @@ hr {
     z-index: 1;
 }
 
-#house-grid-T {
-    display: grid;
-    grid-template-columns:
-        repeat(3, 60px)
-        40px
-        repeat(3, 60px);
-    grid-template-rows:
-        58px
-        40px
-        repeat(4, 58px);
+#house-grid-T{
+    display:grid;
+    grid-template-columns: 100px 100px 40px 100px 100px;
+    grid-template-rows: 80px 40px 80px 80px 80px;
     justify-content: center;
 }
 
-
 #house-grid-T button {
     position: relative;
-    width: 42px;
-    height: 38px;
-    box-sizing: border-box;
-    margin-top: 18px;
-    background: #ffcc80;
-    border: 2px solid #d17a22;
-    border-radius: 0 0 6px 6px;
+    width: 70px;
+    height: 70px;
+    background: #ffcc80; /* warm orange walls */
+    border: 3px solid #d17a22;
+    border-radius: 0 0 10px 10px;
     cursor: pointer;
-    font-size: 0.95rem;
+    font-size: 1.5rem;
     font-weight: bold;
     color: #4a2c00;
     transition: transform 0.2s, box-shadow 0.2s;
     justify-self: center;
 }
 
+/* Little roof using a pseudo-element */
 #house-grid-T button::before {
     content: "";
     position: absolute;
-    top: -20px;
+    top: -40px;
     left: 50%;
     transform: translateX(-50%);
     width: 0;
     height: 0;
-    border-left: 23px solid transparent;
-    border-right: 23px solid transparent;
-    border-bottom: 20px solid #d17a22;
+    border-left: 41px solid transparent;
+    border-right: 41px solid transparent;
+    border-bottom: 40px solid #d17a22; /* roof color */
 }
 
+/* Hover effect for interactivity */
 #house-grid-T button:hover {
     transform: translateY(-5px);
     box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
     background: #ffe0b2;
 }
 
-
+/* Optional: pressed state */
 #house-grid-T button:active {
     transform: translateY(2px);
 }
@@ -347,7 +340,7 @@ hr {
     outline: 3px solid #a52a2a;
 }
 
-
+/* Optional: nice footer */
 footer {
     text-align: center;
     margin-top: 3rem;

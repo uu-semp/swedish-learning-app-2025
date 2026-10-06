@@ -204,8 +204,8 @@ export function GenerateQuestion(difficulty, board) {
   };
 
   if (difficulty === 1) {
+    const random_index = Math.floor(Math.random() * 12)
     const all_houses = board.BuildingsHorizontal.concat(board.BuildingsVertical)
-    const random_index = Math.floor(Math.random() * all_houses.length)
 
     const correct_house = all_houses[random_index]
     config.correctNumber = correct_house.houseNumber
