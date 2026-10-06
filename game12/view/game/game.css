@@ -390,3 +390,6 @@ footer {
     margin-top: 3rem;
     color: #666;
 }
+
+#app[v-cloak] { display: none; }
+#app.loading { text-align: center; margin-top: 3rem; font-size: 1.2rem; }

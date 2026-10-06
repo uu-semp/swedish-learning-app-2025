@@ -197,10 +197,10 @@ export class QuestionGenerator {
 
 */
 
-export function GenerateQuestion(difficulty, board) {
+export function GenerateQuestion(difficulty, board, number_words) {
   let config = {
     correctNumber: null,
-    correctStreet: null
+    correctStreet: null,
   };
 
   if (difficulty === 1) {
@@ -211,8 +211,11 @@ export function GenerateQuestion(difficulty, board) {
     config.correctNumber = correct_house.houseNumber
     config.correctStreet = correct_house.street
 
-    config.promptSwedish = `Jag bor på ${correct_house.street} ${correct_house.houseNumber}.`;
-    config.promptEnglish = `I live at ${correct_house.street} ${correct_house.houseNumber}.`;
+    //Maybe make a better solution here outside of if-statemets
+    const number_word = number_words[correct_house.houseNumber] ?? correct_house.houseNumber
+
+    config.promptSwedish = `Jag bor på ${correct_house.street} ${number_word}.`
+    config.promptEnglish = `I live at ${correct_house.street} ${number_word}.`
 
   }
    else if (difficulty === 2) {
@@ -222,8 +225,12 @@ export function GenerateQuestion(difficulty, board) {
     const direction = this.getRandomElement(this.vocab.directions);
     config.targetLandmark = landmark;
     config.direction = direction;
-    config.promptSwedish = `Jag bor ${direction.swedish} ${landmark.nameSwedish} ${houseNumber}.`;
-    config.promptEnglish = `I live ${direction.english} ${landmark.nameSwedish} ${houseNumber}.`;
+
+    //Maybe make a better solution here outside of if-statemets
+    const number_word = number_words[correct_house.houseNumber] ?? correct_house.houseNumber
+
+    config.promptSwedish = `Jag bor ${direction.swedish} ${landmark.nameSwedish} ${number_word}.`;
+    config.promptEnglish = `I live ${direction.english} ${landmark.nameSwedish} ${number_word}.`;
   }
    else if (difficulty === 3) {
 
@@ -234,8 +241,11 @@ export function GenerateQuestion(difficulty, board) {
     config.targetLandmark = landmark;
     config.direction = direction;
     config.targetTransport = transport.type;
-    config.promptSwedish = `${phrase.swedish} ${street} ${houseNumber}, som ligger ${direction.swedish} ${landmark.nameSwedish}.`;
-    config.promptEnglish = `${phrase.english} ${street} ${houseNumber}, which is ${direction.english} ${landmark.nameSwedish}.`;
+
+    //Maybe make a better solution here outside of if-statemets
+    const number_word = number_words[correct_house.houseNumber] ?? correct_house.houseNumber
+    config.promptSwedish = `${phrase.swedish} ${street} ${number_word}, som ligger ${direction.swedish} ${landmark.nameSwedish}.`;
+    config.promptEnglish = `${phrase.english} ${street} ${number_word}, which is ${direction.english} ${landmark.nameSwedish}.`;
   }
 
   return config;

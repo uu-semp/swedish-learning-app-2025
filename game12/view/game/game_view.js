@@ -1,17 +1,18 @@
 import { createApp, reactive, computed, watch } from 'vue'
 import { GameController } from '../../controller/game_controller.js'
 
+// Read the difficulty selected in the menu.
+const parameters = new URLSearchParams(window.location.search)
+let difficulty = Number(parameters.get('difficulty'))
+
+if (difficulty !== 1 && difficulty !== 2 && difficulty !== 3) {
+    difficulty = 1
+}
+
+const controller = await GameController(difficulty)
+
 createApp({
     setup() {
-        // Read the difficulty selected in the menu.
-        const parameters = new URLSearchParams(window.location.search)
-        let difficulty = Number(parameters.get('difficulty'))
-
-        if (difficulty !== 1 && difficulty !== 2 && difficulty !== 3) {
-            difficulty = 1
-        }
-
-        const controller = GameController(difficulty)
         //controller.Initialize_Controller(difficulty)
         const game = controller.game
 
@@ -198,3 +199,5 @@ createApp({
         }
     }
 }).mount('#app')
+
+document.getElementById('loading')?.remove()

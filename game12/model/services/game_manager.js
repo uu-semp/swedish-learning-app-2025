@@ -1,6 +1,6 @@
 import { GenerateBoard } from "./board_generator.js"
 import { GenerateQuestion } from "./question_generator.js"
-import { get_vocab } from "../../../scripts/vocabulary_await.js"
+import { get_vocab, get_category, loaddb } from "../../../scripts/vocabulary_await.js"
 
 let feedback_timer = null
 let stopped = false
@@ -27,7 +27,16 @@ let all_ranges = [
 
 let available_ranges = []
 
-export function Initialize(difficulty) {
+export async function Initialize(difficulty) {
+    // Load db and fetch streets and numbers. Add directions, buildnings and transports
+    await loaddb();
+    const street_ids = get_category("street");
+    const number_ids = get_category("number")
+
+    const streets = street_ids.map(id => get_vocab(id)?.sv).filter(Boolean)
+    const numbers = number_ids.map(id => get_vocab(id)?.sv).filter(Boolean)
+
+
     let game = {
         difficulty: difficulty,
         questions: [],
@@ -45,14 +54,12 @@ export function Initialize(difficulty) {
         is_finished: false
     }
 
-    console.log(get_vocab())
-
     available_ranges = all_ranges.slice()
 
     if (difficulty === 1) {
         game.difficulty = 1
         for (let index = 0; index < 10; index++) {
-            let board = GenerateBoard(all_streets, available_ranges, difficulty)
+            let board = GenerateBoard(streets, available_ranges, difficulty)
 
             available_ranges = available_ranges.filter(par => par[0] !== board.ChosenRange[0])
             if(available_ranges.length === 0) {
@@ -62,7 +69,7 @@ export function Initialize(difficulty) {
 
             game.boards[index] = board
 
-            game.questions[index] = GenerateQuestion(1, board)
+            game.questions[index] = GenerateQuestion(1, board, numbers)
         }
     }
 

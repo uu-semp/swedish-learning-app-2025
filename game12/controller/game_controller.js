@@ -6,8 +6,8 @@ import { Initialize, NextRound_GM, CheckAnswer_GM, UseHint_GM, StopGame_GM } fro
 //
 //  GameController is responsible for tying the views together with the logic
 //
-export function GameController(difficulty) {
-    let raw_game = Initialize(difficulty)
+export async function GameController(difficulty) {
+    let raw_game =  await Initialize(difficulty)
     let game = reactive(raw_game)
 
     let feedback_timer = null
