@@ -25,6 +25,7 @@ import { PelleContainer } from "./elements/pelleContainer.js";
 import { DressPellePrompt } from "./elements/dressPellePrompt.js";
 import { ScoreCounter } from "./elements/scoreCounter.js";
 import { StatisticsPopUp } from "./elements/statisticsPopUp.js";
+import { SkyBackground } from "./elements/skybackground.js";
 
 
 export default {
@@ -51,5 +52,6 @@ export default {
   PelleContainer,
   DressPellePrompt,
   ScoreCounter,
-  StatisticsPopUp
+  StatisticsPopUp,
+  SkyBackground
 };

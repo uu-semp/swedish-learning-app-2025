@@ -21,6 +21,7 @@ export const ChooseLevelView = {
       this.showLockedModal = false;
     }
   },
+  // The sky background is added around this view in app.js
   template: `
       <div class="choose-level-view">
           <!-- Language selection -->

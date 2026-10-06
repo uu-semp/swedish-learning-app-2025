@@ -26,6 +26,11 @@ This CSS file contains styles specific to the "Choose Level" view of the app.
     position: relative; /* Essential for positioning the flags and go-back button */
 }
 
+/* Keep the view above the clouds and grass of the sky background */
+.sky > .choose-level-view {
+    z-index: 10;
+}
+
 /* Language selection container */
 .choose-level-view .language-selection {
     position: absolute;

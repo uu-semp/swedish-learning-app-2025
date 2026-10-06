@@ -28,6 +28,7 @@ const app = createApp({
   data() {
     return {
       currentView: "StartView", //Default start page
+      skyViews: ["StartView", "ChooseLevelView"], // Views shown on top of the sky background
     };
   },
 
@@ -38,8 +39,12 @@ const app = createApp({
   },
 
   template: `
-    <component :is="currentView" :switch-to="switchViewTo"></component>  
+    <sky-background v-if="skyViews.includes(currentView)">
+      <component :is="currentView" :switch-to="switchViewTo"></component>
+    </sky-background>
+    <component v-else :is="currentView" :switch-to="switchViewTo"></component>
     `, //The visual app shown through the index.html, passes the method switchViewTo which is taken as prop from child components
+    // Views in skyViews are placed inside the sky background, which stays mounted while switching between them
 });
 
 app.config.globalProperties.$language = language;
