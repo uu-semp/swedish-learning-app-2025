@@ -146,6 +146,8 @@ function validateQuestion(raw) {
 		question: raw.question ?? (type === "clock" ? "Vad är klockan?" : ""),
 		answer: raw.answer ?? "",
 		alternatives: Array.isArray(raw.alternatives) ? raw.alternatives : [],
+		tiles: Array.isArray(raw.tiles) ? raw.tiles : [],
+		answerTiles: Array.isArray(raw.answerTiles) ? raw.answerTiles : [],
 		hint: raw.hint ?? "",
 		feedback: raw.feedback ?? "",
 		difficulty: raw.difficulty ?? raw.module ?? "unspecified",
