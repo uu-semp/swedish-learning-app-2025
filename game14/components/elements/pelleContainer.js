@@ -13,7 +13,7 @@ export const PelleContainer = {
              @drop="handleItemDrop" 
              @dragover.prevent="handleDragOver"
              @dragleave.prevent="handleDragLeave">
-          <img src="./components/assets/pelle.png">
+          <img src="./components/assets/pellecharacterbody.svg">
         </div>
     `,
     methods: {
