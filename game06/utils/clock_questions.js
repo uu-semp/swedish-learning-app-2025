@@ -10,6 +10,13 @@
 
 /** @typedef {import("./question_utils.js").ClockQuestion} ClockQuestion */
 
+const TAG_MINUTES = new Map([
+  ["quarter_hour", [15, 45]],
+  ["half_hour", [30]],
+  ["whole_hour", [0]],
+  ["all_times", Array.from({ length: 12 }, (_, index) => index * 5)],
+]);
+
 /** Swedish hour names indexed by hour modulo 12. */
 const HOURS = ["tolv", "ett", "två", "tre", "fyra", "fem", "sex", "sju", "åtta", "nio", "tio", "elva"];
 
@@ -70,18 +77,32 @@ export function createClockQuestion(hour, minute) {
   };
 }
 /**
- * Build all 144 distinct targets on a 12-hour clock.
+ * Build distinct targets on a 12-hour clock, optionally filtered by tags.
  * Each target has a stable ID so replay preserves its saved progress.
  * @returns {ClockQuestion[]}
  */
-export function createClockQuestions() {
+export function createClockQuestions(tags = new Set()) {
+  if (!(tags instanceof Set)) {
+    throw new TypeError("Clock question tags must be a Set.");
+  }
+  const minutes = new Set();
+  for (const tag of tags) {
+    if (!TAG_MINUTES.has(tag)) {
+      throw new RangeError(`Unknown clock question tag: ${String(tag)}`);
+    }
+    for (const minute of TAG_MINUTES.get(tag)) minutes.add(minute);
+  }
+  if (tags.size === 0) {
+    for (const minute of TAG_MINUTES.get("all_times")) minutes.add(minute);
+  }
+
   // 12 hours * 12 minutes (in intervals of 5)
   const possibleQuestions = 144;
   return Array.from({ length: possibleQuestions }, (_, index) => {
     const hour = Math.floor(index / 12);
     const minute = (index % 12) * 5;
     return createClockQuestion(hour, minute);
-  });
+  }).filter((question) => minutes.has(question.minute));
 }
 
 //#endregion
@@ -108,8 +129,8 @@ export function checkClockAnswer(question, time) {
  * Pure with respect to progress: mastered targets remain eligible.
  * @returns {ClockQuestion[]} Five questions with no repeated IDs.
  */
-export function createClockRound() {
-  const pool = createClockQuestions();
+export function createClockRound(tags = new Set()) {
+  const pool = createClockQuestions(tags);
   const round = [];
   for (let index = 0; index < 5; index++) {
     const pick = Math.floor(Math.random() * pool.length);
