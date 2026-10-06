@@ -1,9 +1,15 @@
 const TEAM_NAME = "game03";
 const LEARNED_WORDS_KEY = "learnedWords";
-if (!window.save.get(TEAM_NAME, LEARNED_WORDS_KEY)) {
-    window.save.set(TEAM_NAME, LEARNED_WORDS_KEY, []);
+const saveStore = window.save || {
+    get: () => ({}),
+    set: () => false,
+};
+const save = saveStore;
+
+if (!saveStore.get(TEAM_NAME, LEARNED_WORDS_KEY)) {
+    saveStore.set(TEAM_NAME, LEARNED_WORDS_KEY, []);
 }
-let learnedWords = save.get(TEAM_NAME, LEARNED_WORDS_KEY);
+let learnedWords = saveStore.get(TEAM_NAME, LEARNED_WORDS_KEY) || [];
 
 let remainingQuestions = [];
 window.currentQuestion = null;
@@ -12,6 +18,26 @@ let totalScore = 0; // Track total score (first-try correct answers)
 
 const urlParams = new URLSearchParams(window.location.search);
 const levelIndex = urlParams.get("level") || "1";
+const selectedRoom = urlParams.get("room") || localStorage.getItem('gameRoom') || 'office';
+const shouldResetLevel = urlParams.get("reset") === "true";
+
+if (selectedRoom) {
+    localStorage.setItem('gameRoom', selectedRoom);
+}
+
+function resetLevelSessionState() {
+    remainingQuestions = [];
+    window.currentQuestion = null;
+    currentQuestionAttempts = 0;
+    totalScore = 0;
+    if (typeof window.resetSelectedGroup === "function") {
+        window.resetSelectedGroup();
+    }
+}
+
+if (shouldResetLevel) {
+    resetLevelSessionState();
+}
 
 document.title = `Level ${levelIndex}`;
 const header = document.querySelector("header h1");
@@ -38,9 +64,23 @@ if (levelIndex === "3") {
 
 function loadLevelQuestions(level) {
     return new Promise((resolve, reject) => {
+        const oldQuestionFunction = window.getRandomQuestions;
+        const oldDistractorFunction = window.getRandomDistractorImages;
+        window.getRandomQuestions = undefined;
+        window.getRandomDistractorImages = undefined;
+
         const script = document.createElement("script");
         script.src = `./scripts/level${level}Questions.js`;
-        script.onload = () => resolve();
+        script.async = false;
+        script.onload = () => {
+            if (typeof window.getRandomQuestions !== "function") {
+                window.getRandomQuestions = oldQuestionFunction;
+                window.getRandomDistractorImages = oldDistractorFunction;
+                reject(new Error(`getRandomQuestions is not defined after loading level${level}Questions.js`));
+                return;
+            }
+            resolve();
+        };
         script.onerror = () => reject(new Error(`Failed to load level${level}Questions.js`));
         document.head.appendChild(script);
     });
@@ -81,20 +121,30 @@ function showRandomQuestion() {
     hintButton.addEventListener('click', () => {
         const modal = document.getElementById('hintModal');
         const hintText = document.getElementById('hintText');
-        hintText.textContent = `${window.currentQuestion.swedish} => ${window.currentQuestion.answer}.`;
+        hintText.textContent = window.currentQuestion.hint || `${window.currentQuestion.swedish} => ${window.currentQuestion.answer}.`;
         modal.style.display = 'flex'; // show modal with flex centering
     });
 }
 
-export const questionsLoaded = loadLevelQuestions(levelIndex).then(() => {
-    if (typeof getRandomQuestions !== "undefined") {
-        const selectedQuestions = getRandomQuestions();
-        remainingQuestions = [...selectedQuestions];
-        return selectedQuestions;
-    } else {
-        return Promise.reject(new Error("getRandomQuestions is not defined in the loaded script"));
+export const questionsLoaded = (async () => {
+    await loadLevelQuestions(levelIndex);
+
+    if (typeof window.resetSelectedGroup === "function") {
+        window.resetSelectedGroup();
     }
-});
+
+    if (typeof window.getRandomQuestions !== "function") {
+        throw new Error("getRandomQuestions is not defined in the loaded script");
+    }
+
+    const selectedQuestions = window.getRandomQuestions();
+    if (!Array.isArray(selectedQuestions) || selectedQuestions.length === 0) {
+        throw new Error(`No questions were returned for level ${levelIndex}`);
+    }
+
+    remainingQuestions = [...selectedQuestions];
+    return selectedQuestions;
+})();
 
 document.addEventListener('DOMContentLoaded', function () {
     const header = document.querySelector('header');
@@ -171,7 +221,7 @@ document.addEventListener('DOMContentLoaded', function () {
         if (currentQuestionAttempts === 0) {
             if (!learnedWords.includes(window.currentQuestion.swedish)) {
                 learnedWords.push(window.currentQuestion.swedish);
-                save.set(TEAM_NAME, LEARNED_WORDS_KEY, learnedWords);
+                saveStore.set(TEAM_NAME, LEARNED_WORDS_KEY, learnedWords);
             }
             totalScore++;
             console.log("First-try correct! Score:", totalScore);

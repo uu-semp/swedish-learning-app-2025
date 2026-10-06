@@ -40,6 +40,9 @@ document.querySelectorAll('.room-btn').forEach(btn => {
 
 document.querySelectorAll('.level-btn').forEach(btn =>
     btn.addEventListener('click', () => {
+        if (chosenRoom) {
+            localStorage.setItem('gameRoom', chosenRoom);
+        }
         window.location.href = `level.html?level=${btn.dataset.level}&room=${chosenRoom}`;
     })
 );

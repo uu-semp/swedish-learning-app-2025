@@ -3,6 +3,11 @@ import { questionsLoaded } from './level.js';
 
 export async function loadImages() {
     const selectedQuestions = await questionsLoaded;
+    if (!Array.isArray(selectedQuestions) || selectedQuestions.length === 0) {
+        console.warn('No valid questions loaded for this level.');
+        return [];
+    }
+
     return new Promise(async resolve => {
         window.vocabulary.when_ready(async () => {
             // Get level from URL first
