@@ -38,6 +38,12 @@
   <!-- MAIN GAME AREA -->
   <div id="game-content">
 
+    <!-- Word reveal (shown after the answer is checked) -->
+    <div id="wordReveal" aria-live="polite">
+      <span id="wordSv"></span>
+      <span id="wordEn"></span>
+    </div>
+
     <h3 id="round">Round </h3>
 
     <!-- Audio -->
@@ -53,22 +59,22 @@
     <div class="image-options" id="imageOptions"></div>
 
     <!-- Confirm -->
-    <div>
+    <!-- <div>
       <button id="confirmBtn" class="btn" disabled>
         <i class="fas fa-check fa"></i> Confirm
       </button>
-    </div>
+    </div> -->
 
     <!-- Feedback -->
     <!-- <div id="feedback" class="feedback"></div> -->
     <div id="feedback" role="alert" aria-live="assertive"></div>
 
     <!-- Next -->
-    <div>
+    <!-- <div>
       <button id="nextBtn" class="btn" style="display:none;">
         <i class="fas fa-forward fa-shake"></i> Next
       </button>
-    </div>
+    </div> -->
 
     <!-- End Screen -->
     <div id="endScreen" class="end-screen" style="display:none;">
