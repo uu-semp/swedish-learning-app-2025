@@ -92,6 +92,18 @@ function showLevelSelection() {
 	document.getElementById("level-view").style.display = "block";
 }
 
+
+// ==============================================
+// TIMER FOR ADVANCED LEVEL
+// ==============================================
+
+const ADVANCED_TIME_LIMIT = 30;
+let questionTimerId = null;
+let questionDeadline = 0;
+
+
+
+
 // ==============================================
 // GAME UI CONFIGURATION BY LEVEL
 // ==============================================
