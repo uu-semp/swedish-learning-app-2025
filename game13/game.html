@@ -7,8 +7,20 @@
   <link rel="stylesheet" href="css/game.css" />
 </head>
 <body>
+
   <div class="screen" role="application" aria-label="Dress the cat game screen">
+    <section class = "status-bar">
+      <h2 id="level-title">Level</h2>
+      <button id="backToIndex-btn" class="undoBtn giveUpBtn" aria-label="Back to level-selection"> Back to level-selecting-page</button>
+    </section>
+    <section class="instructions">
+            <p id="instruction-text">
+        instructions here
+      </p>
+    </section>
     <section class="stage" aria-label="Cat stage">
+              <button id="undo-btn" class="confirmBtn undoBtn" aria-label="Undo last change" disabled>Undo</button>
+        <button id="clear-btn" class="confirmBtn undoBtn clearBtn" aria-label="Remove all clothing" disabled>Remove all</button>
       <img src="paperpelletransparent.png" alt="Cat to dress" class="cat-image"/>
       
       <div id="hat-box" class="dropzone hat" data-accept="hat"></div>
@@ -20,17 +32,24 @@
       <div class="wardrobe-box" id="img-menu"></div>
     </aside>
 
-    <footer class="instructions" aria-live="polite">
-      <p id="instruction-text">
-        instructions here
-      </p>
-      <div class="footer-buttons">
-        <button id="undo-btn" class="confirmBtn undoBtn" aria-label="Undo last change" disabled>Undo</button>
-        <button id="clear-btn" class="confirmBtn undoBtn clearBtn" aria-label="Remove all clothing" disabled>Remove all</button>
+    <div class="submissionbar" aria-live="polite">
+
+      <div class="div-buttons">
         <button id="confirm-btn" class="confirmBtn" aria-label="Confirm outfit">Confirm Outfit</button>
+        <button id="giveUp-btn" class="undoBtn giveUpBtn" aria-label="Give up">Give up</button>
       </div>
-    </footer>
+      <div class="feedback"> 
+        <p id="result-text"></p>
+      </div>
+      <div>
+         <button id="next-btn" class="confirmBtn undoBtn nextBtn" aria-label="Next round" disabled>Next</button>
+        <button id="nextLevel-btn" class=" giveUpBtn" aria-label="Next level" >Next Level</button>
+      </div>  
+    </div>
   </div>
+
+  
+
   <!-- Popup window -->
 <div id="popup" class="popup">
   <div class="popup-content">
@@ -45,9 +64,21 @@
 </div>
 
 <script>
+    // Get selected level from the URL
+  const params = new URLSearchParams(window.location.search);
+  const level = params.get("level");
+
+  // Show selected level
+  document.getElementById("level-title").textContent = "Level " + level;
+
+
   const popup = document.getElementById('popup');
   const confirmBtn = document.getElementById('confirm-btn'); // ✅ make sure your button has this id
   const resultText = document.getElementById('result-text');
+  const giveUpBtn = document.getElementById("giveUp-btn")
+  const nextBtn = document.getElementById("next-btn");
+  const nextLvlBtn = document.getElementById("nextLevel-btn");
+  const backtoIndexBtn = document.getElementById("backToIndex-btn");
 
   confirmBtn.addEventListener('click', () => {
     // run your existing checkClothes() function
@@ -70,13 +101,34 @@
       console.log(stats);
       const wins = stats.wins;
         window.save.stats.set("game13", wins + 1, 0);
+      nextBtn.disabled = false;
     } else {
       resultText.textContent = "❌ Incorrect!";
       resultText.style.color = "red";
     }
 
-    popup.style.display = 'flex'; // show popup after checking
+    // popup.style.display = 'flex'; // show popup after checking
   });
+
+  giveUpBtn.addEventListener('click', ( )=> {
+    nextBtn.disabled = false;
+  })
+
+  nextBtn.addEventListener('click', ( )=> {
+    nextBtn.disabled = true;
+    location.reload();
+  })
+
+    nextLvlBtn.addEventListener("click", () => {
+  const nextLevel = Number(level) + 1;
+
+  window.location.href = "level_introduction.html?level=" + nextLevel;
+});
+
+    backtoIndexBtn.addEventListener('click', ( )=> {
+    window.location.href = "index.html";
+  })
+
 </script>
 
 

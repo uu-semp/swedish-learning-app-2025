@@ -1,0 +1,46 @@
+
+/* Fixed-sized screen */
+.screen {
+  width: 800px;
+  height: 600px;
+  background: white;
+  border: 3px solid #333;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Buttons */
+.btn {
+  width: 140px;              /* 🔹 fixed width */
+  height: 50px;              /* 🔹 fixed height */
+  text-align: center;
+  text-decoration: none;
+  background-color: #d26019;
+  color: white;
+  font-family: 'Work Sans';
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 6px;
+  transition: background 0.2s ease, transform 0.1s ease;
+  box-shadow: 3px 3px 0px rgba(0,0,0,0.3);
+  display: flex;             /* centers text vertically */
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.btn:active {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.3);
+}
+
+.btn:hover {
+  background-color: #913b0c;
+  box-shadow: 4px 4px 0px rgba(0,0,0,0.4);
+}
