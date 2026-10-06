@@ -29,6 +29,7 @@ Object.defineProperty(globalThis, 'localStorage', {
 const { getItemsIds, getItems } = await import('../js/data.js');
 const { generateShoppingList, generateShelf } = await import('../js/gameLogic.js');
 const { initGameState, saveState, loadState } = await import('../js/state.js');
+const { getAudio, playCurrentSound, AUDIO_START_TRIM } = await import('../js/ui.js');
 
 const EXCLUDED = ['567f323c', '2f373051', '32191560', '440d3157', '75387a51', '19263071', '6a701276'];
 const keyOf = item => path.basename(item.img).split('.')[0].toLowerCase(); // same key as ui.js / index.html
@@ -118,4 +119,31 @@ test('popup links to an existing end screen file', () => {
     fs.existsSync(path.join(GAME, 'html', target)),
     `popup opens "${target}", but the file does not exist`
   );
+});
+
+// audio is only loaded once per file.
+test('audio is cached and plays from the trim point', () => {
+  globalThis.Audio = class { load() {} play() { this.played = true; return Promise.resolve(); } };
+  window.__game11GameState = { shoppingList: [{ audio: 'a.mp3' }] };
+
+  playCurrentSound();
+
+  const audio = getAudio('a.mp3');
+
+  assert.equal(audio, getAudio('a.mp3'), 'audio not cached');
+  assert.ok(audio.played);
+  assert.equal(audio.currentTime, AUDIO_START_TRIM);
+});
+
+// missing audio shows the error message
+test('missing audio shows the error message', () => {
+  const msg = { style: {} };
+
+  globalThis.document = { getElementById: id => (id === 'audio-error' ? msg : null) };
+
+  window.__game11GameState = { shoppingList: [{ sv: 'gurka' }] };
+
+  playCurrentSound();
+
+  assert.equal(msg.style.display, 'block');
 });
