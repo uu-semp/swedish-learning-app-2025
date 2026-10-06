@@ -406,7 +406,38 @@ Game View Styles - Game 06
     min-height: 24px;
 }
 
+/* Timer Display */
+#question-timer {
+    font-size: 14px;
+    font-weight: 600;
+    color: white;
+    padding: 4px 12px;
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.15);
+    margin-right: 12px;
+    transition: all 0.3s ease;
+    display: inline-block;
+}
 
+#question-timer[hidden] {
+    display: none;
+}
+
+#question-timer.timer-warning {
+    color: #ffd700;
+    background: rgba(255, 215, 0, 0.2);
+}
+
+#question-timer.timer-critical {
+    color: #ff4444;
+    background: rgba(255, 68, 68, 0.25);
+    animation: timer-pulse 0.5s ease-in-out infinite;
+}
+
+@keyframes timer-pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.08); }
+}
 
 /* Responsive Design */
 @media (max-width: 768px) {
