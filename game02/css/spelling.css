@@ -1,0 +1,108 @@
+/* Owned by Game 02 — spelling game */
+
+#game-screen #word-image {
+  display: block;
+  margin: 0 auto 0.5rem;
+  max-width: min(100%, 320px);
+  max-height: 260px;
+  object-fit: contain;
+}
+
+#letter-hint {
+  text-align: center;
+  font-size: 1.5rem;
+  letter-spacing: 0.15em;
+  margin: 0.25rem 0;
+}
+
+#answer-form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+#answer-input {
+  font-size: 1.25rem;
+  padding: 0.4rem 0.6rem;
+  border: 2px solid #555;
+  border-radius: 8px;
+  width: min(60vw, 14rem);
+}
+
+#umlaut-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin: 0.75rem 0;
+}
+
+.umlaut-button {
+  min-width: 3rem;
+  font-size: 1.25rem;
+}
+
+#feedback {
+  min-height: 2.2rem;
+  text-align: center;
+  font-size: 1.5rem;
+  font-family: monospace;
+  letter-spacing: 0.1em;
+}
+
+#feedback .ok {
+  color: #1f7a3d;
+}
+
+#feedback .wrong,
+#feedback .extra,
+#feedback .missing {
+  color: #c0392b;
+  font-weight: bold;
+}
+
+#feedback .extra {
+  text-decoration: line-through;
+}
+
+#feedback .missing {
+  border-bottom: 3px solid #c0392b;
+}
+
+#feedback.success {
+  color: #1f7a3d;
+  font-weight: bold;
+}
+
+#feedback.revealed {
+  font-weight: bold;
+}
+
+#spelling-controls {
+  display: flex;
+  justify-content: center;
+  gap: 0.75rem;
+  margin: 0.5rem 0;
+}
+
+#game-screen #misses,
+#game-screen #elapsed-time,
+#game-screen #progress {
+  text-align: center;
+}
+
+#answer-input.shake {
+  animation: spelling-shake 0.35s;
+  border-color: #c0392b;
+}
+
+#answer-input.correct {
+  border-color: #1f7a3d;
+}
+
+@keyframes spelling-shake {
+  0%, 100% { transform: translateX(0); }
+  20%, 60% { transform: translateX(-6px); }
+  40%, 80% { transform: translateX(6px); }
+}

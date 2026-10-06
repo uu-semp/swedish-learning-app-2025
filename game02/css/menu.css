@@ -1,0 +1,32 @@
+/* Owned by Game 02 — mode menu */
+
+/* ---------- Mode menu ---------- */
+.mode-menu {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.mode-button {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  width: min(100%, 28rem);
+  padding: 1rem 1.25rem;
+  border: 2px solid currentColor;
+  border-radius: 0.75rem;
+  text-decoration: none;
+  color: inherit;
+}
+
+.mode-button:hover,
+.mode-button:focus-visible {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.back-link {
+  display: inline-block;
+  margin-top: 0.25rem;
+}
