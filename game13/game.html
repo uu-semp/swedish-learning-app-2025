@@ -30,26 +30,28 @@
       <div id="hat-box" class="dropzone hat" data-accept="hat"></div>
       <div id="shirt-box" class="dropzone shirt" data-accept="shirt"></div>
       <div id="pants-box" class="dropzone bottom" data-accept="pants"></div>
+
+      <div class="submissionbar" aria-live="polite">
+
+        <div class="div-buttons">
+          <button id="confirm-btn" class="confirmBtn" aria-label="Confirm outfit">Confirm Outfit</button>
+          <button id="giveUp-btn" class="undoBtn giveUpBtn" aria-label="Give up">Give up</button>
+        </div class>
+        <div class="feedback"> 
+          <p id="result-text"></p>
+        </div>
+        <div class="div-buttons">
+          <button id="next-btn" class="confirmBtn undoBtn nextBtn" aria-label="Next round" disabled>Next</button>
+          <button id="nextLevel-btn" class=" giveUpBtn" aria-label="Next level" >Next Level</button>
+        </div>  
+    </div>
     </section>
 
     <aside class="sidebar" aria-label="Wardrobe">
       <div class="wardrobe-box" id="img-menu"></div>
     </aside>
 
-    <div class="submissionbar" aria-live="polite">
 
-      <div class="div-buttons">
-        <button id="confirm-btn" class="confirmBtn" aria-label="Confirm outfit">Confirm Outfit</button>
-        <button id="giveUp-btn" class="undoBtn giveUpBtn" aria-label="Give up">Give up</button>
-      </div>
-      <div class="feedback"> 
-        <p id="result-text"></p>
-      </div>
-      <div>
-         <button id="next-btn" class="confirmBtn undoBtn nextBtn" aria-label="Next round" disabled>Next</button>
-        <button id="nextLevel-btn" class=" giveUpBtn" aria-label="Next level" >Next Level</button>
-      </div>  
-    </div>
   </div>
 
   
@@ -114,7 +116,6 @@
     if (missingItems.length > 0) {
       resultText.textContent = `❌ Missing items: ${missingItems.join(", ")}, Try again!`;
       resultText.style.color = "red";
-      popup.style.display = 'flex'; // show popup after checking
       return;
     }
     if (appliedHat !== correctHat) wrongItems.push("hat");
