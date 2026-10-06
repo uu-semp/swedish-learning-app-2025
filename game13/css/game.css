@@ -2,7 +2,7 @@
 .screen {
   display: grid;
   grid-template-columns: 1fr 220px;
-  grid-template-rows: 1fr 110px;
+  grid-template-rows: 1fr 1fr 490px;
   overflow: hidden;
 
   /* flex-centering from base.css */
@@ -10,10 +10,18 @@
   justify-content: normal;
 }
 
+/* top bar: level title + back button */
+.status-bar {
+  grid-column: 1 / 3;
+  grid-row: 1 / 2;
+  display: flex;
+  justify-content: space-between;
+}
+
 /* stage w/ pelle */
 .stage {
   grid-column: 1 / 2;
-  grid-row: 1 / 2;
+  grid-row: 3 / 4;
   position: relative;
   background:
     linear-gradient(#f6f7f8, #f0f3f5) top/100% 60% no-repeat,
@@ -67,7 +75,7 @@
 /* wardrobe (sidepannel)*/
 .sidebar {
   grid-column: 2 / 3;
-  grid-row: 1 / 2;
+  grid-row: 3 / 4;
   display: flex;
   align-items: stretch;
   padding: 10px;
@@ -131,7 +139,7 @@
   cursor: grabbing;
 }
 
-/* Instruction bar / bottom pannel */
+/* Instruction bar */
 .instructions {
   grid-column: 1 / 3;
   grid-row: 2 / 3;
@@ -141,13 +149,33 @@
   gap: 16px; 
   padding: 14px 16px;
   border-top: 3px solid var(--color-text);
-  background: #f7f9fb;
+  background: var(--color-surface);
   font-size: 16px;
 }
 
 .instructions p {
   margin: 0;
   line-height: 1.4;
+}
+
+/* submission bar: confirm / give up, feedback, next (inside the stage) */
+.submissionbar {
+  position: absolute;
+  bottom: 20px;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.feedback {
+  padding: 14px 16px;
+}
+
+.div-buttons {
+  display: flex;
+  flex-direction: column;
 }
 
 /* buttons for the game, should be replaced w/ btn from base.css */
@@ -201,6 +229,24 @@
     font-size: 30px;
     background: none;
     border: none;
+}
+
+.nextBtn {
+  background-color: #169c1d;
+}
+
+.nextBtn:disabled {
+  background-color: var(--color-disabled);
+}
+
+.giveUpBtn {
+  background-color: transparent;
+  border-radius: 6px;
+  border: 2px solid var(--color-text);
+}
+
+.giveUpBtn:hover {
+  background-color: var(--color-disabled);
 }
 
 .clearBtn {

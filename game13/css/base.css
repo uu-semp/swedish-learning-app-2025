@@ -37,6 +37,7 @@ body {
 
 /* game-box */
 .screen {
+  position: relative;
   width: var(--screen-width);
   height: var(--screen-height);
   background: var(--color-surface);
@@ -100,9 +101,15 @@ body {
 
 /* button landing page */
 .btn {
-  flex: 1;
-  padding: 16px 0;
+  padding: 16px 16px;
   font-size: 20px;
+}
+
+/* "How to play" button in the top-right corner of the landing page */
+.help-btn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
 }
 
 /* focus for keyboard users */

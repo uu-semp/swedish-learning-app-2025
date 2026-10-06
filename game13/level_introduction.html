@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Game</title>
+  <link rel="stylesheet" href="css/level_introduction.css" />
+</head>
+<body>
+<div class="screen" role="introduction" aria-label="Level introduction">
+    <h1 id="level-title"> Introduction</h1>
+    <h3> Here is an instruction of the following level, here we will include a wordlist of words you should know before playing the game as well as a word list of the words for this level</h3>
+    <a id="start-btn" class="btn">Start</a>
+</div>
+
+
+<script>
+const params = new URLSearchParams(window.location.search);
+  const level = params.get("level");
+  const startBtn = document.getElementById("start-btn");
+
+startBtn.href = "game.html?level=" + level;
+document.getElementById("level-title").textContent = "Level " + level;
+
+
+</script>
+
+<script src="../scripts/vocabulary.js" defer></script>
+<script type="module" src="index.js"></script>
+<script src="../scripts/save.js" defer></script>
+</body>
+</html>
