@@ -5,24 +5,16 @@ import { get_vocab, get_category, loaddb } from "../../../scripts/vocabulary_awa
 let feedback_timer = null
 let stopped = false
 
-let all_streets = [
-    "Ringgatan",
-    "Sysslomansgatan",
-    "Drottninggatan",
-    "Kungsgatan",
-    "Svartbäcksgatan"
-]
-
 let all_ranges = [
     [1, 10],
     [11, 21],
-    //[22, 32], // ADD THESE BACK ONCE THE VOCABULARY IS UPDATED
-    //[33, 43],
-    //[44, 54],
-    //[55, 65],
-    //[66, 76],
-    //[87, 97],
-    //[89, 99]
+    [22, 32],
+    [33, 43],
+    [44, 54],
+    [55, 65],
+    [66, 76],
+    [87, 97],
+    [89, 99]
 ]
 
 let available_ranges = []
@@ -31,7 +23,7 @@ export async function Initialize(difficulty) {
     // Load db and fetch streets and numbers. Add directions, buildnings and transports
     await loaddb();
     const street_ids = get_category("street");
-    const number_ids = get_category("number")
+    const number_ids = get_category("number");
 
     const streets = street_ids.map(id => get_vocab(id)?.sv).filter(Boolean)
     const numbers = number_ids.map(id => get_vocab(id)?.sv).filter(Boolean)
