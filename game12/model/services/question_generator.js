@@ -196,6 +196,7 @@ export class QuestionGenerator {
 }
 
 */
+let available_transports = []
 
 export function GenerateQuestion(difficulty, board, number_words, directions, transports) {
   let config = {
@@ -233,20 +234,24 @@ export function GenerateQuestion(difficulty, board, number_words, directions, tr
     config.promptEnglish = `I live in the house ${direction.en} ${landmark.nameEnglish}.`
   }
    else if (difficulty === 3) {
+  
+    // Logic for making sure every transport is used before repeating
+    if (available_transports.length === 0) {
+      available_transports = transports.slice()
+    }
+    const random_index_transport = Math.floor(Math.random() * available_transports.length)
+    const transport = available_transports.splice(random_index_transport, 1)[0]
 
-    const random_index_transport = Math.floor(Math.random() * 3)
     const random_index_direction = Math.floor(Math.random() * 3)
-
     const correct_house = board.BuildingsHorizontal[target_indexes[random_index_direction]]
     const landmark = board.Landmark
     const direction = directions[random_index_direction];
-    const transport = transports[random_index_transport];
 
     config.correctNumber = correct_house.houseNumber
     config.correctStreet = correct_house.street
 
     config.promptSwedish = `Jag ${transport.sv} till huset som ligger ${direction.sv} ${landmark.nameSwedish}.`;
-    config.promptEnglish = `I ${transport.en} to the house, which is ${direction.en} ${landmark.nameSwedish}.`;
+    config.promptEnglish = `I ${transport.en} to the house, which is ${direction.en} ${landmark.nameEnglish}.`;
   }
 
   return config;
