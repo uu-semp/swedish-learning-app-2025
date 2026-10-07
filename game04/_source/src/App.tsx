@@ -40,9 +40,7 @@ interface Question {
   shuffled?: string[];
   correct?: string[];
   season?: Season;
-  imagelabel?: string;
-  weatherIcon?: string;
-  weatherLabel?: string;
+    weatherIcon?: string;
   targetDate?: number;
   targetMonthIndex?: number;
 }
@@ -84,14 +82,7 @@ const TRANSLATIONS: Record<string, string> = {
   soligt: 'sunny', molnigt: 'cloudy', mulet: 'overcast', varmt: 'warm', kallt: 'cold',
 };
 
-const SEASON_PLACEHOLDER_TEXT: Record<Season, string> = {
-  vinter: 'Framtida foto: Uppsala på vintern',
-  vår:    'Framtida foto: Uppsala på våren',
-  sommar: 'Framtida foto: Uppsala på sommaren',
-  höst:   'Framtida foto: Uppsala på hösten',
-};
-
-const SEASON_IMAGES: Partial<Record<Season, string>> = {
+const SEASON_IMAGES: Record<Season, string> = {
   vinter: winterImg,
   vår: springImg,
   sommar: summerImg,
@@ -100,17 +91,17 @@ const SEASON_IMAGES: Partial<Record<Season, string>> = {
 // ── Question Bank ──────────────────────────────────────────────────────────────
 const QUESTIONS: Question[] = [
   // January – vinter
-  { type: 'season-mc',      monthIndex: 0,  instruction: 'Vilken årstid?',                          season: 'vinter', imagelabel: SEASON_PLACEHOLDER_TEXT.vinter,    options: ['vår','sommar','höst','vinter'],                                              answer: 'vinter'             },
+  { type: 'season-mc',      monthIndex: 0,  instruction: 'Vilken årstid?',                          season: 'vinter', options: ['vår','sommar','höst','vinter'],                                              answer: 'vinter'             },
   { type: 'weekday-mc',     monthIndex: 0,  instruction: 'Vilken dag kommer efter onsdag?',          options: ['tisdag','torsdag','fredag'],                                                     answer: 'torsdag'            },
-  { type: 'weather-mc',     monthIndex: 0,  instruction: 'Vad är det för väder?',                    weatherIcon: 'snow',    weatherLabel: 'Framtida foto: snö i Uppsala',         options: ['Det snöar.','Det regnar.','Det är varmt.','Det blåser.'],             answer: 'Det snöar.'         },
+  { type: 'weather-mc',     monthIndex: 0,  instruction: 'Vad är det för väder?',                    weatherIcon: 'snow',    options: ['Det snöar.','Det regnar.','Det är varmt.','Det blåser.'],             answer: 'Det snöar.'         },
   // February – vinter
   { type: 'weekday-click',  monthIndex: 1,  instruction: 'Klicka på rätt dagar.',                   sentence: 'Jag studerar svenska på tisdagar och torsdagar.',                                correctDays: ['tisdag','torsdag']                                               },
   { type: 'month-mc',       monthIndex: 1,  instruction: 'Vilken månad kommer efter januari?',       options: ['mars','december','februari','april'],                                            answer: 'februari'           },
-  { type: 'weather-mc',     monthIndex: 1,  instruction: 'Hur är vädret i dag?',                     weatherIcon: 'cloud',   weatherLabel: 'Framtida foto: mulet i Uppsala',       options: ['Det är soligt.','Det är mulet.','Det snöar.','Solen skiner.'],         answer: 'Det är mulet.'      },
+  { type: 'weather-mc',     monthIndex: 1,  instruction: 'Hur är vädret i dag?',                     weatherIcon: 'cloud',   options: ['Det är soligt.','Det är mulet.','Det snöar.','Solen skiner.'],         answer: 'Det är mulet.'      },
   // March – vår
   { type: 'weekday-order',  monthIndex: 2,  instruction: 'Placera dagarna i rätt ordning.',          shuffled: ['fredag','måndag','onsdag','tisdag','lördag','torsdag','söndag'],                correct: WEEKDAYS                                                               },
   { type: 'month-order',    monthIndex: 2,  instruction: 'Placera månaderna i rätt ordning.',        shuffled: ['mars','januari','april','februari'],                                            correct: ['januari','februari','mars','april']                                   },
-  { type: 'season-mc',      monthIndex: 2,  instruction: 'Vilken årstid?',                          season: 'vår',    imagelabel: SEASON_PLACEHOLDER_TEXT.vår,        options: ['vår','sommar','höst','vinter'],                                              answer: 'vår'                },
+  { type: 'season-mc',      monthIndex: 2,  instruction: 'Vilken årstid?',                          season: 'vår',    options: ['vår','sommar','höst','vinter'],                                              answer: 'vår'                },
   // April – vår
   { type: 'weekday-mc',     monthIndex: 3,  instruction: 'Vilken dag kommer före lördag?',           options: ['fredag','söndag','torsdag'],                                                     answer: 'fredag'             },
   { type: 'date-calendar',  monthIndex: 3,  instruction: 'Klicka på den sextonde april.',            targetDate: 16, targetMonthIndex: 3                                                                                                                              },
@@ -118,22 +109,22 @@ const QUESTIONS: Question[] = [
   // May – vår
   { type: 'weekday-click',  monthIndex: 4,  instruction: 'Klicka på rätt dagar.',                   sentence: 'Jag arbetar på måndag och fredag.',                                             correctDays: ['måndag','fredag']                                                },
   { type: 'month-order',    monthIndex: 4,  instruction: 'Placera månaderna i rätt ordning.',        shuffled: ['maj','februari','april','mars'],                                                correct: ['februari','mars','april','maj']                                       },
-  { type: 'weather-mc',     monthIndex: 4,  instruction: 'Vad är det för väder?',                    weatherIcon: 'rain',    weatherLabel: 'Framtida foto: regn i Uppsala',         options: ['Det regnar.','Det snöar.','Det är soligt.','Det blåser.'],            answer: 'Det regnar.'        },
+  { type: 'weather-mc',     monthIndex: 4,  instruction: 'Vad är det för väder?',                    weatherIcon: 'rain',    options: ['Det regnar.','Det snöar.','Det är soligt.','Det blåser.'],            answer: 'Det regnar.'        },
   // June – sommar
-  { type: 'season-mc',      monthIndex: 5,  instruction: 'Vilken årstid?',                          season: 'sommar', imagelabel: SEASON_PLACEHOLDER_TEXT.sommar,   options: ['vår','sommar','höst','vinter'],                                              answer: 'sommar'             },
-  { type: 'weather-mc',     monthIndex: 5,  instruction: 'Hur är vädret i dag?',                     weatherIcon: 'sun',     weatherLabel: 'Framtida foto: soligt i Uppsala',       options: ['Det är soligt.','Det är mulet.','Det regnar.','Det blåser.'],         answer: 'Det är soligt.'     },
+  { type: 'season-mc',      monthIndex: 5,  instruction: 'Vilken årstid?',                          season: 'sommar', options: ['vår','sommar','höst','vinter'],                                              answer: 'sommar'             },
+  { type: 'weather-mc',     monthIndex: 5,  instruction: 'Hur är vädret i dag?',                     weatherIcon: 'sun',     options: ['Det är soligt.','Det är mulet.','Det regnar.','Det blåser.'],         answer: 'Det är soligt.'     },
   { type: 'grammar-mc',     monthIndex: 5,  instruction: 'Vilken mening är rätt?',                   options: ['Det regnar.','Det är regnar.'],                                                  answer: 'Det regnar.'        },
   // July – sommar
   { type: 'weekday-mc',     monthIndex: 6,  instruction: 'Vilken dag kommer efter fredag?',          options: ['torsdag','måndag','lördag'],                                                     answer: 'lördag'             },
   { type: 'date-calendar',  monthIndex: 6,  instruction: 'Klicka på den tjugofemte juli.',           targetDate: 25, targetMonthIndex: 6                                                                                                                              },
-  { type: 'weather-mc',     monthIndex: 6,  instruction: 'Vad är det för väder?',                    weatherIcon: 'thunder', weatherLabel: 'Framtida foto: åskväder i Uppsala',    options: ['Det åskar och det blixtrar.','Det blåser.','Det är soligt.','Det snöar.'], answer: 'Det åskar och det blixtrar.' },
+  { type: 'weather-mc',     monthIndex: 6,  instruction: 'Vad är det för väder?',                    weatherIcon: 'thunder', options: ['Det åskar och det blixtrar.','Det blåser.','Det är soligt.','Det snöar.'], answer: 'Det åskar och det blixtrar.' },
   // August – sommar
   { type: 'weekday-order',  monthIndex: 7,  instruction: 'Placera dagarna i rätt ordning.',          shuffled: ['söndag','tisdag','fredag','måndag','torsdag','onsdag','lördag'],                correct: WEEKDAYS                                                               },
   { type: 'month-mc',       monthIndex: 7,  instruction: 'Vilken månad kommer före september?',      options: ['oktober','juli','augusti'],                                                      answer: 'augusti'            },
   { type: 'grammar-mc',     monthIndex: 7,  instruction: 'Vilken mening är rätt?',                   options: ['Det är soligt.','Det soligt.'],                                                  answer: 'Det är soligt.'     },
   // September – höst
-  { type: 'season-mc',      monthIndex: 8,  instruction: 'Vilken årstid?',                          season: 'höst',   imagelabel: SEASON_PLACEHOLDER_TEXT.höst,      options: ['vår','sommar','höst','vinter'],                                              answer: 'höst'               },
-  { type: 'weather-mc',     monthIndex: 8,  instruction: 'Hur är vädret i dag?',                     weatherIcon: 'wind',    weatherLabel: 'Framtida foto: blåsigt i Uppsala',     options: ['Det blåser.','Det snöar.','Det är soligt.','Solen skiner.'],          answer: 'Det blåser.'        },
+  { type: 'season-mc',      monthIndex: 8,  instruction: 'Vilken årstid?',                          season: 'höst',   options: ['vår','sommar','höst','vinter'],                                              answer: 'höst'               },
+  { type: 'weather-mc',     monthIndex: 8,  instruction: 'Hur är vädret i dag?',                     weatherIcon: 'wind',    options: ['Det blåser.','Det snöar.','Det är soligt.','Solen skiner.'],          answer: 'Det blåser.'        },
   { type: 'month-mc',       monthIndex: 8,  instruction: 'Vilken månad kommer efter september?',     options: ['november','oktober','december'],                                                 answer: 'oktober'            },
   // October – höst
   { type: 'weekday-click',  monthIndex: 9,  instruction: 'Klicka på rätt dagar.',                   sentence: 'Jag har lektion på onsdag och lördag.',                                        correctDays: ['onsdag','lördag']                                                },
@@ -142,9 +133,9 @@ const QUESTIONS: Question[] = [
   // November – höst
   { type: 'weekday-mc',     monthIndex: 10, instruction: 'Vilken dag kommer före onsdag?',           options: ['tisdag','torsdag','måndag'],                                                     answer: 'tisdag'             },
   { type: 'month-order',    monthIndex: 10, instruction: 'Placera månaderna i rätt ordning.',        shuffled: ['november','september','december','oktober'],                                    correct: ['september','oktober','november','december']                           },
-  { type: 'weather-mc',     monthIndex: 10, instruction: 'Hur är vädret i dag?',                     weatherIcon: 'cloud',   weatherLabel: 'Framtida foto: molnigt i Uppsala',    options: ['Det är molnigt.','Det är soligt.','Det snöar.','Det regnar.'],        answer: 'Det är molnigt.'   },
+  { type: 'weather-mc',     monthIndex: 10, instruction: 'Hur är vädret i dag?',                     weatherIcon: 'cloud',   options: ['Det är molnigt.','Det är soligt.','Det snöar.','Det regnar.'],        answer: 'Det är molnigt.'   },
   // December – vinter
-  { type: 'season-mc',      monthIndex: 11, instruction: 'Vilken årstid?',                          season: 'vinter', imagelabel: 'Framtida foto: Uppsala i december',               options: ['vår','sommar','höst','vinter'],                                              answer: 'vinter'             },
+  { type: 'season-mc',      monthIndex: 11, instruction: 'Vilken årstid?',                          season: 'vinter', options: ['vår','sommar','höst','vinter'],                                              answer: 'vinter'             },
   { type: 'grammar-mc',     monthIndex: 11, instruction: 'Vilken mening är rätt?',                   options: ['Det är kallt.','Det kallt.'],                                                    answer: 'Det är kallt.'      },
   { type: 'weekday-mc',     monthIndex: 11, instruction: 'Vilken dag kommer efter söndag?',          options: ['lördag','måndag','fredag'],                                                      answer: 'måndag'             },
 ];
@@ -182,15 +173,15 @@ const PRACTICE_QUESTIONS: Record<CategoryKey, Question[]> = {
   ],
   arstider: [
     { type: 'grammar-mc',    monthIndex: 5, instruction: 'I Sverige är det ______ i januari.',                     options: ['vår','sommar','höst','vinter'],                                                     answer: 'vinter'                      },
-    { type: 'season-mc',     monthIndex: 5, instruction: 'Vilken årstid?',  season: 'sommar', imagelabel: SEASON_PLACEHOLDER_TEXT.sommar, options: ['vår','sommar','höst','vinter'],    answer: 'sommar'                      },
-    { type: 'season-mc',     monthIndex: 5, instruction: 'Vilken årstid?',  season: 'vår',    imagelabel: SEASON_PLACEHOLDER_TEXT.vår,    options: ['vår','sommar','höst','vinter'],    answer: 'vår'                         },
+    { type: 'season-mc',     monthIndex: 5, instruction: 'Vilken årstid?',  season: 'sommar', options: ['vår','sommar','höst','vinter'],    answer: 'sommar'                      },
+    { type: 'season-mc',     monthIndex: 5, instruction: 'Vilken årstid?',  season: 'vår',    options: ['vår','sommar','höst','vinter'],    answer: 'vår'                         },
     { type: 'grammar-mc',    monthIndex: 5, instruction: 'Det är kallt och det snöar.\nVilken årstid passar bäst?', options: ['vår','sommar','höst','vinter'],                                                   answer: 'vinter'                      },
     { type: 'grammar-mc',    monthIndex: 5, instruction: 'Det är varmt och soligt.\nVilken årstid passar bäst?',    options: ['vår','sommar','höst','vinter'],                                                   answer: 'sommar'                      },
   ],
   vader: [
-    { type: 'weather-mc',    monthIndex: 9, instruction: 'Vad är det för väder?',  weatherIcon: 'snow',   weatherLabel: 'Framtida foto: snö i Uppsala',     options: ['Det snöar.','Det regnar.','Det är varmt.','Det blåser.'],       answer: 'Det snöar.'      },
-    { type: 'weather-mc',    monthIndex: 9, instruction: 'Vad är det för väder?',  weatherIcon: 'sun',    weatherLabel: 'Framtida foto: soligt väder',       options: ['Det är soligt.','Det är mulet.','Det regnar.','Solen skiner.'], answer: 'Det är soligt.'  },
-    { type: 'weather-mc',    monthIndex: 9, instruction: 'Vad är det för väder?',  weatherIcon: 'wind',   weatherLabel: 'Framtida foto: blåsigt väder',      options: ['Det blåser.','Det snöar.','Det är varmt.','Det är soligt.'],   answer: 'Det blåser.'     },
+    { type: 'weather-mc',    monthIndex: 9, instruction: 'Vad är det för väder?',  weatherIcon: 'snow',   options: ['Det snöar.','Det regnar.','Det är varmt.','Det blåser.'],       answer: 'Det snöar.'      },
+    { type: 'weather-mc',    monthIndex: 9, instruction: 'Vad är det för väder?',  weatherIcon: 'sun',    options: ['Det är soligt.','Det är mulet.','Det regnar.','Solen skiner.'], answer: 'Det är soligt.'  },
+    { type: 'weather-mc',    monthIndex: 9, instruction: 'Vad är det för väder?',  weatherIcon: 'wind',   options: ['Det blåser.','Det snöar.','Det är varmt.','Det är soligt.'],   answer: 'Det blåser.'     },
     { type: 'grammar-mc',    monthIndex: 9, instruction: 'Vilken mening är rätt?', options: ['Det regnar.','Det är regnar.'],                                                           answer: 'Det regnar.'     },
     { type: 'grammar-mc',    monthIndex: 9, instruction: 'Vilken mening är rätt?', options: ['Det är soligt.','Det soligt.'],                                                           answer: 'Det är soligt.'  },
   ],
@@ -301,58 +292,28 @@ function MonthBar({ completed, current }: { completed: boolean[]; current: numbe
   );
 }
 
-function SeasonPlaceholder({
-  season,
-  label,
-  minH = 120,
-}: {
-  season: Season;
-  label: string;
-  minH?: number;
-}) {
-  const c = COLORS[season];
-  const image = SEASON_IMAGES[season];
-
+function SeasonPlaceholder({ season, minH = 240 }: { season: Season; minH?: number }) {
   return (
     <div
-      className="w-full rounded-2xl flex flex-col items-center justify-center gap-1 relative overflow-hidden"
-      style={{
-        backgroundColor: c.placeholder,
-        minHeight: minH,
-      }}
+      className="w-full rounded-2xl overflow-hidden shrink-0"
+      style={{ height: minH, backgroundColor: COLORS[season].placeholder }}
     >
-      {image ? (
-        <img
-          src={image}
-          alt={label}
-          className="absolute inset-0 w-full h-full object-cover object-center"
-        />
-      ) : (
-        <>
-          <span style={{ fontSize: 28, lineHeight: 1 }}>
-            {SEASON_ICON[season]}
-          </span>
-
-          <p
-            className="font-mono text-[10px] text-center px-4 opacity-60"
-            style={{ color: c.textDark }}
-          >
-            {label}
-          </p>
-        </>
-      )}
+      <img
+        src={SEASON_IMAGES[season]}
+        alt="Årstidsbild"
+        style={{ display: 'block', width: '100%', height: '100%', objectFit: 'cover' }}
+      />
     </div>
   );
 }
 
-function WeatherPlaceholder({ icon, label }: { icon: string; label: string }) {
+function WeatherPlaceholder({ icon }: { icon: string }) {
   return (
     <div
-      className="w-full rounded-2xl flex flex-col items-center justify-center gap-1"
+      className="w-full rounded-2xl flex items-center justify-center shrink-0"
       style={{ backgroundColor: '#DDE8F0', minHeight: 90 }}
     >
       <span style={{ fontSize: 32, lineHeight: 1 }}>{WEATHER_EMOJI[icon] ?? '🌥️'}</span>
-      <p className="font-mono text-[10px] text-center px-4 opacity-50 text-slate-700">{label}</p>
     </div>
   );
 }
@@ -464,7 +425,7 @@ function SeasonMCQuestion({ q, answerState, onSelect }: { q: Question; answerSta
 
   return (
     <div className="flex flex-col gap-2">
-      <SeasonPlaceholder season={s} label={q.imagelabel!} minH={240} />
+      <SeasonPlaceholder season={s} minH={240} />
       <div className="grid grid-cols-2 gap-2">
         {q.options!.map((opt) => {
           const state = optionState(opt);
@@ -511,7 +472,7 @@ function WeatherMCQuestion({ q, answerState, onSelect }: { q: Question; answerSt
 
   return (
     <div className="flex flex-col gap-2">
-      <WeatherPlaceholder icon={q.weatherIcon!} label={q.weatherLabel!} />
+      <WeatherPlaceholder icon={q.weatherIcon!} />
       <div className="flex flex-col gap-2">
         {q.options!.map((opt) => {
           const state = optionState(opt);
@@ -1313,9 +1274,15 @@ function HomeScreen({ onStart, onPractice }: { onStart: () => void; onPractice: 
                 className="rounded-2xl flex flex-col justify-end p-3 relative overflow-hidden"
                 style={{ backgroundColor: c.placeholder }}
               >
-                <div className="absolute top-2 right-2 text-xl opacity-60">{SEASON_ICON[season]}</div>
-                <p className="font-display font-bold text-sm" style={{ color: c.textDark }}>{label}</p>
-                <p className="font-mono text-[9px] mt-0.5 opacity-60" style={{ color: c.textDark }}>{months}</p>
+                <img
+                  src={SEASON_IMAGES[season]}
+                  alt=""
+                  className="absolute inset-0 w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
+                <div className="absolute top-2 right-2 text-xl">{SEASON_ICON[season]}</div>
+                <p className="relative font-display font-bold text-sm text-white">{label}</p>
+                <p className="relative font-mono text-[9px] mt-0.5 text-white/90">{months}</p>
               </div>
             );
           })}
