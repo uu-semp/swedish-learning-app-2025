@@ -95,3 +95,21 @@
 .explore-view .word-cloud:hover {
     transform: translateY(-2px);
 }
+
+/* The selected body part on Pelle gets the same outline as on hover */
+.explore-view .explore-pelle svg g[id].selected {
+    filter: drop-shadow(10px 0 0 #7CFC00)
+            drop-shadow(-10px 0 0 #7CFC00)
+            drop-shadow(0 10px 0 #7CFC00)
+            drop-shadow(0 -10px 0 #7CFC00)
+            drop-shadow(7px 7px 0 #7CFC00)
+            drop-shadow(-7px 7px 0 #7CFC00)
+            drop-shadow(7px -7px 0 #7CFC00)
+            drop-shadow(-7px -7px 0 #7CFC00);
+}
+
+/* The selected word turns lime green */
+.explore-view .word-cloud.selected {
+    background: #7CFC00;
+    color: #1e3a0a;
+}
