@@ -216,13 +216,13 @@ export function GenerateQuestion(difficulty, board, number_words, directions, tr
 
     const number_word = number_words[correct_house.houseNumber] ?? correct_house.houseNumber
 
-    config.promptSwedish = `Jag bor på ${correct_house.street} ${number_word}.`
-    config.promptEnglish = `I live at ${correct_house.street} ${number_word}.`
+    config.promptSwedish = `Jag bor på ${correct_house.street} ${number_word.sv}.`
+    config.promptEnglish = `I live at ${correct_house.street} ${number_word.en}.`
 
   }
    else if (difficulty === 2) {
     const random_index = Math.floor(Math.random() * 3)
-
+    
     const correct_house = board.BuildingsHorizontal[target_indexes[random_index]]
     const direction = directions[random_index]
     const landmark = board.Landmark
@@ -240,19 +240,14 @@ export function GenerateQuestion(difficulty, board, number_words, directions, tr
         available_transports = transports.slice()
     }
 
-    const random_index_transport =
-        Math.floor(Math.random() * available_transports.length)
-
-    const transport =
-        available_transports.splice(random_index_transport, 1)[0]
+    const random_index_transport = Math.floor(Math.random() * available_transports.length)
+    const transport = available_transports.splice(random_index_transport, 1)[0]
 
     const random_index_direction = Math.floor(Math.random() * 3)
-
-    const correct_house =
-        board.BuildingsHorizontal[target_indexes[random_index_direction]]
-
-    const landmark = board.Landmark
     const direction = directions[random_index_direction]
+
+    const correct_house = board.BuildingsHorizontal[target_indexes[random_index_direction]]
+    const landmark = board.Landmark
 
     config.correctNumber = correct_house.houseNumber
     config.correctStreet = correct_house.street
@@ -266,11 +261,9 @@ export function GenerateQuestion(difficulty, board, number_words, directions, tr
     )
     config.correctTransport = transport
 
-    config.promptSwedish =
-        `Jag ${transport.sv} till huset som ligger ${direction.sv} ${landmark.nameSwedish}.`
+    config.promptSwedish = `Jag ${transport.sv} till huset som ligger ${direction.sv} ${landmark.nameSwedish}.`
 
-    config.promptEnglish =
-        `I ${transport.en} to the house, which is ${direction.en} ${landmark.nameEnglish}.`
+    config.promptEnglish = `I ${transport.en} to the house, which is ${direction.en} ${landmark.nameEnglish}.`
 }
 
 return config}

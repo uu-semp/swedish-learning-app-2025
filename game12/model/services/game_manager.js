@@ -26,8 +26,7 @@ export async function Initialize(difficulty) {
     const number_ids = get_category("number");
 
     const streets = street_ids.map(id => get_vocab(id)?.sv).filter(Boolean)
-    const numbers = number_ids.map(id => get_vocab(id)?.sv).filter(Boolean)
-
+    const numbers = number_ids.map(id => get_vocab(id)).filter(Boolean)
 
     let game = {
         difficulty: difficulty,
@@ -95,8 +94,6 @@ if (difficulty === 3) {
         }
     })
 }
-
-    console.log(transports)
 
     available_ranges = all_ranges.slice()
 
