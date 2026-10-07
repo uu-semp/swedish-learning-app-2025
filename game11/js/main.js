@@ -1,20 +1,52 @@
 //This file is the entry point for the game. It initializes the game state and sets up the UI.
-import { initGameState } from "./state.js";
-import { displayShelf, displayShoppingList, displayCopyright} from "./ui.js";
+import {
+  initGameState,
+  isSpacedRepetitionEnabled
+} from "./state.js";
+import { displayShelf, displayShoppingList, displayCopyright } from "./ui.js";
+import {
+  updateSpacedRepetitionWord
+} from "./spacedRepetition/spacedRepetitionLogic.js";
 
 //The game state is stored in this variable and is exposed to the global window object for access from other scripts.
 let gameState = {};
 
+
+window.addEventListener('message', (event) => {
+  const data = event.data || {};
+
+  if (
+    data.type === 'pickResult' &&
+    data.ok &&
+    typeof data.id === 'string'
+  ) {
+    if (isSpacedRepetitionEnabled()) {
+      updateSpacedRepetitionWord(data.id, data.mistakes);
+    }
+  }
+});
 
 /**
  * Initializes the game state and displays the game UI.
  */
 function startGame() {
   // Wait until the vocabulary data has finished loading.
-  window.vocabulary.when_ready(function() {
+  window.vocabulary.when_ready(function () {
     console.log("main.js is running");
     // Initialize the game state.
     gameState = initGameState();
+
+    if (!gameState) {
+      window.__game11GameState = null;
+
+      const noWordsModal = document.getElementById("sr-no-words-modal");
+
+      if (noWordsModal) {
+        noWordsModal.classList.remove("hidden");
+      }
+
+      return;
+    }
 
     // Preload shelf images so they are cached before rendering
     if (gameState.mode !== 2) gameState.shelf.forEach(item => { new Image().src = "../" + item.img; });
@@ -24,8 +56,15 @@ function startGame() {
     displayShelf(gameState.shelf, gameState.mode);
     displayShoppingList(gameState.shoppingList, gameState.mode);
     displayCopyright(gameState.shelf, gameState.mode);
+
+    if (gameState.pickedIds && Array.isArray(gameState.pickedIds)) {
+      gameState.pickedIds.forEach(id => {
+        window.Game11UI?.placeItemInCart?.(id);
+      })
+    }
+
   });
-  
+
   // Looks redundant assignment to window.__game11GameState. 
   // TODO: remove this and ensure that it do not cause problem.
   window.__game11GameState = gameState;

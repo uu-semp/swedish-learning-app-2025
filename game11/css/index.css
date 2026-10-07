@@ -278,7 +278,7 @@ body {
   flex-direction: column;
   align-items: flex-end;
   gap: 0.5rem;
-  z-index: 20;
+  z-index: 10001;
 }
 
 .status-bar {
@@ -377,6 +377,10 @@ body {
   border-radius: 12px;
   padding: 24px;
   width: 320px;
+
+  max-height: 80vh;
+  overflow-y: auto;
+
   box-shadow: 6px 6px 0 black;
   display: flex;
   flex-direction: column;
@@ -556,4 +560,45 @@ body.high-contrast-mode .game-frame img {
   background-color: rgba(60, 144, 241, 0.336);
   transition: all 0.3s ease;
   transform: translateX(5px) translateY(-2px);
+}
+
+
+/* =================================================
+   SPACED REPETITION
+   ================================================= */
+
+.sr-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.sr-title {
+  font-weight: bold;
+  margin-bottom: 2px;
+}
+
+.danger-btn {
+  background-color: #f87171;
+  color: white;
+}
+
+.modal-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.modal-actions .modal-btn,
+.modal-actions .close-btn {
+  margin-bottom: 0;
+}
+
+.sr-toggle-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.sr-toggle-buttons .modal-btn {
+  flex: 1;
 }

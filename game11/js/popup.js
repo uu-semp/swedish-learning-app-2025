@@ -17,6 +17,7 @@
         if (!isEmbedded) return;
         try { window.parent.postMessage({ type: 'popupReady' }, '*'); } catch (_) { }
     }
+
     // Fallback bank (kept, but we'll usually get real words from parent)
     const FOOD_BANK = [
         { id: 'apple', sv: 'äpple' }, { id: 'banana', sv: 'banan' }, { id: 'bread', sv: 'bröd' },
@@ -51,9 +52,9 @@
                     firstTry: `Rätt: ${game.firstTryCorrectCount}`,
                     mistakes: `Misstag: ${game.mistakes}`,
                     target: `Tröskel: ${game.winThreshold} / ${game.total}`,
-                    index: game.orderIndex,                // 👈 NEW
-                    currentId: cur ? String(cur.id) : null, // optional
-                    currentSv: cur ? cur.sv : null          // optional
+                    index: game.orderIndex,
+                    currentId: cur ? String(cur.id) : null,
+                    currentSv: cur ? cur.sv : null
                 }
             }, '*');
         }
@@ -142,18 +143,23 @@
      * It creates the progress data and resets the counters for a new game.
      *
      * @param {Object[]} words - The words used in the game.
-     */    
-    function initWithWords(words) {
+     */
+   function initWithWords(words, startIndex = 0) {
         const total = words.length;
         game = {
-            words: words.slice(),            // [{id, sv}, ...] in exact order
+            words: words.slice(),            
             total,
             winThreshold: WIN_THRESHOLD(total),
-            orderIndex: 0,
-            perItemState: words.map(w => ({ id: w.id, firstTry: true, done: false })),
-            firstTryCorrectCount: 0,
+            orderIndex: startIndex, 
+            perItemState: words.map((w, idx) => ({
+                id: w.id,
+                firstTry: true,
+                done: idx < startIndex, 
+                mistakes: 0
+            })), 
+            firstTryCorrectCount: startIndex,
             mistakes: 0,
-            completed: 0
+            completed: startIndex
         };
         renderStatus();
     }
@@ -179,10 +185,16 @@
         const st = game.perItemState[ix];
 
         const ok = String(id) === String(cur.id); // ids now both like "banana"
-        // 🔔 Tell parent whether this pick was correct (enables “stick in cart”)
+
+        // Tell parent whether this pick was correct (enables "stick in cart")
         try {
             if (window.parent && window.parent !== window) {
-                window.parent.postMessage({ type: 'pickResult', id: String(id), ok: !!ok }, '*');
+                window.parent.postMessage({
+                    type: 'pickResult',
+                    id: String(id),
+                    ok: !!ok,
+                    mistakes: st.mistakes
+                }, '*');
             }
         } catch (_) { }
 
@@ -191,11 +203,19 @@
         if (ok) {
             toast(`Bra jobbat, du hittade <strong>${cur.sv}</strong>`);
             if (st.firstTry) game.firstTryCorrectCount++;
-            st.done = true; game.completed++; nextItem();
+            st.done = true;
+            game.completed++;
+            nextItem();
         } else {
             toast(`Fel, <strong>${label || id}</strong> är inte <strong>${cur.sv}</strong>. Försök igen!`, 'error');
             window.parent.postMessage({ type: 'wrongAnswer' }, '*');
-            if (st.firstTry) { st.firstTry = false; game.mistakes++; } else { game.mistakes++; }
+
+            st.mistakes++;
+            game.mistakes++;
+
+            if (st.firstTry) {
+                st.firstTry = false;
+            }
         }
         renderStatus();
     }
@@ -222,8 +242,16 @@
             // Tell parent to make the iframe clickable while end screen is shown
             try { window.parent.postMessage({ type: 'endgameOpen' }, '*'); } catch (_) { }
 
+            // NEW: Tell parent that the game has ended and if it was won, so the stats API updates
+            try {
+                window.parent.postMessage({
+                    type: 'gameEnded',
+                    won: win
+                }, '*');
+            } catch (_) { }
+
             // Navigate **inside this iframe** to the end screen (NO full-page redirect)
-            window.location.href = './endGame.html';   // NOTE: filename is lower-case here
+            window.location.href = './endGame.html';
 
             return;
         }
@@ -253,10 +281,9 @@
         if (!data.type) return;
 
         if (data.type === 'initWords' && Array.isArray(data.words) && data.words.length) {
-            // Expecting [{id, sv}, ...] in target order (first is the current target)
             initedFromParent = true;
             if (readyTimer) { clearInterval(readyTimer); readyTimer = null; }
-            initWithWords(data.words);
+            initWithWords(data.words, data.currentIndex || 0); 
             try { window.parent.postMessage({ type: 'initDone' }, '*'); } catch (_) { }
             return;
         }
