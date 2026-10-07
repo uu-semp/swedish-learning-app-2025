@@ -137,7 +137,38 @@ const instructionGroups = [
   ],
 
   // bathroom
-  []
+  [
+    // Layout: [0 toalett, 1 handduk, 2 dusch, 3 spegel, 4 skåp, 5 matta, 6 lampa]
+    [
+      { question: "Dra spegeln till mitten.", answer: "mirror", swedish: "spegel", hint: "You look at yourself in this.", index: [3] },
+      { question: "Dra toaletten längst till vänster.", answer: "toilet", swedish: "toalett", hint: "You sit on this in the bathroom.", index: [0] },
+      { question: "Dra lampan längst till höger.", answer: "lamp", swedish: "lampa", hint: "It shines light in a room.", index: [6] },
+      { question: "Dra handduken direkt till höger om toaletten.", answer: "towel", swedish: "handduk", hint: "You dry yourself with this.", index: [1] },
+      { question: "Dra mattan direkt till vänster om lampan.", answer: "carpet", swedish: "matta", hint: "A soft floor covering.", index: [5] },
+      { question: "Dra duschen direkt till höger om handduken.", answer: "shower", swedish: "dusch", hint: "You wash yourself under this.", index: [2] },
+      { question: "Dra skåpet direkt till höger om spegeln.", answer: "cupboard", swedish: "skåp", hint: "It stores things behind a door.", index: [4] }
+    ],
+    // Layout: [0 lampa, 1 matta, 2 spegel, 3 skåp, 4 handduk, 5 toalett, 6 dusch]
+    [
+      { question: "Dra duschen längst till höger.", answer: "shower", swedish: "dusch", hint: "You wash yourself under this.", index: [6] },
+      { question: "Dra toaletten direkt till vänster om duschen.", answer: "toilet", swedish: "toalett", hint: "You sit on this in the bathroom.", index: [5] },
+      { question: "Dra handduken direkt till vänster om toaletten.", answer: "towel", swedish: "handduk", hint: "You dry yourself with this.", index: [4] },
+      { question: "Dra skåpet direkt till vänster om handduken.", answer: "cupboard", swedish: "skåp", hint: "It stores things behind a door.", index: [3] },
+      { question: "Dra spegeln direkt till vänster om skåpet.", answer: "mirror", swedish: "spegel", hint: "You look at yourself in this.", index: [2] },
+      { question: "Dra mattan direkt till vänster om spegeln.", answer: "carpet", swedish: "matta", hint: "A soft floor covering.", index: [1] },
+      { question: "Dra lampan längst till vänster.", answer: "lamp", swedish: "lampa", hint: "It shines light in a room.", index: [0] }
+    ],
+    // Layout: [0 dusch, 1 skåp, 2 lampa, 3 toalett, 4 matta, 5 handduk, 6 spegel]
+    [
+      { question: "Dra toaletten till mitten.", answer: "toilet", swedish: "toalett", hint: "You sit on this in the bathroom.", index: [3] },
+      { question: "Dra mattan direkt till höger om toaletten.", answer: "carpet", swedish: "matta", hint: "A soft floor covering.", index: [4] },
+      { question: "Dra lampan direkt till vänster om toaletten.", answer: "lamp", swedish: "lampa", hint: "It shines light in a room.", index: [2] },
+      { question: "Dra duschen längst till vänster.", answer: "shower", swedish: "dusch", hint: "You wash yourself under this.", index: [0] },
+      { question: "Dra spegeln längst till höger.", answer: "mirror", swedish: "spegel", hint: "You look at yourself in this.", index: [6] },
+      { question: "Dra skåpet direkt till höger om duschen.", answer: "cupboard", swedish: "skåp", hint: "It stores things behind a door.", index: [1] },
+      { question: "Dra handduken direkt till höger om mattan.", answer: "towel", swedish: "handduk", hint: "You dry yourself with this.", index: [5] }
+    ]
+  ]
 ];
 
 const ROOM_GROUP_INDEX = { office: 0, livingroom: 1, bedroom: 2, kitchen: 3, bathroom: 4 };

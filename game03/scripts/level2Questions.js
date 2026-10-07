@@ -101,7 +101,32 @@ const instructionGroups = [
   ],
 
   // bathroom
-  []
+  [
+    // Layout: [0 skåp, 1 spegel, 2 toalett, 3 handduk, 4 dusch]
+    [
+      { question: "Placera toaletten i mitten.", answer: "toilet", swedish: "toalett", hint: "You sit on this in the bathroom.", index: [2] },
+      { question: "Placera skåpet längst till vänster.", answer: "cupboard", swedish: "skåp", hint: "It stores things behind a door.", index: [0] },
+      { question: "Placera handduken direkt till höger om toaletten.", answer: "towel", swedish: "handduk", hint: "You dry yourself with this.", index: [3] },
+      { question: "Placera duschen längst till höger.", answer: "shower", swedish: "dusch", hint: "You wash yourself under this.", index: [4] },
+      { question: "Placera spegeln mellan skåpet och toaletten.", answer: "mirror", swedish: "spegel", hint: "You look at yourself in this.", index: [1] }
+    ],
+    // Layout: [0 handduk, 1 dusch, 2 lampa, 3 matta, 4 toalett]
+    [
+      { question: "Placera toaletten längst till höger.", answer: "toilet", swedish: "toalett", hint: "You sit on this in the bathroom.", index: [4] },
+      { question: "Placera mattan direkt till vänster om toaletten.", answer: "carpet", swedish: "matta", hint: "A soft floor covering.", index: [3] },
+      { question: "Placera lampan direkt till vänster om mattan.", answer: "lamp", swedish: "lampa", hint: "It shines light in a room.", index: [2] },
+      { question: "Placera duschen direkt till vänster om lampan.", answer: "shower", swedish: "dusch", hint: "You wash yourself under this.", index: [1] },
+      { question: "Placera handduken längst till vänster.", answer: "towel", swedish: "handduk", hint: "You dry yourself with this.", index: [0] }
+    ],
+    // Layout: [0 toalett, 1 skåp, 2 dusch, 3 spegel, 4 lampa]
+    [
+      { question: "Placera duschen i mitten.", answer: "shower", swedish: "dusch", hint: "You wash yourself under this.", index: [2] },
+      { question: "Placera skåpet direkt till vänster om duschen.", answer: "cupboard", swedish: "skåp", hint: "It stores things behind a door.", index: [1] },
+      { question: "Placera lampan längst till höger.", answer: "lamp", swedish: "lampa", hint: "It shines light in a room.", index: [4] },
+      { question: "Placera spegeln mellan duschen och lampan.", answer: "mirror", swedish: "spegel", hint: "You look at yourself in this.", index: [3] },
+      { question: "Placera toaletten längst till vänster.", answer: "toilet", swedish: "toalett", hint: "You sit on this in the bathroom.", index: [0] }
+    ]
+  ]
 ];
 
 const ROOM_GROUP_INDEX = { office: 0, livingroom: 1, bedroom: 2, kitchen: 3, bathroom: 4 };
