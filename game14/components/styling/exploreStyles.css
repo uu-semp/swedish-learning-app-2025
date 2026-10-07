@@ -68,3 +68,30 @@
             drop-shadow(7px -7px 0 #7CFC00)
             drop-shadow(-7px -7px 0 #7CFC00);
 }
+
+/* The word list on the right side */
+.explore-view .explore-words {
+    align-self: center;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+}
+
+/* Each word as a small white cloud */
+.explore-view .word-cloud {
+    font-family: 'Fredoka', 'Arial Rounded MT Bold', sans-serif;
+    font-size: 18px;
+    font-weight: 600;
+    color: #1e528e;
+    background: white;
+    border: none;
+    border-radius: 999px;
+    padding: 10px 18px;
+    box-shadow: 0 4px 0 rgba(0, 0, 0, 0.15);
+    cursor: pointer;
+}
+
+.explore-view .word-cloud:hover {
+    transform: translateY(-2px);
+}
