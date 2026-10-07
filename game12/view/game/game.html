@@ -83,7 +83,13 @@
                     <hr>
                 
                     <!-- Question with individually translated words -->
-                    <div id="prompt-words" :class="{ 'difficulty-2': game.difficulty === 2 || game.difficulty === 3 }">
+                    <div
+    id="prompt-words"
+    :class="{
+        'difficulty-2': game.difficulty === 2 || game.difficulty === 3,
+        'difficulty-3': game.difficulty === 3
+    }"
+>
                         <button
                             v-for="(word, index) in view.promptWords"
                             :key="index"
@@ -98,7 +104,13 @@
                     </div>
 
                     <!-- Existing road and house grid -->
-                    <div class="board-scroll" :class="{ 'difficulty-2': game.difficulty === 2 || game.difficulty === 3}">
+                    <div
+    class="board-scroll"
+    :class="{
+        'difficulty-2': game.difficulty === 2 || game.difficulty === 3,
+        'difficulty-3': game.difficulty === 3
+    }"
+>
                         <div
                             id="house-grid-T"
                             :class="{ 'horizontal-only': game.difficulty === 2 || game.difficulty === 3}"
@@ -181,42 +193,33 @@
                     </div>
                     
                     <div
-                        v-if="game.difficulty === 3"
-                        class="transport-options"
-                    >
-                        <button
-                            type="button"
-                            class="transport-option"
-                        >
-                            <img
-                                src="../../images/Difficulty 3/Bicylesvg.svg"
-                                alt="Cykel"
-                            >
-                            <span>Cykel</span>
-                        </button>
+    v-if="game.difficulty === 3"
+    class="transport-options"
+>
+    <button
+        v-for="transport in view.transportOptions"
+        :key="transport.sv"
+        type="button"
+        class="transport-option"
+        :disabled="game.answer_locked || game.is_finished"
+        :aria-label="display.language === 'en'
+            ? transport.en
+            : transport.sv"
+    >
+        <img
+            :src="transport.img"
+            :alt="display.language === 'en'
+                ? transport.en
+                : transport.sv"
+        >
 
-                        <button
-                            type="button"
-                            class="transport-option"
-                        >
-                            <img
-                                src="../../images/Difficulty 3/Car.svg"
-                                alt="Bil"
-                            >
-                            <span>Bil</span>
-                        </button>
-
-                        <button
-                            type="button"
-                            class="transport-option"
-                        >
-                            <img
-                                src="../../images/Difficulty 3/Schoolbus.svg"
-                                alt="Buss"
-                            >
-                            <span>Buss</span>
-                        </button>
-                    </div>
+        <span>
+            {{ display.language === "en"
+                ? transport.en
+                : transport.sv }}
+        </span>
+    </button>
+</div>
 
                     <hr>
                     <div class="hint-controls">
