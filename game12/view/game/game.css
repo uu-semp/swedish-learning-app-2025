@@ -41,6 +41,20 @@ body {
     background-color: #777;
 }
 
+html,
+body {
+    height: 100%;
+}
+
+#app {
+    min-height: 100%;
+}
+
+main.game-frame {
+    min-height: 100%;
+    box-sizing: border-box;
+}
+
 
 /* Center the main game area */
 main.game-frame {
@@ -362,11 +376,12 @@ hr {
     border-bottom: 40px solid #d17a22; /* roof color */
 }
 
-/* Hover effect for interactivity */
-#house-grid-T button:hover {
-    transform: translateY(-5px);
+#house-grid-T button:not(:disabled):hover,
+#house-grid-T button.is-selected {
+    transform: translateY(-5px) scale(1.08);
     box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
     background: #ffe0b2;
+    z-index: 2;
 }
 
 /* Optional: pressed state */
@@ -374,22 +389,8 @@ hr {
     transform: translateY(2px);
 }
 
-#house-grid-T button.is-correct {
-    background-color: #d9f2df;
-    outline: 3px solid #24743b;
-}
 
-#house-grid-T button.is-incorrect {
-    background-color: #f8dddd;
-    outline: 3px solid #a52a2a;
-}
 
-/* Optional: nice footer */
-footer {
-    text-align: center;
-    margin-top: 3rem;
-    color: #666;
-}
 
 #app[v-cloak] { display: none; }
 #app.loading { text-align: center; margin-top: 3rem; font-size: 1.2rem; }
@@ -464,36 +465,7 @@ footer {
 }
 
 
-.transport-options {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 24px;
-    margin: 15px 0 20px;
-}
 
-.transport-option {
-    width: 100px;
-    height: 90px;
-    padding: 8px;
-
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 4px;
-
-    cursor: pointer;
-}
-
-.transport-option img {
-    width: 70px;
-    height: 55px;
-    object-fit: contain;
-    display: block;
-}
-
-/* Make Difficulty 3 fit inside the fixed 800x600 game frame */
 #prompt-words.difficulty-3 {
     top: 20px;
     margin-bottom: 50px;
@@ -503,17 +475,140 @@ footer {
     padding: 25px 0 20px;
 }
 
+
+
 .transport-options {
-    margin: 5px 0 10px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+
+    gap: 24px;
+    margin: 0 0 8px;
 }
 
 .transport-option {
     width: 90px;
     height: 75px;
     padding: 6px;
+
+    flex: 0 0 90px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.15s ease,
+        box-shadow 0.15s ease,
+        background-color 0.15s ease,
+        border-color 0.15s ease;
 }
 
 .transport-option img {
     width: 60px;
     height: 45px;
+    object-fit: contain;
+    display: block;
+}
+
+.transport-option {
+    transform: scale(1);
+    position: relative;
+    border: 2px solid #ccc;
+    border-radius: 6px;
+}
+
+.transport-option:not(:disabled):hover {
+    transform: scale(1.15);
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.22);
+    z-index: 2;
+}
+
+.transport-option.is-selected {
+    transform: scale(1.15);
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.22);
+    border-color: #555;
+    z-index: 2;
+}
+
+
+
+.transport-option:disabled {
+    cursor: default;
+}
+
+#prompt-words.difficulty-3 {
+    top: 15px;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+    column-gap: 0.25rem;
+    row-gap: 0.1rem;
+    line-height: 1.2;
+}
+
+#prompt-words.difficulty-3 button {
+    font-size: 1.25rem;
+    padding: 2px 4px;
+}
+
+.board-scroll.difficulty-3 #house-grid-T.horizontal-only {
+    grid-template-columns: repeat(5, 90px);
+    grid-template-rows: 70px 40px 64px;
+}
+
+.board-scroll.difficulty-3 #house-grid-T button {
+    width: 54px;
+    height: 54px;
+    font-size: 1.2rem;
+}
+
+.board-scroll.difficulty-3 #house-grid-T button::before {
+    top: -24px;
+    border-left-width: 30px;
+    border-right-width: 30px;
+    border-bottom-width: 24px;
+}
+
+.board-scroll.difficulty-3 {
+    padding: 18px 0 0;
+}
+
+#house-grid-T button.is-selected {
+    border-color: #555;
+    transform: translateY(-5px) scale(1.08);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+    background: #ffe0b2;
+    z-index: 2;
+}
+#house-grid-T button.is-correct {
+    background-color: #d9f2df;
+    border-color: #24743b;
+}
+
+#house-grid-T button.is-correct::before {
+    filter: drop-shadow(0 0 2px #24743b);
+}
+
+#house-grid-T button.is-incorrect {
+    background-color: #f8dddd;
+    border-color: #a52a2a;
+}
+
+#house-grid-T button.is-incorrect::before {
+    filter: drop-shadow(0 0 2px #a52a2a);
+}
+.transport-option.is-correct {
+    background-color: #d9f2df;
+    border-color: #24743b;
+}
+
+.transport-option.is-incorrect {
+    background-color: #f8dddd;
+    border-color: #a52a2a;
 }

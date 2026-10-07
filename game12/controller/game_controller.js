@@ -17,8 +17,8 @@ export async function GameController(difficulty) {
         NextRound_GM(game)
     }
 
-    function CheckAnswer(question_index, answer) {
-        CheckAnswer_GM(question_index, answer, game)
+    function CheckAnswer(question_index, answer, transport = null) {
+        CheckAnswer_GM(question_index, answer, game, transport)
     }
 
     function UseHint() {

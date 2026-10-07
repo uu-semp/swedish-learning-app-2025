@@ -196,11 +196,23 @@
     v-if="game.difficulty === 3"
     class="transport-options"
 >
-    <button
-        v-for="transport in view.transportOptions"
+        <button
+        v-for="transport in view.transportOptions.slice(0, 3)"
         :key="transport.sv"
         type="button"
         class="transport-option"
+        @click="SelectTransport(transport)"
+        :class="{
+            'is-selected': isTransportSelected(transport),
+            'is-correct':
+                isTransportSelected(transport) &&
+                game.answer_locked &&
+                game.answer_correct === true,
+            'is-incorrect':
+                isTransportSelected(transport) &&
+                game.answer_locked &&
+                game.answer_correct === false
+        }"
         :disabled="game.answer_locked || game.is_finished"
         :aria-label="display.language === 'en'
             ? transport.en
@@ -255,12 +267,6 @@
             </section>
         </main>
 
-        <footer>
-            <small>
-                Created as part of the
-                "Software Engineering and Project Management" course 2025
-            </small>
-        </footer>
     </div>
 </body>
 </html>
