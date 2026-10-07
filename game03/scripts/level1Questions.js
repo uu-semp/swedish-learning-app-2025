@@ -112,7 +112,32 @@ const instructionGroups = [
   ],
 
   // Group 5: Bathroom setup (ignored for now, no scenarios)
-  []
+  [
+    // Layout: [0 dusch, 1 handduk, 2 toalett, 3 spegel, 4 skåp]
+    [
+      { question: "Drag the 'toalett' to the middle.", answer: "toilet", swedish: "toalett", hint: "You sit on this in the bathroom.", index: [2] },
+      { question: "Drag the 'dusch' all the way to the left.", answer: "shower", swedish: "dusch", hint: "You wash yourself under this.", index: [0] },
+      { question: "Drag the 'spegel' directly to the right of the 'toalett'.", answer: "mirror", swedish: "spegel", hint: "You look at yourself in this.", index: [3] },
+      { question: "Drag the 'skåp' all the way to the right.", answer: "cupboard", swedish: "skåp", hint: "It stores things behind a door.", index: [4] },
+      { question: "Drag the 'handduk' directly to the right of the 'dusch'.", answer: "towel", swedish: "handduk", hint: "You dry yourself with this.", index: [1] }
+    ],
+    // Layout: [0 matta, 1 toalett, 2 dusch, 3 lampa, 4 handduk]
+    [
+      { question: "Drag the 'handduk' all the way to the right.", answer: "towel", swedish: "handduk", hint: "You dry yourself with this.", index: [4] },
+      { question: "Drag the 'lampa' directly to the left of the 'handduk'.", answer: "lamp", swedish: "lampa", hint: "It shines light in a room.", index: [3] },
+      { question: "Drag the 'dusch' directly to the left of the 'lampa'.", answer: "shower", swedish: "dusch", hint: "You wash yourself under this.", index: [2] },
+      { question: "Drag the 'toalett' directly to the left of the 'dusch'.", answer: "toilet", swedish: "toalett", hint: "You sit on this in the bathroom.", index: [1] },
+      { question: "Drag the 'matta' all the way to the left.", answer: "carpet", swedish: "matta", hint: "A soft floor covering.", index: [0] }
+    ],
+    // Layout: [0 spegel, 1 lampa, 2 skåp, 3 dusch, 4 toalett]
+    [
+      { question: "Drag the 'skåp' to the middle.", answer: "cupboard", swedish: "skåp", hint: "It stores things behind a door.", index: [2] },
+      { question: "Drag the 'lampa' directly to the left of the 'skåp'.", answer: "lamp", swedish: "lampa", hint: "It shines light in a room.", index: [1] },
+      { question: "Drag the 'toalett' all the way to the right.", answer: "toilet", swedish: "toalett", hint: "You sit on this in the bathroom.", index: [4] },
+      { question: "Drag the 'dusch' directly to the right of the 'skåp'.", answer: "shower", swedish: "dusch", hint: "You wash yourself under this.", index: [3] },
+      { question: "Drag the 'spegel' all the way to the left.", answer: "mirror", swedish: "spegel", hint: "You look at yourself in this.", index: [0] }
+    ]
+  ]
 ];
 
 // Room picked in the main menu (level.html?level=N&room=…) selects its scenarios,
