@@ -1,6 +1,6 @@
 /* Owned by Game 02 — spelling game */
 
-#game-screen #word-image {
+#spelling-screen #spelling-image {
   display: block;
   margin: 0 auto 0.5rem;
   max-width: min(100%, 320px);
@@ -8,27 +8,28 @@
   object-fit: contain;
 }
 
-#letter-hint {
+#spelling-slots {
   text-align: center;
   font-size: 1.5rem;
   letter-spacing: 0.15em;
   margin: 0.25rem 0;
 }
 
-#image-row {
+#spelling-image-row {
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 1.5rem;
 }
 
-#game-screen #image-row #word-image {
+#spelling-screen #spelling-image-row #spelling-image {
   display: block;
   margin: 0;
   max-width: min(60%, 320px);
+  max-height: 160px;
 }
 
-#answer-form {
+#spelling-form {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -36,7 +37,7 @@
   flex-wrap: wrap;
 }
 
-#answer-input {
+#spelling-input {
   font-size: 1.25rem;
   padding: 0.4rem 0.6rem;
   border: 2px solid #555;
@@ -44,7 +45,7 @@
   width: min(60vw, 14rem);
 }
 
-#umlaut-buttons {
+#spelling-umlauts {
   display: flex;
   flex-direction: column;
   gap: 0.25rem;
@@ -55,7 +56,7 @@
   font-size: 1.25rem;
 }
 
-#feedback {
+#spelling-feedback {
   min-height: 2.2rem;
   text-align: center;
   font-size: 1.5rem;
@@ -63,7 +64,7 @@
   letter-spacing: 0.1em;
 }
 
-#letter-hint .slot {
+#spelling-slots .slot {
   display: inline-block;
   min-width: 0.8em;
   margin: 0 0.1em;
@@ -71,31 +72,31 @@
   font-family: monospace;
 }
 
-#letter-hint .ok {
+#spelling-slots .ok {
   color: #1f7a3d;
 }
 
-#letter-hint .wrong,
-#letter-hint .extra,
-#letter-hint .missing {
+#spelling-slots .wrong,
+#spelling-slots .extra,
+#spelling-slots .missing {
   color: #c0392b;
   font-weight: bold;
 }
 
-#letter-hint .extra {
+#spelling-slots .extra {
   text-decoration: line-through;
 }
 
-#letter-hint .missing {
+#spelling-slots .missing {
   border-bottom: 3px solid #c0392b;
 }
 
-#feedback.success {
+#spelling-feedback.success {
   color: #1f7a3d;
   font-weight: bold;
 }
 
-#feedback.revealed {
+#spelling-feedback.revealed {
   font-weight: bold;
 }
 
@@ -106,25 +107,24 @@
   margin: 0.25rem 0;
 }
 
-#game-screen h2,
-#game-screen p {
+#spelling-screen h2,
+#spelling-screen p {
   margin-top: 0.3rem;
   margin-bottom: 0.3rem;
 }
 
-#game-screen #misses,
-#game-screen #hints,
-#game-screen #elapsed-time,
-#game-screen #progress {
+#spelling-screen #spelling-misses,
+#spelling-screen #spelling-hints,
+#spelling-screen #spelling-time {
   text-align: center;
 }
 
-#answer-input.shake {
+#spelling-input.shake {
   animation: spelling-shake 0.35s;
   border-color: #c0392b;
 }
 
-#answer-input.correct {
+#spelling-input.correct {
   border-color: #1f7a3d;
 }
 
@@ -134,17 +134,22 @@
   40%, 80% { transform: translateX(6px); }
 }
 
-#hint {
+#spelling-hint {
   background-color: #f39c12;
   border-color: #f39c12;
   color: #fff;
 }
 
-#hint:hover {
+#spelling-hint:hover {
   background-color: #d68910;
   border-color: #d68910;
 }
 
-#letter-hint .revealed {
+#spelling-slots .revealed {
   font-weight: bold;
+}
+
+/* Leave room for the progress bar along the top */
+.game-frame #spelling-screen {
+  padding-top: 36px;
 }

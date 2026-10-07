@@ -8,8 +8,7 @@ import { get_category, get_vocab } from "../../scripts/vocabulary_await.js";
 import { initDb } from "./game-data.js";
 import { getRandomPairs } from "./cards.js";
 
-// Change (or extend) this to widen the pool later
-const SPELLING_CATEGORY = "furniture";
+const DEFAULT_CATEGORY = "furniture";
 
 // Vocab image paths are relative to the repo root, our pages are in game02/
 function imagePath(img) {
@@ -17,16 +16,18 @@ function imagePath(img) {
 }
 
 /**
- * Picks `count` random words for a spelling round: furniture entries that
- * have an image showing a single object.
+ * Picks `count` random words for a spelling round: entries of the category
+ * that have an image showing a single object.
+ * @param {number} count
+ * @param {string} category
  * @returns {Promise<Array<{id: *, sv: string, article: string, img: string}>>}
  */
-export async function loadSpellingWords(count = 8) {
+export async function loadSpellingWords(count = 8, category = DEFAULT_CATEGORY) {
   await initDb();
 
-  const ids = get_category(SPELLING_CATEGORY);
+  const ids = get_category(category);
   if (!ids) {
-    console.error(`No ${SPELLING_CATEGORY} category found in database`);
+    console.error(`No ${category} category found in database`);
     return [];
   }
 

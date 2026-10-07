@@ -44,14 +44,22 @@
 .card-front {
     background-color: #FBCAEF;
     color: black;
+    font-family: "Times New Roman", Times, serif;
+    box-shadow: 0 0 0 2px #555;
+}
+
+.card-title {
+    line-height: 1.2;
+    text-align: left;
 }
 
 .card-back {
     background-color: #ebcea6;
-    color: #555;
+    color: #000;
     transform: rotateY(180deg);
     overflow: hidden;
     font-size: 100%;
+    box-shadow: 0 0 0 2px #555;
 }
 
 .card.flipped .card-inner {
