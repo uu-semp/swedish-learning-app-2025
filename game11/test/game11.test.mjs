@@ -7,6 +7,11 @@ import path from 'node:path';
 const GAME = path.resolve(import.meta.dirname, '..');
 const ROOT = path.resolve(GAME, '..');
 
+
+
+
+
+
 // Build window.vocabulary + localStorage from the repo's words.csv (same fields as scripts/vocabulary_await.js).
 const rows = fs.readFileSync(path.join(ROOT, 'words.csv'), 'utf8').trim().split(/\r?\n/)
   .map(line => [...line.matchAll(/("(?:[^"]|"")*"|[^,]*)(,|$)/g)].map(m => m[1].replace(/^"|"$/g, '').replace(/""/g, '"')));
@@ -26,9 +31,25 @@ Object.defineProperty(globalThis, 'localStorage', {
   }
 });
 
+
+// fake save state for the tests
+globalThis.save = window.save = {
+  get(game, key = null) {
+    const data = JSON.parse(localStorage.getItem(game) ?? '{}');
+    return key ? (data[key] ?? null) : data;
+  },
+  set(game, key, value) {
+    const data = this.get(game);
+    data[key] = value;
+    localStorage.setItem(game, JSON.stringify(data));
+    return true;
+  },
+};
+
 const { getItemsIds, getItems } = await import('../js/data.js');
 const { generateShoppingList, generateShelf } = await import('../js/gameLogic.js');
 const { initGameState, saveState, loadState } = await import('../js/state.js');
+const { getAudio, playCurrentSound, AUDIO_START_TRIM } = await import('../js/ui.js');
 
 const EXCLUDED = ['567f323c', '2f373051', '32191560', '440d3157', '75387a51', '19263071', '6a701276'];
 const keyOf = item => path.basename(item.img).split('.')[0].toLowerCase(); // same key as ui.js / index.html
@@ -81,7 +102,7 @@ test('initGameState creates and saves a fresh round', () => {
   assert.equal(s.shoppingList.length, 10);
   assert.equal(s.shelf.length, 16);
   assert.deepEqual([s.currentIndex, s.mode, s.finished], [0, 1, false]);
-  assert.ok(store.has('game11_game_state'));
+  assert.ok(save.get('game11','game_state'));
 });
 
 // Page refresh / mode switch reuses the saved round.
@@ -96,9 +117,9 @@ test('saved round is restored', () => {
 
 // Corrupted storage is discarded instead of breaking the game.
 test('corrupted saved state is discarded', () => {
-  store.set('game11_game_state', '{"shoppingList":5}');
+  save.set('game11','game_state',{shoppingList:5});
   assert.equal(loadState(), null);
-  assert.ok(!store.has('game11_game_state'));
+  assert.equal(save.get('game11','game_state'), null);
 });
 
 // popup.html's end-screen link must match the real file name (GitHub Pages is case-sensitive).
@@ -118,4 +139,31 @@ test('popup links to an existing end screen file', () => {
     fs.existsSync(path.join(GAME, 'html', target)),
     `popup opens "${target}", but the file does not exist`
   );
+});
+
+// audio is only loaded once per file.
+test('audio is cached and plays from the trim point', () => {
+  globalThis.Audio = class { load() {} play() { this.played = true; return Promise.resolve(); } };
+  window.__game11GameState = { shoppingList: [{ audio: 'a.mp3' }] };
+
+  playCurrentSound();
+
+  const audio = getAudio('a.mp3');
+
+  assert.equal(audio, getAudio('a.mp3'), 'audio not cached');
+  assert.ok(audio.played);
+  assert.equal(audio.currentTime, AUDIO_START_TRIM);
+});
+
+// missing audio shows the error message
+test('missing audio shows the error message', () => {
+  const msg = { style: {} };
+
+  globalThis.document = { getElementById: id => (id === 'audio-error' ? msg : null) };
+
+  window.__game11GameState = { shoppingList: [{ sv: 'gurka' }] };
+
+  playCurrentSound();
+
+  assert.equal(msg.style.display, 'block');
 });

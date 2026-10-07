@@ -323,6 +323,19 @@ body {
   opacity: 0.1;
 }
 
+#audio-error {
+  display: none;
+  position: absolute;
+  top: 275px;
+  left: 100px;
+  background: white;
+  border: 2px solid black;
+  border-radius: 8px;
+  padding: 4px 8px;
+  font-size: 0.8rem;
+  z-index: 30;
+}
+
 .no-bullets {
   list-style: none;
   padding-left: 0;

@@ -141,6 +141,48 @@ function wireShelfItem(element, key) {
     });
 }
 
+// Cache for the audio, so it doesn't have to download it.
+const _audioCache = new Map();
+
+// Skips the empty silence of all the pronounciations
+const AUDIO_START_TRIM = 0.2; // this is in seconds
+
+// Error audio timer
+let _audioErrorTimer = null; // timer for hiding the audio error message
+
+/**
+ * Shows an error message if the audio fails to play
+ */
+function showAudioError(){
+  const msg = document.getElementById('audio-error');
+  if (!msg) return;
+  msg.style.display = 'block';
+  clearTimeout(_audioErrorTimer);
+  _audioErrorTimer = setTimeout(() => {
+    msg.style.display = 'none';
+  }, 2000);
+}
+
+
+
+
+/**
+ * Returns the cached audio element for the given item.
+ * If it is not currently cached, preload it, otherwise load it from the cache.
+ *
+ * @param {string} path - to the item from the vocabulary data.
+ * @return {HTMLAudioElement} the audio element.
+ */
+function getAudio(path) {
+  let audio = _audioCache.get(path);
+  if(!audio){
+    audio = new Audio("../" + path);
+    audio.preload = "auto";
+    audio.load();
+    _audioCache.set(path, audio);
+  }
+  return audio;
+}
 
 
 /**
@@ -155,10 +197,16 @@ function playCurrentSound() {
   const audioPath = item?.audio;
   if (!audioPath) {
     console.warn('[ui] No audio available for current item');
+    showAudioError();
     return;
   }
-  const audio = new Audio("../" + audioPath);
-  audio.play().catch(err => console.warn('[ui] audio play failed:', err));
+  const audio = getAudio(audioPath);
+  audio.currentTime = AUDIO_START_TRIM; // so they start at the Trim
+
+  audio.play().catch(err => {
+    console.warn('[ui] audio play failed:', err);
+    showAudioError();
+  });
 }
 
 
@@ -230,6 +278,14 @@ export function displayShoppingList(list, mode) {
         }, 1500);
       });      
       listWrap.appendChild(soundBtn);
+  }
+  // cache the audio of the items
+  if (mode === 1 || mode === 3){
+    list.forEach(item => {
+      if(item.audio){
+        getAudio(item.audio); 
+      }
+    });
   }
   // Default highlight first row
   highlightListIndex(0);
@@ -444,3 +500,5 @@ function placeItemInCart(key) {
 
   console.debug('[ui] placed in cart:', key);
 }
+
+export { getAudio, playCurrentSound, AUDIO_START_TRIM };

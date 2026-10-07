@@ -7,8 +7,6 @@ import { getItemsIds } from './data.js';
 const ROUND_SIZE = 10;
 // Total capacity of the shelf (target items + distractors).
 const SHELF_CAPACITY = 16;
-// Key used to store the current game state.
-const STORAGE_KEY = 'game11_game_state';
 
 
 /**
