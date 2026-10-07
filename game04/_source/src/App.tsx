@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import summerImg from './assets/seasons/summer.jpg';
 import fallImg from './assets/seasons/fall.jpg';
+import winterImg from './assets/seasons/winter.jpg';
+import springImg from './assets/seasons/spring.jpg';
 
 // ── Shared site save API (see /scripts/SAVE.MD) ─────────────────────────────────
 // Loaded as a plain script by index.html; may not be present yet (or at all, e.g. when
@@ -90,7 +92,8 @@ const SEASON_PLACEHOLDER_TEXT: Record<Season, string> = {
 };
 
 const SEASON_IMAGES: Partial<Record<Season, string>> = {
-  vinter: summerImg,
+  vinter: winterImg,
+  vår: springImg,
   sommar: summerImg,
   höst: fallImg,
 };
