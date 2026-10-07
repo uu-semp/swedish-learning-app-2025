@@ -17,6 +17,7 @@ export function initUmlautButtons(inputEl, buttonSelector = ".umlaut-button") {
     inputEl.value =
       inputEl.value.slice(0, start) + ch + inputEl.value.slice(end);
     inputEl.focus();
+    $(inputEl).trigger("input");
     inputEl.setSelectionRange(start + ch.length, start + ch.length);
   });
 }

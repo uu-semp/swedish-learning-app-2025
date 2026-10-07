@@ -53,7 +53,14 @@ Owned by Game 02
       <h2>Spell the word for the picture</h2>
       <p id="progress">Word 1 / 8</p>
 
-      <img id="word-image" alt="Furniture to spell" />
+      <div id="image-row">
+        <img id="word-image" alt="Furniture to spell" />
+        <div id="umlaut-buttons" aria-label="Swedish letters">
+          <button type="button" class="umlaut-button" data-char="å">å</button>
+          <button type="button" class="umlaut-button" data-char="ä">ä</button>
+          <button type="button" class="umlaut-button" data-char="ö">ö</button>
+        </div>
+      </div>
 
       <p id="letter-hint" aria-label="Number of letters"></p>
 
@@ -63,19 +70,15 @@ Owned by Game 02
         <button type="submit" id="submit-answer">Check</button>
       </form>
 
-      <div id="umlaut-buttons" aria-label="Swedish letters">
-        <button type="button" class="umlaut-button" data-char="å">å</button>
-        <button type="button" class="umlaut-button" data-char="ä">ä</button>
-        <button type="button" class="umlaut-button" data-char="ö">ö</button>
-      </div>
-
       <p id="feedback" role="status" aria-live="polite"></p>
 
       <div id="spelling-controls">
+        <button type="button" id="hint">Hint</button>
         <button type="button" id="show-answer">Show answer</button>
         <button type="button" id="end-game">Quit</button>
       </div>
       <p id="misses">misses: 0</p>
+      <p id="hints">hints: 0</p>
       <p id="elapsed-time">Time: 0s</p>
     </section>
 
@@ -84,6 +87,7 @@ Owned by Game 02
       <h2><span id="header_endscreen"></span></h2>
       <p>Words spelled: <span id="score">0</span></p>
       <p>Misses: <span id="end-misses">0</span></p>
+      <p>Hints used: <span id="end-hints">0</span></p>
       <p>Time elapsed: <span id="time">0</span></p>
       <p>Total Wins: <span id="wins-count">0</span></p>
       <button id="restart-game">Play Again</button>

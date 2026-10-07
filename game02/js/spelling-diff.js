@@ -58,3 +58,37 @@ export function diffWord(typed, answer) {
 
   return { correct: d[a.length][b.length] === 0, parts };
 }
+
+/**
+ * Returns the typed text with the first mistake fixed: a missing letter is
+ * inserted, a wrong letter is replaced and stray extra letters are dropped.
+ * Everything else the player typed is kept. Spaces in the answer are carried
+ * along with the letter after them.
+ *
+ * @param {string} typed
+ * @param {string} answer
+ * @returns {string}
+ */
+export function hintWord(typed, answer) {
+  const want = Array.from(answer.trim());
+  const { parts } = diffWord(typed, answer);
+  const out = [];
+  let j = 0; // position in the answer
+  let done = false; // a real letter has been revealed
+  for (const part of parts) {
+    if (part.status === "extra") {
+      if (done) out.push(part.ch);
+      continue;
+    }
+    if (part.status === "ok") {
+      out.push(part.ch);
+    } else if (!done) {
+      out.push(want[j]);
+      done = want[j] !== " ";
+    } else if (part.status === "wrong") {
+      out.push(part.ch);
+    }
+    j++;
+  }
+  return out.join("");
+}

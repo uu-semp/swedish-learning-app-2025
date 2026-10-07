@@ -4,7 +4,7 @@
   display: block;
   margin: 0 auto 0.5rem;
   max-width: min(100%, 320px);
-  max-height: 260px;
+  max-height: 180px;
   object-fit: contain;
 }
 
@@ -13,6 +13,19 @@
   font-size: 1.5rem;
   letter-spacing: 0.15em;
   margin: 0.25rem 0;
+}
+
+#image-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+#game-screen #image-row #word-image {
+  display: block;
+  margin: 0;
+  max-width: min(60%, 320px);
 }
 
 #answer-form {
@@ -33,9 +46,8 @@
 
 #umlaut-buttons {
   display: flex;
-  justify-content: center;
-  gap: 0.5rem;
-  margin: 0.75rem 0;
+  flex-direction: column;
+  gap: 0.25rem;
 }
 
 .umlaut-button {
@@ -51,22 +63,30 @@
   letter-spacing: 0.1em;
 }
 
-#feedback .ok {
+#letter-hint .slot {
+  display: inline-block;
+  min-width: 0.8em;
+  margin: 0 0.1em;
+  text-align: center;
+  font-family: monospace;
+}
+
+#letter-hint .ok {
   color: #1f7a3d;
 }
 
-#feedback .wrong,
-#feedback .extra,
-#feedback .missing {
+#letter-hint .wrong,
+#letter-hint .extra,
+#letter-hint .missing {
   color: #c0392b;
   font-weight: bold;
 }
 
-#feedback .extra {
+#letter-hint .extra {
   text-decoration: line-through;
 }
 
-#feedback .missing {
+#letter-hint .missing {
   border-bottom: 3px solid #c0392b;
 }
 
@@ -83,10 +103,17 @@
   display: flex;
   justify-content: center;
   gap: 0.75rem;
-  margin: 0.5rem 0;
+  margin: 0.25rem 0;
+}
+
+#game-screen h2,
+#game-screen p {
+  margin-top: 0.3rem;
+  margin-bottom: 0.3rem;
 }
 
 #game-screen #misses,
+#game-screen #hints,
 #game-screen #elapsed-time,
 #game-screen #progress {
   text-align: center;
@@ -105,4 +132,19 @@
   0%, 100% { transform: translateX(0); }
   20%, 60% { transform: translateX(-6px); }
   40%, 80% { transform: translateX(6px); }
+}
+
+#hint {
+  background-color: #f39c12;
+  border-color: #f39c12;
+  color: #fff;
+}
+
+#hint:hover {
+  background-color: #d68910;
+  border-color: #d68910;
+}
+
+#letter-hint .revealed {
+  font-weight: bold;
 }

@@ -1,7 +1,7 @@
 // Run with: node --test game02/js/spelling-diff.test.mjs
 import test from "node:test";
 import assert from "node:assert/strict";
-import { diffWord } from "./spelling-diff.js";
+import { diffWord, hintWord } from "./spelling-diff.js";
 
 const render = (r) => r.parts.map((p) => `${p.status}:${p.ch}`).join(" ");
 
@@ -82,4 +82,20 @@ test("two errors in a longer word", () => {
 test("never reveals correct letters for wrong/extra marks", () => {
   const r = diffWord("stal", "stol");
   assert.ok(!r.parts.some((p) => p.ch === "o"));
+});
+
+test("hint gives the first letter when nothing is typed", () => {
+  assert.equal(hintWord("", "stol"), "s");
+});
+
+test("hint gives the letter after the correct prefix", () => {
+  assert.equal(hintWord("st", "stol"), "sto");
+  assert.equal(hintWord("STO", "stol"), "STOl");
+});
+
+test("hint fixes the first mistake and keeps the other letters", () => {
+  assert.equal(hintWord("sxol", "stol"), "stol");
+  assert.equal(hintWord("sol", "stol"), "stol");
+  assert.equal(hintWord("sstol", "stol"), "stol");
+  assert.equal(hintWord("sxox", "stol"), "stox");
 });

@@ -5,7 +5,7 @@
 "use strict";
 
 import { loadSpellingWords } from "./js/spelling-data.js";
-import { diffWord } from "./js/spelling-diff.js";
+import { diffWord, hintWord } from "./js/spelling-diff.js";
 import { initUmlautButtons } from "./js/umlaut-buttons.js";
 import { startTimer, stopTimer, resetTimer, getElapsedTime } from "./js/timer.js";
 
@@ -20,6 +20,7 @@ export function init() {
   let words = [];
   let index = 0;
   let misses = 0;
+  let hints = 0; // times the hint button was used
   let spelled = 0; // words the player got right
   let locked = true; // true while the input is not accepting answers
   let wins = save.stats.get(team_name).wins;
@@ -38,28 +39,39 @@ export function init() {
     nextTimeout = null;
   }
 
-  function letterHint(word) {
-    return Array.from(word)
-      .map((ch) => (ch === " " ? " " : "_"))
-      .join(" ");
+  function renderSlots(parts) {
+    const $slots = $("#letter-hint").empty();
+    parts.forEach((part) => {
+      $("<span>").addClass(`slot ${part.status}`).text(part.ch).appendTo($slots);
+    });
+  }
+
+  // Fills the slot row with what has been typed, padded with "_" up to the word length
+  function renderTyped() {
+    const typed = Array.from($("#answer-input").val());
+    const slots = Array.from(words[index].sv).map((ch, i) =>
+      i < typed.length
+        ? { ch: typed[i], status: "typed" }
+        : { ch: ch === " " ? " " : "_", status: "empty" }
+    );
+    typed.slice(slots.length).forEach((ch) => slots.push({ ch, status: "typed" }));
+    renderSlots(slots);
   }
 
   function renderWord() {
     const word = words[index];
     $("#progress").text(`Word ${index + 1} / ${words.length}`);
     $("#word-image").attr("src", word.img);
-    $("#letter-hint").text(letterHint(word.sv));
     $("#feedback").removeClass("success revealed").empty();
     $("#answer-input").removeClass("shake correct").val("");
+    renderTyped();
     locked = false;
     input.focus();
   }
 
   function renderParts(parts) {
-    const $feedback = $("#feedback").removeClass("success revealed").empty();
-    parts.forEach((part) => {
-      $("<span>").addClass(part.status).text(part.ch).appendTo($feedback);
-    });
+    $("#feedback").removeClass("success revealed").empty();
+    renderSlots(parts);
   }
 
   function advance(delay) {
@@ -85,7 +97,8 @@ export function init() {
     if (result.correct) {
       spelled++;
       $("#answer-input").addClass("correct");
-      $("#feedback").removeClass("revealed").addClass("success").text(`✓ ${word.sv}`);
+      renderParts(result.parts);
+      $("#feedback").addClass("success").text("✓ Correct!");
       advance(success_delay);
       return;
     }
@@ -99,9 +112,24 @@ export function init() {
     $("#answer-input").addClass("shake");
   }
 
+  function giveHint() {
+    if (locked) return;
+    hints++;
+    $("#hints").text(`hints: ${hints}`);
+    $("#answer-input").val(hintWord($("#answer-input").val(), words[index].sv));
+    input.focus();
+    // show the result of a check, but a hint is not a miss
+    const result = diffWord($("#answer-input").val(), words[index].sv);
+    if (result.correct) submitAnswer();
+    else renderParts(result.parts);
+  }
+
   function showAnswer() {
     if (locked) return;
-    $("#feedback").removeClass("success").addClass("revealed").text(words[index].sv);
+    misses++;
+    $("#misses").text(`misses: ${misses}`);
+    $("#feedback").removeClass("success revealed").empty();
+    renderSlots(Array.from(words[index].sv).map((ch) => ({ ch, status: "revealed" })));
     advance(reveal_delay);
   }
 
@@ -115,6 +143,7 @@ export function init() {
     );
     $("#score").text(`${spelled} / ${words.length}`);
     $("#end-misses").text(misses);
+    $("#end-hints").text(hints);
     $("#time").text(`${getElapsedTime()} seconds`);
 
     if (won) {
@@ -129,8 +158,10 @@ export function init() {
     clearNext();
     index = 0;
     misses = 0;
+    hints = 0;
     spelled = 0;
     $("#misses").text("misses: 0");
+    $("#hints").text("hints: 0");
     resetTimer(() => $("#elapsed-time").text("Time: 0s"));
   }
 
@@ -153,6 +184,12 @@ export function init() {
     e.preventDefault();
     submitAnswer();
   });
+
+  $("#answer-input").on("input", () => {
+    if (!locked) renderTyped();
+  });
+
+  $("#hint").on("click", giveHint);
 
   $("#show-answer").on("click", showAnswer);
 
