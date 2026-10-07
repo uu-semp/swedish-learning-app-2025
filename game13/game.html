@@ -151,6 +151,12 @@
       resultText.textContent = "✅ Correct!";
       resultText.style.color = "green";
       endRound(attempts === 1);
+      const stats = window.save.stats.get("game13");
+      console.log("Stats:");
+      console.log(stats);
+      const wins = stats.wins;
+        window.save.stats.set("game13", wins + 1, 0);
+      nextBtn.disabled = false;
     } else {
       resultText.textContent = "❌ Incorrect items: " + wrongItems.join(", ") + ", Try again!";
       resultText.style.color = "red";
@@ -172,6 +178,7 @@
   giveUpBtn.addEventListener('click', ( )=> {
     if (roundOver) return;
     endRound(false);
+    nextBtn.disabled = false;
   })
 
   nextBtn.addEventListener('click', ( )=> {
