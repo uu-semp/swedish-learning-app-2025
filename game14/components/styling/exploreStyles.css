@@ -50,3 +50,21 @@
 .explore-view .explore-words {
     flex: 1;
 }
+
+/* Every body part in Pelle (head, nose, arm ...) is a group with an id */
+.explore-view .explore-pelle svg g[id] {
+    cursor: pointer;
+    transition: filter 0.15s ease;
+}
+
+/* Light up the body part under the mouse */
+.explore-view .explore-pelle svg g[id]:hover {
+    filter: drop-shadow(10px 0 0 #7CFC00)
+            drop-shadow(-10px 0 0 #7CFC00)
+            drop-shadow(0 10px 0 #7CFC00)
+            drop-shadow(0 -10px 0 #7CFC00)
+            drop-shadow(7px 7px 0 #7CFC00)
+            drop-shadow(-7px 7px 0 #7CFC00)
+            drop-shadow(7px -7px 0 #7CFC00)
+            drop-shadow(-7px -7px 0 #7CFC00);
+}
