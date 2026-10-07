@@ -57,6 +57,16 @@ createApp({
         const currentQuestion = computed(function () {
             return game.questions[game.current_question_index]
         })
+            
+            watch(
+        currentQuestion,
+        function (question) {
+            console.log("QUESTION:", question)
+            console.log("TRANSPORT OPTIONS:", question?.transportOptions)
+        },
+        { immediate: true }
+    )
+
 
         const currentBoard = computed(function () {
             return game.boards[game.current_question_index]
@@ -92,6 +102,7 @@ createApp({
                 horizontalStreet: currentBoard.value.HorizontalStreet,
                 verticalStreet: currentBoard.value.VerticalStreet,
                 selectedHouse: selectedHouse || null,
+                transportOptions: currentQuestion.value.transportOptions || [],
                 showTranslation: display.showTranslation,
                 englishSentence: currentQuestion.value.promptEnglish,
                 promptWords: display.promptWords

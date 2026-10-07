@@ -464,3 +464,56 @@ footer {
 }
 
 
+.transport-options {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 24px;
+    margin: 15px 0 20px;
+}
+
+.transport-option {
+    width: 100px;
+    height: 90px;
+    padding: 8px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+
+    cursor: pointer;
+}
+
+.transport-option img {
+    width: 70px;
+    height: 55px;
+    object-fit: contain;
+    display: block;
+}
+
+/* Make Difficulty 3 fit inside the fixed 800x600 game frame */
+#prompt-words.difficulty-3 {
+    top: 20px;
+    margin-bottom: 50px;
+}
+
+.board-scroll.difficulty-3 {
+    padding: 25px 0 20px;
+}
+
+.transport-options {
+    margin: 5px 0 10px;
+}
+
+.transport-option {
+    width: 90px;
+    height: 75px;
+    padding: 6px;
+}
+
+.transport-option img {
+    width: 60px;
+    height: 45px;
+}
