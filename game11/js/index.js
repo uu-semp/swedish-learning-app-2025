@@ -263,7 +263,9 @@ window.addEventListener('DOMContentLoaded', () => {
         Mode2Btn.addEventListener('click', () => {
             const state = window.__game11GameState;
             state.mode = 2;
-            save.set("game11", "game_state", state);
+           save.set("game11", "sr_enabled", false);
+            save.set("game11", "game_mode_override", 2);
+            save.set("game11", "game_state", null); 
             window.location.reload();
         });
     }
@@ -273,7 +275,9 @@ window.addEventListener('DOMContentLoaded', () => {
         Mode3Btn.addEventListener('click', () => {
             const state = window.__game11GameState;
             state.mode = 3;
-            save.set("game11", "game_state", state);
+           save.set("game11", "sr_enabled", false);
+            save.set("game11", "game_mode_override", 3);
+            save.set("game11", "game_state", null);
             window.location.reload();
         });
     }
@@ -284,7 +288,9 @@ window.addEventListener('DOMContentLoaded', () => {
         Mode1Btn.addEventListener('click', () => {
             const state = window.__game11GameState;
             state.mode = 1;
-            save.set("game11", "game_state", state);
+            save.set("game11", "sr_enabled", false);
+            save.set("game11", "game_mode_override", 1);
+            save.set("game11", "game_state", null)
             window.location.reload();
         });
     }
