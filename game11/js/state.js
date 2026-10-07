@@ -30,21 +30,13 @@ function initGameState() {
 
     if (isSpacedRepetitionEnabled()) {
       let memory = loadSpacedRepetitionMemory();
-
-      // Initialize the Spaced Repetition memory if it does not exist
       if (Object.keys(memory).length === 0) {
         memory = initializeSpacedRepetition();
       }
-
-      // Pull the words that are due for review today
       const dueWords = getWordsDueToday();
-
-      // If there are no words due today, there is nothing to play
       if (dueWords.length === 0) {
         return null;
       }
-
-      // The game uses a maximum of 10 items per round
       shoppingList = dueWords.slice(0, 10);
     } else {
       // Build the normal shopping list
@@ -52,6 +44,9 @@ function initGameState() {
     }
 
     const shelf = generateShelf(shoppingList, vocab);
+
+    let currentMode = save.get("game11", "game_mode_override") || 1;
+    save.set("game11", "game_mode_override", null); 
 
     const state = {
       shoppingList: shoppingList, // items to be found
@@ -61,7 +56,7 @@ function initGameState() {
       pickedIds: [],
       mistakes: {},        // { [targetId]: numberOfMistakes }
       finished: false, // true if all items have been solved
-      mode: 1, //The mode of the game
+      mode: currentMode, 
     };
     saveState(state); 
     return state;
