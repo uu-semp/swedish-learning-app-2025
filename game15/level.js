@@ -51,7 +51,7 @@ async function initializeGame() {
           questions[1] = this.levelStreets.map(streetInfo => {
             const cardinalNumber = streetInfo.number.cardinal.sv;
             return {
-              instruction: `Jag bor på ${streetInfo.streetName} ${cardinalNumber}`,
+              instruction: `Jag bor på ${streetInfo.streetName} ${cardinalNumber}. Välj huset där jag bor.`,
               correct: { 
                 street: streetInfo.streetName, 
                 number: streetInfo.number.cardinal.literal 
@@ -64,7 +64,7 @@ async function initializeGame() {
           questions[2] = this.levelStreets.map(streetInfo => {
             const ordinalNumber = streetInfo.number.ordinal.sv;
             return {
-              instruction: `Jag bor i det ${ordinalNumber} huset på ${streetInfo.streetName}`,
+              instruction: `Jag bor i det ${ordinalNumber} huset på ${streetInfo.streetName}. Välj huset där jag bor.`,
               correct: { 
                 street: streetInfo.streetName, 
                 number: streetInfo.number.cardinal.literal 
