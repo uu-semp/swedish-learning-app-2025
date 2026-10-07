@@ -14,7 +14,7 @@
 
   <div class="screen" role="application" aria-label="Dress the cat game screen">
     <section class = "status-bar">
-      <h2 id="level-title">Level</h2>
+      <h2><span id="level-title">Level</span> <small id="score-text" aria-live="polite"></small></h2>
       <button id="backToIndex-btn" class="undoBtn giveUpBtn" aria-label="Back to level-selection"> Back to level-selecting-page</button>
     </section>
     <section class="instructions">
@@ -36,7 +36,7 @@
         <div class="div-buttons">
           <button id="confirm-btn" class="confirmBtn" aria-label="Confirm outfit">Confirm Outfit</button>
           <button id="giveUp-btn" class="undoBtn giveUpBtn" aria-label="Give up">Give up</button>
-        </div class>
+        </div>
         <div class="feedback"> 
           <p id="result-text"></p>
         </div>
@@ -68,13 +68,36 @@
   </div>
 </div>
 
+<script src="../scripts/save.js"></script>
+<script src="game/progress.js"></script>
 <script>
-    // Get selected level from the URL
+    // Get selected level from the URL (defaults to level 1)
   const params = new URLSearchParams(window.location.search);
-  const level = params.get("level");
+  const level = Number(params.get("level")) || 1;
 
   // Show selected level
   document.getElementById("level-title").textContent = "Level " + level;
+
+  // Score for this level (REQ-STUDENT-7.1 / 7.2)
+  const scoreText = document.getElementById("score-text");
+  function showScore() {
+    const { completed, firstTry } = window.progress.getLevel(level);
+    scoreText.textContent = `Rounds: ${completed} · First try: ${firstTry}`;
+  }
+  showScore();
+
+  // State for the current round
+  let attempts = 0;       // confirmed full outfits this round
+  let roundOver = false;  // true once the round is solved or given up
+
+  function endRound(firstTry) {
+    roundOver = true;
+    window.progress.recordRound(level, firstTry);
+    showScore();
+    confirmBtn.disabled = true;
+    giveUpBtn.disabled = true;
+    nextBtn.disabled = false;
+  }
 
 
   const popup = document.getElementById('popup');
@@ -92,7 +115,7 @@
     // run your existing checkClothes() function
     const outfit = window.currentOutfit;
     correct_answer = false; // Reset correct_answer before checking
-    if (!outfit) return;
+    if (!outfit || roundOver) return;
 
     //Just add more categories here based on level, maybe add an if-statement 
     // to check appropriate categories
@@ -118,6 +141,7 @@
       resultText.style.color = "red";
       return;
     }
+    attempts++; // a full outfit was confirmed
     if (appliedHat !== correctHat) wrongItems.push("hat");
     if (appliedShirt !== correctShirt) wrongItems.push("shirt");
     if (appliedPants !== correctPants) wrongItems.push("pants");
@@ -126,6 +150,7 @@
       correct_answer = true;
       resultText.textContent = "✅ Correct!";
       resultText.style.color = "green";
+      endRound(attempts === 1);
       const stats = window.save.stats.get("game13");
       console.log("Stats:");
       console.log(stats);
@@ -141,6 +166,7 @@
   });
 
   playAgainBtn.addEventListener('click', () => {
+    popup.style.display = 'none';
 
     if (correct_answer) {
         window.clearWardrobe();
@@ -150,6 +176,8 @@
 });
 
   giveUpBtn.addEventListener('click', ( )=> {
+    if (roundOver) return;
+    endRound(false);
     nextBtn.disabled = false;
   })
 
@@ -173,6 +201,5 @@
 
 <script src="../scripts/vocabulary.js" defer></script>
 <script type="module" src="index.js"></script>
-<script src="../scripts/save.js" defer></script>
 </body>
 </html>

@@ -14,9 +14,9 @@
     <img src="paperpelletransparent.png" alt="Game character" class="menu-image">
 
     <div class="menu-buttons">
-      <a href="level_introduction.html?level=1" class="btn">Level 1</a>
-      <a href="game.html?level=2" class="btn">Level 2</a>
-      <a href="game.html?level=3" class="btn">Level 3</a>
+      <a href="level_introduction.html?level=1" class="btn">Level 1<br><small class="level-score" data-level="1"></small></a>
+      <a href="game.html?level=2" class="btn">Level 2<br><small class="level-score" data-level="2"></small></a>
+      <a href="game.html?level=3" class="btn">Level 3<br><small class="level-score" data-level="3"></small></a>
     </div>
   </div>
 
@@ -35,7 +35,19 @@
     </div>
   </div>
 
+  <script src="../scripts/save.js"></script>
+  <script src="game/progress.js"></script>
   <script>
+    // Score per level (REQ-STUDENT-7.3)
+    document.querySelectorAll('.level-score').forEach((el) => {
+      const { completed, firstTry } = window.progress.getLevel(el.dataset.level);
+      el.replaceChildren(
+        `${completed} ${completed === 1 ? 'round' : 'rounds'}`,
+        document.createElement('br'),
+        `${firstTry} first try`
+      );
+    });
+
     const popup = document.getElementById('popup');
     const helpBtn = document.getElementById('helpBtn');
     const closePopup = document.getElementById('closePopup');
