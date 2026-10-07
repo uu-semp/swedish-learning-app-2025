@@ -15,6 +15,11 @@ createApp({
     setup() {
         //controller.Initialize_Controller(difficulty)
         const game = controller.game
+        
+        const difficulty3Selection = reactive({
+        house: null,
+        transport: null
+        })
 
         // Traslation display state 
         const display = reactive({
@@ -22,6 +27,7 @@ createApp({
             showTranslation: false,
             promptWords: []
         })
+
 
         function setLanguage(language) {
             display.language = language
@@ -58,14 +64,6 @@ createApp({
             return game.questions[game.current_question_index]
         })
             
-            watch(
-        currentQuestion,
-        function (question) {
-            console.log("QUESTION:", question)
-            console.log("TRANSPORT OPTIONS:", question?.transportOptions)
-        },
-        { immediate: true }
-    )
 
 
         const currentBoard = computed(function () {
@@ -110,14 +108,48 @@ createApp({
         })
 
         function SelectHouse(house) {
-            controller.CheckAnswer(
-                game.current_question_index,
-                house
-            )
-        }
+    if (game.answer_locked || game.is_finished) {
+        return
+    }
 
-        function isSelected(house){
-            return game.selected_answer !== null && game.selected_answer.street === house.street && game.selected_answer.houseNumber === house.houseNumber
+    // Difficulty 1 and 2 work as before:
+    // clicking a house immediately submits the answer.
+    if (game.difficulty !== 3) {
+        controller.CheckAnswer(
+            game.current_question_index,
+            house
+        )
+        return
+    }
+
+    if (difficulty3Selection.house?.id === house.id) {
+        difficulty3Selection.house = null
+    } else {
+        difficulty3Selection.house = house
+    }
+
+    
+    if (
+        difficulty3Selection.house !== null &&
+        difficulty3Selection.transport !== null
+    ) {
+        controller.CheckAnswer(
+            game.current_question_index,
+            difficulty3Selection.house,
+            difficulty3Selection.transport
+        )
+    }
+}
+        
+
+        function isSelected(house) {
+            if (game.difficulty === 3) {
+                return difficulty3Selection.house?.id === house.id
+            }
+
+            return game.selected_answer !== null &&
+                game.selected_answer.street === house.street &&
+                game.selected_answer.houseNumber === house.houseNumber
         }
 
         function toggleTranslation() {
@@ -130,6 +162,34 @@ createApp({
             if (display.showTranslation) {
                 controller.UseHint()
             }
+        }
+
+        function SelectTransport(transport) {
+    if (game.difficulty !== 3 || game.answer_locked || game.is_finished) {
+        return
+    }
+
+    if (difficulty3Selection.transport?.type === transport.type) {
+        difficulty3Selection.transport = null
+    } else {
+        difficulty3Selection.transport = transport
+    }
+
+    if (
+        difficulty3Selection.house !== null &&
+        difficulty3Selection.transport !== null
+    ) {
+        controller.CheckAnswer(
+            game.current_question_index,
+            difficulty3Selection.house,
+            difficulty3Selection.transport
+        )
+    }
+}
+
+        function isTransportSelected(transport) {
+            return difficulty3Selection.transport !== null &&
+                difficulty3Selection.transport.type === transport.type
         }
 
         function translateWord(word) {
@@ -183,6 +243,9 @@ createApp({
                     return game.difficulty === 2 ? game.answer_locked : null }
             ],
             function () {
+                difficulty3Selection.house = null
+                difficulty3Selection.transport = null
+
                 if ( game.difficulty !== 2 || (!game.answer_locked && !game.is_finished)) {
                     PrepareQuestionDisplay()
                 }
@@ -209,7 +272,9 @@ createApp({
             visibleHouses,
             progressPercentage,
             isSelected,
+            isTransportSelected,
             SelectHouse,
+            SelectTransport,
             translateWord,
             toggleTranslation,
             BackToMenu

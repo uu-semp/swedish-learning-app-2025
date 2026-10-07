@@ -21,7 +21,7 @@ let available_ranges = []
 
 export async function Initialize(difficulty) {
     // Load db and fetch streets and numbers.
-    await loaddb();
+    await loaddb(12);
     const street_ids = get_category("street");
     const number_ids = get_category("number");
 
@@ -74,27 +74,27 @@ export async function Initialize(difficulty) {
     }
 
     let transports = []
-    if (difficulty === 3) {
-        const transport_ids = get_category("transport")
-        transports = transport_ids.map(id => get_vocab(id)).filter(Boolean)
 
-        const transport_images = {
-            "Tar bussen": "../../images/Difficulty 3/Schoolbus.svg",
-            "Tar bilen": "../../images/Difficulty 3/Car.svg",
-            "Cyklar": "../../images/Difficulty 3/Bicylesvg.svg"
-        }
+if (difficulty === 3) {
+    const transport_ids = get_category("transport")
 
-        transports = transport_ids.map(function (id) {
-            const vocabulary = get_vocab(id)
-        
-            return {
-                sv: vocabulary.sv,
-                en: vocabulary.en,
-                img: transport_images[vocabulary.sv]
-            }
-        })
-
+    const transport_images = {
+        bike: "../../images/Difficulty 3/Bicylesvg.svg",
+        bus: "../../images/Difficulty 3/Schoolbus.svg",
+        car: "../../images/Difficulty 3/Car.svg"
     }
+
+    transports = transport_ids.map(function (id) {
+        const vocabulary = get_vocab(id)
+
+        return {
+            sv: vocabulary.sv,
+            en: vocabulary.en,
+            type: vocabulary.game,
+            img: transport_images[vocabulary.game]
+        }
+    })
+}
 
     console.log(transports)
 
@@ -175,7 +175,7 @@ export function NextRound_GM(game) {
     game.answer_locked = false
 }
 
-export function CheckAnswer_GM(question_index, house, game) {
+export function CheckAnswer_GM(question_index, house, game, transport = null)  {
     if (stopped || game.is_finished || game.answer_locked) {
         return
     }
@@ -187,8 +187,25 @@ export function CheckAnswer_GM(question_index, house, game) {
     const question = game.questions[question_index]
 
     game.answer_locked = true
-    game.selected_answer = { street: house.street, houseNumber: house.houseNumber }
-    game.answer_correct = house.street === question.correctStreet && house.houseNumber === question.correctNumber
+    game.selected_answer = {
+    street: house.street,
+    houseNumber: house.houseNumber
+}
+
+const house_correct =
+    house.street === question.correctStreet &&
+    house.houseNumber === question.correctNumber
+
+if (game.difficulty === 3) {
+    const transport_correct =
+        transport !== null &&
+        transport.type === question.correctTransport.type
+
+    game.answer_correct = house_correct && transport_correct
+}
+else {
+    game.answer_correct = house_correct
+}
 
     if (game.answer_correct && !game.hint_used) {
         game.finished_questions.push(question_index)

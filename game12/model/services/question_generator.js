@@ -258,7 +258,12 @@ export function GenerateQuestion(difficulty, board, number_words, directions, tr
     config.correctStreet = correct_house.street
 
     // Needed for the Difficulty 3 transport buttons
-    config.transportOptions = transports
+    config.transportOptions = transports.filter(
+        (transport, index, array) =>
+            array.findIndex(
+                item => item.type === transport.type
+            ) === index
+    )
     config.correctTransport = transport
 
     config.promptSwedish =
