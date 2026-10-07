@@ -52,10 +52,9 @@ export const ChooseLevelView = {
                 @click="switchTo('LevelOneView')"
               ></capsule-button>
               <capsule-button
-                label="level2-locked"
+                label="level2"
                 size="lg"
-                :locked="true"
-                @click="openLockedPrompt"
+                @click="switchTo('LevelTwoView')"
               ></capsule-button>
               <capsule-button
                 label="level3-locked"
