@@ -20,7 +20,7 @@ let all_ranges = [
 let available_ranges = []
 
 export async function Initialize(difficulty) {
-    // Load db and fetch streets and numbers. Add directions, buildnings and transports
+    // Load db and fetch streets and numbers.
     await loaddb();
     const street_ids = get_category("street");
     const number_ids = get_category("number");
@@ -49,7 +49,7 @@ export async function Initialize(difficulty) {
     let landmarks = []
     let directions = []
 
-    if (difficulty === 2) {
+    if (difficulty === 2 || difficulty === 3) {
 
         const directions_ids = get_category("direction")
         directions = directions_ids.map(id => get_vocab(id)).filter(Boolean)
@@ -72,10 +72,35 @@ export async function Initialize(difficulty) {
             }
         })
     }
-    
+
+    let transports = []
+    if (difficulty === 3) {
+        const transport_ids = get_category("transport")
+        transports = transport_ids.map(id => get_vocab(id)).filter(Boolean)
+
+        const transport_images = {
+            "Tar bussen": "../../images/Difficulty 3/Schoolbus.svg",
+            "Tar bilen": "../../images/Difficulty 3/Car.svg",
+            "Cyklar": "../../images/Difficulty 3/Bicylesvg.svg"
+        }
+
+        transports = transport_ids.map(function (id) {
+            const vocabulary = get_vocab(id)
+        
+            return {
+                sv: vocabulary.sv,
+                en: vocabulary.en,
+                img: transport_images[vocabulary.sv]
+            }
+        })
+
+    }
+
+    console.log(transports)
+
     available_ranges = all_ranges.slice()
 
-    if (difficulty === 1 || difficulty === 2) {
+    if (difficulty === 1 || difficulty === 2 || difficulty === 3) {
         
         for (let index = 0; index < 10; index++) {
             let board = GenerateBoard(streets, available_ranges, difficulty, landmarks)
@@ -88,7 +113,7 @@ export async function Initialize(difficulty) {
 
             game.boards[index] = board
 
-            game.questions[index] = GenerateQuestion(difficulty, board, numbers, directions)
+            game.questions[index] = GenerateQuestion(difficulty, board, numbers, directions, transports)
         }
     }
 
