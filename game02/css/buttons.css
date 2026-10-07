@@ -40,7 +40,6 @@ button:active {
     flex-direction: column;
     /* stack vertically */
     gap: 190px;
-    /* space between buttons */
 }
 
 #game-controls button {
@@ -50,6 +49,8 @@ button:active {
 }
 
 #hint-button {
+    position: absolute;
+    top: 54px;
     background-color: #DB9D47;
     /* yellow */
     color: #000;
