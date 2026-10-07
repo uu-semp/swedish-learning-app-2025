@@ -165,29 +165,29 @@
                                     {{ house.houseNumber }}
                                 </button>
 
-                                <details
+                                <div
                                     v-else
                                     class="landmark"
+                                    tabindex="0"
                                     :style="{
                                         gridRow: house.row,
                                         gridColumn: house.col
                                     }"
+                                    :title="display.language === 'en' ? house.nameEnglish : house.nameSwedish"
                                 >
-                                    <summary :title ="display.language === 'en' ? house.nameEnglish : house.nameSwedish">
-                                        <img
-                                            :src="house.image"
-                                            :alt="display.language === 'en'
-                                                ? house.nameEnglish
-                                                : house.nameSwedish"
-                                        >
-                                    </summary>
+                                    <img
+                                        :src="house.image"
+                                        :alt="display.language === 'en'
+                                            ? house.nameEnglish
+                                            : house.nameSwedish"
+                                    >
 
                                     <span class="landmark-name">
                                         {{ display.language === "en"
                                             ? house.nameEnglish
                                             : house.nameSwedish }}
                                     </span>
-                                </details>
+                                </div>
                             </template>
                         </div>
                     </div>
