@@ -29,6 +29,8 @@
     <script type="module" src="js/main.js" defer></script>
     <script type="module" src="js/ui.js" defer></script>
     <script src="js/index.js" defer></script>
+    <script type="module" src="js/spacedRepetition/spacedRepetition.js"></script>
+
   </head>
 
   <body>
@@ -45,6 +47,24 @@
         <button id="mode1-btn" class="modal-btn">Bildinlärning</button>
         <button id="mode2-btn" class="modal-btn">Ordmatchning</button>
         <button id="mode3-btn" class="modal-btn">Lyssningsövning</button>
+
+        <div class="sr-controls">
+          <span class="sr-title">Spaced repetition</span>
+
+          <div class="sr-toggle-buttons">
+            <button id="sr-enable-btn" class="modal-btn">
+              Aktivera
+            </button>
+
+            <button id="sr-disable-btn" class="modal-btn">
+              Inaktivera
+            </button>
+          </div>
+
+          <button id="sr-delete-btn" class="modal-btn danger-btn">
+            Radera minne
+          </button>
+        </div>
 
         <hr style="margin: 12px 0; border: 1px dashed #ccc;">
 

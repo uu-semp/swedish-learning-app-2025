@@ -2,21 +2,23 @@
 // It provides functions to initialize, retrieve, save, and load the game state.
 import { generateShelf, generateShoppingList } from "./gameLogic.js";
 import { getItems } from "./data.js";
+import {
+  loadSpacedRepetitionMemory,
+  initializeSpacedRepetition,
+  getWordsDueToday
+} from "./spacedRepetition/spacedRepetitionLogic.js";
 
-// The local storage key 
-const STORAGE_KEY = "game11_game_state";
-
-
+const STORAGE_KEY = "game_state";
+const SR_ENABLED_KEY = "sr_enabled";
+const SR_CONSENT_KEY = "sr_consent";
 
 /**
- * Initializes the game state using the  vocabulary.
+ * Initializes the game state using the vocabulary.
  * Loads a saved state if available; otherwise, creates a new game state.
  *
  * @returns {Object} The initialized game state.
  */
 function initGameState() {
-  // Pull all items (each item has at least: { id, sv, en, img, ... })
-  // Check if there's a saved state in localStorage, in this case refresh will not reset the game state
   const savedState = loadState();
   if (savedState) {
     return savedState;
@@ -24,24 +26,47 @@ function initGameState() {
     const vocab = getItems(); // <-- important: do NOT overwrite window.vocabulary
 
     // Build lists
-    const shoppingList = generateShoppingList(vocab);      
-    const shelf = generateShelf(shoppingList, vocab);     
+    let shoppingList;
+
+    if (isSpacedRepetitionEnabled()) {
+      let memory = loadSpacedRepetitionMemory();
+
+      // Initialize the Spaced Repetition memory if it does not exist
+      if (Object.keys(memory).length === 0) {
+        memory = initializeSpacedRepetition();
+      }
+
+      // Pull the words that are due for review today
+      const dueWords = getWordsDueToday();
+
+      // If there are no words due today, there is nothing to play
+      if (dueWords.length === 0) {
+        return null;
+      }
+
+      // The game uses a maximum of 10 items per round
+      shoppingList = dueWords.slice(0, 10);
+    } else {
+      // Build the normal shopping list
+      shoppingList = generateShoppingList(vocab);
+    }
+
+    const shelf = generateShelf(shoppingList, vocab);
 
     const state = {
       shoppingList: shoppingList, // items to be found
       shelf: shelf, // shuffled shelf items (shoppingList + distractors)
       currentIndex: 0, // index of the current item in shoppingList
       correctFirstTry: [], // bools per solved item (true if first try)
+      pickedIds: [],
       mistakes: {},        // { [targetId]: numberOfMistakes }
       finished: false, // true if all items have been solved
       mode: 1, //The mode of the game
     };
-    saveState(state); // Optional: persist initial state (safe no-op if storage blocked)
+    saveState(state); 
     return state;
   }
-
 }
-
 
 /**
  * Creates a simplified snapshot of the game state for the UI and other consumers.
@@ -60,46 +85,69 @@ function getGameState(state) {
   };
 }
 
-
-
 /**
- * Saves the current game state to local storage.
+ * Saves the current game state using save.js
  *
- * @param {Object} state - The  game state.
+ * @param {Object} state - The game state.
  */
 function saveState(state) {
-  try {
-    const payload = JSON.stringify(state);
-    localStorage.setItem(STORAGE_KEY, payload);
-  } catch (e) {
-    console.warn("[state] Could not save state:", e);
-  }
+  save.set("game11", STORAGE_KEY, state);
 }
 
-
-
 /**
- * Loads a previously saved state from local storage. Returns null if none/invalid.
+ * Loads a previously saved state using save.js. Returns null if none/invalid.
  *
  * @returns {Object|null} The loaded game state or null if no valid state is found.
  */
 function loadState() {
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if (!raw) return null;
+  const state = save.get("game11", STORAGE_KEY);
+  
+  if (!state) return null;
 
-    const state = JSON.parse(raw);
-
-    // Minimal validation
-    if (!Array.isArray(state.shoppingList) || !Array.isArray(state.shelf)) {
-      throw new Error("Corrupted state");
-    }
-    return state;
-  } catch (e) {
-    console.warn("[state] Invalid saved state discarded:", e);
-    try { localStorage.removeItem(STORAGE_KEY); } catch {}
+  // Minimal validation
+  if (!Array.isArray(state.shoppingList) || !Array.isArray(state.shelf)) {
+    console.warn("[state] Invalid saved state discarded");
+    save.set("game11", STORAGE_KEY, null); // Overwrite corrupted data
     return null;
   }
+  return state;
 }
 
-export { initGameState, getGameState, saveState, loadState };
+function isSpacedRepetitionEnabled() {
+  return save.get("game11", SR_ENABLED_KEY) === true;
+}
+
+function enableSpacedRepetition() {
+  save.set("game11", SR_ENABLED_KEY, true);
+}
+
+function disableSpacedRepetition() {
+  save.set("game11", SR_ENABLED_KEY, false);
+}
+
+function hasSpacedRepetitionConsent() {
+  return save.get("game11", SR_CONSENT_KEY) === true;
+}
+
+function giveSpacedRepetitionConsent() {
+  save.set("game11", SR_CONSENT_KEY, true);
+}
+
+function deleteSpacedRepetitionMemory() {
+  save.set("game11", SR_ENABLED_KEY, false);
+  save.set("game11", SR_CONSENT_KEY, false);
+  save.set("game11", "sr_memory", null); // Completely clear the statistics
+}
+
+export {
+  initGameState,
+  getGameState,
+  saveState,
+  loadState,
+  isSpacedRepetitionEnabled,
+  enableSpacedRepetition,
+  disableSpacedRepetition,
+  hasSpacedRepetitionConsent,
+  giveSpacedRepetitionConsent,
+  deleteSpacedRepetitionMemory
+};
