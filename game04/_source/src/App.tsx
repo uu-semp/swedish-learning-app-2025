@@ -139,6 +139,121 @@ const QUESTIONS: Question[] = [
   { type: 'grammar-mc',     monthIndex: 11, instruction: 'Vilken mening är rätt?',                   options: ['Det är kallt.','Det kallt.'],                                                    answer: 'Det är kallt.'      },
   { type: 'weekday-mc',     monthIndex: 11, instruction: 'Vilken dag kommer efter söndag?',          options: ['lördag','måndag','fredag'],                                                      answer: 'måndag'             },
 ];
+// Extra questions for each month.
+const EXTRA_QUESTIONS: Question[] = MONTHS_FULL.flatMap(
+  (month, monthIndex): Question[] => {
+    const nextMonth = MONTHS_FULL[(monthIndex + 1) % 12];
+    const previousMonth = MONTHS_FULL[(monthIndex + 11) % 12];
+
+    const dayIndex = monthIndex % WEEKDAYS.length;
+    const day = WEEKDAYS[dayIndex];
+    const nextDay = WEEKDAYS[(dayIndex + 1) % 7];
+
+    return [
+      {
+        type: 'month-mc',
+        monthIndex,
+        instruction: `Vilken månad kommer efter ${month}?`,
+        options: [nextMonth, month, previousMonth],
+        answer: nextMonth,
+      },
+      {
+        type: 'month-mc',
+        monthIndex,
+        instruction: `Vilken månad kommer före ${month}?`,
+        options: [month, nextMonth, previousMonth],
+        answer: previousMonth,
+      },
+      {
+        type: 'weekday-mc',
+        monthIndex,
+        instruction: `Vilken dag kommer efter ${day}?`,
+        options: [
+          day,
+          nextDay,
+          WEEKDAYS[(dayIndex + 2) % 7],
+        ],
+        answer: nextDay,
+      },
+      {
+        type: 'grammar-mc',
+        monthIndex,
+        instruction: `Vilken årstid är det i ${month} i Sverige?`,
+        options: ['vår', 'sommar', 'höst', 'vinter'],
+        answer: SEASON_OF_MONTH[monthIndex],
+      },
+    ];
+  }
+);
+
+// Shuffle a copy of an array.
+function shuffle<T>(items: readonly T[]): T[] {
+  const result = [...items];
+
+  for (let i = result.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [result[i], result[j]] = [result[j], result[i]];
+  }
+
+  return result;
+}
+function randomizeDateQuestion(question: Question): Question {
+  if (question.type !== 'date-calendar') {
+    return question;
+  }
+
+  const dates = [
+    { day: 2, word: 'andra' },
+    { day: 16, word: 'sextonde' },
+    { day: 25, word: 'tjugofemte' },
+  ];
+
+  const selected = dates[Math.floor(Math.random() * dates.length)];
+  const monthIndex = question.targetMonthIndex ?? question.monthIndex;
+
+  return {
+    ...question,
+    targetDate: selected.day,
+    instruction:
+      `Klicka på den ${selected.word} ${MONTHS_FULL[monthIndex]}.`,
+  };
+}
+
+// Choose three questions for each month.
+function createGameQuestions(): Question[] {
+  const bank = [...QUESTIONS, ...EXTRA_QUESTIONS];
+
+  return MONTHS_FULL.flatMap((_, monthIndex) => {
+    const monthQuestions = bank.filter(
+      question => question.monthIndex === monthIndex
+    );
+
+    // Remove duplicate questions.
+    const uniqueQuestions = monthQuestions.filter(
+      (question, index, questions) =>
+        questions.findIndex(
+          other =>
+            other.type === question.type &&
+            other.instruction === question.instruction &&
+            other.answer === question.answer
+        ) === index
+    );
+
+
+    return shuffle(uniqueQuestions)
+      .slice(0, 3)
+      .map(randomizeDateQuestion)
+      .map(question => ({
+        ...question,
+        options: question.options
+          ? shuffle(question.options)
+          : undefined,
+        shuffled: question.shuffled
+          ? shuffle(question.shuffled)
+          : undefined,
+      }));
+  });
+}
 
 // ── Practice data ─────────────────────────────────────────────────────────────
 
@@ -442,7 +557,6 @@ function SeasonMCQuestion({ q, answerState, onSelect }: { q: Question; answerSta
               style={{ backgroundColor: bg, border: `2px solid ${border}`, color: textColor }}
               className="flex items-center gap-2 px-3 py-2 rounded-xl font-display font-semibold text-sm transition-all duration-150 hover:shadow-sm cursor-pointer relative"
             >
-              <span>{SEASON_ICON[opt as Season]}</span>
               <AnnotatedText text={opt} />
             </button>
           );
@@ -796,7 +910,6 @@ function GameScreen({
             >
               {monthLabel} · Fråga {qInMonth}/3
             </span>
-            <span className="text-2xl">{SEASON_ICON[season]}</span>
           </div>
 
           {/* Instruction */}
@@ -1302,7 +1415,9 @@ export default function App() {
   const [showMonthComplete, setShowMonthComplete] = useState(false);
   const [answerState, setAnswerState] = useState<AnswerState>('idle');
 
-  const q = QUESTIONS[qIdx];
+  const [gameQuestions, setGameQuestions] = useState<Question[]>(createGameQuestions);
+
+  const q = gameQuestions[qIdx];
   const season = SEASON_OF_MONTH[q?.monthIndex ?? 0];
   const colors = COLORS[season];
 
@@ -1345,8 +1460,7 @@ export default function App() {
   };
 
   const advance = () => {
-    const isLastQ = qIdx === QUESTIONS.length - 1;
-    const isLastOfMonth = (qIdx + 1) % 3 === 0;
+    const isLastQ = qIdx === gameQuestions.length - 1;    const isLastOfMonth = (qIdx + 1) % 3 === 0;
     const mIdx = Math.floor(qIdx / 3);
 
     if (isLastQ) {
@@ -1374,13 +1488,14 @@ export default function App() {
   };
 
   const startGame = () => {
-    setQIdx(0);
-    setScore(0);
-    setCompletedMonths(Array(12).fill(false));
-    setAnswerState('idle');
-    setShowMonthComplete(false);
-    setScreen('game');
-  };
+  setGameQuestions(createGameQuestions());
+  setQIdx(0);
+  setScore(0);
+  setCompletedMonths(Array(12).fill(false));
+  setAnswerState('idle');
+  setShowMonthComplete(false);
+  setScreen('game');
+};
 
   const goHome = () => {
     setShowMonthComplete(false);
