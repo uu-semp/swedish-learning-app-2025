@@ -53,12 +53,14 @@
     border-radius: 10px;
 }
 
-#restart-game {
+#restart-game,
+#go-to-menu {
     padding: 20px 40px;
     font-size: 2em;
     padding: 20px 40px;
     font-size: 1.5em;
     border-radius: 10px;
+    margin: 0 10px;
 }
 
 /* Menu: game mode buttons on the left, info box on the right */

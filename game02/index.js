@@ -185,6 +185,10 @@ $(function () {
   });
 
   $("#restart-game").on("click", function () {
+    $("#start-game").trigger("click");
+  });
+
+  $("#go-to-menu").on("click", function () {
     resetGame();
     showScreen("menu-screen");
   });
