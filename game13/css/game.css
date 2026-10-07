@@ -126,6 +126,7 @@
   align-items: stretch;
   padding: 10px;
   background: #fafbfc;
+}
 
 
 .wardrobe-box {
@@ -194,6 +195,8 @@
   border-top: 3px solid var(--color-text);
   background: var(--color-surface);
   font-size: 16px;
+}
+
 /* Drop highlight: Pelle glows while an item is dragged over him */
 .stage.drop-target .cat-image {
   filter: drop-shadow(0 0 6px #4caf50) drop-shadow(0 0 14px #4caf50);
