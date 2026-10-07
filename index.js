@@ -20,27 +20,63 @@ let translations = {};
 /** Stable order for theme filter buttons (not game sort order). */
 const THEME_ORDER = ["clothing", "furniture", "food", "time", "numbers", "places", "colors"];
 
-/** Single active theme filter: "all" or a theme id from games.json. */
-let activeTheme = "all";
+/** Active theme ids; empty set means "All themes" mode. */
+const activeThemes = new Set();
 
 function themeLabel(themeId) {
   const entry = translations[`theme-${themeId}`];
   return entry ? entry[currentLanguage] : themeId;
 }
 
+function isAllThemesMode() {
+  return activeThemes.size === 0;
+}
+
 function getFilteredGames() {
-  if (activeTheme === "all") return allGames;
+  if (isAllThemesMode()) return allGames;
   return allGames.filter(
-    (g) => Array.isArray(g.themes) && g.themes.includes(activeTheme)
+    (g) =>
+      Array.isArray(g.themes) &&
+      g.themes.some((themeId) => activeThemes.has(themeId))
   );
 }
 
-function selectTheme(value) {
-  activeTheme = value;
+function syncFilterButtonStyles() {
   document.querySelectorAll(".filter-btn").forEach((b) => {
-    b.classList.toggle("active", b.dataset.theme === value);
+    const id = b.dataset.theme;
+    if (id === "all") {
+      b.classList.toggle("active", isAllThemesMode());
+    } else {
+      b.classList.toggle("active", activeThemes.has(id));
+    }
   });
+}
+
+function applyThemeFilter() {
+  syncFilterButtonStyles();
   renderGrid(getFilteredGames());
+}
+
+function selectAllThemes() {
+  activeThemes.clear();
+  applyThemeFilter();
+}
+
+function toggleThemeFilter(value) {
+  if (value === "all") {
+    selectAllThemes();
+    return;
+  }
+
+  if (isAllThemesMode()) {
+    activeThemes.add(value);
+  } else if (activeThemes.has(value)) {
+    activeThemes.delete(value);
+  } else {
+    activeThemes.add(value);
+  }
+
+  applyThemeFilter();
 }
 
 function updateFilterBarLabels() {
@@ -65,17 +101,10 @@ async function loadGames() {
     if (!res.ok) throw new Error("Failed to load games.json");
     allGames = await res.json();
 
-    // Sort by smallest supported_chapters value (display order only; not used for theme filter)
-    allGames.sort((a, b) => {
-      const aMin = Math.min(...a.supported_chapters);
-      const bMin = Math.min(...b.supported_chapters);
-      return aMin - bMin;
-    });
-
     const themeSet = new Set(allGames.flatMap((g) => g.themes || []));
     const themes = THEME_ORDER.filter((t) => themeSet.has(t));
     buildFilter(themes);
-    selectTheme("all");
+    selectAllThemes();
   } catch (err) {
     console.error("Error loading games:", err);
     grid.innerHTML = "<p>Could not load games.</p>";
@@ -111,7 +140,7 @@ function makeFilterBtn(value) {
 filterBar.addEventListener("click", (e) => {
   const btn = e.target.closest(".filter-btn");
   if (!btn) return;
-  selectTheme(btn.dataset.theme);
+  toggleThemeFilter(btn.dataset.theme);
 });
 
 // Render grid of game cards
