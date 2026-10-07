@@ -21,19 +21,19 @@ export function initDb() {
   return dbLoading;
 }
 
-export async function loadFurniturePairs(numPairs) {
+export async function loadPairs(numPairs, category) {
   await initDb();
 
-  // Get all vocabulary IDs belonging to the category `furniture`
-  const furnitureIds = get_category("furniture");
+  // Get all vocabulary IDs belonging to the chosen category ("furniture", "clothing" or "food")
+  const ids = get_category(category);
 
-  if (!furnitureIds) {
-    console.error("No furniture category found in database");
+  if (!ids) {
+    console.error(`No ${category} category found in database`);
     return [];
   }
 
   // Convert to the format expected by getRandomPairs
-  const furnitureData = furnitureIds
+  const data = ids
     .map((id) => {
       const vocab = get_vocab(id);
       if (vocab && vocab.img) {
@@ -44,7 +44,7 @@ export async function loadFurniturePairs(numPairs) {
           swedish: vocab.sv,
           swedish_plural: "", // Not available in new API
           literal: vocab.literal || "",
-          category: "furniture",
+          category: category,
           image_url: vocab.img,
           audio_url: vocab.audio,
         };
@@ -53,7 +53,7 @@ export async function loadFurniturePairs(numPairs) {
     })
     .filter((item) => item !== null);
 
-  return getRandomPairs(furnitureData, numPairs);
+  return getRandomPairs(data, numPairs);
 }
 
 export function buildGrid(pairs, mode) {
