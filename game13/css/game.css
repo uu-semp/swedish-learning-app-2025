@@ -151,6 +151,27 @@
 .menu-item {
   display: flex;
   justify-content: center;
+  position: relative;
+}
+
+/* A clothing item that was confirmed as wrong */
+.menu-item.is-wrong .thumb {
+  filter: grayscale(100%);
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* Red X over wrong clothing */
+.menu-item.is-wrong::after {
+  content: "✕";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: red;
+  font-size: 48px;
+  font-weight: bold;
+  pointer-events: none;
 }
 
 .thumb {
