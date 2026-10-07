@@ -2,25 +2,6 @@ import { useState } from 'react';
 import summerImg from './assets/seasons/summer.jpg';
 import fallImg from './assets/seasons/fall.jpg';
 
-// ── Shared site save API (see /scripts/SAVE.MD) ─────────────────────────────────
-// Loaded as a plain script by index.html; may not be present yet (or at all, e.g. when
-// this game is opened standalone during development), so every call is optional-chained.
-declare global {
-  interface Window {
-    save?: {
-      get: (game: string, key?: string | null) => any;
-      set: (game: string, keyOrData: string | Record<string, unknown>, value?: unknown) => boolean;
-      stats: {
-        get: (game: string) => { wins: number; completion: number };
-        set: (game: string, wins: number, completion: number) => boolean;
-        incrementWin: (game: string) => boolean;
-        setCompletion: (game: string, completion: number) => boolean;
-      };
-    };
-  }
-}
-const GAME_ID = 'game04';
-
 // ── Types ──────────────────────────────────────────────────────────────────────
 type Season = 'vinter' | 'vår' | 'sommar' | 'höst';
 type Screen = 'home' | 'practice' | 'game' | 'year-complete';
@@ -300,7 +281,7 @@ function MonthBar({ completed, current }: { completed: boolean[]; current: numbe
 function SeasonPlaceholder({
   season,
   label,
-  minH = 90,
+  minH = 220,
 }: {
   season: Season;
   label: string;
@@ -311,7 +292,7 @@ function SeasonPlaceholder({
 
   return (
     <div
-      className="w-full rounded-2xl flex flex-col items-center justify-center gap-1 relative overflow-hidden"
+      className="w-full rounded-3xl flex flex-col items-center justify-center gap-3 relative overflow-hidden"
       style={{
         backgroundColor: c.placeholder,
         minHeight: minH,
@@ -325,12 +306,12 @@ function SeasonPlaceholder({
         />
       ) : (
         <>
-          <span style={{ fontSize: 28, lineHeight: 1 }}>
+          <span style={{ fontSize: 56, lineHeight: 1 }}>
             {SEASON_ICON[season]}
           </span>
 
           <p
-            className="font-mono text-[10px] text-center px-4 opacity-60"
+            className="font-mono text-xs text-center px-4 opacity-60"
             style={{ color: c.textDark }}
           >
             {label}
@@ -344,11 +325,11 @@ function SeasonPlaceholder({
 function WeatherPlaceholder({ icon, label }: { icon: string; label: string }) {
   return (
     <div
-      className="w-full rounded-2xl flex flex-col items-center justify-center gap-1"
-      style={{ backgroundColor: '#DDE8F0', minHeight: 90 }}
+      className="w-full rounded-3xl flex flex-col items-center justify-center gap-3"
+      style={{ backgroundColor: '#DDE8F0', minHeight: 220 }}
     >
-      <span style={{ fontSize: 32, lineHeight: 1 }}>{WEATHER_EMOJI[icon] ?? '🌥️'}</span>
-      <p className="font-mono text-[10px] text-center px-4 opacity-50 text-slate-700">{label}</p>
+      <span style={{ fontSize: 72, lineHeight: 1 }}>{WEATHER_EMOJI[icon] ?? '🌥️'}</span>
+      <p className="font-mono text-xs text-center px-4 opacity-50 text-slate-700">{label}</p>
     </div>
   );
 }
@@ -358,25 +339,25 @@ function FeedbackBar({ state, onNext, colors }: { state: AnswerState; onNext: ()
   const ok = state === 'correct';
   return (
     <div
-      className="rounded-xl px-4 py-2 flex items-center justify-between fade-in shrink-0"
+      className="rounded-2xl px-6 py-4 flex items-center justify-between fade-in"
       style={{
         backgroundColor: ok ? '#EDFBF3' : '#FFF5EB',
         border: `1.5px solid ${ok ? '#6ECC9A' : '#F5B872'}`,
       }}
     >
-      <div className="flex items-center gap-2">
-        <span className="text-base">{ok ? '✅' : '⚠️'}</span>
+      <div className="flex items-center gap-3">
+        <span className="text-2xl">{ok ? '✅' : '⚠️'}</span>
         <div>
-          <p className="font-display font-bold text-sm" style={{ color: ok ? '#1A5C38' : '#7A4200' }}>
+          <p className="font-display font-bold text-lg" style={{ color: ok ? '#1A5C38' : '#7A4200' }}>
             {ok ? 'Rätt!' : 'Försök igen.'}
           </p>
-          {ok && <p className="text-xs" style={{ color: '#2D8854' }}>Bra jobbat!</p>}
+          {ok && <p className="text-sm" style={{ color: '#2D8854' }}>Bra jobbat!</p>}
         </div>
       </div>
       {ok && (
         <button
           onClick={onNext}
-          className="px-4 py-2 rounded-lg font-display font-semibold text-sm text-white transition-opacity hover:opacity-85"
+          className="px-7 py-3 rounded-xl font-display font-semibold text-white transition-opacity hover:opacity-85"
           style={{ backgroundColor: colors.dark }}
         >
           Nästa →
@@ -430,7 +411,7 @@ function MCQuestion({
             key={opt}
             onClick={() => handleClick(opt)}
             style={{ backgroundColor: bg, border: `2px solid ${border}`, color: textColor, cursor }}
-            className="w-full text-left px-4 py-2.5 rounded-xl font-semibold text-sm transition-all duration-150 hover:shadow-sm relative"
+            className="w-full text-left px-6 py-4 rounded-2xl font-semibold text-base transition-all duration-150 hover:shadow-sm relative"
           >
             <AnnotatedText text={opt} />
           </button>
@@ -459,9 +440,9 @@ function SeasonMCQuestion({ q, answerState, onSelect }: { q: Question; answerSta
   };
 
   return (
-    <div className="flex flex-col gap-2">
-      <SeasonPlaceholder season={s} label={q.imagelabel!} minH={90} />
-      <div className="grid grid-cols-2 gap-2">
+    <div className="flex flex-col gap-4">
+      <SeasonPlaceholder season={s} label={q.imagelabel!} minH={240} />
+      <div className="grid grid-cols-2 gap-3">
         {q.options!.map((opt) => {
           const state = optionState(opt);
           const sc = COLORS[opt as Season] ?? c;
@@ -475,7 +456,7 @@ function SeasonMCQuestion({ q, answerState, onSelect }: { q: Question; answerSta
               key={opt}
               onClick={() => handleClick(opt)}
               style={{ backgroundColor: bg, border: `2px solid ${border}`, color: textColor }}
-              className="flex items-center gap-2 px-3 py-2 rounded-xl font-display font-semibold text-sm transition-all duration-150 hover:shadow-sm cursor-pointer relative"
+              className="flex items-center gap-3 px-5 py-4 rounded-2xl font-display font-semibold text-lg transition-all duration-150 hover:shadow-sm cursor-pointer relative"
             >
               <span>{SEASON_ICON[opt as Season]}</span>
               <AnnotatedText text={opt} />
@@ -506,9 +487,9 @@ function WeatherMCQuestion({ q, answerState, onSelect }: { q: Question; answerSt
   };
 
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col gap-4">
       <WeatherPlaceholder icon={q.weatherIcon!} label={q.weatherLabel!} />
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-3">
         {q.options!.map((opt) => {
           const state = optionState(opt);
           let bg = '#FFFFFF', border = '#DDD8D2', textColor = '#1C1916';
@@ -520,7 +501,7 @@ function WeatherMCQuestion({ q, answerState, onSelect }: { q: Question; answerSt
               key={opt}
               onClick={() => handleClick(opt)}
               style={{ backgroundColor: bg, border: `2px solid ${border}`, color: textColor }}
-              className="w-full text-left px-4 py-2.5 rounded-xl font-semibold text-sm transition-all duration-150 hover:shadow-sm relative"
+              className="w-full text-left px-6 py-4 rounded-2xl font-semibold text-base transition-all duration-150 hover:shadow-sm relative"
             >
               <AnnotatedText text={opt} />
             </button>
@@ -557,14 +538,14 @@ function WeekdayClickQuestion({ q, answerState, onSubmit }: { q: Question; answe
   };
 
   return (
-    <div className="flex flex-col gap-3">
+    <div className="flex flex-col gap-5">
       <div
-        className="px-3 py-2 rounded-xl"
+        className="px-6 py-4 rounded-2xl"
         style={{ backgroundColor: c.light, border: `1.5px solid ${c.border}` }}
       >
-        <p className="font-display font-semibold text-sm" style={{ color: c.textDark }}><AnnotatedText text={q.sentence!} /></p>
+        <p className="font-display font-semibold text-xl" style={{ color: c.textDark }}><AnnotatedText text={q.sentence!} /></p>
       </div>
-      <div className="grid grid-cols-7 gap-1">
+      <div className="grid grid-cols-7 gap-2">
         {WEEKDAYS.map((day) => {
           const state = dayState(day);
           let bg = '#FFFFFF', border = '#DDD8D2', textColor = '#1C1916';
@@ -577,7 +558,7 @@ function WeekdayClickQuestion({ q, answerState, onSubmit }: { q: Question; answe
               key={day}
               onClick={() => toggle(day)}
               style={{ backgroundColor: bg, border: `2px solid ${border}`, color: textColor }}
-              className="flex items-center justify-center py-1.5 rounded-lg font-semibold text-[11px] transition-all duration-150 hover:shadow-sm cursor-pointer relative"
+              className="flex items-center justify-center py-4 rounded-2xl font-semibold text-sm transition-all duration-150 hover:shadow-sm cursor-pointer relative"
             >
               <AnnotatedText text={day} />
             </button>
@@ -588,7 +569,7 @@ function WeekdayClickQuestion({ q, answerState, onSubmit }: { q: Question; answe
         <button
           onClick={handleSubmit}
           disabled={selected.length === 0}
-          className="self-start px-4 py-2 rounded-lg font-display font-semibold text-sm text-white transition-opacity hover:opacity-85 disabled:opacity-40"
+          className="self-start px-8 py-3 rounded-xl font-display font-semibold text-white transition-opacity hover:opacity-85 disabled:opacity-40"
           style={{ backgroundColor: c.primary }}
         >
           Kontrollera
@@ -631,11 +612,11 @@ function OrderQuestion({ q, answerState, onSubmit }: { q: Question; answerState:
   };
 
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col gap-5">
       {/* Target slots */}
       <div>
-        <p className="text-[10px] font-mono uppercase tracking-widest text-gray-400 mb-1">Din ordning</p>
-        <div className="flex flex-wrap gap-1.5 min-h-[36px] p-2 rounded-xl" style={{ border: `2px dashed ${c.border}`, backgroundColor: c.light }}>
+        <p className="text-xs font-mono uppercase tracking-widest text-gray-400 mb-2">Din ordning</p>
+        <div className="flex flex-wrap gap-2 min-h-[56px] p-3 rounded-2xl" style={{ border: `2px dashed ${c.border}`, backgroundColor: c.light }}>
           {placed.map((item, idx) => {
             const state = placedState(item, idx);
             let bg = c.primary, textColor = '#FFFFFF', border = 'transparent';
@@ -646,7 +627,7 @@ function OrderQuestion({ q, answerState, onSubmit }: { q: Question; answerState:
                 key={`placed-${idx}`}
                 onClick={() => answerState === 'idle' && handlePlacedClick(item)}
                 style={{ backgroundColor: bg, color: textColor, border: `2px solid ${border}` }}
-                className="px-2.5 py-1 rounded-lg font-semibold text-xs transition-all hover:opacity-80 capitalize relative"
+                className="px-4 py-2 rounded-xl font-semibold text-sm transition-all hover:opacity-80 capitalize relative"
               >
                 <AnnotatedText text={item} />
                 {answerState === 'idle' && <span className="opacity-60 ml-1">×</span>}
@@ -654,7 +635,7 @@ function OrderQuestion({ q, answerState, onSubmit }: { q: Question; answerState:
             );
           })}
           {placed.length === 0 && (
-            <span className="text-xs text-gray-400 italic">Klicka på orden nedan...</span>
+            <span className="text-sm text-gray-400 italic">Klicka på orden nedan...</span>
           )}
         </div>
       </div>
@@ -662,14 +643,14 @@ function OrderQuestion({ q, answerState, onSubmit }: { q: Question; answerState:
       {/* Source items */}
       {answerState === 'idle' && (
         <div>
-          <p className="text-[10px] font-mono uppercase tracking-widest text-gray-400 mb-1">Tillgängliga</p>
-          <div className="flex flex-wrap gap-1.5">
+          <p className="text-xs font-mono uppercase tracking-widest text-gray-400 mb-2">Tillgängliga</p>
+          <div className="flex flex-wrap gap-2">
             {remaining.map(item => (
               <button
                 key={item}
                 onClick={() => handleSourceClick(item)}
                 style={{ backgroundColor: '#FFFFFF', border: `2px solid ${c.border}`, color: '#1C1916' }}
-                className="px-2.5 py-1 rounded-lg font-semibold text-xs transition-all hover:shadow-sm capitalize relative"
+                className="px-4 py-2 rounded-xl font-semibold text-sm transition-all hover:shadow-sm capitalize relative"
               >
                 <AnnotatedText text={item} />
               </button>
@@ -679,17 +660,17 @@ function OrderQuestion({ q, answerState, onSubmit }: { q: Question; answerState:
       )}
 
       {answerState === 'idle' && (
-        <div className="flex gap-2">
+        <div className="flex gap-3">
           <button
             onClick={handleCheck}
             disabled={!isComplete}
-            className="px-4 py-2 rounded-lg font-display font-semibold text-sm text-white transition-opacity hover:opacity-85 disabled:opacity-40"
+            className="px-8 py-3 rounded-xl font-display font-semibold text-white transition-opacity hover:opacity-85 disabled:opacity-40"
             style={{ backgroundColor: c.primary }}
           >
             Kontrollera
           </button>
           {placed.length > 0 && (
-            <button onClick={handleReset} className="px-3 py-2 rounded-lg font-semibold text-sm text-gray-500 hover:bg-gray-100 transition-all">
+            <button onClick={handleReset} className="px-5 py-3 rounded-xl font-semibold text-gray-500 hover:bg-gray-100 transition-all">
               Börja om
             </button>
           )}
@@ -725,12 +706,12 @@ function DateCalendarQuestion({ q, answerState, onSelect }: { q: Question; answe
   ];
 
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col gap-4">
       <div
-        className="px-3 py-1.5 rounded-xl flex items-center justify-between"
+        className="px-5 py-3 rounded-2xl flex items-center justify-between"
         style={{ backgroundColor: c.light, border: `1.5px solid ${c.border}` }}
       >
-        <p className="font-display font-bold text-sm capitalize" style={{ color: c.textDark }}>
+        <p className="font-display font-bold text-xl capitalize" style={{ color: c.textDark }}>
           {MONTHS_FULL[q.targetMonthIndex!]} 2025
         </p>
       </div>
@@ -738,7 +719,7 @@ function DateCalendarQuestion({ q, answerState, onSelect }: { q: Question; answe
       {/* Day headers */}
       <div className="grid grid-cols-7 gap-1 text-center">
         {dayNames.map(d => (
-          <div key={d} className="text-[9px] font-mono font-medium uppercase tracking-wide text-gray-400 py-0.5">{d}</div>
+          <div key={d} className="text-xs font-mono font-medium uppercase tracking-wide text-gray-400 py-2">{d}</div>
         ))}
         {cells.map((day, idx) => {
           if (!day) return <div key={`empty-${idx}`} />;
@@ -754,7 +735,7 @@ function DateCalendarQuestion({ q, answerState, onSelect }: { q: Question; answe
               key={day}
               onClick={() => handleClick(day)}
               style={{ backgroundColor: bg, border: `2px solid ${border}`, color: textColor }}
-              className={`h-6 flex items-center justify-center rounded-md font-semibold text-[11px] transition-all ${hoverClass} cursor-pointer`}
+              className={`aspect-square flex items-center justify-center rounded-xl font-semibold text-sm transition-all ${hoverClass} cursor-pointer`}
             >
               {day}
             </button>
@@ -790,9 +771,9 @@ function GameScreen({
   const monthLabel = MONTHS_FULL[q.monthIndex];
 
   return (
-    <div className="h-full flex flex-col" style={{ backgroundColor: '#F5F3F0' }}>
+    <div className="min-h-full flex flex-col" style={{ backgroundColor: '#F5F3F0' }}>
       {/* Top nav */}
-      <header className="px-5 pt-3 pb-2 flex items-center justify-between gap-6">
+      <header className="px-8 pt-6 pb-4 flex items-center justify-between gap-6">
         <div className="flex items-center gap-3">
           <button
             onClick={onHome}
@@ -816,13 +797,13 @@ function GameScreen({
       </header>
 
       {/* Month progress */}
-      <div className="px-5 pb-2">
+      <div className="px-8 pb-6">
         <MonthBar completed={completedMonths} current={q.monthIndex} />
       </div>
 
       {/* Question card */}
-      <main className="flex-1 min-h-0 px-5 pb-3 flex flex-col gap-2 max-w-3xl w-full mx-auto overflow-hidden">
-        <div className="bg-white rounded-2xl shadow-sm p-4 flex flex-col gap-2 fade-in min-h-0 overflow-y-auto">
+      <main className="flex-1 px-8 pb-8 flex flex-col gap-4 max-w-3xl w-full mx-auto">
+        <div className="bg-white rounded-3xl shadow-sm p-8 flex flex-col gap-6 fade-in">
           {/* Question meta */}
           <div className="flex items-center justify-between">
             <span
@@ -835,7 +816,7 @@ function GameScreen({
           </div>
 
           {/* Instruction */}
-          <h2 className="font-display font-bold text-lg text-gray-900"><AnnotatedText text={q.instruction} /></h2>
+          <h2 className="font-display font-bold text-3xl text-gray-900"><AnnotatedText text={q.instruction} /></h2>
 
           {/* Question body */}
           {(q.type === 'weekday-mc' || q.type === 'month-mc' || q.type === 'grammar-mc') && (
@@ -880,33 +861,33 @@ function MonthCompleteScreen({
   const isLast = monthIdx === 11;
 
   return (
-    <div className="h-full flex flex-col items-center justify-center p-4 fade-in overflow-y-auto" style={{ backgroundColor: '#F5F3F0' }}>
-      <div className="w-full max-w-lg bg-white rounded-2xl shadow-sm overflow-hidden">
+    <div className="min-h-full flex flex-col items-center justify-center p-10 fade-in" style={{ backgroundColor: '#F5F3F0' }}>
+      <div className="w-full max-w-2xl bg-white rounded-3xl shadow-sm overflow-hidden">
         {/* Season banner */}
         <div
-          className="px-6 py-5 flex flex-col items-center gap-1.5"
+          className="px-10 py-14 flex flex-col items-center gap-4"
           style={{ backgroundColor: c.placeholder }}
         >
-          <span style={{ fontSize: 36 }}>{SEASON_ICON[season]}</span>
-          <h1 className="font-display font-bold text-xl capitalize" style={{ color: c.textDark }}>
+          <span style={{ fontSize: 80 }}>{SEASON_ICON[season]}</span>
+          <h1 className="font-display font-bold text-5xl capitalize" style={{ color: c.textDark }}>
             {MONTHS_FULL[monthIdx]} klar!
           </h1>
         </div>
 
         {/* Progress */}
-        <div className="px-6 py-3 flex flex-col gap-3">
+        <div className="px-10 py-8 flex flex-col gap-8">
           <MonthBar completed={completedMonths} current={-1} />
 
-          <div className="flex gap-2 justify-center">
+          <div className="flex gap-4 justify-center">
             <button
               onClick={onHome}
-              className="px-3 py-2 rounded-lg text-sm font-semibold text-gray-500 hover:bg-gray-100 transition-all"
+              className="px-6 py-3 rounded-xl font-semibold text-gray-500 hover:bg-gray-100 transition-all"
             >
               ⌂ Hem
             </button>
             <button
               onClick={onNext}
-              className="px-5 py-2 rounded-xl font-display font-bold text-sm text-white transition-opacity hover:opacity-85"
+              className="px-10 py-4 rounded-2xl font-display font-bold text-xl text-white transition-opacity hover:opacity-85"
               style={{ backgroundColor: c.primary }}
             >
               {isLast ? 'Avsluta' : 'Nästa månad →'}
@@ -932,70 +913,70 @@ function YearCompleteScreen({
   const pct = Math.round((score / total) * 100);
 
   return (
-    <div className="h-full flex flex-col items-center justify-center p-3 fade-in overflow-y-auto" style={{ backgroundColor: '#F5F3F0' }}>
-      <div className="w-full max-w-lg bg-white rounded-2xl shadow-sm overflow-hidden">
+    <div className="min-h-full flex flex-col items-center justify-center p-10 fade-in" style={{ backgroundColor: '#F5F3F0' }}>
+      <div className="w-full max-w-2xl bg-white rounded-3xl shadow-sm overflow-hidden">
         {/* Celebration banner */}
-        <div className="px-6 py-4 text-center" style={{ background: 'linear-gradient(135deg, #C2D9EE 0%, #B8E4CA 33%, #F5E0A0 66%, #F0C0A0 100%)' }}>
-          <div className="flex justify-center gap-2 text-2xl mb-2">
+        <div className="px-10 py-12 text-center" style={{ background: 'linear-gradient(135deg, #C2D9EE 0%, #B8E4CA 33%, #F5E0A0 66%, #F0C0A0 100%)' }}>
+          <div className="flex justify-center gap-3 text-5xl mb-6">
             {['❄️','🌿','☀️','🍂'].map((e, i) => (
               <span key={i} style={{ animation: `fadeIn 0.3s ease-out ${i * 0.1}s both` }}>{e}</span>
             ))}
           </div>
-          <h1 className="font-display font-bold text-lg text-gray-900 mb-1">
+          <h1 className="font-display font-bold text-4xl text-gray-900 mb-2">
             Du klarade ett år i Uppsala!
           </h1>
-          <p className="text-gray-600 text-xs">Januari – December ✓</p>
+          <p className="text-gray-600 text-lg">Januari – December ✓</p>
         </div>
 
-        <div className="px-6 py-3 flex flex-col gap-2.5">
+        <div className="px-10 py-8 flex flex-col gap-6">
           {/* Score */}
-          <div className="flex flex-col items-center gap-0.5 py-2 rounded-xl" style={{ backgroundColor: '#F5F3F0' }}>
-            <p className="font-mono text-[10px] text-gray-500 uppercase tracking-widest">Resultat</p>
-            <p className="font-display font-bold text-2xl text-gray-900">{score} / {total} rätt</p>
-            <div className="w-full bg-gray-200 rounded-full h-2 mt-1 max-w-xs">
+          <div className="flex flex-col items-center gap-2 py-4 rounded-2xl" style={{ backgroundColor: '#F5F3F0' }}>
+            <p className="font-mono text-sm text-gray-500 uppercase tracking-widest">Resultat</p>
+            <p className="font-display font-bold text-5xl text-gray-900">{score} / {total} rätt</p>
+            <div className="w-full bg-gray-200 rounded-full h-3 mt-2 max-w-xs">
               <div
-                className="h-2 rounded-full transition-all"
+                className="h-3 rounded-full transition-all"
                 style={{ width: `${pct}%`, backgroundColor: pct >= 80 ? '#4CAF82' : pct >= 60 ? '#C98C08' : '#E57373' }}
               />
             </div>
-            <p className="text-[10px] text-gray-500">{pct}%</p>
+            <p className="text-sm text-gray-500">{pct}%</p>
           </div>
 
           {/* Month grid */}
-          <div className="grid grid-cols-6 gap-1">
+          <div className="grid grid-cols-6 gap-2">
             {MONTH_SHORT.map((m, i) => {
               const c = COLORS[SEASON_OF_MONTH[i]];
               return (
                 <div
                   key={i}
-                  className="flex flex-col items-center gap-0.5 py-1.5 rounded-lg"
+                  className="flex flex-col items-center gap-1 py-3 rounded-xl"
                   style={{ backgroundColor: c.light }}
                 >
-                  <span className="font-mono text-[9px] font-bold" style={{ color: c.primary }}>✓</span>
-                  <span className="font-mono text-[8px] text-gray-500">{m}</span>
+                  <span className="font-mono text-[10px] font-bold" style={{ color: c.primary }}>✓</span>
+                  <span className="font-mono text-[9px] text-gray-500">{m}</span>
                 </div>
               );
             })}
           </div>
 
           {/* Buttons */}
-          <div className="flex gap-2">
+          <div className="flex gap-3">
             <button
               onClick={onReplay}
-              className="flex-1 py-2 rounded-xl font-display font-bold text-sm text-white transition-opacity hover:opacity-85"
+              className="flex-1 py-4 rounded-2xl font-display font-bold text-lg text-white transition-opacity hover:opacity-85"
               style={{ backgroundColor: '#3A7EC6' }}
             >
               Spela igen
             </button>
             <button
               onClick={onPractice}
-              className="px-3 py-2 rounded-xl text-sm font-display font-semibold text-gray-700 hover:bg-gray-100 transition-all border-2 border-gray-200"
+              className="px-6 py-4 rounded-2xl font-display font-semibold text-gray-700 hover:bg-gray-100 transition-all border-2 border-gray-200"
             >
               Öva
             </button>
             <button
               onClick={onHome}
-              className="px-3 py-2 rounded-xl text-sm font-display font-semibold text-gray-500 hover:bg-gray-100 transition-all"
+              className="px-6 py-4 rounded-2xl font-display font-semibold text-gray-500 hover:bg-gray-100 transition-all"
             >
               ⌂ Hem
             </button>
@@ -1050,50 +1031,50 @@ function PracticeResults({
   const praise = score === total ? 'Perfekt!' : score >= total * 0.8 ? 'Bra jobbat!' : 'Fortsätt öva!';
 
   return (
-    <div className="h-full flex flex-col items-center justify-center p-3 fade-in overflow-y-auto" style={{ backgroundColor: '#F5F3F0' }}>
-      <div className="w-full max-w-sm bg-white rounded-2xl shadow-sm overflow-hidden">
+    <div className="min-h-full flex flex-col items-center justify-center p-10 fade-in" style={{ backgroundColor: '#F5F3F0' }}>
+      <div className="w-full max-w-lg bg-white rounded-3xl shadow-sm overflow-hidden">
         {/* Banner */}
-        <div className="px-6 py-4 text-center flex flex-col items-center gap-1.5" style={{ backgroundColor: c.placeholder }}>
-          <span style={{ fontSize: 32 }}>{meta.icon}</span>
-          <h1 className="font-display font-bold text-lg" style={{ color: c.textDark }}>{praise}</h1>
-          <p className="font-display font-semibold text-sm" style={{ color: c.dark }}>
+        <div className="px-10 py-12 text-center flex flex-col items-center gap-4" style={{ backgroundColor: c.placeholder }}>
+          <span style={{ fontSize: 64 }}>{meta.icon}</span>
+          <h1 className="font-display font-bold text-4xl" style={{ color: c.textDark }}>{praise}</h1>
+          <p className="font-display font-semibold text-2xl" style={{ color: c.dark }}>
             {score} av {total} rätt
           </p>
         </div>
 
-        <div className="px-6 py-3 flex flex-col gap-2.5">
+        <div className="px-10 py-8 flex flex-col gap-6">
           {/* Score bar */}
-          <div className="flex flex-col gap-1">
-            <div className="w-full bg-gray-100 rounded-full h-2">
+          <div className="flex flex-col gap-2">
+            <div className="w-full bg-gray-100 rounded-full h-3">
               <div
-                className="h-2 rounded-full transition-all duration-700"
+                className="h-3 rounded-full transition-all duration-700"
                 style={{
                   width: `${pct}%`,
                   backgroundColor: pct >= 80 ? '#4CAF82' : pct >= 60 ? '#C98C08' : '#E57373',
                 }}
               />
             </div>
-            <p className="text-xs text-gray-400 text-right font-mono">{pct}%</p>
+            <p className="text-sm text-gray-400 text-right font-mono">{pct}%</p>
           </div>
 
           {/* Buttons */}
-          <div className="flex flex-col gap-1.5">
+          <div className="flex flex-col gap-3">
             <button
               onClick={onRetry}
-              className="w-full py-2 rounded-xl font-display font-bold text-sm text-white transition-opacity hover:opacity-85"
+              className="w-full py-4 rounded-2xl font-display font-bold text-lg text-white transition-opacity hover:opacity-85"
               style={{ backgroundColor: c.primary }}
             >
               Öva igen
             </button>
             <button
               onClick={onMenu}
-              className="w-full py-2 rounded-xl text-sm font-display font-semibold text-gray-700 border-2 border-gray-200 hover:bg-gray-50 transition-all"
+              className="w-full py-4 rounded-2xl font-display font-semibold text-gray-700 border-2 border-gray-200 hover:bg-gray-50 transition-all"
             >
               Välj annat område
             </button>
             <button
               onClick={onHome}
-              className="w-full py-1.5 rounded-xl text-sm font-semibold text-gray-400 hover:text-gray-600 transition-colors"
+              className="w-full py-3 rounded-2xl font-semibold text-gray-400 hover:text-gray-600 transition-colors"
             >
               ⌂ Till startsidan
             </button>
@@ -1143,35 +1124,35 @@ function PracticeScreen({ onBack }: { onBack: () => void }) {
   // ── Menu ──
   if (view === 'menu') {
     return (
-      <div className="h-full flex flex-col p-5 overflow-y-auto" style={{ backgroundColor: '#F5F3F0' }}>
-        <div className="max-w-3xl w-full mx-auto flex flex-col gap-4 fade-in">
-          <div className="flex items-center gap-3">
-            <button onClick={onBack} className="text-gray-400 hover:text-gray-700 transition-colors font-display text-lg">←</button>
+      <div className="min-h-full flex flex-col p-10" style={{ backgroundColor: '#F5F3F0' }}>
+        <div className="max-w-3xl w-full mx-auto flex flex-col gap-10 fade-in">
+          <div className="flex items-center gap-4">
+            <button onClick={onBack} className="text-gray-400 hover:text-gray-700 transition-colors font-display text-xl">←</button>
             <div>
-              <p className="font-mono text-[10px] text-gray-400 uppercase tracking-widest">Övningsläge</p>
-              <h1 className="font-display font-bold text-xl text-gray-900">Vad vill du öva på?</h1>
+              <p className="font-mono text-xs text-gray-400 uppercase tracking-widest">Övningsläge</p>
+              <h1 className="font-display font-bold text-4xl text-gray-900">Vad vill du öva på?</h1>
             </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-2 gap-5">
             {(Object.entries(CATEGORIES) as [CategoryKey, CategoryMeta][]).map(([key, { label, icon, season, desc }]) => {
               const c = COLORS[season];
               return (
                 <button
                   key={key}
                   onClick={() => startSession(key)}
-                  className="text-left p-4 rounded-2xl transition-all hover:shadow-md hover:scale-[1.01] cursor-pointer"
+                  className="text-left p-8 rounded-3xl transition-all hover:shadow-md hover:scale-[1.01] cursor-pointer"
                   style={{ backgroundColor: c.light, border: `2px solid ${c.border}` }}
                 >
-                  <span className="text-2xl mb-1 block">{icon}</span>
-                  <h2 className="font-display font-bold text-base mb-0.5" style={{ color: c.textDark }}>{label}</h2>
-                  <p className="text-xs" style={{ color: c.primary }}>{desc}</p>
+                  <span className="text-5xl mb-4 block">{icon}</span>
+                  <h2 className="font-display font-bold text-2xl mb-1" style={{ color: c.textDark }}>{label}</h2>
+                  <p className="text-sm" style={{ color: c.primary }}>{desc}</p>
                 </button>
               );
             })}
           </div>
 
-          <p className="text-center text-xs text-gray-400 italic">
+          <p className="text-center text-sm text-gray-400 italic">
             Välj ett ämne för att öva specifika frågor.
           </p>
         </div>
@@ -1201,9 +1182,9 @@ function PracticeScreen({ onBack }: { onBack: () => void }) {
   const c = COLORS[meta.season];
 
   return (
-    <div className="h-full flex flex-col" style={{ backgroundColor: '#F5F3F0' }}>
+    <div className="min-h-full flex flex-col" style={{ backgroundColor: '#F5F3F0' }}>
       {/* Header */}
-      <header className="px-5 pt-3 pb-2 flex items-center justify-between gap-6">
+      <header className="px-8 pt-6 pb-4 flex items-center justify-between gap-6">
         <div className="flex items-center gap-3">
           <button
             onClick={() => setView('menu')}
@@ -1222,7 +1203,7 @@ function PracticeScreen({ onBack }: { onBack: () => void }) {
       </header>
 
       {/* Progress dots */}
-      <div className="px-5 pb-2 flex gap-2">
+      <div className="px-8 pb-5 flex gap-2">
         {questions.map((_, i) => (
           <div
             key={i}
@@ -1233,8 +1214,8 @@ function PracticeScreen({ onBack }: { onBack: () => void }) {
       </div>
 
       {/* Question card */}
-      <main className="flex-1 min-h-0 px-5 pb-3 flex flex-col gap-2 max-w-3xl w-full mx-auto overflow-hidden">
-        <div className="bg-white rounded-2xl shadow-sm p-4 flex flex-col gap-2 fade-in min-h-0 overflow-y-auto">
+      <main className="flex-1 px-8 pb-8 flex flex-col gap-4 max-w-3xl w-full mx-auto">
+        <div className="bg-white rounded-3xl shadow-sm p-8 flex flex-col gap-6 fade-in">
           <div className="flex items-center justify-between">
             <span
               className="px-4 py-1 rounded-full text-xs font-mono font-medium uppercase tracking-widest"
@@ -1245,7 +1226,7 @@ function PracticeScreen({ onBack }: { onBack: () => void }) {
             <span className="text-2xl">{meta.icon}</span>
           </div>
 
-          <h2 className="font-display font-bold text-lg text-gray-900"><AnnotatedText text={q.instruction} /></h2>
+          <h2 className="font-display font-bold text-3xl text-gray-900"><AnnotatedText text={q.instruction} /></h2>
 
           {renderPracticeQuestion(q, qIdx, answerState, handleMC, handleClick, handleOrder, handleDate)}
         </div>
@@ -1267,32 +1248,32 @@ function HomeScreen({ onStart, onPractice }: { onStart: () => void; onPractice: 
   ];
 
   return (
-    <div className="h-full flex flex-col" style={{ backgroundColor: '#F5F3F0' }}>
-      <div className="flex-1 flex flex-row min-h-0">
+    <div className="min-h-full flex flex-col" style={{ backgroundColor: '#F5F3F0' }}>
+      <div className="flex-1 flex flex-col lg:flex-row">
         {/* Left – hero text */}
-        <div className="flex-1 flex flex-col justify-center px-6 py-5 min-w-0">
-          <p className="font-mono text-[10px] text-gray-400 uppercase tracking-[0.15em] mb-2">Uppsala Universitet · Basic Swedish 1</p>
+        <div className="flex-1 flex flex-col justify-center px-14 py-16 max-w-xl">
+          <p className="font-mono text-xs text-gray-400 uppercase tracking-[0.2em] mb-4">Uppsala Universitet · Basic Swedish 1</p>
           <h1
-            className="font-display font-bold leading-none mb-3"
-            style={{ fontSize: 'clamp(1.75rem, 4.5vw, 2.5rem)', color: '#1C1916' }}
+            className="font-display font-bold leading-none mb-6"
+            style={{ fontSize: 'clamp(3rem, 7vw, 5.5rem)', color: '#1C1916' }}
           >
-            Ett år i Uppsala
+            Ett år i<br />Uppsala
           </h1>
-          <p className="text-sm text-gray-500 mb-5 leading-relaxed">
+          <p className="text-xl text-gray-500 mb-12 leading-relaxed">
             Träna dagar, månader, datum, årstider och väder.
           </p>
-
-          <div className="flex gap-3">
+          
+          <div className="flex gap-4">
             <button
               onClick={onStart}
-              className="px-5 py-3 rounded-xl font-display font-bold text-sm text-white transition-all hover:opacity-88 hover:shadow-lg"
+              className="px-10 py-5 rounded-2xl font-display font-bold text-xl text-white transition-all hover:opacity-88 hover:shadow-lg"
               style={{ backgroundColor: '#3A7EC6' }}
             >
               Starta spelet →
             </button>
             <button
               onClick={onPractice}
-              className="px-4 py-3 rounded-xl font-display font-semibold text-sm text-gray-600 hover:bg-white hover:shadow-sm transition-all border-2 border-gray-200 bg-transparent"
+              className="px-8 py-5 rounded-2xl font-display font-semibold text-xl text-gray-600 hover:bg-white hover:shadow-sm transition-all border-2 border-gray-200 bg-transparent"
             >
               Öva
             </button>
@@ -1300,18 +1281,18 @@ function HomeScreen({ onStart, onPractice }: { onStart: () => void; onPractice: 
         </div>
 
         {/* Right – season grid */}
-        <div className="flex-1 grid grid-cols-2 gap-1.5 p-4" style={{ gridTemplateRows: '1fr 1fr' }}>
+        <div className="flex-1 grid grid-cols-2 gap-px p-6 lg:p-10" style={{ gridTemplateRows: '1fr 1fr' }}>
           {seasonData.map(({ season, label, months }) => {
             const c = COLORS[season];
             return (
               <div
                 key={season}
-                className="rounded-2xl flex flex-col justify-end p-3 relative overflow-hidden"
+                className="rounded-3xl flex flex-col justify-end p-8 relative overflow-hidden min-h-[180px]"
                 style={{ backgroundColor: c.placeholder }}
               >
-                <div className="absolute top-2 right-2 text-xl opacity-60">{SEASON_ICON[season]}</div>
-                <p className="font-display font-bold text-sm" style={{ color: c.textDark }}>{label}</p>
-                <p className="font-mono text-[9px] mt-0.5 opacity-60" style={{ color: c.textDark }}>{months}</p>
+                <div className="absolute top-5 right-6 text-4xl opacity-60">{SEASON_ICON[season]}</div>
+                <p className="font-display font-bold text-2xl" style={{ color: c.textDark }}>{label}</p>
+                <p className="font-mono text-xs mt-1 opacity-60" style={{ color: c.textDark }}>{months}</p>
               </div>
             );
           })}
@@ -1383,8 +1364,6 @@ export default function App() {
       next[11] = true;
       setCompletedMonths(next);
       setScreen('year-complete');
-      window.save?.stats?.incrementWin(GAME_ID);
-      window.save?.stats?.setCompletion(GAME_ID, 100);
     } else if (isLastOfMonth) {
       const next = [...completedMonths];
       next[mIdx] = true;
