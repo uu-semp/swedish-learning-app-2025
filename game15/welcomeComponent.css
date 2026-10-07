@@ -61,18 +61,6 @@ body {
     transform: scale(0.98);
 }
 
-.level-btn.locked {
-    background-color: #ccc;
-    border: 1px solid #999;
-    cursor: not-allowed;
-    color: #666;
-}
-
-.level-btn.locked:hover {
-    background-color: #ccc;
-    transform: none;
-}
-
 .level-info {
     display: flex;
     justify-content: space-between;
@@ -102,11 +90,6 @@ body {
     background-color: white;
     border-radius: 4px;
     transition: width 0.3s ease;
-}
-
-.locked-icon {
-    font-size: 14px;
-    margin-left: 5px;
 }
 
 .summary-btn {

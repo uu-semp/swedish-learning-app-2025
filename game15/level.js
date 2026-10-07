@@ -156,13 +156,6 @@ async function initializeGame() {
             gameProgress[levelKey].timeSpent += timeSpent;
           }
           gameProgress[levelKey].lastPlayed = new Date().toISOString().split('T')[0];
-
-          if (this.level === 1 && this.correctAnswersThisLevel >= 10) {
-            gameProgress.level2.unlocked = true;
-          } else if (this.level === 2 && this.correctAnswersThisLevel >= 10) {
-            gameProgress.level3.unlocked = true;
-          }
-
           updateGameProgress(gameProgress);
         },
 
