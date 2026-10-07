@@ -171,7 +171,7 @@ window.addEventListener('DOMContentLoaded', () => {
             ) {
                 window.Game11UI?.highlightListIndex?.(s.index);
 
-                // Aggiorna e salva l'indice corrente nello storage
+                // Updates and saves the current index in the storage.
                 const gs = window.__game11GameState;
                 if (gs) {
                     gs.currentIndex = Number(s.index);

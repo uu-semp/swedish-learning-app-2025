@@ -6,7 +6,7 @@ const SR_STORAGE_KEY = "sr_memory";
 const SR_INTERVALS = [1, 2, 4, 7, 14, 30, 60, 90, 180];
 
 /**
- * Genera la data in formato YYYY-MM-DD rispettando il fuso orario locale.
+ * Generates the date in YYYY-MM-DD format respecting the local timezone.
  */
 function getLocalISODate(date) {
     const year = date.getFullYear();
