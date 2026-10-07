@@ -1,0 +1,10 @@
+{
+  "description": "Create and customize engaging games effortlessly with this user-friendly platform, perfect for educators, game developers, and hobbyists.",
+  "robots": {
+    "index": false
+  },
+  "accessibility": {
+    "addBypassLinks": false,
+    "ignoreReducedMotion": false
+  }
+}
