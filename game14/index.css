@@ -65,10 +65,10 @@ body {
 
 .pelle-start-right {
   position: absolute;
-  right: 50px;
+  right: 30px;
   bottom: 60px;
-  height: 600px;
-  max-height: 500px;
+  height: 430px;
+  max-height:75%;
   z-index: 4;
   transform: scaleX(-1);
   pointer-events: none;
@@ -164,15 +164,19 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+   padding-right: 320px;
+   box-sizing: border-box;
 }
 
 .sky-content .main-text {
   font-family: 'Fredoka', 'Arial Rounded MT Bold', sans-serif;
-  font-size: 85px;
+   font-size: 58px;
+  line-height: 1.1;
+  text-align: center;
   font-weight: 900;
   text-transform: uppercase;
   letter-spacing: 4px;
-  margin: 0 0 240px 0;
+  margin: 0 0 180px 0;
 
   background: linear-gradient(180deg, #fcebc2 0%, #f4d393 45%, #e1af63 100%);
   -webkit-background-clip: text;
