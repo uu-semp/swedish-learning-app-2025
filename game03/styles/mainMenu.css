@@ -468,6 +468,59 @@ body {
 .room-stack .menu-btn:hover,
 .level-stack .menu-btn:hover { transform: rotate(0deg) translateY(-2px); }
 
+.colour-mode-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    margin: 0 0 10px;
+    padding: 11px 14px;
+    border: 1px solid var(--sheet-line);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.55);
+    color: var(--ink);
+    text-align: left;
+    cursor: pointer;
+}
+
+.colour-mode-toggle .title,
+.colour-mode-toggle .hint {
+    display: block;
+}
+
+.colour-mode-toggle .title {
+    font-size: 0.95rem;
+    font-weight: 700;
+}
+
+.colour-mode-toggle .hint {
+    margin-top: 2px;
+    color: var(--ink-soft);
+    font-size: 0.68rem;
+}
+
+.colour-mode-state {
+    min-width: 38px;
+    padding: 5px 8px;
+    border: 1px solid var(--ink-soft);
+    border-radius: 999px;
+    font-size: 0.76rem;
+    font-weight: 700;
+    text-align: center;
+}
+
+.colour-mode-toggle.is-on .colour-mode-state {
+    background: var(--yellow);
+    border-color: var(--yellow-dark);
+    color: #fff;
+}
+
+.colour-mode-toggle:hover,
+.colour-mode-toggle:focus-visible {
+    border-color: var(--yellow-dark);
+    outline: none;
+}
+
 /* handwritten "back" link under the stack */
 .back-link {
     align-self: center;
@@ -500,6 +553,7 @@ body {
     .menu-btn.compact .icon svg { width: 18px; height: 18px; }
     .menu-btn.compact .title { font-size: 0.95rem; }
     .menu-btn.compact .hint { font-size: 0.64rem; }
+    .colour-mode-toggle { padding: 9px 12px; }
     .back-link { font-size: 0.98rem; margin-top: 2px; }
 }
 
