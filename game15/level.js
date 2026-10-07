@@ -32,12 +32,20 @@ async function initializeGame() {
         questions: {},
         allStreetData: allData,
         startTime: Date.now(),
-        correctAnswersThisLevel: 0
+        correctAnswersThisLevel: 0,
+        wrongCount: 0,
+        previousWrongCount: null
       },
 
       created() { 
         console.log('Vue instance created, generating questions...');
         this.questions = this.generateQuestions();
+
+        // =====  load last game's wrong count =====
+        const progress = getGameProgress();
+        this.previousWrongCount =
+          typeof progress.lastWrongCount === "number" ? progress.lastWrongCount : null;
+        
         
         const selectedLevel = window.save.get("game15", "selectedLevel") || 1;
         console.log('Selected level from storage:', selectedLevel);
@@ -164,6 +172,15 @@ async function initializeGame() {
             gameProgress.level3.unlocked = true;
           }
 
+           // ===== save wrong count =====
+          gameProgress.lastWrongCount = this.wrongCount;
+
+          updateGameProgress(gameProgress);
+        },
+        
+        saveWrongCount() {
+          const gameProgress = getGameProgress();
+          gameProgress.lastWrongCount = this.wrongCount;
           updateGameProgress(gameProgress);
         },
 
@@ -203,6 +220,11 @@ async function initializeGame() {
         },
 
         fail() {
+
+           // ===== save wrong count =====
+          this.wrongCount++;
+          this.saveWrongCount();
+
           this.lives--; 
           this.feedback = "❌ Fel svar! Försök igen.";
           this.feedbackClass = "wrong";
