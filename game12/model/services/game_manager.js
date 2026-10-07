@@ -21,7 +21,7 @@ let available_ranges = []
 
 export async function Initialize(difficulty) {
     // Load db and fetch streets and numbers.
-    await loaddb();
+    await loaddb(12);
     const street_ids = get_category("street");
     const number_ids = get_category("number");
 
@@ -74,30 +74,27 @@ export async function Initialize(difficulty) {
     }
 
     let transports = []
-    if (difficulty === 3) {
-        const transport_ids = get_category("transport")
-        transports = transport_ids.map(id => get_vocab(id)).filter(Boolean)
 
-        const transport_images = {
-            "tar bussen": "../../images/Difficulty 3/Schoolbus.svg",
-            "tar bilen": "../../images/Difficulty 3/Car.svg",
-            "cyklar": "../../images/Difficulty 3/Bicylesvg.svg",
-            "åker buss": "../../images/Difficulty 3/Schoolbus.svg",
-            "åker bil": "../../images/Difficulty 3/Car.svg",
-            "tar cykeln": "../../images/Difficulty 3/Bicylesvg.svg"
-        }
+if (difficulty === 3) {
+    const transport_ids = get_category("transport")
 
-        transports = transport_ids.map(function (id) {
-            const vocabulary = get_vocab(id)
-        
-            return {
-                sv: vocabulary.sv,
-                en: vocabulary.en,
-                img: transport_images[vocabulary.sv]
-            }
-        })
-
+    const transport_images = {
+        bike: "../../images/Difficulty 3/Bicylesvg.svg",
+        bus: "../../images/Difficulty 3/Schoolbus.svg",
+        car: "../../images/Difficulty 3/Car.svg"
     }
+
+    transports = transport_ids.map(function (id) {
+        const vocabulary = get_vocab(id)
+
+        return {
+            sv: vocabulary.sv,
+            en: vocabulary.en,
+            type: vocabulary.game,
+            img: transport_images[vocabulary.game]
+        }
+    })
+}
 
     console.log(transports)
 
@@ -202,7 +199,7 @@ const house_correct =
 if (game.difficulty === 3) {
     const transport_correct =
         transport !== null &&
-        transport.sv === question.correctTransport.sv
+        transport.type === question.correctTransport.type
 
     game.answer_correct = house_correct && transport_correct
 }
