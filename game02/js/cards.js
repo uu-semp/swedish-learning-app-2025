@@ -45,7 +45,7 @@ export function renderGrid(cards) {
       const imagePath = card.content.startsWith("assets/")
         ? "../" + card.content
         : card.content;
-      backContent = `<img src="${imagePath}" alt="Furniture" style="width: 100%; height: 100%; object-fit: cover; border-radius: 10px;">`;
+      backContent = `<img src="${imagePath}" alt="Pictures" style="width: 100%; height: 100%; object-fit: cover; border-radius: 10px;">`;
     } else if (card.type === "sound") {
       backContent = "🔊";
     } else {
