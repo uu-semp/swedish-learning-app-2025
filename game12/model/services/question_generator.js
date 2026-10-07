@@ -197,11 +197,13 @@ export class QuestionGenerator {
 
 */
 
-export function GenerateQuestion(difficulty, board, number_words, directions) {
+export function GenerateQuestion(difficulty, board, number_words, directions, transports) {
   let config = {
     correctNumber: null,
     correctStreet: null,
   };
+
+  let target_indexes = [2, 6, 5]
 
   if (difficulty === 1) {
     const random_index = Math.floor(Math.random() * 12)
@@ -211,17 +213,15 @@ export function GenerateQuestion(difficulty, board, number_words, directions) {
     config.correctNumber = correct_house.houseNumber
     config.correctStreet = correct_house.street
 
-    //Maybe make a better solution here outside of if-statemets
     const number_word = number_words[correct_house.houseNumber] ?? correct_house.houseNumber
 
     config.promptSwedish = `Jag bor på ${correct_house.street} ${number_word}.`
     config.promptEnglish = `I live at ${correct_house.street} ${number_word}.`
 
   }
-   else if (difficulty === 2 || difficulty === 3) {
+   else if (difficulty === 2) {
     const random_index = Math.floor(Math.random() * 3)
 
-    const target_indexes = [2, 6, 5]
     const correct_house = board.BuildingsHorizontal[target_indexes[random_index]]
     const direction = directions[random_index]
     const landmark = board.Landmark
@@ -232,21 +232,22 @@ export function GenerateQuestion(difficulty, board, number_words, directions) {
     config.promptSwedish = `Jag bor i huset ${direction.sv} ${landmark.nameSwedish}.`
     config.promptEnglish = `I live in the house ${direction.en} ${landmark.nameEnglish}.`
   }
-   /* else if (difficulty === 3) {
+   else if (difficulty === 3) {
 
-    const landmark = this.getRandomElement(this.vocab.landmarks);
-    const direction = this.getRandomElement(this.vocab.directions);
-    const transport = this.getRandomElement(this.vocab.transports);
-    const phrase = this.getRandomElement(transport.phrases);
-    config.targetLandmark = landmark;
-    config.direction = direction;
-    config.targetTransport = transport.type;
+    const random_index_transport = Math.floor(Math.random() * 3)
+    const random_index_direction = Math.floor(Math.random() * 3)
 
-    //Maybe make a better solution here outside of if-statemets
-    const number_word = number_words[correct_house.houseNumber] ?? correct_house.houseNumber
-    config.promptSwedish = `${phrase.swedish} ${street} ${number_word}, som ligger ${direction.swedish} ${landmark.nameSwedish}.`;
-    config.promptEnglish = `${phrase.english} ${street} ${number_word}, which is ${direction.english} ${landmark.nameSwedish}.`;
-  } */
+    const correct_house = board.BuildingsHorizontal[target_indexes[random_index_direction]]
+    const landmark = board.Landmark
+    const direction = directions[random_index_direction];
+    const transport = transports[random_index_transport];
+
+    config.correctNumber = correct_house.houseNumber
+    config.correctStreet = correct_house.street
+
+    config.promptSwedish = `Jag ${transport.sv} till huset som ligger ${direction.sv} ${landmark.nameSwedish}.`;
+    config.promptEnglish = `I ${transport.en} to the house, which is ${direction.en} ${landmark.nameSwedish}.`;
+  }
 
   return config;
 }
