@@ -47,18 +47,15 @@
     height: 100%;
 }
 
-.explore-view .explore-words {
-    flex: 1;
-}
-
 /* Every body part in Pelle (head, nose, arm ...) is a group with an id */
 .explore-view .explore-pelle svg g[id] {
     cursor: pointer;
     transition: filter 0.15s ease;
 }
 
-/* Light up the body part under the mouse */
-.explore-view .explore-pelle svg g[id]:hover {
+/* Lime green outline on the body part under the mouse, and on the selected one */
+.explore-view .explore-pelle svg g[id]:hover,
+.explore-view .explore-pelle svg g[id].selected {
     filter: drop-shadow(10px 0 0 #7CFC00)
             drop-shadow(-10px 0 0 #7CFC00)
             drop-shadow(0 10px 0 #7CFC00)
@@ -69,9 +66,28 @@
             drop-shadow(-7px -7px 0 #7CFC00);
 }
 
-/* The word list on the right side */
-.explore-view .explore-words {
+/* The right side: instruction above the word list */
+.explore-view .explore-side {
+    flex: 1;
     align-self: center;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+/* Instruction text */
+.explore-view .explore-instruction {
+    font-family: 'Fredoka', 'Arial Rounded MT Bold', sans-serif;
+    font-size: 20px;
+    font-weight: 600;
+    color: white;
+    text-align: center;
+    margin: 0;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.35);
+}
+
+/* The word list */
+.explore-view .explore-words {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -94,18 +110,6 @@
 
 .explore-view .word-cloud:hover {
     transform: translateY(-2px);
-}
-
-/* The selected body part on Pelle gets the same outline as on hover */
-.explore-view .explore-pelle svg g[id].selected {
-    filter: drop-shadow(10px 0 0 #7CFC00)
-            drop-shadow(-10px 0 0 #7CFC00)
-            drop-shadow(0 10px 0 #7CFC00)
-            drop-shadow(0 -10px 0 #7CFC00)
-            drop-shadow(7px 7px 0 #7CFC00)
-            drop-shadow(-7px 7px 0 #7CFC00)
-            drop-shadow(7px -7px 0 #7CFC00)
-            drop-shadow(-7px -7px 0 #7CFC00);
 }
 
 /* The selected word turns lime green */

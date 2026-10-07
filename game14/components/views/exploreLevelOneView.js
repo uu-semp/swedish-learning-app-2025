@@ -61,7 +61,7 @@ export const ExploreLevelOneView = {
       this.selectedPart = null;
     },
   },
-  template: `
+   template: `
       <div class="start-view-wrapper">
         <div class="sky explore-view" @click="clearSelection">
           <h1 class="explore-title">{{$language.translate('level1')}}</h1>
@@ -69,16 +69,20 @@ export const ExploreLevelOneView = {
           <div class="explore-content">
             <div class="explore-pelle" v-html="pelleSvg" @click="handlePelleClick"></div>
 
-            <div class="explore-words">
-              <button
-                v-for="word in words"
-                :key="word.en"
-                class="word-cloud"
-                :class="{ selected: word.en === selectedPart }"
-                @click.stop="selectPart(word.en)"
-              >
-                {{ word.article }} {{ word.sv }}
-              </button>
+            <div class="explore-side">
+              <p class="explore-instruction">{{$language.translate('explore-instruction')}}</p>
+
+              <div class="explore-words">
+                <button
+                  v-for="word in words"
+                  :key="word.en"
+                  class="word-cloud"
+                  :class="{ selected: word.en === selectedPart }"
+                  @click.stop="selectPart(word.en)"
+                >
+                  {{ word.article }} {{ word.sv }}
+                </button>
+              </div>
             </div>
           </div>
         </div>
