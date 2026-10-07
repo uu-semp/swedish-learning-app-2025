@@ -302,6 +302,6 @@ function createHousesArray(allData) {
       ...house
     });
   });
-  
+  // test
   return houses;
 }
