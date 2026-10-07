@@ -83,7 +83,7 @@
                     <hr>
                 
                     <!-- Question with individually translated words -->
-                    <div id="prompt-words" :class="{ 'difficulty-2': game.difficulty === 2 }">
+                    <div id="prompt-words" :class="{ 'difficulty-2': game.difficulty === 2 || game.difficulty === 3 }">
                         <button
                             v-for="(word, index) in view.promptWords"
                             :key="index"
@@ -98,10 +98,10 @@
                     </div>
 
                     <!-- Existing road and house grid -->
-                    <div class="board-scroll" :class="{ 'difficulty-2': game.difficulty === 2 }">
+                    <div class="board-scroll" :class="{ 'difficulty-2': game.difficulty === 2 || game.difficulty === 3}">
                         <div
                             id="house-grid-T"
-                            :class="{ 'horizontal-only': game.difficulty === 2 }"
+                            :class="{ 'horizontal-only': game.difficulty === 2 || game.difficulty === 3}"
                         >
                             <div class="road horizontal-road-T">
                                 <p class="street-text">
@@ -178,6 +178,44 @@
                                 </details>
                             </template>
                         </div>
+                    </div>
+                    
+                    <div
+                        v-if="game.difficulty === 3"
+                        class="transport-options"
+                    >
+                        <button
+                            type="button"
+                            class="transport-option"
+                        >
+                            <img
+                                src="../../images/Difficulty 3/Bicylesvg.svg"
+                                alt="Cykel"
+                            >
+                            <span>Cykel</span>
+                        </button>
+
+                        <button
+                            type="button"
+                            class="transport-option"
+                        >
+                            <img
+                                src="../../images/Difficulty 3/Car.svg"
+                                alt="Bil"
+                            >
+                            <span>Bil</span>
+                        </button>
+
+                        <button
+                            type="button"
+                            class="transport-option"
+                        >
+                            <img
+                                src="../../images/Difficulty 3/Schoolbus.svg"
+                                alt="Buss"
+                            >
+                            <span>Buss</span>
+                        </button>
                     </div>
 
                     <hr>
