@@ -46,12 +46,49 @@ export async function Initialize(difficulty) {
         is_finished: false
     }
 
+    let landmarks = []
+    let directions = []
+
+    if (difficulty === 2) {
+        directions = [
+            get_vocab("7BD52803"), // ID for left of
+            get_vocab("111493E9"), // ID for right of
+            get_vocab("B494F36C")  // ID for opposite of
+        ]
+
+        const landmark_entries = [
+            {
+                id: "07A858F9", // CID for domkyrkan
+                image: "../../images/Difficulty 2/uppsala-domkyrka.svg"
+            },
+            {
+                id: "900F23DC", // ID for slottet
+                image: "../../images/Difficulty 2/uppsala-slott.svg"
+            },
+            {
+                id: "4EA6BE2D", // ID för konsert
+                image: "../../images/Difficulty 2/uppsala-konserthus.svg"
+            }
+        ]
+
+        landmarks = landmark_entries.map(function (entry) {
+            const vocabulary = get_vocab(entry.id)
+
+            return {
+                sv: vocabulary.sv,
+                en: vocabulary.en,
+                img: entry.image
+            }
+        })
+    }
+
+
     available_ranges = all_ranges.slice()
 
-    if (difficulty === 1) {
-        game.difficulty = 1
+    if (difficulty === 1 || difficulty === 2) {
+        
         for (let index = 0; index < 10; index++) {
-            let board = GenerateBoard(streets, available_ranges, difficulty)
+            let board = GenerateBoard(streets, available_ranges, difficulty, landmarks)
 
             available_ranges = available_ranges.filter(par => par[0] !== board.ChosenRange[0])
             if(available_ranges.length === 0) {
@@ -61,7 +98,7 @@ export async function Initialize(difficulty) {
 
             game.boards[index] = board
 
-            game.questions[index] = GenerateQuestion(1, board, numbers)
+            game.questions[index] = GenerateQuestion(difficulty, board, numbers, directions)
         }
     }
 

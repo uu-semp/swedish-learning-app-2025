@@ -1,13 +1,15 @@
-export function GenerateBoard(streets, ranges, difficulty) {
+export function GenerateBoard(streets, ranges, difficulty, landmarks) {
     if (difficulty === 1) {
         return GenerateT(streets, ranges, difficulty)
     }
     else {
-        return GenerateHorizontal(streets, ranges, difficulty)
+        return GenerateHorizontal(streets, ranges,  landmarks)
     }
 }
 
-function GenerateHorizontal(streets, ranges) {
+
+
+function GenerateHorizontal(streets, ranges, landmarks) {
     let building_positions_horionztal = [
         { col: 1, row: 1 },
         { col: 1, row: 3 },
@@ -23,23 +25,39 @@ function GenerateHorizontal(streets, ranges) {
 
     let chosen_street_1 = streets[Math.floor((Math.random() * streets.length))]
 
+    let chosen_range = ranges[Math.floor((Math.random() * ranges.length))]
+
     let buildings_horionztal = []
     for (let index = 0; index < building_positions_horionztal.length; index++) {
-        let house_number = chosen_range + index
+        let house_number = chosen_range[0] + index
         buildings_horionztal[index] = {
-            Type: "HOUSE",
-            Street: chosen_street_1,
-            HouseNumber: house_number,
+            type: "HOUSE",
+            id: chosen_street_1 + "_" + house_number,
+            street: chosen_street_1,
+            houseNumber: house_number,
             col: building_positions_horionztal[index].col,
             row: building_positions_horionztal[index].row
         }
     }
 
+
+    //Random selector for the landmarks 
+    let chosen_landmark = landmarks[Math.floor((Math.random() * landmarks.length))]
+
+    let landmark = buildings_horionztal[4]
+    landmark.type = "LANDMARK"
+    landmark.nameSwedish = chosen_landmark.sv
+    landmark.nameEnglish = chosen_landmark.en
+    landmark.image = chosen_landmark.img
+
     return {
         BuildingsHorizontal: buildings_horionztal,
-        ChosenRange: chosen_range
+        ChosenRange: chosen_range,
+        HorizontalStreet: chosen_street_1,
+        Landmark: landmark
     }
 }
+
 
 function GenerateT(streets, ranges) {
     let building_positions_horionztal = [

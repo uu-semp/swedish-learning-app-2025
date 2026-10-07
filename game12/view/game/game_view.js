@@ -166,10 +166,16 @@ createApp({
 
         // Reset display settings when the controller changes questions.
         watch(
+            [function () { 
+                return game.current_question_index}, 
+                function () { 
+                    return game.difficulty === 2 ? game.answer_locked : null }
+            ],
             function () {
-                return game.current_question_index
+                if ( game.difficulty !== 2 || (!game.answer_locked && !game.is_finished)) {
+                    PrepareQuestionDisplay()
+                }
             },
-            PrepareQuestionDisplay,
             { immediate: true }
         )
 

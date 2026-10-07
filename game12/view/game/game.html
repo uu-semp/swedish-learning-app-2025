@@ -83,7 +83,7 @@
                     <hr>
                 
                     <!-- Question with individually translated words -->
-                    <div id="prompt-words">
+                    <div id="prompt-words" :class="{ 'difficulty-2': game.difficulty === 2 }">
                         <button
                             v-for="(word, index) in view.promptWords"
                             :key="index"
@@ -98,11 +98,10 @@
                     </div>
 
                     <!-- Existing road and house grid -->
-                    <div class="board-scroll">
+                    <div class="board-scroll" :class="{ 'difficulty-2': game.difficulty === 2 }">
                         <div
-                            v-if="game.difficulty === 1"
                             id="house-grid-T"
-                            :class="{ 'horizontal-only': view.roadType === 'horizontal' }"
+                            :class="{ 'horizontal-only': game.difficulty === 2 }"
                         >
                             <div class="road horizontal-road-T">
                                 <p class="street-text">
@@ -112,7 +111,10 @@
                                 <div class="dotted-line"></div>
                             </div>
 
-                            <div class="road vertical-road-T">
+                            <div
+                                v-if="game.difficulty === 1"
+                                class="road vertical-road-T"
+                            >
                                 <p class="street-text">
                                     {{ view.verticalStreet }}
                                 </p>
@@ -120,37 +122,63 @@
                                 <div class="dotted-line"></div>
                             </div>
 
-                            <button
+                            <template
                                 v-for="house in visibleHouses"
                                 :key="house.id"
-                                type="button"
-                                :disabled="game.answer_locked || game.is_finished"
-                                :style="{
-                                    gridRow: house.row,
-                                    gridColumn: house.col
-                                }"
-                                :class="{
-                                    'is-selected': isSelected(house),
-                                    'is-correct':
-                                        isSelected(house) &&
-                                        game.answer_correct === true,
-                                    'is-incorrect':
-                                        isSelected(house) &&
-                                        game.answer_correct === false
-                                }"
-                                :aria-label="house.street + ' ' + house.houseNumber"
-                                :aria-pressed="
-                                    view.selectedHouse !== null &&
-                                    view.selectedHouse.id === house.id
-                                "
-                                @click="SelectHouse(house)"
                             >
-                                {{ house.houseNumber }}
-                            </button>
+                                <button
+                                    v-if="house.type === 'HOUSE'"
+                                    type="button"
+                                    :disabled="game.answer_locked || game.is_finished"
+                                    :style="{
+                                        gridRow: house.row,
+                                        gridColumn: house.col
+                                    }"
+                                    :class="{
+                                        'is-selected': isSelected(house),
+                                        'is-correct':
+                                            isSelected(house) &&
+                                            game.answer_correct === true,
+                                        'is-incorrect':
+                                            isSelected(house) &&
+                                            game.answer_correct === false
+                                    }"
+                                    :aria-label="house.street + ' ' + house.houseNumber"
+                                    :aria-pressed="
+                                        view.selectedHouse !== null &&
+                                        view.selectedHouse.id === house.id
+                                    "
+                                    @click="SelectHouse(house)"
+                                >
+                                    {{ house.houseNumber }}
+                                </button>
+
+                                <details
+                                    v-else
+                                    class="landmark"
+                                    :style="{
+                                        gridRow: house.row,
+                                        gridColumn: house.col
+                                    }"
+                                >
+                                    <summary :title ="display.language === 'en' ? house.nameEnglish : house.nameSwedish">
+                                        <img
+                                            :src="house.image"
+                                            :alt="display.language === 'en'
+                                                ? house.nameEnglish
+                                                : house.nameSwedish"
+                                        >
+                                    </summary>
+
+                                    <span class="landmark-name">
+                                        {{ display.language === "en"
+                                            ? house.nameEnglish
+                                            : house.nameSwedish }}
+                                    </span>
+                                </details>
+                            </template>
                         </div>
                     </div>
-
-                    <!--Add only horizontal road here-->
 
                     <hr>
                     <div class="hint-controls">

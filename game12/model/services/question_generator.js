@@ -197,7 +197,7 @@ export class QuestionGenerator {
 
 */
 
-export function GenerateQuestion(difficulty, board, number_words) {
+export function GenerateQuestion(difficulty, board, number_words, directions) {
   let config = {
     correctNumber: null,
     correctStreet: null,
@@ -219,18 +219,18 @@ export function GenerateQuestion(difficulty, board, number_words) {
 
   }
    else if (difficulty === 2) {
+    const random_index = Math.floor(Math.random() * 3)
 
-    // make sure left/right works as intended.
-    const landmark = this.getRandomElement(this.vocab.landmarks);
-    const direction = this.getRandomElement(this.vocab.directions);
-    config.targetLandmark = landmark;
-    config.direction = direction;
+    const target_indexes = [2, 6, 5]
+    const correct_house = board.BuildingsHorizontal[target_indexes[random_index]]
+    const direction = directions[random_index]
+    const landmark = board.Landmark
 
-    //Maybe make a better solution here outside of if-statemets
-    const number_word = number_words[correct_house.houseNumber] ?? correct_house.houseNumber
+    config.correctNumber = correct_house.houseNumber
+    config.correctStreet = correct_house.street
 
-    config.promptSwedish = `Jag bor ${direction.swedish} ${landmark.nameSwedish} ${number_word}.`;
-    config.promptEnglish = `I live ${direction.english} ${landmark.nameSwedish} ${number_word}.`;
+    config.promptSwedish = `Jag bor i huset ${direction.sv} ${landmark.nameSwedish}.`
+    config.promptEnglish = `I live in the house ${direction.en} ${landmark.nameEnglish}.`
   }
    else if (difficulty === 3) {
 

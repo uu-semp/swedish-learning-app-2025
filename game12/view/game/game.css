@@ -393,3 +393,74 @@ footer {
 
 #app[v-cloak] { display: none; }
 #app.loading { text-align: center; margin-top: 3rem; font-size: 1.2rem; }
+
+
+
+#house-grid-T.horizontal-only {
+    grid-template-columns: repeat(5, 100px);
+    grid-template-rows: 80px 40px 80px;
+}
+.board-scroll.difficulty-2 {
+    overflow-x: auto;
+    padding: 40px 0 70px;
+}
+
+#prompt-words.difficulty-2 {
+    position: relative;
+    top: 40px;
+    margin-bottom: 90px;
+}
+
+.landmark {
+    position: relative;
+    width: 80px;
+    justify-self: center;
+    text-align: center;
+}
+
+.landmark summary {
+    list-style: none;
+    cursor: pointer;
+}
+
+.landmark summary::-webkit-details-marker {
+    display: none;
+}
+
+.landmark img {
+    display: block;
+    width: 80px;
+    height: 70px;
+    object-fit: contain;
+}
+
+
+
+.landmark-name {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 3;
+    padding: 4px 8px;
+    background: white;
+    color: #222;
+    border: 1px solid #777;
+    border-radius: 4px;
+    white-space: nowrap;
+}
+
+
+.landmark:hover .landmark-name,
+.landmark:focus-within .landmark-name,
+.landmark[open] .landmark-name {
+    display: block;
+}
+
+.orientation {
+    text-align: center;
+    font-size: 0.9rem;
+}
+
+
