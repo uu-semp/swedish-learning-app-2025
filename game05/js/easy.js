@@ -29,7 +29,6 @@ $(function () {
     let currentLevel = 0;
     const WORDS_PER_LEVEL = 4;
     const connections = {}; // stores imageId -> word
-
     // --- Step 3: Build a level ---
 
     function createLevel(words) {
@@ -125,13 +124,23 @@ $(function () {
     // --- Step 5: Check answers ---
     function checkAnswers(levelWords) {
       const message = document.getElementById("message");
+      const imageContainer = document.getElementById("image-container");
       let correct = 0;
       const mistakes = [];
 
       levelWords.forEach((item, i) => {
         const chosen = connections[i];
-        if (chosen === item.swedish) correct++;
-        else mistakes.push(`${item.english} → should be "${item.swedish}"`);
+        const img = imageContainer.querySelector(`img[data-index="${i}"]`);
+
+        if (chosen === item.swedish) {
+          console.log(`[data-index="${i}"]`);
+          correct++;
+          img.classList.add("correct");
+        }
+        else {
+          mistakes.push(`${item.english} → should be "${item.swedish}"`);
+          img.classList.add("incorrect");
+        } 
       });
 
       if (correct === levelWords.length) {

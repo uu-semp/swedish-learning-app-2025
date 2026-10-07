@@ -25,6 +25,16 @@ body {
   text-align: center;
 }
 
+.item.correct{
+  border-color: #228b22;
+}
+
+
+.item.incorrect{
+  border-color: #b90e0a;
+}
+
+
 .top-bar {
   display: flex;
   justify-content: space-between;
