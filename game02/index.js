@@ -4,7 +4,7 @@
 
 "use strict";
 
-import { loadFurniturePairs, buildGrid, initDb } from "./js/game-data.js";
+import { loadPairs, buildGrid, initDb } from "./js/game-data.js";
 import { startTimer, stopTimer, resetTimer, getElapsedTime } from "./js/timer.js";
 import { initHints } from "./js/hints.js";
 
@@ -20,6 +20,7 @@ $(function () {
     listening: "Match each sound to its Swedish word",
     dialect: "Match each dialect sound to its Swedish word",
   }; // heading above the board for each mode
+  const dialect_categories = ["furniture"];
 
   // variables
   let corrects = 0;
@@ -38,9 +39,9 @@ $(function () {
     $("#" + screenId).show();
   }
 
-  async function mapCards(mode) {
+  async function mapCards(mode, category) {
     try {
-      currentPairs = await loadFurniturePairs(numPairs);
+      currentPairs = await loadPairs(numPairs, category);
       buildGrid(currentPairs, mode);
     } catch (error) {
       console.error("Error loading data:", error);
@@ -167,11 +168,13 @@ $(function () {
   // Button handlers
   $("#start-game").on("click", async function () {
     const mode = $(".mode-btn.selected").data("mode"); // "picture", "spelling", "listening" or "dialect"
+    const category = $(".category-btn.selected").data("category"); // "furniture", "clothing" or "food"
     $("#game-title").text(mode_titles[mode]);
 
     $(this).prop("disabled", true).text("Loading...");
-    await mapCards(mode);
+    await mapCards(mode, category);
     $(this).prop("disabled", false).text("Start Game");
+    resetGame();
 
     showScreen("game-screen");
     startTimer((elapsed) => $("#elapsed-time").text(`Time: ${elapsed}s`));
@@ -179,12 +182,15 @@ $(function () {
 
   $("#end-game").on("click", function () {
     stopTimer();
-    updateEndScreen();
     resetGame();
-    showScreen("end-screen");
+    showScreen("menu-screen");
   });
 
   $("#restart-game").on("click", function () {
+    $("#start-game").trigger("click");
+  });
+
+  $("#go-to-menu").on("click", function () {
     resetGame();
     showScreen("menu-screen");
   });
@@ -215,6 +221,19 @@ $(function () {
   $(".dialect-btn").on("click", function () {
     $(".dialect-btn").removeClass("selected");
     $(this).addClass("selected");
+  });
+
+  $(".category-btn").on("click", function () {
+    $(".category-btn").removeClass("selected");
+    $(this).addClass("selected");
+
+    // Grey out the dialects that have no recordings for this category (Standard Swedish always works)
+    const hasDialects = dialect_categories.includes($(this).data("category"));
+    $(".dialect-btn").not('[data-dialect="standard"]').prop("disabled", !hasDialects);
+    if (!hasDialects) {
+      $(".dialect-btn").removeClass("selected");
+      $('.dialect-btn[data-dialect="standard"]').addClass("selected");
+    }
   });
 
   // Event delegation för dynamiskt skapade kort

@@ -38,7 +38,13 @@ Owned by Game 02
 
         <!-- Menu Screen -->
     <section id="menu-screen">
-      <h2>WHAT AM I - FURNITURE MEMORY</h2>
+      <h2>WHAT AM I?</h2>
+      <div id="category-buttons">
+        <button class="category-btn selected" data-category="furniture">Furniture</button>
+        <button class="category-btn" data-category="clothing">Clothes</button>
+        <button class="category-btn" data-category="food">Food</button>
+      </div>
+
 
       <div id="menu-body">
         <!-- Game modes -->
@@ -103,7 +109,7 @@ Owned by Game 02
         <button class="dialect-btn selected" data-dialect="standard">Standard Swedish</button>
         <button class="dialect-btn" data-dialect="malmo">Malmö</button>
         <button class="dialect-btn" data-dialect="gothenburg">Gothenburg</button>
-        <button class="dialect-btn" data-dialect="ostgota">Östgöta</button>
+        <button class="dialect-btn" data-dialect="finnish-swedish">Finnish-Swedish</button>
       </div>
 
 
@@ -239,8 +245,10 @@ Owned by Game 02
           <p>Once all pairs are removed, the game is won.</p>
         </div>
       </div>
-      <p id="moves">moves: 0</p>
-      <p id="elapsed-time">Time: 0s</p>
+      <div id="game-stats">
+        <p id="moves">moves: 0</p>
+        <p id="elapsed-time">Time: 0s</p>
+      </div>
 
     </section>
 
@@ -251,6 +259,7 @@ Owned by Game 02
       <p>Time elapsed: <span id="time">0</span></p>
       <p>Total Wins: <span id="wins-count">0</span></p>
       <button id="restart-game">Play Again</button>
+      <button id="go-to-menu">Go to main menu</button>
     </section>
 
   </main>
