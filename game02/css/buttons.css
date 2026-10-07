@@ -33,8 +33,8 @@ button:active {
 #game-controls {
     position: absolute;
     /* position relative to #game-screen */
-    top: 470px;
-    /* distance from top of game scene */
+    bottom: 40px;
+    /* distance from bottom of game scene */
     right: 40px;
     /* distance from right of game scene */
     display: flex;

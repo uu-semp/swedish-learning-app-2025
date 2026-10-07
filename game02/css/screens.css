@@ -11,7 +11,8 @@
 }
 
 /* Info box styling */
-#info-box {
+#info-box,
+.help-modal-content {
     background-color: #FFCAE9;
     border-left: 6px solid #9d0000;
     padding: 15px 20px;
@@ -24,22 +25,26 @@
     font-weight: bold;
 }
 
-#info-box h3 {
+#info-box h3,
+.help-modal-content h3 {
     margin-top: 0;
     color: black;
 }
 
-#info-box ol {
+#info-box ol,
+.help-modal-content ol {
     padding-left: 20px;
 }
 
-#info-box li {
+#info-box li,
+.help-modal-content li {
     margin: 8px 0;
     line-height: 1.5;
     color: #555;
 }
 
-#info-box p {
+#info-box p,
+.help-modal-content p {
     margin-top: 15px;
     font-weight: bold;
     color: #555;

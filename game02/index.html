@@ -229,8 +229,21 @@ Owned by Game 02
       </div>
 
       <div id="game-controls">
-        <button id="hint-button">Help</button>
+        <button id="help-button">Help</button>
+        <button id="hint-button">Hint</button>
         <button id="end-game">Quit</button>
+      </div>
+      <div id="help-modal" class="help-modal" style="display: none;">
+        <div class="help-modal-content" role="dialog" aria-modal="true" aria-labelledby="help-title">
+          <button type="button" id="close-help" class="help-close" aria-label="Close help">&times;</button>
+          <h3 id="help-title">How to Play</h3>
+          <ol>
+            <li>Click on a card to reveal its image or text.</li>
+            <li>Then, click on another card.</li>
+            <li>If image and description match, the pair is removed from the game board.</li>
+          </ol>
+          <p>Once all pairs are removed, the game is won.</p>
+        </div>
       </div>
       <div id="game-stats">
         <p id="moves">moves: 0</p>

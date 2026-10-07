@@ -195,6 +195,20 @@ $(function () {
     showScreen("menu-screen");
   });
 
+  $("#help-button").on("click", function () {
+    $("#help-modal").fadeIn();
+  });
+
+  $("#close-help").on("click", function () {
+    $("#help-modal").fadeOut();
+  });
+
+  $("#help-modal").on("click", function (event) {
+    if (event.target === this) {
+      $(this).fadeOut();
+    }
+  });
+
     // Show the info for the clicked game mode
   $(".mode-btn").on("click", function () {
     $(".mode-btn").removeClass("selected");
