@@ -49,7 +49,7 @@ export async function Initialize(difficulty) {
     let landmarks = []
     let directions = []
 
-    if (difficulty === 2) {
+    if (difficulty === 2 || difficulty === 3) {
         directions = [
             get_vocab("7BD52803"), // ID for left of
             get_vocab("111493E9"), // ID for right of
@@ -85,7 +85,7 @@ export async function Initialize(difficulty) {
 
     available_ranges = all_ranges.slice()
 
-    if (difficulty === 1 || difficulty === 2) {
+    if (difficulty === 1 || difficulty === 2 || difficulty === 3) {
         
         for (let index = 0; index < 10; index++) {
             let board = GenerateBoard(streets, available_ranges, difficulty, landmarks)

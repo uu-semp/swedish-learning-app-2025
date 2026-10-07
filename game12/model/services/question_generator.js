@@ -218,7 +218,7 @@ export function GenerateQuestion(difficulty, board, number_words, directions) {
     config.promptEnglish = `I live at ${correct_house.street} ${number_word}.`
 
   }
-   else if (difficulty === 2) {
+   else if (difficulty === 2 || difficulty === 3) {
     const random_index = Math.floor(Math.random() * 3)
 
     const target_indexes = [2, 6, 5]
@@ -232,7 +232,7 @@ export function GenerateQuestion(difficulty, board, number_words, directions) {
     config.promptSwedish = `Jag bor i huset ${direction.sv} ${landmark.nameSwedish}.`
     config.promptEnglish = `I live in the house ${direction.en} ${landmark.nameEnglish}.`
   }
-   else if (difficulty === 3) {
+   /* else if (difficulty === 3) {
 
     const landmark = this.getRandomElement(this.vocab.landmarks);
     const direction = this.getRandomElement(this.vocab.directions);
@@ -246,7 +246,7 @@ export function GenerateQuestion(difficulty, board, number_words, directions) {
     const number_word = number_words[correct_house.houseNumber] ?? correct_house.houseNumber
     config.promptSwedish = `${phrase.swedish} ${street} ${number_word}, som ligger ${direction.swedish} ${landmark.nameSwedish}.`;
     config.promptEnglish = `${phrase.english} ${street} ${number_word}, which is ${direction.english} ${landmark.nameSwedish}.`;
-  }
+  } */
 
   return config;
 }
