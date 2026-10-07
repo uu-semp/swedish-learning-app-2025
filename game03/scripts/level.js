@@ -4,7 +4,6 @@ const saveStore = window.save || {
     get: () => ({}),
     set: () => false,
 };
-const save = saveStore;
 
 if (!saveStore.get(TEAM_NAME, LEARNED_WORDS_KEY)) {
     saveStore.set(TEAM_NAME, LEARNED_WORDS_KEY, []);
@@ -14,6 +13,7 @@ let learnedWords = saveStore.get(TEAM_NAME, LEARNED_WORDS_KEY) || [];
 let remainingQuestions = [];
 window.currentQuestion = null;
 let currentQuestionAttempts = 0; // Track attempts for current question
+let questionCount = 0; // Number of questions in the current round
 let totalScore = 0; // Track total score (first-try correct answers)
 
 const urlParams = new URLSearchParams(window.location.search);
@@ -86,18 +86,30 @@ function loadLevelQuestions(level) {
     });
 }
 
+// Remember this room + level as passed and update the overall completion.
+// Every room in ROOM_GROUP_INDEX (including the bathroom) counts towards 100 %.
+function markPassed() {
+    const passed = window.save.get(TEAM_NAME, "passed") || {};
+    passed[`${selectedRoom}-${levelIndex}`] = 1;
+    window.save.set(TEAM_NAME, "passed", passed);
+
+    const rooms = Object.keys(ROOM_GROUP_INDEX);
+    const total = rooms.length * 3;
+    const done = rooms.flatMap(room => [1, 2, 3].map(level => `${room}-${level}`)).filter(key => passed[key]).length;
+    window.save.stats.setCompletion(TEAM_NAME, Math.round((done / total) * 100));
+}
+
 function showRandomQuestion() {
     const questionsContainer = document.getElementById('questions-container');
     questionsContainer.innerHTML = '';
     if (remainingQuestions.length === 0) {
         // Store final score in localStorage before redirecting
         console.log('Game completed! Final score:', totalScore);
-        window.save.stats.incrementWin(TEAM_NAME);
         localStorage.setItem('gameScore', totalScore);
-        const requiredScore = levelIndex === "3" ? 7 : 5; // Level 3 has 7 questions, others have 5
-        if (totalScore === requiredScore) {
-            // Mark this level as passed
-            window.save.set(TEAM_NAME, `level${levelIndex}Passed`, 1);
+        // Only a perfect round counts as passed (and as a win)
+        if (totalScore === questionCount) {
+            window.save.stats.incrementWin(TEAM_NAME);
+            markPassed();
         }
         localStorage.setItem('gameLevel', `Level ${levelIndex}`);
         console.log('Stored in localStorage - Score:', totalScore, `Level: Level ${levelIndex}`);
@@ -143,6 +155,7 @@ export const questionsLoaded = (async () => {
     }
 
     remainingQuestions = [...selectedQuestions];
+    questionCount = selectedQuestions.length;
     return selectedQuestions;
 })();
 

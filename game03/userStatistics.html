@@ -1,49 +1,69 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
-    <title>User Statistics - Swedish Learning App</title>
-    <link rel="stylesheet" href="../style.css?v=20251009">
-    <link rel="stylesheet" href="styles/userStatistics.css?v=20251013">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Statistik - Decorate</title>
+    <link rel="stylesheet" href="styles/mainMenu.css?v=20261002">
+    <link rel="stylesheet" href="styles/userStatistics.css?v=20261007">
     <script src="../scripts/save.js" defer></script>
-    <script src="./scripts/userStatistics.js" defer></script>
+    <script src="./scripts/userStatistics.js?v=20261007" defer></script>
 </head>
-
 <body>
-    <main class="stats-frame">
-        <section class="stats-card">
-            <h1><i class="fas fa-chart-line"></i> User Statistics</h1>
+    <main class="layout" aria-label="Decorate – statistics">
 
-            <div class="stat-item">
-                <span><i class="fas fa-trophy"></i> Wins</span>
-                <strong id="wins-count">0</strong>
-            </div>
+        <!-- ================= Stats (left) ================= -->
+        <section class="plan">
+            <header class="sheet-header">
+                <span class="kicker">Projekt 01 · Statistik</span>
+                <h1>STATISTIK</h1>
+                <div class="subtitle">Dina framsteg &mdash; your progress</div>
+                <div class="rule"></div>
+            </header>
 
-            <div class="stat-item">
-                <span><i class="fas fa-book-open"></i> Words Learned</span>
-                <strong id="words-count">0</strong>
-            </div>
-
-            <div class="stat-item progress-section">
-                <span><i class="fas fa-tasks"></i> Game Progress</span>
-                <div class="progress-bar-container">
-                    <div class="progress-bar" id="progress-bar"></div>
+            <div class="stat-list">
+                <div class="stat-row">
+                    <span class="stat-name">Vinster <small>Wins</small></span>
+                    <strong id="wins-count">0</strong>
                 </div>
-                <span id="progress-percent">0%</span>
+                <div class="stat-row">
+                    <span class="stat-name">Ord <small>Words learned</small></span>
+                    <strong id="words-count">0</strong>
+                </div>
+                <div class="stat-row progress-row">
+                    <span class="stat-name">Framsteg <small>Game progress</small></span>
+                    <strong id="progress-percent">0%</strong>
+                    <div class="progress-track"><div class="progress-fill" id="progress-bar"></div></div>
+                </div>
             </div>
+        </section>
 
-            <div class="button-container">
-                <button class="menu-btn" onclick="window.location.href='index.html'">
-                    <i class="fas fa-arrow-left"></i> Back to Menu
+        <!-- ================= Actions (right) ================= -->
+        <aside class="sidebar" aria-label="Statistics menu">
+            <div class="menu-label">Meny</div>
+            <div class="menu-stack">
+                <button class="menu-btn primary" onclick="window.location.href='index.html'">
+                    <span class="icon">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
+                    </span>
+                    <span>
+                        <span class="title">Tillbaka</span>
+                        <span class="hint">Back to menu</span>
+                    </span>
                 </button>
 
                 <button class="menu-btn danger" id="clear-stats-btn">
-                    <i class="fas fa-trash"></i> Clear Statistics
+                    <span class="icon">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                    </span>
+                    <span>
+                        <span class="title">Rensa</span>
+                        <span class="hint">Clear statistics</span>
+                    </span>
                 </button>
             </div>
-        </section>
+            <div class="scale" aria-hidden="true"></div>
+        </aside>
     </main>
 </body>
-
 </html>
