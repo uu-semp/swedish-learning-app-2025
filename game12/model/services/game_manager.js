@@ -48,41 +48,52 @@ export async function Initialize(difficulty) {
 
     let landmarks = []
     let directions = []
+    
+if (difficulty === 2 || difficulty === 3) {
 
-    if (difficulty === 2 || difficulty === 3) {
-        directions = [
-            get_vocab("7BD52803"), // ID for left of
-            get_vocab("111493E9"), // ID for right of
-            get_vocab("B494F36C")  // ID for opposite of
-        ]
+    const directions_ids = get_category("direction")
+    directions = directions_ids.map(id => get_vocab(id)).filter(Boolean)
 
-        const landmark_entries = [
-            {
-                id: "07A858F9", // CID for domkyrkan
-                image: "../../images/Difficulty 2/uppsala-domkyrka.svg"
-            },
-            {
-                id: "900F23DC", // ID for slottet
-                image: "../../images/Difficulty 2/uppsala-slott.svg"
-            },
-            {
-                id: "4EA6BE2D", // ID för konsert
-                image: "../../images/Difficulty 2/uppsala-konserthus.svg"
-            }
-        ]
+    const landmark_ids = get_category("landmarks")
 
-        landmarks = landmark_entries.map(function (entry) {
-            const vocabulary = get_vocab(entry.id)
+    const landmark_images = {
+        "Uppsala Domkyrka": "../../images/Difficulty 2/uppsala-domkyrka.svg",
+        "Uppsala Slott": "../../images/Difficulty 2/uppsala-slott.svg",
+        "UKK": "../../images/Difficulty 2/uppsala-konserthus.svg"
+    }
 
+    landmarks = landmark_ids.map(function (id) {
+        const vocabulary = get_vocab(id)
+
+        return {
+            sv: vocabulary.sv,
+            en: vocabulary.en,
+            img: landmark_images[vocabulary.sv]
+        }
+    })
+}
+        const directions_ids = get_category("direction")
+        directions = directions_ids.map(id => get_vocab(id)).filter(Boolean)
+
+        const landmark_ids = get_category("landmarks")
+
+        const landmark_images = {
+            "Uppsala Domkyrka": "../../images/Difficulty 2/uppsala-domkyrka.svg",
+            "Uppsala Slott": "../../images/Difficulty 2/uppsala-slott.svg",
+            "UKK": "../../images/Difficulty 2/uppsala-konserthus.svg"
+        }
+        
+        landmarks = landmark_ids.map(function (id) {
+            const vocabulary = get_vocab(id)
+        
             return {
                 sv: vocabulary.sv,
                 en: vocabulary.en,
-                img: entry.image
+                img: landmark_images[vocabulary.sv]
             }
         })
     }
-
-
+    
     available_ranges = all_ranges.slice()
 
     if (difficulty === 1 || difficulty === 2 || difficulty === 3) {
