@@ -12,12 +12,17 @@ export const ExploreLevelOneView = {
     const response = await fetch("./components/assets/pellecharacterbody.svg");
     this.pelleSvg = await response.text();
   },
-  template: `
+    template: `
       <div class="start-view-wrapper">
         <div class="sky explore-view">
-          <h1 class="main-text">{{$language.translate('level1')}}</h1>
+          <h1 class="explore-title">{{$language.translate('level1')}}</h1>
 
-          <div class="explore-pelle" v-html="pelleSvg" style="height: 300px;"></div>
+          <div class="explore-content">
+            <div class="explore-pelle" v-html="pelleSvg"></div>
+            <div class="explore-words">
+              <!-- The word list comes here -->
+            </div>
+          </div>
         </div>
       </div>
     `,
