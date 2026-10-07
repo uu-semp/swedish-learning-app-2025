@@ -26,20 +26,21 @@ button:active {
 /* Game Controls*/
 #game-screen {
     position: relative;
+    height: 560px;
     /* make it the reference for absolute positioning */
 }
 
 #game-controls {
     position: absolute;
     /* position relative to #game-screen */
-    top: 290px;
+    top: 470px;
     /* distance from top of game scene */
     right: 40px;
     /* distance from right of game scene */
     display: flex;
     flex-direction: column;
     /* stack vertically */
-    gap: 190px;
+    gap: 10px;
     /* space between buttons */
 }
 
@@ -47,6 +48,17 @@ button:active {
     width: 120px;
     /* optional fixed width */
     padding: 10px 15px;
+}
+
+#game-stats {
+    position: absolute;
+    top: 290px;
+    right: 40px;
+    width: 120px;
+}
+
+#game-stats p {
+    margin: 0 0 10px;
 }
 
 #hint-button {

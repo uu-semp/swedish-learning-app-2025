@@ -172,6 +172,7 @@ $(function () {
     $(this).prop("disabled", true).text("Loading...");
     await mapCards(mode);
     $(this).prop("disabled", false).text("Start Game");
+    resetGame();
 
     showScreen("game-screen");
     startTimer((elapsed) => $("#elapsed-time").text(`Time: ${elapsed}s`));
@@ -179,9 +180,8 @@ $(function () {
 
   $("#end-game").on("click", function () {
     stopTimer();
-    updateEndScreen();
     resetGame();
-    showScreen("end-screen");
+    showScreen("menu-screen");
   });
 
   $("#restart-game").on("click", function () {
