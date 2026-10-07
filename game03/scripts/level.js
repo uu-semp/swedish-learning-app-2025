@@ -75,6 +75,9 @@ function addColourPractice(questions) {
     });
 }
 
+// Wall and floor look comes from the room (see .room-* in room.css)
+document.querySelector('.room-container').classList.add(`room-${selectedRoom}`);
+
 document.title = `Level ${levelIndex}`;
 const header = document.querySelector("header h1");
 if (header) header.textContent = `Welcome to Level ${levelIndex}`;

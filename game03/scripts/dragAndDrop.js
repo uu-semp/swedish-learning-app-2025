@@ -1,5 +1,5 @@
 // dragAndDrop.js
-import { loadImages } from './imageFetching.js';
+import { loadImages } from './imageFetching.js?v=20261008';
 
 let dragSource = null;
 

@@ -1,5 +1,5 @@
 // fetchImages.js
-import { questionsLoaded } from './level.js';
+import { questionsLoaded } from './level.js?v=20261008';
 
 export async function loadImages() {
     const selectedQuestions = await questionsLoaded;
