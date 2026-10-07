@@ -34,7 +34,6 @@
   <main class="game-frame">
     <div id="app" v-cloak>
       <div class="status-bar">
-        <div>❤️ Liv: {{ lives }}</div>
         <div>⭐ Poäng: {{ score }}</div>
         <div>📈 Nivå: {{ level }}</div>
       </div>
@@ -44,13 +43,13 @@
           <div class="character-section">
             <div class="character">
               <div class="character-name"><strong>{{ character.name }}</strong></div>
-              <img src="kevin.png" alt="Kevin">
+              <img src="Kevin.png" alt="Kevin">
             </div>
 
             <div class="speech" v-if="currentQuestion">
               <div>{{ currentQuestion.instruction }}</div>
               <div v-if="translation" class="translation">{{ translation }}</div>
-              <button class="translate-btn" @click="translateQuestion">🌍 Översätt</button>
+              <button class="translate-btn" @click="translateQuestion">🌍 English Translation</button>
             </div>
           </div>
 
@@ -62,7 +61,7 @@
             <input 
               v-model="textAnswer" 
               @keyup.enter="checkTextAnswer"
-              placeholder="Ex: ringgatan ett">
+              placeholder="Ex: ett">
             <button @click="checkTextAnswer">Skicka</button>
           </div>
         </div>
