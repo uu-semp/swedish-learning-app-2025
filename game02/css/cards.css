@@ -1,0 +1,63 @@
+/* Owned by Game 02 — memory cards & game board */
+
+/* Game board grid for cards */
+#game-board {
+    display: grid;
+    grid-template-columns: repeat(4, 100px);
+    gap: 10px;
+    justify-content: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+/* Memory card styling */
+.card {
+    width: 100px;
+    height: 100px;
+    background-color: transparent;
+    position: relative;
+    cursor: pointer;
+    border-radius: 10px;
+    user-select: none;
+    perspective: 900px;
+}
+
+.card-inner {
+    position: absolute;
+    inset: 0;
+    transition: transform 0.4s ease;
+    transform-style: preserve-3d;
+    border-radius: 10px;
+}
+
+.card-face {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    border-radius: 10px;
+    backface-visibility: hidden;
+}
+
+.card-front {
+    background-color: #FBCAEF;
+    color: black;
+}
+
+.card-back {
+    background-color: #ebcea6;
+    color: #555;
+    transform: rotateY(180deg);
+    overflow: hidden;
+    font-size: 100%;
+}
+
+.card.flipped .card-inner {
+    transform: rotateY(180deg);
+}
+
+.card.matched {
+    pointer-events: none;
+}

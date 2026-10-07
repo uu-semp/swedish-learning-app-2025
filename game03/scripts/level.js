@@ -86,9 +86,11 @@ function showRandomQuestion() {
     });
 }
 
-const questionsLoaded = loadLevelQuestions(levelIndex).then(() => {
+export const questionsLoaded = loadLevelQuestions(levelIndex).then(() => {
     if (typeof getRandomQuestions !== "undefined") {
-        remainingQuestions = getRandomQuestions();
+        const selectedQuestions = getRandomQuestions();
+        remainingQuestions = [...selectedQuestions];
+        return selectedQuestions;
     } else {
         return Promise.reject(new Error("getRandomQuestions is not defined in the loaded script"));
     }
