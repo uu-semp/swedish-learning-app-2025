@@ -197,8 +197,8 @@
     class="transport-options"
 >
         <button
-        v-for="transport in view.transportOptions.slice(0, 3)"
-        :key="transport.sv"
+        v-for="transport in view.transportOptions"
+        :key="transport.type"
         type="button"
         class="transport-option"
         @click="SelectTransport(transport)"
@@ -225,11 +225,7 @@
                 : transport.sv"
         >
 
-        <span>
-            {{ display.language === "en"
-                ? transport.en
-                : transport.sv }}
-        </span>
+        
     </button>
 </div>
 

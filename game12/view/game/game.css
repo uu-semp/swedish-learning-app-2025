@@ -611,4 +611,14 @@ hr {
 .transport-option.is-incorrect {
     background-color: #f8dddd;
     border-color: #a52a2a;
+} 
+
+.board-scroll.difficulty-3 .landmark {
+    transform: translateY(-20px);
+    width: 102px;
+}
+
+.board-scroll.difficulty-3 .landmark img {
+    width: 102px;
+    height: 90px;
 }

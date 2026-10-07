@@ -169,7 +169,7 @@ createApp({
         return
     }
 
-    if (difficulty3Selection.transport?.sv === transport.sv) {
+    if (difficulty3Selection.transport?.type === transport.type) {
         difficulty3Selection.transport = null
     } else {
         difficulty3Selection.transport = transport
@@ -189,7 +189,7 @@ createApp({
 
         function isTransportSelected(transport) {
             return difficulty3Selection.transport !== null &&
-                difficulty3Selection.transport.sv === transport.sv
+                difficulty3Selection.transport.type === transport.type
         }
 
         function translateWord(word) {
