@@ -7,6 +7,11 @@ import path from 'node:path';
 const GAME = path.resolve(import.meta.dirname, '..');
 const ROOT = path.resolve(GAME, '..');
 
+
+
+
+
+
 // Build window.vocabulary + localStorage from the repo's words.csv (same fields as scripts/vocabulary_await.js).
 const rows = fs.readFileSync(path.join(ROOT, 'words.csv'), 'utf8').trim().split(/\r?\n/)
   .map(line => [...line.matchAll(/("(?:[^"]|"")*"|[^,]*)(,|$)/g)].map(m => m[1].replace(/^"|"$/g, '').replace(/""/g, '"')));
@@ -25,6 +30,21 @@ Object.defineProperty(globalThis, 'localStorage', {
     getItem: k => store.get(k) ?? null, setItem: (k, v) => store.set(k, String(v)), removeItem: k => store.delete(k),
   }
 });
+
+
+// fake save state for the tests
+globalThis.save = window.save = {
+  get(game, key = null) {
+    const data = JSON.parse(localStorage.getItem(game) ?? '{}');
+    return key ? (data[key] ?? null) : data;
+  },
+  set(game, key, value) {
+    const data = this.get(game);
+    data[key] = value;
+    localStorage.setItem(game, JSON.stringify(data));
+    return true;
+  },
+};
 
 const { getItemsIds, getItems } = await import('../js/data.js');
 const { generateShoppingList, generateShelf } = await import('../js/gameLogic.js');
@@ -82,7 +102,7 @@ test('initGameState creates and saves a fresh round', () => {
   assert.equal(s.shoppingList.length, 10);
   assert.equal(s.shelf.length, 16);
   assert.deepEqual([s.currentIndex, s.mode, s.finished], [0, 1, false]);
-  assert.ok(store.has('game11_game_state'));
+  assert.ok(save.get('game11','game_state'));
 });
 
 // Page refresh / mode switch reuses the saved round.
@@ -97,9 +117,9 @@ test('saved round is restored', () => {
 
 // Corrupted storage is discarded instead of breaking the game.
 test('corrupted saved state is discarded', () => {
-  store.set('game11_game_state', '{"shoppingList":5}');
+  save.set('game11','game_state',{shoppingList:5});
   assert.equal(loadState(), null);
-  assert.ok(!store.has('game11_game_state'));
+  assert.equal(save.get('game11','game_state'), null);
 });
 
 // popup.html's end-screen link must match the real file name (GitHub Pages is case-sensitive).
