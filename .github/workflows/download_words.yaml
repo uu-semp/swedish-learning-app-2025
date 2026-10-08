@@ -1,0 +1,46 @@
+name: Test
+
+on: 
+  schedule:
+    - cron: '59 23 * * *' 
+      timezone: 'Europe/Stockholm'
+  workflow_dispatch:
+
+
+
+jobs:
+  mirror_main:
+    runs-on: ubuntu-latest
+    
+    env:
+      SHEETID: 1de16iRzmgSqWvTTxiNvQYM79sWJBwFJN0Up3Y0allDg
+      NEW_BRANCH: hosting_branch
+    steps: 
+      - name: Checkout repository
+        uses: actions/checkout@v6
+        with: 
+          fetch-depth: 0
+      
+      - name: mirror
+        run: |
+          git fetch origin
+          git checkout $NEW_BRANCH
+          git reset --hard origin/main
+          git push --force-with-lease origin $NEW_BRANCH
+      
+      - name: Checkout branch
+        run: |
+          git checkout $NEW_BRANCH
+          git pull
+      
+      - name: download_file
+        run: curl -L "https://docs.google.com/spreadsheets/d/$SHEETID/export?format=csv&gid=0" > words.csv 
+      
+      - name: commit
+        run: |
+          git config user.name ${{github.actor}}
+          git config user.email ${{github.actor}}
+
+          git add words.csv
+          git commit -m "Automatic update of words.csv"
+          git push origin $NEW_BRANCH
