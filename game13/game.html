@@ -14,7 +14,7 @@
 
   <div class="screen" role="application" aria-label="Dress the cat game screen">
 
-    <section class = "status-bar">
+    <section class = "bar status-bar ">
       <h2><span id="level-title">Level</span> <small id="score-text" aria-live="polite"></small></h2>
       <button id="backToIndex-btn" class="undoBtn giveUpBtn" aria-label="Back to level-selection"> Back to level-selecting-page</button>
     </section>
@@ -22,9 +22,9 @@
     <section class="game-area">
 
       <section class="stage" aria-label="Cat stage">
-        <div class = "control-buttons-wrapper">
-          <button id="undo-btn" class="confirmBtn undoBtn" aria-label="Undo last change" disabled>Undo</button>
-          <button id="clear-btn" class="confirmBtn undoBtn clearBtn" aria-label="Remove all clothing" disabled>Remove all</button>
+        <div class = "tool-buttons-wrapper">
+          <button id="undo-btn" class="btn toolBtn" aria-label="Undo last change" disabled>Undo</button>
+          <button id="clear-btn" class="btn toolBtn" aria-label="Remove all clothing" disabled>Remove all</button>
         </div>
 
       <section class="speech-bubble">
@@ -45,24 +45,21 @@
         </div>
       </div>
 
-      <div class="submissionbar" aria-live="polite">
-        <div class="div-buttons">
-          <button id="confirm-btn" class="confirmBtn" aria-label="Confirm outfit">Confirm Outfit</button>
-          <button id="giveUp-btn" class="undoBtn giveUpBtn" aria-label="Give up">Give up</button>
-        </div>
-        <div class="feedback"> 
-          <p id="result-text"></p>
-        </div>
-        <div class="div-buttons">
-          <button id="next-btn" class="confirmBtn undoBtn nextBtn" aria-label="Next round" disabled>Next</button>
-          <button id="nextLevel-btn" class=" giveUpBtn" aria-label="Next level" >Next Level</button>
-        </div>  
-      </div>
+
     </section>
 
     <!-- Shelves are created by wardrobe_ui.js, one per body position in the level -->
     <aside class="wardrobe" id="wardrobe" aria-label="Wardrobe"></aside>
     </section>
+          <div class="bar submissionbar" aria-live="polite">
+          <button id="giveUp-btn" class="btn toolBtn" aria-label="Give up">Give up</button>
+          <button id="confirm-btn" class="btn confirmBtn" aria-label="Confirm outfit">Confirm Outfit</button>
+        <div class="feedback"> 
+          <p id="result-text"></p>
+        </div>
+          <button id="next-btn" class="btn nextBtn" aria-label="Next round" disabled>Next</button>
+          <button id="nextLevel-btn" class=" btn toolBtn" aria-label="Next level" >Next Level</button>
+      </div>
   </div>
 
   <!-- Popup window -->
