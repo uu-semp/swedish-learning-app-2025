@@ -22,14 +22,18 @@
         instructions here
       </p>
     </section>
+    <section class="game-area">
+    
     <section class="stage" aria-label="Cat stage">
-              <button id="undo-btn" class="confirmBtn undoBtn" aria-label="Undo last change" disabled>Undo</button>
+        <button id="undo-btn" class="confirmBtn undoBtn" aria-label="Undo last change" disabled>Undo</button>
         <button id="clear-btn" class="confirmBtn undoBtn clearBtn" aria-label="Remove all clothing" disabled>Remove all</button>
       <img src="paperpelletransparent.png" alt="Cat to dress" class="cat-image"/>
       
-      <div id="hat-box" class="dropzone hat" data-accept="hat"></div>
-      <div id="shirt-box" class="dropzone shirt" data-accept="shirt"></div>
-      <div id="pants-box" class="dropzone bottom" data-accept="pants"></div>
+      <div class="dropzone-areas">
+        <div id="hat-box" class="dropzone hat" data-accept="hat"></div>
+        <div id="shirt-box" class="dropzone shirt" data-accept="shirt"></div>
+        <div id="pants-box" class="dropzone bottom" data-accept="pants"></div>
+      </div>
 
       <div class="submissionbar" aria-live="polite">
 
@@ -44,12 +48,16 @@
           <button id="next-btn" class="confirmBtn undoBtn nextBtn" aria-label="Next round" disabled>Next</button>
           <button id="nextLevel-btn" class=" giveUpBtn" aria-label="Next level" >Next Level</button>
         </div>  
-    </div>
+      </div>
     </section>
 
     <aside class="sidebar" aria-label="Wardrobe">
       <div class="wardrobe-box" id="img-menu"></div>
     </aside>
+
+    </section>
+
+
 
 
   </div>
