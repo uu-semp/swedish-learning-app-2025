@@ -168,6 +168,82 @@ test('missing audio shows the error message', () => {
   assert.equal(msg.style.display, 'block');
 });
 
+// Minimal fake DOM for the shelf / shopping list tests.
+const { displayShelf, displayShoppingList } = await import('../js/ui.js');
+
+class El {
+  constructor(tag) {
+    this.tagName = tag.toUpperCase();
+    this.style = {};
+    this.dataset = {};
+    this.children = [];
+    this.on = {};
+    const cls = new Set();
+    this.classList = { add: c => cls.add(c), contains: c => cls.has(c) };
+  }
+  set textContent(t) { this.children = []; this._text = t; }
+  get textContent() { return this._text ?? ''; }
+  addEventListener(type, fn) { this.on[type] = fn; }
+  appendChild(c) { c.parent = this; this.children.push(c); }
+  replaceWith(n) {
+    const siblings = this.parent.children;
+    n.parent = this.parent;
+    siblings[siblings.indexOf(this)] = n;
+  }
+}
+
+// Renders a fresh round and returns the shelf and cart elements.
+function renderRound() {
+  const els = {
+    '.shelf_items': new El('div'),
+    '.shopping_list': new El('div'),
+    '.cart_items': new El('div'),
+  };
+  globalThis.document = {
+    createElement: t => new El(t),
+    querySelector: s => els[s] ?? null,
+    getElementById: () => null,
+  };
+  const list = generateShoppingList(items);
+  displayShoppingList(list, 2);
+  displayShelf(generateShelf(list, items), 1);
+  window.sendPickToPopup = key => window.Game11UI.placeItemInCart(key);
+  return { shelf: els['.shelf_items'].children, cart: els['.cart_items'] };
+}
+
+const click = el => el.on.click({ stopPropagation() {} });
+
+// NFR 5.4: clicking a shelf item updates the UI within 200 ms.
+test('shelf click gives feedback within 200 ms', () => {
+  const { shelf, cart } = renderRound();
+
+  const start = performance.now();
+  click(shelf[0]);
+  const ms = performance.now() - start;
+
+  assert.ok(shelf[0].classList.contains('is-picked'));
+  assert.equal(cart.children.length, 1);
+  assert.ok(ms < 200, `took ${ms} ms`);
+});
+
+// A 404 image is replaced by a text fallback that still works.
+test('missing image falls back to text without throwing', () => {
+  let alerts = 0;
+  globalThis.alert = () => alerts++;
+  const { shelf, cart } = renderRound();
+
+  assert.doesNotThrow(() => shelf.slice().forEach(img => img.onerror()));
+  shelf.forEach(el => {
+    assert.equal(el.tagName, 'DIV');
+    assert.ok(el.textContent.startsWith('⚠'));
+  });
+  assert.equal(alerts, 1);
+
+  click(shelf[0]);
+  assert.ok(shelf[0].classList.contains('is-picked'));
+  assert.equal(cart.children.length, 1);
+});
+
 // testing the soundeffects and that if the name is wrong for some reason there it does nothing.
 test('sound effects play the right number of notes', () => {
   let started = 0;
