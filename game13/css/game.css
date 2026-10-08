@@ -1,12 +1,29 @@
 /*Reused layout components*/
 .bar {
-
   background-color: var(--color-surface);
   border-radius: 9px;
   border: 3px solid #333;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  text-align: center;
+  flex-shrink: 0;
+  box-sizing: border-box;
+}
+
+.speech-bubble {
+  position: relative;
+  background: #fffdf5;
+  border: 3px solid #333;
+  border-radius: 45%;
+}
+
+
+
+.speech-bubble p {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.5;
 }
 
 /* Main layout components*/
@@ -84,44 +101,16 @@ padding-right: 6px;
 
 /* Section for the outfit-prompt*/
 .instructions {
-  border-top: 3px solid var(--color-text);
-  background: var(--color-surface);
-  padding: 14px 16px;
-  display: flex;
-  align-items: center;
-  font-size: 16px;
-  justify-content: space-between;
-  gap: 16px; /* keep long descriptions from touching the buttons */
-}
-
-/* confirm / give up, feedback, next (inside the stage) */
-.submissionbar {
-  padding: 6px;
-  justify-content: space-between;
-}
-
-/*feedback shown after submission*/
-.feedback {
-    padding: 14px 16px;
-}
-
-.speech-bubble {
-  position: relative;
-  background: #fffdf5;
-  border: 3px solid #333;
-  border-radius: 45%;
   padding: 20px 30px;
   margin: 6px;
   max-width: 400px;
-  text-align: center;
-  flex-shrink: 0;
-  box-sizing: border-box;
+
   width: 80%; 
   align-self: flex-end;
 }
 
 /* The tail pointing towards Pelle */
-.speech-bubble::after {
+.instructions::after {
   content: "";
   position: absolute;
   bottom: -20px;
@@ -134,11 +123,40 @@ padding-right: 6px;
   transform: rotate(45deg);
 }
 
-.speech-bubble p {
-  margin: 0;
-  font-size: 16px;
-  line-height: 1.5;
+/* confirm / give up, feedback, next (inside the stage) */
+.submissionbar {
+  padding: 6px;
+  justify-content: space-between;
 }
+
+/*feedback shown after submission*/
+.feedback {
+    position: absolute;
+    padding: 20px 30px;
+    width: 30%;
+    right: 5%; 
+    top: 30%;
+    display: none;
+}
+
+.feedback.visible {
+  display: block;
+}
+
+.feedback::after {
+  content: "";
+  position: absolute;
+  top: 40px;
+  left: -20px;
+  width: 30px;
+  height: 30px;
+  background: #fffdf5;
+  border-right: 3px solid #333;
+  border-bottom: 3px solid #333;
+  transform: rotate(120deg);
+}
+
+
 
 /* dressing related CSS*/
 
