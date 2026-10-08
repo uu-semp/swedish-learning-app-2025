@@ -10,7 +10,17 @@ document.addEventListener('keydown', (e) => { if (e.key === 'Escape') overlay.cl
 const views = document.querySelectorAll('.menu-view');
 const rings = document.querySelectorAll('.room-ring');
 const levelRoomName = document.getElementById('levelRoomName');
+const colourModeToggle = document.getElementById('colourModeToggle');
+const colourModeState = colourModeToggle.querySelector('.colour-mode-state');
 let chosenRoom = null;
+let colourPractice = false;
+
+colourModeToggle.addEventListener('click', () => {
+    colourPractice = !colourPractice;
+    colourModeToggle.classList.toggle('is-on', colourPractice);
+    colourModeToggle.setAttribute('aria-pressed', String(colourPractice));
+    colourModeState.textContent = colourPractice ? 'På' : 'Av';
+});
 
 function showView(name) {
     views.forEach(v => { v.hidden = v.dataset.view !== name; });
@@ -43,6 +53,7 @@ document.querySelectorAll('.level-btn').forEach(btn =>
         if (chosenRoom) {
             localStorage.setItem('gameRoom', chosenRoom);
         }
-        window.location.href = `level.html?level=${btn.dataset.level}&room=${chosenRoom}`;
+        const colours = colourPractice ? 'on' : 'off';
+        window.location.href = `level.html?level=${btn.dataset.level}&room=${chosenRoom}&colours=${colours}`;
     })
 );

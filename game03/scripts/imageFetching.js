@@ -46,6 +46,16 @@ export async function loadImages() {
                 }
             });
 
+            if (requiredImages.includes('shower') && !imageElements.some(image => image.dataset.name === 'shower')) {
+                const img = document.createElement('img');
+                img.src = '../assets/images/furniture/shower.png';
+                img.draggable = true;
+                img.className = 'image-item';
+                img.dataset.name = 'shower';
+                sidebar.appendChild(img);
+                imageElements.push(img);
+            }
+
             // Load additional random distractor images
             if (levelIndex === "2" && window.getRandomDistractorImages) {
                 try {

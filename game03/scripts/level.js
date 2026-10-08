@@ -20,6 +20,17 @@ const urlParams = new URLSearchParams(window.location.search);
 const levelIndex = urlParams.get("level") || "1";
 const selectedRoom = urlParams.get("room") || localStorage.getItem('gameRoom') || 'office';
 const shouldResetLevel = urlParams.get("reset") === "true";
+const colourPractice = urlParams.get("colours") === "on";
+
+const colourTargets = {
+    office: { answer: 'chair', colour: 'green', swedish: 'stol', colouredSwedish: 'grön stol', definite: 'stolen', colouredDefinite: 'den gröna stolen', english: 'green chair' },
+    livingroom: { answer: 'couch', colour: 'blue', swedish: 'soffa', colouredSwedish: 'blå soffa', definite: 'soffan', colouredDefinite: 'den blå soffan', english: 'blue couch' },
+    bedroom: { answer: 'carpet', colour: 'blue', swedish: 'matta', colouredSwedish: 'blå matta', definite: 'mattan', colouredDefinite: 'den blå mattan', english: 'blue carpet' },
+    kitchen: { answer: 'table', colour: 'red', swedish: 'bord', colouredSwedish: 'rött bord', definite: 'bordet', colouredDefinite: 'det röda bordet', english: 'red table' },
+    bathroom: { answer: 'cupboard', colour: 'green', swedish: 'skåp', colouredSwedish: 'grönt skåp', definite: 'skåpet', colouredDefinite: 'det gröna skåpet', english: 'green cupboard' }
+};
+
+const bathroomFallback = { answer: 'towel', colour: 'blue', swedish: 'handduk', colouredSwedish: 'blå handduk', definite: 'handduken', colouredDefinite: 'den blå handduken', english: 'blue towel' };
 
 if (selectedRoom) {
     localStorage.setItem('gameRoom', selectedRoom);
@@ -37,6 +48,31 @@ function resetLevelSessionState() {
 
 if (shouldResetLevel) {
     resetLevelSessionState();
+}
+
+function addColourPractice(questions) {
+    if (!colourPractice) return questions;
+
+    let target = colourTargets[selectedRoom];
+    if (selectedRoom === 'bathroom' && !questions.some(question => question.answer === target.answer)) {
+        target = bathroomFallback;
+    }
+
+    return questions.map(question => {
+        if (!target || question.answer !== target.answer) return question;
+
+        const word = levelIndex === '1' ? `'${target.swedish}'` : target.definite;
+        const colouredWord = levelIndex === '1' ? `'${target.colouredSwedish}'` : target.colouredDefinite;
+        const colouredQuestion = question.question.replace(word, colouredWord);
+        if (colouredQuestion === question.question) return question;
+
+        return {
+            ...question,
+            question: colouredQuestion,
+            colour: target.colour,
+            hint: `${target.colouredSwedish} means ${target.english}. ${question.hint}`
+        };
+    });
 }
 
 // Wall and floor look comes from the room (see .room-* in room.css)
@@ -124,6 +160,7 @@ function showRandomQuestion() {
     // Take the first question from the remaining questions (they come in order from the group)
     window.currentQuestion = remainingQuestions.shift();
     currentQuestionAttempts = 0; // Reset attempts for new question
+    document.dispatchEvent(new CustomEvent('QuestionChanged', { detail: window.currentQuestion }));
     const div = document.createElement('div');
     div.className = 'question-block';
     div.innerHTML = `
@@ -152,7 +189,7 @@ export const questionsLoaded = (async () => {
         throw new Error("getRandomQuestions is not defined in the loaded script");
     }
 
-    const selectedQuestions = window.getRandomQuestions();
+    const selectedQuestions = addColourPractice(window.getRandomQuestions());
     if (!Array.isArray(selectedQuestions) || selectedQuestions.length === 0) {
         throw new Error(`No questions were returned for level ${levelIndex}`);
     }

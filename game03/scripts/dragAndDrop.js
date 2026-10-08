@@ -8,10 +8,49 @@ let dragSource = null;
 
     const workspace = document.getElementById('workspace');
     const sidebar = document.getElementById('sidebar');
+    const colourClasses = ['colour-red', 'colour-green', 'colour-blue'];
+    const colours = ['original', 'red', 'green', 'blue'];
     let draggedImage = null;
+    let colourAlternative = null;
 
-    images.forEach(img => {
-        img.addEventListener('dragstart', () => draggedImage = img);
+    function setColour(image, colour) {
+        image.classList.remove(...colourClasses);
+        image.dataset.colour = colour;
+        if (colour !== 'original') image.classList.add(`colour-${colour}`);
+    }
+
+    function showColourChoices() {
+        if (colourAlternative) {
+            colourAlternative.remove();
+            colourAlternative = null;
+        }
+
+        const question = window.currentQuestion;
+        if (!question?.colour) return;
+
+        const correctImage = images.find(image =>
+            image.dataset.name === question.answer && image.draggable && image.closest('#sidebar')
+        );
+        if (!correctImage) return;
+
+        setColour(correctImage, question.colour);
+        const wrongColours = colours.filter(colour => colour !== question.colour);
+        const wrongColour = wrongColours[Math.floor(Math.random() * wrongColours.length)];
+        colourAlternative = correctImage.cloneNode(true);
+        setColour(colourAlternative, wrongColour);
+
+        if (Math.random() < 0.5) {
+            sidebar.insertBefore(colourAlternative, correctImage);
+        } else {
+            sidebar.insertBefore(colourAlternative, correctImage.nextSibling);
+        }
+    }
+
+    document.addEventListener('QuestionChanged', showColourChoices);
+    showColourChoices();
+
+    sidebar.addEventListener('dragstart', event => {
+        if (event.target.classList.contains('image-item')) draggedImage = event.target;
     });
 
     document.addEventListener('dragstart', e => {
@@ -26,12 +65,14 @@ let dragSource = null;
         if (!tile) return;
         const tileIndex = parseInt(tile.dataset.index);
         const itemName = draggedImage.dataset.name;
+        const colourMatches = !window.currentQuestion?.colour || draggedImage.dataset.colour === window.currentQuestion.colour;
         console.log(itemName);
         console.log(currentQuestion);
         console.log(itemName === window.currentQuestion.answer);
         if (
             window.currentQuestion &&
             itemName === window.currentQuestion.answer &&
+            colourMatches &&
             window.currentQuestion.index.includes(tileIndex)
         ) {
             // Correct placement
@@ -63,6 +104,8 @@ let dragSource = null;
             document.dispatchEvent(new CustomEvent('AnswerIncorrect', {
                 detail: { reason: 'Wrong item or tile' }
             }));
+            dragSource = null;
+            draggedImage = null;
         }
 
     });
