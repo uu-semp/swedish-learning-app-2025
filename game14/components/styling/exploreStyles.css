@@ -1,0 +1,119 @@
+/* Layout for the explore view (level 1) */
+.explore-view {
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    padding: 20px 20px 30px 20px;
+}
+
+/* Title in the same golden style as the start page, but smaller */
+.explore-view .explore-title {
+    font-family: 'Fredoka', 'Arial Rounded MT Bold', sans-serif;
+    font-size: 48px;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    text-align: center;
+    margin: 0;
+
+    background: linear-gradient(180deg, #fcebc2 0%, #f4d393 45%, #e1af63 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+    filter: drop-shadow(0px 4px 0px #8e5e29)
+            drop-shadow(2px 2px 0px #8e5e29)
+            drop-shadow(-2px -2px 0px #8e5e29);
+}
+
+/* Pelle on the left, words on the right. In front of the grass */
+.explore-view .explore-content {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    align-items: flex-end;
+    gap: 20px;
+    position: relative;
+    z-index: 6;
+}
+
+.explore-view .explore-pelle {
+    flex: 1;
+    height: 100%;
+}
+
+.explore-view .explore-pelle svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+/* Every body part in Pelle (head, nose, arm ...) is a group with an id */
+.explore-view .explore-pelle svg g[id] {
+    cursor: pointer;
+    transition: filter 0.15s ease;
+}
+
+/* Lime green outline on the body part under the mouse, and on the selected one */
+.explore-view .explore-pelle svg g[id]:hover,
+.explore-view .explore-pelle svg g[id].selected {
+    filter: drop-shadow(10px 0 0 #7CFC00)
+            drop-shadow(-10px 0 0 #7CFC00)
+            drop-shadow(0 10px 0 #7CFC00)
+            drop-shadow(0 -10px 0 #7CFC00)
+            drop-shadow(7px 7px 0 #7CFC00)
+            drop-shadow(-7px 7px 0 #7CFC00)
+            drop-shadow(7px -7px 0 #7CFC00)
+            drop-shadow(-7px -7px 0 #7CFC00);
+}
+
+/* The right side: instruction above the word list */
+.explore-view .explore-side {
+    flex: 1;
+    align-self: center;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+/* Instruction text */
+.explore-view .explore-instruction {
+    font-family: 'Fredoka', 'Arial Rounded MT Bold', sans-serif;
+    font-size: 20px;
+    font-weight: 600;
+    color: white;
+    text-align: center;
+    margin: 0;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.35);
+}
+
+/* The word list */
+.explore-view .explore-words {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+}
+
+/* Each word as a small white cloud */
+.explore-view .word-cloud {
+    font-family: 'Fredoka', 'Arial Rounded MT Bold', sans-serif;
+    font-size: 18px;
+    font-weight: 600;
+    color: #1e528e;
+    background: white;
+    border: none;
+    border-radius: 999px;
+    padding: 10px 18px;
+    box-shadow: 0 4px 0 rgba(0, 0, 0, 0.15);
+    cursor: pointer;
+}
+
+.explore-view .word-cloud:hover {
+    transform: translateY(-2px);
+}
+
+/* The selected word turns lime green */
+.explore-view .word-cloud.selected {
+    background: #7CFC00;
+    color: #1e3a0a;
+}

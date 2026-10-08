@@ -49,7 +49,7 @@ export const ChooseLevelView = {
               <capsule-button
                 label="level1"
                 size="lg"
-                @click="switchTo('LevelOneView')"
+                @click="switchTo('ExploreLevelOneView')"
               ></capsule-button>
               <capsule-button
                 label="level2"
