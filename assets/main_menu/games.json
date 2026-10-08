@@ -98,12 +98,12 @@
   {
     "id": "game10",
     "title": {
-      "en": "Eat and Learn", 
+      "en": "Eat and Learn",
       "sv": "Ät och lär"
     },
     "desc": {
-      "en": "The primary objective of this game is to support learners in acquiring Swedish vocabulary related to food and fruits. It utilizes a three-level progression system (True/False, Matching, Spelling) emphasizing recognition, comprehension, and spelling. \n\n Prior to starting a level, users can access Learning Mode to study the upcoming vocabulary without affecting their game score. The three main levels then guide the user through increasing levels of difficulty:\n\nLevel 1 (True/False): Focuses on basic recognition \nLevel 2 (Matching): Tests comprehension and association \nLevel 3 (Spelling): Requires recognition and comprehension to present accurate spelling ",
-      "sv": "Huvudsyftet med detta spel är att stödja inlärare i att förvärva ett svenskt ordförråd relaterat till mat och frukter. Det använder ett progressionssystem med tre nivåer (Sant/Falskt, Matchning, Stavning) som betonar igenkänning, förståelse och stavning.\n\nFöre start av en nivå kan användare få tillgång till Inlärningsläget för att studera det kommande ordförrådet utan att påverka deras spelpoäng. De tre huvudnivåerna vägleder sedan användaren genom ökande svårighetsgrader:\n\nNivå 1 (Sant/Falskt): Fokuserar på grundläggande igenkänning\nNivå 2 (Matchning): Testar förståelse och association\nNivå 3 (Stavning): Kräver igenkänning och förståelse för att presentera korrekt stavning" 
+      "en": "The primary objective of this game is to support learners in acquiring a Swedish vocabulary related to food and fruits. Match, spell and learn!",
+      "sv": "Huvudsyftet med spelet är att stärka ditt svenska ordförråd relaterat till mat och frukter. Para ihop, stava och lär!"
     },
     "supported_chapters": [4]
   },
@@ -127,7 +127,7 @@
     },
     "desc": {
       "en": "This game is all about numbers. You will see a few houses with different numbers on your screen and your mission is too click on the house with the correct number. ",
-      "sv": "Det här spelet fokuserar på siffror. Du kommer att se några hus med olika siffror på din skärm och ditt uppdrag är att klicka på huset med rätt siffra." 
+      "sv": "Det här spelet fokuserar på siffror. Du kommer att se några hus med olika siffror på din skärm och ditt uppdrag är att klicka på huset med rätt siffra."
     },
     "supported_chapters": [1, 3]
   },
@@ -166,5 +166,5 @@
       "sv": "I det här spelet ska du hitta det rätta huset på en väg baserat på instruktioner från Kevin. Kevin berättar för dig var han bor, och din uppgift är att förstå vart det är. Spelet blir svårare ju längre du kommer, allt eftersom Kevin berättar svårare instruktioner på svenska."
     },
     "supported_chapters": [1, 3]
-  } 
+  }
 ]
