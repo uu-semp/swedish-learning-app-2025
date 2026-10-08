@@ -1,4 +1,4 @@
-import { getGameProgress, updateGameProgress } from './localStorage.js';
+import { getGameProgress } from './localStorage.js';
 
 // Wait for DOM to be fully loaded
 document.addEventListener('DOMContentLoaded', function() {
@@ -17,26 +17,9 @@ function initWelcomeComponent() {
   }
 }
 
-function updateLevelProgress() {
-  console.log('Updating level progress...');
-  const gameProgress = getGameProgress();
-  console.log('Current game progress:', gameProgress);
-  
-  // Check if levels should be unlocked
-  if (gameProgress.level1.completed === gameProgress.level1.total) {
-    gameProgress.level2.unlocked = true;
-  }
-  if (gameProgress.level2.completed === gameProgress.level2.total) {
-    gameProgress.level3.unlocked = true;
-  }
-
-  updateGameProgress(gameProgress);
-  return gameProgress;
-}
-
 function createLevelButton(levelNum, progress) {
   const button = document.createElement('button');
-  button.className = progress.unlocked ? 'level-btn' : 'level-btn locked';
+  button.className = 'level-btn';
   
   const progressPercent = (progress.completed / progress.total) * 100;
   
@@ -45,7 +28,6 @@ function createLevelButton(levelNum, progress) {
       <span class="level-name">Nivå ${levelNum}</span>
       <span class="progress-indicator">
         ${progress.completed}/${progress.total}
-        ${!progress.unlocked ? '<span class="locked-icon">🔒</span>' : ''}
       </span>
     </div>
     <div class="progress-bar">
@@ -53,11 +35,7 @@ function createLevelButton(levelNum, progress) {
     </div>
   `;
   
-  if (progress.unlocked) {
-    button.onclick = () => startLevel(levelNum);
-  } else {
-    button.onclick = () => alert('Du måste först slutföra föregående nivå!');
-  }
+  button.onclick = () => startLevel(levelNum);
   
   return button;
 }
@@ -65,7 +43,7 @@ function createLevelButton(levelNum, progress) {
 function renderLevels() {
   console.log('Rendering levels...');
   try {
-    const gameProgress = updateLevelProgress();
+    const gameProgress = getGameProgress();
     const container = document.getElementById('levelButtons');
     
     if (!container) {
@@ -119,10 +97,7 @@ function generateSummaryContent() {
     let status = '';
     let statusClass = '';
     
-    if (!level.unlocked) {
-      status = 'Låst';
-      statusClass = 'status-locked';
-    } else if (level.completed === level.total) {
+    if (level.completed === level.total) {
       status = 'Slutförd';
       statusClass = 'status-completed';
     } else if (level.completed > 0) {
