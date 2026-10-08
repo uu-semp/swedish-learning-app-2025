@@ -7,6 +7,7 @@
 import { loadPairs, buildGrid, initDb } from "./js/game-data.js";
 import { startTimer, stopTimer, resetTimer, getElapsedTime } from "./js/timer.js";
 import { initHints } from "./js/hints.js";
+import { initSpelling } from "./js/spelling.js";
 
 $(function () {
   // constants
@@ -35,7 +36,7 @@ $(function () {
 
   // Function to show only one screen at a time
   function showScreen(screenId) {
-    $("#menu-screen, #game-screen, #end-screen").hide();
+    $("#menu-screen, #game-screen, #end-screen, #spelling-screen, #spelling-end-screen").hide();
     $("#" + screenId).show();
   }
 
@@ -86,8 +87,8 @@ $(function () {
     if (corrects >= corrects_needed) {
       stopTimer();
       updateEndScreen();
-      wins++; // Increment wins
       save.stats.incrementWin(team_name); // Save the new win count
+      wins = save.stats.get(team_name).wins; // Re-read, spelling can also add wins
       $("#wins-count").text(wins); // Update wins display
       setTimeout(() => {
         $("#wins-count").text(wins); // Update wins display
@@ -169,6 +170,15 @@ $(function () {
   $("#start-game").on("click", async function () {
     const mode = $(".mode-btn.selected").data("mode"); // "picture", "spelling", "listening" or "dialect"
     const category = $(".category-btn.selected").data("category"); // "furniture", "clothing" or "food"
+
+    // Spelling has its own screens and logic in spelling.js
+    if (mode === "spelling") {
+      $(this).prop("disabled", true).text("Loading...");
+      await startSpelling(category);
+      $(this).prop("disabled", false).text("Start Game");
+      return;
+    }
+
     $("#game-title").text(mode_titles[mode]);
 
     $(this).prop("disabled", true).text("Loading...");
@@ -240,6 +250,7 @@ $(function () {
   $(document).on("click", ".card", clickCard);
 
   initHints(() => currentPairs);
+  const { startGame: startSpelling } = initSpelling({ showScreen });
 
   // Initialize on menu screen
   showScreen("menu-screen");

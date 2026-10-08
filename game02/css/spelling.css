@@ -1,0 +1,155 @@
+/* Owned by Game 02 — spelling game */
+
+#spelling-screen #spelling-image {
+  display: block;
+  margin: 0 auto 0.5rem;
+  max-width: min(100%, 320px);
+  max-height: 180px;
+  object-fit: contain;
+}
+
+#spelling-slots {
+  text-align: center;
+  font-size: 1.5rem;
+  letter-spacing: 0.15em;
+  margin: 0.25rem 0;
+}
+
+#spelling-image-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+#spelling-screen #spelling-image-row #spelling-image {
+  display: block;
+  margin: 0;
+  max-width: min(60%, 320px);
+  max-height: 160px;
+}
+
+#spelling-form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+#spelling-input {
+  font-size: 1.25rem;
+  padding: 0.4rem 0.6rem;
+  border: 2px solid #555;
+  border-radius: 8px;
+  width: min(60vw, 14rem);
+}
+
+#spelling-umlauts {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.umlaut-button {
+  min-width: 3rem;
+  font-size: 1.25rem;
+}
+
+#spelling-feedback {
+  min-height: 2.2rem;
+  text-align: center;
+  font-size: 1.5rem;
+  font-family: monospace;
+  letter-spacing: 0.1em;
+}
+
+#spelling-slots .slot {
+  display: inline-block;
+  min-width: 0.8em;
+  margin: 0 0.1em;
+  text-align: center;
+  font-family: monospace;
+}
+
+#spelling-slots .ok {
+  color: #1f7a3d;
+}
+
+#spelling-slots .wrong,
+#spelling-slots .extra,
+#spelling-slots .missing {
+  color: #c0392b;
+  font-weight: bold;
+}
+
+#spelling-slots .extra {
+  text-decoration: line-through;
+}
+
+#spelling-slots .missing {
+  border-bottom: 3px solid #c0392b;
+}
+
+#spelling-feedback.success {
+  color: #1f7a3d;
+  font-weight: bold;
+}
+
+#spelling-feedback.revealed {
+  font-weight: bold;
+}
+
+#spelling-controls {
+  display: flex;
+  justify-content: center;
+  gap: 0.75rem;
+  margin: 0.25rem 0;
+}
+
+#spelling-screen h2,
+#spelling-screen p {
+  margin-top: 0.3rem;
+  margin-bottom: 0.3rem;
+}
+
+#spelling-screen #spelling-misses,
+#spelling-screen #spelling-hints,
+#spelling-screen #spelling-time {
+  text-align: center;
+}
+
+#spelling-input.shake {
+  animation: spelling-shake 0.35s;
+  border-color: #c0392b;
+}
+
+#spelling-input.correct {
+  border-color: #1f7a3d;
+}
+
+@keyframes spelling-shake {
+  0%, 100% { transform: translateX(0); }
+  20%, 60% { transform: translateX(-6px); }
+  40%, 80% { transform: translateX(6px); }
+}
+
+#spelling-hint {
+  background-color: #f39c12;
+  border-color: #f39c12;
+  color: #fff;
+}
+
+#spelling-hint:hover {
+  background-color: #d68910;
+  border-color: #d68910;
+}
+
+#spelling-slots .revealed {
+  font-weight: bold;
+}
+
+/* Leave room for the progress bar along the top */
+.game-frame #spelling-screen {
+  padding-top: 36px;
+}

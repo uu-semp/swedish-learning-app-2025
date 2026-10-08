@@ -59,7 +59,9 @@
 }
 
 #restart-game,
-#go-to-menu {
+#go-to-menu,
+#spelling-restart,
+#spelling-go-to-menu {
     padding: 20px 40px;
     font-size: 2em;
     padding: 20px 40px;

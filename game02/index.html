@@ -73,7 +73,7 @@ Owned by Game 02
             <ol>
               <li>A picture is shown.</li>
               <li>Type the Swedish word for it.</li>
-              <li>If the spelling is wrong, try again or ask for a hint.</li>
+              <li>Wrong letters are marked in red. Ask for a hint if you get stuck.</li>
             </ol>
 
             <p>Spell 8 words to finish.</p>
@@ -260,6 +260,67 @@ Owned by Game 02
       <p>Total Wins: <span id="wins-count">0</span></p>
       <button id="restart-game">Play Again</button>
       <button id="go-to-menu">Go to main menu</button>
+    </section>
+
+    <!-- Spelling Game Screen -->
+    <section id="spelling-screen" style="display: none;">
+      <div id="spelling-progress-bar"><div id="spelling-progress-fill"></div><span id="spelling-progress-text">0 / 8 words</span></div>
+      <h2>Spell the word for the picture</h2>
+
+      <div id="spelling-image-row">
+        <img id="spelling-image" alt="Word to spell" />
+        <div id="spelling-umlauts" aria-label="Swedish letters">
+          <button type="button" class="umlaut-button" data-char="å">å</button>
+          <button type="button" class="umlaut-button" data-char="ä">ä</button>
+          <button type="button" class="umlaut-button" data-char="ö">ö</button>
+        </div>
+      </div>
+
+      <p id="spelling-slots" aria-label="Number of letters"></p>
+
+      <form id="spelling-form" autocomplete="off">
+        <input id="spelling-input" type="text" autocomplete="off" autocapitalize="off"
+          autocorrect="off" spellcheck="false" aria-label="Your answer" />
+        <button type="submit" id="spelling-submit">Check</button>
+      </form>
+
+      <p id="spelling-feedback" role="status" aria-live="polite"></p>
+
+      <div id="spelling-controls">
+        <button type="button" id="spelling-help">Help</button>
+        <button type="button" id="spelling-hint">Hint</button>
+        <button type="button" id="spelling-show-answer">Show answer</button>
+        <button type="button" id="spelling-quit">Quit</button>
+      </div>
+      <div id="spelling-help-modal" class="help-modal" style="display: none;">
+        <div class="help-modal-content" role="dialog" aria-modal="true" aria-labelledby="spelling-help-title">
+          <button type="button" id="spelling-close-help" class="help-close" aria-label="Close help">&times;</button>
+          <h3 id="spelling-help-title">How to Play</h3>
+          <ol>
+            <li>Look at the picture.</li>
+            <li>Type the Swedish word for it (without "en" or "ett").</li>
+            <li>Wrong letters are marked in red, and a missing letter shows as a red gap.</li>
+            <li>Hint fills in the next missing letter, and Show answer reveals the word. Both are counted.</li>
+            <li>Use the å, ä and ö buttons if your keyboard doesn't have them.</li>
+          </ol>
+          <p>Spell all the words to win the game.</p>
+        </div>
+      </div>
+      <p id="spelling-misses">misses: 0</p>
+      <p id="spelling-hints">hints: 0</p>
+      <p id="spelling-time">Time: 0s</p>
+    </section>
+
+    <!-- Spelling End Screen -->
+    <section id="spelling-end-screen" style="display: none;">
+      <h2><span id="spelling-end-header"></span></h2>
+      <p>Words spelled: <span id="spelling-score">0</span></p>
+      <p>Misses: <span id="spelling-end-misses">0</span></p>
+      <p>Hints used: <span id="spelling-end-hints">0</span></p>
+      <p>Time elapsed: <span id="spelling-end-time">0</span></p>
+      <p>Total Wins: <span id="spelling-wins">0</span></p>
+      <button id="spelling-restart">Play Again</button>
+      <button id="spelling-go-to-menu">Go to main menu</button>
     </section>
 
   </main>
