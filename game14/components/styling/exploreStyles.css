@@ -160,3 +160,36 @@
     0%   { filter: url(#outline-green); }
     50%  { filter: none; }
 }
+
+/* Level 2: result when all words are done */
+.explore-view .find-result {
+    font-family: 'Fredoka', 'Arial Rounded MT Bold', sans-serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: white;
+    text-align: center;
+    margin: 0;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.35);
+}
+
+.explore-view .play-again {
+    align-self: center;
+    font-size: 22px;
+    padding: 12px 28px;
+}
+
+/* Level 2: short feedback under the word */
+.explore-view .find-feedback {
+    font-family: 'Fredoka', 'Arial Rounded MT Bold', sans-serif;
+    font-size: 24px;
+    font-weight: 700;
+    text-align: center;
+    margin: 0;
+    min-height: 32px;
+    color: white;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+.explore-view .find-feedback.right       { color: #7CFC00; }
+.explore-view .find-feedback.wrong       { color: #ffb3b3; }
+.explore-view .find-feedback.show-answer { color: #fff3b0; }

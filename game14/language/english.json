@@ -9,7 +9,14 @@
     "explore-instruction": "Click a word or a part of Pelle's body to match them! All words are in singular.",
     "level2": "LEVEL 2",
     "level2-instruction": "Click on the body part that matches the word!",
+    "first-try": "correct on the first try",
+    "feedback-right": "Correct!",
+    "feedback-wrong": "Not quite right, try again!",
+    "feedback-show-answer": "Here it is!",
+    "play-again": "Play again",
     "level3": "LEVEL 3",
+    
+    
     "level2-locked": "LEVEL 2 🔒",
     "level3-locked": "LEVEL 3 🔒",
     "not-implemented-prompt": "This level is not yet implemented.",
@@ -34,7 +41,6 @@
     "extra": "EXTRA NOTES",
     "additional-info": "If you are unsure about the vocabulary, you can always replay a level or check the word list in the provided material. The game is designed to be fun while reinforcing Swedish language learning.",
     "dress-pelle-prompt": "Dress Pelle with: ",
-    "play-again":"PLAY AGAIN",
     "good-job":"GOOD JOB!",
     "num-tries":"TOTAL NUMBER OF TRIES: ",
     "num-right":"TOTAL NUMBER RIGHT: ",

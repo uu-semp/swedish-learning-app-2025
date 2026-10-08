@@ -13,6 +13,9 @@ export const LevelTwoView = {
       mistakesOnCurrent: 0,  // Wrong clicks on the current word
       locked: false,         // True while the answer is shown, to ignore clicks
       finished: false,       // True when all words are done
+      firstTryCorrect: 0,    // Words found without any wrong click
+       feedback: "",          // "right", "wrong" or "show-answer", shown under the word
+      feedbackTimer: null,   // Timer that hides the feedback again
     };
   },
   computed: {
@@ -46,6 +49,13 @@ export const LevelTwoView = {
       return copy;
     },
 
+     // Show a short message under the word, then hide it again
+    setFeedback(type, duration = 1200) {
+      clearTimeout(this.feedbackTimer);
+      this.feedback = type;
+      this.feedbackTimer = setTimeout(() => (this.feedback = ""), duration);
+    },
+
     // Check if the player clicked the right body part
     handlePelleClick(event) {
       const part = event.target.closest("g[id]");
@@ -54,6 +64,8 @@ export const LevelTwoView = {
       if (part.id === this.currentWord.en) {
         // Right: keep the part green and go to the next word
         part.classList.add("found");
+        if (this.mistakesOnCurrent === 0) this.firstTryCorrect++;
+        this.setFeedback("right");
         this.nextWord();
       } else {
         // Wrong: flash the clicked part red
@@ -61,7 +73,12 @@ export const LevelTwoView = {
         part.classList.add("wrong");
         setTimeout(() => part.classList.remove("wrong"), 600);
 
-        if (this.mistakesOnCurrent >= MAX_MISTAKES) this.showAnswer();
+        if (this.mistakesOnCurrent >= MAX_MISTAKES) {
+          this.setFeedback("show-answer", 1800);
+          this.showAnswer();
+        } else {
+          this.setFeedback("wrong");
+        }
       }
     },
 
@@ -88,6 +105,17 @@ export const LevelTwoView = {
         this.finished = true;
       }
     },
+
+    // Start over with the words in a new random order
+    playAgain() {
+      this.$el.querySelectorAll("g.found").forEach((part) => part.classList.remove("found"));
+      this.words = this.shuffle(this.words);
+      this.currentIndex = 0;
+      this.mistakesOnCurrent = 0;
+      this.firstTryCorrect = 0;
+      this.finished = false;
+      this.feedback = "";
+    },
   },
   template: `
       <div class="start-view-wrapper">
@@ -97,10 +125,24 @@ export const LevelTwoView = {
           <div class="explore-content">
             <div class="explore-pelle" v-html="pelleSvg" @click="handlePelleClick"></div>
 
+            <!-- While playing -->
             <div class="explore-side" v-if="currentWord && !finished">
               <p class="explore-instruction">{{$language.translate('level2-instruction')}}</p>
               <div class="find-word">{{ currentWord.article }} {{ currentWord.sv }}</div>
               <p class="find-progress">{{ currentIndex + 1 }} / {{ words.length }}</p>
+              <p class="find-feedback" :class="feedback">
+                {{ feedback ? $language.translate('feedback-' + feedback) : '' }}
+              </p>
+            </div>
+
+            <!-- When all words are done -->
+            <div class="explore-side" v-if="finished">
+              <p class="find-result">
+                {{ firstTryCorrect }} / {{ words.length }} {{$language.translate('first-try')}}
+              </p>
+              <button class="word-cloud play-again" @click="playAgain">
+                {{$language.translate('play-again')}}
+              </button>
             </div>
           </div>
         </div>
