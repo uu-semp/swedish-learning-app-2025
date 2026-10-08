@@ -30,6 +30,7 @@ background-image: url("../assets/PaperPellesRoom.png");
   background-size: 100% 100%;
   background-position: left;
   min-height: 0;
+  height:100%;
 }
 
 /* the area with pelle */
@@ -41,8 +42,11 @@ background-image: url("../assets/PaperPellesRoom.png");
   border-right: 3px solid var(--color-text);
   overflow: hidden;
   min-height: 0;
-  justify-content: center;
-  align-items: flex-end;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
+  min-width: 0;
+  height:100%;
 }
 
 /* The section for the warderobe containing all clothes */
@@ -93,15 +97,51 @@ background-image: url("../assets/PaperPellesRoom.png");
     padding: 14px 16px;
 }
 
+.speech-bubble {
+  position: relative;
+  background: #fffdf5;
+  border: 3px solid #333;
+  border-radius: 45%;
+  padding: 25px 35px;
+  max-width: 400px;
+  text-align: center;
+  flex-shrink: 0;
+  box-sizing: border-box;
+  width: 80%; 
+  align-self: flex-end;
+}
+
+/* The tail pointing towards Pelle */
+.speech-bubble::after {
+  content: "";
+  position: absolute;
+  bottom: -20px;
+  left: 30%;
+  width: 30px;
+  height: 30px;
+  background: #fffdf5;
+  border-right: 3px solid #333;
+  border-bottom: 3px solid #333;
+  transform: rotate(45deg);
+}
+
+.speech-bubble p {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
 /* dressing related CSS*/
 
 /* defines the area cintaining the paper-pelle image and dropzone */
 .paper-pelle-area{
+  flex: 1;
+  min-height: 0;
+  width: 100%;
   display: flex;
   position: relative;
   justify-content: center;
   align-items: flex-end;
-  height: 90%;
 }
 
 .paper-pelle-image {
