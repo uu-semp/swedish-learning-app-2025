@@ -13,26 +13,36 @@
 <body>
 
   <div class="screen" role="application" aria-label="Dress the cat game screen">
+
     <section class = "status-bar">
       <h2><span id="level-title">Level</span> <small id="score-text" aria-live="polite"></small></h2>
       <button id="backToIndex-btn" class="undoBtn giveUpBtn" aria-label="Back to level-selection"> Back to level-selecting-page</button>
     </section>
+
     <section class="instructions">
             <p id="instruction-text">
         instructions here
       </p>
     </section>
-    <section class="stage" aria-label="Cat stage">
-              <button id="undo-btn" class="confirmBtn undoBtn" aria-label="Undo last change" disabled>Undo</button>
-        <button id="clear-btn" class="confirmBtn undoBtn clearBtn" aria-label="Remove all clothing" disabled>Remove all</button>
-      <img src="paperpelletransparent.png" alt="Cat to dress" class="cat-image"/>
-      
-      <div id="hat-box" class="dropzone hat" data-accept="hat"></div>
-      <div id="shirt-box" class="dropzone shirt" data-accept="shirt"></div>
-      <div id="pants-box" class="dropzone bottom" data-accept="pants"></div>
+
+    <section class="game-area">
+      <section class="stage" aria-label="Cat stage">
+        <div class = "control-buttons-wrapper">
+          <button id="undo-btn" class="confirmBtn undoBtn" aria-label="Undo last change" disabled>Undo</button>
+          <button id="clear-btn" class="confirmBtn undoBtn clearBtn" aria-label="Remove all clothing" disabled>Remove all</button>
+        </div>
+
+        <div class = paper-pelle-area>
+          <img src="paperpelletransparent.png" alt="Cat to dress" class="paper-pelle-image"/>
+          <div class="dropzone-area">
+            <div id="hat-box" class="dropzone headwear" data-accept="hat"></div>
+            <div id="face-box" class="dropzone face" data-accept="hat"></div>
+            <div id="shirt-box" class="dropzone top" data-accept="shirt"></div>
+          <div id="pants-box" class="dropzone bottom" data-accept="pants"></div>
+        </div>
+      </div>
 
       <div class="submissionbar" aria-live="polite">
-
         <div class="div-buttons">
           <button id="confirm-btn" class="confirmBtn" aria-label="Confirm outfit">Confirm Outfit</button>
           <button id="giveUp-btn" class="undoBtn giveUpBtn" aria-label="Give up">Give up</button>
@@ -44,17 +54,19 @@
           <button id="next-btn" class="confirmBtn undoBtn nextBtn" aria-label="Next round" disabled>Next</button>
           <button id="nextLevel-btn" class=" giveUpBtn" aria-label="Next level" >Next Level</button>
         </div>  
-    </div>
+      </div>
     </section>
 
-    <aside class="sidebar" aria-label="Wardrobe">
-      <div class="wardrobe-box" id="img-menu"></div>
+    <aside class="wardrobe" aria-label="Wardrobe"> <!-- TODO: make amount of divs dynamic when categories are implemented -->
+      <div class="wardrobe-shelf" id="img-menu"></div> 
+      <div class="wardrobe-shelf" id="img-menu"></div>
+      <div class="wardrobe-shelf" id="img-menu"></div>
+      <div class="wardrobe-shelf" id="img-menu"></div>
+      <div class="wardrobe-shelf" id="img-menu"></div>
+      
     </aside>
-
-
+    </section>
   </div>
-
-  
 
   <!-- Popup window -->
 <div id="popup" class="popup">
@@ -99,9 +111,8 @@
     nextBtn.disabled = false;
   }
 
-
   const popup = document.getElementById('popup');
-  const confirmBtn = document.getElementById('confirm-btn'); // ✅ make sure your button has this id
+  const confirmBtn = document.getElementById('confirm-btn');
   const playAgainBtn = document.getElementById('playAgainBtn');
   const backToMenuBtn = document.getElementById('backToMenuBtn');
   const resultText = document.getElementById('result-text');
@@ -122,8 +133,6 @@
     const correctHat = outfit.items.hat.imgId;
     const correctShirt = outfit.items.shirt.imgId;
     const correctPants = outfit.items.pants.imgId;
-
-
 
     const appliedHat = document.getElementById("hat-box").children[0]?.dataset.id;
     const appliedShirt = document.getElementById("shirt-box").children[0]?.dataset.id;
@@ -161,8 +170,6 @@
       resultText.textContent = "❌ Incorrect items: " + wrongItems.join(", ") + ", Try again!";
       resultText.style.color = "red";
     }
-
-    // popup.style.display = 'flex'; // show popup after checking
   });
 
   playAgainBtn.addEventListener('click', () => {
@@ -196,8 +203,26 @@
     window.location.href = "index.html";
   })
 
-</script>
 
+// temporary fix to populate all shelves (later categories)
+  const menu = document.getElementById("img-menu");
+
+  const observer = new MutationObserver(() => {
+    const shelves = document.querySelectorAll(".wardrobe-shelf");
+    const items = [...menu.querySelectorAll(".menu-item")];
+
+    if (items.length === 0) return;
+
+    observer.disconnect();
+
+    items.forEach((item, index) => {
+      shelves[index % shelves.length].appendChild(item);
+    });
+  });
+
+  observer.observe(menu, { childList: true });
+
+</script>
 
 <script src="../scripts/vocabulary.js" defer></script>
 <script type="module" src="index.js"></script>

@@ -1,56 +1,73 @@
 
+/* Main layout components*/
 
-/*game box */
+/*container for the UI*/
 .screen {
-  display: grid; 
   width: var(--screen-width);
   height: var(--screen-height);
-  grid-template-columns: 1fr 220px;
-  grid-template-rows: 1fr 1fr 490px;
+  display:flex;
+  flex-direction: column;
   overflow: hidden;
 
     /* flex-centering from base.css */
   align-items: stretch;
-  justify-content: normal;
+  justify-content: flex-start;
 }
 
+/* The top-bar displaying Level, rounds and other relevant stats*/
 .status-bar {
-  grid-column: 1 / 3;
-  grid-row: 1 / 2;
   display: flex;
   justify-content: space-between;
 }
 
-/* stage w/ pelle */
-.stage {
-  grid-column: 1 / 2;
-  grid-row: 3 / 4;
-  position: relative;
-  background:
-    linear-gradient(#f6f7f8, #f0f3f5) top/100% 60% no-repeat,
-    #e8edf1;
-  border-right: 3px solid var(--color-text); 
+/* the interactive area including stage and wardrobe*/
+.game-area{
+  display: flex;
+  flex-direction: row;
+  flex:1;
+  overflow: hidden;
+background-image: url("../assets/PaperPellesRoom.png");
+  background-size: 100% 100%;
+  background-position: left;
+  min-height: 0;
 }
 
-/* Make the sidebar a proper scroll container host */
-.sidebar {
-  grid-column: 2 / 3;
-  grid-row: 3 / 4;
-  background: #fafbfc;
-  padding: 10px;
+/* the area with pelle */
+.stage {
+  display:flex;
+  position: relative;
+  flex: 2; 
+  background-repeat: no-repeat;
+  border-right: 3px solid var(--color-text);
+  overflow: hidden;
+  min-height: 0;
+  justify-content: center;
+  align-items: flex-end;
+}
+
+/* The section for the warderobe containing all clothes */
+.wardrobe {
+  flex:1; 
+  flex-direction: column;
+  background-image: url("../assets/wardrobe_white_bg.png");
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  padding: 25px;
+  padding-top: 40px;
+  padding-bottom: 40px;
   display: flex;
   align-items: stretch;
+  gap: 15px; /* represents the visuals "planks" between the shelves to match the image*/
 
   /* critical bits */
   min-height: 0;     /* allow it to shrink within the grid row */
   overflow: hidden;  /* keep overflow inside the wardrobe-box */
 }
 
-/* Instructions bar */
+/* Section for the outfit-prompt*/
 .instructions {
-  grid-column: 1 / 3;
-  grid-row: 2 / 3;
-  border-top: 3px solid #333;
+  border-top: 3px solid var(--color-text);
   background: var(--color-surface);
   padding: 14px 16px;
   display: flex;
@@ -60,90 +77,98 @@
   gap: 16px; /* keep long descriptions from touching the buttons */
 }
 
+/* confirm / give up, feedback, next (inside the stage) */
 .submissionbar {
   position: absolute;
   bottom: 20px;
   left: 0;
   right: 0;
-
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
+/*feedback shown after submission*/
 .feedback {
     padding: 14px 16px;
 }
 
-/* OBS: dropzonernas positioner nedan är inställda efter kattbildens
-   höjd (300px) */
-.cat-image {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  height: 300px;
-  z-index: 1;
+/* dressing related CSS*/
+
+/* defines the area cintaining the paper-pelle image and dropzone */
+.paper-pelle-area{
+  display: flex;
+  position: relative;
+  justify-content: center;
+  align-items: flex-end;
+  height: 90%;
+}
+
+.paper-pelle-image {
+  height: 90%; /* leave some room at the top for the headwear*/
+  width: auto;
+  z-index: 1; /* the paper Pelle image should lay below all garments*/
   user-select: none;
   pointer-events: none;
 }
 
-/* Pelle gets a green overlay when a clothing is hovering above him */
-.stage.drop-target .cat-image {
+/* Drop highlight: Pelle glows while an item is dragged over him */
+.paper-pelle-area.drop-target .paper-pelle-image {
   filter: drop-shadow(0 0 6px #4caf50) drop-shadow(0 0 14px #4caf50);
 }
 
 /* Dropzone for clothes*/
+.dropzone-area {
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  position:absolute; /* position above cat-image*/
+  
+  /* Center any child image in the box nicely */
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+
+  /* IMPORTANT: allow clicking images inside the dropzone */
+  pointer-events: auto;
+  z-index: 2; /* above cat */
+}
+
+/* Define dropzone for different garments*/
 .dropzone {
   position: absolute;
-  z-index: 2; 
-  border: none;
-  border-radius: 6px;
-  color: red;
-  font-size: 12px;
-  text-align: center;
-
-  pointer-events: auto;
-
+  left: 0;
+  width: 100%;
   display: flex;
-  align-items: center;
-  justify-content: center;
+  justify-content: center; /*center the image within the dropzone*/
+  align-items: center; /*center the image within the dropzone*/
 }
 
-.hat     { left: 50%; top: 12%; transform: translateX(-50%); width: 120px; height: 70px; }
-.glasses { left: 51%; top: 26%; transform: translateX(-50%); width: 65px;  height: 40px; }
-.scarfs  { left: 49%; top: 39%; transform: translateX(-50%); width: 80px;  height: 50px; }
-.shirt   { left: 50%; top: 44%; transform: translateX(-50%); width: 150px; height: 100px; }
-.gloves  { left: 49%; top: 54%; transform: translateX(-50%); width: 160px; height: 50px; }
-.bottom  { left: 50%; top: 65%; transform: translateX(-50%); width: 130px; height: 80px; }
-.shoes   { left: 50%; top: 74%; transform: translateX(-50%); width: 110px; height: 40px; }
-
-/* wardrobe (sidepannel)*/
-.sidebar {
-  grid-column: 2 / 3;
-  grid-row: 3 / 4;
-  display: flex;
-  align-items: stretch;
-  padding: 10px;
-  background: #fafbfc;
-}
+/* Settings for garments areas*/
+.headwear{ height: 25%; top: 0%}
+.face {height: 25%; top:20%}
+.top   { height: 35%; top:45%; z-index: 3;} /* obs bottom and top area overlap, z-index places top above bottom*/
+.hands  { height: 20%; }
+.bottom  { height: 25%; top:70%} 
+.shoes   { height: 15%; top: 80%}
 
 
-.wardrobe-box {
-  flex: 1 1 auto;
+/*wardrobe related CSS*/
+
+/* each row of clothes*/
+.wardrobe-shelf {
+  flex: 1;
   width: 100%;
   height: 100%;
   min-height: 0;
-  padding: 8px;
+  padding: 4px;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   gap: 8px;
 
-  border: 2px dashed #999;
-  border-radius: 6px;
-  background-color: var(--color-surface);
-
-  overflow-y: auto;
+  overflow-x: auto; /* each row scrolls in horizontal direction*/
+  overflow-y: hidden; 
   -webkit-overflow-scrolling: touch; 
 }
 
@@ -153,11 +178,13 @@
   justify-content: center;
 }
 
+/*The image used for the garments*/
 .thumb {
-  width: 140px;
-  height: auto;
+  height: 100%; /*the thumb size is fitted to the height of the container*/
+  width: auto; /*width changes according to ratio*/
+  object-fit: contain; /*the original ratio of the image will be kept*/
   display: block;
-  cursor: pointer;
+  cursor: pointer; 
 
   /* lodrät swipe scrollar garderoben, sidledes drag startar dragning */
   touch-action: pan-y;
@@ -181,69 +208,19 @@
   opacity: 0.85;
   transform: scale(1.05);
   cursor: grabbing;
+  height: auto;
+  max-height: none;
+  object-fit: contain;
 }
 
-/* Instruction bar */
-.instructions {
-  grid-column: 1 / 3;
-  grid-row: 2 / 3;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px; 
-  padding: 14px 16px;
-  border-top: 3px solid var(--color-text);
-  background: var(--color-surface);
-  font-size: 16px;
-}
-
-/* Drop highlight: Pelle glows while an item is dragged over him */
-.stage.drop-target .cat-image {
-  filter: drop-shadow(0 0 6px #4caf50) drop-shadow(0 0 14px #4caf50);
-}
-
-/* Stage layering so Pelle stays visible; zones above him */
-.stage { position: relative; }
-.cat-image { z-index: 1; }
-.dropzone {
+/* Place buttons in corner of stage*/
+.control-buttons-wrapper {
   position: absolute;
-  border: none;
-  border-radius: 6px;
-  color: red;
-  font-size: 12px;
-  text-align: center;
-
-  /* IMPORTANT: allow clicking images inside the dropzone */
-  pointer-events: auto;
-
-  /* Center any child image in the box nicely */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  z-index: 2; /* above cat */
+  left: 0%;
+  top:0%
 }
 
-.instructions p {
-  margin: 0;
-  line-height: 1.4;
-}
-
-/* submission bar: confirm / give up, feedback, next (inside the stage) */
-.submissionbar {
-  position: absolute;
-  bottom: 20px;
-  left: 0;
-  right: 0;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.feedback {
-  padding: 14px 16px;
-}
-
+/*TODO: move button CSS to base*/
 .div-buttons {
   display: flex;
   flex-direction: column;
@@ -340,6 +317,7 @@
   justify-content: center;
   cursor: pointer;
 }
+
 
 .nextBtn {
   background-color: #169c1d;

@@ -18,7 +18,7 @@ export function injectHtmlObjects(htmlObjects) {
     }
 
     const slots = Array.from(document.querySelectorAll(".dropzone"));
-    const pelle = document.querySelector(".cat-image");
+    const pelle = document.querySelector(".paper-pelle-image");
     const menuImgById = new Map();
     const undoBtn = document.getElementById("undo-btn");
     const clearBtn = document.getElementById("clear-btn");
