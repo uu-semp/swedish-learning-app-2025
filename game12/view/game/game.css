@@ -618,3 +618,16 @@ hr {
   width: 102px;
   height: 90px;
 }
+
+
+.street-text {
+    width: max-content;
+    min-width: 145px;
+    box-sizing: border-box;
+    padding: 0 28px 0 10px;
+}
+
+.horizontal-road-T .street-text {
+    left: 10px;
+    transform: translateY(-50%);
+}
