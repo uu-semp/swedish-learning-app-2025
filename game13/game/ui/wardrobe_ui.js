@@ -33,10 +33,16 @@ export function injectHtmlObjects(htmlObjects) {
         menuImgById.get(wornImg.dataset.id)?.classList.remove("is-worn");
         wornImg.remove();
     }
+    window.takeOffClothing = (wornImg) => {
+    playerTakeOff(wornImg);
+    };
 
     // Puts a copy of the menu item on Pelle, replacing anything already
     // in that slot, and grays out the menu item.
     function wear(menuImg) {
+        if (menuImg.closest(".menu-item")?.classList.contains("is-wrong")) {
+            return;
+        }
         const slot = slotFor(menuImg);
         if (!slot) {
             console.warn(`[move blocked] No dropzone configured for category "${menuImg.dataset.category}".`);
@@ -121,13 +127,21 @@ export function injectHtmlObjects(htmlObjects) {
             makeDraggable(img, pelle, () => playerWear(img));
         }
 
-        img.addEventListener("click", () => {
-            if (img.classList.contains("is-worn")) {
-                playerTakeOff(slotFor(img).firstElementChild);
-            } else {
-                playerWear(img);
-            }
-        });
+    img.addEventListener("click", () => {
+        // Om plagget sitter på Pelle får det tas av
+        if (img.classList.contains("is-worn")) {
+            playerTakeOff(slotFor(img).firstElementChild);
+            return;
+        }
+
+        // Felmarkerade plagg får inte väljas igen
+        if (img.closest(".menu-item")?.classList.contains("is-wrong")) {
+            return;
+        }
+
+        // Annars välj plagget
+        playerWear(img);
+});
 
         const item = document.createElement("div");
         item.className = "menu-item";
@@ -174,7 +188,9 @@ function makeDraggable(img, dropTarget, onDrop) {
     }
 
     img.addEventListener("pointerdown", (e) => {
-        if (img.classList.contains("is-worn") || e.button !== 0) return;
+        if (img.classList.contains("is-worn") ||
+        img.closest(".menu-item")?.classList.contains("is-wrong") ||
+        e.button !== 0) return;
         const r = img.getBoundingClientRect();
         press = {
             x: e.clientX,

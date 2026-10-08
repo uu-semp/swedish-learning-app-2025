@@ -72,7 +72,7 @@
 <div id="popup" class="popup">
   <div class="popup-content">
     <h2></h2>
-    <p id="result-text"></p> <!-- ✅ added id so JS can update text -->
+    <p id="popup-result-text"></p> <!-- ✅ added id so JS can update text -->
     <div class="menu-buttons">
       <button id="playAgainBtn" class="btn">Play Again!</button>
       <button id="backToMenuBtn" class="btn">Go back to start menu!</button>
@@ -138,6 +138,12 @@
     const appliedShirt = document.getElementById("shirt-box").children[0]?.dataset.id;
     const appliedPants = document.getElementById("pants-box").children[0]?.dataset.id;
 
+    const items = [
+    ["hat", appliedHat, correctHat],
+    ["shirt", appliedShirt, correctShirt],
+    ["pants", appliedPants, correctPants]
+    ];
+
     const missingItems = [];
     const wrongItems = [];
 
@@ -151,9 +157,29 @@
       return;
     }
     attempts++; // a full outfit was confirmed
-    if (appliedHat !== correctHat) wrongItems.push("hat");
-    if (appliedShirt !== correctShirt) wrongItems.push("shirt");
-    if (appliedPants !== correctPants) wrongItems.push("pants");
+
+items.forEach(([category, applied, correct]) => {
+    if (!applied || applied === correct) return;
+
+    wrongItems.push(category);
+
+    // Markera garderobsbilden som fel
+    const menuImg = document.querySelector(
+        `#img-menu [data-id="${applied}"]`
+    );
+
+    menuImg?.closest(".menu-item")?.classList.add("is-wrong");
+
+    // Hitta plagget som sitter på Pelle
+    const wornImg = document.querySelector(
+        `#${category}-box [data-id="${applied}"]`
+    );
+
+    // Ta bort det från Pelle
+    if (wornImg) {
+        window.takeOffClothing(wornImg);
+    }
+});
 
     if (correctHat === appliedHat && correctShirt === appliedShirt && correctPants === appliedPants) {
       correct_answer = true;
