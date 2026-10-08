@@ -27,16 +27,17 @@
     <section class="stage" aria-label="Cat stage">
         <button id="undo-btn" class="confirmBtn undoBtn" aria-label="Undo last change" disabled>Undo</button>
         <button id="clear-btn" class="confirmBtn undoBtn clearBtn" aria-label="Remove all clothing" disabled>Remove all</button>
-      <img src="paperpelletransparent.png" alt="Cat to dress" class="cat-image"/>
-      
-      <div class="dropzone-areas">
-        <div id="hat-box" class="dropzone hat" data-accept="hat"></div>
-        <div id="shirt-box" class="dropzone shirt" data-accept="shirt"></div>
-        <div id="pants-box" class="dropzone bottom" data-accept="pants"></div>
+      <div class = paper-pelle-area>
+        <img src="paperpelletransparent.png" alt="Cat to dress" class="cat-image"/>
+        <div class="dropzone-areas">
+          <div id="hat-box" class="dropzone hat" data-accept="hat"></div>
+          <div id="shirt-box" class="dropzone shirt" data-accept="shirt"></div>
+          <div id="pants-box" class="dropzone bottom" data-accept="pants"></div>
+        </div>
       </div>
 
-      <div class="submissionbar" aria-live="polite">
 
+      <div class="submissionbar" aria-live="polite">
         <div class="div-buttons">
           <button id="confirm-btn" class="confirmBtn" aria-label="Confirm outfit">Confirm Outfit</button>
           <button id="giveUp-btn" class="undoBtn giveUpBtn" aria-label="Give up">Give up</button>
@@ -51,18 +52,16 @@
       </div>
     </section>
 
-    <aside class="sidebar" aria-label="Wardrobe">
-      <div class="wardrobe-box" id="img-menu"></div>
+    <aside class="sidebar" aria-label="Wardrobe"> <!-- TODO: make amount of divs dynamic when categories are implemented -->
+      <div class="wardrobe-shelf" id="img-menu"></div> 
+      <div class="wardrobe-shelf" id="img-menu"></div>
+      <div class="wardrobe-shelf" id="img-menu"></div>
+      <div class="wardrobe-shelf" id="img-menu"></div>
+      <div class="wardrobe-shelf" id="img-menu"></div>
+      
     </aside>
-
     </section>
-
-
-
-
   </div>
-
-  
 
   <!-- Popup window -->
 <div id="popup" class="popup">
@@ -203,6 +202,25 @@
     backtoIndexBtn.addEventListener('click', ( )=> {
     window.location.href = "index.html";
   })
+
+
+// temporary fix to populate all shelves (later categories)
+  const menu = document.getElementById("img-menu");
+
+  const observer = new MutationObserver(() => {
+    const shelves = document.querySelectorAll(".wardrobe-shelf");
+    const items = [...menu.querySelectorAll(".menu-item")];
+
+    if (items.length === 0) return;
+
+    observer.disconnect();
+
+    items.forEach((item, index) => {
+      shelves[index % shelves.length].appendChild(item);
+    });
+  });
+
+  observer.observe(menu, { childList: true });
 
 </script>
 

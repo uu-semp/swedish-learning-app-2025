@@ -20,7 +20,7 @@
   flex:1;
   overflow: hidden;
 background-image: url("../assets/PaperPellesRoom.png");
-  background-size: auto 100%;
+  background-size: 100% 100%;
   background-position: left;
 }
 
@@ -41,15 +41,17 @@ background-image: url("../assets/PaperPellesRoom.png");
 /* Make the sidebar a proper scroll container host */
 .sidebar {
   flex:1; 
+  flex-direction: column;
   background-image: url("../assets/wardrobe_white_bg.png");
   background-size: 100% 100%;
   background-position: center;
   background-repeat: no-repeat;
-  padding: 20px;
+  padding: 25px;
   padding-top: 40px;
   padding-bottom: 40px;
   display: flex;
   align-items: stretch;
+  gap: 15px; /* represents the visuals "planks" between the shelves to match the image*/
 
   /* critical bits */
   min-height: 0;     /* allow it to shrink within the grid row */
@@ -126,20 +128,21 @@ background-image: url("../assets/PaperPellesRoom.png");
 .bottom  { left: 50%; top: 65%; transform: translateX(-50%); width: 130px; height: 80px; }
 .shoes   { left: 50%; top: 74%; transform: translateX(-50%); width: 110px; height: 40px; }
 
-.wardrobe-box {
+.wardrobe-shelf {
   flex: 1 1 auto;
   width: 100%;
   height: 100%;
   min-height: 0;
-  padding: 8px;
+  padding: 4px;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   gap: 8px;
 
   border: 2px dashed #999;
   border-radius: 6px;
 
-  overflow-y: auto;
+  overflow-x: auto; /* each row scrolls in horizontal direction*/
+  overflow-y: hidden; 
   -webkit-overflow-scrolling: touch; 
 }
 
@@ -149,11 +152,13 @@ background-image: url("../assets/PaperPellesRoom.png");
   justify-content: center;
 }
 
+/*The image used for the garments*/
 .thumb {
-  width: 140px;
-  height: auto;
+  height: 100%; /*the thumb size is fitted to the height of the container*/
+  width: auto; /*width changes according to ratio*/
+  object-fit: contain; /*the original ratio of the image will be kept*/
   display: block;
-  cursor: pointer;
+  cursor: pointer; 
 
   /* lodrät swipe scrollar garderoben, sidledes drag startar dragning */
   touch-action: pan-y;
@@ -200,7 +205,7 @@ background-image: url("../assets/PaperPellesRoom.png");
 
 /* Stage layering so Pelle stays visible; zones above him */
 .stage { position: relative; }
-.cat-image { z-index: 1; }
+
 .dropzone {
   position: absolute;
   border: none;
