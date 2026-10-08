@@ -56,14 +56,7 @@
 /* Lime green outline on the body part under the mouse, and on the selected one */
 .explore-view .explore-pelle svg g[id]:hover,
 .explore-view .explore-pelle svg g[id].selected {
-    filter: drop-shadow(10px 0 0 #7CFC00)
-            drop-shadow(-10px 0 0 #7CFC00)
-            drop-shadow(0 10px 0 #7CFC00)
-            drop-shadow(0 -10px 0 #7CFC00)
-            drop-shadow(7px 7px 0 #7CFC00)
-            drop-shadow(-7px 7px 0 #7CFC00)
-            drop-shadow(7px -7px 0 #7CFC00)
-            drop-shadow(-7px -7px 0 #7CFC00);
+    filter: url(#outline-green);
 }
 
 /* The right side: instruction above the word list */
