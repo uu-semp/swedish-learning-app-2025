@@ -25,12 +25,12 @@ closeHelp.addEventListener("click", () => {
   helpPopup.classList.add("hidden");
 });
 
-// Level 2 instructions (Levelview.html is shared with level 1, so set the text here)
+// Level 2 instructions (level-view.html is shared with level 1, so set the text here)
 const helpText = helpPopup.querySelector("p");
 if (helpText) helpText.textContent = "First choose the right article (en or ett), then choose the clothing item matching the image!";
 
-// Level-2-only styles. They live here (not in levelview.css) so they always load
-// together with this script and never affect level 1, which shares Levelview.html.
+// Level-2-only styles. They live here (not in level-view.css) so they always load
+// together with this script and never affect level 1, which shares level-view.html.
 const LEVEL2_CSS = `
 .quiz.level2 {
   justify-content: safe center;
@@ -150,7 +150,7 @@ document.querySelector(".quiz").classList.add("level2");
 
 function goBacktoLevelSelectpage() {
     
-  window.location.href = "../Views/levelSelect.html";
+  window.location.href = "level-select.html";
 }
 
 function shuffled(arr) {
@@ -168,7 +168,11 @@ function getLabel(vocab) {
 }
 function normalizeAssetUrl(url) {
   if (!url) return "";
-  return url.startsWith("/") ? url : "/" + url;
+  if (url.startsWith("http://") || url.startsWith("https://")) return url;
+  
+  const cleanUrl = url.startsWith("/") ? url.slice(1) : url;
+  
+  return `../${cleanUrl}`;
 }
 
 
@@ -407,14 +411,14 @@ document.getElementById("nextLevelBtn").onclick = () => {
   const params = new URLSearchParams(window.location.search);
   const currentLevel = parseInt(params.get("level") || "1");
   const nextLevel = currentLevel + 1;
-  window.location.href = `../Views/AdvancedLevelview.html?level=${nextLevel}`;
+  window.location.href = `advanced-level-view.html?level=${nextLevel}`;
 };
 
 }
 
 function goBacktomainpage() {
     
-  window.location.href = "../index.html";
+  window.location.href = "index.html";
 }
 function start() {
   progress = 0;
