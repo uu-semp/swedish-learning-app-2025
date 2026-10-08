@@ -34,7 +34,8 @@ async function initializeGame() {
         questions: {},
         allStreetData: allData,
         startTime: Date.now(),
-        correctAnswersThisLevel: 0
+        correctAnswersThisLevel: 0,
+        levelComplete: false
       },
 
       created() { 
@@ -97,6 +98,7 @@ async function initializeGame() {
           console.log(`Starting level ${lv}...`);
           this.level = lv;
           this.correctAnswersThisLevel = 0;
+          this.levelComplete = false;
           this.remainingQuestions = [...this.questions[lv]];
           console.log(`Level ${lv} has ${this.remainingQuestions.length} questions`);
           this.pickNextQuestion();
@@ -134,22 +136,18 @@ async function initializeGame() {
         },
 
         completeLevel() {
+           this.levelComplete = true;
+           this.feedback = "";
+           this.feedbackClass = "";
+},
+
+        continueAfterLevelCompletion() {
           if (this.level < 3) {
-            this.feedback = `🎉 Du klarade nivå ${this.level}! Bra jobbat 👏`;
-            this.feedbackClass = "correct";
-            
-            setTimeout(() => {
-              this.startTime = Date.now();
-              this.startLevel(this.level + 1);
-            }, 2000);
+            this.startLevel(this.level + 1);
           } else {
-            this.feedback = "🏆 Du har klarat alla nivåer! Fantastiskt 🎉";
-            this.feedbackClass = "correct";
-            setTimeout(() => {
-              window.location.href = 'index.html';
-            }, 3000);
-          }
-        },
+            window.location.href = "index.html";
+        }
+      },    
 
         updateGameProgressMethod() {
           const gameProgress = getGameProgress();
