@@ -49,7 +49,7 @@ globalThis.save = window.save = {
 const { getItemsIds, getItems } = await import('../js/data.js');
 const { generateShoppingList, generateShelf } = await import('../js/gameLogic.js');
 const { initGameState, saveState, loadState } = await import('../js/state.js');
-const { getAudio, playCurrentSound, AUDIO_START_TRIM } = await import('../js/ui.js');
+const { getAudio, playCurrentSound, AUDIO_START_TRIM, playSoundEffect } = await import('../js/ui.js');
 
 const EXCLUDED = ['567f323c', '2f373051', '32191560', '440d3157', '75387a51', '19263071', '6a701276'];
 const keyOf = item => path.basename(item.img).split('.')[0].toLowerCase(); // same key as ui.js / index.html
@@ -242,4 +242,22 @@ test('missing image falls back to text without throwing', () => {
   click(shelf[0]);
   assert.ok(shelf[0].classList.contains('is-picked'));
   assert.equal(cart.children.length, 1);
+});
+
+// testing the soundeffects and that if the name is wrong for some reason there it does nothing.
+test('sound effects play the right number of notes', () => {
+  let started = 0;
+  const param = { setValueAtTime() {}, exponentialRampToValueAtTime() {} };
+
+
+  window.AudioContext = class {
+    currentTime = 0; state = 'running'; destination = {};
+    createOscillator() { return { frequency: {}, connect: n => n, start: () => started++, stop() {} }; }
+    createGain() { return { gain: param, connect: n => n }; }
+  };
+
+  playSoundEffect('win');
+  assert.equal(started, 4);
+  playSoundEffect('unknown');
+  assert.equal(started, 4);
 });
