@@ -25,6 +25,9 @@ async function initializeGame() {
         translation: "",
         feedback: "",
         feedbackClass: "",
+        showAnswerOption: false,
+        correctAnswerVisible: false,
+        correctAnswer: "",  
         hoveredHouse: null,
         houses: allHouses,
         levelStreets: streets,
@@ -103,6 +106,9 @@ async function initializeGame() {
           this.translation = "";
           this.feedback = "";
           this.feedbackClass = "";
+          this.showAnswerOption = false;
+          this.correctAnswerVisible = false;
+          this.correctAnswer = "";
           this.hoveredHouse = null;
 
           if (this.correctAnswersThisLevel >= 10) {
@@ -217,10 +223,24 @@ async function initializeGame() {
         fail() {
           this.feedback = "❌ Fel svar! Försök igen.";
           this.feedbackClass = "wrong";
+          this.showAnswerOption = true;
           setTimeout(() => {
               this.feedback = "";
               this.feedbackClass = "";
             }, 1500);
+        },
+
+        revealCorrectAnswer() {
+          if (this.currentQuestion.type === "map") {
+            this.correctAnswer =
+              `${this.currentQuestion.correct.street} ${this.currentQuestion.correct.number}`;
+          } else if (this.currentQuestion.type === "text") {
+            this.correctAnswer =
+             this.currentQuestion.correct.split(" ").slice(1).join(" ");
+          }
+
+          this.correctAnswerVisible = true;
+          this.showAnswerOption = false;
         },
 
         restartLevel() {
