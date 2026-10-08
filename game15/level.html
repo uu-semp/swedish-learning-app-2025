@@ -70,7 +70,28 @@
           <div class="map-wrapper">
             <div class="map-container">
               <img src="map.png" alt="Karta" class="map-image">
-              
+              <!-- Display address numbers with text that scales with each circle -->
+              <div
+                v-for="(h, i) in houses"
+                :key="'number-' + i"
+                class="house-number"
+                :style="{
+                  top: (h.labelCoords.y * 100) + '%',
+                  left: (h.labelCoords.x * 100) + '%'
+                }"
+              >
+                <svg viewBox="0 0 100 100" width="100%" height="100%">
+                  <text
+                    x="50"
+                    y="50"
+                    text-anchor="middle"
+                    dominant-baseline="central"
+                    font-size="42"
+                    font-weight="500"
+                    fill="#222"
+                  >{{ h.number.cardinal.literal }}</text>
+                </svg>
+              </div>
               <div
                 v-for="(h, i) in houses"
                 :key="i"

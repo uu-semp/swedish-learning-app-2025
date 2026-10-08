@@ -311,3 +311,26 @@ header h1 {
 footer {
     display: none;
 }
+/* Cover the fixed map numbers with the current address numbers */
+.house-number {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    width: 6%;
+    aspect-ratio: 1;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 3px solid #555;
+    border-radius: 50%;
+    background: #eee;
+
+    /* Allow clicks to reach the house underneath */
+    pointer-events: none;
+    z-index: 6;
+}
+
+/* Keep the level 3 pointer above the number labels */
+.map-container .pointer {
+    z-index: 7;
+}

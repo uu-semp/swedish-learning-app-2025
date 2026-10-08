@@ -1,6 +1,9 @@
 "use strict";
 
-import { setUpLevel } from './setUpLevels.js';
+import {
+  setUpLevel,
+  randomizeHouseNumbers
+} from './setUpLevels.js';
 import { getGameProgress, updateGameProgress } from './localStorage.js';
 
 $(function() {
@@ -40,62 +43,91 @@ async function initializeGame() {
         
         const selectedLevel = window.save.get("game15", "selectedLevel") || 1;
         console.log('Selected level from storage:', selectedLevel);
-        this.startLevel(selectedLevel);
+        // Restore saved progress when loading the page
+        this.startLevel(selectedLevel, true);
       },
 
       methods: {
         generateQuestions() {
-          console.log('Generating questions from street data...');
           const questions = {};
-          
-          questions[1] = this.levelStreets.map(streetInfo => {
-            const cardinalNumber = streetInfo.number.cardinal.sv;
-            return {
-              instruction: `Jag bor på ${streetInfo.streetName} ${cardinalNumber}`,
-              correct: { 
-                street: streetInfo.streetName, 
-                number: streetInfo.number.cardinal.literal 
-              },
-              type: "map",
-              streetInfo
-            };
-          });
-          
-          questions[2] = this.levelStreets.map(streetInfo => {
-            const ordinalNumber = streetInfo.number.ordinal.sv;
-            return {
-              instruction: `Jag bor i det ${ordinalNumber} huset på ${streetInfo.streetName}`,
-              correct: { 
-                street: streetInfo.streetName, 
-                number: streetInfo.number.cardinal.literal 
-              },
-              type: "map",
-              streetInfo
-            };
-          });
-          
-          questions[3] = this.levelStreets.map(streetInfo => {
-            const colorSv = streetInfo.color.sv;
-            const cardinalNumber = streetInfo.number.cardinal.sv;
-            return {
-              instruction: `Jag bor i det ${colorSv}a huset på ${streetInfo.streetName}. Stava ut min adress.`,
-              correct: `${streetInfo.streetName.toLowerCase()} ${cardinalNumber}`,
-              type: "text",
-              target: streetInfo,
-              streetInfo
-            };
-          });
-          
-          console.log('Generated questions:', questions);
+
+          // Prepare the question list for each level
+          for (const level of [1, 2, 3]) {
+            questions[level] = this.levelStreets.map(streetInfo =>
+              this.createQuestion(streetInfo, level)
+            );
+          }
+
           return questions;
         },
 
-        startLevel(lv) {
+        createQuestion(streetInfo, level) {
+          const cardinalNumber = streetInfo.number.cardinal.sv;
+
+          // Level 1: Find the house by its address number
+          if (level === 1) {
+            return {
+              instruction: `Jag bor på ${streetInfo.streetName} ${cardinalNumber}`,
+              correct: {
+                street: streetInfo.streetName,
+                number: streetInfo.number.cardinal.literal
+              },
+              type: "map",
+              streetInfo
+            };
+          }
+
+          // Level 2: Find the house by its position on the street
+          if (level === 2) {
+            const ordinalNumber = streetInfo.number.ordinal.sv;
+
+            return {
+              instruction: `Jag bor i det ${ordinalNumber} huset på ${streetInfo.streetName}`,
+              correct: {
+                street: streetInfo.streetName,
+                number: streetInfo.number.cardinal.literal
+              },
+              type: "map",
+              streetInfo
+            };
+          }
+
+          // Level 3: Spell the address number of the indicated house
+          const colorSv = streetInfo.color.sv;
+
+          return {
+            instruction: `Jag bor i det ${colorSv}a huset på ${streetInfo.streetName}. Stava ut min adress.`,
+            correct: `${streetInfo.streetName.toLowerCase()} ${cardinalNumber}`,
+            type: "text",
+            target: streetInfo,
+            streetInfo
+          };
+        },
+
+        startLevel(lv, resume = false) {
           console.log(`Starting level ${lv}...`);
+
+          const gameProgress = getGameProgress();
+          const savedCompleted = gameProgress[`level${lv}`].completed;
+
           this.level = lv;
-          this.correctAnswersThisLevel = 0;
+          this.startTime = Date.now();
+
+          // Resume unfinished levels; completed levels start a new round
+          this.correctAnswersThisLevel =
+            resume && savedCompleted < 10 ? savedCompleted : 0;
+
+          // Restore the score after a page refresh
+          if (resume) {
+            this.score = savedCompleted < 10
+              ? (gameProgress.score ?? this.correctAnswersThisLevel * 10)
+              : 0;
+          }
+
+          // Remember the current level, including automatic level changes
+          window.save.set("game15", "selectedLevel", lv);
+
           this.remainingQuestions = [...this.questions[lv]];
-          console.log(`Level ${lv} has ${this.remainingQuestions.length} questions`);
           this.pickNextQuestion();
         },
 
@@ -112,8 +144,26 @@ async function initializeGame() {
           }
 
           if (this.remainingQuestions.length > 0) {
+            // Select the house for the next question
             const i = Math.floor(Math.random() * this.remainingQuestions.length);
-            this.currentQuestion = this.remainingQuestions.splice(i, 1)[0];
+            const selectedQuestion = this.remainingQuestions.splice(i, 1)[0];
+
+            // Assign new address numbers before displaying the question
+            randomizeHouseNumbers(this.houses);
+
+            // Find the selected house by its street and fixed position
+            const selectedHouse = this.houses.find(house =>
+              house.street === selectedQuestion.streetInfo.streetName &&
+              house.position === selectedQuestion.streetInfo.coords.position
+            );
+
+            // Use the house's updated number when creating the question
+            const streetInfo = {
+              ...selectedHouse,
+              streetName: selectedHouse.street
+            };
+
+            this.currentQuestion = this.createQuestion(streetInfo, this.level);
             this.textAnswer = "";
           } else {
             console.log(`Reloading questions. Progress: ${this.correctAnswersThisLevel}/10`);
@@ -151,6 +201,8 @@ async function initializeGame() {
           const levelCompleted = this.correctAnswersThisLevel >= 10;
           
           gameProgress[levelKey].completed = this.correctAnswersThisLevel;
+          // Save the score together with the completed question count
+          gameProgress.score = this.score;
           if (levelCompleted) {
             const timeSpent = Math.round((Date.now() - this.startTime) / 60000);
             gameProgress[levelKey].timeSpent += timeSpent;
@@ -262,49 +314,47 @@ async function initializeGame() {
 }
 
 function createHousesArray(allData) {
-  const houses = [];
-  
-  allData.Ringgatan.forEach((house, index) => {
-    houses.push({
-      street: "Ringgatan",
-      number: house.number.cardinal.literal,
-      color: house.color.sv,
+  // Number label positions on the map, ordered by house position
+  const labelPositions = {
+    Ringgatan: [
+      { x: 0.484, y: 0.812 },
+      { x: 0.322, y: 0.848 },
+      { x: 0.383, y: 0.737 },
+      { x: 0.163, y: 0.741 },
+      { x: 0.201, y: 0.568 },
+      { x: 0.128, y: 0.512 },
+      { x: 0.061, y: 0.463 }
+    ],
+    Skolgatan: [
+      { x: 0.671, y: 0.664 },
+      { x: 0.539, y: 0.569 },
+      { x: 0.399, y: 0.445 },
+      { x: 0.288, y: 0.365 },
+      { x: 0.205, y: 0.299 },
+      { x: 0.053, y: 0.248 }
+    ],
+    "Parkvägen": [
+      { x: 0.796, y: 0.484 },
+      { x: 0.686, y: 0.404 },
+      { x: 0.599, y: 0.329 },
+      { x: 0.531, y: 0.276 },
+      { x: 0.455, y: 0.219 },
+      { x: 0.385, y: 0.155 },
+      { x: 0.253, y: 0.126 }
+    ]
+  };
+
+  // Collect all houses with their click areas and number label positions
+  return Object.entries(allData).flatMap(([street, houses]) =>
+    houses.map(house => ({
+      ...house,
+      street,
       x: house.coords.x,
       y: house.coords.y,
       width: house.coords.width,
       height: house.coords.height,
       position: house.coords.position,
-      ...house
-    });
-  });
-  
-  allData.Skolgatan.forEach((house, index) => {
-    houses.push({
-      street: "Skolgatan",
-      number: house.number.cardinal.literal,
-      color: house.color.sv,
-      x: house.coords.x,
-      y: house.coords.y,
-      width: house.coords.width,
-      height: house.coords.height,
-      position: house.coords.position,
-      ...house
-    });
-  });
-  
-  allData.Parkvägen.forEach((house, index) => {
-    houses.push({
-      street: "Parkvägen",
-      number: house.number.cardinal.literal,
-      color: house.color.sv,
-      x: house.coords.x,
-      y: house.coords.y,
-      width: house.coords.width,
-      height: house.coords.height,
-      position: house.coords.position,
-      ...house
-    });
-  });
-  
-  return houses;
+      labelCoords: labelPositions[street][house.coords.position - 1]
+    }))
+  );
 }
