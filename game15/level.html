@@ -57,6 +57,15 @@
             {{ feedback }}
           </div>
 
+          <button
+             v-if="showAnswerOption && !correctAnswerVisible"
+             @click="revealCorrectAnswer">
+             Visa rätt svar
+          </button>
+          <div v-if="correctAnswerVisible" class="correct-answer">
+             Rätt svar: {{ correctAnswer }}
+          </div>
+
           <div class="text-question" v-if="currentQuestion && currentQuestion.type === 'text'">
             <input 
               v-model="textAnswer" 
