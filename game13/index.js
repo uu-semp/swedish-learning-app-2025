@@ -16,6 +16,7 @@
  */
 import { loadClothes } from "./game/clothing/clothing_placer.js";
 import { SwedishClothingDescriptionGenerator } from "./game/outfit_generator.js";
+import { currentLevel } from "./game/clothing/categories.js";
 
 
 
@@ -54,7 +55,7 @@ window.nextInstruction = fetchDescription;
 window.addEventListener("DOMContentLoaded", () => {
     if (window.vocabulary && typeof window.vocabulary.load_game_data === "function") {
         fetchDescription();
-        loadClothes();
+        loadClothes(currentLevel());
     } else {
         console.log("API Unavailable")
     }

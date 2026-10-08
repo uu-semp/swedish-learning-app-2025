@@ -10,13 +10,20 @@ export class ImgObject {
   #imgDescription;
   #imgEnglishDescription;
   #category;
+  #article;
 
-  constructor(imgId, imgPath, imgDescription, category, imgEnglishDescription = null) {
+  // category is the item's body position (the word list's Subcategory).
+  constructor(imgId, imgPath, imgDescription, category, imgEnglishDescription = null, article = "") {
     this.#imgId = imgId;
     this.#imgPath = imgPath;
     this.#imgDescription = imgDescription;
     this.#category = category;
     this.#imgEnglishDescription = imgEnglishDescription;
+    this.#article = article;
+  }
+
+  getArticle() {
+    return this.#article;
   }
 
     getImgId() {

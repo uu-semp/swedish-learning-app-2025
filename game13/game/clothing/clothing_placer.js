@@ -1,54 +1,87 @@
 import { ImgObject } from "./imgObject.js";
-import { CLOTHING_CATEGORIES } from "./categories.js";
+import { CLOTHING_CATEGORY, subcategoriesForLevel } from "./categories.js";
 import { createHtmlObjects } from "../ui/clothing_ui.js";
 import { injectHtmlObjects } from "../ui/wardrobe_ui.js";
+
 /**
- * Coordinates loading and displaying the clothing items used in the game.
+ * Loads the clothing for a level from the shared word list and puts it in
+ * the wardrobe.
  *
- * Loads clothing data from the vocabulary system. The clothing items are grouped by category and represented as
- * ImgObject instances before being passed to the UI components.
+ * An entry ends up in the wardrobe when
+ *   1. its Category is "clothing",
+ *   2. its Subcategory (body position) is used in this level, and
+ *   3. its Image_url points to an image that actually loads.
+ * The word list is fetched every time the game starts, so entries added to
+ * or removed from it show up or disappear on the next start.
  */
-export function loadClothes() {
-    const CATEGORIES = CLOTHING_CATEGORIES;
-    const imgArray = [];
+export function loadClothes(level) {
+    const subcategories = subcategoriesForLevel(level);
 
-    window.vocabulary.load_game_data(13);
+    window.vocabulary.when_ready(async () => {
+        const ids = window.vocabulary.get_category(CLOTHING_CATEGORY) ?? [];
+        const candidates = [];
 
-    window.vocabulary.when_ready(() => {
-        for (const cat of CATEGORIES) {
-            const ids = window.vocabulary.get_category(cat);
+        for (const id of ids) {
+            const vocab = window.vocabulary.get_vocab(id);
+            if (!vocab) continue;
 
-            console.log(ids);
-
-            for (const id of ids) {
-                const rawGamePath = window.vocabulary.get_game_data(id);
-                console.log(rawGamePath);
-
-                const description = window.vocabulary.get_vocab(id) ?? {};
-                const path = rawGamePath;
-
-                imgArray.push(
-                    new ImgObject(
-                        id,
-                        path,
-                        description.sv ?? "",
-                        cat,
-                        description.en ?? description.sv ?? ""
-                    )
-                );
+            const subcategory = vocab.subCat?.trim().toLowerCase();
+            if (!subcategory) {
+                console.warn(`Clothing entry ${id} (${vocab.sv}) has no Subcategory, so it has no place on Pelle.`);
+                continue;
             }
+            if (!subcategories.includes(subcategory)) continue;
+            if (!vocab.img) {
+                console.warn(`Clothing entry ${id} (${vocab.sv}) has no Image_url.`);
+                continue;
+            }
+
+            candidates.push(new ImgObject(
+                id,
+                resolveImagePath(vocab.img),
+                vocab.sv ?? "",
+                subcategory,
+                vocab.en ?? vocab.sv ?? "",
+                vocab.article ?? ""
+            ));
         }
 
-        // Give clothing data to the outfit generator
-        if (
-            window.clothingGenerator &&
-            typeof window.clothingGenerator.setItemsFromImgObjects === "function"
-        ) {
-            window.clothingGenerator.setItemsFromImgObjects(imgArray);
-        }
+        // Keep only the items whose image file exists.
+        const loads = await Promise.all(candidates.map((item) => imageLoads(item.getImgPath())));
+        const items = candidates.filter((item, i) => {
+            if (!loads[i]) console.warn(`Missing image for ${item.getImgId()} (${item.getImgDescription()}): ${item.getImgPath()}`);
+            return loads[i];
+        });
 
-        // Let UI components handle creating/inserting HTML
-        const htmlObjects = createHtmlObjects(imgArray);
-        injectHtmlObjects(htmlObjects);
+        // Body positions in this level that actually have clothes.
+        const activeSubcategories = subcategories.filter((sub) =>
+            items.some((item) => item.getCategory() === sub)
+        );
+
+        window.clothingGenerator?.setItems(items, activeSubcategories);
+
+        const htmlObjects = createHtmlObjects(items);
+        injectHtmlObjects(htmlObjects, activeSubcategories);
+    });
+}
+
+/**
+ * Image_url in the word list is relative to the repository root
+ * (e.g. "assets/images/clothes/cap.png"); this page lives in game13/.
+ */
+function resolveImagePath(url) {
+    const path = url.trim();
+    if (/^([a-z]+:)?\/\//i.test(path) || path.startsWith("/") || path.startsWith("data:")) {
+        return path;
+    }
+    return "../" + path;
+}
+
+function imageLoads(src) {
+    return new Promise((resolve) => {
+        const img = new Image();
+        img.onload = () => resolve(true);
+        img.onerror = () => resolve(false);
+        img.src = src;
     });
 }

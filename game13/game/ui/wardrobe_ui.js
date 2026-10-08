@@ -10,14 +10,43 @@
  * these changes one at a time, and the remove-all button (#clear-btn)
  * takes everything off Pelle in one (undoable) step.
  */
-export function injectHtmlObjects(htmlObjects) {
-    const menuRoot = document.getElementById("img-menu");
-    if (!menuRoot) {
-        console.warn("Could not find #img-menu container");
+// Number of shelves drawn in assets/wardrobe_white_bg.png.
+const DRAWN_SHELVES = 5;
+
+export function injectHtmlObjects(htmlObjects, subcategories) {
+    const wardrobe = document.getElementById("wardrobe");
+    if (!wardrobe) {
+        console.warn("Could not find #wardrobe container");
         return;
     }
 
-    const slots = Array.from(document.querySelectorAll(".dropzone"));
+    // One shelf per body position in this level, in the level's order.
+    // The wardrobe picture has DRAWN_SHELVES shelves and the CSS spacing
+    // matches it, so there are always at least that many rows; any extra
+    // rows stay empty so the clothes line up with the drawn shelves.
+    wardrobe.replaceChildren();
+    const shelves = new Map();
+    const rowCount = Math.max(DRAWN_SHELVES, subcategories.length);
+    for (let i = 0; i < rowCount; i++) {
+        const shelf = document.createElement("div");
+        shelf.className = "wardrobe-shelf";
+        const subcategory = subcategories[i];
+        if (subcategory) {
+            shelf.dataset.subcategory = subcategory;
+            shelf.setAttribute("aria-label", subcategory);
+            shelves.set(subcategory, shelf);
+        } else {
+            shelf.setAttribute("aria-hidden", "true");
+        }
+        wardrobe.appendChild(shelf);
+    }
+
+    // Only the slots on Pelle that this level uses are shown.
+    const allSlots = Array.from(document.querySelectorAll(".dropzone"));
+    allSlots.forEach((s) => {
+        s.style.display = subcategories.includes(s.dataset.accept) ? "" : "none";
+    });
+    const slots = allSlots.filter((s) => subcategories.includes(s.dataset.accept));
     const pelle = document.querySelector(".paper-pelle-image");
     const menuImgById = new Map();
     const undoBtn = document.getElementById("undo-btn");
@@ -132,7 +161,7 @@ export function injectHtmlObjects(htmlObjects) {
         const item = document.createElement("div");
         item.className = "menu-item";
         item.appendChild(img);
-        menuRoot.appendChild(item);
+        shelves.get(img.dataset.category)?.appendChild(item);
     });
 }
 

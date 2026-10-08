@@ -35,10 +35,12 @@
         <div class = paper-pelle-area>
           <img src="paperpelletransparent.png" alt="Cat to dress" class="paper-pelle-image"/>
           <div class="dropzone-area">
-            <div id="hat-box" class="dropzone headwear" data-accept="hat"></div>
-            <div id="face-box" class="dropzone face" data-accept="hat"></div>
-            <div id="shirt-box" class="dropzone top" data-accept="shirt"></div>
-          <div id="pants-box" class="dropzone bottom" data-accept="pants"></div>
+            <!-- data-accept is the word list's Subcategory for clothes worn there -->
+            <div id="hat-box" class="dropzone headwear" data-accept="hats"></div>
+            <div id="face-box" class="dropzone face" data-accept="accessories"></div>
+            <div id="shirt-box" class="dropzone top" data-accept="shirts"></div>
+            <div id="pants-box" class="dropzone bottom" data-accept="pants"></div>
+            <div id="feet-box" class="dropzone shoes" data-accept="feet"></div>
         </div>
       </div>
 
@@ -57,14 +59,8 @@
       </div>
     </section>
 
-    <aside class="wardrobe" aria-label="Wardrobe"> <!-- TODO: make amount of divs dynamic when categories are implemented -->
-      <div class="wardrobe-shelf" id="img-menu"></div> 
-      <div class="wardrobe-shelf" id="img-menu"></div>
-      <div class="wardrobe-shelf" id="img-menu"></div>
-      <div class="wardrobe-shelf" id="img-menu"></div>
-      <div class="wardrobe-shelf" id="img-menu"></div>
-      
-    </aside>
+    <!-- Shelves are created by wardrobe_ui.js, one per body position in the level -->
+    <aside class="wardrobe" id="wardrobe" aria-label="Wardrobe"></aside>
     </section>
   </div>
 
@@ -128,22 +124,15 @@
     correct_answer = false; // Reset correct_answer before checking
     if (!outfit || roundOver) return;
 
-    //Just add more categories here based on level, maybe add an if-statement 
-    // to check appropriate categories
-    const correctHat = outfit.items.hat.imgId;
-    const correctShirt = outfit.items.shirt.imgId;
-    const correctPants = outfit.items.pants.imgId;
-
-    const appliedHat = document.getElementById("hat-box").children[0]?.dataset.id;
-    const appliedShirt = document.getElementById("shirt-box").children[0]?.dataset.id;
-    const appliedPants = document.getElementById("pants-box").children[0]?.dataset.id;
-
+    // Compare what Pelle wears with the outfit, one body position at a time.
     const missingItems = [];
     const wrongItems = [];
-
-    if (!appliedHat) missingItems.push("hat");
-    if (!appliedShirt) missingItems.push("shirt");
-    if (!appliedPants) missingItems.push("pants");
+    for (const [subcategory, item] of Object.entries(outfit.items)) {
+      const zone = document.querySelector(`.dropzone[data-accept="${subcategory}"]`);
+      const appliedId = zone?.firstElementChild?.dataset.id;
+      if (!appliedId) missingItems.push(subcategory);
+      else if (appliedId !== item.imgId) wrongItems.push(subcategory);
+    }
 
     if (missingItems.length > 0) {
       resultText.textContent = `❌ Missing items: ${missingItems.join(", ")}, Try again!`;
@@ -151,11 +140,8 @@
       return;
     }
     attempts++; // a full outfit was confirmed
-    if (appliedHat !== correctHat) wrongItems.push("hat");
-    if (appliedShirt !== correctShirt) wrongItems.push("shirt");
-    if (appliedPants !== correctPants) wrongItems.push("pants");
 
-    if (correctHat === appliedHat && correctShirt === appliedShirt && correctPants === appliedPants) {
+    if (wrongItems.length === 0) {
       correct_answer = true;
       resultText.textContent = "✅ Correct!";
       resultText.style.color = "green";
@@ -204,23 +190,6 @@
   })
 
 
-// temporary fix to populate all shelves (later categories)
-  const menu = document.getElementById("img-menu");
-
-  const observer = new MutationObserver(() => {
-    const shelves = document.querySelectorAll(".wardrobe-shelf");
-    const items = [...menu.querySelectorAll(".menu-item")];
-
-    if (items.length === 0) return;
-
-    observer.disconnect();
-
-    items.forEach((item, index) => {
-      shelves[index % shelves.length].appendChild(item);
-    });
-  });
-
-  observer.observe(menu, { childList: true });
 
 </script>
 

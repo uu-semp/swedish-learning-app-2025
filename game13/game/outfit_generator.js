@@ -1,19 +1,21 @@
-//import { ImgObject } from "./clothing/ImgObject.js";
-import { CLOTHING_CATEGORIES } from "./clothing/categories.js";
 // Helper function to get random item from array
 export function getRandomItem(array) {
-    return array[Math.floor(Math.random() * array.length)];
+  return array[Math.floor(Math.random() * array.length)];
 }
 
-// Swedish clothing generator - creates random outfit descriptions and checks player answers
-//To large function, we should modularise and break it into more functions
+/**
+ * Creates random outfit descriptions from the clothing that was loaded
+ * from the word list.
+ *
+ * The outfit has one item for every body position (subcategory) in the
+ * current level, in the level's order.
+ */
 export class SwedishClothingDescriptionGenerator {
+  #resolveLoad = null;
+
   constructor() {
-    this.hats = [];
-    this.shirts = [];
-    this.pants = [];
-    this.extraCategories = {};
-    this.requiredCategories = [...CLOTHING_CATEGORIES];
+    this.itemsBySubcategory = {};
+    this.subcategories = [];
     this.descriptionPrefixes = [
       "Idag tar Pelle på sig",
       "Kläderna Pelle har valt idag är",
@@ -27,169 +29,73 @@ export class SwedishClothingDescriptionGenerator {
     });
   }
 
-  #resolveLoad = null;
+  /**
+   * @param {ImgObject[]} imgObjects  clothing available in this level
+   * @param {string[]} subcategories  body positions to dress, in order
+   */
+  setItems(imgObjects, subcategories) {
+    this.subcategories = [...subcategories];
+    this.itemsBySubcategory = {};
 
-  normalizeRequiredCategory(category) {
-    if (!category) return null;
-    const value = category.trim().toLowerCase();
-    if (this.requiredCategories.includes(value)) {
-      return value;
-    }
-
-    switch (value) {
-      case "head":
-      case "hat":
-      case "hats":
-        return "hat";
-      case "torso":
-      case "upper":
-      case "shirt":
-      case "shirts":
-        return "shirt";
-      case "legs":
-      case "lower":
-      case "pant":
-      case "pants":
-        return "pants";
-      default:
-        return null;
-    }
-  }
-
-  markLoaded() {
-    if (!this.isLoaded) {
-      this.isLoaded = true;
-      if (typeof this.#resolveLoad === "function") {
-        this.#resolveLoad();
-        this.#resolveLoad = null;
-      }
-    }
-  }
-
-  resetCollections() {
-    this.hats = [];
-    this.shirts = [];
-    this.pants = [];
-    this.extraCategories = {};
-    this.isLoaded = false;
-  }
-
-  addItem(item) {
-    if (!item || !item.category) {
-      return;
-    }
-
-    if (item.category === "hat") {
-      this.hats.push(item);
-    } else if (item.category === "shirt") {
-      this.shirts.push(item);
-    } else if (item.category === "pants") {
-      this.pants.push(item);
-    } else {
-      if (!this.extraCategories[item.category]) {
-        this.extraCategories[item.category] = [];
-      }
-      this.extraCategories[item.category].push(item);
-    }
-  }
-
-  setItemsFromImgObjects(imgObjects = []) {
-    this.resetCollections();
-
-    imgObjects.forEach((imgObject) => {
-      if (!imgObject) return;
-      const category = this.normalizeRequiredCategory(imgObject.getCategory()) ?? imgObject.getCategory();
+    for (const imgObject of imgObjects) {
+      const subcategory = imgObject.getCategory();
+      const article = imgObject.getArticle?.() ?? "";
       const swedish = imgObject.getImgDescription();
-      const english = typeof imgObject.getEnglishDescription === "function"
-        ? (imgObject.getEnglishDescription() ?? swedish)
-        : swedish;
-
       const item = {
         file: imgObject.getImgPath(),
         swedish,
-        english,
-        category,
+        // "en mössa", "ett bälte"; plural-only words like "jeans" have no article
+        swedishWithArticle: article ? `${article} ${swedish}` : swedish,
+        english: imgObject.getEnglishDescription() ?? swedish,
+        category: subcategory,
         imgId: imgObject.getImgId()
       };
+      (this.itemsBySubcategory[subcategory] ??= []).push(item);
+    }
 
-      if (!category) {
-        console.warn("Uncategorized clothing item", item);
-        return;
-      }
+    this.isLoaded = true;
+    this.#resolveLoad?.();
+    this.#resolveLoad = null;
 
-      this.addItem(item);
-    });
-
-    this.markLoaded();
-
-    console.log("Clothing items loaded from ImgObjects", {
-      hats: this.hats.length,
-      shirts: this.shirts.length,
-      pants: this.pants.length
-    });
+    console.log("Clothing items loaded from the word list",
+      Object.fromEntries(this.subcategories.map((s) => [s, this.itemsBySubcategory[s]?.length ?? 0])));
   }
+
   // Generate outfit for game
   generateOutfit() {
     if (!this.isLoaded) {
       console.warn("Clothing data not ready yet. Call generateOutfit after loadPromise resolves.");
       return null;
     }
-    const categoryPools = {
-      hat: this.hats,
-      shirt: this.shirts,
-      pants: this.pants,
-      ...this.extraCategories
-    };
-
-    const selectedItems = {};
-    const missingCategory = this.requiredCategories.find(category => {
-      const pool = categoryPools[category] ?? [];
-      if (!Array.isArray(pool) || pool.length === 0) {
-        console.error(`Missing clothing data for category: ${category}`);
-        return true;
-      }
-
-      selectedItems[category] = getRandomItem(pool);
-      return false;
-    });
-
-    if (missingCategory) {
+    if (this.subcategories.length === 0) {
+      console.error("No clothing available for this level.");
       return null;
     }
 
+    const items = {};
+    for (const subcategory of this.subcategories) {
+      items[subcategory] = getRandomItem(this.itemsBySubcategory[subcategory]);
+    }
+
+    const chosen = this.subcategories.map((s) => items[s]);
     const prefix = getRandomItem(this.descriptionPrefixes);
-    const swedishList = this.requiredCategories.map(category => selectedItems[category].swedish);
-    const englishList = this.requiredCategories.map(category => selectedItems[category].english);
+    const swedishText = `${prefix} ${joinList(chosen.map((i) => i.swedishWithArticle), "och")}.`;
+    const englishText = `Today Pelle is wearing ${joinList(chosen.map((i) => i.english), "and")}.`;
 
-    const swedishText = `${prefix} ${swedishList.join(', ')}.`;
-    const englishText = `Today Pelle is wearing ${englishList.join(', ')}.`;
-
-    const assetFiles = this.requiredCategories.map(category => selectedItems[category].file);
-    const byCategory = this.requiredCategories.reduce((acc, category) => {
-      acc[category] = selectedItems[category].file;
-      return acc;
-    }, {});
-
-    const items = this.requiredCategories.reduce((acc, category) => {
-      acc[category] = selectedItems[category];
-      return acc;
-    }, {});
-
-    const correctAnswer = {
-      filenames: assetFiles,
-      byCategory
-    };
-
-    if (byCategory.hat) correctAnswer.hatFile = byCategory.hat;
-    if (byCategory.shirt) correctAnswer.shirtFile = byCategory.shirt;
-    if (byCategory.pants) correctAnswer.pantsFile = byCategory.pants;
+    const byCategory = Object.fromEntries(chosen.map((i) => [i.category, i.file]));
 
     return {
       swedish: swedishText,
       english: englishText,
-      assets: assetFiles,
-      correctAnswer,
+      assets: chosen.map((i) => i.file),
+      correctAnswer: { filenames: chosen.map((i) => i.file), byCategory },
       items
     };
   }
+}
+
+// ["a", "b", "c"] -> "a, b och c"
+function joinList(words, and) {
+  if (words.length <= 1) return words.join("");
+  return `${words.slice(0, -1).join(", ")} ${and} ${words[words.length - 1]}`;
 }

@@ -29,6 +29,7 @@ import * as DB from "./database_type.js"
  * @property {string} Article - The grammatical article (e.g., "ett" or "en").
  * @property {string} Audio_url - URL or path to audio pronunciation (may be empty).
  * @property {string} Category - Category of the item (e.g., "furniture").
+ * @property {string} Subcategory - Subcategory of the item (e.g., "hats" from category clothing). (may be empty)
  * @property {string} English - English word (e.g., "window").
  * @property {string} ID - Unique identifier for the entry.
  * @property {string} Image_copyright_info - Copyright or license information for the image.
@@ -124,6 +125,7 @@ export async function loaddb(game_id = -1) {
     if (row["Image_copyright_info"]?.trim())
       meta.img_copyright = row["Image_copyright_info"];
     if (row["Audio_url"]?.trim()) meta.audio = row["Audio_url"];
+    if (row["Subcategory"]?.trim()) meta.subCat = row["Subcategory"].trim();
     idToMeta[id] = meta;
 
     // Category
