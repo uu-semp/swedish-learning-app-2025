@@ -240,7 +240,7 @@
             try { sessionStorage.setItem('game11_end_stats', JSON.stringify(payload)); } catch (_) { }
 
             // Tell parent to make the iframe clickable while end screen is shown
-            try { window.parent.postMessage({ type: 'endgameOpen' }, '*'); } catch (_) { }
+            try { window.parent.postMessage({ type: 'endgameOpen', won: win }, '*'); } catch (_) { }
 
             // NEW: Tell parent that the game has ended and if it was won, so the stats API updates
             try {
