@@ -40,9 +40,9 @@ $(function () {
     $("#" + screenId).show();
   }
 
-  async function mapCards(mode, category) {
+  async function mapCards(mode, category, dialect) {
     try {
-      currentPairs = await loadPairs(numPairs, category);
+      currentPairs = await loadPairs(numPairs, category, dialect);
       buildGrid(currentPairs, mode);
     } catch (error) {
       console.error("Error loading data:", error);
@@ -170,6 +170,8 @@ $(function () {
   $("#start-game").on("click", async function () {
     const mode = $(".mode-btn.selected").data("mode"); // "picture", "spelling", "listening" or "dialect"
     const category = $(".category-btn.selected").data("category"); // "furniture", "clothing" or "food"
+    // The dialect row is hidden in the other modes but keeps its selection, so only use it in Dialect mode
+    const dialect = mode === "dialect" ? $(".dialect-btn.selected").data("dialect") : "standard";
 
     // Spelling has its own screens and logic in spelling.js
     if (mode === "spelling") {
@@ -182,7 +184,7 @@ $(function () {
     $("#game-title").text(mode_titles[mode]);
 
     $(this).prop("disabled", true).text("Loading...");
-    await mapCards(mode, category);
+    await mapCards(mode, category, dialect);
     $(this).prop("disabled", false).text("Start Game");
     resetGame();
 

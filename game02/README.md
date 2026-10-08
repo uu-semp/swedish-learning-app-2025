@@ -18,6 +18,7 @@ The game is composed of three main files. The stylesheet and the script are spli
     * `js/cards.js`: Picks random pairs, prepares the cards and draws them on the board. It is imported by `game-data.js`.
     * `js/timer.js`: The game clock.
     * `js/hints.js`: The hint modal.
+* `assets/audio/dialects/`: The dialect recordings, with one folder per dialect: `malmo` (files start with `s_`), `gothenburg` (`g_`) and `finnish-swedish` (`f_`). A file is named after its prefix, the English word from the word list and `.mp3`, for example `malmo/s_bed.mp3`. So far there are recordings for furniture only. The standard recordings are not stored here, they come from the shared word list.
 
 ## How the Code Works
 
@@ -30,7 +31,7 @@ The HTML file is structured into three main sections, each representing a differ
     * The game mode buttons Picture, Spelling, Listening and Dialect. The selected mode is highlighted. Spelling is not built yet: it starts the same picture board as Picture, with a different heading, although its info text describes typing the word.
     * An info box that shows how the selected mode works.
     * The "Start Game" button.
-    * A row of dialect buttons: Standard Swedish, Malmö, Gothenburg and Finnish-Swedish. The row is only shown while Dialect is selected. Malmö, Gothenburg and Finnish-Swedish are greyed out and cannot be selected when the chosen category has no recordings for them. The categories that have such recordings are listed in `dialect_categories` in `index.js` (so far only Furniture). Standard Swedish can always be selected. The dialect choice is not used yet: all dialects play the same recordings as Listening.
+    * A row of dialect buttons: Standard Swedish, Malmö, Gothenburg and Finnish-Swedish. The row is only shown while Dialect is selected. Malmö, Gothenburg and Finnish-Swedish are greyed out and cannot be selected when the chosen category has no recordings for them. The categories that have such recordings are listed in `dialect_categories` in `index.js` (so far only Furniture). Standard Swedish can always be selected. The selected dialect decides which recordings the sound cards play in Dialect mode (see `loadPairs()` below). Standard Swedish plays the same recordings as Listening.
 * **Game Screen (`#game-screen`):** This screen is displayed when the game starts. It contains:
     * A progress bar along the top (`#progress-bar`) that reads "x / 8 pairs".
     * A heading (`#game-title`) that follows the selected mode.
@@ -55,7 +56,7 @@ This file contains the core logic of the game, which is built using jQuery. It i
 
 * `js/game-data.js`:
     * **`initDb()`:** This function starts the download of the shared word list when the page loads, while the user reads the menu. It only starts one download, and every later call waits for that same one.
-    * **`loadPairs(numPairs, category)`:** This function waits for the word list, takes the vocabulary category given by `category` ("furniture", "clothing" or "food") from `scripts/vocabulary_await.js`, keeps only the words that have a picture and picks `numPairs` of them at random. Each pair holds the Swedish and English word, the picture and the recording. The pairs are tagged with the category. If the category does not exist, the function logs an error to the console and returns an empty list.
+    * **`loadPairs(numPairs, category, dialect)`:** This function waits for the word list, takes the vocabulary category given by `category` ("furniture", "clothing" or "food") from `scripts/vocabulary_await.js`, keeps only the words that have a picture and picks `numPairs` of them at random. Each pair holds the Swedish and English word, the picture and the recording. The pairs are tagged with the category. If the category does not exist, the function logs an error to the console and returns an empty list. `dialect` is "standard" unless another value is given. For "standard" the recording is the one from the word list. For "malmo", "gothenburg" and "finnish-swedish" the recording is the dialect recording of the word, found in `assets/audio/dialects/<dialect>/` and named `<prefix><English word from the vocabulary>.mp3`. The prefixes ("s_", "g_" and "f_") are in `dialect_prefixes`. The stored path starts with `game02/`, because `clickCard()` puts `../` in front of it. `dialect_missing` lists, for every dialect, the furniture words that still have no recording, and `loadPairs()` leaves those words out before it picks the pairs. A word is removed from the list when its recording is added.
     * **`buildGrid(pairs, mode)`:** This function creates the cards with `prepareGridItems()` and draws them with `renderGrid()`.
 * `js/cards.js`:
     * **`getRandomPairs(data, numPairs)`:** This function shuffles a copy of the list and returns the first `numPairs` items.
@@ -86,7 +87,7 @@ This file contains the core logic of the game, which is built using jQuery. It i
 These functions are defined in `index.js`:
 
 * **`showScreen(screenId)`:** This function controls which of the three game screens is currently visible to the user.
-* **`mapCards(mode, category)`:** This function loads the cards for a game. It calls `loadPairs(numPairs, category)`, stores the pairs in `currentPairs` and calls `buildGrid(currentPairs, mode)` to draw the cards on the game board. Errors are logged to the console.
+* **`mapCards(mode, category, dialect)`:** This function loads the cards for a game. It calls `loadPairs(numPairs, category, dialect)`, stores the pairs in `currentPairs` and calls `buildGrid(currentPairs, mode)` to draw the cards on the game board. Errors are logged to the console.
 * **`resetFlipState()`:** This function turns the flipped cards face down again and clears `flippedCards` and `allowFlipBack`.
 * **`updateProgress()`:** This function sets the width of the progress bar and its text ("x / 8 pairs") from `corrects`.
 * **`resetGame()`:** This function resets the game state, including the number of correct matches and misses, the progress bar, the moves counter, the flipped cards and the timer.
@@ -95,7 +96,7 @@ These functions are defined in `index.js`:
 * **`notMatch()`:** This function counts a failed attempt. It increments `misses` and updates the moves counter.
 * **`clickCard()`:** This is the event handler for when a user clicks on a card. It ignores clicks on matched cards and clicks that arrive while a pair is being checked. If two cards that did not match are face up (`allowFlipBack`), the click turns them face down again and does nothing else. Otherwise it flips the card (a sound card also plays its recording). When two cards are flipped, it compares their `data-pair-id`. A match is marked `matched` at once, and after 1 second the two cards fade out and `foundMatch()` runs. A mismatch runs `notMatch()` after 0.5 seconds and leaves both cards face up.
 * **Button handlers:**
-    * "Start Game" reads the selected mode and the selected category, sets the heading from `mode_titles` and shows "Loading..." on the button while `mapCards(mode, category)` runs. Then it calls `resetGame()` (so every game starts from zero), shows the game screen and starts the timer.
+    * "Start Game" reads the selected mode and the selected category. It only reads the selected dialect in Dialect mode, because the dialect buttons are hidden in the other modes but keep their selection. In the other modes the dialect is "standard". It sets the heading from `mode_titles` and shows "Loading..." on the button while `mapCards(mode, category, dialect)` runs. Then it calls `resetGame()` (so every game starts from zero), shows the game screen and starts the timer.
     * "Quit" stops the timer, resets the game and shows the menu screen.
     * "Play Again" triggers a click on "Start Game", so a new game starts at once in the same category and mode, with new cards.
     * "Go to main menu" resets the game and shows the menu screen.
@@ -103,11 +104,17 @@ These functions are defined in `index.js`:
     * The mode buttons mark the clicked mode as selected, show its text in the info box and show the dialect buttons only for Dialect. The dialect buttons only mark the clicked dialect as selected.
     * The cards are created when a game starts, so their click handler (`clickCard()`) is attached to `document` (event delegation).
 
+#### Adding a Dialect Recording:
+
+1.  Save the file as `assets/audio/dialects/<dialect>/<prefix><English word>.mp3`. The English word must be spelled exactly as in the word list, for example `refrigerator` or `livingroom`.
+2.  Remove the word from that dialect's list in `dialect_missing` in `js/game-data.js`. Until then the word is left out of the game.
+3.  For a category other than furniture, add the category to `dialect_categories` in `index.js` when its recordings exist, and list the words of that category that still have no recording in `dialect_missing`.
+
 #### Game Flow:
 
 1.  The game starts on the menu screen. The word list starts downloading in the background.
 2.  The user picks a word category (Furniture is selected from the start) and a game mode. The info box shows how that mode works.
-3.  When the user clicks "Start Game", `mapCards()` loads 8 random pairs of the chosen category and draws the 16 cards on the board. The button says "Loading..." until the cards are ready.
+3.  When the user clicks "Start Game", `mapCards()` loads 8 random pairs of the chosen category (with the recordings of the chosen dialect in Dialect mode) and draws the 16 cards on the board. The button says "Loading..." until the cards are ready.
 4.  The game is reset, the `game-screen` is shown with the heading for the selected mode, and the timer starts.
 5.  The user clicks on cards to flip them. The `clickCard()` function handles the logic for checking for matches. A sound card plays its recording when it is flipped, and the "Help" button shows the English word for every flipped word card.
 6.  If two cards match, they are marked as matched at once, so they cannot be clicked. After 1 second they fade out, the `corrects` count is incremented and the progress bar grows.
