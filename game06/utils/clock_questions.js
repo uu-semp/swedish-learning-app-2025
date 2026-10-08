@@ -67,11 +67,17 @@ export function createClockQuestion(hour, minute) {
     throw new RangeError("Time must use a valid hour [0-12] and a five-minute interval [0-55].");
   }
 
+  const tags = new Set();
+  for (const [tag, minutes] of TAG_MINUTES) {
+    if (minutes.includes(minute)) tags.add(tag);
+  }
+
   return {
     id: `set-clock-${hour}-${minute}`,
     type: "clock",
     hour,
     minute,
+    tags,
     question: swedishTimePhrase(hour, minute),
     answer: `${hour || 12}:${String(minute).padStart(2, "0")}`,
   };
