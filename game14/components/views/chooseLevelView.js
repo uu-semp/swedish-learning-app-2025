@@ -41,6 +41,14 @@ export const ChooseLevelView = {
                 :selected="selectedLanguage === 'en'"
                 @select="languageSwitch($event)"
               ></language-flag-button>
+
+              <capsule-button
+                size="sm"
+                label="?"
+                :translate-key="false"
+                :title="$language.translate('help')"
+                @click="switchTo('HelpView', 'ChooseLevelView')"
+              ></capsule-button>
           </div>
 
           <h1 class="main-text">{{$language.translate('choose-level')}}</h1>    
@@ -64,7 +72,7 @@ export const ChooseLevelView = {
               ></capsule-button>
           </div>
 
-          <div class="go-back-wrapper"> 
+          <div class="button-container choose-level-back">
               <capsule-button
                 label="go-back"
                 size="md"

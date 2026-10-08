@@ -5,18 +5,16 @@ export const ExploreLevelOneView = {
   props: ["switchTo"],
   data() {
     return {
-      pelleSvg: "",       // The SVG code of Pelle, loaded when the page opens
-      words: [],          // The body part words from the database
-      selectedPart: null, // English name of the selected body part, e.g. "nose"
+      pelleSvg: "",
+      words: [],
+      selectedPart: null,
+      showModal: false,
     };
   },
   async mounted() {
-    // Load the SVG as text so it becomes part of the page,
-    // which makes every body part clickable
     const response = await fetch("./components/assets/pellecharacterbody.svg");
     this.pelleSvg = await response.text();
 
-    // Load the body part words from the shared vocabulary database
     try {
       await loaddb();
       this.words = get_category("body-part").map((id) => get_vocab(id));
@@ -25,46 +23,58 @@ export const ExploreLevelOneView = {
     }
   },
   watch: {
-    // Every time selectedPart changes, highlight the matching body part on Pelle
     selectedPart(newPart) {
       const svg = this.$el.querySelector(".explore-pelle svg");
       if (!svg) return;
 
-      // Remove the highlight from the previously selected body part
       svg.querySelectorAll("g.selected").forEach((part) => part.classList.remove("selected"));
 
-      // Highlight the new one, e.g. the group with id="nose"
       if (newPart) {
-        const part = svg.querySelector("#" + newPart);
+        const part = svg.querySelector(`#${newPart}`);
         if (part) part.classList.add("selected");
       }
     },
   },
   methods: {
-    // Select a body part, or unselect it if it is already selected
+    openModal() {
+      this.showModal = true;
+    },
+    closeModal() {
+      this.showModal = false;
+    },
+    confirmExit() {
+      this.switchTo("ChooseLevelView");
+      this.closeModal();
+    },
+    handleOverlayClick(event) {
+      if (event.target.classList.contains("modal-overlay")) {
+        this.closeModal();
+      }
+    },
     selectPart(partName) {
-      //console.log("Selected:", partName);
       this.selectedPart = this.selectedPart === partName ? null : partName;
     },
-
-    // Find out which body part was clicked on Pelle
     handlePelleClick(event) {
       const part = event.target.closest("g[id]");
       if (part) {
-        event.stopPropagation(); // Don't let the click reach the background
+        event.stopPropagation();
         this.selectPart(part.id);
       }
     },
-
-        // Unselect when clicking somewhere else on the page
     clearSelection() {
       this.selectedPart = null;
     },
   },
-   template: `
+  template: `
       <div class="start-view-wrapper">
         <div class="sky explore-view" @click="clearSelection">
-          <h1 class="explore-title">{{$language.translate('level1')}}</h1>
+          <div class="explore-topbar">
+            <div class="explore-topbar-spacer"></div>
+            <h1 class="explore-title">{{$language.translate('level1')}}</h1>
+            <div class="explore-topbar-actions">
+              <exit-game-button @click="openModal"></exit-game-button>
+            </div>
+          </div>
 
           <div class="explore-content">
             <div class="explore-pelle" v-html="pelleSvg" @click="handlePelleClick"></div>
@@ -82,6 +92,16 @@ export const ExploreLevelOneView = {
                 >
                   {{ word.article }} {{ word.sv }}
                 </button>
+              </div>
+            </div>
+          </div>
+
+          <div v-if="showModal" class="modal-overlay" @click="handleOverlayClick">
+            <div class="modal-content" @click.stop>
+              <h2>{{$language.translate('exit-confirmation')}}</h2>
+              <div class="modal-buttons">
+                <capsule-button label="yes" size="md" @click="confirmExit"></capsule-button>
+                <capsule-button label="no" size="md" @click="closeModal"></capsule-button>
               </div>
             </div>
           </div>

@@ -235,6 +235,10 @@ export const LevelOneView = {
                 </div>
                 
                 <dress-pelle-prompt :item="currentItem"></dress-pelle-prompt>
+
+                <div class="level-header-actions">
+                    <exit-game-button @click="openModal"></exit-game-button>
+                </div>
     
             </div>
             
@@ -254,7 +258,6 @@ export const LevelOneView = {
             </div>
 
             <div>
-                <capsule-button label="exit" size="md" @click="openModal"></capsule-button>
                 <info-button @click="this.showInfo=true"></info-button>
                 <license-button @click="this.showLicense=true"></license-button>
             </div>
