@@ -60,7 +60,7 @@ export const SLOTS = [
 
 /**
  * Every garment. Files live in assets/game13/clothes/<key>/ as
- * line.png, mask.png and optionally shade.png, all exported on
+ * line.png, mask.png and optionally shade.png (set extra.shade), all exported on
  * Pelle's canvas.
  *
  * layer: drawing order on Pelle (higher is on top).
@@ -70,12 +70,22 @@ export const SLOTS = [
  */
 const CLOTHES_DIR = "../assets/game13/clothes";
 
-function garment(key, sv, slot, layer, patternable) {
+/**
+ * extra.wordList: the item's English name in the shared word list, when it
+ *   differs from key (the game finds garments by that name).
+ * extra.pair: the word list has the singular ("stövel"), but the picture is
+ *   a pair, so the game uses sv (plural) and plural adjectives instead.
+ * extra.shade: true once a shade.png has been exported for the garment
+ *   (otherwise it is not requested, to avoid 404 errors in the console).
+ */
+function garment(key, sv, slot, layer, patternable, extra = {}) {
     return {
         key, sv, slot, layer, patternable,
+        wordList: extra.wordList ?? key,
+        pair: extra.pair ?? false,
         line:  `${CLOTHES_DIR}/${key}/line.png`,
         mask:  `${CLOTHES_DIR}/${key}/mask.png`,
-        shade: `${CLOTHES_DIR}/${key}/shade.png`,
+        shade: extra.shade ? `${CLOTHES_DIR}/${key}/shade.png` : null,
     };
 }
 
@@ -87,7 +97,7 @@ export const ITEMS = [
     garment("glasses",    "glasögon",     "eyes",         60, false),
     garment("sunglasses", "solglasögon",  "eyes",         60, false),
 
-    garment("earrings",   "örhängen",     "ears",         60, false),
+    garment("earrings",   "örhängen",     "ears",         60, false, { pair: true }),
 
     garment("scarf",      "halsduk",      "neck",         60, true),
     garment("necklace",   "halsband",     "neck",         60, false),
@@ -102,11 +112,11 @@ export const ITEMS = [
 
     garment("tie",        "slips",        "topAccessory", 50, true),
 
-    garment("trousers",   "byxor",        "bottoms",      20, true),
+    garment("trousers",   "byxor",        "bottoms",      20, true,  { wordList: "pants" }),
     garment("jeans",      "jeans",        "bottoms",      20, false),
     garment("skirt",      "kjol",         "bottoms",      20, true),
     garment("shorts",     "shorts",       "bottoms",      20, true),
-    garment("tights",     "strumpbyxor",  "bottoms",      20, true),
+    garment("tights",     "strumpbyxor",  "bottoms",      20, true,  { wordList: "pantyhose" }),
     garment("leggings",   "leggings",     "bottoms",      20, true),
 
     garment("belt",       "bälte",        "belt",         25, false),
@@ -115,12 +125,12 @@ export const ITEMS = [
     garment("coat",       "kappa",        "onePiece",     40, true),
     garment("suit",       "kostym",       "onePiece",     40, true),
 
-    garment("gloves",     "handskar",     "hands",       100, true),
-    garment("mittens",    "vantar",       "hands",       100, true),
+    garment("gloves",     "handskar",     "hands",       100, true,  { pair: true }),
+    garment("mittens",    "vantar",       "hands",       100, true,  { pair: true }),
     garment("bracelet",   "armband",      "hands",       100, false),
     garment("ring",       "ring",         "hands",       100, false),
 
-    garment("sandals",    "sandaler",     "feet",         22, false),
-    garment("boots",      "stövlar",      "feet",         22, false),
-    garment("socks",      "strumpor",     "feet",         10, true),
+    garment("sandals",    "sandaler",     "feet",         22, false, { pair: true }),
+    garment("boots",      "stövlar",      "feet",         22, false, { pair: true }),
+    garment("socks",      "strumpor",     "feet",         10, true,  { pair: true }),
 ];

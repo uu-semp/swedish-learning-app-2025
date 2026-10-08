@@ -340,3 +340,41 @@ background-image: url("../assets/PaperPellesRoom.png");
 .clearBtn {
   width: 110px; 
 }
+/* Masked garments (garment_renderer.js): Pelle, every worn garment and
+   Pelle's raised hand are images of the same size, stacked exactly on top
+   of each other. Stacking order comes from each garment's layer in
+   clothing_catalog.js (0 Pelle, 10–70 clothes, 90 hand, 100 hand accessories). */
+.pelle-stack {
+  position: relative;
+  height: 90%; /* leave some room at the top for the headwear */
+  aspect-ratio: 698 / 1305; /* same as pelle.png and every garment file */
+  isolation: isolate; /* garment z-indexes only compete with each other */
+}
+
+.pelle-stack .paper-pelle-image,
+.pelle-stack .worn-garment,
+.pelle-stack .pelle-hand {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  user-select: none;
+}
+
+.pelle-stack .paper-pelle-image { z-index: 0; }
+.pelle-stack .pelle-hand { z-index: 90; }
+
+/* The dropzones cover all of Pelle and must not create their own stacking
+   order, otherwise garment layers in different zones could not interleave. */
+.pelle-stack .dropzone-area { z-index: auto; }
+.pelle-stack .dropzone {
+  top: 0;
+  height: 100%;
+  z-index: auto;
+  pointer-events: none;
+}
+
+.pelle-stack.drop-target .paper-pelle-image {
+  filter: drop-shadow(0 0 6px #4caf50) drop-shadow(0 0 14px #4caf50);
+}

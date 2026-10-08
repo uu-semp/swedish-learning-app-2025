@@ -33,15 +33,20 @@
         </div>
 
         <div class = paper-pelle-area>
-          <img src="paperpelletransparent.png" alt="Cat to dress" class="paper-pelle-image"/>
-          <div class="dropzone-area">
-            <!-- data-accept is the word list's Subcategory for clothes worn there -->
-            <div id="hat-box" class="dropzone headwear" data-accept="hats"></div>
-            <div id="face-box" class="dropzone face" data-accept="accessories"></div>
-            <div id="shirt-box" class="dropzone top" data-accept="shirts"></div>
-            <div id="pants-box" class="dropzone bottom" data-accept="pants"></div>
-            <div id="feet-box" class="dropzone shoes" data-accept="feet"></div>
-        </div>
+          <!-- Pelle, every garment and his raised hand are drawn on the same
+               canvas, so they are stacked as same-size layers (see game.css) -->
+          <div class="pelle-stack">
+            <img src="../assets/game13/pelle.png" alt="Cat to dress" class="paper-pelle-image"/>
+            <div class="dropzone-area">
+              <!-- data-accept is the word list's Subcategory for clothes worn there -->
+              <div id="hat-box" class="dropzone headwear" data-accept="hats"></div>
+              <div id="face-box" class="dropzone face" data-accept="accessories"></div>
+              <div id="shirt-box" class="dropzone top" data-accept="shirts"></div>
+              <div id="pants-box" class="dropzone bottom" data-accept="pants"></div>
+              <div id="feet-box" class="dropzone shoes" data-accept="feet"></div>
+            </div>
+            <img src="../assets/game13/pelle_hand.png" alt="" class="pelle-hand"/>
+          </div>
       </div>
 
       <div class="submissionbar" aria-live="polite">

@@ -76,8 +76,12 @@ export function injectHtmlObjects(htmlObjects, subcategories) {
             takeOff(slot.firstElementChild);
         }
 
+        // Masked garments are drawn on Pelle's whole canvas, so the worn
+        // copy uses the full-size picture and covers Pelle exactly.
         const wornImg = menuImg.cloneNode();
-        wornImg.addEventListener("click", () => playerTakeOff(wornImg));
+        wornImg.src = menuImg.dataset.fullSrc ?? menuImg.src;
+        wornImg.className = "worn-garment";
+        if (menuImg.dataset.layer) wornImg.style.zIndex = menuImg.dataset.layer;
         slot.appendChild(wornImg);
         menuImg.classList.add("is-worn");
     }
@@ -137,6 +141,17 @@ export function injectHtmlObjects(htmlObjects, subcategories) {
     const playerTakeOff = recordable(takeOff);
     const playerRemoveAll = recordable(removeAll);
 
+    // Worn garments all cover Pelle's whole area, so a click takes off the
+    // topmost garment that has a visible pixel under the pointer.
+    pelle?.parentElement.addEventListener("click", (e) => {
+        const hit = slots
+            .map((s) => s.firstElementChild)
+            .filter(Boolean)
+            .sort((a, b) => (Number(b.style.zIndex) || 0) - (Number(a.style.zIndex) || 0))
+            .find((img) => isOpaqueAt(img, e));
+        if (hit) playerTakeOff(hit);
+    });
+
     undoBtn?.addEventListener("click", undo);
     clearBtn?.addEventListener("click", playerRemoveAll);
     updateButtons();
@@ -163,6 +178,22 @@ export function injectHtmlObjects(htmlObjects, subcategories) {
         item.appendChild(img);
         shelves.get(img.dataset.category)?.appendChild(item);
     });
+}
+
+
+const hitCanvas = document.createElement("canvas");
+hitCanvas.width = hitCanvas.height = 1;
+const hitContext = hitCanvas.getContext("2d", { willReadFrequently: true });
+
+// True if the image has a non-transparent pixel under the pointer.
+function isOpaqueAt(img, e) {
+    const r = img.getBoundingClientRect();
+    const x = ((e.clientX - r.left) / r.width) * img.naturalWidth;
+    const y = ((e.clientY - r.top) / r.height) * img.naturalHeight;
+    if (x < 0 || y < 0 || x >= img.naturalWidth || y >= img.naturalHeight) return false;
+    hitContext.clearRect(0, 0, 1, 1);
+    hitContext.drawImage(img, x, y, 1, 1, 0, 0, 1, 1);
+    return hitContext.getImageData(0, 0, 1, 1).data[3] > 0;
 }
 
 
