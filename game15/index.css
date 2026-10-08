@@ -311,3 +311,28 @@ header h1 {
 footer {
     display: none;
 }
+
+.level-completion {
+    max-width: 500px;
+    margin: 3rem auto;
+    padding: 2rem;
+    text-align: center;
+    background: #ffffff;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+}
+
+.level-completion h2 {
+    color: #2e7d32;
+    margin-bottom: 1rem;
+}
+
+.level-completion button {
+    padding: 0.75rem 1.25rem;
+    background: #9d0000;
+    color: white;
+    border: none;
+    border-radius: 0.375rem;
+    cursor: pointer;
+    font-weight: 600;
+}
