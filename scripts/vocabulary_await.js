@@ -123,7 +123,9 @@ export async function loaddb(game_id = -1) {
     // Metadata
     const meta = { en: row["English"], sv: row["Swedish"] };
     if (row["Article"]?.trim()) meta.article = row["Article"];
-    if (row["Swedish_plural"]?.trim()) meta.swe_plural = row["Swedish_plural"];
+    if (row["Swedish_plural"]?.trim()) {
+      meta.sv_plural = row["Swedish_plural"];
+    }
     if (row["Literal"]?.trim()) meta.literal = row["Literal"];
     if (row["Image_url"]?.trim()) meta.img = row["Image_url"];
     if (row["Image_copyright_info"]?.trim())
