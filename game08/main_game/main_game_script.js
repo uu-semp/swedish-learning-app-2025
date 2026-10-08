@@ -93,7 +93,6 @@ function loadRound() {
     "round"
   ).textContent = `Round ${currentRound} / ${totalRounds}`;
 
-  document.getElementById("feedback").innerHTML = "";
   document.getElementById("wordReveal").classList.remove("show");
 
   // set audio
@@ -303,7 +302,6 @@ function checkAnswer(index) {
   if (answered) return; // ignore extra clicks
   answered = true;
 
-  const feedbackEl = document.getElementById("feedback");
   const correctIndex = currentData.correct_index;
   const correctWord = currentData.words[correctIndex];
   const chosen = currentData.words[index];
@@ -340,11 +338,9 @@ function checkAnswer(index) {
   if (isCorrect) {
     chosenCard.style.borderColor = "green";
     chosenCard.style.background = "#e6ffe6";
-    feedbackEl.innerHTML = `<span style="color:green;"><i class="fas fa-check-circle"></i> Correct!</span>`;
   } else {
     chosenCard.style.borderColor = "red";
     chosenCard.style.background = "#ffe6e6";
-    feedbackEl.innerHTML = `<span style="color:red;"><i class="fas fa-times-circle"></i> Wrong!</span>`;
   }
 
   // Show the exact word at the top (Swedish, English below)

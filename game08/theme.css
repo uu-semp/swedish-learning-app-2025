@@ -1,0 +1,23 @@
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Fredoka:wght@500;600;700&display=swap");
+
+:root {
+  --game-bg: #F7F1E6;
+  --surface: #FFFEF9;
+  --surface-soft: #EFE0C0;
+  --ink: #1E1B1A;
+  --red: #D75B4A;
+  --blue: #3D7DB8;
+  --blue-dark: #275F8D;
+  --yellow: #F4C95D;
+  --green: #5E9D70;
+  --red-soft: #F7DDD6;
+  --green-soft: #DCEBDD;
+  --border: 3px solid var(--ink);
+  --shadow: 4px 4px 0 var(--ink);
+  --shadow-large: 6px 6px 0 var(--ink);
+  --radius: 14px;
+  --radius-small: 9px;
+  --font-body: "DM Sans", system-ui, sans-serif;
+  --font-display: "Fredoka", "DM Sans", system-ui, sans-serif;
+  --transition: 140ms ease;
+}
