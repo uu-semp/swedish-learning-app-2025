@@ -4,6 +4,7 @@
  * @property {string} sv - Swedish translation.
  * @property {string} article - Swedish article ("en" or "ett").
  * @property {string} sv_plural - plural version of the specific word
+ * @property {string} literal - The literal representation of the word (Optional)
  * @property {string} subCat - subcategory of word
  * @property {string} img - image url.
  * @property {string} img_copyright - Copyright or license information for the image.
