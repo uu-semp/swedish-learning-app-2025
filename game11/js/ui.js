@@ -32,6 +32,7 @@ let _currentIndex = 0;                     // Is there to track which is the cur
  * @param {string} key - The key identifying the selected item.
  */
 function sendPick(key) {
+  getAudioContext(); // This is here to allow audio since it needs browsers block audio before a click
   if (!key) return;
   const img = _shelfImgByKey.get(String(key));
   // If already solved, do nothing (prevents double-sending)
@@ -149,6 +150,68 @@ const AUDIO_START_TRIM = 0.2; // this is in seconds
 
 // Error audio timer
 let _audioErrorTimer = null; // timer for hiding the audio error message
+
+// Context necesary to create sound effects with Web audio API
+let _audioContext = null;
+
+// Notes for each sound effect with frequency in Hz and start and duration in seconds
+const SOUND_EFFECTS = {
+  correct: [{ freq: 660, start: 0, dur: 0.12 }, { freq: 880, start: 0.1, dur: 0.2 }],
+  wrong:   [{ freq: 220, start: 0, dur: 0.3, type: "triangle" }],
+  win:     [523, 659, 784, 1047].map((freq, i) => ({ freq, start: i * 0.12, dur: 0.25 })),
+  lose:    [392, 330, 262].map((freq, i) => ({ freq, start: i * 0.2, dur: 0.3 })),
+};
+
+// Volume of the sound effects
+const SOUND_VOLUME = 0.15; 
+
+/**
+ * Returns the shared audio context and also creating it if there is none.
+ * This will only work if the browser supports it. 
+ * Safari, Edge, Chrome and Firefox do support it.
+ *
+ * @returns {AudioContext|null} The audio context or null if not supported
+ */
+function getAudioContext(){
+  if(!_audioContext){
+    const Context = window.AudioContext || window.webkitAudioContext;
+    if(!Context) return null;
+    _audioContext = new Context();
+  }
+  if(_audioContext.state === "suspended") _audioContext.resume();
+  return _audioContext;
+}
+
+
+/*
+ * Play the sound effect
+ *
+ * @param {string} name - the soudn to play either correct, wrong, win or lose.
+ */
+function playSoundEffect(name){
+  const notes = SOUND_EFFECTS[name];
+  const Context = notes ? getAudioContext() : null;
+
+  if(!Context) return;
+
+  const now = Context.currentTime;
+  
+  notes.forEach(({ freq, start, dur, type = 'sine' }) => {
+    const osc = Context.createOscillator();
+    const gain = Context.createGain();
+    osc.type = type;
+    osc.frequency.value = freq;
+    
+    // Fade in
+    gain.gain.setValueAtTime(0.0001, now + start);
+    gain.gain.exponentialRampToValueAtTime(SOUND_VOLUME, now + start + 0.02);
+    gain.gain.exponentialRampToValueAtTime(0.0001, now + start + dur);
+    osc.connect(gain).connect(Context.destination);
+    osc.start(now + start);
+    osc.stop(now + start + dur + 0.05);
+
+  });
+}
 
 /**
  * Shows an error message if the audio fails to play
@@ -294,6 +357,7 @@ export function displayShoppingList(list, mode) {
   window.Game11UI = window.Game11UI || {};
   window.Game11UI.highlightListIndex = highlightListIndex;
   window.Game11UI.placeItemInCart = placeItemInCart;
+  window.Game11UI.playSoundEffect = playSoundEffect;
 
   console.log('[ui] Displaying shopping list');
 }
@@ -501,4 +565,5 @@ function placeItemInCart(key) {
   console.debug('[ui] placed in cart:', key);
 }
 
-export { getAudio, playCurrentSound, AUDIO_START_TRIM };
+// Exports for testing
+export { getAudio, playCurrentSound, AUDIO_START_TRIM, playSoundEffect };

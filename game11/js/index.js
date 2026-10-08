@@ -186,6 +186,11 @@ window.addEventListener('DOMContentLoaded', () => {
         }
 
         if (data.type === 'endgameOpen') {
+            // This is to wait out the other soundeffects
+            setTimeout(() => {
+                window.Game11UI?.playSoundEffect?.(data.won ? 'win' : 'lose');
+            }, 400);
+
             setIframeInteractive(true);
             return;
         }
@@ -407,9 +412,14 @@ window.addEventListener('message', (event) => {
 
     if (
         data.type === 'pickResult' &&
-        data.ok &&
         typeof data.id === 'string'
     ) {
+        // plays correct or wrong sound depending on item was correct.
+        window.Game11UI?.playSoundEffect?.(data.ok ? 'correct' : 'wrong');
+        
+        // this is so that it stops incorrect picks from going into the cart
+        if(!data.ok) return;
+
         window.Game11UI?.placeItemInCart?.(data.id);
 
         const gs = window.__game11GameState;
