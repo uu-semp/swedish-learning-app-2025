@@ -308,6 +308,12 @@ header h1 {
     }
 }
 
+.last-wrong {
+  text-align: center;
+  margin: 8px 0;
+  font-weight: bold;
+}
+
 footer {
     display: none;
 }

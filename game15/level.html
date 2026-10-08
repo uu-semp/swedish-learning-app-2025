@@ -38,6 +38,9 @@
         <div>⭐ Poäng: {{ score }}</div>
         <div>📈 Nivå: {{ level }}</div>
       </div>
+      <div class="last-wrong" v-if="previousWrongCount !== null">
+        Förra gången svarade du fel på {{ previousWrongCount }} frågor.
+      </div>
 
       <div class="game-content">
         <div class="left-panel">
