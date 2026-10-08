@@ -469,15 +469,6 @@ hr {
   font-size: 0.9rem;
 }
 
-#prompt-words.difficulty-3 {
-  top: 20px;
-  margin-bottom: 50px;
-}
-
-.board-scroll.difficulty-3 {
-  padding: 25px 0 20px;
-}
-
 .transport-options {
   display: flex;
   flex-direction: row;
@@ -520,6 +511,7 @@ hr {
   position: relative;
   border: 2px solid #ccc;
   border-radius: 6px;
+  margin: 0 0 40px;
 }
 
 .transport-option:not(:disabled):hover {
@@ -541,7 +533,7 @@ hr {
 
 #prompt-words.difficulty-3 {
   top: 15px;
-  margin-bottom: 30px;
+  margin-bottom: 55px;
   flex-wrap: wrap;
   column-gap: 0.25rem;
   row-gap: 0.1rem;
@@ -572,7 +564,7 @@ hr {
 }
 
 .board-scroll.difficulty-3 {
-  padding: 18px 0 0;
+    padding: 30px 0 30px;
 }
 
 #house-grid-T button.is-selected {
@@ -620,14 +612,14 @@ hr {
 }
 
 
-.street-text {
+#house-grid-T.horizontal-only .street-text {
     width: max-content;
-    min-width: 145px;
+    min-width: 150px;
     box-sizing: border-box;
     padding: 0 28px 0 10px;
 }
 
-.horizontal-road-T .street-text {
+#house-grid-T.horizontal-only .horizontal-road-T .street-text {
     left: 10px;
     transform: translateY(-50%);
 }
