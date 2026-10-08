@@ -175,6 +175,45 @@ function normalizeAssetUrl(url) {
   return `../${cleanUrl}`;
 }
 
+// All the places an image path could point to, most likely first. GitHub Pages
+// serves the site from /<repo-name>/ and is case-sensitive, so a path that works
+// on localhost can fail there – we try each candidate until one loads.
+function imageCandidates(url) {
+  if (!url) return [];
+  if (/^(https?:|data:)/.test(url)) return [url];
+  const clean = url.replace(/^\/+/, "");
+  const list = [];
+  const vocabScript = document.querySelector('script[src*="vocabulary.js"]');
+  if (vocabScript && vocabScript.src) list.push(new URL("../" + clean, vocabScript.src).href); // next to /scripts
+  list.push(new URL(normalizeAssetUrl(url), location.href).href);                              // ../path
+  if (location.hostname.endsWith("github.io")) {
+    const repo = location.pathname.split("/")[1];
+    if (repo) list.push(location.origin + "/" + repo + "/" + clean);                           // repo root
+  }
+  list.push(new URL(clean, location.href).href);                                               // inside game09
+  list.push(location.origin + "/" + clean);                                                    // domain root
+  return [...new Set(list)];
+}
+
+let imageLoadToken = 0;
+function setVocabImage(url) {
+  const candidates = imageCandidates(url);
+  const token = ++imageLoadToken;
+  let i = 0;
+  imgEl.onerror = () => {
+    if (token !== imageLoadToken) return; // a newer question has started
+    i++;
+    if (i < candidates.length) {
+      imgEl.src = candidates[i];
+    } else {
+      imgEl.onerror = null;
+      console.warn("[Level 2] Image not found. Tried:", candidates);
+    }
+  };
+  imgEl.onload = () => { if (token === imageLoadToken) imgEl.onerror = null; };
+  imgEl.src = candidates[0] || "";
+}
+
 
 function renderRound() {
     if (progress >= TOTAL_QUESTIONS) {
@@ -207,7 +246,7 @@ function renderRound() {
       ...distractorWords.map(w => ({ text: w, correct: false }))
     ]);
 
-    imgEl.src = normalizeAssetUrl(correct.img);
+    setVocabImage(correct.img);
     imgEl.alt = correct.en || correct.sv;
 
     selectedArticleBtn = null;
