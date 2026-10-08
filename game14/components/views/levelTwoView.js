@@ -5,81 +5,54 @@ export const LevelTwoView = {
   props: ["switchTo"],
   data() {
     return {
-      pelleSvg: "",       // The SVG code of Pelle, loaded when the page opens
-      words: [],          // The body part words from the database
-      selectedPart: null, // English name of the selected body part, e.g. "nose"
+      pelleSvg: "",     // The SVG code of Pelle, loaded when the page opens
+      words: [],        // The body part words in random order
+      currentIndex: 0,  // Which word the player is looking for now
     };
   },
+  computed: {
+    // The word the player is looking for right now
+    currentWord() {
+      return this.words[this.currentIndex];
+    },
+  },
   async mounted() {
-    // Load the SVG as text so it becomes part of the page,
-    // which makes every body part clickable
+    // Load the SVG as text so every body part is clickable
     const response = await fetch("./components/assets/pellecharacterbody.svg");
     this.pelleSvg = await response.text();
 
     // Load the body part words from the shared vocabulary database
     try {
       await loaddb();
-      this.words = get_category("body-part").map((id) => get_vocab(id));
+      const words = get_category("body-part").map((id) => get_vocab(id));
+      this.words = this.shuffle(words);
     } catch (error) {
       console.error("Could not load the words from the database", error);
     }
   },
-  watch: {
-    // Every time selectedPart changes, highlight the matching body part on Pelle
-    selectedPart(newPart) {
-      const svg = this.$el.querySelector(".explore-pelle svg");
-      if (!svg) return;
-
-      svg.querySelectorAll("g.selected").forEach((part) => part.classList.remove("selected"));
-
-      if (newPart) {
-        const part = svg.querySelector("#" + newPart);
-        if (part) part.classList.add("selected");
-      }
-    },
-  },
   methods: {
-    // Select a body part, or unselect it if it is already selected
-    selectPart(partName) {
-      this.selectedPart = this.selectedPart === partName ? null : partName;
-    },
-
-    // Unselect when clicking somewhere else on the page
-    clearSelection() {
-      this.selectedPart = null;
-    },
-
-    // Find out which body part was clicked on Pelle
-    handlePelleClick(event) {
-      const part = event.target.closest("g[id]");
-      if (part) {
-        event.stopPropagation();
-        this.selectPart(part.id);
+    // Put the words in random order (Fisher-Yates shuffle)
+    shuffle(list) {
+      const copy = [...list];
+      for (let i = copy.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [copy[i], copy[j]] = [copy[j], copy[i]];
       }
+      return copy;
     },
   },
   template: `
       <div class="start-view-wrapper">
-        <div class="sky explore-view" @click="clearSelection">
+        <div class="sky explore-view find-mode">
           <h1 class="explore-title">{{$language.translate('level2')}}</h1>
 
           <div class="explore-content">
-            <div class="explore-pelle" v-html="pelleSvg" @click="handlePelleClick"></div>
+            <div class="explore-pelle" v-html="pelleSvg"></div>
 
-            <div class="explore-side">
-              <p class="explore-instruction">{{$language.translate('explore-instruction')}}</p>
-
-              <div class="explore-words">
-                <button
-                  v-for="word in words"
-                  :key="word.en"
-                  class="word-cloud"
-                  :class="{ selected: word.en === selectedPart }"
-                  @click.stop="selectPart(word.en)"
-                >
-                  {{ word.article }} {{ word.sv }}
-                </button>
-              </div>
+            <div class="explore-side" v-if="currentWord">
+              <p class="explore-instruction">{{$language.translate('level2-instruction')}}</p>
+              <div class="find-word">{{ currentWord.article }} {{ currentWord.sv }}</div>
+              <p class="find-progress">{{ currentIndex + 1 }} / {{ words.length }}</p>
             </div>
           </div>
         </div>

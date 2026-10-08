@@ -110,3 +110,29 @@
     background: #7CFC00;
     color: #1e3a0a;
 }
+
+/* ===== Level 2: find the body part ===== */
+
+/* The word to find, as a big white card */
+.explore-view .find-word {
+    align-self: center;
+    font-family: 'Fredoka', 'Arial Rounded MT Bold', sans-serif;
+    font-size: 40px;
+    font-weight: 700;
+    color: #1e528e;
+    background: white;
+    border-radius: 24px;
+    padding: 16px 36px;
+    box-shadow: 0 6px 0 rgba(0, 0, 0, 0.15);
+}
+
+/* eg"3 / 12" under the word */
+.explore-view .find-progress {
+    font-family: 'Fredoka', 'Arial Rounded MT Bold', sans-serif;
+    font-size: 20px;
+    font-weight: 600;
+    color: white;
+    text-align: center;
+    margin: 0;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.35);
+}
