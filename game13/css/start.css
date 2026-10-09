@@ -1,0 +1,42 @@
+/* Start page (index.html): the drawn start screen as background.
+   Load after base.css. */
+
+/* The artwork already shows the title and Pelle. The frame takes the
+   artwork's proportions (2322 × 1473) so nothing is cropped or stretched. */
+.screen.start-screen {
+  height: calc(var(--screen-width) * 1473 / 2322);
+  background: url("../../assets/game13/start_screen.png") center / cover no-repeat;
+  overflow: hidden;
+}
+
+/* Title is in the picture; keep the text for screen readers only */
+.start-screen .menu-title {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* Level buttons in the empty wall between Pelle and the clothes rack */
+.start-screen .menu-buttons {
+  position: absolute;
+  left: 24%;
+  top: 36%;
+  width: 19%;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.start-screen .menu-buttons .btn {
+  padding: 8px 12px;
+  font-size: 18px;
+}
+
+.start-screen .help-btn {
+  top: 12px;
+  right: 12px;
+  padding: 8px 14px;
+  font-size: 16px;
+}
