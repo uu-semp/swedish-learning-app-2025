@@ -92,6 +92,93 @@ function showLevelSelection() {
 	document.getElementById("level-view").style.display = "block";
 }
 
+
+// ==============================================
+// TIMER FOR ADVANCED LEVEL
+// ==============================================
+
+const ADVANCED_TIME_LIMIT = 30;
+let questionTimerId = null;
+let questionDeadline = 0;
+
+/**
+ * Starts a per-question countdown timer for Advanced level.
+ * Updates the #timer-value display every 250ms.
+ * Auto-submits as incorrect when time runs out.
+ */
+function startQuestionTimer() {
+	stopQuestionTimer();
+
+	const timerEl = document.getElementById("question-timer");
+	const timerValueEl = document.getElementById("timer-value");
+	if (timerEl) timerEl.hidden = false;
+
+	let remaining = ADVANCED_TIME_LIMIT;
+	if (timerValueEl) timerValueEl.textContent = String(remaining);
+
+	questionDeadline = Date.now() + ADVANCED_TIME_LIMIT * 1000;
+
+	questionTimerId = setInterval(() => {
+		remaining = Math.max(0, Math.ceil((questionDeadline - Date.now()) / 1000));
+		if (timerValueEl) timerValueEl.textContent = String(remaining);
+
+		if (timerEl) {
+			timerEl.classList.toggle("timer-warning", remaining <= 10);
+			timerEl.classList.toggle("timer-critical", remaining <= 5);
+		}
+
+		if (remaining <= 0) {
+			stopQuestionTimer();
+			onTimerExpired();
+		}
+	}, 250);
+}
+
+/**
+ * Stops the question timer and hides the display.
+ */
+function stopQuestionTimer() {
+	if (questionTimerId !== null) {
+		clearInterval(questionTimerId);
+		questionTimerId = null;
+	}
+	const timerEl = document.getElementById("question-timer");
+	if (timerEl) {
+		timerEl.hidden = true;
+		timerEl.classList.remove("timer-warning", "timer-critical");
+	}
+}
+
+/**
+ * Called when the timer expires. Auto-submits the answer as incorrect.
+ */
+function onTimerExpired() {
+	if (answerSubmitted) return;
+
+	answerSubmitted = true;
+	updateTileSubmitState();
+
+	const q = window.currentQuestion;
+	if (!q) return;
+
+	window.currentSession.record(q, false);
+
+	const feedback = document.getElementById("tile-feedback");
+	if (feedback) {
+		feedback.textContent = `⏰ Time's up! The answer is: ${q.answerTiles.join(" ")}`;
+		feedback.style.color = "#ff9800";
+	}
+
+	renderTileInterface();
+
+	document.getElementById("submit-btn").style.display = "none";
+	document.getElementById("reset-tiles-btn").style.display = "none";
+	document.getElementById("next-btn").style.display = "";
+}
+
+
+
+
 // ==============================================
 // GAME UI CONFIGURATION BY LEVEL
 // ==============================================
@@ -173,6 +260,7 @@ function insertLetter(letter) {
 
 // Show Summary View (after all questions are done)
 function showSummary() {
+	stopQuestionTimer();
 	hideAllViews();
 	document.getElementById("summary-view").style.display = "block";
 	const scoreElement = document.getElementById("final-score");
@@ -184,7 +272,7 @@ function showSummary() {
 		if (score >= 40)
 			summarySubtitle.textContent =
 				"🥇 Excellent! You mastered this topic perfectly!";
-		else if (finalScore >= 30)
+		else if (score >= 30)
 			summarySubtitle.textContent = "🥈 Great job! Keep practicing!";
 		else
 			summarySubtitle.textContent =
@@ -478,6 +566,13 @@ function updateQuestion() {
 	}
 	if (nextBtn) nextBtn.style.display = "none";
 	if (resetBtn) resetBtn.style.display = isAdvanced ? "" : "none";
+
+	// Start timer for Advanced level, stop for other levels
+	if (isAdvanced) {
+		startQuestionTimer();
+	} else {
+		stopQuestionTimer();
+	}
 }
 
 /**
@@ -591,6 +686,7 @@ function submitAnswer() {
 		}
 
 		answerSubmitted = true;
+		stopQuestionTimer();
 
 		updateTileSubmitState();
 
