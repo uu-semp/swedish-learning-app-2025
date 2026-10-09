@@ -127,10 +127,12 @@
       else if (appliedId !== item.imgId) wrongItems.push(subcategory);
     }
 
-    if (missingItems.length > 0) {
-      resultText.textContent = `❌ Missing items: ${missingItems.join(", ")}, Try again!`;
-      resultText.style.color = "red";
-    }
+if (missingItems.length > 0) {
+    resultText.textContent = `❌ Missing items: ${missingItems.join(", ")}, Try again!`;
+    resultText.style.color = "red";
+    feedback.classList.add("visible");
+    return;
+}
     attempts++; // a full outfit was confirmed
 
 
