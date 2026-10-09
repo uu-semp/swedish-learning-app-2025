@@ -1,297 +1,151 @@
-import clothingItems from "../../clothing-items-info.js";
+import { loaddb, get_category, get_vocab } from "../../../scripts/vocabulary_await.js";
+
+const MAX_MISTAKES = 2; // Wrong clicks before the answer is shown
 
 export const LevelTwoView = {
-    name: "level-two-view",
-    props: ["switchTo"],
-    data() {
-            return {
-                showModal: false, // Controls the visibility of the modal
-                showCorrectFeedback: false,
-                showIncorrectFeedback: false,
-                currentScore: 0, // Initial  player's score
-                currentItem: null, 
-                // Track attempts for the current item
-                currentAttempts: 0,
-                incorrectMessage: '',
-                // Placeholder progress data
-                totalTries: 0,
-                correctAnswers: 0,
-                gameOver:false,
-                showInfo:false,
-                showLicense:false,
-                chosenClothingItems: [],
-                numberOfQuestionsAsked: 10,
-                indexesAsked: []
-    
-            };
-        },
-    
-        mounted() {
-            this.startLevel();
-        },
-    
-        methods: {
-                startLevel() {  
-                    const stats = window.save.stats.get("game14")  //Consol log state of system at start of each round
-                    console.log("State of the system: ", stats)  
-                    this.chosenClothingItems = this.generateSubCategories()
-                if (this.chosenClothingItems && this.chosenClothingItems.length > 0) {
-                    let randomIndex = this.getRandomIndex(this.chosenClothingItems)
-                    this.currentItem = this.chosenClothingItems[randomIndex];
-                    this.indexesAsked.push(randomIndex); // keep track of what indexes we´ve asked for!
-                    this.currentAttempts = 0;
-                    this.incorrectMessage = '';
-                } else {
-                    console.error("No clothing items found to start the level.");
-                }
-            },
-    
-            loadNextItem() {
-                if (this.indexesAsked.length < this.numberOfQuestionsAsked) {  // Check if we have asked < than 10 indexes. 
-                    let randomIndex = this.getRandomIndex(this.chosenClothingItems)
-                    while (this.indexesAsked.includes(randomIndex)) {
-                        randomIndex = this.getRandomIndex(this.chosenClothingItems)
-                    }
-                    this.currentItem = this.chosenClothingItems[randomIndex];
-                    this.currentAttempts = 0;
-                    this.incorrectMessage = '';
-                    this.indexesAsked.push(randomIndex)
-                } else {
-                    this.saveGameScore()
-                    this.gameOver=true
-                }
-            },
-    
-            saveGameScore(){  // Uses the save.js API to set the score of our game! 
-                //Right now this is really simplified, and we don't consider the other levels while setting completion.
-                const stats = window.save.stats.get("game14")
-                const completion = stats.completion
-                let wins = stats.wins
-                let percentageCorrect = this.getPercentage()
-                if (percentageCorrect > completion){ //Only set percentage if better than prev attempts
-                    const numWins = wins + 1;
-                    save.stats.set("game14", numWins, percentageCorrect)
-                    console.log("set new record!")
-                }
-            },
-    
-            getPercentage(){
-                return (this.currentScore/this.numberOfQuestionsAsked)*100;
-            },
-    
-            getPercentageScore(){ // By using this method the lower the score the better the score point becomes
-                //This can be used to send as the score feature of the save js API (which i cannot get to work ATM)
-                const maxPossible = this.numberOfQuestionsAsked * 3; // We have 3 attempts per question
-                const percentageScore = (this.currentScore / maxPossible) * 100;
-    
-                return percentageScore
-            },
-    
-            generateSubCategories(){
-                const categories = ["accessories", "shirts", "pants", "shoes"]
-                const chosenClothingItems = []
-                for (const subCategory  of categories){
-                    const categoryItems =  clothingItems.filter(items => items.Subcategory === subCategory);
-                    let chosenSubcategoryItems= [];
-                    if (categoryItems.length > 9){ // We only display 9 items, some don't have 9 items though!
-                        chosenSubcategoryItems = this.subsetGenerator(categoryItems)
-                    }
-                    else{ chosenSubcategoryItems = categoryItems}
-                    chosenClothingItems.push(...chosenSubcategoryItems);
-                }
-                return chosenClothingItems;
-            },
-    
-            subsetGenerator(categoryItems){
-                let randomSubset = []
-                for (let i=0; i < 9; i++) {
-                    let randomIndex = this.getRandomIndex(categoryItems)
-                    let randomItem = categoryItems[randomIndex];
-                    randomSubset.push(randomItem);
-                    categoryItems.splice(randomIndex, 1) // removes the selected item
-                }
-                return randomSubset;
-            },
-    
-            getRandomIndex(subset){
-                return Math.floor(Math.random() * subset.length) //Gives a random index, 
-            },
-    
-            openModal() {
-                this.showModal = true;
-            },
-    
-            closeModal() {
-                this.showModal = false;
-                this.showInfo=false;
-            },
-            
-            confirmExit() {
-                this.saveGameScore()  // If user exits before we still want to save the progress. 
-                this.switchTo('ChooseLevelView'); // Navigate to ChooseLevelView
-                this.closeModal();
-            },
-    
-            handleOverlayClick(event) {
-                if (event.target.classList.contains('modal-overlay')) {
-                    this.closeModal();
-                    this.showInfo = false;
-                    this.showLicense = false;
-                }
-            },
-    
-            // Placeholder progress tracking methods
-            incrementTotalTries() {
-                this.totalTries = (this.totalTries || 0) + 1;
-            },
-    
-            recordCorrectAnswer() {
-                this.correctAnswers = (this.correctAnswers || 0) + 1;
-                // Reset attempts for the next question
-                this.currentAttempts = 0;
-            },
-    
-            recordIncorrectAttempt() {
-                // Increment attempts for the current question and return the new value
-                this.currentAttempts = Math.min(3, (this.currentAttempts || 0) + 1);
-                return this.currentAttempts;
-            },
-    
-          handleDropResult({ isCorrect, droppedItem }) {
-                // Record that the player made a try (placeholder for persistent storage)
-                this.incrementTotalTries();
-                if (isCorrect) {
-                    // Correct answer: reset attempts, show success, award point and go next
-                    this.currentAttempts = 0;
-                    this.incorrectMessage = '';
-                    this.showCorrectFeedback = true;
-                    this.currentScore++;
-                    // Track correct answers (placeholder)
-                    this.recordCorrectAnswer();
-                    setTimeout(() => {
-                        this.showCorrectFeedback = false;
-                        this.loadNextItem();
-                    }, 1500);
-                } else {
-                    // Incorrect: increment attempts and choose the message
-                    const attempts = this.recordIncorrectAttempt();
-                    // Map attempts to translation keys
-                    const key = attempts === 1 ? 'wrong-try-1' : (attempts === 2 ? 'wrong-try-2' : 'wrong-try-3');
-                    this.incorrectMessage = this.$language.translate(key);
-    
-                    // Show the incorrect feedback with dynamic message
-                    this.showIncorrectFeedback = true;
-    
-                    // If third attempt, after showing message advance to next item
-                    if (this.currentAttempts >= 3) {
-                        setTimeout(() => {
-                            this.showIncorrectFeedback = false;
-                            // ensure no points awarded, reset attempts and move on
-                            this.currentAttempts = 0;
-                            this.incorrectMessage = '';
-                            this.loadNextItem();
-                        }, 1500);
-                    } else {
-                        // For attempts 1 or 2, just show message briefly
-                        setTimeout(() => {
-                            this.showIncorrectFeedback = false;
-                        }, 1500);
-                    }
-                }
-            },
-    
-            restartGame(){
-                this.resetGameState()
-                this.startLevel()
-            },
-    
-            resetGameState(){
-                this.showModal= false, 
-                this.showCorrectFeedback= false;
-                this.showIncorrectFeedback= false;
-                this.currentScore= 0;
-                this.currentItem= null;
-                this.currentIndex= 0;
-                this.currentAttempts= 0;
-                this.incorrectMessage= '';
-                this.totalTries= 0;
-                this.correctAnswers= 0;
-                this.gameOver=false;
-                this.showInfo=false;
-                this.chosenClothingItems= [];
-                this.numberOfQuestionsAsked= 10;
-                this.indexesAsked= []
-    
-            },
-    
-        },
-    
+  name: "level-two-view",
+  props: ["switchTo"],
+  data() {
+    return {
+      pelleSvg: "",          // The SVG code of Pelle, loaded when the page opens
+      words: [],             // The body part words in random order
+      currentIndex: 0,       // Which word the player is looking for now
+      mistakesOnCurrent: 0,  // Wrong clicks on the current word
+      locked: false,         // True while the answer is shown, to ignore clicks
+      finished: false,       // True when all words are done
+      firstTryCorrect: 0,    // Words found without any wrong click
+       feedback: "",          // "right", "wrong" or "show-answer", shown under the word
+      feedbackTimer: null,   // Timer that hides the feedback again
+    };
+  },
+  computed: {
+    // The word the player is looking for right now
+    currentWord() {
+      return this.words[this.currentIndex];
+    },
+  },
+  async mounted() {
+    // Load the SVG as text so every body part is clickable
+    const response = await fetch("./components/assets/pellecharacterbody.svg");
+    this.pelleSvg = await response.text();
+
+    // Load the body part words from the shared vocabulary database
+    try {
+      await loaddb();
+      const words = get_category("body-part").map((id) => get_vocab(id));
+      this.words = this.shuffle(words);
+    } catch (error) {
+      console.error("Could not load the words from the database", error);
+    }
+  },
+  methods: {
+    // Put the words in random order (Fisher-Yates shuffle)
+    shuffle(list) {
+      const copy = [...list];
+      for (let i = copy.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [copy[i], copy[j]] = [copy[j], copy[i]];
+      }
+      return copy;
+    },
+
+     // Show a short message under the word, then hide it again
+    setFeedback(type, duration = 1200) {
+      clearTimeout(this.feedbackTimer);
+      this.feedback = type;
+      this.feedbackTimer = setTimeout(() => (this.feedback = ""), duration);
+    },
+
+    // Check if the player clicked the right body part
+    handlePelleClick(event) {
+      const part = event.target.closest("g[id]");
+      if (!part || !this.currentWord || this.locked || this.finished) return;
+
+      if (part.id === this.currentWord.en) {
+        // Right: keep the part green and go to the next word
+        part.classList.add("found");
+        if (this.mistakesOnCurrent === 0) this.firstTryCorrect++;
+        this.setFeedback("right");
+        this.nextWord();
+      } else {
+        // Wrong: flash the clicked part red
+        this.mistakesOnCurrent++;
+        part.classList.add("wrong");
+        setTimeout(() => part.classList.remove("wrong"), 600);
+
+        if (this.mistakesOnCurrent >= MAX_MISTAKES) {
+          this.setFeedback("show-answer", 1800);
+          this.showAnswer();
+        } else {
+          this.setFeedback("wrong");
+        }
+      }
+    },
+
+    // After too many mistakes: blink the right body part, then move on
+    showAnswer() {
+      this.locked = true;
+      const svg = this.$el.querySelector(".explore-pelle svg");
+      const rightPart = svg.querySelector("#" + this.currentWord.en);
+      rightPart.classList.add("hint");
+
+      setTimeout(() => {
+        rightPart.classList.remove("hint");
+        rightPart.classList.add("found");
+        this.locked = false;
+        this.nextWord();
+      }, 1800);
+    },
+
+    nextWord() {
+      this.mistakesOnCurrent = 0;
+      if (this.currentIndex < this.words.length - 1) {
+        this.currentIndex++;
+      } else {
+        this.finished = true;
+      }
+    },
+
+    // Start over with the words in a new random order
+    playAgain() {
+      this.$el.querySelectorAll("g.found").forEach((part) => part.classList.remove("found"));
+      this.words = this.shuffle(this.words);
+      this.currentIndex = 0;
+      this.mistakesOnCurrent = 0;
+      this.firstTryCorrect = 0;
+      this.finished = false;
+      this.feedback = "";
+    },
+  },
   template: `
-    <div class="level-two-view">
-          <div class="level-header">
+      <div class="start-view-wrapper">
+        <div class="sky explore-view find-mode">
+          <h1 class="explore-title">{{$language.translate('level2')}}</h1>
 
-              <div class="score-counter">
-                  <score-counter :score="currentScore" :item-amount="numberOfQuestionsAsked"></score-counter>
-              </div>
-              
-              <dress-pelle-prompt :item="currentItem"></dress-pelle-prompt>
+          <div class="explore-content">
+            <div class="explore-pelle" v-html="pelleSvg" @click="handlePelleClick"></div>
 
-          </div>
-          
-          <correct-answer-feedback v-if="showCorrectFeedback"></correct-answer-feedback>
-          <incorrect-answer-feedback v-if="showIncorrectFeedback" :message="incorrectMessage"></incorrect-answer-feedback>         
+            <!-- While playing -->
+            <div class="explore-side" v-if="currentWord && !finished">
+              <p class="explore-instruction">{{$language.translate('level2-instruction')}}</p>
+              <div class="find-word">{{ currentWord.article }} {{ currentWord.sv }}</div>
+              <p class="find-progress">{{ currentIndex + 1 }} / {{ words.length }}</p>
+              <p class="find-feedback" :class="feedback">
+                {{ feedback ? $language.translate('feedback-' + feedback) : '' }}
+              </p>
+            </div>
 
-          <div class="main-content-area">
-                              <div class="pelle-wrapper">
-                                      <pelle-container
-                                          :expected-item-id="currentItem ? currentItem.ID : ''"
-                                          @item-dropped="handleDropResult"
-                                      ></pelle-container>
-                              </div>
-              <div class="wardrobe-wrapper">
-                  <wardrobe-container :clothes="this.chosenClothingItems"></wardrobe-container>
-              </div>
+            <!-- When all words are done -->
+            <div class="explore-side" v-if="finished">
+              <p class="find-result">
+                {{ firstTryCorrect }} / {{ words.length }} {{$language.translate('first-try')}}
+              </p>
+              <button class="word-cloud play-again" @click="playAgain">
+                {{$language.translate('play-again')}}
+              </button>
+            </div>
           </div>
-
-          <div>
-              <capsule-button label="exit" size="md" @click="openModal"></capsule-button>
-              <info-button @click="this.showInfo=true"></info-button>
-              <license-button @click="this.showLicense=true"></license-button>
-          </div>
-          <div v-if="showModal" class="modal-overlay" @click="handleOverlayClick">
-              <div class="modal-content" @click.stop>
-                  <h2>{{$language.translate('exit-confirmation')}}</h2>
-                  <div class="modal-buttons">
-                      <capsule-button label="yes" size="md" @click="confirmExit"></capsule-button>
-                      <capsule-button label="no" size="md" @click="closeModal"></capsule-button>
-                  </div>
-              </div>
-          </div>
-          <statisticsPopUp v-if="gameOver" @playAgain="restartGame" @exit="confirmExit" :totalNumberTries="totalTries" :score="this.currentScore" :numQuestionsAsked="this.numberOfQuestionsAsked"></statisticsPopUp>
-          <div v-if="this.showInfo" class="modal-overlay" @click="handleOverlayClick">
-              <div class="modal-content" @click="this.showInfo=false">
-                  <h2>{{$language.translate('information-message')}}</h2>
-                  <div class="modal-buttons">
-                      <capsule-button id="info-back-button" label="okay-continue" size="md" @click="this.showInfo=false"></capsule-button>
-                  </div>
-              </div>
-          </div>
-          <div v-if="this.showLicense" class="modal-overlay" @click="handleOverlayClick">
-              <div class="modal-content license-modal" @click="this.showLicense=false">
-                  <h2>{{$language.translate('license-information')}}</h2>
-                  <div class="license-content">
-                      <p>{{$language.translate('license-details')}}</p>
-                      <div class="license-sections">
-                          <p><strong>{{$language.translate('license-freepik')}}</strong></p>
-                          <p><strong>{{$language.translate('license-public-domain')}}</strong></p>
-                          <p><strong>{{$language.translate('license-cc')}}</strong></p>
-                      </div>
-                  </div>
-                  <div class="modal-buttons">
-                      <capsule-button label="okay-continue" size="md" @click="this.showLicense=false"></capsule-button>
-                  </div>
-              </div>
-          </div>
+        </div>
       </div>
     `,
-      };
+};

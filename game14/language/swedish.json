@@ -8,6 +8,14 @@
     "level1": "NIVÅ 1",
     "explore-instruction": "Klicka på ett ord eller en del av Pelles kropp för att para ihop dem! Alla ord står i singular.",
     "level2": "NIVÅ 2",
+    "level2-instruction": "Klicka på kroppsdelen som passar ordet!",
+    "first-try": "rätt på första försöket",
+    "feedback-right": "Rätt!",
+    "feedback-wrong": "Inte riktigt rätt, försök igen!",
+    "feedback-show-answer": "Här är den!",
+    "play-again": "Spela igen",
+
+
     "level3": "NIVÅ 3",
     "level2-locked": "NIVÅ 2 🔒",
     "level3-locked": "NIVÅ 3 🔒",
@@ -34,7 +42,6 @@
     "extra": "EXTRA INFO",
     "additional-info": "Om du är osäker på orden kan du alltid spela om en nivå eller kolla ordlistan i det medföljande materialet. Spelet är utformat för att vara roligt samtidigt som det förstärker inlärningen av svenska.",
     "dress-pelle-prompt": "Klä på Pelle ",
-    "play-again":"SPELA IGEN",
     "good-job":"BRA JOBBAT!",
     "num-tries":"TOTALT ANTAL FÖRSÖK: ",
     "num-right":"TOTALT ANTAL RÄTT: ",
