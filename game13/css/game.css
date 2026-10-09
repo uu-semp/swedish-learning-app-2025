@@ -1,3 +1,30 @@
+/*Reused layout components*/
+.bar {
+  background-color: var(--color-surface);
+  border-radius: 9px;
+  border: 3px solid #333;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  text-align: center;
+  flex-shrink: 0;
+  box-sizing: border-box;
+}
+
+.speech-bubble {
+  position: relative;
+  background: #fffdf5;
+  border: 3px solid #333;
+  border-radius: 45%;
+}
+
+
+
+.speech-bubble p {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.5;
+}
 
 /* Main layout components*/
 
@@ -8,16 +35,21 @@
   display:flex;
   flex-direction: column;
   overflow: hidden;
+  padding:10px;
 
     /* flex-centering from base.css */
   align-items: stretch;
   justify-content: flex-start;
+
+  background-image: url("../assets/PaperPellesRoom.png");
+  background-size: 100% 100%;
+  background-position: left;
 }
 
 /* The top-bar displaying Level, rounds and other relevant stats*/
 .status-bar {
-  display: flex;
-  justify-content: space-between;
+padding-left: 6px;
+padding-right: 6px;
 }
 
 /* the interactive area including stage and wardrobe*/
@@ -26,10 +58,9 @@
   flex-direction: row;
   flex:1;
   overflow: hidden;
-background-image: url("../assets/PaperPellesRoom.png");
-  background-size: 100% 100%;
-  background-position: left;
+
   min-height: 0;
+  height:100%;
 }
 
 /* the area with pelle */
@@ -41,8 +72,11 @@ background-image: url("../assets/PaperPellesRoom.png");
   border-right: 3px solid var(--color-text);
   overflow: hidden;
   min-height: 0;
-  justify-content: center;
-  align-items: flex-end;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
+  min-width: 0;
+  height:100%;
 }
 
 /* The section for the warderobe containing all clothes */
@@ -67,41 +101,74 @@ background-image: url("../assets/PaperPellesRoom.png");
 
 /* Section for the outfit-prompt*/
 .instructions {
-  border-top: 3px solid var(--color-text);
-  background: var(--color-surface);
-  padding: 14px 16px;
-  display: flex;
-  align-items: center;
-  font-size: 16px;
-  justify-content: space-between;
-  gap: 16px; /* keep long descriptions from touching the buttons */
+  padding: 20px 30px;
+  margin: 6px;
+  max-width: 400px;
+
+  width: 80%; 
+  align-self: flex-end;
+}
+
+/* The tail pointing towards Pelle */
+.instructions::after {
+  content: "";
+  position: absolute;
+  bottom: -20px;
+  left: 30%;
+  width: 30px;
+  height: 30px;
+  background: #fffdf5;
+  border-right: 3px solid #333;
+  border-bottom: 3px solid #333;
+  transform: rotate(45deg);
 }
 
 /* confirm / give up, feedback, next (inside the stage) */
 .submissionbar {
-  position: absolute;
-  bottom: 20px;
-  left: 0;
-  right: 0;
-  display: flex;
-  align-items: center;
+  padding: 6px;
   justify-content: space-between;
 }
 
 /*feedback shown after submission*/
 .feedback {
-    padding: 14px 16px;
+    position: absolute;
+    padding: 20px 30px;
+    width: 30%;
+    right: 5%; 
+    top: 30%;
+    display: none;
 }
+
+.feedback.visible {
+  display: block;
+}
+
+.feedback::after {
+  content: "";
+  position: absolute;
+  top: 40px;
+  left: -20px;
+  width: 30px;
+  height: 30px;
+  background: #fffdf5;
+  border-right: 3px solid #333;
+  border-bottom: 3px solid #333;
+  transform: rotate(120deg);
+}
+
+
 
 /* dressing related CSS*/
 
 /* defines the area cintaining the paper-pelle image and dropzone */
 .paper-pelle-area{
+  flex: 1;
+  min-height: 0;
+  width: 100%;
   display: flex;
   position: relative;
   justify-content: center;
   align-items: flex-end;
-  height: 90%;
 }
 
 .paper-pelle-image {
@@ -214,10 +281,13 @@ background-image: url("../assets/PaperPellesRoom.png");
 }
 
 /* Place buttons in corner of stage*/
-.control-buttons-wrapper {
+.tool-buttons-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
   position: absolute;
   left: 0%;
-  top:0%
+  top:5%
 }
 
 /*TODO: move button CSS to base*/
@@ -227,16 +297,11 @@ background-image: url("../assets/PaperPellesRoom.png");
 }
 
 /* buttons for the game, should be replaced w/ btn from base.css */
-.btn,
 .confirmBtn {
   flex: none;   
-  padding: 0;
-  width: 140px;
-  height: 50px;
   font-size: 16px;
   border-radius: 6px;
   box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.3);
-
   /* centering the text */
   display: flex;
   align-items: center;
@@ -262,16 +327,16 @@ background-image: url("../assets/PaperPellesRoom.png");
 }
 
 /* undo clothing*/
-.undoBtn {
+.toolBtn {
   width: 100px;
   background-color: var(--color-secondary);
 }
 
-.undoBtn:hover {
+.toolBtn:hover {
   background-color: var(--color-secondary-dark);
 }
 
-.undoBtn:disabled {
+.toolBtn:disabled {
   background-color: var(--color-disabled);
   box-shadow: none;
   transform: none;
@@ -294,7 +359,6 @@ background-image: url("../assets/PaperPellesRoom.png");
 
 .giveUpBtn:hover {
   background-color: #b0bec5;
-
 }
 
 /* Buttons */

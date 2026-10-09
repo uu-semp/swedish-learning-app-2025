@@ -14,24 +14,29 @@
 
   <div class="screen" role="application" aria-label="Dress the cat game screen">
 
-    <section class = "status-bar">
+    <section class = "bar status-bar ">
       <h2><span id="level-title">Level</span> <small id="score-text" aria-live="polite"></small></h2>
       <button id="backToIndex-btn" class="undoBtn giveUpBtn" aria-label="Back to level-selection"> Back to level-selecting-page</button>
     </section>
 
-    <section class="instructions">
-            <p id="instruction-text">
-        instructions here
-      </p>
-    </section>
-
     <section class="game-area">
+
       <section class="stage" aria-label="Cat stage">
-        <div class = "control-buttons-wrapper">
-          <button id="undo-btn" class="confirmBtn undoBtn" aria-label="Undo last change" disabled>Undo</button>
-          <button id="clear-btn" class="confirmBtn undoBtn clearBtn" aria-label="Remove all clothing" disabled>Remove all</button>
+        <div class = "tool-buttons-wrapper">
+          <button id="undo-btn" class="btn toolBtn" aria-label="Undo last change" disabled>Undo</button>
+          <button id="clear-btn" class="btn toolBtn" aria-label="Remove all clothing" disabled>Remove all</button>
         </div>
 
+
+      <section class="speech-bubble instructions">
+        <p id="instruction-text">
+        instructions here
+        </p>
+      </section>
+
+      <div class="speech-bubble feedback"> 
+          <p id="result-text"></p>
+      </div>
         <div class = paper-pelle-area>
           <!-- Pelle, every garment and his raised hand are drawn on the same
                canvas, so they are stacked as same-size layers (see game.css) -->
@@ -49,37 +54,20 @@
           </div>
       </div>
 
-      <div class="submissionbar" aria-live="polite">
-        <div class="div-buttons">
-          <button id="confirm-btn" class="confirmBtn" aria-label="Confirm outfit">Confirm Outfit</button>
-          <button id="giveUp-btn" class="undoBtn giveUpBtn" aria-label="Give up">Give up</button>
-        </div>
-        <div class="feedback"> 
-          <p id="result-text"></p>
-        </div>
-        <div class="div-buttons">
-          <button id="next-btn" class="confirmBtn undoBtn nextBtn" aria-label="Next round" disabled>Next</button>
-          <button id="nextLevel-btn" class=" giveUpBtn" aria-label="Next level" >Next Level</button>
-        </div>  
-      </div>
+
     </section>
 
     <!-- Shelves are created by wardrobe_ui.js, one per body position in the level -->
     <aside class="wardrobe" id="wardrobe" aria-label="Wardrobe"></aside>
     </section>
-  </div>
+          <div class="bar submissionbar" aria-live="polite">
+          <button id="giveUp-btn" class="btn toolBtn" aria-label="Give up">Give up</button>
+          <button id="confirm-btn" class="btn confirmBtn" aria-label="Confirm outfit">Confirm Outfit</button>
 
-  <!-- Popup window -->
-<div id="popup" class="popup">
-  <div class="popup-content">
-    <h2></h2>
-    <p id="result-text"></p> <!-- ✅ added id so JS can update text -->
-    <div class="menu-buttons">
-      <button id="playAgainBtn" class="btn">Play Again!</button>
-      <button id="backToMenuBtn" class="btn">Go back to start menu!</button>
-    </div>
+          <button id="next-btn" class="btn nextBtn" aria-label="Next round" disabled>Next</button>
+          <button id="nextLevel-btn" class=" btn toolBtn" aria-label="Next level" >Next Level</button>
+      </div>
   </div>
-</div>
 
 <script src="../scripts/save.js"></script>
 <script src="game/progress.js"></script>
@@ -114,7 +102,6 @@
 
   const popup = document.getElementById('popup');
   const confirmBtn = document.getElementById('confirm-btn');
-  const playAgainBtn = document.getElementById('playAgainBtn');
   const backToMenuBtn = document.getElementById('backToMenuBtn');
   const resultText = document.getElementById('result-text');
   const giveUpBtn = document.getElementById("giveUp-btn")
@@ -122,6 +109,7 @@
   const nextLvlBtn = document.getElementById("nextLevel-btn");
   const backtoIndexBtn = document.getElementById("backToIndex-btn");
   let correct_answer = false;
+  const feedback = document.querySelector(".feedback");
 
   confirmBtn.addEventListener('click', () => {
     // run your existing checkClothes() function
@@ -142,9 +130,9 @@
     if (missingItems.length > 0) {
       resultText.textContent = `❌ Missing items: ${missingItems.join(", ")}, Try again!`;
       resultText.style.color = "red";
-      return;
     }
     attempts++; // a full outfit was confirmed
+
 
     if (wrongItems.length === 0) {
       correct_answer = true;
@@ -161,9 +149,12 @@
       resultText.textContent = "❌ Incorrect items: " + wrongItems.join(", ") + ", Try again!";
       resultText.style.color = "red";
     }
+
+    feedback.classList.add("visible");
+
   });
 
-  playAgainBtn.addEventListener('click', () => {
+  nextBtn.addEventListener('click', () => {
     popup.style.display = 'none';
 
     if (correct_answer) {
@@ -171,6 +162,7 @@
         window.nextInstruction();
         correct_answer = false;
     }
+
 });
 
   giveUpBtn.addEventListener('click', ( )=> {
