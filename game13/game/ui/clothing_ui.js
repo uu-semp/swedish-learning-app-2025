@@ -25,7 +25,11 @@ export function createHtmlObjects(imgArray) {
         // add more properties, like styling, if needed
         htmlImgObject.dataset.category = cat;
         htmlImgObject.dataset.id = id;
-        htmlImgObject.src = path;
+        // The shelf shows the cropped thumbnail; wardrobe_ui puts the
+        // full-size picture (same size as Pelle) on him.
+        htmlImgObject.src = imgObject.getThumbPath();
+        htmlImgObject.dataset.fullSrc = path;
+        if (imgObject.getLayer() !== null) htmlImgObject.dataset.layer = imgObject.getLayer();
         htmlImgObject.alt = description;
         htmlImgObject.width = 100;
         htmlImgObject.height = 100;

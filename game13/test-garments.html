@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Garment test</title>
+  <style>
+    body { font-family: sans-serif; margin: 16px; background: #f4f1ea; color: #222; }
+    .layout { display: flex; gap: 24px; flex-wrap: wrap; align-items: flex-start; }
+
+    /* Pelle and every garment are full-size layers in the same box */
+    .pelle-stack { position: relative; height: 70vh; background: #e8e2d4; outline: 1px dashed #999; }
+    .pelle-stack img { position: absolute; inset: 0; width: 100%; height: 100%; }
+    .pelle-stack .pelle { position: static; display: block; width: auto; }
+
+    .controls { display: flex; flex-direction: column; gap: 12px; min-width: 260px; max-width: 560px; }
+    #items { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 8px; }
+    select:disabled { opacity: 0.4; }
+    fieldset { border: 1px solid #bbb; border-radius: 6px; }
+    label { display: block; margin: 4px 0; }
+    .thumbs { display: flex; gap: 8px; flex-wrap: wrap; }
+    .thumbs img { height: 90px; background: #fff; border: 1px solid #ccc; border-radius: 6px; padding: 4px; }
+    #log { color: #b00020; white-space: pre-wrap; font-size: 13px; }
+  </style>
+</head>
+<body>
+  <h1>Garment alignment test</h1>
+  <p>Serve the repo root (<code>python3 -m http.server 8000</code>) and open
+     <code>http://localhost:8000/game13/test-garments.html</code>.</p>
+
+  <div class="layout">
+    <div class="pelle-stack" id="stack">
+      <img class="pelle" id="pelle" src="../assets/game13/pelle.png" alt="Pelle">
+      <!-- Raised hand drawn again above clothing (90) but below hand accessories (100) -->
+      <img id="pelle-hand" src="../assets/game13/pelle_hand.png" alt="" style="z-index: 90">
+    </div>
+
+    <div class="controls">
+      <div id="items"></div>
+      <fieldset>
+        <legend>Checks</legend>
+        <label>Pattern scale <input type="range" id="scale" min="0.25" max="4" step="0.25" value="1"> <span id="scale-val">1</span></label>
+        <label>Garment opacity <input type="range" id="opacity" min="0.1" max="1" step="0.1" value="1"></label>
+        <label><input type="checkbox" id="hide-pelle"> Hide Pelle</label>
+        <label><input type="checkbox" id="hide-hand"> Hide hand layer</label>
+      </fieldset>
+      <div>
+        <strong>Wardrobe thumbnails (auto-cropped)</strong>
+        <div class="thumbs" id="thumbs"></div>
+      </div>
+      <div id="log"></div>
+    </div>
+  </div>
+
+  <script type="module">
+    import { COLORS, PATTERNS, SLOTS, ITEMS } from "./game/clothing/clothing_catalog.js";
+    import { renderGarmentCanvas, cropToContent } from "./game/clothing/garment_renderer.js";
+
+    // The garment list, slots and layers live in clothing_catalog.js.
+    // Pick "none" in a slot to leave it empty.
+    const stack = document.getElementById("stack");
+    const thumbs = document.getElementById("thumbs");
+    const log = document.getElementById("log");
+    const scaleInput = document.getElementById("scale");
+    const opacityInput = document.getElementById("opacity");
+
+    const itemByKey = Object.fromEntries(ITEMS.map((item) => [item.key, item]));
+    const state = {};
+    const DEFAULTS = { top: "blouse", hands: "ring" };
+
+    function options(keys, labels = {}) {
+      return keys.map((k) => `<option value="${k}">${labels[k] ?? k}</option>`).join("");
+    }
+
+    // One control group per slot: garment, colour, pattern
+    const itemsRoot = document.getElementById("items");
+    for (const slot of SLOTS) {
+      const slotItems = ITEMS.filter((item) => item.slot === slot.key);
+      const labels = Object.fromEntries(slotItems.map((i) => [i.key, `${i.key} (${i.sv})`]));
+      state[slot.key] = { item: DEFAULTS[slot.key] ?? "none", color: "blue", pattern: "striped" };
+
+      const box = document.createElement("fieldset");
+      box.innerHTML = `
+        <legend>${slot.key} (${slot.sv})</legend>
+        <label>Garment <select data-field="item">
+          <option value="none">none</option>${options(slotItems.map((i) => i.key), labels)}
+        </select></label>
+        <label>Colour <select data-field="color">${options(Object.keys(COLORS))}</select></label>
+        <label>Pattern <select data-field="pattern">${options(Object.keys(PATTERNS))}</select></label>
+      `;
+      const patternSelect = box.querySelector('[data-field="pattern"]');
+      const sync = () => {
+        const item = itemByKey[state[slot.key].item];
+        // Colour-only garments can't take a pattern
+        patternSelect.disabled = !item || !item.patternable;
+        box.querySelector('[data-field="color"]').disabled = !item;
+      };
+      box.querySelector('[data-field="item"]').value = state[slot.key].item;
+      box.querySelector('[data-field="color"]').value = state[slot.key].color;
+      patternSelect.value = state[slot.key].pattern;
+      sync();
+
+      box.addEventListener("input", (e) => {
+        state[slot.key][e.target.dataset.field] = e.target.value;
+        sync();
+        render();
+      });
+      itemsRoot.appendChild(box);
+    }
+
+    let renderId = 0;
+    let fileErrors = ""; // missing Pelle / hand, kept across redraws
+
+    async function render() {
+      const id = ++renderId; // ignore results from an older render
+      const patternScale = Number(scaleInput.value);
+      document.getElementById("scale-val").textContent = patternScale;
+
+      const pelle = document.getElementById("pelle");
+      const layers = [];
+      const thumbUrls = [];
+      let messages = "";
+
+      for (const slot of SLOTS) {
+        const s = state[slot.key];
+        const item = itemByKey[s.item];
+        if (!item) continue;
+        try {
+          const canvas = await renderGarmentCanvas(item, { color: s.color, pattern: s.pattern, patternScale });
+
+          if (pelle.naturalWidth && (canvas.width !== pelle.naturalWidth || canvas.height !== pelle.naturalHeight)) {
+            messages += `⚠ ${item.key} is ${canvas.width}×${canvas.height} but Pelle is ` +
+              `${pelle.naturalWidth}×${pelle.naturalHeight}. They must be exported from the same canvas.\n`;
+          }
+          thumbUrls.push(cropToContent(canvas).toDataURL());
+          layers.push({ src: canvas.toDataURL(), layer: item.layer });
+        } catch (err) {
+          messages += `✗ ${item.key}: ${err.message}\n`;
+        }
+      }
+
+      if (id !== renderId) return;
+      stack.querySelectorAll(".garment").forEach((el) => el.remove());
+      thumbs.innerHTML = "";
+      log.textContent = fileErrors + messages;
+
+      for (const { src, layer } of layers) {
+        const img = new Image();
+        img.className = "garment";
+        img.src = src;
+        img.style.zIndex = layer;
+        img.style.opacity = opacityInput.value;
+        stack.appendChild(img);
+      }
+      for (const src of thumbUrls) {
+        const thumb = new Image();
+        thumb.src = src;
+        thumbs.appendChild(thumb);
+      }
+    }
+
+    scaleInput.addEventListener("input", render);
+    opacityInput.addEventListener("input", render);
+    document.getElementById("hide-pelle").addEventListener("change", (e) => {
+      document.getElementById("pelle").style.visibility = e.target.checked ? "hidden" : "visible";
+    });
+    document.getElementById("hide-hand").addEventListener("change", (e) => {
+      document.getElementById("pelle-hand").style.visibility = e.target.checked ? "hidden" : "visible";
+    });
+    document.getElementById("pelle-hand").addEventListener("error", () => {
+      fileErrors += "✗ pelle_hand.png not found\n";
+      log.textContent = fileErrors + log.textContent;
+    });
+
+    const pelleImg = document.getElementById("pelle");
+    pelleImg.complete ? render() : pelleImg.addEventListener("load", render);
+    pelleImg.addEventListener("error", () => { fileErrors += "✗ pelle.png not found\n"; render(); });
+  </script>
+</body>
+</html>
