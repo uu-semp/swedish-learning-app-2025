@@ -28,21 +28,25 @@ const app = createApp({
   data() {
     return {
       currentView: "StartView", //Default start page
+      helpReturnView: "StartView",
       skyViews: ["StartView", "ChooseLevelView"], // Views shown on top of the sky background
     };
   },
 
   methods: {
-    switchViewTo(viewName) {
+    switchViewTo(viewName, returnView = null) {
+      if (viewName === "HelpView") {
+        this.helpReturnView = returnView || this.currentView;
+      }
       this.currentView = viewName; // Sets the new view after button press
     },
   },
 
   template: `
     <sky-background v-if="skyViews.includes(currentView)">
-      <component :is="currentView" :switch-to="switchViewTo"></component>
+      <component :is="currentView" :switch-to="switchViewTo" :help-return-view="helpReturnView"></component>
     </sky-background>
-    <component v-else :is="currentView" :switch-to="switchViewTo"></component>
+    <component v-else :is="currentView" :switch-to="switchViewTo" :help-return-view="helpReturnView"></component>
     `, //The visual app shown through the index.html, passes the method switchViewTo which is taken as prop from child components
     // Views in skyViews are placed inside the sky background, which stays mounted while switching between them
 });

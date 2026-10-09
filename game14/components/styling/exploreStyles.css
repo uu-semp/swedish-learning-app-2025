@@ -6,6 +6,25 @@
     padding: 20px 20px 30px 20px;
 }
 
+.explore-view .explore-topbar {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: start;
+    gap: 16px;
+    margin-bottom: 16px;
+    position: relative;
+    z-index: 10;
+}
+
+.explore-view .explore-topbar-spacer {
+    min-width: 1px;
+}
+
+.explore-view .explore-topbar-actions {
+    display: flex;
+    justify-content: flex-end;
+}
+
 /* Title in the same golden style as the start page, but smaller */
 .explore-view .explore-title {
     font-family: 'Fredoka', 'Arial Rounded MT Bold', sans-serif;
@@ -17,6 +36,7 @@
     margin: 0;
 
     background: linear-gradient(180deg, #fcebc2 0%, #f4d393 45%, #e1af63 100%);
+    background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 
@@ -71,7 +91,7 @@
 /* Instruction text */
 .explore-view .explore-instruction {
     font-family: 'Fredoka', 'Arial Rounded MT Bold', sans-serif;
-    font-size: 20px;
+    font-size: clamp(24px, 2.8vw, 30px);
     font-weight: 600;
     color: white;
     text-align: center;
@@ -90,13 +110,13 @@
 /* Each word as a small white cloud */
 .explore-view .word-cloud {
     font-family: 'Fredoka', 'Arial Rounded MT Bold', sans-serif;
-    font-size: 18px;
+    font-size: clamp(22px, 2.4vw, 28px);
     font-weight: 600;
     color: #1e528e;
     background: white;
     border: none;
     border-radius: 999px;
-    padding: 10px 18px;
+    padding: 14px 24px;
     box-shadow: 0 4px 0 rgba(0, 0, 0, 0.15);
     cursor: pointer;
 }

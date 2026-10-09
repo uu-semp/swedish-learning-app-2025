@@ -766,15 +766,11 @@ body {
 }
 
 #exit-game-button {
-    background-color: #D32F2F;
-    border-color: #B71C1C;
-    color: white;
-    padding: 8px 16px;
-    font-size: 16px;
-    border-width: 4px;
-    border-radius: 15px;
-    margin: 0% 0% 4% 4%;
-    width: 15%;
+    min-width: 150px;
+    padding: 10px 24px;
+    font-size: 20px;
+    letter-spacing: 1px;
+    margin: 0;
 }
 
 .level-header .big-buttons:hover {

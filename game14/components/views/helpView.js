@@ -1,6 +1,6 @@
 export const HelpView = {
   name: "help-view",
-  props: ["switchTo"],
+  props: ["switchTo", "helpReturnView"],
   template: `
       <div class="help-view">
       <h1 class = "main-text">{{$language.translate('about')}}</h1>  
@@ -24,7 +24,7 @@ export const HelpView = {
       </div>
 
       <div class = button-container> 
-        <capsule-button label="go-back" size="md" @click="switchTo('StartView')"></capsule-button>
+        <capsule-button label="go-back" size="md" @click="switchTo(helpReturnView || 'StartView')"></capsule-button>
       </div>
     </div>
     `,

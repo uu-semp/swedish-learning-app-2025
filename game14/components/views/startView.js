@@ -41,7 +41,7 @@ export const StartView = {
              label="?"
              :translate-key="false"
              :title="$language.translate('help')"
-             @click="switchTo('HelpView')"
+             @click="switchTo('HelpView', 'StartView')"
            ></capsule-button>
 
           </div>

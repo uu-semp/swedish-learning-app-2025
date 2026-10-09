@@ -69,6 +69,70 @@ export const LevelOneView = {
           <div class="explore-content">
             <div class="explore-pelle" v-html="pelleSvg" @click="handlePelleClick"></div>
 
+                <div class="score-counter">
+                    <score-counter :score="currentScore" :item-amount="numberOfQuestionsAsked"></score-counter>
+                </div>
+                
+                <dress-pelle-prompt :item="currentItem"></dress-pelle-prompt>
+
+                <div class="level-header-actions">
+                    <exit-game-button @click="openModal"></exit-game-button>
+                </div>
+    
+            </div>
+            
+            <correct-answer-feedback v-if="showCorrectFeedback"></correct-answer-feedback>
+            <incorrect-answer-feedback v-if="showIncorrectFeedback" :message="incorrectMessage"></incorrect-answer-feedback>         
+
+            <div class="main-content-area">
+                                <div class="pelle-wrapper">
+                                        <pelle-container
+                                            :expected-item-id="currentItem ? currentItem.ID : ''"
+                                            @item-dropped="handleDropResult"
+                                        ></pelle-container>
+                                </div>
+                <div class="wardrobe-wrapper">
+                    <wardrobe-container :clothes="this.chosenClothingItems"></wardrobe-container>
+                </div>
+            </div>
+
+            <div>
+                <info-button @click="this.showInfo=true"></info-button>
+                <license-button @click="this.showLicense=true"></license-button>
+            </div>
+            <div v-if="showModal" class="modal-overlay" @click="handleOverlayClick">
+                <div class="modal-content" @click.stop>
+                    <h2>{{$language.translate('exit-confirmation')}}</h2>
+                    <div class="modal-buttons">
+                        <capsule-button label="yes" size="md" @click="confirmExit"></capsule-button>
+                        <capsule-button label="no" size="md" @click="closeModal"></capsule-button>
+                    </div>
+                </div>
+            </div>
+            <statisticsPopUp v-if="gameOver" @playAgain="restartGame" @exit="confirmExit" :totalNumberTries="totalTries" :score="this.currentScore" :numQuestionsAsked="this.numberOfQuestionsAsked"></statisticsPopUp>
+            <div v-if="this.showInfo" class="modal-overlay" @click="handleOverlayClick">
+                <div class="modal-content" @click="this.showInfo=false">
+                    <h2>{{$language.translate('information-message')}}</h2>
+                    <div class="modal-buttons">
+                        <capsule-button id="info-back-button" label="okay-continue" size="md" @click="this.showInfo=false"></capsule-button>
+                    </div>
+                </div>
+            </div>
+            <div v-if="this.showLicense" class="modal-overlay" @click="handleOverlayClick">
+                <div class="modal-content license-modal" @click="this.showLicense=false">
+                    <h2>{{$language.translate('license-information')}}</h2>
+                    <div class="license-content">
+                        <p>{{$language.translate('license-details')}}</p>
+                        <div class="license-sections">
+                            <p><strong>{{$language.translate('license-freepik')}}</strong></p>
+                            <p><strong>{{$language.translate('license-public-domain')}}</strong></p>
+                            <p><strong>{{$language.translate('license-cc')}}</strong></p>
+                        </div>
+                    </div>
+                    <div class="modal-buttons">
+                        <capsule-button label="okay-continue" size="md" @click="this.showLicense=false"></capsule-button>
+                    </div>
+                </div>
             <div class="explore-side">
               <p class="explore-instruction">{{$language.translate('explore-instruction')}}</p>
 

@@ -101,8 +101,14 @@ export const CategoryClothingButton = {
 };
 
 export const ExitGameButton = {
+    emits: ["click"],
+    methods: {
+      handleClick(event) {
+        this.$emit("click", event);
+      },
+    },
     template: `
-    <button class="capsule-button capsule-button--md" id="exit-game-button">{{$language.translate('exit')}}</button>
+    <button class="capsule-button capsule-button--md" id="exit-game-button" @click="handleClick">{{$language.translate('exit')}}</button>
   `,
 };
 export const LanguageFlagButton = {
