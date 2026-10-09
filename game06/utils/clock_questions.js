@@ -111,6 +111,53 @@ export function createClockQuestions(tags = new Set()) {
   }).filter((question) => minutes.has(question.minute));
 }
 
+/**
+ * Generates an MCQ clock question with 3 distractors.
+ */
+export function createMcqClockQuestion(hour, minute, difficulty) {
+  const answer = swedishTimePhrase(hour, minute);
+  
+  // Pick 3 random distractor phrases with different times
+  const alternatives = new Set();
+  while (alternatives.size < 3) {
+    const dHour = Math.floor(Math.random() * 12);
+    const dMinute = (Math.floor(Math.random() * 12)) * 5;
+    const distractor = swedishTimePhrase(dHour, dMinute);
+    if (distractor !== answer) {
+      alternatives.add(distractor);
+    }
+  }
+  return {
+    id: `mcq-clock-${hour}-${minute}`,
+    type: "clock",
+    difficulty,
+    question: "Hur mycket är klockan?",
+    hour,
+    minute,
+    answer,
+    alternatives: Array.from(alternatives),
+    feedback: "Good try, mistakes are how you learn!"
+  };
+}
+/**
+ * Generates a round of distinct MCQ questions based on difficulty tags.
+ */
+export function createStandardModeQuestions(difficulty, count = 5) {
+  // Map difficulty to existing TAG_MINUTES
+  const tags = difficulty === "easy" 
+    ? new Set(["whole_hour", "half_hour"]) 
+    : new Set(["all_times"]);
+  const pool = createClockQuestions(tags);
+  const questions = [];
+  
+  for (let i = 0; i < count && pool.length > 0; i++) {
+    const pick = Math.floor(Math.random() * pool.length);
+    const target = pool.splice(pick, 1)[0];
+    questions.push(createMcqClockQuestion(target.hour, target.minute, difficulty));
+  }
+  return questions;
+}
+
 //#endregion
 /* =========================== Answer checking ========================= */
 //#region
