@@ -20,18 +20,53 @@
     },
     
     "intro-desc": {
-        "en": "Here you can practice basic Swedish from the courses <a href=\"https://www.uu.se/en/study/course?query=5PU028\"target=\"_blank\"> Basic Swedish 1</a> / <a href=\"https://www.uu.se/en/staff/employment/continuing-professional-development/courses-for-employees/swedish-for-academics-1-75-hp\" target=\"_blank\">Swedish for Academics 1</a> at Uppsala University. Each game matches one or more chapters in the course book. Use the filters below to pick the chapter you want to study. Have fun!",
-        "sv": "Här kan du öva på enkel svenska från kurserna <a href=\"https://www.uu.se/en/study/course?query=5PU028\"target=\"_blank\">Basic Swedish 1</a>/<a href=\"https://www.uu.se/en/staff/employment/continuing-professional-development/courses-for-employees/swedish-for-academics-1-75-hp\" target=\"_blank\">Swedish for Academics 1</a> på Uppsala Universitet. Varje spel matchar ett eller flera kapitel i kursboken. Använd filter-knapparna nedanför för att välja ett kapitel att öva på. Ha så kul!"
+        "en": "Here you can practice basic Swedish from the courses <a href=\"https://www.uu.se/en/study/course?query=5PU028\"target=\"_blank\"> Basic Swedish 1</a> / <a href=\"https://www.uu.se/en/staff/employment/continuing-professional-development/courses-for-employees/swedish-for-academics-1-75-hp\" target=\"_blank\">Swedish for Academics 1</a> at Uppsala University. Each game focuses on one or more learning themes. Use the filters below to pick one or more themes you want to study. Have fun!",
+        "sv": "Här kan du öva på enkel svenska från kurserna <a href=\"https://www.uu.se/en/study/course?query=5PU028\"target=\"_blank\">Basic Swedish 1</a>/<a href=\"https://www.uu.se/en/staff/employment/continuing-professional-development/courses-for-employees/swedish-for-academics-1-75-hp\" target=\"_blank\">Swedish for Academics 1</a> på Uppsala Universitet. Varje spel fokuserar på ett eller flera lärandeteman. Använd filter-knapparna nedanför för att välja ett eller flera teman att öva på. Ha så kul!"
     },
 
     "filter": {
-        "en": "Filter by chapter:",
-        "sv": "Filtrera efter kapitel:"
+        "en": "Filter by theme:",
+        "sv": "Filtrera efter tema:"
     },
 
-    "chapter": {
-        "en": "Chapter",
-        "sv": "Kapitel"
+    "theme-all": {
+        "en": "All themes",
+        "sv": "Alla teman"
+    },
+
+    "theme-clothing": {
+        "en": "Clothes",
+        "sv": "Kläder"
+    },
+
+    "theme-furniture": {
+        "en": "Furniture",
+        "sv": "Möbler"
+    },
+
+    "theme-food": {
+        "en": "Food",
+        "sv": "Mat"
+    },
+
+    "theme-time": {
+        "en": "Time",
+        "sv": "Tid"
+    },
+
+    "theme-numbers": {
+        "en": "Numbers",
+        "sv": "Siffror"
+    },
+
+    "theme-places": {
+        "en": "Places",
+        "sv": "Platser"
+    },
+
+    "theme-colors": {
+        "en": "Colors",
+        "sv": "Färger"
     },
 
     "clear?": {
