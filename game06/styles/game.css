@@ -8,7 +8,7 @@ Game View Styles - Game 06
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     border-radius: 20px;
     max-width: 750px;
-    height: 580px;
+    min-height: 580px;
     box-sizing: border-box;
 
     margin: 5px auto;

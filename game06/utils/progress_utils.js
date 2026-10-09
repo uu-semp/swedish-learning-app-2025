@@ -4,13 +4,14 @@
  * Rules:
  * - A question becomes **mastered** after the first correct answer.
  * - Regular sessions exclude mastered questions.
+ * - Practice sessions include mastered questions without clearing their history.
  * - Review modes:
  *    • "review-current": wrong > 0 AND correct == 0 (unsolved mistakes)
  *    • "review-all":     wrong > 0 (historical mistakes, even if later mastered)
  */
 
 /** @typedef {"regular"|"clock"} QuestionType */
-/** @typedef {"regular"|"review-current"|"review-all"} SessionMode */
+/** @typedef {"regular"|"practice"|"review-current"|"review-all"} SessionMode */
 
 /**
  * Common fields for all questions.
@@ -36,6 +37,7 @@
  * @property {number} wrong     // number of wrong attempts
  * @property {number} lastAt    // epoch ms of last attempt
  * @property {boolean} mastered // true after first correct attempt
+ * @property {boolean} [saved] // whether an attempt was persisted (recordResult only)
  */
 
 /**
@@ -89,11 +91,11 @@ function _load() {
 /**
  * Persist the progress database to localStorage.
  * @param {Database} db
- * @returns {void}
+ * @returns {boolean} Whether the database was saved successfully.
  */
 function _save(db) {
 	console.log("Saved data: ", db);
-	window.save.set(LS_KEY, db);
+	return window.save.set(LS_KEY, db) !== false;
 }
 
 /**
@@ -161,8 +163,8 @@ export function recordResult(id, wasCorrect) {
 		db[id].wrong += 1;
 	}
 	db[id].lastAt = Date.now();
-	_save(db);
-	return db[id];
+	const saved = _save(db);
+	return { ...db[id], saved };
 }
 
 /**
@@ -309,6 +311,7 @@ export function nextReviewAll(questions, { excludeIds = null } = {}) {
  * Create a session that serves up to `size` **distinct** questions with NO repeats.
  * Eligibility per `mode`:
  *  - "regular":        not mastered
+ *  - "practice":       all questions, including mastered questions
  *  - "review-current": wrong > 0 && correct == 0
  *  - "review-all":     wrong > 0
  *
@@ -318,7 +321,9 @@ export function nextReviewAll(questions, { excludeIds = null } = {}) {
  * are no more eligible questions.
  *
  * @param {Question[]} questions - The working pool (e.g., only "easy" items).
- * @param {{ mode?: SessionMode, size?: number }} [options]
+ * In practice mode, questionClass optionally keeps the next question in the
+ * same class after a mistake, until a correct answer restores the full pool.
+ * @param {{ mode?: SessionMode, size?: number, questionClass?: function(Question): string }} [options]
  * @returns {SessionObject}
  *
  * @example
@@ -331,11 +336,18 @@ export function nextReviewAll(questions, { excludeIds = null } = {}) {
  * }
  * console.log(session.seenIds); // IDs served in this run
  */
-export function createSession(questions, { mode = "regular", size = 5 } = {}) {
+export function createSession(questions, { mode = "regular", size = 5, questionClass = null } = {}) {
 	const seen = new Set();
 	let asked = 0;
+	let preferredClass = null;
 
 	function pickNext() {
+		if (mode === "practice") {
+			const eligible = questions.filter((q) => !seen.has(q.id));
+			const preferred = preferredClass === null ? eligible
+				: eligible.filter((q) => questionClass(q) === preferredClass);
+			return randPick(preferred.length ? preferred : eligible);
+		}
 		const opts = { excludeIds: seen };
 		if (mode === "review-current")
 			return nextReviewCurrent(questions, opts);
@@ -368,7 +380,11 @@ export function createSession(questions, { mode = "regular", size = 5 } = {}) {
 
 		/** Record the result into progress store */
 		record(q, wasCorrect) {
-			return recordResult(q.id, wasCorrect);
+			const status = recordResult(q.id, wasCorrect);
+			if (mode === "practice" && questionClass) {
+				preferredClass = wasCorrect ? null : questionClass(q);
+			}
+			return status;
 		},
 	};
 }

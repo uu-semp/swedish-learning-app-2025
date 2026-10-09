@@ -9,8 +9,8 @@
  * - Handle question progression, replay, and return to level selection.
  */
 
-import { createClockRound, checkClockAnswer } from "./utils/clock_questions.js";
-import { initProgress, recordResult } from "./utils/progress_utils.js";
+import { createClockQuestions, clockQuestionClass, checkClockAnswer } from "./utils/clock_questions.js";
+import { initProgress, createSession } from "./utils/progress_utils.js";
 
 /** @typedef {import("./utils/question_utils.js").ClockQuestion} ClockQuestion */
 
@@ -26,8 +26,8 @@ document.querySelector(".game-frame").insertAdjacentHTML("beforeend", `
           <div class="clock-container">
             <div id="setting-clock" class="clock" aria-label="Draggable analog clock">
               <div class="clock-face">
-                <div class="hand hour-hand" id="setting-hour-hand" aria-label="Red hour hand" title="Drag anywhere along the hour hand"></div>
-                <div class="hand minute-hand" id="setting-minute-hand" aria-label="Blue minute hand" title="Drag anywhere along the minute hand"></div>
+                <div class="hand hour-hand" id="setting-hour-hand" role="slider" tabindex="-1" aria-label="Hour hand" aria-valuemin="1" aria-valuemax="12" title="Drag or use arrow keys to set the hour"></div>
+                <div class="hand minute-hand" id="setting-minute-hand" role="slider" tabindex="-1" aria-label="Minute hand" aria-valuemin="0" aria-valuemax="55" title="Drag or use arrow keys to set the minutes"></div>
               </div>
             </div>
           </div>
@@ -35,7 +35,7 @@ document.querySelector(".game-frame").insertAdjacentHTML("beforeend", `
             <p class="question-label">Set the clock to:</p>
             <p id="set-clock-question" class="question-text" lang="sv"></p>
           </div>
-          <p class="question-label">Drag the red hour hand and blue minute hand to match the Swedish phrase, then submit your answer. Grab anywhere along a hand; it snaps into place when released.</p>
+          <p class="question-label">Drag the red hour hand and blue minute hand to match the Swedish phrase, then submit your answer. You can also focus a hand and use the arrow keys.</p>
           <button id="set-clock-submit" class="submit-btn" type="button" disabled>Submit Answer</button>
           <button id="set-clock-next" class="next-btn" type="button" hidden>Next Question</button>
           <p id="set-clock-feedback" class="feedback-message" role="status" aria-live="polite" hidden></p>
@@ -55,16 +55,6 @@ document.querySelector(".game-frame").insertAdjacentHTML("beforeend", `
       </section>
     </div>
 `);
-document.querySelector(".level-cards").insertAdjacentHTML("afterbegin", `
-<div class="level-card">
-            <div class="level-icon">
-              <i class="fa-solid fa-clock" aria-hidden="true"></i>
-            </div>
-            <h3 class="level-name">Set Clock</h3>
-            <p class="level-description">Match Swedish time phrases</p>
-            <button id="set-clock-launch" class="level-btn" type="button" disabled>Play Now</button>
-          </div>
-`);
 
 // Initialize the clock after its markup has been added to the page.
 const { resetClock, getClockTime, setAnalogTime, setInteractive } = await import("./components/setting-clock.js");
@@ -82,6 +72,7 @@ let index = 0;
 let score = 0;
 /** @type {boolean} Prevents more than one submission for the current question */
 let submitted = false;
+let session = null;
 
 // ==============================================
 // CLOCK INTEGRATION HELPERS
@@ -95,10 +86,10 @@ function active() {
   return document.body.classList.contains("setting-clock-mode");
 }
 
-// Enable Submit only after movement and pointer release.
+// Any resting clock can be submitted, including its initial 12:00 position.
 clock.addEventListener("clock-change", (event) => {
   if (!active() || submitted) return;
-  submit.disabled = !event.detail.moved || event.detail.dragging;
+  submit.disabled = event.detail.dragging;
 });
 
 // ==============================================
@@ -107,10 +98,11 @@ clock.addEventListener("clock-change", (event) => {
 
 /**
  * Display the current phrase and reset question controls and clock hands.
- * Clears previous feedback and disables Submit until a hand has moved.
+ * Clears previous feedback and allows the initial clock position to be submitted.
  * @returns {void}
  */
 function showQuestion() {
+  round[index] = session.next();
   submitted = false;
   document.getElementById("set-clock-question").textContent = round[index].question;
   document.getElementById("set-clock-counter").textContent = `Question ${index + 1}/5`;
@@ -119,7 +111,7 @@ function showQuestion() {
   feedback.textContent = "";
   feedback.className = "feedback-message";
   submit.hidden = false;
-  submit.disabled = true;
+  submit.disabled = false;
   next.hidden = true;
   resetClock();
 }
@@ -130,8 +122,10 @@ function showQuestion() {
  * @returns {void}
  */
 function startRound() {
-  round = createClockRound();
-  initProgress(round.map((question) => question.id));
+  const questions = createClockQuestions();
+  initProgress(questions.map((question) => question.id));
+  session = createSession(questions, { mode: "practice", size: 5, questionClass: clockQuestionClass });
+  round = [];
   index = 0;
   score = 0;
   document.querySelectorAll(".view").forEach((other) => { other.style.display = "none"; });
@@ -152,12 +146,13 @@ function startRound() {
  */
 submit.addEventListener("click", () => {
   const time = getClockTime();
-  if (!active() || submitted || !time.moved || time.dragging) return;
+  if (!active() || submitted || time.dragging) return;
   const question = round[index];
   const correct = checkClockAnswer(question, time);
   submitted = true;
   setInteractive(false);
-  recordResult(question.id, correct);
+  const status = session.record(question, correct);
+  document.getElementById("save-warning").hidden = status.saved !== false;
   if (correct) {
     score += 10;
   } else {
@@ -171,6 +166,7 @@ submit.addEventListener("click", () => {
   submit.disabled = true;
   submit.hidden = true;
   next.hidden = false;
+  next.focus();
 });
 
 /**
@@ -179,7 +175,7 @@ submit.addEventListener("click", () => {
 next.addEventListener("click", () => {
   if (!submitted) return;
   index += 1;
-  if (index < round.length) {
+  if (index < session.size) {
     showQuestion();
   } else {
     next.hidden = true;
