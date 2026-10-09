@@ -1,105 +1,109 @@
 // ==============================================
 // Owned by Game 10
 // ==============================================
-import {loadProgress, saveProgress} from '../dev-tools/cookies.js'
 
-$(document).ready(function(){
-  const svg = document.getElementById('result-wires');
-  const gameState = JSON.parse(localStorage.getItem('level2GameState'));
-  if(!gameState) return;
+import { getLang, recordLevelScore, changeWeight, getStreak, recordStreak } from "../dev-tools/cookies.js";
+import { t, applyI18n, roundSummary } from "../dev-tools/i18n.js";
+import { vocabUrl } from "../dev-tools/util.js";
 
-  // recreate buttons in same order
-  const leftCol = $('#left-col');
-  const rightCol = $('#right-col');
+const PAIR_COUNT = 4;
+const LEVEL_ID = 2;
+const initialStreak = getStreak(LEVEL_ID);
 
-  gameState.leftWords.forEach(word => {
-    leftCol.append(`<button class="word-btn" data-id="${word.id}">${word.text}</button>`);
-  });
-  gameState.rightWords.forEach(word => {
-    rightCol.append(`<button class="word-btn" data-id="${word.id}">${word.text}</button>`);
-  });
+let currentStreak = initialStreak.current;
+let bestStreak = initialStreak.best;
 
-  // Re-map buttons now that they are in the DOM
-  const leftButtons = $('.col.left .word-btn');
-  const rightButtons = $('.col.right .word-btn');
-  // draw lines and color them according to correctness
+const state = JSON.parse(sessionStorage.getItem("eatLearnL2") || "null");
+const lang = getLang();
 
-  let correctAnswers = 0;
-  gameState.pairs.forEach(p => {
-    const leftBtn = leftButtons.filter(`[data-id="${p.leftId}"]`);
-    const rightBtn = rightButtons.filter(`[data-id="${p.rightId}"]`);
+function show(id) {
+  document.getElementById("results").classList.toggle("is-on", id === "results");
+  document.getElementById("done").classList.toggle("is-on", id === "done");
+}
 
-    // The logic is now much simpler: are the IDs the same?
-    const correct = p.leftId === p.rightId;
-
-    if(correct){
-      $(leftBtn).addClass('correct');
-      $(rightBtn).addClass('correct');
-      correctAnswers++;
-    } else {
-      $(leftBtn).addClass('incorrect');
-      $(rightBtn).addClass('incorrect');
-    }
-
-    const line = drawLine(leftBtn[0], rightBtn[0]);
-    line.setAttribute('class', correct ? 'correct' : 'incorrect');
-
-  });
-
-  updateAndSaveProgress(correctAnswers);
-
-
-  /**
-   * Loads progress, adds the new score, and saves the total back to a cookie.
-   * Advances the player to level 3 if their cumulative score reaches 10.
-   * @param {number} newScore - The number of correct answers in this round.
-   */
-  function updateAndSaveProgress(newScore) {
-    let progress = loadProgress();
-
-    // Initialize score for level 2 if it doesn't exist
-    if (!progress.levelScores[2]) {
-      progress.levelScores[2] = 0;
-    }
-    
-    // Add the new score to the existing total for Level 2
-    progress.levelScores[2] += newScore;
-    const totalScore = progress.levelScores[2];
-
-    // Check for level up condition (only advance if they are currently on level 2)
-    if (totalScore >= 10 && progress.currentLevel === 2) {
-      progress.currentLevel = 3; // Advance to Level 3!
-      alert(`You got ${newScore} correct! Your total score is now ${totalScore}/10`);
-      save.stats.setCompletion("game10", 67);
-      window.location.href = '../advance-next-level/advance-next-level3.html';
-    } else if (progress.currentLevel > 2) {
-       alert(`You got ${newScore} correct! Great job practicing!`);
-    } else {
-      alert(`You got ${newScore} correct! Your total score is now ${totalScore}/10. You need 10 to unlock the next level.`);
-    }
-    
-    // Save the updated progress object back to the cookie
-    saveProgress(progress);
-    console.log("Progress saved:", progress);
+function render() {
+  applyI18n(lang);
+  if (!state) {
+    window.location.href = "game_page.html";
+    return;
   }
+  const { leftItems, rightItems, links } = state;
+  const graded = links.map((link) => {
+    const left = leftItems[link.left];
+    const right = rightItems[link.right];
+    return { ...link, correct: left.id === right.id, leftItem: left, rightItem: right };
+  });
 
-  function drawLine(elA, elB){
-    const ra = elA.getBoundingClientRect();
-    const rb = elB.getBoundingClientRect();
-    const root = svg.getBoundingClientRect();
-    const ax = (ra.left + ra.right) / 2 - root.left;
-    const ay = (ra.top + ra.bottom) / 2 - root.top;
-    const bx = (rb.left + rb.right) / 2 - root.left;
-    const by = (rb.top + rb.bottom) / 2 - root.top;
-
-    const line = document.createElementNS("http://www.w3.org/2000/svg","line");
-    line.setAttribute("x1", ax);
-    line.setAttribute("y1", ay);
-    line.setAttribute("x2", bx);
-    line.setAttribute("y2", by);
-    line.setAttribute("stroke-width", 3);
-    svg.appendChild(line);
-    return line;
+  const roundScore = graded.filter((g) => g.correct).length;
+  if (roundScore === PAIR_COUNT) {
+    currentStreak += roundScore;
+  } else {
+    currentStreak = roundScore;
   }
+  if (currentStreak > bestStreak) bestStreak = currentStreak;
+  recordStreak(LEVEL_ID, currentStreak, bestStreak);
 
-});
+  document.getElementById("res-ok").innerHTML = `<i class="fa-solid fa-check"></i>${roundScore} ${t(lang, "rightWord")}`;
+  document.getElementById("res-no").innerHTML = `<i class="fa-solid fa-xmark"></i>${PAIR_COUNT - roundScore} ${t(lang, "wrongWord")}`;
+  document.getElementById("res-left").innerHTML = leftItems
+    .map(
+      (item) => `
+      <div class="al-pair">
+        <img src="${vocabUrl(item.img)}" alt="">
+        <span style="font:500 13px 'Work Sans',sans-serif;color:#555">${item.en || ""}</span>
+      </div>`
+    )
+    .join("");
+  document.getElementById("res-right").innerHTML = rightItems
+    .map((item, index) => {
+      const matched = graded.find((g) => g.right === index);
+      const ok = matched?.correct;
+      const note = matched
+        ? `${item.en || ""} — ${t(lang, ok ? "lineWasRight" : "lineWasWrong")}`
+        : "";
+      return `<div class="al-result-word ${ok ? "al-result-ok" : "al-result-no"}">
+        <i class="fa-solid ${ok ? "fa-check" : "fa-xmark"}" style="color:${ok ? "#1f6b3a" : "#9d0000"}"></i>
+        <div><div style="font:600 19px/1.1 'Work Sans',sans-serif;color:#14100e">${item.sv}</div>
+        <div style="font:400 12.5px 'Work Sans',sans-serif;margin-top:2px">${note}</div></div>
+      </div>`;
+    })
+    .join("");
+
+  requestAnimationFrame(() => {
+    const svg = document.getElementById("result-wires");
+    const stage = document.getElementById("result-stage");
+    const root = stage.getBoundingClientRect();
+    const leftCards = [...document.querySelectorAll("#res-left .al-pair")];
+    const rightCards = [...document.querySelectorAll("#res-right .al-result-word")];
+    svg.innerHTML = graded
+      .map((g) => {
+        const a = leftCards[g.left].getBoundingClientRect();
+        const b = rightCards[g.right].getBoundingClientRect();
+        const x1 = a.right - root.left - 8;
+        const y1 = a.top + a.height / 2 - root.top;
+        const x2 = b.left - root.left + 8;
+        const y2 = b.top + b.height / 2 - root.top;
+        const stroke = g.correct ? "#1f6b3a" : "#9d0000";
+        const dash = g.correct ? "" : 'stroke-dasharray="8 7"';
+        return `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${stroke}" stroke-width="3.5" stroke-linecap="round" ${dash}></line>`;
+      })
+      .join("");
+  });
+
+  document.getElementById("continue").addEventListener("click", () => {
+    graded.forEach((g) => changeWeight(g.leftItem.id, "recognition", g.correct ? 1 : -1));
+    const { total } = recordLevelScore(LEVEL_ID, roundScore);
+
+    document.getElementById("done-score").textContent = String(roundScore);
+    document.getElementById("next-level").style.display = "flex";
+    document.getElementById("done-note").textContent = roundSummary(lang, {
+      round: roundScore,
+      max: PAIR_COUNT,
+      level: LEVEL_ID,
+      total
+    });
+    show("done");
+  });
+}
+
+render();
