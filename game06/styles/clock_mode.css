@@ -1,0 +1,32 @@
+/*
+=================================================
+Set the Clock Mode Styles - Game 06
+=================================================
+*/
+
+/* Keep this mode scrollable inside the game frame. */
+body.setting-clock-mode { display: block; height: auto; min-height: 100vh; }
+.setting-clock-mode .view { display: none !important; }
+.setting-clock-mode .game-frame { box-sizing: border-box; height: 100vh; overflow: auto; }
+#set-clock-view [hidden] { display: none; }
+
+/* Scale clock.css's viewport-based dimensions to a 230px clock. */
+#setting-clock { width: 207px; height: 207px; padding: 4.6px; border-width: 1.84px; flex-shrink: 0; user-select: none; }
+#setting-clock .clock-face::after { width: 3.68px; height: 3.68px; }
+#setting-clock .hand { border-radius: 0.46px; box-shadow: 0 0.46px 0.92px rgba(0, 0, 0, 0.2); transition: none; pointer-events: none; }
+#setting-clock .hour-hand { height: 4.6px; }
+#setting-clock .minute-hand { height: 2.3px; }
+#setting-clock .number {
+  font-size: 16.1px;
+  width: 6.9px;
+  height: 6.9px;
+  transform: translate(-3.45px, -3.45px) rotate(var(--rotation)) translate(0, -92px) rotate(calc(-1 * var(--rotation)));
+}
+
+/* Visible grab dots and wider hit areas belong only to the drag clock. */
+#setting-clock.interactive .hand { pointer-events: auto; cursor: grab; touch-action: none; }
+#setting-clock.interactive .hand.dragging { cursor: grabbing; }
+#setting-clock .hand::before, #setting-clock .hand::after { content: ""; position: absolute; top: 50%; transform: translateY(-50%); }
+#setting-clock .hand::before { inset-inline: 0; height: 26px; }
+#setting-clock .minute-hand::before { height: 12px; }
+#setting-clock .hand::after { left: -6px; width: 8px; height: 8px; border: 2px solid white; border-radius: 50%; background: inherit; }

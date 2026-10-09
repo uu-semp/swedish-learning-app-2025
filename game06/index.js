@@ -35,6 +35,8 @@ let selectedButton = null;
 /** @type {number} Current score in the session */
 let score = 0;
 
+import { createStandardModeQuestions } from "./utils/clock_questions.js";
+
 /**
  * All tiles for the current question, including tiles placed in answer slots.
  * Each tile has a unique ID and the text displayed on its button.
@@ -283,35 +285,7 @@ function showSummary() {
 // Restart Game
 function restartGame() {
 	console.log("🔁 Restarting game...");
-
-	// Step 1: Reset global variables
-	score = 0;
-	selectedAnswer = null;
-	selectedButton = null;
-	currentDifficulty = currentDifficulty || "easy"; // fallback if none selected
-
-	// Step 2: Recreate a new session with same difficulty
-	if (questionUtils && progressUtils) {
-		const levelQuestions = questionUtils.byDifficulty(currentDifficulty);
-		const questionIds = levelQuestions.map((q) => q.id);
-		progressUtils.initProgress(questionIds);
-
-		window.currentSession = progressUtils.createSession(levelQuestions, {
-			mode: "regular",
-			size: 5,
-		});
-	}
-
-	// Step 3: Update score UI
-	const scoreEl = document.getElementById("score-value");
-	if (scoreEl) scoreEl.textContent = "0";
-
-	// Step 4: Switch back to game view and load first question
-	hideAllViews();
-	document.getElementById("game-view").style.display = "block";
-	updateQuestion();
-
-	console.log("✅ Game fully restarted at level:", currentDifficulty);
+	startGame(currentDifficulty || "easy");
 }
 // Show Finish View
 function showFinish() {
@@ -598,7 +572,10 @@ function startGame(level) {
 	const gameContainer = document.querySelector(".game-container");
 	gameContainer.classList.toggle("hard-mode", level === "hard");
 	// Initialize progress for all questions of this difficulty
-	const levelQuestions = questionUtils.byDifficulty(currentDifficulty);
+	const levelQuestions = (currentDifficulty === "easy" || currentDifficulty === "medium")
+	? createStandardModeQuestions(currentDifficulty, 5)
+	: questionUtils.byDifficulty(currentDifficulty);
+
 	const questionIds = levelQuestions.map((q) => q.id);
 
 	// Reset progress so previously mastered questions can be played again
