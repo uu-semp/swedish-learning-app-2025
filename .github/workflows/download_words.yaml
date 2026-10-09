@@ -5,6 +5,10 @@ on:
     - cron: '59 23 * * *' 
       timezone: 'Europe/Stockholm'
   workflow_dispatch:
+  push:
+    branches:
+      - menuteam-CI
+
 
 
 
