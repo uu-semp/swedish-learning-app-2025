@@ -1,0 +1,62 @@
+/* Owned by Game 02 — menu & end screen */
+
+/* Menu screen layout */
+#menu-screen {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    /* space between elements */
+    padding: 20px;
+}
+
+/* Info box styling */
+#info-box {
+    background-color: #FFCAE9;
+    border-left: 6px solid #9d0000;
+    padding: 15px 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    width: 100%;
+    text-align: left;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+#info-box h3 {
+    margin-top: 0;
+    color: black;
+}
+
+#info-box ol {
+    padding-left: 20px;
+}
+
+#info-box li {
+    margin: 8px 0;
+    line-height: 1.5;
+    color: #555;
+}
+
+#info-box p {
+    margin-top: 15px;
+    font-weight: bold;
+    color: #555;
+}
+
+#start-game {
+    padding: 20px 40px;
+    font-size: 2em;
+    padding: 20px 40px;
+    font-size: 1.5em;
+    border-radius: 10px;
+}
+
+#restart-game {
+    padding: 20px 40px;
+    font-size: 2em;
+    padding: 20px 40px;
+    font-size: 1.5em;
+    border-radius: 10px;
+}

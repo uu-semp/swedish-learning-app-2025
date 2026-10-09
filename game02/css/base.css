@@ -1,0 +1,38 @@
+/* Owned by Game 02 — base layout */
+
+/* Body background */
+body {
+    background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+    min-height: 100vh;
+}
+
+/* Header styling */
+header h1 {
+    text-align: center;
+    color: #000;
+    margin: 20px 0;
+    font-size: 2em;
+}
+
+/* Game frame styling */
+.game-frame {
+    background-color: #ffffffcc;
+    /* slightly transparent white */
+    /*padding: 20px;*/
+    border-radius: 0px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Screens (menu, game, end) */
+.game-frame section {
+    text-align: center;
+    padding: 20px;
+}
+
+footer {
+    width: 800px;
+    margin: 20px auto 0 auto;
+    text-align: center;
+    font-size: 0.9em;
+    color: #555;
+}

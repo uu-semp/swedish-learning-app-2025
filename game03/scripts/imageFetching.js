@@ -1,18 +1,14 @@
 // fetchImages.js
+import { questionsLoaded } from './level.js';
+
 export async function loadImages() {
+    const selectedQuestions = await questionsLoaded;
     return new Promise(async resolve => {
         window.vocabulary.when_ready(async () => {
             // Get level from URL first
             const urlParams = new URLSearchParams(window.location.search);
             const levelIndex = urlParams.get("level") || "1";
             
-            // Wait for level-specific questions to be loaded
-            if (levelIndex === "3") {
-                await new Promise(resolve => setTimeout(resolve, 100));
-            }
-            
-            // Get the randomly selected questions for this game session
-            const selectedQuestions = window.getRandomQuestions ? window.getRandomQuestions() : [];
             const requiredImages = selectedQuestions.map(q => q.answer);
             
             // console.log('Selected questions:', selectedQuestions);
