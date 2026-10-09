@@ -258,6 +258,19 @@ Owned by Game 02
       <p>Number of moves: <span id="score">0</span></p>
       <p>Time elapsed: <span id="time">0</span></p>
       <p>Total Wins: <span id="wins-count">0</span></p>
+      <p class="previous-games-title">Previous Memory Games</p>
+      <table class="previous-games-table">
+        <thead>
+          <tr>
+            <th>Mode</th>
+            <th>Time</th>
+            <th>Moves</th>
+          </tr>
+        </thead>
+        <tbody id="prev-games">
+          <!-- Rows will be added here dynamically -->
+        </tbody>
+      </table>
       <button id="restart-game">Play Again</button>
       <button id="go-to-menu">Go to main menu</button>
     </section>
@@ -319,6 +332,19 @@ Owned by Game 02
       <p>Hints used: <span id="spelling-end-hints">0</span></p>
       <p>Time elapsed: <span id="spelling-end-time">0</span></p>
       <p>Total Wins: <span id="spelling-wins">0</span></p>
+      <p class="previous-games-title">Previous Spelling Games</p>
+      <table class="previous-games-table">
+        <thead>
+          <tr>
+            <th>Time</th>
+            <th>Misses</th>
+            <th>Hints</th>
+          </tr>
+        </thead>
+        <tbody id="prev-spelling-games">
+          <!-- Rows will be added here dynamically -->
+        </tbody>
+      </table>
       <button id="spelling-restart">Play Again</button>
       <button id="spelling-go-to-menu">Go to main menu</button>
     </section>

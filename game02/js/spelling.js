@@ -135,6 +135,52 @@ export function initSpelling({ showScreen }) {
     advance(reveal_delay);
   }
 
+  // Create table with stats of the previous 3 spelling games
+  function buildPrevSpellingGamesTable() {
+    let prevSpellingGames = save.get(team_name, "spelling-stats");
+    const table = document.getElementById("prev-spelling-games");
+    if(prevSpellingGames != null) {
+      table.replaceChildren(); // Clear previous rows
+
+      prevSpellingGames.forEach(game => {
+        const row = document.createElement("tr");
+        const timeCell = document.createElement("td");
+        const hintsCell = document.createElement("td");
+        const missesCell = document.createElement("td");
+
+        timeCell.textContent = `${game.time}s`;
+        hintsCell.textContent = game.hints;
+        missesCell.textContent = game.misses;
+        
+        row.appendChild(timeCell);
+        row.appendChild(hintsCell);
+        row.appendChild(missesCell);
+
+        table.prepend(row);
+      });
+      
+      // save the current game stats to local storage
+      prevSpellingGames = [...prevSpellingGames, { time: getElapsedTime(), hints: hints, misses: misses }]
+    } else {
+      const row = document.createElement("tr");
+      const cell = document.createElement("td");
+
+      cell.textContent = "No previous games";
+      cell.colSpan = 3;
+      cell.classList.add("no-previous-games");
+
+      row.appendChild(cell);
+      table.appendChild(row);
+      
+      prevSpellingGames = [{ time: getElapsedTime(), hints: hints, misses: misses }];
+    }
+    
+    if(prevSpellingGames.length > 3) {
+      prevSpellingGames = prevSpellingGames.slice(-3); // Keep only the last 3 games
+    }
+    save.set(team_name, "spelling-stats", prevSpellingGames);
+  }
+
   function finishGame(won) {
     clearNext();
     locked = true;
@@ -147,6 +193,8 @@ export function initSpelling({ showScreen }) {
     $("#spelling-end-misses").text(misses);
     $("#spelling-end-hints").text(hints);
     $("#spelling-end-time").text(`${getElapsedTime()} seconds`);
+
+    buildPrevSpellingGamesTable(); // Update the previous spelling games table
 
     if (won) save.stats.incrementWin(team_name);
     $("#spelling-wins").text(save.stats.get(team_name).wins);
