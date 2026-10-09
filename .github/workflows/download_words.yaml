@@ -28,7 +28,7 @@ jobs:
       - name: mirror
         run: |
           git fetch origin
-          git checkout $NEW_BRANCH
+          git checkout -b $NEW_BRANCH
 
           CURRENT_BRANCH=$(git branch --show-current)
           
