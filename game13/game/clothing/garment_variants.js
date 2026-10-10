@@ -2,7 +2,7 @@ import { COLORS, PATTERNS, ITEMS } from "./clothing_catalog.js";
 import { renderGarmentCanvas } from "./garment_renderer.js";
 import { ImgObject } from "./imgObject.js";
 import { getStoredPicture, storePicture, storedPictureKeys } from "./wardrobe_cache.js";
-import { colorsForLevel } from "./categories.js";
+import { colorsForLevel } from "../level_configuration.js";
 
 /**
  * Turns word-list clothing into coloured, patterned wardrobe items.
