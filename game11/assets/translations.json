@@ -39,6 +39,13 @@
         "sv": "<p><strong>Hur du spelar</strong><br>Hitta objekten från inköpslistan på hyllan,<br>klicka eller dra och släpp den i varukorgen.</p>",
         "en": "<p><strong>How to play</strong><br>Find the items in the shopping list on the shelf,<br>click or drag and drop the items into the cart.</p>"
     },
+
+  "info-content": {
+    "en": "<strong>Welcome!</strong><br><br>This minigame helps Swedish learners practise everyday grocery shopping vocabulary.<br><br><strong>How to play</strong><br><br>• Match items from the shopping list with the correct products on the shelf.<br><br>• Click or drag products into the cart.<br><br>• Try to find as many correct items as possible.<br><br><strong>About this game</strong><br><br>While playing, you will encounter common Swedish words used in supermarkets and everyday shopping situations. The goal is to strengthen vocabulary recognition through repeated exposure and interaction with common grocery items.",
+
+    "sv": "<strong>Välkommen!</strong><br><br>Det här minispelet hjälper dig att träna vanliga svenska ord som används när man handlar mat.<br><br><strong>Så spelar du</strong><br><br>• Matcha orden i inköpslistan med rätt produkter på hyllan.<br><br>• Klicka eller dra produkterna till kundvagnen.<br><br>• Försök hitta så många rätt varor som möjligt.<br><br><strong>Om spelet</strong><br><br>Under spelets gång möter du vanliga svenska ord som används i svenska butiker och vardagliga inköpssituationer. Målet är att stärka ordförrådet genom upprepad exponering och interaktion med vanliga matvaror."
+  }
+    ,
     "menu-header-text": {
         "sv": "Meny",
         "en": "Menu"

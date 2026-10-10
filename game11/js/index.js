@@ -234,7 +234,14 @@ window.addEventListener('DOMContentLoaded', () => {
     const settingsModal = document.getElementById('settings-modal');
     const closeSettingsBtn =
         document.getElementById('close-settings-btn');
+    const infoBtn =
+    document.getElementById('info-btn');
 
+    const infoPanel =
+    document.getElementById('info-panel');
+
+    const infoContent =
+    document.getElementById('info-content');
     if (menuBtn && settingsModal && closeSettingsBtn) {
 
         menuBtn.addEventListener('click', (e) => {
@@ -247,7 +254,42 @@ window.addEventListener('DOMContentLoaded', () => {
             settingsModal.classList.add('hidden');
         });
     }
+    if (infoBtn && infoPanel && infoContent) {
 
+    infoBtn.addEventListener('click', async () => {
+
+        const res =
+            await fetch("assets/translations.json");
+
+        if (!res.ok) {
+            throw new Error(
+                "Failed to load translations.json"
+            );
+        }
+
+        const translationTable =
+            new Map(
+                Object.entries(await res.json())
+            );
+
+        const languageBtn =
+            document.getElementById('toggle-language-btn');
+
+        const isSwedish =
+            languageBtn &&
+            languageBtn.textContent === 'Engelska';
+
+        const infoTranslation =
+            translationTable.get('info-content');
+
+        infoContent.innerHTML =
+            isSwedish
+                ? infoTranslation.sv
+                : infoTranslation.en;
+
+        infoPanel.classList.toggle('hidden');
+    });
+}
 
 
     // RESTART
@@ -378,8 +420,21 @@ window.addEventListener('DOMContentLoaded', () => {
                     currentElement.innerHTML = isSwedish ? value.en : value.sv;
                 }
             });
-        });
-    }
+                if (
+                    infoPanel &&
+                    infoContent &&
+                    !infoPanel.classList.contains('hidden')
+                    ) {
+                        const infoTranslation =
+                            translationTable.get('info-content');
+
+                        infoContent.innerHTML =
+                            isSwedish
+                                ? infoTranslation.en
+                                : infoTranslation.sv;
+                        }    
+                });
+            }
 
     // COPYRIGHT
 

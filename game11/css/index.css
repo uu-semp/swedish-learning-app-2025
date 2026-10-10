@@ -615,3 +615,19 @@ body.high-contrast-mode .game-frame img {
 .sr-toggle-buttons .modal-btn {
   flex: 1;
 }
+
+#info-panel {
+    margin-top: 10px;
+    padding: 12px;
+
+    background: white;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+
+    text-align: left;
+    line-height: 1.5;
+}
+
+.hidden {
+    display: none;
+}
