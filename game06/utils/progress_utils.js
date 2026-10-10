@@ -64,6 +64,18 @@
  * @property {function(Question, boolean): QuestionStatus} record // persist result to progress store
  */
 
+import {
+	createClockQuestions,
+	createMcqClockQuestion,
+	createAdvancedModeQuestions,
+} from "./clock_questions.js";
+
+/**
+ * Collection of replacement questions generated from failed attempts.
+ * @type {Question[]}
+ */
+export const replay_collection = [];
+
 /**
  * Key to access data from localStorage.
  * @constant {string}
@@ -146,14 +158,23 @@ export function getStatus(id) {
 /**
  * Record the outcome of an attempt.
  * - When `wasCorrect === true`, increments `correct` and sets `mastered = true`.
- * - When `wasCorrect === false`, increments `wrong` (mastered remains unchanged).
+ * - When `wasCorrect === false`, increments `wrong` (mastered remains unchanged)
+ *   and adds a new question with matching tags and difficulty to replay_collection.
  * - Always updates `lastAt` to `Date.now()`.
  * Side effect: writes to localStorage.
- * @param {string} id
+ * @param {string|Question} idOrQuestion
  * @param {boolean} wasCorrect
+ * @param {Question} [questionObj]
  * @returns {QuestionStatus} The updated status for this question.
  */
-export function recordResult(id, wasCorrect) {
+export function recordResult(idOrQuestion, wasCorrect, questionObj = null) {
+	const question = (typeof idOrQuestion === "object" && idOrQuestion !== null)
+		? idOrQuestion
+		: questionObj;
+	const id = (typeof idOrQuestion === "object" && idOrQuestion !== null)
+		? idOrQuestion.id
+		: idOrQuestion;
+
 	const db = _load();
 	if (!db[id]) db[id] = { correct: 0, wrong: 0, lastAt: 0, mastered: false };
 	if (wasCorrect) {
@@ -161,7 +182,46 @@ export function recordResult(id, wasCorrect) {
 		db[id].mastered = true;
 	} else {
 		db[id].wrong += 1;
+
+		if (question) {
+			const tagSet = question.tags instanceof Set
+				? question.tags
+				: new Set(question.tags || []);
+			const specificTags = new Set(Array.from(tagSet).filter((t) => t !== "all_times"));
+			const filterTags = specificTags.size > 0 ? specificTags : tagSet;
+
+			const pool = createClockQuestions(filterTags);
+			if (pool.length > 0) {
+				const existingIds = new Set(replay_collection.map((q) => q.id));
+				existingIds.add(id);
+				const candidates = pool.filter((c) => !existingIds.has(c.id) && (c.hour !== question.hour || c.minute !== question.minute));
+				const target = (candidates.length > 0 ? candidates : pool)[
+					Math.floor(Math.random() * (candidates.length > 0 ? candidates.length : pool.length))
+				];
+
+				const diff = question.difficulty || "easy";
+				let newQuestion;
+				if (diff === "easy") {
+					newQuestion = createMcqClockQuestion(target.hour, target.minute, "easy");
+				} else if (diff === "hard") {
+					newQuestion = createAdvancedModeQuestions().find(
+						(q) => q.hour === target.hour && q.minute === target.minute
+					) || target;
+				} else {
+					newQuestion = target;
+				}
+
+				replay_collection.push(newQuestion);
+			}
+		}
 	}
+
+	// Remove the question that was just answered from replay_collection (if present)
+	const removeIndex = replay_collection.findIndex((q) => q.id === id);
+	if (removeIndex !== -1) {
+		replay_collection.splice(removeIndex, 1);
+	}
+
 	db[id].lastAt = Date.now();
 	const saved = _save(db);
 	return { ...db[id], saved };
@@ -380,7 +440,7 @@ export function createSession(questions, { mode = "regular", size = 5, questionC
 
 		/** Record the result into progress store */
 		record(q, wasCorrect) {
-			const status = recordResult(q.id, wasCorrect);
+			const status = recordResult(q, wasCorrect);
 			if (mode === "practice" && questionClass) {
 				preferredClass = wasCorrect ? null : questionClass(q);
 			}
