@@ -33,6 +33,7 @@ $(function () {
   let allowFlipBack = false;
   let isChecking = false;
   let currentPairs = []; // last loaded round, used for hints
+  let currentMode = null; // last loaded category ("picture", "spelling", "listening" or "dialect")
 
   // Function to show only one screen at a time
   function showScreen(screenId) {
@@ -79,6 +80,52 @@ $(function () {
     $("#time").text(`${getElapsedTime()} seconds`);
   }
 
+  // Create table with stats of the previous 3 games
+  function buildPrevGamesTable() {
+    let prevGames = save.get(team_name, "memory-stats");
+    const table = document.getElementById("prev-games");
+    if(prevGames != null) {
+      table.replaceChildren(); // Clear previous rows
+
+      prevGames.forEach(game => {
+        const row = document.createElement("tr");
+        const modeCell = document.createElement("td");
+        const timeCell = document.createElement("td");
+        const movesCell = document.createElement("td");
+
+        modeCell.textContent = game.mode;
+        timeCell.textContent = `${game.time}s`;
+        movesCell.textContent = game.moves;
+        
+        row.appendChild(modeCell);
+        row.appendChild(timeCell);
+        row.appendChild(movesCell);
+
+        table.prepend(row);
+      });
+      
+      // save the current game stats to local storage
+      prevGames = [...prevGames, { time: getElapsedTime(), moves: corrects + misses, mode: currentMode }]
+    } else {
+      const row = document.createElement("tr");
+      const cell = document.createElement("td");
+
+      cell.textContent = "No previous games";
+      cell.colSpan = 3;
+      cell.classList.add("no-previous-games");
+
+      row.appendChild(cell);
+      table.appendChild(row);
+
+      prevGames = [{ time: getElapsedTime(), moves: corrects + misses, mode: currentMode }];
+    }
+    
+    if(prevGames.length > 3) {
+      prevGames = prevGames.slice(-3); // Keep only the last 3 games
+    }
+    save.set(team_name, "memory-stats", prevGames);
+  }
+
   function foundMatch() {
     corrects++;
     updateProgress();
@@ -90,6 +137,7 @@ $(function () {
       save.stats.incrementWin(team_name); // Save the new win count
       wins = save.stats.get(team_name).wins; // Re-read, spelling can also add wins
       $("#wins-count").text(wins); // Update wins display
+      buildPrevGamesTable(); // Update the previous games table
       setTimeout(() => {
         $("#wins-count").text(wins); // Update wins display
         resetGame();
@@ -170,6 +218,7 @@ $(function () {
   $("#start-game").on("click", async function () {
     const mode = $(".mode-btn.selected").data("mode"); // "picture", "spelling", "listening" or "dialect"
     const category = $(".category-btn.selected").data("category"); // "furniture", "clothing" or "food"
+    currentMode = mode;
     // The dialect row is hidden in the other modes but keeps its selection, so only use it in Dialect mode
     const dialect = mode === "dialect" ? $(".dialect-btn.selected").data("dialect") : "standard";
 

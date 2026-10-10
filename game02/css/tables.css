@@ -1,0 +1,85 @@
+
+/* Previous games heading */
+.previous-games-title {
+  text-align: center;
+  font-size: 1rem;
+  font-weight: bold;
+  margin: 0.75rem 0 0.35rem;
+}
+
+/* Previous games table */
+.previous-games-table {
+  width: min(85%, 360px);
+  margin: 0 auto 0.75rem;
+  border-collapse: separate;
+  border-spacing: 0;
+  border: 2px solid #333;
+  border-radius: 10px;
+  overflow: hidden;
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+/* Header */
+.previous-games-table th {
+  background-color: #FFCAE9;
+  color: #333;
+  font-weight: 600;
+  padding: 0.4rem 0.6rem;
+  border: none;
+}
+
+/* Cells */
+.previous-games-table td {
+  padding: 0.35rem 0.6rem;
+  border: none;
+  color: inherit;
+}
+
+.previous-games-table .no-previous-games {
+  text-align: center;
+  color: #777;
+  font-style: italic;
+  padding: 0.6rem;
+}
+
+/* Subtle horizontal separators between rows */
+.previous-games-table tbody tr + tr td {
+  border-top: 1px solid #e0e0e0;
+}
+
+/* Alternate row colors */
+.previous-games-table tbody tr:nth-child(odd) {
+  background-color: #f2f2f2;
+}
+
+.previous-games-table tbody tr:nth-child(even) {
+  background-color: #fff;
+}
+
+/* Hover effect */
+.previous-games-table tbody tr:hover {
+  background-color: #e8f5eb;
+}
+
+/* Rounded corners, including the header */
+.previous-games-table thead th:first-child {
+  border-top-left-radius: 9px;
+}
+
+.previous-games-table thead th:last-child {
+  border-top-right-radius: 9px;
+}
+
+/* Smaller screens */
+@media (max-width: 480px) {
+  .previous-games-table {
+    width: 90%;
+    font-size: 0.85rem;
+  }
+
+  .previous-games-table th,
+  .previous-games-table td {
+    padding: 0.3rem 0.45rem;
+  }
+}
