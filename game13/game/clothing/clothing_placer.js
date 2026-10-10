@@ -1,4 +1,4 @@
-import { subcategoriesForLevel } from "./categories.js";
+import { subcategoriesForLevel } from "../level_configuration.js";
 import { loadWardrobe } from "./wardrobe_builder.js";
 import { createHtmlObjects } from "../ui/clothing_ui.js";
 import { injectHtmlObjects } from "../ui/wardrobe_ui.js";

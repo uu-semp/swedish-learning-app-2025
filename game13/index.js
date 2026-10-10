@@ -16,9 +16,8 @@
  */
 import { loadClothes } from "./game/clothing/clothing_placer.js";
 import { SwedishClothingDescriptionGenerator } from "./game/outfit_generator.js";
-import { currentLevel } from "./game/clothing/categories.js";
+import { currentLevel } from "./game/level_configuration.js";
 import { prepareUpcoming } from "./game/clothing/wardrobe_builder.js";
-
 
 
 // Description generator class global instance
