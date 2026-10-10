@@ -5,11 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Game</title>
   <link rel="stylesheet" href="css/level_introduction.css" />
+  <link rel="stylesheet" href="css/level_wordlist.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap" rel="stylesheet">
 </head>
 <body>
-<div class="screen" role="introduction" aria-label="Level introduction">
+<div class="screen wordlist-screen" role="introduction" aria-label="Level introduction">
     <h1 id="level-title"> Introduction</h1>
-    <h3> Here is an instruction of the following level, here we will include a wordlist of words you should know before playing the game as well as a word list of the words for this level</h3>
+    <!-- The panel headings are drawn in the background picture -->
+    <section class="wordlist-box known" aria-label="You should already know"></section>
+    <section class="wordlist-box new" aria-label="New words for this level"></section>
     <a id="start-btn" class="btn">Start</a>
 </div>
 
@@ -22,17 +26,19 @@ const params = new URLSearchParams(window.location.search);
 startBtn.href = "game.html?level=" + level;
 document.getElementById("level-title").textContent = "Level " + level;
 
+// Each level has its own drawn picture, with the level number in it
+document.querySelector(".wordlist-screen").style.backgroundImage =
+  `url("../assets/game13/level_intro_${level}.png")`;
+
 
 </script>
 
-<!-- Gets this level's first round ready while the player reads
-     (see game/clothing/wardrobe_builder.js). -->
+<script src="../scripts/vocabulary.js" defer></script>
 <script type="module">
-  import { prepareWardrobe } from "./game/clothing/wardrobe_builder.js";
-  import { currentLevel } from "./game/clothing/categories.js";
-  window.game13Warmup = prepareWardrobe(currentLevel()).catch((err) => {
-    console.warn("Could not prepare the wardrobe:", err);
-  });
+  import { showLevelWordlists } from "./game/level_wordlist.js";
+
+  const level = Number(new URLSearchParams(window.location.search).get("level")) || 1;
+  showLevelWordlists(level, document.querySelector(".wordlist-box.known"), document.querySelector(".wordlist-box.new"));
 </script>
 <script src="../scripts/save.js" defer></script>
 </body>
