@@ -13,12 +13,11 @@
 
 .speech-bubble {
   position: relative;
-  background: #fffdf5;
-  border: 3px solid #333;
-  border-radius: 45%;
+  background-image: url("../assets/Speechbubble\ horizontal.png");
+  background-position: center;
+  background-size: 100% 100% ;
+  border-radius: 30%;
 }
-
-
 
 .speech-bubble p {
   margin: 0;
@@ -113,16 +112,17 @@ padding-right: 6px;
 .instructions::after {
   content: "";
   position: absolute;
-  bottom: -20px;
+  bottom: -35px;
   left: 30%;
-  width: 30px;
-  height: 30px;
-  background: #fffdf5;
-  border-right: 3px solid #333;
-  border-bottom: 3px solid #333;
-  transform: rotate(45deg);
-}
 
+  width: 40px;
+  height: 40px;
+
+  background-image: url("../assets/Speechbubble-tail.png");
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+}
 /* confirm / give up, feedback, next (inside the stage) */
 .submissionbar {
   padding: 6px;
@@ -135,7 +135,7 @@ padding-right: 6px;
     padding: 20px 30px;
     width: 30%;
     right: 5%; 
-    top: 30%;
+    top: 35%;
     display: none;
 }
 
@@ -148,12 +148,16 @@ padding-right: 6px;
   position: absolute;
   top: 40px;
   left: -20px;
-  width: 30px;
-  height: 30px;
-  background: #fffdf5;
-  border-right: 3px solid #333;
-  border-bottom: 3px solid #333;
-  transform: rotate(120deg);
+
+  width: 40px;
+  height: 40px;
+
+  background-image: url("../assets/Speechbubble-tail.png");
+  /* transform: scaleX(-1); mirror the image */
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  transform: scaleX(-1) rotate(-100deg);
 }
 
 
