@@ -25,8 +25,15 @@ document.getElementById("level-title").textContent = "Level " + level;
 
 </script>
 
-<script src="../scripts/vocabulary.js" defer></script>
-<script type="module" src="index.js"></script>
+<!-- Gets this level's first round ready while the player reads
+     (see game/clothing/wardrobe_builder.js). -->
+<script type="module">
+  import { prepareWardrobe } from "./game/clothing/wardrobe_builder.js";
+  import { currentLevel } from "./game/clothing/categories.js";
+  window.game13Warmup = prepareWardrobe(currentLevel()).catch((err) => {
+    console.warn("Could not prepare the wardrobe:", err);
+  });
+</script>
 <script src="../scripts/save.js" defer></script>
 </body>
 </html>

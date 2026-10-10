@@ -31,6 +31,14 @@ Clothing is not hardcoded: it is read from the shared word list (the Google Shee
 
 To add a garment, add a row to the sheet and its image under `assets/images/clothes/`. To remove one, delete the row. No code change is needed.
 
+## Loading, colours and browser storage
+The sheet is only downloaded when the game starts (the menu, `index.html`), not on every level or round.
+
+- **Colours:** every round picks new random colours from its level's list, `LEVEL_COLORS` in `game/clothing/categories.js` (level 1: the six basic colours, levels 2-3: all ten). Patterns start at `PATTERNS_FROM_LEVEL` in `garment_variants.js`.
+- **Word list:** the menu saves the clothing rows in `localStorage` (`game/clothing/word_list_cache.js`); levels read that copy.
+- **Pictures:** rendering coloured garments is slow, so each round's colours are chosen in advance and its pictures rendered in the background while the player plays the round before (`wardrobe_builder.js`). The menu prepares the first round of every level; a level page prepares its next round and the next level's first round. Pictures are kept in IndexedDB (`wardrobe_cache.js`) and deleted when no round needs them any more.
+- After changing garment art, colours or rendering code, bump `PICTURE_VERSION` in `garment_variants.js` so stored pictures are rendered again.
+
 # Tools Used
 - **Frontend**: HTML, CSS, JavaScript
 - **Version Control**: Git, GitHub

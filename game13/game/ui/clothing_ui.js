@@ -30,6 +30,7 @@ export function createHtmlObjects(imgArray) {
         htmlImgObject.src = imgObject.getThumbPath();
         htmlImgObject.dataset.fullSrc = path;
         if (imgObject.getLayer() !== null) htmlImgObject.dataset.layer = imgObject.getLayer();
+        if (imgObject.getBox()) htmlImgObject.dataset.box = JSON.stringify(imgObject.getBox());
         htmlImgObject.alt = description;
         htmlImgObject.width = 100;
         htmlImgObject.height = 100;
