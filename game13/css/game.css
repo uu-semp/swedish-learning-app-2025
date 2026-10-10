@@ -104,8 +104,8 @@ padding-right: 6px;
   margin: 6px;
   max-width: 400px;
 
-  width: 80%; 
-  align-self: flex-end;
+  width: 70%; 
+  align-self: flex-start;
 }
 
 /* The tail pointing towards Pelle */
@@ -122,6 +122,7 @@ padding-right: 6px;
   background-size: contain;
   background-position: center;
   background-repeat: no-repeat;
+  transform: scaleX(-1);
 }
 /* confirm / give up, feedback, next (inside the stage) */
 .submissionbar {
@@ -290,7 +291,7 @@ padding-right: 6px;
   flex-direction: column;
   gap: 6px;
   position: absolute;
-  left: 0%;
+  right: 0%;
   top:5%
 }
 
@@ -414,7 +415,7 @@ padding-right: 6px;
    clothing_catalog.js (0 Pelle, 10–70 clothes, 90 hand, 100 hand accessories). */
 .pelle-stack {
   position: relative;
-  height: 90%; /* leave some room at the top for the headwear */
+  height: 100%;
   aspect-ratio: 698 / 1305; /* same as pelle.png and every garment file */
   isolation: isolate; /* garment z-indexes only compete with each other */
 }
