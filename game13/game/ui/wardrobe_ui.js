@@ -76,12 +76,14 @@ export function injectHtmlObjects(htmlObjects, subcategories) {
             takeOff(slot.firstElementChild);
         }
 
-        // Masked garments are drawn on Pelle's whole canvas, so the worn
-        // copy uses the full-size picture and covers Pelle exactly.
+        // Masked garments are drawn on Pelle's whole canvas. The worn copy
+        // either uses a full-size picture that covers Pelle exactly, or a
+        // cropped picture placed where it belongs on that canvas (box).
         const wornImg = menuImg.cloneNode();
         wornImg.src = menuImg.dataset.fullSrc ?? menuImg.src;
         wornImg.className = "worn-garment";
         if (menuImg.dataset.layer) wornImg.style.zIndex = menuImg.dataset.layer;
+        if (menuImg.dataset.box) placeOnCanvas(wornImg, JSON.parse(menuImg.dataset.box));
         slot.appendChild(wornImg);
         menuImg.classList.add("is-worn");
     }
@@ -141,8 +143,8 @@ export function injectHtmlObjects(htmlObjects, subcategories) {
     const playerTakeOff = recordable(takeOff);
     const playerRemoveAll = recordable(removeAll);
 
-    // Worn garments all cover Pelle's whole area, so a click takes off the
-    // topmost garment that has a visible pixel under the pointer.
+    // Worn garments overlap on Pelle, so a click takes off the topmost
+    // garment that has a visible pixel under the pointer.
     pelle?.parentElement.addEventListener("click", (e) => {
         const hit = slots
             .map((s) => s.firstElementChild)
@@ -180,6 +182,15 @@ export function injectHtmlObjects(htmlObjects, subcategories) {
     });
 }
 
+
+// Positions a cropped garment picture over Pelle, in percent of his
+// canvas, so it scales with him.
+function placeOnCanvas(img, box) {
+    img.style.left = `${(box.x / box.width) * 100}%`;
+    img.style.top = `${(box.y / box.height) * 100}%`;
+    img.style.width = `${(box.w / box.width) * 100}%`;
+    img.style.height = `${(box.h / box.height) * 100}%`;
+}
 
 const hitCanvas = document.createElement("canvas");
 hitCanvas.width = hitCanvas.height = 1;
