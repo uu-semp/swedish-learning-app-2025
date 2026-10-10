@@ -1,30 +1,19 @@
 // ==============================================
-// Owned by Game 02
+// Owned by Game 02 — main wiring
 // ==============================================
 
 "use strict";
 
-import {
-  loaddb,
-  get_category,
-  get_vocab,
-} from "../scripts/vocabulary_await.js";
-
-let loaded_before = false;
-
-async function init_db(reload = false) {
-  if (!loaded_before || reload) {
-    loaded_before = true;
-    await loaddb();
-  }
-}
+import { loadFurniturePairs, buildGrid } from "./js/game-data.js";
+import { startTimer, stopTimer, resetTimer, getElapsedTime } from "./js/timer.js";
+import { initHints } from "./js/hints.js";
 
 $(function () {
   // constants
   const team_name = "game02"; // Team name for saving data
-  const time_delay = 2000; // 2 seconds delay after every match
   const corrects_needed = 8; // number of correct pairs needed to win
   const misses_max = 20; // number of misses allowed before losing
+  const numPairs = 8; // number of pairs of cards
 
   // variables
   let corrects = 0;
@@ -33,10 +22,9 @@ $(function () {
   $("#wins-count").text(wins); // Update the display with the loaded win count
 
   let flippedCards = []; // array of currently flipped cards
-  let elapsedTime = 0;
-  // timer variables
-  let startTime = null;
-  let timerInterval = null;
+  let allowFlipBack = false;
+  let isChecking = false;
+  let currentPairs = []; // last loaded round, used for hints
 
   // Function to show only one screen at a time
   function showScreen(screenId) {
@@ -44,56 +32,19 @@ $(function () {
     $("#" + screenId).show();
   }
 
-  // Button handlers
-  $("#start-game").on("click", function () {
-    showScreen("game-screen");
-    startTimer();
-  });
-
-  $("#end-game").on("click", function () {
-    stopTimer();
-    updateEndScreen();
-    resetGame();
-    showScreen("end-screen");
-  });
-  // --- Timer Functions ---
-  function startTimer() {
-    startTime = Date.now();
-    timerInterval = setInterval(updateTimerDisplay, 1000);
+  async function mapCards() {
+    try {
+      currentPairs = await loadFurniturePairs(numPairs);
+      buildGrid(currentPairs);
+    } catch (error) {
+      console.error("Error loading data:", error);
+    }
   }
-
-  function stopTimer() {
-    clearInterval(timerInterval);
-    timerInterval = null;
-  }
-
-  function resetTimer() {
-    stopTimer();
-    $("#elapsed-time").text("Time: 0s");
-  }
-
-  function updateTimerDisplay() {
-    elapsedTime = Math.floor((Date.now() - startTime) / 1000);
-    $("#elapsed-time").text(`Time: ${elapsedTime}s`);
-  }
-
-  $("#restart-game").on("click", function () {
-    resetGame();
-    mapCards(); // Load new random cards
-    showScreen("menu-screen");
-  });
-
-  // Initialize on menu screen
-  showScreen("menu-screen");
-
-  // Game logic
-  mapCards();
 
   function resetFlipState() {
-    // when no pair is found, card flips back
-    flippedCards[0]?.removeClass("flipped");
-    flippedCards[1]?.removeClass("flipped");
+    flippedCards.forEach((card) => $(card).removeClass("flipped"));
     flippedCards = [];
+    allowFlipBack = false;
   }
 
   function resetGame() {
@@ -101,8 +52,9 @@ $(function () {
     misses = 0;
     $("#moves").text(`moves: 0`);
     resetFlipState();
-    resetTimer();
+    resetTimer(() => $("#elapsed-time").text("Time: 0s"));
   }
+
   function updateEndScreen() {
     $("#header_endscreen").text(
       corrects >= corrects_needed
@@ -110,8 +62,9 @@ $(function () {
         : "Game Over!"
     );
     $("#score").text(corrects + misses);
-    $("#time").text(`${elapsedTime} seconds`);
+    $("#time").text(`${getElapsedTime()} seconds`);
   }
+
   function foundMatch() {
     corrects++;
     $("#moves").text(`moves: ${misses + corrects}`);
@@ -142,13 +95,6 @@ $(function () {
     //   showScreen("end-screen");
     // }
   }
-
-  // Event delegation för dynamiskt skapade kort
-  $(document).on("click", ".card", clickCard);
-
-  // keep this at the top
-  let allowFlipBack = false;
-  let isChecking = false;
 
   function clickCard() {
     const card = this; // store DOM element directly
@@ -201,151 +147,33 @@ $(function () {
     }
   }
 
-  function resetFlipState() {
-    flippedCards.forEach((card) => $(card).removeClass("flipped"));
-    flippedCards = [];
-    allowFlipBack = false;
-  }
-
-  // Hint button click
-  $("#hint-button").on("click", function () {
-    const flippedTextCards = $(".card.flipped").filter(function () {
-      return $(this).data("type") === "description";
-    });
-
-    if (flippedTextCards.length === 0) {
-      $("#hint-text").text(
-        "No text cards are flipped! Flip a card with text to get help."
-      );
-    } else {
-      let hints = [];
-
-      flippedTextCards.each(function () {
-        const swedishWord = $(this).data("content");
-        const match = currentPairs.find((p) => p.swedish === swedishWord);
-        if (match) {
-          hints.push(`${swedishWord} → ${match.english}`);
-        } else {
-          hints.push(`${swedishWord} → (no match found)`);
-        }
-      });
-
-      $("#hint-text").html(hints.join("<br>"));
-    }
-
-    $("#hint-modal").fadeIn();
+  // Button handlers
+  $("#start-game").on("click", function () {
+    showScreen("game-screen");
+    startTimer((elapsed) => $("#elapsed-time").text(`Time: ${elapsed}s`));
   });
 
-  // Close modal when clicking the "x"
-  $("#close-hint").on("click", function () {
-    $("#hint-modal").fadeOut();
+  $("#end-game").on("click", function () {
+    stopTimer();
+    updateEndScreen();
+    resetGame();
+    showScreen("end-screen");
   });
 
-  // Optional: close modal when clicking outside the hint box
-  $("#hint-modal").on("click", function (e) {
-    if (e.target.id === "hint-modal") {
-      $(this).fadeOut();
-    }
+  $("#restart-game").on("click", function () {
+    resetGame();
+    mapCards(); // Load new random cards
+    showScreen("menu-screen");
   });
+
+  // Event delegation för dynamiskt skapade kort
+  $(document).on("click", ".card", clickCard);
+
+  initHints(() => currentPairs);
+
+  // Initialize on menu screen
+  showScreen("menu-screen");
+
+  // Game logic
+  mapCards();
 });
-
-function getRandomPairs(data, numPairs) {
-  console.log(data);
-  const shuffled = [...data].sort(() => 0.5 - Math.random());
-  return shuffled.slice(0, numPairs);
-}
-
-function prepareGridItems(pairs) {
-  const cards = [];
-
-  pairs.forEach((pair, index) => {
-    const id = `pair-${index}`;
-    cards.push({ id, type: "description", content: pair.swedish });
-    cards.push({ id, type: "image", content: pair.image_url });
-  });
-
-  // Shuffle the final cards
-  return cards.sort(() => 0.5 - Math.random());
-}
-
-function renderGrid(cards) {
-  const gameBoard = document.getElementById("game-board");
-  gameBoard.innerHTML = ""; // Rensa befintliga kort
-
-  cards.forEach((card, index) => {
-    const cardElement = document.createElement("div");
-    cardElement.className = "card";
-    cardElement.setAttribute("data-index", index + 1);
-    cardElement.setAttribute("data-content", card.content);
-    cardElement.setAttribute("data-type", card.type);
-    cardElement.setAttribute("data-pair-id", card.id);
-
-    // Bestäm innehållet för baksidan baserat på typ
-    let backContent;
-    if (card.type === "image") {
-      // Fixa bildvägen - lägg till ../ för att gå upp en mapp
-      const imagePath = card.content.startsWith("assets/")
-        ? "../" + card.content
-        : card.content;
-      backContent = `<img src="${imagePath}" alt="Furniture" style="width: 100%; height: 100%; object-fit: cover; border-radius: 10px;">`;
-    } else {
-      backContent = card.content;
-    }
-
-    cardElement.innerHTML = `
-      <div class="card-inner">
-        <div class="card-face card-front">${index + 1}</div>
-        <div class="card-face card-back">${backContent}</div>
-      </div>
-    `;
-
-    gameBoard.appendChild(cardElement);
-  });
-}
-
-// Keep reference to the loaded card data for hints
-let currentPairs = [];
-let numPairs = 8; // number of pairs of cards
-
-// Modify mapCards() to use the API instead of CSV
-async function mapCards() {
-  try {
-    await init_db();
-    
-    // Get all vocabulary IDs belonging to the category `furniture`
-    const furnitureIds = get_category("furniture");
-    
-    if (!furnitureIds) {
-      console.error("No furniture category found in database");
-      return;
-    }
-    
-    // Convert to the format expected by getRandomPairs
-    const furnitureData = furnitureIds
-      .map(id => {
-        const vocab = get_vocab(id);
-        if (vocab && vocab.img) {
-          return {
-            id: id,
-            english: vocab.en,
-            article: vocab.article || "",
-            swedish: vocab.sv,
-            swedish_plural: "", // Not available in new API
-            literal: vocab.literal || "",
-            category: "furniture",
-            image_url: vocab.img
-          };
-        }
-        return null;
-      })
-      .filter(item => item !== null);
-    
-    const pairs = getRandomPairs(furnitureData, numPairs);
-    currentPairs = pairs; // store globally for hint use
-    const cards = prepareGridItems(pairs);
-    renderGrid(cards);
-    
-  } catch (error) {
-    console.error("Error loading data:", error);
-  }
-}

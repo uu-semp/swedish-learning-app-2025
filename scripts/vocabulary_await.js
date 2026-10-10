@@ -9,7 +9,7 @@ import * as DB from "./database_type.js"
 // ==============================================
 
 /**
- * @typedef {Object.<string, VocabEntry>} VocabMap
+ * @typedef {Object.<string, DB.VocabEntry>} VocabMap
  * A map where keys are strings and values are VocabEntry objects.
  */
 
@@ -28,11 +28,14 @@ import * as DB from "./database_type.js"
  * @typedef {Object} RowItem
  * @property {string} Article - The grammatical article (e.g., "ett" or "en").
  * @property {string} Audio_url - URL or path to audio pronunciation (may be empty).
+ * @property {string} Audio__is_plural - checkbox for if the audio contains a plural of the word
  * @property {string} Category - Category of the item (e.g., "furniture").
+ * @property {string} Subcategory - Subcategory of the item (e.g., "hats" from category clothing). (may be empty)
  * @property {string} English - English word (e.g., "window").
  * @property {string} ID - Unique identifier for the entry.
  * @property {string} Image_copyright_info - Copyright or license information for the image.
  * @property {string} Image_url - URL or path to the image.
+ * @property {string} Image_is_plural - checkbox for if the image contains a plural of the word
  * @property {string} Literal - Literal translation (can be empty).
  * @property {string} Swedish - Swedish word (e.g., "fönster").
  * @property {string} Swedish_plural - Swedish plural form (may be empty).
@@ -104,8 +107,9 @@ export async function loaddb(game_id = -1) {
   const rows = parsed.data;
 
   // Stringify incase this get a number
-  const game_id_str = String(game_id).padStart(2, "0");
-  const game_column = `Game${game_id_str}`;
+  const game_id_str = String(game_id).padStart(4, "0");
+  const game_column = `Game04`;
+  console.log(game_column)
 
   // Creating two alternative access patterns based on rows
   const idToMeta = {};
@@ -119,13 +123,13 @@ export async function loaddb(game_id = -1) {
     // Metadata
     const meta = { en: row["English"], sv: row["Swedish"] };
     if (row["Article"]?.trim()) meta.article = row["Article"];
+    if (row["Swedish_plural"]?.trim()) meta.sv_plural = row["Swedish_plural"];
     if (row["Literal"]?.trim()) meta.literal = row["Literal"];
     if (row["Image_url"]?.trim()) meta.img = row["Image_url"];
     if (row["Image_copyright_info"]?.trim())
       meta.img_copyright = row["Image_copyright_info"];
     if (row["Audio_url"]?.trim()) meta.audio = row["Audio_url"];
-    idToMeta[id] = meta;
-
+    
     // Category
     const cat = row["Category"]?.trim();
     if (cat) {
@@ -133,11 +137,25 @@ export async function loaddb(game_id = -1) {
       catToIds[cat].push(id);
     }
 
+    if(row["Subcategory"]?.trim()){ 
+      meta.subCat = row["Subcategory"];
+    }
+
+    if(row["Image_is_plural"]?.trim() && row["Image_url"]?.trim()){ 
+      meta.img_is_plural = row["Image_is_plural"];
+    }
+    
+    if(row["Audio_is_plural"]?.trim() && row["Audio_url"]?.trim()){ 
+      meta.audio_is_plural = row["Audio_is_plural"];
+    }
+
     // Game data
     if (row[game_column]) {
       meta.game = row[game_column].trim();
       gameIds.push(id);
     };
+
+    idToMeta[id] = meta;
   }
 
   db = {

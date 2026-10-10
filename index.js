@@ -299,6 +299,7 @@ async function setLanguage(lang) {
   try {
     currentLanguage = lang
     const elements = document.querySelectorAll('.translate');
+    window.language.set(lang);
 
     // Translating menu text (not games or filter)
     elements.forEach(el => {
