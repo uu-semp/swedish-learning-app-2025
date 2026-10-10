@@ -33,6 +33,13 @@
       </p>
     </div>
   </div>
+  
+  <script type="module">
+    import { prepareWardrobes } from "./game/clothing/wardrobe_builder.js";
+    window.game13Warmup = prepareWardrobes().catch((err) => {
+      console.warn("Could not prepare the wardrobes:", err);
+    });
+  </script>
 
   <script src="../scripts/save.js"></script>
   <script src="game/progress.js"></script>

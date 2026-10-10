@@ -17,6 +17,7 @@
 import { loadClothes } from "./game/clothing/clothing_placer.js";
 import { SwedishClothingDescriptionGenerator } from "./game/outfit_generator.js";
 import { currentLevel } from "./game/clothing/categories.js";
+import { prepareUpcoming } from "./game/clothing/wardrobe_builder.js";
 
 
 
@@ -49,14 +50,17 @@ window.nextInstruction = fetchDescription;
 /**
  * Initializes the game once the page has loaded.
  *
- * Verifies that the vocabulary API is available before starting
- * the outfit generation and clothing loading processes.
+ * The clothing comes from the word list and garment pictures kept in the
+ * browser (see game/clothing/wardrobe_builder.js), so the page does not
+ * download the word list itself.
  */
 window.addEventListener("DOMContentLoaded", () => {
-    if (window.vocabulary && typeof window.vocabulary.load_game_data === "function") {
-        fetchDescription();
-        loadClothes(currentLevel());
-    } else {
-        console.log("API Unavailable")
-    }
+    fetchDescription();
+    loadClothes(currentLevel())
+        // Once this round is showing, get the next round (new random
+        // colours) and the next level ready in the background.
+        .then(() => prepareUpcoming(currentLevel()))
+        .catch((err) => {
+            console.error("Could not load the clothing:", err);
+        });
 });
