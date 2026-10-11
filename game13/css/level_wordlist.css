@@ -66,12 +66,25 @@ body {
 .wordlist-empty { margin: 8px 0; }
 
 /* Start button on the empty wall in the top-right corner */
-.wordlist-screen #start-btn {
-  position: absolute;
-  top: 14%;
-  right: 6%;
-  width: 170px;
-  height: 60px;
-  font-family: 'Patrick Hand', 'Work Sans', sans-serif;
-  font-size: 30px;
-}
+   .wordlist-screen #start-btn {
+     position: absolute;
+     top: 14%;
+     right: 6%;
+     flex: none;
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     width: 170px;
+     height: 60px;
+     font-family: var(--font-display);
+     font-size: 30px;
+     font-weight: bold;
+     background-color: var(--color-level);
+     color: var(--color-level-text);
+     border: 3px solid var(--color-text);
+     box-shadow: none;
+   }
+
+   .wordlist-screen #start-btn:hover {
+     background-color: var(--color-level-dark);
+   }

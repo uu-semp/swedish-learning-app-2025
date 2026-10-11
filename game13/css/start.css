@@ -32,6 +32,10 @@
 .start-screen .menu-buttons .btn {
   padding: 8px 12px;
   font-size: 18px;
+  font-family: var(--font-display);
+  background-color: var(--color-level);
+  color: var(--color-level-text);
+  border: 3px solid var(--color-text);
 }
 
 .start-screen .help-btn {
@@ -39,4 +43,13 @@
   right: 12px;
   padding: 8px 14px;
   font-size: 16px;
+  font-family: var(--font-display);
+  background-color: var(--color-level);
+  color: var(--color-level-text);
+  border: 3px solid var(--color-text);
+}
+
+.start-screen .menu-buttons .btn:hover,
+.start-screen .help-btn:hover {
+  background-color: var(--color-level-dark);
 }
