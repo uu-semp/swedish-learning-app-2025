@@ -61,6 +61,7 @@ export async function loadPairs(numPairs, category, dialect = "standard") {
           category: category,
           image_url: vocab.img,
           audio_url: audio_url,
+          license: vocab.img_copyright || "None",
         };
       }
       return null;

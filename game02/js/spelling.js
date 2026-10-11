@@ -8,6 +8,7 @@ import { loadSpellingWords } from "./spelling-data.js";
 import { diffWord, hintWord } from "./spelling-diff.js";
 import { initUmlautButtons } from "./umlaut-buttons.js";
 import { startTimer, stopTimer, resetTimer, getElapsedTime } from "./timer.js";
+import { initSpellingLicenses } from "./hints.js";
 
 export function initSpelling({ showScreen }) {
   // constants
@@ -254,12 +255,20 @@ export function initSpelling({ showScreen }) {
     if (event.target === this) $(this).fadeOut();
   });
 
+  $("#spelling-licenses-modal").on("click", function (event) {
+    if (event.target === this) $(this).fadeOut();
+  });
+  $("#spelling-licenses-button").on("click", () => $("#spelling-licenses-modal").fadeIn());
+  $("#spelling-close-licenses").on("click", () => $("#spelling-licenses-modal").fadeOut());
+
+
   // Fall back to alt text if an image fails to load
   $("#spelling-image").on("error", function () {
     $(this).attr("alt", "Image could not be loaded");
   });
 
   initUmlautButtons(input);
+  initSpellingLicenses(() => words);
 
   return { startGame };
 }

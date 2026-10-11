@@ -69,3 +69,34 @@
     font-size: 1.5em;
     cursor: pointer;
 }
+
+
+#licenses-list,
+#spelling-licenses-list {
+  max-height: 60vh;
+  overflow-y: auto;
+  text-align: left;
+}
+
+.license-entry {
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.license-entry:last-child {
+  border-bottom: none;
+}
+
+.license-entry h4 {
+  margin: 0.25rem 0;
+}
+
+.license-entry p {
+  margin: 0.2rem 0;
+  font-size: 0.9rem;
+}
+
+.license-entry a {
+  display: inline-block;
+  margin-right: 0.5rem;
+}

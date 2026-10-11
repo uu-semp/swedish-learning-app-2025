@@ -6,7 +6,7 @@
 
 import { loadPairs, buildGrid, initDb } from "./js/game-data.js";
 import { startTimer, stopTimer, resetTimer, getElapsedTime } from "./js/timer.js";
-import { initHints } from "./js/hints.js";
+import { initHints, initLicenses } from "./js/hints.js";
 import { initSpelling } from "./js/spelling.js";
 
 $(function () {
@@ -270,6 +270,18 @@ $(function () {
     }
   });
 
+  $("#licenses-modal").on("click", function (event) {
+    if (event.target === this) {
+      $(this).fadeOut();
+    }
+  });
+  $("#licenses-button").on("click", function () {
+    $("#licenses-modal").fadeIn();
+  });
+  $("#close-licenses").on("click", function () {
+    $("#licenses-modal").fadeOut();
+  });
+
     // Show the info for the clicked game mode
   $(".mode-btn").on("click", function () {
     $(".mode-btn").removeClass("selected");
@@ -301,6 +313,7 @@ $(function () {
   $(document).on("click", ".card", clickCard);
 
   initHints(() => currentPairs);
+  initLicenses(() => currentPairs); 
   const { startGame: startSpelling } = initSpelling({ showScreen });
 
   // Initialize on menu screen
