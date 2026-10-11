@@ -88,6 +88,16 @@ const SEASON_IMAGES: Record<Season, string> = {
   sommar: summerImg,
   höst: fallImg,
 };
+
+const WEATHER_IMAGES: Record<string, string> = {
+  snow: winterImg,
+  rain: winterImg,
+  sun: winterImg,
+  wind: winterImg,
+  cloud: winterImg,
+  thunder: winterImg,
+};
+
 // ── Question Bank ──────────────────────────────────────────────────────────────
 const QUESTIONS: Question[] = [
   // January – vinter
@@ -95,7 +105,7 @@ const QUESTIONS: Question[] = [
   { type: 'weekday-mc',     monthIndex: 0,  instruction: 'Vilken dag kommer efter onsdag?',          options: ['tisdag','torsdag','fredag'],                                                     answer: 'torsdag'            },
   { type: 'weather-mc',     monthIndex: 0,  instruction: 'Vad är det för väder?',                    weatherIcon: 'snow',    options: ['Det snöar.','Det regnar.','Det är varmt.','Det blåser.'],             answer: 'Det snöar.'         },
   // February – vinter
-  { type: 'weekday-click',  monthIndex: 1,  instruction: 'Klicka på rätt dagar.',                   sentence: 'Jag studerar svenska på tisdagar och torsdagar.',                                correctDays: ['tisdag','torsdag']                                               },
+  { type: 'weekday-click',  monthIndex: 1, instruction: 'Klicka på rätt dagar.', sentence: 'Jag studerar svenska dagen efter måndag och dagen före fredag.', correctDays: ['tisdag', 'torsdag'],},  
   { type: 'month-mc',       monthIndex: 1,  instruction: 'Vilken månad kommer efter januari?',       options: ['mars','december','februari','april'],                                            answer: 'februari'           },
   { type: 'weather-mc',     monthIndex: 1,  instruction: 'Hur är vädret i dag?',                     weatherIcon: 'cloud',   options: ['Det är soligt.','Det är mulet.','Det snöar.','Solen skiner.'],         answer: 'Det är mulet.'      },
   // March – vår
@@ -107,7 +117,7 @@ const QUESTIONS: Question[] = [
   { type: 'date-calendar',  monthIndex: 3,  instruction: 'Klicka på den sextonde april.',            targetDate: 16, targetMonthIndex: 3                                                                                                                              },
   { type: 'month-mc',       monthIndex: 3,  instruction: 'Vilken månad kommer efter april?',         options: ['mars','maj','juni','augusti'],                                                   answer: 'maj'                },
   // May – vår
-  { type: 'weekday-click',  monthIndex: 4,  instruction: 'Klicka på rätt dagar.',                   sentence: 'Jag arbetar på måndag och fredag.',                                             correctDays: ['måndag','fredag']                                                },
+  { type: 'weekday-click',  monthIndex: 4, instruction: 'Klicka på rätt dagar.', sentence: 'Jag arbetar dagen efter söndag och dagen före lördag.', correctDays: ['måndag', 'fredag'],},  
   { type: 'month-order',    monthIndex: 4,  instruction: 'Placera månaderna i rätt ordning.',        shuffled: ['maj','februari','april','mars'],                                                correct: ['februari','mars','april','maj']                                       },
   { type: 'weather-mc',     monthIndex: 4,  instruction: 'Vad är det för väder?',                    weatherIcon: 'rain',    options: ['Det regnar.','Det snöar.','Det är soligt.','Det blåser.'],            answer: 'Det regnar.'        },
   // June – sommar
@@ -276,7 +286,7 @@ const PRACTICE_QUESTIONS: Record<CategoryKey, Question[]> = {
     { type: 'weekday-mc',    monthIndex: 0, instruction: 'Vilken dag kommer efter onsdag?',                        options: ['tisdag','torsdag','fredag'],                                                        answer: 'torsdag'                     },
     { type: 'weekday-mc',    monthIndex: 0, instruction: 'Vilken dag kommer före lördag?',                         options: ['fredag','söndag','torsdag'],                                                        answer: 'fredag'                      },
     { type: 'weekday-mc',    monthIndex: 0, instruction: 'Vilken dag kommer efter måndag?',                        options: ['söndag','tisdag','onsdag'],                                                         answer: 'tisdag'                      },
-    { type: 'weekday-click', monthIndex: 0, instruction: 'Klicka på rätt dagar.',  sentence: 'Jag går på nation på fredagar.',                                                          correctDays: ['fredag']                                                                                },
+    { type: 'weekday-click',monthIndex: 0,instruction: 'Klicka på rätt dag.',sentence: 'Jag går på nation dagen före lördag.', correctDays: ['fredag'],},    
     { type: 'weekday-order', monthIndex: 0, instruction: 'Placera dagarna i rätt ordning.',                        shuffled: ['fredag','tisdag','söndag','måndag','torsdag','onsdag','lördag'],                  correct: WEEKDAYS                     },
   ],
   manader: [
@@ -425,43 +435,79 @@ function SeasonPlaceholder({ season, minH = 240 }: { season: Season; minH?: numb
 function WeatherPlaceholder({ icon }: { icon: string }) {
   return (
     <div
-      className="w-full rounded-2xl flex items-center justify-center shrink-0"
-      style={{ backgroundColor: '#DDE8F0', minHeight: 90 }}
+      className="w-full rounded-2xl overflow-hidden shrink-0"
+      style={{ height: 240, backgroundColor: '#DDE8F0' }}
     >
-      <span style={{ fontSize: 32, lineHeight: 1 }}>{WEATHER_EMOJI[icon] ?? '🌥️'}</span>
+      <img
+        src={WEATHER_IMAGES[icon] ?? winterImg}
+        alt=""
+        style={{
+          display: 'block',
+          width: '100%',
+          height: '100%',
+          objectFit: 'cover',
+        }}
+      />
     </div>
   );
 }
 
-function FeedbackBar({ state, onNext, colors }: { state: AnswerState; onNext: () => void; colors: (typeof COLORS)[Season] }) {
+function FeedbackBar({
+  state,
+  onNext,
+  colors,
+  q,
+}: {
+  state: AnswerState;
+  onNext: () => void;
+  colors: (typeof COLORS)[Season];
+  q: Question;
+}) {
   if (state === 'idle') return null;
+
   const ok = state === 'correct';
+
+  const correctAnswer =
+    q.answer ??
+    q.correctDays?.join(' och ') ??
+    q.correct?.join(' → ') ??
+    (q.targetDate !== undefined
+      ? `${q.targetDate} ${
+          MONTHS_FULL[q.targetMonthIndex ?? q.monthIndex]
+        }`
+      : '');
+
   return (
     <div
-      className="rounded-xl px-4 py-2 flex items-center justify-between fade-in shrink-0"
+      className="rounded-xl px-4 py-2 flex items-center justify-between gap-3 fade-in shrink-0"
       style={{
-        backgroundColor: ok ? '#EDFBF3' : '#FFF5EB',
-        border: `1.5px solid ${ok ? '#6ECC9A' : '#F5B872'}`,
+        backgroundColor: ok ? '#EDFBF3' : '#FFF0F0',
+        border: `1.5px solid ${ok ? '#6ECC9A' : '#E57373'}`,
       }}
     >
-      <div className="flex items-center gap-2">
-        <span className="text-base">{ok ? '✅' : '⚠️'}</span>
-        <div>
-          <p className="font-display font-bold text-sm" style={{ color: ok ? '#1A5C38' : '#7A4200' }}>
-            {ok ? 'Rätt!' : 'Försök igen.'}
-          </p>
-          {ok && <p className="text-xs" style={{ color: '#2D8854' }}>Bra jobbat!</p>}
-        </div>
-      </div>
-      {ok && (
-        <button
-          onClick={onNext}
-          className="px-4 py-2 rounded-lg font-display font-semibold text-sm text-white transition-opacity hover:opacity-85"
-          style={{ backgroundColor: colors.dark }}
+      <div>
+        <p
+          className="font-display font-bold text-sm"
+          style={{ color: ok ? '#1A5C38' : '#8B2020' }}
         >
-          Nästa →
-        </button>
-      )}
+          {ok ? 'Rätt!' : 'Fel svar.'}
+        </p>
+
+        <p
+          className="text-xs"
+          style={{ color: ok ? '#2D8854' : '#8B2020' }}
+        >
+          {ok ? 'Bra jobbat!' : `Rätt svar: ${correctAnswer}`}
+        </p>
+      </div>
+
+      <button
+        onClick={onNext}
+        className="px-4 py-2 rounded-lg font-display font-semibold text-sm text-white shrink-0"
+        style={{ backgroundColor: colors.dark }}
+      >
+        Nästa →
+      </button>
     </div>
   );
 }
@@ -937,7 +983,7 @@ function GameScreen({
         </div>
 
         {/* Feedback */}
-        <FeedbackBar state={answerState} onNext={onAdvance} colors={colors} />
+        <FeedbackBar state={answerState} onNext={onAdvance} colors={colors}  q={q} />
       </main>
     </div>
   );
@@ -1328,7 +1374,7 @@ function PracticeScreen({ onBack }: { onBack: () => void }) {
           {renderPracticeQuestion(q, qIdx, answerState, handleMC, handleClick, handleOrder, handleDate)}
         </div>
 
-        <FeedbackBar state={answerState} onNext={advance} colors={c} />
+        <FeedbackBar state={answerState} onNext={advance} colors={c} q={q}/>
       </main>
     </div>
   );
