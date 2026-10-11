@@ -13,6 +13,60 @@
 // Number of shelves drawn in assets/wardrobe_white_bg.png.
 const DRAWN_SHELVES = 5;
 
+
+/**
+ * Creates the navigation arrows for a wardrobe shelf.
+ */
+function createShelfNavigation(shelf, subcategory) {
+    const wrapper = document.createElement("div");
+    wrapper.className = "shelf-wrapper";
+
+    const left = document.createElement("button");
+    left.className = "shelf-arrow left";
+    left.textContent = "❮";
+    left.setAttribute("aria-label", `Previous ${subcategory ?? "clothes"}`);
+
+    const right = document.createElement("button");
+    right.className = "shelf-arrow right";
+    right.textContent = "❯";
+    right.setAttribute("aria-label", `Next ${subcategory ?? "clothes"}`);
+
+    // Scroll the shelf
+    left.addEventListener("click", () => {
+        shelf.scrollBy({
+            left: -shelf.clientWidth,
+            behavior: "smooth"
+        });
+    });
+
+    right.addEventListener("click", () => {
+        shelf.scrollBy({
+            left: shelf.clientWidth,
+            behavior: "smooth"
+        });
+    });
+
+    // Disable arrows when the shelf cannot scroll further
+    function updateArrows() {
+        left.disabled = shelf.scrollLeft <= 1;
+        right.disabled =
+            shelf.scrollLeft + shelf.clientWidth >= shelf.scrollWidth - 1;
+    }
+
+    shelf.addEventListener("scroll", updateArrows);
+
+    // Update when shelf size or images change
+    const observer = new ResizeObserver(updateArrows);
+    observer.observe(shelf);
+
+    shelf.addEventListener("load", updateArrows, true);
+
+    wrapper.append(left, shelf, right);
+
+    return { wrapper, updateArrows };
+}
+
+
 export function injectHtmlObjects(htmlObjects, subcategories) {
     const wardrobe = document.getElementById("wardrobe");
     if (!wardrobe) {
@@ -26,6 +80,7 @@ export function injectHtmlObjects(htmlObjects, subcategories) {
     // rows stay empty so the clothes line up with the drawn shelves.
     wardrobe.replaceChildren();
     const shelves = new Map();
+    const updateShelfArrows = [];
     const rowCount = Math.max(DRAWN_SHELVES, subcategories.length);
     for (let i = 0; i < rowCount; i++) {
         const shelf = document.createElement("div");
@@ -38,7 +93,11 @@ export function injectHtmlObjects(htmlObjects, subcategories) {
         } else {
             shelf.setAttribute("aria-hidden", "true");
         }
-        wardrobe.appendChild(shelf);
+
+        const { wrapper, updateArrows } = createShelfNavigation(shelf, subcategory);
+
+        wardrobe.appendChild(wrapper);
+        updateShelfArrows.push(updateArrows);
     }
 
     // Only the slots on Pelle that this level uses are shown.
@@ -179,6 +238,10 @@ export function injectHtmlObjects(htmlObjects, subcategories) {
         item.className = "menu-item";
         item.appendChild(img);
         shelves.get(img.dataset.category)?.appendChild(item);
+    });
+    // Update navigation after clothing items have been added
+    requestAnimationFrame(() => {
+        updateShelfArrows.forEach(update => update());
     });
 }
 

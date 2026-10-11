@@ -26,7 +26,7 @@ Clothing is not hardcoded: it is read from the shared word list (the Google Shee
 - Every row with `Category` = `clothing` is a clothing item.
 - `Swedish` (and `Article`) is the word shown in the instructions, `Image_url` is the picture, and `Subcategory` is where it goes on Pelle: `hats`, `shirts`, `pants`, `feet` or `accessories`.
 - An item is only put in the wardrobe if its subcategory is used in the current level **and** its image loads. Rows without a subcategory or with a missing image are skipped with a warning in the browser console.
-- Which subcategories each level uses is set in `game/clothing/categories.js` (`LEVEL_SUBCATEGORIES`).
+- Which subcategories each level uses is set in `game/level_configuration` (`LEVEL_CONFIGURATION`).
 - Each subcategory needs a dropzone in `game.html` with a matching `data-accept` value.
 
 To add a garment, add a row to the sheet and its image under `assets/images/clothes/`. To remove one, delete the row. No code change is needed.

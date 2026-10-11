@@ -1,4 +1,4 @@
-import { CLOTHING_CATEGORY, LEVEL_SUBCATEGORIES } from "./clothing/categories.js";
+import { CLOTHING_CATEGORY, LEVEL_SUBCATEGORIES } from "./level_configuration.js";
 import { COLORS, PATTERNS } from "./clothing/clothing_catalog.js";
 import { catalogItemFor, PATTERNS_FROM_LEVEL } from "./clothing/garment_variants.js";
 

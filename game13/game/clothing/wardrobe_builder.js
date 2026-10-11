@@ -1,4 +1,4 @@
-import { LEVEL_SUBCATEGORIES, subcategoriesForLevel } from "./categories.js";
+import { LEVEL_SUBCATEGORIES, subcategoriesForLevel } from "../level_configuration.js";
 import {
     buildVariants, catalogItemFor, chooseVariants,
     fillPictureStore, pictureKeysForChoice, picturesForChoice,

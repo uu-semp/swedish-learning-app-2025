@@ -13,12 +13,11 @@
 
 .speech-bubble {
   position: relative;
-  background: #fffdf5;
-  border: 3px solid #333;
-  border-radius: 45%;
+  background-image: url("../assets/Speechbubble\ horizontal.png");
+  background-position: center;
+  background-size: 100% 100% ;
+  border-radius: 30%;
 }
-
-
 
 .speech-bubble p {
   margin: 0;
@@ -105,24 +104,26 @@ padding-right: 6px;
   margin: 6px;
   max-width: 400px;
 
-  width: 80%; 
-  align-self: flex-end;
+  width: 70%; 
+  align-self: flex-start;
 }
 
 /* The tail pointing towards Pelle */
 .instructions::after {
   content: "";
   position: absolute;
-  bottom: -20px;
+  bottom: -35px;
   left: 30%;
-  width: 30px;
-  height: 30px;
-  background: #fffdf5;
-  border-right: 3px solid #333;
-  border-bottom: 3px solid #333;
-  transform: rotate(45deg);
-}
 
+  width: 40px;
+  height: 40px;
+
+  background-image: url("../assets/Speechbubble-tail.png");
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  transform: scaleX(-1);
+}
 /* confirm / give up, feedback, next (inside the stage) */
 .submissionbar {
   padding: 6px;
@@ -135,7 +136,7 @@ padding-right: 6px;
     padding: 20px 30px;
     width: 30%;
     right: 5%; 
-    top: 30%;
+    top: 35%;
     display: none;
 }
 
@@ -148,12 +149,16 @@ padding-right: 6px;
   position: absolute;
   top: 40px;
   left: -20px;
-  width: 30px;
-  height: 30px;
-  background: #fffdf5;
-  border-right: 3px solid #333;
-  border-bottom: 3px solid #333;
-  transform: rotate(120deg);
+
+  width: 40px;
+  height: 40px;
+
+  background-image: url("../assets/Speechbubble-tail.png");
+  /* transform: scaleX(-1); mirror the image */
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  transform: scaleX(-1) rotate(-100deg);
 }
 
 
@@ -223,17 +228,28 @@ padding-right: 6px;
 
 /*wardrobe related CSS*/
 
+/* Container for each shelf and its arrows */
+.shelf-wrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    flex: 1;
+    width: 100%;
+    min-height: 0;
+    gap: 4px;
+}
+
 /* each row of clothes*/
 .wardrobe-shelf {
-  flex: 1;
-  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  flex: 1 1 0;;
   height: 100%;
   min-height: 0;
   padding: 4px;
-  display: flex;
-  flex-direction: row;
   gap: 8px;
-
+  box-sizing: border-box;
   overflow-x: auto; /* each row scrolls in horizontal direction*/
   overflow-y: hidden; 
   -webkit-overflow-scrolling: touch; 
@@ -243,7 +259,37 @@ padding-right: 6px;
 .menu-item {
   display: flex;
   justify-content: center;
+  flex-shrink: 0;
+  height: 100%;
 }
+
+/* Navigation arrows */
+.shelf-arrow {
+    flex-shrink: 0;
+    width: 22px;
+    height: 40px;
+    padding: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: transparent;
+    border: none;
+    color: #333;
+    font-size: 22px;
+    cursor: pointer;
+}
+
+.shelf-arrow:hover:not(:disabled) {
+    color: var(--color-primary);
+}
+
+.shelf-arrow:disabled {
+    opacity: 0.25;
+    cursor: default;
+}
+
 
 /*The image used for the garments*/
 .thumb {
@@ -286,7 +332,7 @@ padding-right: 6px;
   flex-direction: column;
   gap: 6px;
   position: absolute;
-  left: 0%;
+  right: 0%;
   top:5%
 }
 
@@ -410,7 +456,7 @@ padding-right: 6px;
    clothing_catalog.js (0 Pelle, 10–70 clothes, 90 hand, 100 hand accessories). */
 .pelle-stack {
   position: relative;
-  height: 90%; /* leave some room at the top for the headwear */
+  height: 100%;
   aspect-ratio: 698 / 1305; /* same as pelle.png and every garment file */
   isolation: isolate; /* garment z-indexes only compete with each other */
 }

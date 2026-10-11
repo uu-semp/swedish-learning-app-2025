@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="css/base.css" />
   <link rel="stylesheet" href="css/game.css" />
 </head>
+
 <body>
 
   <div class="screen" role="application" aria-label="Dress the cat game screen">
@@ -178,12 +179,6 @@ if (missingItems.length > 0) {
     location.reload();
   })
 
-    nextLvlBtn.addEventListener("click", () => {
-  const nextLevel = Number(level) + 1;
-
-  window.location.href = "level_introduction.html?level=" + nextLevel;
-});
-
     backtoIndexBtn.addEventListener('click', ( )=> {
     window.location.href = "index.html";
   })
@@ -193,5 +188,32 @@ if (missingItems.length > 0) {
 </script>
 
 <script type="module" src="index.js"></script>
+
+<!-- Controls navigation between levels by hiding the Next Level button
+on the final level and preventing navigation beyond the configured maximum. -->
+<script type="module">
+    import { MAX_LEVEL } from "./game/level_configuration.js";
+
+    console.log("Level navigation module loaded");
+    console.log("MAX_LEVEL:", MAX_LEVEL);
+
+    const nextLvlBtn = document.getElementById("nextLevel-btn");
+    const level = Number(new URLSearchParams(window.location.search).get("level")) || 1;
+
+   // Disable the button and explain when the player has reached the final level.
+if (level >= MAX_LEVEL) {
+    nextLvlBtn.disabled = true;
+    nextLvlBtn.textContent = "Final Level Reached!";
+    nextLvlBtn.title = "You have completed all available levels.";
+}
+
+    // Navigate to the next level only if another level is available.
+    nextLvlBtn.addEventListener("click", () => {
+        if (level < MAX_LEVEL) {
+            window.location.href = `level_introduction.html?level=${level + 1}`;
+        }
+    });
+</script>
+
 </body>
 </html>

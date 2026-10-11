@@ -1,4 +1,4 @@
-import { CLOTHING_CATEGORY } from "./categories.js";
+import { CLOTHING_CATEGORY } from "../level_configuration.js";
 
 /**
  * Keeps the clothing rows of the shared word list in the browser
