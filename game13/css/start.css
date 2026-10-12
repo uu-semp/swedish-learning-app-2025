@@ -30,6 +30,10 @@
 }
 
 .start-screen .menu-buttons .btn {
+  display: flex;
+  justify-content: space-between; 
+  align-items: center;
+  gap: 12px;
   padding: 8px 12px;
   font-size: 18px;
   font-family: var(--font-display);
