@@ -68,9 +68,15 @@
 
           <div class="text-question" v-if="currentQuestion && currentQuestion.type === 'text'">
             <input 
+              ref="textAnswer"
               v-model="textAnswer" 
               @keyup.enter="checkTextAnswer"
               placeholder="Ex: ett">
+            <div v-if="level === 3" class="character-buttons">
+              <button type="button" @mousedown.prevent @click="insertSwedishCharacter('å')">å</button>
+              <button type="button" @mousedown.prevent @click="insertSwedishCharacter('ä')">ä</button>
+              <button type="button" @mousedown.prevent @click="insertSwedishCharacter('ö')">ö</button>
+            </div>
             <button @click="checkTextAnswer">Skicka</button>
           </div>
         </div>

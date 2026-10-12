@@ -209,7 +209,7 @@ header h1 {
 
 .text-question button {
     width: 100%;
-    padding: 0.75rem;
+    padding: 3px;
     background: #9d0000;
     color: white;
     border: none;
@@ -222,6 +222,16 @@ header h1 {
 
 .text-question button:hover {
     background: #7d0000;
+}
+
+.text-question .character-buttons {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.text-question .character-buttons button {
+    flex: 1;
+    width: auto;
 }
 
 .feedback {

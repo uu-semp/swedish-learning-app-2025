@@ -102,6 +102,20 @@ async function initializeGame() {
           this.pickNextQuestion();
         },
 
+        insertSwedishCharacter(character) {
+          const input = this.$refs.textAnswer;
+          const start = input ? input.selectionStart : this.textAnswer.length;
+          const end = input ? input.selectionEnd : this.textAnswer.length;
+
+          this.textAnswer = `${this.textAnswer.slice(0, start)}${character}${this.textAnswer.slice(end)}`;
+          this.$nextTick(() => {
+            if (input) {
+              input.focus();
+              input.setSelectionRange(start + character.length, start + character.length);
+            }
+          });
+        },
+
         pickNextQuestion() {
           this.translation = "";
           this.feedback = "";
