@@ -231,6 +231,8 @@ $(function () {
     }
 
     $("#game-title").text(mode_titles[mode]);
+    // The licenses are for the images, which listening and dialect never show
+    $("#licenses-button").toggle(mode !== "listening" && mode !== "dialect");
 
     $(this).prop("disabled", true).text("Loading...");
     await mapCards(mode, category, dialect);
