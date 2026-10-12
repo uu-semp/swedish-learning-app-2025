@@ -26,6 +26,7 @@ body.setting-clock-mode { display: block; height: auto; min-height: 100vh; }
 /* Visible grab dots and wider hit areas belong only to the drag clock. */
 #setting-clock.interactive .hand { pointer-events: auto; cursor: grab; touch-action: none; }
 #setting-clock.interactive .hand.dragging { cursor: grabbing; }
+#setting-clock .hand:focus-visible { outline: 3px solid #4f5ed9; outline-offset: 4px; }
 #setting-clock .hand::before, #setting-clock .hand::after { content: ""; position: absolute; top: 50%; transform: translateY(-50%); }
 #setting-clock .hand::before { inset-inline: 0; height: 26px; }
 #setting-clock .minute-hand::before { height: 12px; }

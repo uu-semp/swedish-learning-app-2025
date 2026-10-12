@@ -4,7 +4,7 @@
  * File responsibilities:
  * - Generate Swedish phrases for five-minute intervals on a 12-hour clock.
  * - Provide stable target IDs for the existing progress store.
- * - Compare the independently positioned hour and minute hands.
+ * - Compare the snapped clock time with the numeric target.
  * - Select five distinct targets without filtering mastered questions.
  */
 
@@ -111,21 +111,54 @@ export function createClockQuestions(tags = new Set()) {
   }).filter((question) => minutes.has(question.minute));
 }
 
+/** The narrowest supported time class containing this question's minute. */
+export function clockQuestionClass(question) {
+  for (const [tag, minutes] of TAG_MINUTES) {
+    if (minutes.includes(question.minute)) return tag;
+  }
+  throw new RangeError("Clock questions must use a five-minute interval.");
+}
+
+/** Build the Advanced tile pool, preserving IDs and tiles of existing questions. */
+export function createAdvancedModeQuestions(existingQuestions = []) {
+  const existing = new Map(existingQuestions.map((q) => [`${q.hour % 12}-${q.minute}`, q]));
+  return createClockQuestions().map((target) => {
+    const previous = existing.get(`${target.hour}-${target.minute}`);
+    if (previous) return { ...previous, tags: target.tags };
+
+    const answer = target.question.slice(0, -1);
+    const answerTiles = ["Klockan är", ...answer.slice("Klockan är ".length).split(" ")];
+    const tiles = [...answerTiles];
+    const distractors = ["i", "över", "kvart", "halv", "fem", "tio", "tjugo",
+      HOURS[target.hour], HOURS[(target.hour + 1) % 12]];
+    for (const word of distractors) {
+      if (!tiles.includes(word)) tiles.push(word);
+    }
+    return {
+      ...target,
+      id: `hard-blocks-${target.hour}-${target.minute}`,
+      difficulty: "hard",
+      question: "Vad är klockan?",
+      answer,
+      tiles,
+      answerTiles,
+    };
+  });
+}
+
 /**
  * Generates an MCQ clock question with 3 distractors.
  */
 export function createMcqClockQuestion(hour, minute, difficulty) {
   const answer = swedishTimePhrase(hour, minute);
 
-  // Pick 3 random distractor phrases with different times
-  const alternatives = new Set();
-  while (alternatives.size < 3) {
-    const dHour = Math.floor(Math.random() * 12);
-    const dMinute = (Math.floor(Math.random() * 12)) * 5;
-    const distractor = swedishTimePhrase(dHour, dMinute);
-    if (distractor !== answer) {
-      alternatives.add(distractor);
-    }
+  // Wrong choices use the same most-specific time class as the target.
+  const tag = clockQuestionClass({ minute });
+  const pool = createClockQuestions(new Set([tag])).filter((q) => q.question !== answer);
+  const alternatives = [];
+  for (let index = 0; index < 3; index++) {
+    const pick = Math.floor(Math.random() * pool.length);
+    alternatives.push(pool.splice(pick, 1)[0].question);
   }
   return {
     id: `mcq-clock-${hour}-${minute}`,
@@ -135,19 +168,16 @@ export function createMcqClockQuestion(hour, minute, difficulty) {
     hour,
     minute,
     answer,
-    alternatives: Array.from(alternatives),
+    tags: new Set([tag, "all_times"]),
+    alternatives,
     feedback: "Good try, mistakes are how you learn!"
   };
 }
 /**
- * Generates a round of distinct MCQ questions based on difficulty tags.
+ * Generates distinct MCQ questions covering all five-minute times.
  */
 export function createStandardModeQuestions(difficulty, count = 5) {
-  // Map difficulty to existing TAG_MINUTES
-  const tags = difficulty === "easy"
-    ? new Set(["whole_hour", "half_hour"])
-    : new Set(["all_times"]);
-  const pool = createClockQuestions(tags);
+  const pool = createClockQuestions();
   const questions = [];
 
   for (let i = 0; i < count && pool.length > 0; i++) {
@@ -163,8 +193,8 @@ export function createStandardModeQuestions(difficulty, count = 5) {
 //#region
 
 /**
- * Compare both snapped hands with the numeric target.
- * The hour hand points to the hour number, not between numbers for partial hours.
+ * Compare the snapped time with the numeric target.
+ * The clock component adjusts the hour-hand position for the selected minutes.
  * @param {ClockQuestion} question
  * @param {Pick<ClockQuestion, "hour"|"minute">} time
  * @returns {boolean} True only when both hand positions match.

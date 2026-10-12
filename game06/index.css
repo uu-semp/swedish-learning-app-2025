@@ -13,11 +13,12 @@ body {
 
 .game-frame {
     width: 100%;
+    box-sizing: border-box;
     max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
-    min-height: calc(100vh - 200px);
-    height: auto !important;
+    min-height: 0;
+    height: 100vh !important;
     overflow-y: auto;
 }
 

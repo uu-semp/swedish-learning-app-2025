@@ -2,7 +2,7 @@
  * Game 06 - Draggable analog clock component
  *
  * File responsibilities:
- * - Render the clock face and independently positioned hands.
+ * - Render clock hands with the hour position adjusted for the selected minutes.
  * - Follow mouse or touch input and snap each hand on release.
  * - Expose the current time and interaction state to the mode controller.
  * - Notify the mode controller through clock-change events.
@@ -30,6 +30,8 @@ const hands = {
 };
 /** @type {Record<HandName, number>} Clockwise angles in degrees, starting at 12 */
 const angles = { hour: 0, minute: 0 };
+/** Last snapped time, separate from the pointer's temporary hand angle. */
+const time = { hour: 0, minute: 0 };
 /** @type {boolean} Whether the player can drag a hand */
 let interactive = false;
 /** @type {{name: HandName, pointerId: number}|null} Captured hand and pointer */
@@ -48,17 +50,23 @@ let moved = false;
  */
 function renderHand(name) {
   hands[name].style.transform = `rotate(${angles[name] + 90}deg)`;
+  const value = name === "hour" ? time.hour || 12 : time.minute;
+  hands[name].setAttribute("aria-valuenow", String(value));
+  hands[name].setAttribute("aria-valuetext", name === "hour"
+    ? `${time.hour || 12}:${String(time.minute).padStart(2, "0")}`
+    : `${value} minutes`);
 }
 
 /**
- * Display a target time using independent hand positions.
- * The hour hand points directly to its number regardless of the minute value.
+ * Display a target time with the hour hand between numbers for partial hours.
  * @param {number} hour Target hour, interpreted modulo 12.
  * @param {number} minute Target minute.
  * @returns {void}
  */
 export function setAnalogTime(hour, minute) {
-  angles.hour = (hour % 12) * 30;
+  time.hour = ((hour % 12) + 12) % 12;
+  time.minute = minute;
+  angles.hour = (time.hour * 30 + minute / 2) % 360;
   angles.minute = minute * 6;
   renderHand("hour");
   renderHand("minute");
@@ -75,16 +83,21 @@ function notifyChange() {
 }
 
 /**
- * Snap the captured hand to the nearest 30-degree position and release it.
- * This corresponds to one hour number or one five-minute mark.
+ * Snap minutes to a five-minute mark, or hours to the nearest position adjusted
+ * for the selected minutes. Changing minutes also updates the hour position.
  * No-op when no hand is being dragged.
  * @returns {void}
  */
 function finishDrag() {
   if (!drag) return;
   const { name, pointerId } = drag;
-  angles[name] = (Math.round(angles[name] / 30) * 30) % 360;
-  renderHand(name);
+  if (name === "hour") {
+    const hour = Math.round((angles.hour - time.minute / 2) / 30);
+    setAnalogTime(hour, time.minute);
+  } else {
+    const minute = (Math.round(angles.minute / 30) % 12) * 5;
+    setAnalogTime(time.hour, minute);
+  }
   drag = null;
   hands[name].classList.remove("dragging");
   if (hands[name].hasPointerCapture(pointerId)) hands[name].releasePointerCapture(pointerId);
@@ -100,11 +113,15 @@ export function setInteractive(enabled) {
   finishDrag();
   interactive = enabled;
   clock.classList.toggle("interactive", enabled);
+  for (const hand of Object.values(hands)) {
+    hand.tabIndex = enabled ? 0 : -1;
+    hand.setAttribute("aria-disabled", String(!enabled));
+  }
 }
 
 /**
  * Reset both hands to 12:00 and enable dragging for a new question.
- * Clears the movement flag so an untouched clock cannot be submitted.
+ * Clears the movement flag for the new question.
  * @returns {void}
  */
 export function resetClock() {
@@ -115,13 +132,13 @@ export function resetClock() {
 }
 
 /**
- * Read the rounded hand positions without changing their displayed angles.
+ * Read the last snapped time without rounding a fractional hour to the next hour.
  * @returns {ClockTime}
  */
 export function getClockTime() {
   return {
-    hour: Math.round(angles.hour / 30) % 12,
-    minute: (Math.round(angles.minute / 30) % 12) * 5,
+    hour: time.hour,
+    minute: time.minute,
     moved,
     dragging: drag !== null,
   };
@@ -154,6 +171,27 @@ function moveHand(event) {
 
 // Only one primary pointer controls a hand at a time; cancellation also releases it.
 for (const [name, hand] of Object.entries(hands)) {
+  hand.addEventListener("keydown", (event) => {
+    if (!interactive || drag) return;
+    const changes = { ArrowRight: 30, ArrowUp: 30, ArrowLeft: -30, ArrowDown: -30 };
+    let { hour, minute } = time;
+    if (Object.hasOwn(changes, event.key)) {
+      if (name === "hour") hour = (hour + changes[event.key] / 30 + 12) % 12;
+      else minute = (minute + changes[event.key] / 6 + 60) % 60;
+    } else if (event.key === "Home") {
+      if (name === "hour") hour = 1;
+      else minute = 0;
+    } else if (event.key === "End") {
+      if (name === "hour") hour = 0;
+      else minute = 55;
+    } else {
+      return;
+    }
+    event.preventDefault();
+    moved = true;
+    setAnalogTime(hour, minute);
+    notifyChange();
+  });
   hand.addEventListener("pointerdown", (event) => {
     if (!interactive || drag || !event.isPrimary || event.button !== 0) return;
     event.preventDefault();

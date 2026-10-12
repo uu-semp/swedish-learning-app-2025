@@ -35,7 +35,7 @@ let selectedButton = null;
 /** @type {number} Current score in the session */
 let score = 0;
 
-import { createStandardModeQuestions } from "./utils/clock_questions.js";
+import { createStandardModeQuestions, createAdvancedModeQuestions, clockQuestionClass } from "./utils/clock_questions.js";
 
 /**
  * All tiles for the current question, including tiles placed in answer slots.
@@ -81,6 +81,7 @@ function hideAllViews() {
  * Hides all other views and displays the introduction
  */
 function showIntro() {
+	stopQuestionTimer();
 	hideAllViews();
 	document.getElementById("intro-view").style.display = "block";
 }
@@ -90,6 +91,9 @@ function showIntro() {
  * Allows users to choose difficulty level (easy/medium/hard)
  */
 function showLevelSelection() {
+	stopQuestionTimer();
+	window.currentSession = null;
+	window.currentQuestion = null;
 	hideAllViews();
 	document.getElementById("level-view").style.display = "block";
 }
@@ -163,7 +167,8 @@ function onTimerExpired() {
 	const q = window.currentQuestion;
 	if (!q) return;
 
-	window.currentSession.record(q, false);
+	const status = window.currentSession.record(q, false);
+	document.getElementById("save-warning").hidden = status.saved !== false;
 
 	const feedback = document.getElementById("tile-feedback");
 	if (feedback) {
@@ -176,6 +181,7 @@ function onTimerExpired() {
 	document.getElementById("submit-btn").style.display = "none";
 	document.getElementById("reset-tiles-btn").style.display = "none";
 	document.getElementById("next-btn").style.display = "";
+	document.getElementById("next-btn").focus();
 }
 
 
@@ -390,6 +396,9 @@ function resetTiles() {
 function renderTileInterface() {
 	const bank = document.getElementById("tile-bank");
 	const row = document.getElementById("answer-row");
+	const focused = document.activeElement;
+	const focusedBankIndex = [...bank.children].indexOf(focused);
+	const focusedSlotIndex = [...row.children].indexOf(focused);
 
 	bank.replaceChildren();
 	row.replaceChildren();
@@ -429,6 +438,13 @@ function renderTileInterface() {
 
 		row.appendChild(slot);
 	});
+	if (!answerSubmitted) {
+		if (focusedBankIndex !== -1) {
+			bank.children[Math.min(focusedBankIndex, bank.children.length - 1)]?.focus();
+		} else if (focusedSlotIndex !== -1) {
+			row.children[focusedSlotIndex]?.focus();
+		}
+	}
 }
 
 // ==============================================
@@ -465,6 +481,9 @@ function updateQuestion() {
 	window.currentQuestion = q;
 	selectedAnswer = null;
 	selectedButton = null;
+	const feedbackMessage = document.getElementById("feedback-message");
+	feedbackMessage.textContent = "";
+	feedbackMessage.style.display = "none";
 
 	// // Reset/prepare hint UI
 	// toggleHint(false, "");
@@ -496,7 +515,7 @@ function updateQuestion() {
 		// Advanced: display word blocks and answer slots.
 		setupTileQuestion(q);
 	} else {
-		// Beginner and Intermediate: keep multiple-choice answers.
+		// Easy: multiple-choice answers.
 		const choices = shuffleArray(questionUtils.choicesForEasy(q));
 
 		choices.forEach((choice) => {
@@ -562,6 +581,10 @@ function updateQuestion() {
  * @param {string} level - Difficulty level ("easy", "medium", or "hard")
  */
 function startGame(level) {
+	if (level === "medium") {
+		document.getElementById("set-clock-launch").click();
+		return;
+	}
 	if (!questionUtils || !progressUtils) {
 		console.error("Question utils or progress utils not loaded yet");
 		return;
@@ -572,20 +595,20 @@ function startGame(level) {
 	const gameContainer = document.querySelector(".game-container");
 	gameContainer.classList.toggle("hard-mode", level === "hard");
 	// Initialize progress for all questions of this difficulty
-	const levelQuestions = (currentDifficulty === "easy" || currentDifficulty === "medium")
-	? createStandardModeQuestions(currentDifficulty, 5)
-	: questionUtils.byDifficulty(currentDifficulty);
+	const levelQuestions = currentDifficulty === "easy"
+		? createStandardModeQuestions(currentDifficulty, 144)
+		: createAdvancedModeQuestions(questionUtils.byDifficulty(currentDifficulty));
 
 	const questionIds = levelQuestions.map((q) => q.id);
 
-	// Reset progress so previously mastered questions can be played again
-	questionIds.forEach((id) => progressUtils.resetQuestion(id));
+	// Keep attempt history while allowing mastered questions to be replayed.
 	progressUtils.initProgress(questionIds);
 
 	// Create a session with the selected difficulty questions
 	window.currentSession = progressUtils.createSession(levelQuestions, {
-		mode: "regular",
+		mode: "practice",
 		size: 5,
+		questionClass: clockQuestionClass,
 	});
 
 	score = 0;
@@ -677,6 +700,7 @@ function submitAnswer() {
 			q.answerTiles.every((expected, i) => expected === userAnswer[i]);
 
 		const status = window.currentSession.record(q, correct);
+		document.getElementById("save-warning").hidden = status.saved !== false;
 
 		if (correct) {
 			score += 10;
@@ -698,6 +722,7 @@ function submitAnswer() {
 		document.getElementById("submit-btn").style.display = "none";
 		document.getElementById("reset-tiles-btn").style.display = "none";
 		document.getElementById("next-btn").style.display = "";
+		document.getElementById("next-btn").focus();
 		return;
 	}
 
@@ -721,6 +746,7 @@ function submitAnswer() {
 			window.currentQuestion,
 			check.correct
 		);
+		document.getElementById("save-warning").hidden = status.saved !== false;
 
 		// update score on correct
 		if (check.correct) {
@@ -774,6 +800,12 @@ function showSubmissionFeedback(checkResult, progressResult) {
 		console.error("Feedback element not found");
 		return;
 	}
+	feedbackElement.textContent = checkResult.correct
+		? "Correct!"
+		: `Incorrect. The correct answer is: ${checkResult.expected}`;
+	feedbackElement.className = `feedback-message ${checkResult.correct ? "correct" : "wrong"}`;
+	feedbackElement.style.display = "block";
+	document.getElementById("next-btn").focus();
 }
 
 /**
@@ -832,47 +864,25 @@ window.resetTiles = resetTiles;
 // ==============================================
 
 /**
- * Application initialization when DOM and vocabulary are ready
+ * Application initialization after the module's DOM has loaded.
  *
  * Sets up the game by:
  * - Loading question utilities and initializing questions from JSON
  * - Loading progress utilities for tracking user performance
  * - Displaying the intro view
- * - Setting up test functions for development/debugging
  */
-$(function () {
-	window.vocabulary.when_ready(async function () {
-		console.log("Game 06 - Tick-Tock Time initialized!");
-
-		try {
-			// Load and initialize question management utilities
-			questionUtils = await import("./utils/question_utils.js");
-			await questionUtils.initQuestions("./data/questions.json");
-
-			// Load progress tracking utilities
-			progressUtils = await import("./utils/progress_utils.js");
-
-			console.log("Questions and progress utils loaded successfully");
-		} catch (error) {
-			console.error("Failed to load question or progress utils:", error);
-		}
-
-		// Show intro view on load
-		showIntro();
-
-		// OLD TEST FUNCTIONS (kept for reference)
-		// $("#check-jquery").on("click", () => {
-		// 	alert("JavaScript and jQuery are working.");
-		// });
-
-		// $("#check-saving").on("click", () => {
-		// 	var data = window.save.get("game06");
-		// 	data.counter = data.counter ?? 0;
-		// 	data.counter += 1;
-		// 	$("#check-saving").text(
-		// 		`This button has been pressed ${data.counter} times`
-		// 	);
-		// 	window.save.set("game06", data);
-		// });
-	});
-});
+async function initializeGame() {
+	const buttons = document.querySelectorAll(".level-btn[onclick]");
+	buttons.forEach((button) => { button.disabled = true; });
+	try {
+		questionUtils = await import("./utils/question_utils.js");
+		await questionUtils.initQuestions("./data/questions.json");
+		progressUtils = await import("./utils/progress_utils.js");
+		buttons.forEach((button) => { button.disabled = false; });
+	} catch (error) {
+		console.error("Failed to load question or progress utils:", error);
+		document.getElementById("load-warning").hidden = false;
+	}
+	showIntro();
+}
+initializeGame();

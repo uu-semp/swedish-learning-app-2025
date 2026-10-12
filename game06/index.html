@@ -59,6 +59,9 @@ Owned by Game 06
 
   <main class="game-frame">
 
+    <p id="load-warning" role="alert" hidden>The questions could not be loaded. Reload the page to try again.</p>
+    <p id="save-warning" role="alert" hidden>Your progress could not be saved. You can keep playing, but this result will not be remembered.</p>
+
     <!-- INTRO VIEW -->
     <div id="intro-view" class="view">
       <div class="intro-container">
@@ -75,8 +78,8 @@ Owned by Game 06
         </div>
 
         <p class="game-description">
-          Ready to race the clock? Practice Swedish time expressions while clicking, typing, and laughing at your
-          mistakes. You'll master time step by step — and fast!
+          Practice Swedish time expressions by choosing an answer, setting the clock,
+          and building phrases with word blocks. You'll master time step by step!
         </p>
 
         <button class="start-btn" onclick="showLevelSelection()">
@@ -91,13 +94,13 @@ Owned by Game 06
         <h1 class="level-title">Choose Your Level</h1>
 
         <div class="level-cards">
-          <!-- Beginner Card -->
+          <!-- Easy Card -->
           <div class="level-card">
             <div class="level-icon">
               <i class="fa-solid fa-clock"></i>
             </div>
-            <h3 class="level-name">Beginner</h3>
-            <p class="level-description">Start with basic hours and half hours</p>
+            <h3 class="level-name">Easy</h3>
+            <p class="level-description">Read the clock and choose the matching phrase</p>
             <button class="level-btn" onclick="startGame('easy')">Play Now</button>
           </div>
 
@@ -107,8 +110,8 @@ Owned by Game 06
               <i class="fa-solid fa-clock"></i>
             </div>
             <h3 class="level-name">Intermediate</h3>
-            <p class="level-description">Practice quarters and complex times</p>
-            <button class="level-btn" onclick="startGame('medium')">Play Now</button>
+            <p class="level-description">Set the clock to match Swedish time phrases</p>
+            <button id="set-clock-launch" class="level-btn" type="button" disabled>Play Now</button>
           </div>
 
           <!-- Advanced Card -->
@@ -117,7 +120,7 @@ Owned by Game 06
               <i class="fa-solid fa-clock"></i>
             </div>
             <h3 class="level-name">Advanced</h3>
-            <p class="level-description">Master time during dialogue</p>
+            <p class="level-description">Build time phrases with word blocks in 30 seconds</p>
             <button class="level-btn" onclick="startGame('hard')">Play Now</button>
           </div>
         </div>
@@ -208,7 +211,9 @@ Owned by Game 06
         </div>
 
         <!-- Feedback Message -->
-        <div id="feedback-message" class="feedback-message" style="display: none;"></div>
+        <div id="feedback-message" class="feedback-message" role="status" aria-live="polite" style="display: none;"></div>
+
+        <button id="game-back" class="back-btn" type="button" onclick="showLevelSelection()">Back to Levels</button>
 
         <!-- Next Action -->
         <!-- <div id="next-actions" class="next-actions" style="display: none;">
