@@ -3,6 +3,11 @@ import summerImg from './assets/seasons/summer.jpg';
 import fallImg from './assets/seasons/fall.jpg';
 import winterImg from './assets/seasons/winter.jpg';
 import springImg from './assets/seasons/spring.jpg';
+import cloudImg from './assets/seasons/cloudy.jpg';
+import thunderImg from './assets/seasons/thunder.jpg';
+import windImg from './assets/seasons/windy.jpg';
+import rainImg from './assets/seasons/rain.jpg';
+
 
 // ── Shared site save API (see /scripts/SAVE.MD) ─────────────────────────────────
 // Loaded as a plain script by index.html; may not be present yet (or at all, e.g. when
@@ -91,11 +96,11 @@ const SEASON_IMAGES: Record<Season, string> = {
 
 const WEATHER_IMAGES: Record<string, string> = {
   snow: winterImg,
-  rain: winterImg,
-  sun: winterImg,
-  wind: winterImg,
-  cloud: winterImg,
-  thunder: winterImg,
+  rain: rainImg,
+  sun: summerImg,
+  wind: windImg,
+  cloud: cloudImg,
+  thunder: thunderImg,
 };
 
 // ── Question Bank ──────────────────────────────────────────────────────────────
@@ -524,7 +529,7 @@ function MCQuestion({
   const [chosen, setChosen] = useState<string | null>(null);
 
   const handleClick = (opt: string) => {
-    if (answerState === 'correct') return;
+    if (answerState !== 'idle') return;
     setChosen(opt);
     onSelect(opt);
   };
@@ -554,6 +559,7 @@ function MCQuestion({
         return (
           <button
             key={opt}
+            disabled={answerState !== 'idle'}
             onClick={() => handleClick(opt)}
             style={{ backgroundColor: bg, border: `2px solid ${border}`, color: textColor, cursor }}
             className="w-full text-left px-4 py-2.5 rounded-xl font-semibold text-sm transition-all duration-150 hover:shadow-sm relative"
@@ -572,7 +578,7 @@ function SeasonMCQuestion({ q, answerState, onSelect }: { q: Question; answerSta
   const c = COLORS[s];
 
   const handleClick = (opt: string) => {
-    if (answerState === 'correct') return;
+    if (answerState !== 'idle') return;
     setChosen(opt);
     onSelect(opt);
   };
@@ -599,6 +605,7 @@ function SeasonMCQuestion({ q, answerState, onSelect }: { q: Question; answerSta
           return (
             <button
               key={opt}
+              disabled={answerState !== 'idle'}
               onClick={() => handleClick(opt)}
               style={{ backgroundColor: bg, border: `2px solid ${border}`, color: textColor }}
               className="flex items-center gap-2 px-3 py-2 rounded-xl font-display font-semibold text-sm transition-all duration-150 hover:shadow-sm cursor-pointer relative"
@@ -618,7 +625,7 @@ function WeatherMCQuestion({ q, answerState, onSelect }: { q: Question; answerSt
   const c = COLORS[season];
 
   const handleClick = (opt: string) => {
-    if (answerState === 'correct') return;
+    if (answerState !== 'idle') return;
     setChosen(opt);
     onSelect(opt);
   };
@@ -643,6 +650,7 @@ function WeatherMCQuestion({ q, answerState, onSelect }: { q: Question; answerSt
           return (
             <button
               key={opt}
+              disabled={answerState !== 'idle'}
               onClick={() => handleClick(opt)}
               style={{ backgroundColor: bg, border: `2px solid ${border}`, color: textColor }}
               className="w-full text-left px-4 py-2.5 rounded-xl font-semibold text-sm transition-all duration-150 hover:shadow-sm relative"
@@ -662,7 +670,7 @@ function WeekdayClickQuestion({ q, answerState, onSubmit }: { q: Question; answe
   const c = COLORS[season];
 
   const toggle = (day: string) => {
-    if (answerState === 'correct') return;
+    if (answerState !== 'idle') return;
     setSelected(prev => prev.includes(day) ? prev.filter(d => d !== day) : [...prev, day]);
   };
 
@@ -700,6 +708,7 @@ function WeekdayClickQuestion({ q, answerState, onSubmit }: { q: Question; answe
           return (
             <button
               key={day}
+              disabled={answerState !== 'idle'}
               onClick={() => toggle(day)}
               style={{ backgroundColor: bg, border: `2px solid ${border}`, color: textColor }}
               className="flex items-center justify-center py-1.5 rounded-lg font-semibold text-[11px] transition-all duration-150 hover:shadow-sm cursor-pointer relative"
@@ -732,12 +741,12 @@ function OrderQuestion({ q, answerState, onSubmit }: { q: Question; answerState:
   const isComplete = placed.length === q.shuffled!.length;
 
   const handleSourceClick = (item: string) => {
-    if (answerState === 'correct') return;
+    if (answerState !== 'idle') return;
     setPlaced(prev => [...prev, item]);
   };
 
   const handlePlacedClick = (item: string) => {
-    if (answerState === 'correct') return;
+    if (answerState !== 'idle') return;
     setPlaced(prev => prev.filter(p => p !== item));
   };
 
@@ -769,6 +778,7 @@ function OrderQuestion({ q, answerState, onSubmit }: { q: Question; answerState:
             return (
               <button
                 key={`placed-${idx}`}
+                disabled={answerState !== 'idle'}
                 onClick={() => answerState === 'idle' && handlePlacedClick(item)}
                 style={{ backgroundColor: bg, color: textColor, border: `2px solid ${border}` }}
                 className="px-2.5 py-1 rounded-lg font-semibold text-xs transition-all hover:opacity-80 capitalize relative"
@@ -832,7 +842,7 @@ function DateCalendarQuestion({ q, answerState, onSelect }: { q: Question; answe
   const dayNames = ['Mån', 'Tis', 'Ons', 'Tor', 'Fre', 'Lör', 'Sön'];
 
   const handleClick = (day: number) => {
-    if (answerState === 'correct') return;
+    if (answerState !== 'idle') return;
     setChosen(day);
     onSelect(day);
   };
@@ -877,6 +887,7 @@ function DateCalendarQuestion({ q, answerState, onSelect }: { q: Question; answe
           return (
             <button
               key={day}
+              disabled={answerState !== 'idle'}
               onClick={() => handleClick(day)}
               style={{ backgroundColor: bg, border: `2px solid ${border}`, color: textColor }}
               className={`h-6 flex items-center justify-center rounded-md font-semibold text-[11px] transition-all ${hoverClass} cursor-pointer`}
@@ -1249,10 +1260,10 @@ function PracticeScreen({ onBack }: { onBack: () => void }) {
   const handleCorrect = () => { setScore(s => s + 1); setAnswerState('correct'); };
   const handleWrong   = () => setAnswerState('wrong');
 
-  const handleMC    = (chosen: string) => { if (answerState === 'correct') return; const q = PRACTICE_QUESTIONS[category!][qIdx]; if (chosen === q.answer) handleCorrect(); else handleWrong(); };
-  const handleClick = (days: string[]) => { if (answerState === 'correct') return; const q = PRACTICE_QUESTIONS[category!][qIdx]; const ok = days.length === q.correctDays!.length && q.correctDays!.every(d => days.includes(d)); if (ok) handleCorrect(); else handleWrong(); };
-  const handleOrder = (ordered: string[]) => { if (answerState === 'correct') return; const q = PRACTICE_QUESTIONS[category!][qIdx]; const ok = ordered.every((item, i) => item === q.correct![i]); if (ok) handleCorrect(); else handleWrong(); };
-  const handleDate  = (date: number) => { if (answerState === 'correct') return; const q = PRACTICE_QUESTIONS[category!][qIdx]; if (date === q.targetDate) handleCorrect(); else handleWrong(); };
+  const handleMC    = (chosen: string) => { if (answerState !== 'idle') return; const q = PRACTICE_QUESTIONS[category!][qIdx]; if (chosen === q.answer) handleCorrect(); else handleWrong(); };
+  const handleClick = (days: string[]) => { if (answerState !== 'idle') return; const q = PRACTICE_QUESTIONS[category!][qIdx]; const ok = days.length === q.correctDays!.length && q.correctDays!.every(d => days.includes(d)); if (ok) handleCorrect(); else handleWrong(); };
+  const handleOrder = (ordered: string[]) => { if (answerState !== 'idle') return; const q = PRACTICE_QUESTIONS[category!][qIdx]; const ok = ordered.every((item, i) => item === q.correct![i]); if (ok) handleCorrect(); else handleWrong(); };
+  const handleDate  = (date: number) => { if (answerState !== 'idle') return; const q = PRACTICE_QUESTIONS[category!][qIdx]; if (date === q.targetDate) handleCorrect(); else handleWrong(); };
 
   const advance = () => {
     const questions = PRACTICE_QUESTIONS[category!];
@@ -1481,27 +1492,27 @@ export default function App() {
   };
 
   const handleAnswerMC = (chosen: string) => {
-    if (answerState === 'correct') return;
+    if (answerState !== 'idle') return;
     if (chosen === q.answer) handleCorrect();
     else handleWrong();
   };
 
   const handleAnswerClick = (days: string[]) => {
-    if (answerState === 'correct') return;
+    if (answerState !== 'idle') return;
     const correct = q.correctDays!;
     const ok = days.length === correct.length && correct.every(d => days.includes(d));
     if (ok) handleCorrect(); else handleWrong();
   };
 
   const handleAnswerOrder = (ordered: string[]) => {
-    if (answerState === 'correct') return;
+    if (answerState !== 'idle') return;
     const correct = q.correct!;
     const ok = ordered.every((item, i) => item === correct[i]);
     if (ok) handleCorrect(); else handleWrong();
   };
 
   const handleAnswerDate = (date: number) => {
-    if (answerState === 'correct') return;
+    if (answerState !== 'idle') return;
     if (date === q.targetDate) handleCorrect(); else handleWrong();
   };
 
