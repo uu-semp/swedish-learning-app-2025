@@ -263,6 +263,13 @@ padding-right: 6px;
   height: 100%;
 }
 
+/* A clothing item that was confirmed as wrong: grayed out, can't be chosen */
+.menu-item.is-wrong .thumb {
+  filter: grayscale(100%);
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
 /* Navigation arrows */
 .shelf-arrow {
     flex-shrink: 0;

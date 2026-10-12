@@ -125,6 +125,7 @@ export function injectHtmlObjects(htmlObjects, subcategories) {
     // Puts a copy of the menu item on Pelle, replacing anything already
     // in that slot, and grays out the menu item.
     function wear(menuImg) {
+        if (isWrong(menuImg)) return; // confirmed wrong: can't be worn again
         const slot = slotFor(menuImg);
         if (!slot) {
             console.warn(`[move blocked] No dropzone configured for category "${menuImg.dataset.category}".`);
@@ -198,6 +199,22 @@ export function injectHtmlObjects(htmlObjects, subcategories) {
     updateButtons();
     };
 
+    // Called after Confirm with the ids of garments that were wrong: takes
+    // them off Pelle and grays them out in the wardrobe, so they can't be
+    // picked or dragged again this round. Taking them off is
+    // not an undo step, so Undo can't put a wrong garment back on.
+    window.markWrongClothing = (ids) => {
+        for (const id of ids) {
+            const menuImg = menuImgById.get(id);
+            if (!menuImg) continue;
+            const worn = slotFor(menuImg)?.firstElementChild;
+            if (worn?.dataset.id === id) takeOff(worn);
+            menuImg.closest(".menu-item")?.classList.add("is-wrong");
+            menuImg.setAttribute("aria-disabled", "true");
+        }
+        updateButtons();
+    };
+
     const playerWear = recordable(wear);
     const playerTakeOff = recordable(takeOff);
     const playerRemoveAll = recordable(removeAll);
@@ -229,7 +246,7 @@ export function injectHtmlObjects(htmlObjects, subcategories) {
         img.addEventListener("click", () => {
             if (img.classList.contains("is-worn")) {
                 playerTakeOff(slotFor(img).firstElementChild);
-            } else {
+            } else if (!isWrong(img)) {
                 playerWear(img);
             }
         });
@@ -253,6 +270,11 @@ function placeOnCanvas(img, box) {
     img.style.top = `${(box.y / box.height) * 100}%`;
     img.style.width = `${(box.w / box.width) * 100}%`;
     img.style.height = `${(box.h / box.height) * 100}%`;
+}
+
+// True if the wardrobe item was confirmed as wrong (see markWrongClothing).
+function isWrong(img) {
+    return img.closest(".menu-item")?.classList.contains("is-wrong") ?? false;
 }
 
 const hitCanvas = document.createElement("canvas");
@@ -308,7 +330,7 @@ function makeDraggable(img, dropTarget, onDrop) {
     }
 
     img.addEventListener("pointerdown", (e) => {
-        if (img.classList.contains("is-worn") || e.button !== 0) return;
+        if (img.classList.contains("is-worn") || isWrong(img) || e.button !== 0) return;
         const r = img.getBoundingClientRect();
         press = {
             x: e.clientX,
