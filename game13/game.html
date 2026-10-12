@@ -121,11 +121,15 @@
     // Compare what Pelle wears with the outfit, one body position at a time.
     const missingItems = [];
     const wrongItems = [];
+    const wrongIds = []; // the garments Pelle wears that are wrong
     for (const [subcategory, item] of Object.entries(outfit.items)) {
       const zone = document.querySelector(`.dropzone[data-accept="${subcategory}"]`);
       const appliedId = zone?.firstElementChild?.dataset.id;
       if (!appliedId) missingItems.push(subcategory);
-      else if (appliedId !== item.imgId) wrongItems.push(subcategory);
+      else if (appliedId !== item.imgId) {
+        wrongItems.push(subcategory);
+        wrongIds.push(appliedId);
+      }
     }
 
 if (missingItems.length > 0) {
@@ -151,6 +155,8 @@ if (missingItems.length > 0) {
     } else {
       resultText.textContent = "❌ Incorrect items: " + wrongItems.join(", ") + ", Try again!";
       resultText.style.color = "red";
+      // Take the wrong garments off Pelle and gray them out in the wardrobe
+      window.markWrongClothing?.(wrongIds);
     }
 
     feedback.classList.add("visible");
