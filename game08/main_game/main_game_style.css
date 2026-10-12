@@ -450,8 +450,8 @@ body {
 
 .image-card {
   display: grid;
-  width: clamp(8.75rem, 25vw, 13rem);
-  min-height: 10rem;
+  width: clamp(7.5rem, 21vw, 11rem);
+  min-height: 8.5rem;
   place-items: center;
   padding: 0.75rem;
   border: 3px solid var(--ink);
@@ -469,7 +469,7 @@ body {
 .image-card img {
   display: block;
   width: 100%;
-  height: clamp(7.5rem, 21vw, 11rem);
+  height: clamp(6rem, 17vw, 9rem);
   object-fit: contain;
 }
 
@@ -495,7 +495,7 @@ body {
 
 
 #wordReveal {
-  min-height: 4rem;
+  min-height: 3.5rem;
   margin-bottom: 0.5rem;
   color: var(--ink);
 }
@@ -503,12 +503,12 @@ body {
 #wordSv {
   color: var(--red);
   font-family: var(--font-display);
-  font-size: clamp(1.6rem, 5vw, 2.2rem);
+  font-size: clamp(1.3rem, 4vw, 1.8rem);
 }
 
 #wordEn {
   color: var(--ink);
-  font-size: 1rem;
+  font-size: 0.9rem;
 }
 
 .end-screen {
@@ -659,8 +659,8 @@ a:focus-visible,
 @media (max-width: 600px) {
   #game-content { justify-content: flex-start; }
   .image-options { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .image-card { width: 100%; min-height: 8rem; }
-  .image-card img { height: clamp(6rem, 32vw, 9rem); }
+  .image-card { width: 100%; min-height: 7rem; }
+  .image-card img { height: clamp(5rem, 24vw, 7rem); }
   #top-banner { min-height: 4.5rem; }
   #top-banner .corner-btn { width: 2.6rem; height: 2.6rem; }
   #copyright > div { margin-top: 4vh; }
@@ -668,4 +668,118 @@ a:focus-visible,
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
+
+
+/* ===== Game Progress Bar ===== */
+.progress-container {
+  width: min(90%, 650px);
+  margin: 0.5rem auto 1rem;
+}
+
+.progress-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 0.6rem;
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+
+#progressText {
+  color: var(--ink);
+  font-size: 0.85rem;
+  white-space: nowrap;
+}
+
+.progress-bar {
+  display: flex;
+  width: 100%;
+  gap: 5px;
+}
+
+.progress-segment {
+  flex: 1;
+  min-width: 0;
+  height: 14px;
+  border: 2px solid var(--ink);
+  border-radius: 5px;
+  background: #d9dce2;
+  transition:
+    background-color 0.25s ease,
+    transform 0.25s ease;
+}
+
+/* Correct answer */
+.progress-segment.correct {
+  background: #36b66a;
+}
+
+/* Wrong answer */
+.progress-segment.wrong {
+  background: #e34b4b;
+}
+
+/* Current round */
+.progress-segment.current {
+  background: var(--yellow);
+  transform: translateY(-2px);
+  box-shadow: 0 2px 0 var(--ink);
+}
+
+/* Legend */
+.progress-legend {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 0.65rem;
+  font-size: 0.75rem;
+}
+
+.progress-legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.legend-dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 3px;
+}
+
+.legend-dot.correct {
+  background: #36b66a;
+}
+
+.legend-dot.wrong {
+  background: #e34b4b;
+}
+
+.legend-dot.pending {
+  background: #d9dce2;
+  border: 1px solid #999;
+}
+
+@media (max-width: 600px) {
+  .progress-container {
+    width: 100%;
+  }
+
+  .progress-bar {
+    gap: 3px;
+  }
+
+  .progress-segment {
+    height: 12px;
+    border-width: 1px;
+  }
+
+  .progress-legend {
+    gap: 0.6rem;
+    font-size: 0.7rem;
+  }
 }

@@ -46,6 +46,30 @@
 
     <h3 id="round">Round </h3>
 
+    <!-- Progress Bar -->
+    <div class="progress-container">
+      <div class="progress-header">
+        <span>Game Progress</span>
+        <span id="progressText">0 / 10 completed</span>
+      </div>
+
+      <div
+        id="progressBar"
+        class="progress-bar"
+        role="progressbar"
+        aria-label="Game progress"
+        aria-valuemin="0"
+        aria-valuemax="10"
+        aria-valuenow="0"
+      ></div>
+
+      <div class="progress-legend">
+        <span><i class="legend-dot correct"></i> Correct</span>
+        <span><i class="legend-dot wrong"></i> Wrong</span>
+        <span><i class="legend-dot pending"></i> Not completed</span>
+      </div>
+    </div>
+
     <!-- Audio -->
     <div>
       <button id="playAudio" class="btn" title="Replay Audio" aria-label="Play audio">
