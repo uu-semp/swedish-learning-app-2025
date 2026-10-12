@@ -1,11 +1,11 @@
 {
     "toggle-language-btn": {
-        "sv": "Engelska",
-        "en": "Swedish"
+        "sv": "English",
+        "en": "Svenska"
     },
     "toggle-language-text": {
-        "sv": "Byt språk",
-        "en": "Change language"
+        "sv": "Change language",
+        "en": "Byt språk"
     },
     "toggle-contrast-btn": {
         "sv": "AV",
@@ -43,6 +43,22 @@
         "sv": "Meny",
         "en": "Menu"
     },
+    "progressPill": {
+        "sv": "not used",
+        "en": "not used"
+    },
+    "firstTryPill": {
+        "sv": "not used",
+        "en": "not used"
+    },
+    "mistakesPill": {
+        "sv": "not used",
+        "en": "not used"
+    },
+    "targetPill": {
+        "sv": "not used",
+        "en": "not used"
+    },
     "copyright-header-text": {
         "sv": "Licenser <i class=\"fas fa-minus\"></i>numrerad vänster till höger, uppifrån och ner <i class=\"fas fa-minus\"></i> skrolla för att se mer",
         "en": "Licenses <i class=\"fas fa-minus\"></i>numbered left to right, top to bottom <i class=\"fas fa-minus\"></i> scroll to see more"
@@ -62,5 +78,65 @@
     "audio-error": {
         "sv": "Ljudet kunde inte spelas upp",
         "en": "The audio could not be played"
-  }
+    },
+    "sr-info-text": {
+        "sv": "För att komma ihåg dina framsteg sparas information om vilka ord du har tränat på och när de ska repeteras igen. Informationen sparas lokalt i din webbläsare.",
+        "en": "To save your progress in this game, information of which words you have seen and when they will be repeated again. The inforamtion is saved locally in your browser."
+    },
+    "sr-accept-btn": {
+        "sv": "Godkänn och aktivera",
+        "en": "Confirm and activate"
+    },
+    "sr-info-cancel-btn": {
+        "sv": "Avbryt",
+        "en": "Cancel"
+    },
+    "sr-delete-text": {
+        "sv": "Alla sparade Spaced Repetition-framsteg kommer att raderas. Detta går inte att ångra.",
+        "en": "All saved spaced repetition progress will be deleted. This cannot be reverted."
+    },
+    "sr-delete-confirm-btn": {
+        "sv": "Radera",
+        "en": "Delete"
+    },
+    "sr-delete-cancel-btn": {
+        "sv": "Avbryt",
+        "en": "Cancel"
+    },
+    "sr-no-words-text": {
+        "sv": "Inga ord att repetera idag. Kom tillbaka imorgon!",
+        "en": "No words left to repeat today. Come back tomorrow!"
+    },
+    "sr-no-words-close-btn": {
+        "sv": "Tillbaka till normalt läge",
+        "en": "Back to normal mode"
+    },
+    "sr-enable-btn": {
+        "sv": "Aktivera",
+        "en": "Activate"
+    },
+    "sr-disable-btn": {
+        "sv": "Avaktivera",
+        "en": "Deactivate"
+    },
+    "sr-delete-btn": {
+        "sv": "Radera minne",
+        "en": "Delete memory"
+    },
+    "sr-title": {
+        "sv": "Tidsfördelad repetition",
+        "en": "Spaced repetition"
+    },
+    "sr-info-header": {
+        "sv": "Tidsfördelad repetition",
+        "en": "Spaced repetition"
+    },
+    "sr-no-words-header": {
+        "sv": "Tidsfördelad repetition",
+        "en": "Spaced repetition"
+    },
+    "sr-delete-header": {
+        "sv": "Är du säker?",
+        "en": "Are you sure?"
+    }
 }

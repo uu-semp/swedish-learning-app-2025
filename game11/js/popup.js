@@ -43,15 +43,38 @@
 
     // Send the current game status and progress to the parent page.
     function renderStatus() {
+        let isSwedish = true;
+        const languageBtn =
+            document.querySelector('#toggle-language-btn');
+
+        // NOTE: This check is quite fragile to changes
+        if (languageBtn) isSwedish = languageBtn.textContent == "English";
+
         if (window.parent && window.parent !== window && game) {
             const cur = game.words[game.orderIndex] || null;
+            const progressText = 
+                isSwedish 
+                    ? `${game.completed} / ${game.total} klara`
+                    : `${game.completed} / ${game.total} complete`;
+            const firstTryText = 
+                isSwedish 
+                    ? `Rätt: ${game.firstTryCorrectCount}`
+                    : `Correct: ${game.firstTryCorrectCount}`;
+            const mistakesText = 
+                isSwedish 
+                    ? `Misstag: ${game.mistakes}` 
+                    : `Mistakes: ${game.mistakes}`;
+            const targetText = 
+                isSwedish 
+                    ? `Tröskel: ${game.winThreshold} / ${game.total}` 
+                    : `Threshold: ${game.winThreshold} / ${game.total}`;
             window.parent.postMessage({
                 type: 'statusUpdate',
                 status: {
-                    progress: `${game.completed} / ${game.total} klara`,
-                    firstTry: `Rätt: ${game.firstTryCorrectCount}`,
-                    mistakes: `Misstag: ${game.mistakes}`,
-                    target: `Tröskel: ${game.winThreshold} / ${game.total}`,
+                    progress: progressText,
+                    firstTry: firstTryText,
+                    mistakes: mistakesText,
+                    target: targetText,
                     index: game.orderIndex,
                     currentId: cur ? String(cur.id) : null,
                     currentSv: cur ? cur.sv : null
@@ -200,14 +223,27 @@
 
         console.log('[popup] pick:', id, 'target:', cur?.id, 'ok?', ok);
 
+        const isSwedish = true;
+        const langaugeBtn = document.querySelector("#toggle-language-btn");
+        // NOTE: This check is quite fragile to change
+        if (langaugeBtn) isSwedish = langaugeBtn.textContent == "English";
+
         if (ok) {
-            toast(`Bra jobbat, du hittade <strong>${cur.sv}</strong>`);
+            const toastText = 
+                isSwedish 
+                    ? `Bra jobbat, du hittade <strong>${cur.sv}</strong>` 
+                    : `Good job, you found <strong>${cur.sv}</strong>`;
+            toast(toastText);
             if (st.firstTry) game.firstTryCorrectCount++;
             st.done = true;
             game.completed++;
             nextItem();
         } else {
-            toast(`Fel, <strong>${label || id}</strong> är inte <strong>${cur.sv}</strong>. Försök igen!`, 'error');
+            const toastText = 
+                isSwedish 
+                    ? `Fel, <strong>${label || id}</strong> är inte <strong>${cur.sv}</strong>. Försök igen!`
+                    : `Wrong, <strong>${label || id}</strong> is not <strong>${cur.sv}</strong>. Try again!`
+            toast(toastText, 'error');
             window.parent.postMessage({ type: 'wrongAnswer' }, '*');
 
             st.mistakes++;

@@ -314,12 +314,14 @@ window.addEventListener('DOMContentLoaded', () => {
             const isActive =
                 document.body.classList.contains('high-contrast-mode');
 
-            // NOTE: Needs to know the current langauge to work properly
+            // NOTE: Needs to know the current langauge to change the text correctly
             const languageBtn =
                 document.getElementById('toggle-language-btn');
 
             if (languageBtn) {
-                const isSwedish = languageBtn.textContent == "Engelska";
+                // NOTE: This check is quite fragile to changes
+                const isSwedish = languageBtn.textContent == "English";
+
                 toggleContrastBtn.textContent =
                     isSwedish 
                         ? isActive
@@ -328,12 +330,15 @@ window.addEventListener('DOMContentLoaded', () => {
                         : isActive
                             ? 'ON'
                             : 'OFF';
-
-                toggleContrastBtn.classList.toggle(
-                    'active',
-                    isActive
-                );
+            } else {
+                // Fallback in case of issues with langauge button
+                toggleContrastBtn.textContent = isActive ? 'PÅ' : 'AV';
             }
+
+            toggleContrastBtn.classList.toggle(
+                'active',
+                isActive
+            );
         });
     }
 
@@ -346,7 +351,8 @@ window.addEventListener('DOMContentLoaded', () => {
     if (languageBtn) {
         languageBtn.addEventListener('click', async () => {
             // NOTE: This check is quite fragile to changes
-            const isSwedish = languageBtn.textContent == "Engelska";
+            const isSwedish = languageBtn.textContent == "English";
+
             const res = await fetch("assets/translations.json");
             if (!res.ok) {
                 throw new Error("Failed to load translations.json");
@@ -363,19 +369,46 @@ window.addEventListener('DOMContentLoaded', () => {
                 }
 
                 // NOTE: Needs to be handled seperatly because the text can change
-                if (key == "toggle-contrast-btn") {
-                    const isContrastOn =
-                        document.body.classList.contains('high-contrast-mode');
-                    currentElement.textContent = 
-                        isSwedish 
-                            ? isContrastOn
-                                ? 'ON'
-                                : 'OFF'
-                            : isContrastOn
-                                ? 'PÅ'
-                                : 'AV';
-                } else {
-                    currentElement.innerHTML = isSwedish ? value.en : value.sv;
+                switch(key) {
+                    case "toggle-contrast-btn":
+                        const isContrastOn =
+                            document.body.classList.contains('high-contrast-mode');
+                        currentElement.textContent = 
+                            isSwedish 
+                                ? isContrastOn
+                                    ? 'ON'
+                                    : 'OFF'
+                                : isContrastOn
+                                    ? 'PÅ'
+                                    : 'AV';
+                        break;
+                    case "progressPill":
+                        progressPill.textContent = 
+                            isSwedish 
+                                ? progressPill.textContent.slice(0, -5) + "complete"
+                                : progressPill.textContent.slice(0, -8) + "klara";
+                        break;
+                    case "firstTryPill":
+                        firstTryPill.textContent = 
+                            isSwedish
+                                ? "Correct" + firstTryPill.textContent.slice(4)
+                                : "Rätt" + firstTryPill.textContent.slice(7);
+                        break;
+                    case "mistakesPill":
+                        mistakesPill.textContent = 
+                            isSwedish
+                                ? "Mistakes" + mistakesPill.textContent.slice(7)
+                                : "Misstag" + mistakesPill.textContent.slice(8);
+                        break;
+                    case "targetPill":
+                        targetPill.textContent = 
+                            isSwedish
+                                ? "Threshold" + targetPill.textContent.slice(7)
+                                : "Tröskel" + targetPill.textContent.slice(9);
+                        break;
+                    default:
+                        currentElement.innerHTML = isSwedish ? value.en : value.sv;
+                        break;
                 }
             });
         });

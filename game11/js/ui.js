@@ -293,11 +293,19 @@ export function displayShoppingList(list, mode) {
   ul.className = 'shopping-list';
 
   _listEls = list.map(item => {
+    const swedishText = 
+      item.img_is_plural == "TRUE"
+        ? item.sv_plural 
+          ? item.sv_plural 
+          : item.sv
+        : item.article 
+          ? `${item.article} ${item.sv}` 
+          : item.sv;
     const li = document.createElement('li');
     if (mode === 2) {
       li.textContent = item.en;
     } else  if (mode === 1 ) {
-      li.textContent = item.sv;
+      li.textContent = swedishText;
     } else {
       ul.classList.add('no-bullets');
       li.textContent = "";
