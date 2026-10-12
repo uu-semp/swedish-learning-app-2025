@@ -214,3 +214,22 @@ body {
     color: #999;
     font-weight: bold;
 }
+
+.lang-toggle-btn {
+    padding: 8px 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-weight: bold;
+    background-color: #f0f0f0;
+    border: 2px solid #ccc;
+    color: #333;
+    margin-bottom: 20px;
+    transition: background-color 0.2s;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  .lang-toggle-btn:hover {
+    background-color: #e0e0e0;
+  }

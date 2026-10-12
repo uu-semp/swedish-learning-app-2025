@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Var bor jag? - Level</title>
+  <title data-sv="Var bor jag? - Level" data-en="Where do I live? - Level">Var bor jag? - Level</title>
   
   <link rel="stylesheet" href="../style.css" />
   <link rel="stylesheet" href="index.css" />
@@ -22,21 +22,37 @@
   <script type="module" src="localStorage.js"></script>
   <script type="module" src="setUpLevels.js"></script>
   <script type="module" src="level.js"></script>
+
+  <!-- Language Toggle Script for Static HTML -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      if (sessionStorage.getItem('game15_lang') === 'en') {
+        document.querySelectorAll('[data-en]').forEach(el => {
+          if (el.tagName.toLowerCase() === 'title') {
+            document.title = el.getAttribute('data-en');
+          } else {
+            el.childNodes[0].nodeValue = el.getAttribute('data-en');
+          }
+        });
+      }
+    });
+  </script>
 </head>
 <body>
   <header>
-    <h1>Var bor jag?</h1>
-    <button class="back-button" onclick="window.location.href='index.html'">
-      ← Tillbaka
-    </button>
+    <h1 data-sv="Var bor jag?" data-en="Where do I live?">Var bor jag?</h1>
+    <button class="back-button" onclick="window.location.href='index.html'" data-sv="← Tillbaka" data-en="← Back">← Tillbaka</button>
   </header>
 
   <main class="game-frame">
     <div id="app" v-cloak>
       <div class="status-bar">
-        <div>❤️ Liv: {{ lives }}</div>
-        <div>⭐ Poäng: {{ score }}</div>
-        <div>📈 Nivå: {{ level }}</div>
+        <div>❤️ {{ isEnglish ? 'Lives' : 'Liv' }}: {{ lives }}</div>
+        <div>⭐ {{ isEnglish ? 'Score' : 'Poäng' }}: {{ score }}</div>
+        <div>📈 {{ isEnglish ? 'Level' : 'Nivå' }}: {{ level }}</div>
+        <button class="lang-toggle-btn" @click="toggleLanguage">
+          {{ isEnglish ? 'Byt till Svenska' : 'Switch to English' }}
+        </button>
       </div>
 
       <div class="game-content">
@@ -48,9 +64,7 @@
             </div>
 
             <div class="speech" v-if="currentQuestion">
-              <div>{{ currentQuestion.instruction }}</div>
-              <div v-if="translation" class="translation">{{ translation }}</div>
-              <button class="translate-btn" @click="translateQuestion">🌍 Översätt</button>
+              <div>{{ isEnglish ? currentQuestion.instructionEn : currentQuestion.instructionSv }}</div>
             </div>
           </div>
 
@@ -62,8 +76,8 @@
             <input 
               v-model="textAnswer" 
               @keyup.enter="checkTextAnswer"
-              placeholder="Ex: ringgatan ett">
-            <button @click="checkTextAnswer">Skicka</button>
+              :placeholder="isEnglish ? 'Ex: ringgatan one' : 'Ex: ringgatan ett'">
+            <button @click="checkTextAnswer">{{ isEnglish ? 'Submit' : 'Skicka' }}</button>
           </div>
         </div>
 

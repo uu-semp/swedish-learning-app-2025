@@ -35,14 +35,16 @@ function updateLevelProgress() {
 }
 
 function createLevelButton(levelNum, progress) {
+  const isEn = sessionStorage.getItem('game15_lang') === 'en';
   const button = document.createElement('button');
   button.className = progress.unlocked ? 'level-btn' : 'level-btn locked';
   
   const progressPercent = (progress.completed / progress.total) * 100;
+  const levelText = isEn ? 'Level' : 'Nivå';
   
   button.innerHTML = `
     <div class="level-info">
-      <span class="level-name">Nivå ${levelNum}</span>
+      <span class="level-name">${levelText} ${levelNum}</span>
       <span class="progress-indicator">
         ${progress.completed}/${progress.total}
         ${!progress.unlocked ? '<span class="locked-icon">🔒</span>' : ''}
@@ -56,7 +58,7 @@ function createLevelButton(levelNum, progress) {
   if (progress.unlocked) {
     button.onclick = () => startLevel(levelNum);
   } else {
-    button.onclick = () => alert('Du måste först slutföra föregående nivå!');
+    button.onclick = () => alert(isEn ? 'You must complete the previous level first!' : 'Du måste först slutföra föregående nivå!');
   }
   
   return button;
@@ -109,6 +111,7 @@ window.closeSummary = function() {
 }
 
 function generateSummaryContent() {
+  const isEn = sessionStorage.getItem('game15_lang') === 'en';
   const gameProgress = getGameProgress();
   let html = '';
   
@@ -120,28 +123,28 @@ function generateSummaryContent() {
     let statusClass = '';
     
     if (!level.unlocked) {
-      status = 'Låst';
+      status = isEn ? 'Locked' : 'Låst';
       statusClass = 'status-locked';
     } else if (level.completed === level.total) {
-      status = 'Slutförd';
+      status = isEn ? 'Completed' : 'Slutförd';
       statusClass = 'status-completed';
     } else if (level.completed > 0) {
-      status = 'Pågående';
+      status = isEn ? 'In Progress' : 'Pågående';
       statusClass = 'status-in-progress';
     } else {
-      status = 'Ej påbörjad';
+      status = isEn ? 'Not started' : 'Ej påbörjad';
       statusClass = 'status-locked';
     }
     
     html += `
       <div class="summary-item">
-        <div class="summary-level">Nivå ${levelNum}</div>
+        <div class="summary-level">${isEn ? 'Level' : 'Nivå'} ${levelNum}</div>
         <div class="summary-details">
           <strong>Status:</strong> <span class="${statusClass}">${status}</span><br>
-          <strong>Framsteg:</strong> ${level.completed}/${level.total} frågor (${Math.round((level.completed/level.total)*100)}%)<br>
-          <strong>Antal försök:</strong> ${level.attempts}<br>
-          <strong>Tid spenderad:</strong> ${level.timeSpent} minuter<br>
-          <strong>Senast spelad:</strong> ${level.lastPlayed ? level.lastPlayed : 'Aldrig'}
+          <strong>${isEn ? 'Progress:' : 'Framsteg:'}</strong> ${level.completed}/${level.total} ${isEn ? 'questions' : 'frågor'} (${Math.round((level.completed/level.total)*100)}%)<br>
+          <strong>${isEn ? 'Attempts:' : 'Antal försök:'}</strong> ${level.attempts}<br>
+          <strong>${isEn ? 'Time spent:' : 'Tid spenderad:'}</strong> ${level.timeSpent} ${isEn ? 'minutes' : 'minuter'}<br>
+          <strong>${isEn ? 'Last played:' : 'Senast spelad:'}</strong> ${level.lastPlayed ? level.lastPlayed : (isEn ? 'Never' : 'Aldrig')}
         </div>
       </div>
     `;
@@ -155,12 +158,12 @@ function generateSummaryContent() {
   
   html += `
     <div class="summary-item" style="background-color: #e8f5e8; border-color: #4CAF50;">
-      <div class="summary-level">Totalt Framsteg</div>
+      <div class="summary-level">${isEn ? 'Total Progress' : 'Totalt Framsteg'}</div>
       <div class="summary-details">
-        <strong>Slutförda frågor:</strong> ${totalCompleted}/${totalQuestions} (${Math.round((totalCompleted/totalQuestions)*100)}%)<br>
-        <strong>Totala försök:</strong> ${totalAttempts}<br>
-        <strong>Total tid:</strong> ${totalTime} minuter<br>
-        <strong>Genomsnittlig tid per fråga:</strong> ${totalCompleted > 0 ? Math.round(totalTime/totalCompleted) : 0} minuter
+        <strong>${isEn ? 'Completed questions:' : 'Slutförda frågor:'}</strong> ${totalCompleted}/${totalQuestions} (${Math.round((totalCompleted/totalQuestions)*100)}%)<br>
+        <strong>${isEn ? 'Total attempts:' : 'Totala försök:'}</strong> ${totalAttempts}<br>
+        <strong>${isEn ? 'Total time:' : 'Total tid:'}</strong> ${totalTime} ${isEn ? 'minutes' : 'minuter'}<br>
+        <strong>${isEn ? 'Average time per question:' : 'Genomsnittlig tid per fråga:'}</strong> ${totalCompleted > 0 ? Math.round(totalTime/totalCompleted) : 0} ${isEn ? 'minutes' : 'minuter'}
       </div>
     </div>
   `;
