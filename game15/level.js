@@ -17,7 +17,6 @@ async function initializeGame() {
       el: '#app',
       data: {
         character: { name: 'Kevin' },
-        lives: 3, 
         score: 0, 
         level: 1,
         textAnswer: "",
@@ -26,15 +25,16 @@ async function initializeGame() {
         translation: "",
         feedback: "",
         feedbackClass: "",
+        showAnswerOption: false,
+        correctAnswerVisible: false,
+        correctAnswer: "",  
         hoveredHouse: null,
         houses: allHouses,
         levelStreets: streets,
         questions: {},
         allStreetData: allData,
         startTime: Date.now(),
-        correctAnswersThisLevel: 0,
-        wrongCount: 0,
-        previousWrongCount: null
+        correctAnswersThisLevel: 0
       },
 
       created() { 
@@ -60,7 +60,7 @@ async function initializeGame() {
           questions[1] = this.levelStreets.map(streetInfo => {
             const cardinalNumber = streetInfo.number.cardinal.sv;
             return {
-              instruction: `Jag bor på ${streetInfo.streetName} ${cardinalNumber}`,
+              instruction: `Jag bor på ${streetInfo.streetName} ${cardinalNumber}. Välj huset där jag bor.`,
               correct: { 
                 street: streetInfo.streetName, 
                 number: streetInfo.number.cardinal.literal 
@@ -73,7 +73,7 @@ async function initializeGame() {
           questions[2] = this.levelStreets.map(streetInfo => {
             const ordinalNumber = streetInfo.number.ordinal.sv;
             return {
-              instruction: `Jag bor i det ${ordinalNumber} huset på ${streetInfo.streetName}`,
+              instruction: `Jag bor i det ${ordinalNumber} huset på ${streetInfo.streetName}. Välj huset där jag bor.`,
               correct: { 
                 street: streetInfo.streetName, 
                 number: streetInfo.number.cardinal.literal 
@@ -87,7 +87,7 @@ async function initializeGame() {
             const colorSv = streetInfo.color.sv;
             const cardinalNumber = streetInfo.number.cardinal.sv;
             return {
-              instruction: `Jag bor i det ${colorSv}a huset på ${streetInfo.streetName}. Stava ut min adress.`,
+              instruction: `Jag bor i det ${colorSv}a huset på ${streetInfo.streetName}. Skriv numret.`,
               correct: `${streetInfo.streetName.toLowerCase()} ${cardinalNumber}`,
               type: "text",
               target: streetInfo,
@@ -103,20 +103,37 @@ async function initializeGame() {
           console.log(`Starting level ${lv}...`);
           this.level = lv;
           this.correctAnswersThisLevel = 0;
+          this.levelComplete = false;
           this.remainingQuestions = [...this.questions[lv]];
           console.log(`Level ${lv} has ${this.remainingQuestions.length} questions`);
           this.pickNextQuestion();
+        },
+
+        insertSwedishCharacter(character) {
+          const input = this.$refs.textAnswer;
+          const start = input ? input.selectionStart : this.textAnswer.length;
+          const end = input ? input.selectionEnd : this.textAnswer.length;
+
+          this.textAnswer = `${this.textAnswer.slice(0, start)}${character}${this.textAnswer.slice(end)}`;
+          this.$nextTick(() => {
+            if (input) {
+              input.focus();
+              input.setSelectionRange(start + character.length, start + character.length);
+            }
+          });
         },
 
         pickNextQuestion() {
           this.translation = "";
           this.feedback = "";
           this.feedbackClass = "";
+          this.showAnswerOption = false;
+          this.correctAnswerVisible = false;
+          this.correctAnswer = "";
           this.hoveredHouse = null;
 
           if (this.correctAnswersThisLevel >= 10) {
             console.log(`Level ${this.level} complete with ${this.correctAnswersThisLevel} correct answers!`);
-            this.updateGameProgressMethod();
             this.completeLevel();
             return;
           }
@@ -138,32 +155,29 @@ async function initializeGame() {
         },
 
         completeLevel() {
+           this.levelComplete = true;
+           this.feedback = "";
+           this.feedbackClass = "";
+},
+
+        continueAfterLevelCompletion() {
           if (this.level < 3) {
-            this.feedback = `🎉 Du klarade nivå ${this.level}! Bra jobbat 👏`;
-            this.feedbackClass = "correct";
-            
-            setTimeout(() => {
-              this.startTime = Date.now();
-              this.startLevel(this.level + 1);
-            }, 2000);
+            this.startLevel(this.level + 1);
           } else {
-            this.feedback = "🏆 Du har klarat alla nivåer! Fantastiskt 🎉";
-            this.feedbackClass = "correct";
-            setTimeout(() => {
-              window.location.href = 'index.html';
-            }, 3000);
-          }
-        },
+            window.location.href = "index.html";
+        }
+      },    
 
         updateGameProgressMethod() {
           const gameProgress = getGameProgress();
           const levelKey = `level${this.level}`;
-          
-          const timeSpent = Math.round((Date.now() - this.startTime) / 60000);
+          const levelCompleted = this.correctAnswersThisLevel >= 10;
           
           gameProgress[levelKey].completed = this.correctAnswersThisLevel;
-          gameProgress[levelKey].attempts++;
-          gameProgress[levelKey].timeSpent += timeSpent;
+          if (levelCompleted) {
+            const timeSpent = Math.round((Date.now() - this.startTime) / 60000);
+            gameProgress[levelKey].timeSpent += timeSpent;
+          }
           gameProgress[levelKey].lastPlayed = new Date().toISOString().split('T')[0];
 
           if (this.level === 1 && this.correctAnswersThisLevel >= 10) {
@@ -172,20 +186,13 @@ async function initializeGame() {
             gameProgress.level3.unlocked = true;
           }
 
-           // ===== save wrong count =====
-          gameProgress.lastWrongCount = this.wrongCount;
-
-          updateGameProgress(gameProgress);
-        },
-        
-        saveWrongCount() {
-          const gameProgress = getGameProgress();
-          gameProgress.lastWrongCount = this.wrongCount;
           updateGameProgress(gameProgress);
         },
 
         checkHouseClick(house) {
           if (this.currentQuestion.type !== "map") return;
+
+          this.recordAttempt();
           
           const correctLiteral = this.currentQuestion.correct.number;
           const houseLiteral = house.number.cardinal.literal;
@@ -205,9 +212,12 @@ async function initializeGame() {
 
         checkTextAnswer() {
           if (this.currentQuestion.type !== "text") return;
+
+          this.recordAttempt();
           
           const ans = this.textAnswer.trim().toLowerCase().replace(/\s+/g," ");
-          if (ans === this.currentQuestion.correct) {
+          const parts = this.currentQuestion.correct.split(" ");
+          if (ans === parts[1]) {
             this.score += 10;
             this.correctAnswersThisLevel++;
             this.updateGameProgressMethod();
@@ -216,33 +226,35 @@ async function initializeGame() {
             setTimeout(() => this.pickNextQuestion(), 1000);
           } else { 
             this.fail(); 
+            this.textAnswer = "";
           }
         },
 
         fail() {
-
-           // ===== save wrong count =====
-          this.wrongCount++;
-          this.saveWrongCount();
-
           this.lives--; 
           this.feedback = "❌ Fel svar! Försök igen.";
           this.feedbackClass = "wrong";
-          
-          if (this.lives <= 0) { 
-            this.feedback = `💀 Du förlorade alla liv i nivå ${this.level}. Försök igen!`;
-            this.feedbackClass = "wrong";
-            setTimeout(() => this.restartLevel(), 2000); 
-          } else {
-            setTimeout(() => {
+          this.showAnswerOption = true;
+          setTimeout(() => {
               this.feedback = "";
               this.feedbackClass = "";
             }, 1500);
+        },
+
+        revealCorrectAnswer() {
+          if (this.currentQuestion.type === "map") {
+            this.correctAnswer =
+              `${this.currentQuestion.correct.street} ${this.currentQuestion.correct.number}`;
+          } else if (this.currentQuestion.type === "text") {
+            this.correctAnswer =
+             this.currentQuestion.correct.split(" ").slice(1).join(" ");
           }
+
+          this.correctAnswerVisible = true;
+          this.showAnswerOption = false;
         },
 
         restartLevel() {
-          this.lives = 3;
           this.feedback = "";
           this.feedbackClass = "";
           this.startTime = Date.now();
