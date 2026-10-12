@@ -34,19 +34,20 @@ async function initializeGame() {
         questions: {},
         allStreetData: allData,
         startTime: Date.now(),
-        correctAnswersThisLevel: 0
+        correctAnswersThisLevel: 0,
+        levelComplete: false,
+        wrongCount: 0,
+        previousWrongCount: null
       },
 
       created() { 
         console.log('Vue instance created, generating questions...');
         this.questions = this.generateQuestions();
 
-        // =====  load last game's wrong count =====
         const progress = getGameProgress();
         this.previousWrongCount =
           typeof progress.lastWrongCount === "number" ? progress.lastWrongCount : null;
-        
-        
+
         const selectedLevel = window.save.get("game15", "selectedLevel") || 1;
         console.log('Selected level from storage:', selectedLevel);
         this.startLevel(selectedLevel);
@@ -179,13 +180,24 @@ async function initializeGame() {
             gameProgress[levelKey].timeSpent += timeSpent;
           }
           gameProgress[levelKey].lastPlayed = new Date().toISOString().split('T')[0];
+          gameProgress.lastWrongCount = this.wrongCount;
+          updateGameProgress(gameProgress);
+        },
 
-          if (this.level === 1 && this.correctAnswersThisLevel >= 10) {
-            gameProgress.level2.unlocked = true;
-          } else if (this.level === 2 && this.correctAnswersThisLevel >= 10) {
-            gameProgress.level3.unlocked = true;
-          }
 
+        saveWrongCount() {
+          const gameProgress = getGameProgress();
+          gameProgress.lastWrongCount = this.wrongCount;
+          updateGameProgress(gameProgress);
+        },
+
+       
+       
+
+        recordAttempt() {
+          const gameProgress = getGameProgress();
+          const levelKey = `level${this.level}`;
+          gameProgress[levelKey].attempts++;
           updateGameProgress(gameProgress);
         },
 
@@ -231,7 +243,8 @@ async function initializeGame() {
         },
 
         fail() {
-          this.lives--; 
+          this.wrongCount++;
+          this.saveWrongCount();
           this.feedback = "❌ Fel svar! Försök igen.";
           this.feedbackClass = "wrong";
           this.showAnswerOption = true;
