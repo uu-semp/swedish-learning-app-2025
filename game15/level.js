@@ -28,13 +28,17 @@ async function initializeGame() {
         translation: "",
         feedback: "",
         feedbackClass: "",
+        showAnswerOption: false,
+        correctAnswerVisible: false,
+        correctAnswer: "",  
         hoveredHouse: null,
         houses: allHouses,
         levelStreets: streets,
         questions: {},
         allStreetData: allData,
         startTime: Date.now(),
-        correctAnswersThisLevel: 0
+        correctAnswersThisLevel: 0,
+        levelComplete: false
       },
 
       created() { 
@@ -127,14 +131,32 @@ async function initializeGame() {
           // Remember the current level, including automatic level changes
           window.save.set("game15", "selectedLevel", lv);
 
+          this.levelComplete = false;
           this.remainingQuestions = [...this.questions[lv]];
           this.pickNextQuestion();
+        },
+
+        insertSwedishCharacter(character) {
+          const input = this.$refs.textAnswer;
+          const start = input ? input.selectionStart : this.textAnswer.length;
+          const end = input ? input.selectionEnd : this.textAnswer.length;
+
+          this.textAnswer = `${this.textAnswer.slice(0, start)}${character}${this.textAnswer.slice(end)}`;
+          this.$nextTick(() => {
+            if (input) {
+              input.focus();
+              input.setSelectionRange(start + character.length, start + character.length);
+            }
+          });
         },
 
         pickNextQuestion() {
           this.translation = "";
           this.feedback = "";
           this.feedbackClass = "";
+          this.showAnswerOption = false;
+          this.correctAnswerVisible = false;
+          this.correctAnswer = "";
           this.hoveredHouse = null;
 
           if (this.correctAnswersThisLevel >= 10) {
@@ -178,22 +200,18 @@ async function initializeGame() {
         },
 
         completeLevel() {
+           this.levelComplete = true;
+           this.feedback = "";
+           this.feedbackClass = "";
+},
+
+        continueAfterLevelCompletion() {
           if (this.level < 3) {
-            this.feedback = `🎉 Du klarade nivå ${this.level}! Bra jobbat 👏`;
-            this.feedbackClass = "correct";
-            
-            setTimeout(() => {
-              this.startTime = Date.now();
-              this.startLevel(this.level + 1);
-            }, 2000);
+            this.startLevel(this.level + 1);
           } else {
-            this.feedback = "🏆 Du har klarat alla nivåer! Fantastiskt 🎉";
-            this.feedbackClass = "correct";
-            setTimeout(() => {
-              window.location.href = 'index.html';
-            }, 3000);
-          }
-        },
+            window.location.href = "index.html";
+        }
+      },    
 
         updateGameProgressMethod() {
           const gameProgress = getGameProgress();
@@ -208,13 +226,6 @@ async function initializeGame() {
             gameProgress[levelKey].timeSpent += timeSpent;
           }
           gameProgress[levelKey].lastPlayed = new Date().toISOString().split('T')[0];
-
-          if (this.level === 1 && this.correctAnswersThisLevel >= 10) {
-            gameProgress.level2.unlocked = true;
-          } else if (this.level === 2 && this.correctAnswersThisLevel >= 10) {
-            gameProgress.level3.unlocked = true;
-          }
-
           updateGameProgress(gameProgress);
         },
 
@@ -269,10 +280,24 @@ async function initializeGame() {
         fail() {
           this.feedback = "❌ Fel svar! Försök igen.";
           this.feedbackClass = "wrong";
+          this.showAnswerOption = true;
           setTimeout(() => {
               this.feedback = "";
               this.feedbackClass = "";
             }, 1500);
+        },
+
+        revealCorrectAnswer() {
+          if (this.currentQuestion.type === "map") {
+            this.correctAnswer =
+              `${this.currentQuestion.correct.street} ${this.currentQuestion.correct.number}`;
+          } else if (this.currentQuestion.type === "text") {
+            this.correctAnswer =
+             this.currentQuestion.correct.split(" ").slice(1).join(" ");
+          }
+
+          this.correctAnswerVisible = true;
+          this.showAnswerOption = false;
         },
 
         restartLevel() {
