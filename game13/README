@@ -14,7 +14,6 @@ Paper Pelle is an educational game built for students of Swedish for Academics 1
 - [CSS](#css)
 - [Tech Stack](#tech-stack)
 - [Testing](#testing)
-- [Contributing](#contributing)
 - [Unimplemented Requirements](#unimplemented-requirements)
 
 ---
@@ -97,6 +96,6 @@ User requirements we did not have time to implement:
 - **REQ-STUDENT-22**: A student needs to be able to get help when stuck in the game, so the student does not give up.
   - **REQ-STUDENT-22.1**: Add language hints.
 
-### Other implementations to follow up on
+### Other implementations to follow up on:
 - Hide the scrollbars that are in the wardrobe.
 - Replace the "Back to level-selecting-page" button with a clearer "Back to menu" button.
