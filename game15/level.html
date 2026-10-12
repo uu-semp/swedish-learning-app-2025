@@ -37,6 +37,9 @@
         <div>⭐ Poäng: {{ score }}</div>
         <div>📈 Nivå: {{ level }}</div>
       </div>
+      <div class="last-wrong" v-if="previousWrongCount !== null">
+        Förra gången svarade du fel på {{ previousWrongCount }} frågor.
+      </div>
 
       <div v-if="levelComplete" class="level-completion">
           <h2>🎉 Du har klarat nivå {{ level }}!</h2>

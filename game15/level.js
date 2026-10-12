@@ -35,13 +35,19 @@ async function initializeGame() {
         allStreetData: allData,
         startTime: Date.now(),
         correctAnswersThisLevel: 0,
-        levelComplete: false
+        levelComplete: false,
+        wrongCount: 0,
+        previousWrongCount: null
       },
 
       created() { 
         console.log('Vue instance created, generating questions...');
         this.questions = this.generateQuestions();
-        
+
+        const progress = getGameProgress();
+        this.previousWrongCount =
+          typeof progress.lastWrongCount === "number" ? progress.lastWrongCount : null;
+
         const selectedLevel = window.save.get("game15", "selectedLevel") || 1;
         console.log('Selected level from storage:', selectedLevel);
         this.startLevel(selectedLevel);
@@ -174,8 +180,19 @@ async function initializeGame() {
             gameProgress[levelKey].timeSpent += timeSpent;
           }
           gameProgress[levelKey].lastPlayed = new Date().toISOString().split('T')[0];
+          gameProgress.lastWrongCount = this.wrongCount;
           updateGameProgress(gameProgress);
         },
+
+
+        saveWrongCount() {
+          const gameProgress = getGameProgress();
+          gameProgress.lastWrongCount = this.wrongCount;
+          updateGameProgress(gameProgress);
+        },
+
+       
+       
 
         recordAttempt() {
           const gameProgress = getGameProgress();
@@ -226,6 +243,8 @@ async function initializeGame() {
         },
 
         fail() {
+          this.wrongCount++;
+          this.saveWrongCount();
           this.feedback = "❌ Fel svar! Försök igen.";
           this.feedbackClass = "wrong";
           this.showAnswerOption = true;
