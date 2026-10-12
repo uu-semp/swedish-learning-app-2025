@@ -81,7 +81,7 @@ async function initializeGame() {
             const colorSv = streetInfo.color.sv;
             const cardinalNumber = streetInfo.number.cardinal.sv;
             return {
-              instruction: `Jag bor i det ${colorSv}a huset på ${streetInfo.streetName}. Stava ut min adress.`,
+              instruction: `Jag bor i det ${colorSv}a huset på ${streetInfo.streetName}. Skriv numret.`,
               correct: `${streetInfo.streetName.toLowerCase()} ${cardinalNumber}`,
               type: "text",
               target: streetInfo,
