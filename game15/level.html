@@ -38,7 +38,25 @@
         <div>📈 Nivå: {{ level }}</div>
       </div>
 
-      <div class="game-content">
+      <div v-if="levelComplete" class="level-completion">
+          <h2>🎉 Du har klarat nivå {{ level }}!</h2>
+
+        <p v-if="level < 3">
+          Du är redo att gå vidare till nästa nivå.
+        </p>
+
+        <p v-else>
+          Du har klarat alla nivåer!
+        </p>
+
+        <button @click="continueAfterLevelCompletion">
+          <span v-if="level < 3">Gå vidare till nästa nivå</span>
+          <span v-else>Gå till huvudmenyn</span>
+        </button>
+      </div>
+
+      <div class="game-content" v-if="!levelComplete">
+      
         <div class="left-panel">
           <div class="character-section">
             <div class="character">
