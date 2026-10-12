@@ -38,13 +38,30 @@
     <section class="image-area">
       <img id="vocabImg" alt="vocab image" />
     </section>
+
+    <div class="l3-phrase">
+      <span id="slotArticle" class="l3-slot">?</span>
+      <span id="slotWord" class="l3-slot l3-word-slot">?</span>
+    </div>
    
     <section id="options" class="options">
         <div class="input-area">
-          <input id="articleInput" type="text" placeholder=" (en / ett)" maxlength="4" />
+          <div class="article-group" role="group" aria-label="Choose an article">
+            <button type="button" class="article-choice"
+            data-article="en" aria-pressed="false">En</button>
+            <span class="article-slash">/</span>
+            <button type="button" class="article-choice"
+            data-article="ett" aria-pressed="false">Ett</button>
+            <span class="article-slash">/</span>
+            <button type="button" class="article-choice"
+            data-article="" aria-pressed="false">No article</button>
+          </div>
+
+          <input id="articleInput" type="hidden" value="" />
           <input id="wordInput" type="text" placeholder="words" />
           <button id="submitBtn" class="btn green">Submit</button>
         </div>
+
         <p id="gameFeedback" class="feedback-text"></p>
       </section>
       

@@ -14,7 +14,43 @@ const resultPopup = document.getElementById("resultPopup");
 const submitBtn = document.getElementById("submitBtn");
 const articleInput = document.getElementById("articleInput");
 const wordInput = document.getElementById("wordInput");
+const slotArticle = document.getElementById("slotArticle");
+const slotWord = document.getElementById("slotWord");
 const nextBtn = document.getElementById("nextBtn");
+const articleButtons = document.querySelectorAll(".article-choice");
+let selectedArticle = null;
+
+articleButtons.forEach(button => {
+  button.addEventListener("click", () => {
+    if (submitBtn.disabled) return;
+
+    selectedArticle = button.dataset.article;
+    articleInput.value = selectedArticle;
+    slotArticle.textContent = selectedArticle || "—";
+    
+       
+    articleButtons.forEach(articleButton => {
+      articleButton.classList.remove("needs-answer");
+    });
+
+    articleButtons.forEach(otherButton => {
+      otherButton.setAttribute(
+        "aria-pressed",
+        String(otherButton === button)
+      );
+    });
+  });
+});
+
+wordInput.addEventListener("keydown", event => {
+  if (event.key === "Enter") {
+    event.preventDefault();
+    submitBtn.click();
+  }
+});
+wordInput.addEventListener("input", () => {
+  slotWord.textContent = wordInput.value || "?";
+});
 
 let allIds = [];
 let unusedIds = [];
@@ -77,7 +113,17 @@ function renderRound() {
   imgEl.alt = word.en || "";
 
   articleInput.value = "";
+selectedArticle = null;
+
+articleButtons.forEach(button => {
+  button.setAttribute("aria-pressed", "false");
+});
   wordInput.value = "";
+  slotArticle.textContent = "?";
+  slotWord.textContent = "?";
+
+  slotArticle.classList.remove("right", "wrong");
+  slotWord.classList.remove("right", "wrong");
   articleInput.style.borderColor = "#000000";
   wordInput.style.borderColor = "#000000";
   articleInput.disabled = false;
@@ -94,6 +140,26 @@ submitBtn.addEventListener("click", () => {
 
   const userArticle = articleInput.value.trim().toLowerCase();
   const userWord = wordInput.value.trim().toLowerCase();
+    // Ask the student to choose an article option.
+  if (selectedArticle === null) {
+    articleButtons.forEach(button => {
+      button.classList.add("needs-answer");
+    });
+
+    document.getElementById("gameFeedback").textContent =
+      "Choose en, ett or No article before submitting.";
+
+    articleButtons[0].focus();
+    return;
+  }
+    // Ask for a word before checking the answer.
+  if (userWord === "") {
+    document.getElementById("gameFeedback").textContent =
+       `Type the Swedish word for "${currentWord.en}" before submitting.`;
+
+    wordInput.focus();
+    return;
+  }
 
   const correctArticle = currentWord.article?.trim().toLowerCase() || "";
   const correctWord = currentWord.sv?.trim().toLowerCase() || "";
@@ -106,6 +172,8 @@ submitBtn.addEventListener("click", () => {
   const articleCorrect =
     (!correctArticle && userArticle === "") || (userArticle === correctArticle);
   const wordCorrect = userWord === correctWord;
+  slotArticle.classList.add(articleCorrect ? "right" : "wrong");
+  slotWord.classList.add(wordCorrect ? "right" : "wrong");
 
   
   if (articleCorrect && wordCorrect) {

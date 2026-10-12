@@ -263,3 +263,84 @@
     
   }
   
+.article-choice {
+  background: #9bbf92;
+  border: none;
+  border-radius: 10px;
+  padding: 11px 20px;
+  font-size: 18px;
+  font-weight: bold;
+  font-family: "Comic Sans MS", cursive;
+  color: white;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.article-choice:hover {
+  background: #a5c9a1;
+  transform: scale(1.05);
+}
+
+.article-choice + .article-choice {
+  margin-left: 8px;
+}
+
+
+.article-choice[aria-pressed="true"] {
+  background: #426b3b;
+  box-shadow: inset 0 0 0 2px white;
+}
+
+
+.article-choice.needs-answer {
+  outline: 3px solid red;
+  outline-offset: 3px;
+}
+.article-group {
+  margin-right: 50px;
+}
+.article-group {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.article-slash {
+  color: white;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.l3-phrase {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.l3-slot {
+  min-width: 70px;
+  padding: 6px 16px;
+  border: 3px dashed rgba(255,255,255,0.5);
+  border-radius: 14px;
+  color: white;
+  font-size: 22px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.l3-word-slot {
+  min-width: 130px;
+}
+
+.l3-slot.right {
+  background: #2ecc71;
+  border-color: #2ecc71;
+  border-style: solid;
+}
+
+.l3-slot.wrong {
+  background: #e74c3c;
+  border-color: #e74c3c;
+  border-style: solid;
+}
