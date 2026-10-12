@@ -197,6 +197,15 @@ export class QuestionGenerator {
 
 */
 let available_transports = [] 
+let available_directions = []
+
+function NextDirectionIndex(){
+  if (available_directions.length === 0){
+    available_directions = [0,1,2]
+  }
+  const position = Math.floor(Math.random()*available_directions.length)
+  return available_directions.splice(position,1)[0]
+}
 
 export function GenerateQuestion(difficulty, board, number_words, directions, transports) {
   let config = {
@@ -221,7 +230,7 @@ export function GenerateQuestion(difficulty, board, number_words, directions, tr
 
   }
    else if (difficulty === 2) {
-    const random_index = Math.floor(Math.random() * 3)
+    const random_index = NextDirectionIndex()
     
     const correct_house = board.BuildingsHorizontal[target_indexes[random_index]]
     const direction = directions[random_index]
@@ -243,7 +252,7 @@ export function GenerateQuestion(difficulty, board, number_words, directions, tr
     const random_index_transport = Math.floor(Math.random() * available_transports.length)
     const transport = available_transports.splice(random_index_transport, 1)[0]
 
-    const random_index_direction = Math.floor(Math.random() * 3)
+    const random_index_direction = NextDirectionIndex()
     const direction = directions[random_index_direction]
 
     const correct_house = board.BuildingsHorizontal[target_indexes[random_index_direction]]

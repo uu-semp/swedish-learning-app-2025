@@ -46,6 +46,7 @@ export async function Initialize(difficulty) {
     }
 
     let landmarks = []
+    let available_landmarks = []
     let directions = []
 
     if (difficulty === 2 || difficulty === 3) {
@@ -96,16 +97,23 @@ if (difficulty === 3) {
 }
 
     available_ranges = all_ranges.slice()
+    available_landmarks = landmarks.slice()
 
     if (difficulty === 1 || difficulty === 2 || difficulty === 3) {
         
         for (let index = 0; index < 10; index++) {
-            let board = GenerateBoard(streets, available_ranges, difficulty, landmarks)
+            let board = GenerateBoard(streets, available_ranges, difficulty, available_landmarks)
 
             available_ranges = available_ranges.filter(par => par[0] !== board.ChosenRange[0])
             if(available_ranges.length === 0) {
                 // reset ranges
                 available_ranges = all_ranges.slice()
+            }
+            if (difficulty === 2 || difficulty ===3 ){
+                available_landmarks = available_landmarks.filter(par => par.sv !== board.Landmark.nameSwedish)
+                if(available_landmarks.length === 0){
+                    available_landmarks = landmarks.slice()
+                }
             }
 
             game.boards[index] = board
