@@ -72,12 +72,3 @@ This CSS file contains styles specific to the "Choose Level" view of the app.
     font-size: 1.8em; /* Match text size from previous suggestion for "LEVEL X" */
 }
 
-/*
-    Styles for the 'GO BACK' button to be positioned in the bottom left corner.
-*/
-.choose-level-view .go-back-wrapper {
-    position: absolute;
-    bottom: 15px;
-    left: 20px;
-}
-

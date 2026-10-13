@@ -63,6 +63,14 @@ export const LevelOneView = {
   },
    template: `
       <div class="explore-view" @click="clearSelection">
+        <div class="go-back-wrapper">
+          <capsule-button
+            label="go-back"
+            size="md"
+            @click.stop="switchTo('ChooseLevelView')"
+          ></capsule-button>
+        </div>
+
         <h1 class="explore-title">{{$language.translate('level1')}}</h1>
 
         <div class="explore-content">
