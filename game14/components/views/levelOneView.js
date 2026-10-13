@@ -84,7 +84,6 @@ export const LevelOneView = {
           <div class="explore-side">
             <p class="explore-instruction">{{$language.translate('explore-instruction')}}</p>
             <p class="explore-audio-hint">
-              <i class="fa-solid fa-volume-high"></i>
               {{$language.translate('explore-audio-hint-level1')}}
             </p>
 
@@ -96,6 +95,7 @@ export const LevelOneView = {
                 :class="{ selected: word.en === selectedPart }"
                 @click.stop="selectPart(word.en)"
               >
+                <i v-if="word.en === selectedPart" class="fa-solid fa-volume-high word-icon"></i>
                 {{ word.article }} {{ word.sv }}
               </button>
             </div>
