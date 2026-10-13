@@ -87,7 +87,7 @@ Owned by Game 07
       const highscores = window.save.get('game07', 'highscores') || {};
 
       function formatScore(score) {
-        return typeof score === 'number' ? `${score} / 5` : '-';
+        return typeof score === 'number' ? `${score}` : '-';
       }
 
       document.getElementById('clothing-scores').textContent = formatScore(highscores.clothing);
