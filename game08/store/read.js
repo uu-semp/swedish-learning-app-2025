@@ -15,6 +15,11 @@ import {
   get_vocab,
 } from "../../scripts/vocabulary_await.js";
 
+const bad_combinations = new Map();
+// These IDs should idealy be read from a separate file
+bad_combinations.set("5424324c",["61733c03"]); 
+bad_combinations.set("61733c03",["5424324c"]);
+
 init();
 
 function init() {
@@ -209,10 +214,48 @@ export function get_n_random_words(ids, n) {
     console.error("Not enough words in: ", ids);
     return [];
   }
-  for (let i = 0; i < n; i++) {
+
+  let counter = 0;
+
+  while (counter < n) {
     const randomIndex = Math.floor(Math.random() * ids.length);
-    result.push(ids[randomIndex]);
-    ids.splice(randomIndex, 1);
+
+    if (check_for_badcombination(ids[randomIndex], result) == false) {
+      result.push(ids[randomIndex]);
+      ids.splice(randomIndex, 1);
+      counter++;
+    } 
+
   }
+
+  // Normal method without checking for bad word combinations
+  // for (let i = 0; i < n; i++) {
+  //   const randomIndex = Math.floor(Math.random() * ids.length);
+  //   result.push(ids[randomIndex]);
+  //   ids.splice(randomIndex, 1);
+  // }
   return result;
+}
+
+/**
+ * Check if the id is considered a bad combination (images deemed to similar)
+ * @param {string} id the id to be checked
+ * @param {string[]} result the already selected IDs 
+ * @returns {boolean} true if id maps to any IDs in result, otherwise false
+ */
+function check_for_badcombination(id, result) {
+  let bad_words = bad_combinations.get(id);
+  if (bad_words == undefined) {
+   return false;
+  }  
+  for (let j = 0 ; j < bad_words.length;j++) {
+    for(let i = 0; i < result.length; i++) {
+      if (bad_words[j] == result[i]) {
+        return true;
+      }
+    }
+  }
+
+  return false;
+
 }
