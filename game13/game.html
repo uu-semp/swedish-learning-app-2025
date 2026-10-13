@@ -18,7 +18,10 @@
 
     <section class = "bar status-bar ">
       <h2><span id="level-title">Level</span> </h2>
-      <small id="score-text" aria-live="polite"></small>
+      <div class = "score-bar" >
+        <div class = "score-text" id="rounds-completed" class="status-section"></div>
+        <div class = "score-text" id="first-try-wins" class="status-section"></div>
+      </div>
       <button id="backToIndex-btn" class="undoBtn giveUpBtn" aria-label="Back to level-selection"> Back to levels</button>
     </section>
 
@@ -83,10 +86,14 @@
   document.getElementById("level-title").textContent = "Level " + level;
 
   // Score for this level (REQ-STUDENT-7.1 / 7.2)
-  const scoreText = document.getElementById("score-text");
+  const roundsCompleted = document.getElementById("rounds-completed");
+  const firstTryWins = document.getElementById("first-try-wins");
+
   function showScore() {
     const { completed, firstTry } = window.progress.getLevel(level);
-    scoreText.textContent = `Rounds completed: ${completed} · First-try wins: ${firstTry}`;
+
+    roundsCompleted.textContent = `Rounds completed: ${completed}`;
+    firstTryWins.textContent = `First-try wins: ${firstTry}`;
   }
   showScore();
 
