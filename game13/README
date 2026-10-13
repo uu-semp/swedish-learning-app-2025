@@ -1,81 +1,101 @@
-# A simple game to learn basic Swedish Words of cloting and collours
-Paper pelle is  agame for students ...
+# Paper Pelle 
 
-# Overview / Introduction
-menu/landing page
-diffferent levels ...
+**A browser game for learning basic Swedish clothing and color vocabulary.**
 
-## Features:
+Paper Pelle is an educational game built for students of Swedish for Academics 1 at Uppsala University, taught by Sandra Uitto (Lecturer, Department of Scandinavian Languages). Players read a Swedish description of an outfit and dress Pelle the cat accordingly by selecting clothing from a wardrobe. This game content match the course syllabus.
 
-# CSS structure:
-`game.css` depends on `base.css`, so `base.css` shall always be loaded **before** `game.css` in the HTML files:
+---
 
-**css/base.css:**
+## Table of Contents
+- [How to Run](#how-to-run)
+- [How to Play](#how-to-play)
+- [Features](#features)
+- [Clothing Assets](#clothing-assets)
+- [CSS](#css)
+- [Tech Stack](#tech-stack)
+- [Testing](#testing)
+- [Unimplemented Requirements](#unimplemented-requirements)
+
+---
+## How to Run
+**See README in root**
+
+## How to Play
+1. Open the landing page and choose a level.
+2. Read the level introduction, which covers the vocabulary the level will adress.
+3. Read the instruction text describing the outfit Pelle want to wear.
+4. Click items in the wardrobe to dress Pelle. 
+5. Click **Confirm Outfit** when you think Pelle is dressed correctly.
+6. Get instant feedback:
+   - ✅ **Correct!**: the round is completed.
+   - ❌ **Incorrect items / Missing items**: the game tells you which categories need fixing, and you can try again.
+7. Click **Next** for a new round, **Give up** to skip the current one or **Next level** to proced to nex level (higher dificullty)
+
+---
+
+## Features
+
+- **Level selection menu** with a "How to play" popup.
+- **Level introductions** that present the vocabulary for each level.
+- **Randomly generated outfits**: each round is a new Swedish description.
+- **Clothing generation**: generates clothes by masking clothing.png with colors or patterns. The correct clothing has its color/pattern used more than once on other clothing.
+- **Click or drag to dress** 
+- **Undo** and **Remove all** controls for quick corrections.
+- **Targeted feedback**: tells the player which items are missing or wrong.
+- **Progress tracking per level**: completed rounds and "first try" successes, shown in the menu and in-game.
+- **Give up** option and a **Next level** button.
+- **Persistent stats** saved via the shared `save.js` module.
+
+---
+
+
+## Clothing Assets
+Clothing assets are in `assets/game13` and were drawn by Shianne Tan, a member of the group, so there are no copyright conflicts.
+
+---
+
+## CSS
+
+all `.css` depends on `base.css`, so **`base.css` must be loaded first** in HTML files.
+**`css/base.css`**
 - Shared components such as buttons and popups.
-- Design variables (colors, screen size, shadows, font) defined in `:root`, so they can be changed in one place and apply to all components.
-- Styles for the landing page (menu): title, image and the button row.
+- Design variables (colors, screen size, shadows, font) in `:root`, so they can be changed in one place.
+
+---
+
+## Tech Stack
+
+- **Frontend:** HTML, CSS, vanilla JavaScript (ES modules)
+- **Fonts:** Work Sans (Google Fonts)
+- **Version control:** Git, GitHub
+- **Dev server:** Python's built-in `http.server`
+
+---
+
+## Testing
+...
+---
+
+## Unimplemented Requirements
+
+User requirements we did not have time to implement:
 
 
-**css/game.css:**
-- Contains the styles for the game screen. It overrides the parts of `base.css` that do not apply to the game.
+- **REQ-STUDENT-2**: A student needs the instructions to be simple, so they can understand them even with limited knowledge of Swedish.
+  - **REQ-STUDENT-2.1**: Instructions shall use short sentences and vocabulary already covered in the course. *(Requires user testing with students.)*
 
+- **REQ-TEACHER-5**: A teacher needs the game to be available to students with different accessibility requirements, so that all students can use the game.
+  - **REQ-TEACHER-5.1**: The system shall provide options that allow students with different requirements to interact with the game.
 
-# Clothing data (REQ-DEVELOPER-5)
-Clothing is not hardcoded: it is read from the shared word list (the Google Sheet in `scripts/database_config.js`) every time the game starts.
+- **REQ-DEVELOPER-7**: A future developer needs a way to test the game logic, so changes can be verified without manually checking everything by hand.
+  - **REQ-DEVELOPER-7.1**: The system shall include an automated test suite that verifies the game logic and can be run with a single command.
+  - **REQ-DEVELOPER-7.2**: The system shall report the result of each test run as pass or fail per test, with a message that identifies which test failed and why, so a developer can locate the problem without manual checking.
 
-- Every row with `Category` = `clothing` is a clothing item.
-- `Swedish` (and `Article`) is the word shown in the instructions, `Image_url` is the picture, and `Subcategory` is where it goes on Pelle: `hats`, `shirts`, `pants`, `feet` or `accessories`.
-- An item is only put in the wardrobe if its subcategory is used in the current level **and** its image loads. Rows without a subcategory or with a missing image are skipped with a warning in the browser console.
-- Which subcategories each level uses is set in `game/level_configuration` (`LEVEL_CONFIGURATION`).
-- Each subcategory needs a dropzone in `game.html` with a matching `data-accept` value.
+- **REQ-STUDENT-20**: A student needs the game to render and function consistently across common web browsers (e.g. Chrome, Firefox, Safari), so that all students have a reliable experience regardless of which browser they use. *(This should probably work, but it has not been thoroughly tested.)*
 
-To add a garment, add a row to the sheet and its image under `assets/images/clothes/`. To remove one, delete the row. No code change is needed.
+- **REQ-STUDENT-22**: A student needs to be able to get help when stuck in the game, so the student does not give up.
+  - **REQ-STUDENT-22.1**: Add language hints.
 
-## Loading, colours and browser storage
-The sheet is only downloaded when the game starts (the menu, `index.html`), not on every level or round.
-
-- **Colours:** every round picks new random colours from its level's list, `LEVEL_COLORS` in `game/clothing/categories.js` (level 1: the six basic colours, levels 2-3: all ten). Patterns start at `PATTERNS_FROM_LEVEL` in `garment_variants.js`.
-- **Word list:** the menu saves the clothing rows in `localStorage` (`game/clothing/word_list_cache.js`); levels read that copy.
-- **Pictures:** rendering coloured garments is slow, so each round's colours are chosen in advance and its pictures rendered in the background while the player plays the round before (`wardrobe_builder.js`). The menu prepares the first round of every level; a level page prepares its next round and the next level's first round. Pictures are kept in IndexedDB (`wardrobe_cache.js`) and deleted when no round needs them any more.
-- After changing garment art, colours or rendering code, bump `PICTURE_VERSION` in `garment_variants.js` so stored pictures are rendered again.
-
-# Tools Used
-- **Frontend**: HTML, CSS, JavaScript
-- **Version Control**: Git, GitHub
-
-# How to run
-1. **Clone the repository:**
-   git clone https://github.com/uu-semp/swedish-learning-app-2025.git
-
-2. **Navigate to the project folder:**
-    cd swedish-learning-app-2025
-
-3. **Start the server:**
-    python3 -m http.server 8000
-
-4. **Open your browser and go to:**
-    http://localhost:8000
-
--------------
-#old notes
-
-HTMl + JS team: 
-
-- The game logic chack if an answer is correct bypassing the target area, simply 
-reordering the player list of clother and the right ansert list so the comparsion is easier
-
-
-
-# FUNCTION STATUS:
-=================
-
-DONE:
-- getRandomItem(array) -    Helper function to get random item from array
-- SwedishClothingDescriptionGenerator class - Contains clothing data and generates outfits
-- generateOutfit() -        Creates random outfit descriptions with Swedish/English text
-- checkClothes(correctClothesIds, appliedClothesIds) - Compares two arrays of clothing IDs
-
-NOT DONE / EMPTY:
-- applyClothes(id) -        Function to apply clothes to character (empty)
-- undress(id) -             Function to undress clothes from character (basic implementation)
-
+### Other implementations to follow up on:
+- Hide the scrollbars that are in the wardrobe.
+- Replace the "Back to level-selecting-page" button with a clearer "Back to menu" button.
