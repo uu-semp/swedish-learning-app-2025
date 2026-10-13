@@ -17,8 +17,9 @@
   <div class="screen" role="application" aria-label="Dress the cat game screen">
 
     <section class = "bar status-bar ">
-      <h2><span id="level-title">Level</span> <small id="score-text" aria-live="polite"></small></h2>
-      <button id="backToIndex-btn" class="undoBtn giveUpBtn" aria-label="Back to level-selection"> Back to level-selecting-page</button>
+      <h2><span id="level-title">Level</span> </h2>
+      <small id="score-text" aria-live="polite"></small>
+      <button id="backToIndex-btn" class="undoBtn giveUpBtn" aria-label="Back to level-selection"> Back to levels</button>
     </section>
 
     <section class="game-area">
@@ -66,7 +67,7 @@
           <button id="giveUp-btn" class="btn toolBtn" aria-label="Give up">Give up</button>
           <button id="confirm-btn" class="btn confirmBtn" aria-label="Confirm outfit">Confirm Outfit</button>
 
-          <button id="next-btn" class="btn nextBtn" aria-label="Next round" disabled>Next</button>
+          <button id="next-btn" class="btn nextBtn" aria-label="Next round" disabled>New Round</button>
           <button id="nextLevel-btn" class=" btn toolBtn" aria-label="Next level" >Next Level</button>
       </div>
   </div>
@@ -85,7 +86,7 @@
   const scoreText = document.getElementById("score-text");
   function showScore() {
     const { completed, firstTry } = window.progress.getLevel(level);
-    scoreText.textContent = `Rounds: ${completed} · First try: ${firstTry}`;
+    scoreText.textContent = `Rounds completed: ${completed} · First-try wins: ${firstTry}`;
   }
   showScore();
 

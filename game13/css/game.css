@@ -253,6 +253,12 @@ padding-right: 6px;
   overflow-x: auto; /* each row scrolls in horizontal direction*/
   overflow-y: hidden; 
   -webkit-overflow-scrolling: touch; 
+  scrollbar-width: none; /* Hide scrollbar in Firefox */
+}
+
+/* Hide scrollbar in Chrome, Edge and Safari */
+.wardrobe-shelf::-webkit-scrollbar {
+  display: none;
 }
 
 /* Wrapper for JS*/
@@ -343,7 +349,7 @@ padding-right: 6px;
   top:5%
 }
 
-//* ---------- Game buttons ----------
+/* ---------- Game buttons ----------
    Färg, typsnitt, ram, hover och disabled kommer från .btn i base.css.
    Här sätts bara storlek och placering. */
 
