@@ -9,7 +9,7 @@
     "explore-instruction": "Click a word or a part of Pelle's body to match them! All words are in singular.",
     "explore-audio-hint-level1": "Want to hear the pronunciation? Click the word or body part again once it is selected.",
     "level2": "LEVEL 2",
-    "level2-instruction": "Click on the body part that matches the word!",
+    "level2-instruction": "Click on the body part that matches the word! A correct answer on the first try gives one point. If you get it wrong, you get one more try before the answer is shown.",
     "explore-audio-hint-level2": "Want to hear the pronunciation? Click the word.",
     "progress-word": "Word",
     "progress-of": "of",
