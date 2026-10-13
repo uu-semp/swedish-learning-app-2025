@@ -231,6 +231,7 @@ Owned by Game 02
       <div id="game-controls">
         <button id="help-button">Help</button>
         <button id="hint-button">Hint</button>
+        <button id="licenses-button">Licenses</button>
         <button id="end-game">Quit</button>
       </div>
       <div id="help-modal" class="help-modal" style="display: none;">
@@ -245,13 +246,24 @@ Owned by Game 02
           <p>Once all pairs are removed, the game is won.</p>
         </div>
       </div>
+      <div id="licenses-modal" class="help-modal" style="display: none;">
+        <div class="help-modal-content" role="dialog" aria-modal="true" aria-labelledby="licenses-title">
+          <button type="button" id="close-licenses" class="help-close" aria-label="Close licenses">
+            &times;
+          </button>
+          <h3 id="licenses-title">Image licenses</h3>
+          <div id="licenses-list">
+            <!-- Licenses will be added here dynamically -->
+          </div>
+        </div>
+      </div>
       <div id="game-stats">
         <p id="moves">moves: 0</p>
         <p id="elapsed-time">Time: 0s</p>
       </div>
-
+      
     </section>
-
+    
     <!-- End Screen -->
     <section id="end-screen" style="display: none;">
       <h2><span id="header_endscreen"></span></h2>
@@ -303,6 +315,7 @@ Owned by Game 02
         <button type="button" id="spelling-help">Help</button>
         <button type="button" id="spelling-hint">Hint</button>
         <button type="button" id="spelling-show-answer">Show answer</button>
+        <button type="button" id="spelling-licenses-button">Licenses</button>
         <button type="button" id="spelling-quit">Quit</button>
       </div>
       <div id="spelling-help-modal" class="help-modal" style="display: none;">
@@ -317,6 +330,17 @@ Owned by Game 02
             <li>Use the å, ä and ö buttons if your keyboard doesn't have them.</li>
           </ol>
           <p>Spell all the words to win the game.</p>
+        </div>
+      </div>
+      <div id="spelling-licenses-modal" class="help-modal" style="display: none;">
+        <div class="help-modal-content" role="dialog" aria-modal="true" aria-labelledby="licenses-title">
+          <button type="button" id="spelling-close-licenses" class="help-close" aria-label="Close licenses">
+            &times;
+          </button>
+          <h3 id="spelling-licenses-title">Image licenses</h3>
+          <div id="spelling-licenses-list">
+            <!-- Licenses will be added here dynamically -->
+          </div>
         </div>
       </div>
       <p id="spelling-misses">misses: 0</p>

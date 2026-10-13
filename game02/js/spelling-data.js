@@ -43,8 +43,10 @@ export async function loadSpellingWords(count = 8, category = DEFAULT_CATEGORY) 
     .map(({ id, vocab }) => ({
       id,
       sv: vocab.sv,
+      english: vocab.en,
       article: vocab.article || "",
       img: imagePath(vocab.img),
+      license: vocab.img_copyright || "None",
     }));
 
   return getRandomPairs(pool, count);
