@@ -326,18 +326,152 @@ function getMonthCalendar(monthIndex: number) {
 }
 
 // ── Vocabulary tooltip components ─────────────────────────────────────────────
+const QUESTION_TRANSLATIONS: Record<string, string> = {
+  'Vilken årstid?': 'Which season?',
+  'Vad är det för väder?': 'What is the weather like?',
+  'Hur är vädret i dag?': 'What is the weather like today?',
+  'Vilken mening är rätt?': 'Which sentence is correct?',
+  'Klicka på rätt dag.': 'Click on the correct day.',
+  'Klicka på rätt dagar.': 'Click on the correct days.',
+  'Placera dagarna i rätt ordning.': 'Put the weekdays in the correct order.',
+  'Placera månaderna i rätt ordning.': 'Put the months in the correct order.',
+  'Hur säger man datumet?\n"16 april"':
+    'How do you say the date?\n"16 April"',
+  'I Sverige är det ______ i januari.':
+    'In Sweden, it is ______ in January.',
+  'Det är kallt och det snöar.\nVilken årstid passar bäst?':
+    'It is cold and snowing.\nWhich season fits best?',
+  'Det är varmt och soligt.\nVilken årstid passar bäst?':
+    'It is warm and sunny.\nWhich season fits best?',
+  'Jag studerar svenska dagen efter måndag och dagen före fredag.':
+    'I study Swedish the day after Monday and the day before Friday.',
+  'Jag arbetar dagen efter söndag och dagen före lördag.':
+    'I work the day after Sunday and the day before Saturday.',
+  'Jag har lektion på onsdag och lördag.':
+    'I have a class on Wednesday and Saturday.',
+  'Jag går på nation dagen före lördag.':
+    'I go to a student nation the day before Saturday.',
+};
+
+function translateQuestion(text: string): string | undefined {
+  if (QUESTION_TRANSLATIONS[text]) {
+    return QUESTION_TRANSLATIONS[text];
+  }
+
+  const sequence = text.match(
+    /^Vilken (dag|månad) kommer (efter|före) (.+)\?$/
+  );
+
+  if (sequence) {
+    const [, unit, direction, word] = sequence;
+    const translatedWord = TRANSLATIONS[word];
+
+    if (translatedWord) {
+      return `Which ${unit === 'dag' ? 'day' : 'month'} comes ${
+        direction === 'efter' ? 'after' : 'before'
+      } ${translatedWord}?`;
+    }
+  }
+
+  const season = text.match(
+    /^Vilken årstid är det i (.+) i Sverige\?$/
+  );
+
+  if (season && TRANSLATIONS[season[1]]) {
+    return `Which season is it in ${TRANSLATIONS[season[1]]} in Sweden?`;
+  }
+
+  const date = text.match(/^Klicka på den (.+) (.+)\.$/);
+  const ordinals: Record<string, string> = {
+    andra: '2nd',
+    sextonde: '16th',
+    tjugofemte: '25th',
+  };
+
+  if (date && ordinals[date[1]] && TRANSLATIONS[date[2]]) {
+    return `Click on ${TRANSLATIONS[date[2]]} ${ordinals[date[1]]}.`;
+  }
+
+  return undefined;
+}
+
+function QuestionText({ text }: { text: string }) {
+  const [hovered, setHovered] = useState(false);
+  const [focused, setFocused] = useState(false);
+  const [pinned, setPinned] = useState(false);
+  const translation = translateQuestion(text);
+  const visible = hovered || focused || pinned;
+
+  if (!translation) return <AnnotatedText text={text} />;
+
+  return (
+    <span
+      className="relative block"
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+    >
+      <button
+        type="button"
+        onFocus={() => setFocused(true)}
+        onBlur={() => {
+          setFocused(false);
+          setPinned(false);
+        }}
+        onClick={() => setPinned(value => !value)}
+        onKeyDown={event => {
+          if (event.key === 'Escape') {
+            setPinned(false);
+            setHovered(false);
+            event.currentTarget.blur();
+          }
+        }}
+        aria-expanded={visible}
+        className="text-left whitespace-pre-line rounded-md
+                   border-b border-dashed border-gray-300
+                   hover:border-blue-500 hover:text-blue-700
+                   focus-visible:outline focus-visible:outline-2
+                   focus-visible:outline-blue-500
+                   transition-colors cursor-help"
+        style={{ font: 'inherit' }}
+      >
+        {text}
+      </button>
+
+      {visible && (
+        <span
+          className="absolute left-0 top-full z-50 mt-2
+              w-80 max-w-full rounded-xl border border-blue-100
+              bg-white px-4 py-3 shadow-lg pointer-events-none"
+        >
+          <span className="block text-sm font-normal leading-relaxed
+                           text-gray-700 whitespace-pre-line">
+            {translation}
+          </span>
+        </span>
+      )}
+    </span>
+  );
+}
 
 function VocabTooltip({ text }: { text: string }) {
   return (
     <span
-      className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2.5 py-1.5 rounded-lg text-xs font-sans font-medium whitespace-nowrap z-50 pointer-events-none select-none"
-      style={{ backgroundColor: '#1C1916', color: '#F5F3F0', boxShadow: '0 2px 10px rgba(0,0,0,0.3)' }}
+      className="absolute left-1/2 bottom-full z-50 mb-2
+                 -translate-x-1/2 rounded-xl border border-blue-100
+                 bg-white px-4 py-3 shadow-lg
+                 pointer-events-none select-none"
+      style={{
+        width: 'max-content',
+        maxWidth: 'min(260px, 80vw)',
+        whiteSpace: 'normal',
+      }}
     >
-      {text}
       <span
-        className="absolute top-full left-1/2 -translate-x-1/2 block w-0 h-0"
-        style={{ borderLeft: '4px solid transparent', borderRight: '4px solid transparent', borderTop: '4px solid #1C1916' }}
-      />
+        className="block text-sm font-normal leading-relaxed
+                   text-gray-700 text-left"
+      >
+        {text}
+      </span>
     </span>
   );
 }
@@ -357,7 +491,13 @@ function SwedishWord({ text }: { text: string }) {
       tabIndex={0}
       style={{ outline: 'none' }}
     >
-      <span style={{ borderBottom: '1.5px dotted rgba(0,0,0,0.32)', cursor: 'help' }}>{text}</span>
+    <span
+      className="border-b border-dashed border-gray-300
+                hover:border-blue-500 hover:text-blue-700
+                transition-colors cursor-help"
+        >
+      {text}
+    </span>
       {show && <VocabTooltip text={translation} />}
     </span>
   );
@@ -695,7 +835,7 @@ function WeekdayClickQuestion({ q, answerState, onSubmit }: { q: Question; answe
         className="px-3 py-2 rounded-xl"
         style={{ backgroundColor: c.light, border: `1.5px solid ${c.border}` }}
       >
-        <p className="font-display font-semibold text-sm" style={{ color: c.textDark }}><AnnotatedText text={q.sentence!} /></p>
+        <p className="font-display font-semibold text-sm" style={{ color: c.textDark }}><QuestionText key={q.sentence} text={q.sentence!} /></p>
       </div>
       <div className="grid grid-cols-7 gap-1">
         {WEEKDAYS.map((day) => {
@@ -970,7 +1110,7 @@ function GameScreen({
           </div>
 
           {/* Instruction */}
-          <h2 className="font-display font-bold text-lg text-gray-900"><AnnotatedText text={q.instruction} /></h2>
+          <h2 className="font-display font-bold text-lg text-gray-900"><QuestionText key={q.instruction} text={q.instruction} /></h2>
 
           {/* Question body */}
           {(q.type === 'weekday-mc' || q.type === 'month-mc' || q.type === 'grammar-mc') && (
@@ -1380,7 +1520,7 @@ function PracticeScreen({ onBack }: { onBack: () => void }) {
             <span className="text-2xl">{meta.icon}</span>
           </div>
 
-          <h2 className="font-display font-bold text-lg text-gray-900"><AnnotatedText text={q.instruction} /></h2>
+          <h2 className="font-display font-bold text-lg text-gray-900"><QuestionText key={q.instruction} text={q.instruction} /></h2>
 
           {renderPracticeQuestion(q, qIdx, answerState, handleMC, handleClick, handleOrder, handleDate)}
         </div>
