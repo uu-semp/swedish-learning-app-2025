@@ -1534,9 +1534,11 @@ function PracticeScreen({ onBack }: { onBack: () => void }) {
 // ── Home Screen ────────────────────────────────────────────────────────────────
 function SeasonPopup({
   info,
+  image,
   onClose,
 }: {
   info: { title: string; months: string; weather: string };
+  image: string;
   onClose: () => void;
 }) {
   return (
@@ -1555,6 +1557,11 @@ function SeasonPopup({
       className="m-auto w-[calc(100%-2rem)] max-w-sm rounded-2xl
                  p-0 shadow-xl backdrop:bg-black/40"
     >
+    <img
+        src={image}
+        alt={info.title}
+        className="w-full h-44 object-cover rounded-t-2xl"
+      />
       <div className="bg-white p-5">
         <div className="flex items-center justify-between gap-3 mb-3">
           <h2
@@ -1631,6 +1638,7 @@ const seasonInfo: Record<
       {selectedSeason && (
         <SeasonPopup
           info={seasonInfo[selectedSeason]}
+          image={SEASON_IMAGES[selectedSeason]}
           onClose={() => setSelectedSeason(null)}
         />
       )}
