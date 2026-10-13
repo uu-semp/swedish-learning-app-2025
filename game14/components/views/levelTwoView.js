@@ -149,7 +149,9 @@ export const LevelTwoView = {
               <i class="fa-solid fa-volume-high find-word-icon"></i>
               {{ currentWord.article }} {{ currentWord.sv }}
             </button>
-            <p class="find-progress">{{ currentIndex + 1 }} / {{ words.length }}</p>
+            <p class="find-progress">
+              {{$language.translate('progress-word')}} {{ currentIndex + 1 }} {{$language.translate('progress-of')}} {{ words.length }}
+            </p>
             <p class="find-feedback" :class="feedback">
               {{ feedback ? $language.translate('feedback-' + feedback) : '' }}
             </p>

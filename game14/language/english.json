@@ -11,6 +11,8 @@
     "level2": "LEVEL 2",
     "level2-instruction": "Click on the body part that matches the word!",
     "explore-audio-hint-level2": "Want to hear the pronunciation? Click the word.",
+    "progress-word": "Word",
+    "progress-of": "of",
     "first-try": "correct on the first try",
     "feedback-right": "Correct!",
     "feedback-wrong": "Not quite right, try again!",
