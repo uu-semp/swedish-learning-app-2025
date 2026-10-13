@@ -594,6 +594,17 @@ body {
     font-size: 14px;
 }
 
+/* Language flags in the top right corner of every sky view */
+.language-selection {
+  position: absolute;
+  top: 25px;
+  right: 20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  z-index: 20; /* Above the clouds, grass and the views */
+}
+
 .flag-button {
   background: transparent;
   border: none;

@@ -3,16 +3,10 @@ export const ChooseLevelView = {
   props: ["switchTo"],
   data() {
     return {
-      selectedLanguage: this.$language.selectedLanguage, // 'sv' or 'en' 
       showLockedModal: false,
     };
   },
   methods: {
-    languageSwitch(Language) {
-      this.$language.load(Language);
-      this.selectedLanguage = this.$language.selectedLanguage;
-    },
-
     openLockedPrompt() {
       this.showLockedModal = true;
     },
@@ -21,28 +15,9 @@ export const ChooseLevelView = {
       this.showLockedModal = false;
     }
   },
-  // The sky background is added around this view in app.js
+  // The sky background and language flags are added around this view in app.js
   template: `
       <div class="choose-level-view">
-          <!-- Language selection -->
-          <div class="language-selection">
-              <language-flag-button
-                src="./components/assets/game14FlagSE.png"
-                alt="Swedish"
-                value="sv"
-                :selected="selectedLanguage === 'sv'"
-                @select="languageSwitch($event)"
-              ></language-flag-button>
-
-              <language-flag-button
-                src="./components/assets/game14FlagEN.png"
-                alt="English"
-                value="en"
-                :selected="selectedLanguage === 'en'"
-                @select="languageSwitch($event)"
-              ></language-flag-button>
-          </div>
-
           <h1 class="main-text">{{$language.translate('choose-level')}}</h1>    
           
           <div class="level-buttons-container">
