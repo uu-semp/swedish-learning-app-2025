@@ -54,8 +54,24 @@ window.vocabulary = {
     },
 
     // Returns a random vocabulary item. See `get_vocab()`
-    get_random() {
-        return resolved_methods.get_random();
+    get_random(gameId, candidateIds) {
+        return resolved_methods.get_random(gameId, candidateIds);
+    },
+
+    get_random_id(gameId, candidateIds) {
+        return resolved_methods.get_random_id(gameId, candidateIds);
+    },
+
+    mark_correct(gameId, wordId) {
+        return resolved_methods.mark_correct(gameId, wordId);
+    },
+
+    reset_progress(gameId) {
+        return resolved_methods.reset_progress(gameId);
+    },
+
+    remaining_count(gameId, candidateIds) {
+        return resolved_methods.remaining_count(gameId, candidateIds);
     },
 
     when_ready(callback) {

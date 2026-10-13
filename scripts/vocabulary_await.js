@@ -83,7 +83,7 @@ async function fetch_sheets() {
 }
 
 /**
- * @param {int} game_id The number of your game, if game specific data should be loaded
+ * @param {number} [game_id=-1] The game number, if game-specific data should be loaded
  */
 export async function loaddb(game_id = -1) {
   // Fetching a parser
@@ -106,10 +106,10 @@ export async function loaddb(game_id = -1) {
   const parsed = Papa.parse(text, { header: true, skipEmptyLines: true });
   const rows = parsed.data;
 
-  // Stringify incase this get a number
-  const game_id_str = String(game_id).padStart(4, "0");
-  const game_column = `Game04`;
-  console.log(game_column)
+  const numericGameId = Number(game_id);
+  const game_column = Number.isInteger(numericGameId) && numericGameId > 0
+    ? `Game${String(numericGameId).padStart(2, "0")}`
+    : null;
 
   // Creating two alternative access patterns based on rows
   const idToMeta = {};
@@ -149,10 +149,10 @@ export async function loaddb(game_id = -1) {
     }
 
     // Game data
-    if (row[game_column]) {
+    if (game_column && row[game_column]?.trim()) {
       meta.game = row[game_column].trim();
       gameIds.push(id);
-    };
+    }
 
 
     idToMeta[id] = meta;
@@ -202,18 +202,93 @@ export function get_category(category) {
   return null;
 }
 
+const STORAGE_PREFIX = "vocab_progress:";
+
+function loadMastered(gameId) {
+  try {
+    return new Set(JSON.parse(localStorage.getItem(STORAGE_PREFIX + gameId) || "[]"));
+  } catch (e) {
+    return new Set();
+  }
+}
+
+export function mark_correct(gameId, wordId) {
+  const mastered = loadMastered(gameId);
+  mastered.add(wordId);
+  localStorage.setItem(STORAGE_PREFIX + gameId, JSON.stringify([...mastered]));
+}
+
+export function reset_progress(gameId) {
+  localStorage.removeItem(STORAGE_PREFIX + gameId);
+}
+
 /**
- * @description Returns a random vocabulary item. See `get_vocab()`
- * @returns {DB.VocabEntry}
+ * Counts eligible IDs for a game's progress pool.
+ * @param {string} gameId Progress key.
+ * @param {string[]} [candidateIds] Optional subset to count.
+ * @returns {number}
  */
-export function get_random() {
+export function remaining_count(gameId, candidateIds) {
+  if (db == undefined) {
+    console.error("Database has not been loaded");
+    return 0;
+  }
+
+  const mastered = loadMastered(gameId);
+  const pool = Array.isArray(candidateIds)
+    ? [...new Set(candidateIds)]
+    : Object.keys(db.vocab);
+  return pool.filter(id => !mastered.has(id)).length;
+}
+
+/**
+ * Selects a random eligible ID from a progress pool.
+ * Candidate IDs may be application-specific stable IDs, not just vocabulary IDs.
+ * @param {string} gameId Progress key.
+ * @param {string[]} [candidateIds] Optional subset to choose from.
+ * @returns {string | null}
+ */
+export function get_random_id(gameId, candidateIds) {
   if (db == undefined) {
     console.error("Database has not been loaded");
     return null;
   }
-  const ids = Object.keys(db.vocab);
-  const randomIndex = Math.floor(Math.random() * db.vocabLength);
-  return db.vocab[ids[randomIndex]];
+
+  const pool = Array.isArray(candidateIds)
+    ? [...new Set(candidateIds)]
+    : Object.keys(db.vocab);
+  const mastered = loadMastered(gameId);
+  const eligible = pool.filter(id => !mastered.has(id));
+  if (eligible.length === 0) return null;
+
+  return eligible[Math.floor(Math.random() * eligible.length)];
+}
+
+
+/**
+ * @description Returns a random vocabulary item. See `get_vocab()`
+ * @param {string} [gameId] Progress key used to exclude mastered vocabulary.
+ * @param {string[]} [candidateIds] Optional IDs to choose from.
+ * @returns {DB.VocabEntry | null}
+ */
+export function get_random(gameId, candidateIds) {
+  if (db == undefined) {
+    console.error("Database has not been loaded");
+    return null;
+  }
+
+  const availableIds = Array.isArray(candidateIds)
+    ? candidateIds.filter(id => Object.hasOwn(db.vocab, id))
+    : Object.keys(db.vocab);
+  let id = null;
+  if (gameId) {
+    id = get_random_id(gameId, availableIds);
+  } else if (availableIds.length > 0) {
+    id = availableIds[Math.floor(Math.random() * availableIds.length)];
+  }
+  if (id === null) return null;
+
+  return { ...db.vocab[id], id };
 }
 
 export function deprecated_load_game_data(game_id) {
@@ -222,9 +297,10 @@ export function deprecated_load_game_data(game_id) {
     return null;
   }
 
-  // Stringify incase this get a number
-  const game_id_str = String(game_id).padStart(2, "0");
-  const game_column = `Game${game_id_str}`;
+  const numericGameId = Number(game_id);
+  const game_column = Number.isInteger(numericGameId) && numericGameId > 0
+    ? `Game${String(numericGameId).padStart(2, "0")}`
+    : null;
 
   const gameIds = [];
 
@@ -232,11 +308,13 @@ export function deprecated_load_game_data(game_id) {
     const id = row["ID"]?.trim();
     if (!id) continue;
 
+    delete db.vocab[id].game;
+
     // Game data
-    if (game_column && row[game_column]) {
+    if (game_column && row[game_column]?.trim()) {
       db.vocab[id].game = row[game_column].trim();
       gameIds.push(id);
-    };
+    }
   }
 
   db.game = gameIds;
