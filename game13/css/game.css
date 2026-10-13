@@ -47,8 +47,8 @@
 
 /* The top-bar displaying Level, rounds and other relevant stats*/
 .status-bar {
-padding-left: 6px;
-padding-right: 6px;
+padding-left: 20px;
+padding-right: 20px;
 }
 
 /* the interactive area including stage and wardrobe*/
@@ -128,6 +128,22 @@ padding-right: 6px;
 .submissionbar {
   padding: 6px;
   justify-content: space-between;
+}
+
+.score-bar {
+  display: flex;
+  padding: 10px 20px;
+  background-color: var(--color-accent-light);
+  border-radius: 9px;
+  color: var(--color-text-accent);
+}
+
+.score-bar > *:not(:last-child) {
+  border-right: 2px solid var(--color-text-accent);
+}
+
+.score-text {
+  padding: 0 15px;
 }
 
 /*feedback shown after submission*/
@@ -253,6 +269,12 @@ padding-right: 6px;
   overflow-x: auto; /* each row scrolls in horizontal direction*/
   overflow-y: hidden; 
   -webkit-overflow-scrolling: touch; 
+  scrollbar-width: none; /* Hide scrollbar in Firefox */
+}
+
+/* Hide scrollbar in Chrome, Edge and Safari */
+.wardrobe-shelf::-webkit-scrollbar {
+  display: none;
 }
 
 /* Wrapper for JS*/
@@ -343,7 +365,7 @@ padding-right: 6px;
   top:5%
 }
 
-//* ---------- Game buttons ----------
+/* ---------- Game buttons ----------
    Färg, typsnitt, ram, hover och disabled kommer från .btn i base.css.
    Här sätts bara storlek och placering. */
 
