@@ -31,7 +31,7 @@ Owned by Game 14
     <link rel="stylesheet" href="./components/styling/pelle.css">
     <link rel="stylesheet" href="./components/styling/score.css">
     <link rel="stylesheet" href="./components/styling/chooseLevelStyles.css">
-    <link rel="stylesheet" href="./components/styling/exploreStyles.css">
+    <link rel="stylesheet" href="./components/styling/pelleLevels.css">
     <script src="index.js" defer></script>
     <script type="module" src="app.js"></script>
 
@@ -46,6 +46,24 @@ Owned by Game 14
       <filter id="outline-green" x="-20%" y="-20%" width="140%" height="140%">
         <feMorphology in="SourceAlpha" operator="dilate" radius="30" result="thick" />
         <feFlood flood-color="#7CFC00" />
+        <feComposite in2="thick" operator="in" result="outline" />
+        <feMerge>
+          <feMergeNode in="outline" />
+          <feMergeNode in="SourceGraphic" />
+        </feMerge>
+      </filter>
+            <filter id="outline-white" x="-20%" y="-20%" width="140%" height="140%">
+        <feMorphology in="SourceAlpha" operator="dilate" radius="25" result="thick" />
+        <feFlood flood-color="white" />
+        <feComposite in2="thick" operator="in" result="outline" />
+        <feMerge>
+          <feMergeNode in="outline" />
+          <feMergeNode in="SourceGraphic" />
+        </feMerge>
+      </filter>
+      <filter id="outline-red" x="-20%" y="-20%" width="140%" height="140%">
+        <feMorphology in="SourceAlpha" operator="dilate" radius="40" result="thick" />
+        <feFlood flood-color="#ff3b3b" />
         <feComposite in2="thick" operator="in" result="outline" />
         <feMerge>
           <feMergeNode in="outline" />

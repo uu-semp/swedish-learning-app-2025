@@ -110,3 +110,86 @@
     background: #7CFC00;
     color: #1e3a0a;
 }
+
+/* ===== Level 2: find the body part ===== */
+
+/* The word to find, as a big white card */
+.explore-view .find-word {
+    align-self: center;
+    font-family: 'Fredoka', 'Arial Rounded MT Bold', sans-serif;
+    font-size: 40px;
+    font-weight: 700;
+    color: #1e528e;
+    background: white;
+    border-radius: 24px;
+    padding: 16px 36px;
+    box-shadow: 0 6px 0 rgba(0, 0, 0, 0.15);
+}
+
+.explore-view .find-progress {
+    font-family: 'Fredoka', 'Arial Rounded MT Bold', sans-serif;
+    font-size: 20px;
+    font-weight: 600;
+    color: white;
+    text-align: center;
+    margin: 0;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.35);
+}
+
+/* Level 2: white outline on hover, so green only means "correct" */
+.explore-view.find-mode .explore-pelle svg g[id]:hover {
+    filter: url(#outline-white);
+}
+
+/* Level 2: found body parts stay green */
+.explore-view.find-mode .explore-pelle svg g[id].found {
+    filter: url(#outline-green);
+}
+
+/* Level 2: a wrong click flashes red */
+.explore-view.find-mode .explore-pelle svg g[id].wrong {
+    filter: url(#outline-red);
+}
+
+/* Level 2: after too many mistakes, the right part blinks green */
+.explore-view.find-mode .explore-pelle svg g[id].hint {
+    animation: hint-blink 0.6s steps(1) 3;
+}
+
+@keyframes hint-blink {
+    0%   { filter: url(#outline-green); }
+    50%  { filter: none; }
+}
+
+/* Level 2: result when all words are done */
+.explore-view .find-result {
+    font-family: 'Fredoka', 'Arial Rounded MT Bold', sans-serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: white;
+    text-align: center;
+    margin: 0;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.35);
+}
+
+.explore-view .play-again {
+    align-self: center;
+    font-size: 22px;
+    padding: 12px 28px;
+}
+
+/* Level 2: short feedback under the word */
+.explore-view .find-feedback {
+    font-family: 'Fredoka', 'Arial Rounded MT Bold', sans-serif;
+    font-size: 24px;
+    font-weight: 700;
+    text-align: center;
+    margin: 0;
+    min-height: 32px;
+    color: white;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+.explore-view .find-feedback.right       { color: #7CFC00; }
+.explore-view .find-feedback.wrong       { color: #ffb3b3; }
+.explore-view .find-feedback.show-answer { color: #fff3b0; }
