@@ -19,6 +19,8 @@ let answered = false;
 let nextTimer = null;
 const NEXT_ROUND_DELAY = 2500;
 
+const roundResults = Array(totalRounds).fill(null); //store the historical answer
+
 // function loadRound() {
 //   currentData = get_next_words();
 //   selectedIndex = null;
@@ -84,10 +86,57 @@ const NEXT_ROUND_DELAY = 2500;
 //   });
 //   enableKeyboardNavigation();
 // }
+
+
+
+function updateProgress() {
+  const progressBar = document.getElementById("progressBar");
+  const progressText = document.getElementById("progressText");
+
+  if (!progressBar || !progressText) return;
+
+  progressBar.innerHTML = "";
+
+  let completedRounds = 0;
+
+  roundResults.forEach((result, index) => {
+    const segment = document.createElement("div");
+    segment.className = "progress-segment";
+
+    // Display the result of each completed round
+    if (result === true) {
+      segment.classList.add("correct");
+      segment.title = `Round ${index + 1}: Correct`;
+      completedRounds++;
+    } else if (result === false) {
+      segment.classList.add("wrong");
+      segment.title = `Round ${index + 1}: Wrong`;
+      completedRounds++;
+    } else if (index === currentRound - 1) {
+      // Highlight the current round
+      segment.classList.add("current");
+      segment.title = `Round ${index + 1}: In progress`;
+    } else {
+      segment.title = `Round ${index + 1}: Not completed`;
+    }
+
+    progressBar.appendChild(segment);
+  });
+
+  progressText.textContent =
+    `${completedRounds} / ${totalRounds} completed`;
+
+  progressBar.setAttribute("aria-valuenow", completedRounds);
+}
+
+
+
 function loadRound() {
   currentData = get_next_words();
   answered = false;
   clearTimeout(nextTimer);
+
+  updateProgress();
 
   document.getElementById(
     "round"
@@ -307,6 +356,9 @@ function checkAnswer(index) {
   const chosen = currentData.words[index];
   const isCorrect = index === correctIndex;
 
+  roundResults[currentRound - 1] = isCorrect; //store the answer
+  updateProgress(); // updateProgressBar
+
   // store result
   update_selection({ id: chosen.id, guessed_correct: isCorrect });
   if (isCorrect) score++;
@@ -366,6 +418,12 @@ function goToNextRound() {
 document.getElementById("restartBtn").addEventListener("click", () => {
   currentRound = 1;
   score = 0;
+
+  //refresh the progress bar
+  roundResults.fill(null);
+  clearTimeout(nextTimer);
+  updateProgress();
+
   // firstAttempt = true;
   document.getElementById("round").style.display = "block";
   document.getElementById("playAudio").style.display = "inline-block";
