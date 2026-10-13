@@ -1406,30 +1406,44 @@ function HomeScreen({ onStart, onPractice }: { onStart: () => void; onPractice: 
       <div className="flex-1 flex flex-row min-h-0">
         {/* Left – hero text */}
         <div className="flex-1 flex flex-col justify-center px-6 py-5 min-w-0">
-          <p className="font-mono text-[10px] text-gray-400 uppercase tracking-[0.15em] mb-2">Uppsala Universitet · Basic Swedish 1</p>
+          <p className="font-mono text-[10px] text-gray-400 uppercase tracking-[0.15em] mb-2">
+            Uppsala Universitet · Basic Swedish 1
+          </p>
+
           <h1
             className="font-display font-bold leading-none mb-3"
-            style={{ fontSize: 'clamp(1.75rem, 4.5vw, 2.5rem)', color: '#1C1916' }}
+            style={{
+              fontSize: 'clamp(1.75rem, 4.5vw, 2.5rem)',
+              color: '#1C1916',
+            }}
           >
             Ett år i Uppsala
           </h1>
-          <p className="text-sm text-gray-500 mb-5 leading-relaxed">
-            Träna dagar, månader, datum, årstider och väder.
+          <p className="text-sm text-gray-600 mb-2 leading-relaxed">
+            Practise Swedish weekdays, months, dates, seasons and weather.
           </p>
 
-          <div className="flex gap-3">
+          <div className="flex flex-col sm:flex-row gap-3">
             <button
               onClick={onStart}
-              className="px-5 py-3 rounded-xl font-display font-bold text-sm text-white transition-all hover:opacity-88 hover:shadow-lg"
+              className="flex-1 text-left px-5 py-3 rounded-xl text-white
+                        transition-all hover:shadow-lg"
               style={{ backgroundColor: '#3A7EC6' }}
             >
-              Starta spelet →
+              <span className="block font-display font-bold text-base">
+                Spela · Play →
+              </span>
             </button>
+
             <button
               onClick={onPractice}
-              className="px-4 py-3 rounded-xl font-display font-semibold text-sm text-gray-600 hover:bg-white hover:shadow-sm transition-all border-2 border-gray-200 bg-transparent"
+              className="flex-1 text-left px-5 py-3 rounded-xl
+                        text-gray-700 bg-white border-2 border-gray-300
+                        transition-all hover:shadow-md"
             >
-              Öva
+              <span className="block font-display font-bold text-base">
+                Öva · Practice →
+              </span>
             </button>
           </div>
         </div>
