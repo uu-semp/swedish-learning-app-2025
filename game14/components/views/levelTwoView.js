@@ -163,8 +163,7 @@ export const LevelTwoView = {
           <!-- When all words are done -->
           <div class="explore-side" v-if="finished">
             <p class="find-result">
-              {{ firstTryCorrect }} / {{ words.length }} {{$language.translate('first-try')}}
-            </p>
+              {{$language.translate('result-you-got')}} {{ firstTryCorrect }} {{$language.translate('progress-of')}} {{ words.length }} {{$language.translate('result-points')}}            </p>
             <button class="word-cloud play-again" @click="playAgain">
               {{$language.translate('play-again')}}
             </button>
