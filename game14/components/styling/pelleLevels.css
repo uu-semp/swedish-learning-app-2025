@@ -145,6 +145,28 @@
     box-shadow: 0 6px 0 rgba(0, 0, 0, 0.15);
 }
 
+/* The word card is a button, so it can be clicked to hear the word */
+.explore-view button.find-word {
+    border: none;
+    cursor: pointer;
+    transition: transform 0.1s;
+}
+
+.explore-view button.find-word:hover {
+    transform: scale(1.04);
+}
+
+.explore-view button.find-word:active {
+    transform: scale(0.97);
+}
+
+/* Speaker icon inside the word card */
+.explore-view .find-word-icon {
+    font-size: 28px;
+    margin-right: 12px;
+    opacity: 0.7;
+}
+
 .explore-view .find-progress {
     font-family: 'Fredoka', 'Arial Rounded MT Bold', sans-serif;
     font-size: 20px;
