@@ -177,6 +177,22 @@
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.35);
 }
 
+/* Level 2: score shown while playing */
+.explore-view .find-score {
+    font-family: 'Fredoka', 'Arial Rounded MT Bold', sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: white;
+    text-align: center;
+    margin: 0;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.35);
+}
+
+.explore-view .find-score i {
+    color: #ffd84d;
+    margin-right: 6px;
+}
+
 /* Level 2: white outline on hover, so green only means "correct" */
 .explore-view.find-mode .explore-pelle svg g[id]:hover {
     filter: url(#outline-white);

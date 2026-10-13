@@ -152,6 +152,9 @@ export const LevelTwoView = {
             <p class="find-progress">
               {{$language.translate('progress-word')}} {{ currentIndex + 1 }} {{$language.translate('progress-of')}} {{ words.length }}
             </p>
+            <p class="find-score">
+              <i class="fa-solid fa-star"></i> {{$language.translate('score')}}: {{ firstTryCorrect }}
+            </p>
             <p class="find-feedback" :class="feedback">
               {{ feedback ? $language.translate('feedback-' + feedback) : '' }}
             </p>
