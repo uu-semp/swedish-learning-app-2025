@@ -29,12 +29,11 @@
     "no": "NEJ",
     "about":"OM SPELET",
     "goal":"MÅLET MED SPELET",
-
-    "purpose":  "Syftet med Klä på Pelle spelet är att hjälpa spelare att lära sig svenska ord för kläder och öva på grammatik såsom adjektiv, färger och användningen av \"en\"/\"ett\" samt pluralformer",
-    "how-to-play": "På varje nivå visas en beskrivning av ett klädesplagg (till exempel: \"en röd tröja\" eller \"blå skor\").  Din uppgift är att hitta rätt plagg och placera det på Pelle. Om ditt val är rätt fortsätter du, annars kan du försöka igen.",
+    "purpose":  "Syftet med Pelle från topp till tå är att lära sig svenska ord för kroppsdelar och träna på deras användning av \"en\"/\"ett\".",
+    "how-to-play": "På varje nivå tränar man på svenska orden för kroppsdelar genom att antingen själv få klicka på delar, para ihop ord och kroppsdelar, eller själv behöva skriva in orden",
     "levels":"NIVÅER",
-    "l1-description":"\"Drag-and-drop\" igenkänning av enskilda klädesplagg",
-    "l2-description":"Kommer snart - ännu inte tillgänglig",
+    "l1-description":"Klicka runt på kroppsdelar och ord för att se vilka som är vad",
+    "l2-description":"Klicka på Pelles kroppsdel baserad på vilket ord som dyker upp",
     "l3-description":"Kommer snart - ännu inte tillgänglig",
 
     
