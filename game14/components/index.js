@@ -18,13 +18,7 @@ import {
   ExitGameButton,
   CapsuleButton,
 } from "./elements/buttons.js";
-import { CorrectAnswerFeedback } from "./elements/correctAnswerFeedback.js";
-import { IncorrectAnswerFeedback } from "./elements/incorrectAnswerFeedback.js";
-import { WardrobeContainer } from "./elements/wardrobeContainer.js";
-import { PelleContainer } from "./elements/pelleContainer.js";
-import { DressPellePrompt } from "./elements/dressPellePrompt.js";
-import { ScoreCounter } from "./elements/scoreCounter.js";
-import { StatisticsPopUp } from "./elements/statisticsPopUp.js";
+
 import { SkyBackground } from "./elements/skybackground.js";
 import { LanguageSelection } from "./elements/languageSelection.js";
 
@@ -42,18 +36,11 @@ export default {
   InfoButton,
   LicenseButton,
   LevelButton,
-  CorrectAnswerFeedback,
-  IncorrectAnswerFeedback,
-  WardrobeContainer,
   CategoryClothingButton,
   ClothingItemButton,
   LanguageFlagButton,
   ExitGameButton,
   CapsuleButton,
-  PelleContainer,
-  DressPellePrompt,
-  ScoreCounter,
-  StatisticsPopUp,
   SkyBackground,
   LanguageSelection
 };
