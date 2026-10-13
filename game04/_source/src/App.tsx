@@ -1392,8 +1392,93 @@ function PracticeScreen({ onBack }: { onBack: () => void }) {
 }
 
 // ── Home Screen ────────────────────────────────────────────────────────────────
+function SeasonPopup({
+  info,
+  onClose,
+}: {
+  info: { title: string; months: string; weather: string };
+  onClose: () => void;
+}) {
+  return (
+    <dialog
+      ref={(dialog) => {
+        if (dialog && !dialog.open) dialog.showModal();
+      }}
+      onCancel={(event) => {
+        event.preventDefault();
+        onClose();
+      }}
+      onClick={(event) => {
+        if (event.target === event.currentTarget) onClose();
+      }}
+      aria-labelledby="season-popup-title"
+      className="m-auto w-[calc(100%-2rem)] max-w-sm rounded-2xl
+                 p-0 shadow-xl backdrop:bg-black/40"
+    >
+      <div className="bg-white p-5">
+        <div className="flex items-center justify-between gap-3 mb-3">
+          <h2
+            id="season-popup-title"
+            className="font-display font-bold text-xl text-gray-900"
+          >
+            {info.title}
+          </h2>
 
+          <button
+            type="button"
+            onClick={onClose}
+            autoFocus
+            aria-label="Close"
+            className="rounded-lg px-3 py-1 text-xl text-gray-500
+                       hover:bg-gray-100"
+          >
+            ×
+          </button>
+        </div>
+
+        <p className="text-sm font-semibold text-blue-700 mb-2">
+          {info.months}
+        </p>
+
+        <p className="text-sm text-gray-600 leading-relaxed">
+          {info.weather}
+        </p>
+
+        <p className="text-xs text-gray-400 mt-3">
+          Typical conditions in Uppsala. Seasons vary from year to year.
+        </p>
+      </div>
+    </dialog>
+  );
+}
 function HomeScreen({ onStart, onPractice }: { onStart: () => void; onPractice: () => void }) {
+  const [selectedSeason, setSelectedSeason] = useState<Season | null>(null);
+
+const seasonInfo: Record<
+  Season,
+  { title: string; months: string; weather: string }
+> = {
+  vinter: {
+    title: 'Winter · Vinter',
+    months: 'Usually December–February',
+    weather: 'Cold weather, short days and often snow and ice.',
+  },
+  vår: {
+    title: 'Spring · Vår',
+    months: 'Usually March–May',
+    weather: 'Days get longer and warmer. Expect a mix of sunshine, rain and occasional snow.',
+  },
+  sommar: {
+    title: 'Summer · Sommar',
+    months: 'Usually June–August',
+    weather: 'Long days and generally warmer weather, with sunshine, rain and occasional thunderstorms.',
+  },
+  höst: {
+    title: 'Autumn · Höst',
+    months: 'Usually September–November',
+    weather: 'Days get shorter and cooler. Expect rain, wind and sometimes frost.',
+  },
+};
   const seasonData = [
     { season: 'vinter' as Season, label: 'Vinter', months: 'Dec · Jan · Feb' },
     { season: 'vår'    as Season, label: 'Vår',    months: 'Mar · Apr · Maj' },
@@ -1403,6 +1488,12 @@ function HomeScreen({ onStart, onPractice }: { onStart: () => void; onPractice: 
 
   return (
     <div className="h-full flex flex-col" style={{ backgroundColor: '#F5F3F0' }}>
+      {selectedSeason && (
+        <SeasonPopup
+          info={seasonInfo[selectedSeason]}
+          onClose={() => setSelectedSeason(null)}
+        />
+      )}
       <div className="flex-1 flex flex-row min-h-0">
         {/* Left – hero text */}
         <div className="flex-1 flex flex-col justify-center px-6 py-5 min-w-0">
@@ -1453,23 +1544,40 @@ function HomeScreen({ onStart, onPractice }: { onStart: () => void; onPractice: 
           {seasonData.map(({ season, label, months }) => {
             const c = COLORS[season];
             return (
-              <div
-                key={season}
-                className="rounded-2xl flex flex-col justify-end p-3 relative overflow-hidden"
-                style={{ backgroundColor: c.placeholder }}
-              >
-                <img
-                  src={SEASON_IMAGES[season]}
-                  alt=""
-                  className="absolute inset-0 w-full h-full object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
-                <div className="absolute top-2 right-2 text-xl">{SEASON_ICON[season]}</div>
-                <p className="relative font-display font-bold text-sm text-white">{label}</p>
-                <p className="relative font-mono text-[9px] mt-0.5 text-white/90">{months}</p>
-              </div>
-            );
-          })}
+                <button
+                  type="button"
+                  key={season}
+                  onClick={() => setSelectedSeason(season)}
+                  aria-label={`Read about ${seasonInfo[season].title}`}
+                  className="rounded-2xl flex flex-col justify-end p-3 relative
+                            overflow-hidden text-left cursor-pointer
+                            transition-transform hover:scale-[1.02]
+                            focus-visible:outline focus-visible:outline-2
+                            focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+                  style={{ backgroundColor: c.placeholder }}
+                >
+                  <img
+                    src={SEASON_IMAGES[season]}
+                    alt=""
+                    className="absolute inset-0 w-full h-full object-cover"
+                  />
+
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
+
+                  <div className="absolute top-2 right-2 text-xl">
+                    {SEASON_ICON[season]}
+                  </div>
+
+                  <p className="relative font-display font-bold text-sm text-white">
+                    {label}
+                  </p>
+
+                  <p className="relative font-mono text-[9px] mt-0.5 text-white/90">
+                    {months}
+                  </p>
+                </button>
+              );
+            })}
         </div>
       </div>
     </div>
