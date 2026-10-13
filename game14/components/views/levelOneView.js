@@ -1,4 +1,5 @@
 import { loaddb, get_category, get_vocab } from "../../../scripts/vocabulary_await.js";
+import { playSound } from "../elements/playSound.js";
 
 export const LevelOneView = {
   name: "level-one",
@@ -41,11 +42,15 @@ export const LevelOneView = {
     },
   },
   methods: {
-    // Select a body part, or unselect it if it is already selected
+    // First click selects a body part, clicking it again plays the sound.
+    // Clicking another word selects that one instead.
     selectPart(partName) {
-      //console.log("Selected:", partName);
-      this.selectedPart = this.selectedPart === partName ? null : partName;
-    },
+        if (this.selectedPart === partName) {
+          playSound(this.words.find((w) => w.en === partName));
+        } else {
+          this.selectedPart = partName;
+        }
+      },
 
     // Find out which body part was clicked on Pelle
     handlePelleClick(event) {
