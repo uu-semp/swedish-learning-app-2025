@@ -28,7 +28,7 @@ const app = createApp({
   data() {
     return {
       currentView: "StartView", //Default start page
-      skyViews: ["StartView", "ChooseLevelView", "LevelOneView", "LevelTwoView"], // Views shown on top of the sky background
+      skyViews: ["StartView", "ChooseLevelView", "LevelOneView", "LevelTwoView", "HelpView"], // Views shown on top of the sky background
     };
   },
 

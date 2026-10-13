@@ -680,67 +680,72 @@ body {
     border-radius: 15px;
 }
 
+/* Help view, shown on top of the sky background like the choose level view */
 .help-view {
+  position: relative;
+  width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  width: 100vw;
-  height: 100vh;
-  background-color: #ceffd7;
-  padding: 20px;
+  padding: 50px 20px 95px 20px; /* Bottom padding keeps the card above the grass */
   box-sizing: border-box;
 }
 
-.help-content {
-  max-width: 600px;
-  width: 90%;
-  background: #ffffff;
-  border: 6px solid #02b823;
-  border-radius: 25px;
-  padding: 25px 30px;
-  text-align: left;
-  line-height: 1.4;
-  box-shadow: 
-    inset 0 4px 0px rgba(255, 255, 255, 0.5),
-    0 8px 0px rgba(2, 184, 35, 0.2);
-  position: relative;
-  overflow: hidden;
+/* Keep the view above the clouds and grass of the sky background */
+.sky > .help-view {
+  z-index: 10;
 }
 
 .help-view .main-text {
-  margin-top: 15px;
+  margin-top: 0;
   margin-bottom: 15px;
-  font-size: 180%;
-  text-shadow: 0 4px 0 rgba(0, 0, 0, 0.1);
+}
+
+.help-content {
+  max-width: 650px;
+  width: 90%;
+  min-height: 0; /* Lets the card shrink and scroll inside the flex column */
+  overflow-y: auto;
+  background: rgba(255, 255, 255, 0.92);
+  border: 4px solid #3c6512;
+  border-radius: 25px;
+  padding: 25px 30px;
+  box-sizing: border-box;
+  text-align: left;
+  line-height: 1.4;
+  box-shadow:
+    inset 0 3px 2px rgba(255, 255, 255, 0.6),
+    0 8px 15px rgba(0, 0, 0, 0.25);
+  position: relative;
 }
 
 .help-content h2 {
-  color: #02b823;
+  color: #3c6512;
   font-size: 20px;
+  font-weight: 700;
   margin-top: 20px;
   margin-bottom: 10px;
-  border-bottom: 3px dashed #02b823;
+  border-bottom: 3px dashed #7db939;
   padding-bottom: 5px;
   text-transform: uppercase;
   letter-spacing: 1px;
 }
 
+.help-content h2:first-child {
+  margin-top: 0;
+}
+
 .help-content p, .help-content li {
   color: #333;
   margin-bottom: 8px;
-  font-size: 14px;
+  font-size: 16px;
 }
 
 .help-content ul {
   margin-left: 20px;
   margin-bottom: 10px;
   list-style-type: '👉 ';
-}
-
-.help-view .button-container {
-  margin-top: 15px;
-  margin-bottom: 15px;
 }
 
 .level-info {
