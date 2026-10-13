@@ -12,7 +12,6 @@ This project is an interactive Swedish language-learning game designed to make v
 - Three progressive levels with increasing linguistic complexity
 - Immediate feedback on answers (correct/incorrect detection)
 - End-of-level performance summaries for progress tracking
-- Persistent Level 1 vocabulary progress: correctly answered clothing words are mastered, while missed and unseen words remain available in future sessions. Progress can be reset after mastering all words.
 - Support for English and Swedish language
 - Score counter and wardrobe popup interactions
 

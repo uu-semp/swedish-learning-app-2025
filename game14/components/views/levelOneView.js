@@ -1,8 +1,5 @@
 import clothingItems from "/game14/clothing-items-info.js";
 
-const GAME_ID = "game14";
-const PROGRESS_KEY = `${GAME_ID}-level1`;
-
 export const LevelOneView = {
     name: 'level-one-view',
     props: ['switchTo'],
@@ -20,7 +17,6 @@ export const LevelOneView = {
             totalTries: 0,
             correctAnswers: 0,
             gameOver:false,
-            masteredAll:false,
             showInfo:false,
             showLicense:false,
             chosenClothingItems: [],
@@ -31,7 +27,7 @@ export const LevelOneView = {
     },
 
     mounted() {
-        window.vocabulary.when_ready(() => this.startLevel());
+        this.startLevel();
     },
 
     methods: {
@@ -39,51 +35,31 @@ export const LevelOneView = {
                 const stats = window.save.stats.get("game14")  //Consol log state of system at start of each round
                 console.log("State of the system: ", stats)  
                 this.chosenClothingItems = this.generateSubCategories()
-                this.loadNextItem();
+            if (this.chosenClothingItems && this.chosenClothingItems.length > 0) {
+                let randomIndex = this.getRandomIndex(this.chosenClothingItems)
+                this.currentItem = this.chosenClothingItems[randomIndex];
+                this.indexesAsked.push(randomIndex); // keep track of what indexes we´ve asked for!
+                this.currentAttempts = 0;
+                this.incorrectMessage = '';
+            } else {
+                console.error("No clothing items found to start the level.");
+            }
         },
 
         loadNextItem() {
-            const allIds = clothingItems.map(item => item.ID);
-            if (this.indexesAsked.length >= this.numberOfQuestionsAsked) {
+            if (this.indexesAsked.length < this.numberOfQuestionsAsked) {  // Check if we have asked < than 10 indexes. 
+                let randomIndex = this.getRandomIndex(this.chosenClothingItems)
+                while (this.indexesAsked.includes(randomIndex)) {
+                    randomIndex = this.getRandomIndex(this.chosenClothingItems)
+                }
+                this.currentItem = this.chosenClothingItems[randomIndex];
+                this.currentAttempts = 0;
+                this.incorrectMessage = '';
+                this.indexesAsked.push(randomIndex)
+            } else {
                 this.saveGameScore()
                 this.gameOver=true
-                return;
             }
-
-            if (window.vocabulary.remaining_count(PROGRESS_KEY, allIds) === 0) {
-                this.masteredAll = true;
-                this.currentItem = null;
-                return;
-            }
-
-            let candidateIds = this.chosenClothingItems
-                .map(item => item.ID)
-                .filter(id => !this.indexesAsked.includes(id));
-            let selectedId = window.vocabulary.get_random_id(PROGRESS_KEY, candidateIds);
-
-            if (!selectedId) {
-                candidateIds = allIds.filter(id => !this.indexesAsked.includes(id));
-                selectedId = window.vocabulary.get_random_id(PROGRESS_KEY, candidateIds);
-
-                if (!selectedId) {
-                    this.saveGameScore();
-                    this.gameOver = true;
-                    return;
-                }
-
-                const requiredItem = clothingItems.find(item => item.ID === selectedId);
-                this.chosenClothingItems = this.generateSubCategories(requiredItem);
-            }
-
-            this.currentItem = clothingItems.find(item => item.ID === selectedId);
-            if (!this.currentItem) {
-                console.error(`Game 14: no clothing item found for vocabulary ID "${selectedId}".`);
-                this.gameOver = true;
-                return;
-            }
-            this.currentAttempts = 0;
-            this.incorrectMessage = '';
-            this.indexesAsked.push(selectedId);
         },
 
         saveGameScore(){  // Uses the save.js API to set the score of our game! 
@@ -94,7 +70,7 @@ export const LevelOneView = {
             let percentageCorrect = this.getPercentage()
             if (percentageCorrect > completion){ //Only set percentage if better than prev attempts
                 const numWins = wins + 1;
-                window.save.stats.set("game14", numWins, percentageCorrect)
+                save.stats.set("game14", numWins, percentageCorrect)
                 console.log("set new record!")
             }
         },
@@ -111,7 +87,7 @@ export const LevelOneView = {
             return percentageScore
         },
 
-        generateSubCategories(requiredItem = null){
+        generateSubCategories(){
             const categories = ["accessories", "shirts", "pants", "shoes"]
             const chosenClothingItems = []
             for (const subCategory  of categories){
@@ -121,10 +97,6 @@ export const LevelOneView = {
                     chosenSubcategoryItems = this.subsetGenerator(categoryItems)
                 }
                 else{ chosenSubcategoryItems = categoryItems}
-                if (requiredItem && requiredItem.Subcategory === subCategory &&
-                    !chosenSubcategoryItems.some(item => item.ID === requiredItem.ID)) {
-                    chosenSubcategoryItems[chosenSubcategoryItems.length - 1] = requiredItem;
-                }
                 chosenClothingItems.push(...chosenSubcategoryItems);
             }
             return chosenClothingItems;
@@ -190,7 +162,6 @@ export const LevelOneView = {
             this.incrementTotalTries();
             if (isCorrect) {
                 // Correct answer: reset attempts, show success, award point and go next
-                window.vocabulary.mark_correct(PROGRESS_KEY, this.currentItem.ID);
                 this.currentAttempts = 0;
                 this.incorrectMessage = '';
                 this.showCorrectFeedback = true;
@@ -234,11 +205,6 @@ export const LevelOneView = {
             this.startLevel()
         },
 
-        restartLearning() {
-            window.vocabulary.reset_progress(PROGRESS_KEY);
-            this.restartGame();
-        },
-
         resetGameState(){
             this.showModal= false, 
             this.showCorrectFeedback= false;
@@ -251,7 +217,6 @@ export const LevelOneView = {
             this.totalTries= 0;
             this.correctAnswers= 0;
             this.gameOver=false;
-            this.masteredAll=false;
             this.showInfo=false;
             this.chosenClothingItems= [];
             this.numberOfQuestionsAsked= 10;
@@ -262,12 +227,7 @@ export const LevelOneView = {
     },
 
     template: `
-      <div v-if="masteredAll" class="level-one-view">
-        <h1>{{$language.translate('mastered-all-words')}}</h1>
-        <button class="big-buttons" @click="restartLearning">{{$language.translate('restart-learning')}}</button>
-        <button class="big-buttons" @click="switchTo('ChooseLevelView')">{{$language.translate('go-back')}}</button>
-      </div>
-      <div v-else class="level-one-view">
+      <div class="level-one-view">
             <div class="level-header">
 
                 <div class="score-counter">

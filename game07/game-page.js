@@ -7,78 +7,64 @@
 // Number of rounds in the game, can be changed whenever
 // Could also add a button in category, so the user can select the amount of rounds in any given game
 const rounds = 5;
-const GAME_ID = "game07";
 
 function game_start(category) {
-  let ids = [];
+  var ids = [];
   const game_words = [];
 
   //If the player chooses the mixed option, retreive all categories into one list
   if (category == "mixed") {
-    for (const name of ["clothing", "food", "furniture"]) {
-      ids = ids.concat(window.vocabulary.get_category(name) || []);
-    }
+    const clothing = window.vocabulary.get_category("clothing");
+    const food = window.vocabulary.get_category("food");
+    const furniture = window.vocabulary.get_category("furniture");
+    ids = ids.concat(clothing, food, furniture);
   }
   // Get all the words from the chosen category
   else {
-    ids = window.vocabulary.get_category(category) || [];
+    ids = window.vocabulary.get_category(category);
   }
 
-  ids = [...new Set(ids)];
-  if (ids.length < 4) {
-    alert("There are not enough words in this category to start a round.");
-    return false;
-  }
-
-  const targetIds = [...ids];
-  let actualRounds = 0;
-
-  // Each round targets a word that has not yet been answered correctly.
+  //Loop through once for each round
   for (let i = 0; i < rounds; i++) {
-    const target = window.vocabulary.get_random(GAME_ID, targetIds);
-    if (!target) break;
+    // Generate a random number between 1 and 4, this will be the answer for that round
+    const correct_answer = Math.floor(Math.random() * 4) + 1;
 
-    targetIds.splice(targetIds.indexOf(target.id), 1);
-    const distractorIds = ids.filter(id => id !== target.id);
-    const correctAnswer = Math.floor(Math.random() * 4);
-    const roundWords = [];
-    for (let index = 0; index < 4; index++) {
-      if (index === correctAnswer) {
-        roundWords.push({ ...target, answer: true });
-        continue;
-      }
+    // Pick four random words from the ids array
+    for (let j = 0; j < 4; j++) {
+      //Generate a random word from the array
+      const rand = Math.floor(Math.random() * ids.length);
+      const generated_word = window.vocabulary.get_vocab(ids[rand]);
 
-      const rand = Math.floor(Math.random() * distractorIds.length);
-      const id = distractorIds.splice(rand, 1)[0];
-      roundWords.push({ ...window.vocabulary.get_vocab(id), id, answer: false });
+      // If this word matches the random answer number, mark it as the answer, else mark it as false
+      if (j == correct_answer - 1) generated_word["answer"] = true;
+      else generated_word["answer"] = false;
+
+      game_words.push(generated_word);
+      ids.splice(rand, 1);
     }
 
-    game_words.push(...roundWords);
-    actualRounds++;
-  }
+   }
 
-  if (actualRounds === 0) {
-    alert("You have answered all the words in this category correctly.");
-    return false;
-  }
+    // Add a highscore object to the end of the array for tracking the score
+    // Depending on the number of rounds, will add that many items that track the score for that particular round
+    var highscore = {};
+    for (let i = 0; i < rounds; i++) {
+        highscore["round" + (i + 1)] = 0;
+    };
+    highscore["total"] = 0;
+    game_words.push(highscore);
 
-  // Add per-round score and wrong-answer trackers.
-  const highscore = {};
-  for (let i = 0; i < actualRounds; i++) {
-    highscore["round" + (i + 1)] = 0;
-  }
-  highscore["total"] = 0;
-  game_words.push(highscore);
 
-  const wrong_words = {};
-  for (let i = 0; i < actualRounds; i++) {
-    wrong_words["round" + (i + 1)] = [];
-  }
-  wrong_words["all"] = [];
-  game_words.push(wrong_words);
+    //Wrong words tracking for replay button
+    var wrong_words = {};
+    for (let i = 0; i < rounds; i++) {
+        wrong_words["round" + (i + 1)] = []; // empty array to hold wrong word IDs or names
+    }
+    wrong_words["all"] = []; // all wrong words across all rounds
+    game_words.push(wrong_words);
 
-  localStorage.setItem('game_words', JSON.stringify(game_words));
-  return true;
+    // Put the chosen words in local storage
+    localStorage.setItem('game_words', JSON.stringify(game_words));
 };
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -124,9 +110,6 @@ function gameplay() {
     return;
   }
 
-  const highscore = words[words.length - 2];
-  const totalRounds = Object.keys(highscore).filter(key => key !== "total").length;
-
   let correctImage = null;
   let currentRound = 0;
   let selectionLock = false; // Lock selection if user has clicked image
@@ -170,7 +153,7 @@ function gameplay() {
     });
 
     // Update Next button text if current round number is same as total amount of rounds
-    if (roundNumber === totalRounds - 1) {
+    if (roundNumber === rounds - 1) {
       updateNextButtonText("Finish");
     } else {
       updateNextButtonText("Next");
@@ -201,7 +184,6 @@ function gameplay() {
             if (image === clickedImage && image === correctImage) {
                 document.getElementById('instruction').textContent = 
                     "Correct answer! The correct answer was: " + correctAnswer.sv;
-                window.vocabulary.mark_correct(GAME_ID, correctAnswer.id);
                 // Update high score  
                 highscore["round" + (currentRound + 1)] += 1;
                 highscore["total"] += 1;
@@ -231,7 +213,7 @@ function gameplay() {
     if (!selectionLock) {
       return;
     }
-    if (currentRound < totalRounds - 1) {
+    if (currentRound < rounds - 1) {
       currentRound++;
       startNewRound(currentRound);
     } else {

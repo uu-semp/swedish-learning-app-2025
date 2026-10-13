@@ -48,12 +48,7 @@ Owned by Game 12
         </div>
       </section> -->
 
-      <section v-if="currentScreen === 'complete'" id="complete-screen" class="game-box">
-        <h2>{{completionMessage}}</h2>
-        <button v-if="canRestartLearning" @click="restartLearning" class="start-button">Restart learning</button>
-        <a href="index.html" class="start-page-button">Back to menu</a>
-      </section>
-      <section v-if="currentScreen === 'game'" id="game-screen" >
+      <section v-else-if="currentScreen === 'game'" id="game-screen" >
         <div class="game-box">
           <a href="index.html" class="start-page-button">⬅ Tillbaka</a>
           <div class="progress-wrap">
