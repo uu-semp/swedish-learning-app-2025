@@ -1041,6 +1041,41 @@ function DateCalendarQuestion({ q, answerState, onSelect }: { q: Question; answe
   );
 }
 
+function HomeButton({ onClick }: { onClick: () => void }) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      aria-label="Return to the game home screen"
+      className="inline-flex items-center gap-2 shrink-0
+                 rounded-xl border border-gray-300 bg-white
+                 px-3 py-2 text-sm font-semibold text-gray-700
+                 shadow-sm transition-colors
+                 hover:bg-blue-50 hover:border-blue-400
+                 hover:text-blue-700
+                 focus-visible:outline focus-visible:outline-2
+                 focus-visible:outline-blue-500"
+    >
+      <svg
+        width="20"
+        height="20"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.8"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        aria-hidden="true"
+      >
+        <path d="M3 10.5 12 3l9 7.5" />
+        <path d="M5 9v12h14V9" />
+        <path d="M9 21v-8h6v8" />
+      </svg>
+
+      <span>Hem · Home</span>
+    </button>
+  );
+}
 // ── Game Screen ────────────────────────────────────────────────────────────────
 
 function GameScreen({
@@ -1070,13 +1105,7 @@ function GameScreen({
       {/* Top nav */}
       <header className="px-5 pt-3 pb-2 flex items-center justify-between gap-6">
         <div className="flex items-center gap-3">
-          <button
-            onClick={onHome}
-            className="text-gray-400 hover:text-gray-700 transition-colors text-xl font-display"
-            title="Till startsidan"
-          >
-            ⌂
-          </button>
+          <HomeButton onClick={onHome} />
           <span
             className="font-display font-bold text-xl"
             style={{ color: colors.primary }}
@@ -1421,8 +1450,8 @@ function PracticeScreen({ onBack }: { onBack: () => void }) {
       <div className="h-full flex flex-col p-5 overflow-y-auto" style={{ backgroundColor: '#F5F3F0' }}>
         <div className="max-w-3xl w-full mx-auto flex flex-col gap-4 fade-in">
           <div className="flex items-center gap-3">
-            <button onClick={onBack} className="text-gray-400 hover:text-gray-700 transition-colors font-display text-lg">←</button>
-            <div>
+            <HomeButton onClick={onBack} />            
+          <div>
               <p className="font-mono text-[10px] text-gray-400 uppercase tracking-widest">Övningsläge</p>
               <h1 className="font-display font-bold text-xl text-gray-900">Vad vill du öva på?</h1>
             </div>
@@ -1480,12 +1509,15 @@ function PracticeScreen({ onBack }: { onBack: () => void }) {
       {/* Header */}
       <header className="px-5 pt-3 pb-2 flex items-center justify-between gap-6">
         <div className="flex items-center gap-3">
-          <button
-            onClick={() => setView('menu')}
-            className="text-gray-400 hover:text-gray-700 transition-colors font-display text-xl"
-          >
-            ←
-          </button>
+          <HomeButton onClick={onBack} />
+            <button
+              type="button"
+              onClick={() => setView('menu')}
+              className="text-sm font-semibold text-gray-600
+                        hover:text-blue-700 transition-colors"
+            >
+              ← Topics
+            </button>
           <span className="font-display font-bold text-xl" style={{ color: c.primary }}>
             {meta.icon} {meta.label}
           </span>
