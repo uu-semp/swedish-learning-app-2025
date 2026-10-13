@@ -14,12 +14,24 @@ const $ = id => document.getElementById(id);
 
 // Display the end-game statistics if available.
 // Otherwise, display default values and a "No data" message.
+const isSwedish = true;
+const languageBtn = document.querySelector('#toggle-language-btn');
+// NOTE: This check is quite fragile to changes
+if (languageBtn) isSwedish = languageBtn.textContent == "English";
+
 if (stats) {
     const { total, correct, mistakes, threshold, won } = stats;
     $('correct').textContent = String(correct);
     $('total').textContent = String(total);
     $('mistakes').textContent = String(mistakes);
-    $('headline').textContent = won ? 'Bra jobbat, du vann!' : 'Bra försök!';
+    $('headline').textContent = 
+        won
+            ? isSwedish
+                ? 'Bra jobbat, du vann!' 
+                : 'Good job, you won!'
+            : isSwedish
+                ? 'Bra försök!'
+                : 'Nice try!';
 } else {
     $('headline').textContent = 'Ingen data';
     $('correct').textContent = $('total').textContent = $('mistakes').textContent = '0';
