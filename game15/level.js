@@ -77,7 +77,7 @@ async function initializeGame() {
           // Level 1: Find the house by its address number
           if (level === 1) {
             return {
-              instruction: `Jag bor på ${streetInfo.streetName} ${cardinalNumber}`,
+              instruction: `Jag bor på ${streetInfo.streetName} ${cardinalNumber}. Välj huset där jag bor.`,
               correct: {
                 street: streetInfo.streetName,
                 number: streetInfo.number.cardinal.literal
@@ -92,7 +92,7 @@ async function initializeGame() {
             const ordinalNumber = streetInfo.number.ordinal.sv;
 
             return {
-              instruction: `Jag bor i det ${ordinalNumber} huset på ${streetInfo.streetName}`,
+              instruction: `Jag bor i det ${ordinalNumber} huset på ${streetInfo.streetName}. Välj huset där jag bor.`,
               correct: {
                 street: streetInfo.streetName,
                 number: streetInfo.number.cardinal.literal
@@ -340,9 +340,9 @@ async function initializeGame() {
           
           if (this.currentQuestion.type === "map") {
             if (this.level === 1) {
-              this.translation = `I live on ${streetInfo.streetName} ${streetInfo.number.cardinal.en}`;
+              this.translation = `I live on ${streetInfo.streetName} ${streetInfo.number.cardinal.en}. Choose the house where I live.`;
             } else if (this.level === 2) {
-              this.translation = `I live in the ${streetInfo.number.ordinal.en} house on ${streetInfo.streetName}`;
+              this.translation = `I live in the ${streetInfo.number.ordinal.en} house on ${streetInfo.streetName}. Choose the house where I live.`;
             }
           } else if (this.currentQuestion.type === "text") {
             const colorEn = streetInfo.color.en;
