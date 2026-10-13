@@ -31,15 +31,6 @@ This CSS file contains styles specific to the "Choose Level" view of the app.
     z-index: 10;
 }
 
-/* Language selection container */
-.choose-level-view .language-selection {
-    position: absolute;
-    top: 25px;
-    right: 20px;
-    display: flex;
-    gap: 8px;
-}
-
 /* Override .main-text positioning for this view */
 .choose-level-view .main-text {
     margin-top: 0; /* Remove top margin for tighter layout */
@@ -70,14 +61,5 @@ This CSS file contains styles specific to the "Choose Level" view of the app.
     /* Slightly adjust padding to make them tall and rounded */
     padding: 15px 25px; 
     font-size: 1.8em; /* Match text size from previous suggestion for "LEVEL X" */
-}
-
-/*
-    Styles for the 'GO BACK' button to be positioned in the bottom left corner.
-*/
-.choose-level-view .go-back-wrapper {
-    position: absolute;
-    bottom: 15px;
-    left: 20px;
 }
 

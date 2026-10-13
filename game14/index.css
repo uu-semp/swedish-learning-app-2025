@@ -355,6 +355,14 @@ body {
   border-left: 15px solid #ffffff;
 }
 
+/* GO BACK button in the top left corner of the game screen */
+.go-back-wrapper {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  z-index: 20; /* Above the clouds, grass and view content */
+}
+
 .btn-help {
   display: flex;
   align-items: center;
@@ -584,6 +592,17 @@ body {
 .license-sections p {
     margin-bottom: 10px;
     font-size: 14px;
+}
+
+/* Language flags in the top right corner of every sky view */
+.language-selection {
+  position: absolute;
+  top: 25px;
+  right: 20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  z-index: 20; /* Above the clouds, grass and the views */
 }
 
 .flag-button {

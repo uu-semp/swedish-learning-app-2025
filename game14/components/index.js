@@ -26,6 +26,7 @@ import { DressPellePrompt } from "./elements/dressPellePrompt.js";
 import { ScoreCounter } from "./elements/scoreCounter.js";
 import { StatisticsPopUp } from "./elements/statisticsPopUp.js";
 import { SkyBackground } from "./elements/skybackground.js";
+import { LanguageSelection } from "./elements/languageSelection.js";
 
 
 export default {
@@ -53,5 +54,6 @@ export default {
   DressPellePrompt,
   ScoreCounter,
   StatisticsPopUp,
-  SkyBackground
+  SkyBackground,
+  LanguageSelection
 };

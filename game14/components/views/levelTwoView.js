@@ -38,6 +38,10 @@ export const LevelTwoView = {
       console.error("Could not load the words from the database", error);
     }
   },
+  // Stop the feedback timer if the player leaves in the middle of a game
+  beforeUnmount() {
+    clearTimeout(this.feedbackTimer);
+  },
   methods: {
     // Put the words in random order (Fisher-Yates shuffle)
     shuffle(list) {
@@ -119,6 +123,14 @@ export const LevelTwoView = {
   },
   template: `
       <div class="explore-view find-mode">
+        <div class="go-back-wrapper">
+          <capsule-button
+            label="go-back"
+            size="md"
+            @click="switchTo('ChooseLevelView')"
+          ></capsule-button>
+        </div>
+
         <h1 class="explore-title">{{$language.translate('level2')}}</h1>
 
         <div class="explore-content">

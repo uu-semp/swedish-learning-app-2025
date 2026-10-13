@@ -40,11 +40,23 @@ const app = createApp({
 
   template: `
     <sky-background v-if="skyViews.includes(currentView)">
+      <language-selection>
+        <!-- Help button next to the flags, only on the start view -->
+        <capsule-button
+          v-if="currentView === 'StartView'"
+          size="sm"
+          label="?"
+          :translate-key="false"
+          :title="$language.translate('help')"
+          @click="switchViewTo('HelpView')"
+        ></capsule-button>
+      </language-selection>
       <component :is="currentView" :switch-to="switchViewTo"></component>
     </sky-background>
     <component v-else :is="currentView" :switch-to="switchViewTo"></component>
     `, //The visual app shown through the index.html, passes the method switchViewTo which is taken as prop from child components
     // Views in skyViews are placed inside the sky background, which stays mounted while switching between them
+    // The language flags are shown once here, on top of every sky view
 });
 
 app.config.globalProperties.$language = language;
