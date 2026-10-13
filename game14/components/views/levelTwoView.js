@@ -118,32 +118,30 @@ export const LevelTwoView = {
     },
   },
   template: `
-      <div class="start-view-wrapper">
-        <div class="sky explore-view find-mode">
-          <h1 class="explore-title">{{$language.translate('level2')}}</h1>
+      <div class="explore-view find-mode">
+        <h1 class="explore-title">{{$language.translate('level2')}}</h1>
 
-          <div class="explore-content">
-            <div class="explore-pelle" v-html="pelleSvg" @click="handlePelleClick"></div>
+        <div class="explore-content">
+          <div class="explore-pelle" v-html="pelleSvg" @click="handlePelleClick"></div>
 
-            <!-- While playing -->
-            <div class="explore-side" v-if="currentWord && !finished">
-              <p class="explore-instruction">{{$language.translate('level2-instruction')}}</p>
-              <div class="find-word">{{ currentWord.article }} {{ currentWord.sv }}</div>
-              <p class="find-progress">{{ currentIndex + 1 }} / {{ words.length }}</p>
-              <p class="find-feedback" :class="feedback">
-                {{ feedback ? $language.translate('feedback-' + feedback) : '' }}
-              </p>
-            </div>
+          <!-- While playing -->
+          <div class="explore-side" v-if="currentWord && !finished">
+            <p class="explore-instruction">{{$language.translate('level2-instruction')}}</p>
+            <div class="find-word">{{ currentWord.article }} {{ currentWord.sv }}</div>
+            <p class="find-progress">{{ currentIndex + 1 }} / {{ words.length }}</p>
+            <p class="find-feedback" :class="feedback">
+              {{ feedback ? $language.translate('feedback-' + feedback) : '' }}
+            </p>
+          </div>
 
-            <!-- When all words are done -->
-            <div class="explore-side" v-if="finished">
-              <p class="find-result">
-                {{ firstTryCorrect }} / {{ words.length }} {{$language.translate('first-try')}}
-              </p>
-              <button class="word-cloud play-again" @click="playAgain">
-                {{$language.translate('play-again')}}
-              </button>
-            </div>
+          <!-- When all words are done -->
+          <div class="explore-side" v-if="finished">
+            <p class="find-result">
+              {{ firstTryCorrect }} / {{ words.length }} {{$language.translate('first-try')}}
+            </p>
+            <button class="word-cloud play-again" @click="playAgain">
+              {{$language.translate('play-again')}}
+            </button>
           </div>
         </div>
       </div>
