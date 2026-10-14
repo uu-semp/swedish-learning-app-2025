@@ -1,6 +1,9 @@
 name: Download google sheet as csv
 
-on: 
+on:
+  push:
+    branches:
+      - main
   schedule:
     - cron: '59 23 * * *' 
       timezone: 'Europe/Stockholm'
