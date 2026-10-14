@@ -73,7 +73,7 @@ The following components reside within the Model:
 
 **REQ-STUDENT17:** The student needs to see different expressions using variations of the same word related to transportation so that they can understand different ways of expressing the same thing. For example: “jag cyklar” and “jag tar cykeln.” :white_check_mark:
 
-**REQ-DEVELOPER1:** The developer needs a README file containing setup, local execution, structure, dependencies, and instructions for adding or changing game content so that future developers can maintain and extend the game. 
+**REQ-DEVELOPER1:** The developer needs a README file containing setup, local execution, structure, dependencies, and instructions for adding or changing game content so that future developers can maintain and extend the game. :white_check_mark:
 
 **REQ-DEVELOPER2:** The developer needs images, words, and game content to be loaded from a structured content repository. :white_check_mark:
 
