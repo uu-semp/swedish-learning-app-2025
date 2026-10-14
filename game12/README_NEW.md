@@ -19,6 +19,10 @@ Hitta rätt hus is game 12 of the Swedish Learning App. The game is divided into
 ## Architecture
 The architecture of the game follows a **Model–View–Controller (MVC)** structure and is built with plain HTML/CSS/JavaScript, using Vue 3.
 
+<img width="995" height="646" alt="image" src="https://github.com/user-attachments/assets/d8f7b9b4-1939-437b-9a37-3c5941f9feb0" />
+
+[For future groups, here is the Lucidchart link](https://lucid.app/lucidchart/8901213b-8367-4d1d-b0ac-a3cf890e72d1/edit?viewport_loc=-3207%2C-985%2C2841%2C1824%2C0_0&invitationId=inv_a220bc95-01a8-49cc-b59f-aba2b4bee895)
+
 ### View
 The following views exist:
 - Main menu: displays the main menu, allowing the player to select game difficulty
@@ -27,6 +31,7 @@ The following views exist:
 ### Controller
 The following controllers exist:
 - Game controller: handles the communication between the game view and the game manager (which resides inside model)
+- (NOT YET IMPLEMENTED) Main menu controller: responsible for fetching progression and graphics
 
 ### Model
 The following components reside within the Model:
