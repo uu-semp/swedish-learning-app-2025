@@ -77,6 +77,40 @@ Owned by the Menu Team
         </main>
         <footer>
             <small class="translate" id="footer-text"></small>
+            <small class="translate" id="storage-footer"></small>
         </footer>
+        <!-- Browser Storage Consent -->
+        <div id="storage-consent-overlay" hidden>
+            <div id="storage-consent-box">
+                <div id="storage-consent-language">
+                    <button
+                        class="consent-language-btn"
+                        id="storage-consent-lang-en">
+                        English
+                    </button>
+
+                    <button
+                        class="consent-language-btn"
+                        id="storage-consent-lang-sv">
+                        Svenska
+                    </button>
+                </div>
+                <h2 class="translate" id="storage-consent-title"></h2>
+
+                <p class="translate" id="storage-consent-text"></p>
+
+                <div id="storage-consent-actions">
+                    <button
+                        class="settings-btn secondary translate"
+                        id="storage-consent-decline">
+                    </button>
+
+                    <button
+                        class="settings-btn primary translate"
+                        id="storage-consent-accept">
+                    </button>
+                </div>
+            </div>
+        </div>
     </body>
 </html>

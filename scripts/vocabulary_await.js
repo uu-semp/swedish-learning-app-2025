@@ -109,8 +109,6 @@ export async function loaddb(game_id = -1) {
   // Stringify incase this get a number
   const game_id_str = String(game_id).padStart(4, "0");
   const game_column = `Game04`;
-  console.log(game_column)
-
   // Creating two alternative access patterns based on rows
   const idToMeta = {};
   const gameIds = [];
