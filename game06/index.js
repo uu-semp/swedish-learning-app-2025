@@ -94,6 +94,9 @@ function showLevelSelection() {
 	stopQuestionTimer();
 	window.currentSession = null;
 	window.currentQuestion = null;
+	if (progressUtils?.replay_collection) {
+		progressUtils.replay_collection.length = 0;
+	}
 	hideAllViews();
 	document.getElementById("level-view").style.display = "block";
 }
@@ -274,6 +277,15 @@ function showSummary() {
 	const scoreElement = document.getElementById("final-score");
 	if (scoreElement) scoreElement.textContent = String(score);
 
+	// Only show "Train on failed questions" button if replay_collection has questions
+	const trainFailedBtn = document.getElementById("train-failed-btn");
+	if (trainFailedBtn) {
+		const hasFailedQuestions = Boolean(
+			progressUtils?.replay_collection && progressUtils.replay_collection.length > 0
+		);
+		trainFailedBtn.style.display = hasFailedQuestions ? "inline-block" : "none";
+	}
+
 	// Optional: dynamic feedback text
 	const summarySubtitle = document.querySelector(".summary-subtitle");
 	if (summarySubtitle) {
@@ -293,6 +305,35 @@ function restartGame() {
 	console.log("🔁 Restarting game...");
 	startGame(currentDifficulty || "easy");
 }
+
+// Train on failed questions
+function trainFailedQuestions() {
+	if (!progressUtils?.replay_collection || progressUtils.replay_collection.length === 0) {
+		return;
+	}
+
+	const replayQuestions = [...progressUtils.replay_collection];
+	const questionIds = replayQuestions.map((q) => q.id);
+	progressUtils.initProgress(questionIds);
+
+	currentDifficulty = replayQuestions[0].difficulty || currentDifficulty || "easy";
+
+	window.currentSession = progressUtils.createSession(replayQuestions, {
+		mode: "practice",
+		size: replayQuestions.length,
+		questionClass: clockQuestionClass,
+	});
+
+	score = 0;
+	const scoreEl = document.getElementById("score-value");
+	if (scoreEl) scoreEl.textContent = "0";
+
+	hideAllViews();
+	document.getElementById("game-view").style.display = "block";
+
+	updateQuestion();
+}
+
 // Show Finish View
 function showFinish() {
 	showSummary();
@@ -502,7 +543,13 @@ function updateQuestion() {
 	// Render question text
 	document.getElementById("question").innerText = q.question;
 
+	if (q.difficulty) {
+		currentDifficulty = q.difficulty;
+	}
 	const isAdvanced = currentDifficulty === "hard";
+	const gameContainer = document.querySelector(".game-container");
+	if (gameContainer) gameContainer.classList.toggle("hard-mode", isAdvanced);
+
 	const answerContainer = document.getElementById("answers-container");
 	const tileGame = document.getElementById("tile-game");
 
@@ -852,6 +899,7 @@ window.showLevelSelection = showLevelSelection;
 window.showIntro = showIntro;
 window.submitAnswer = submitAnswer;
 window.restartGame = restartGame;
+window.trainFailedQuestions = trainFailedQuestions;
 window.showFinish = showFinish;
 window.setupGameForLevel = setupGameForLevel;
 window.toggleHint = toggleHint;
