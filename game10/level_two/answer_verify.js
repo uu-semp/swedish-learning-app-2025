@@ -50,7 +50,7 @@ function render() {
       (item) => `
       <div class="al-pair">
         <img src="${vocabUrl(item.img)}" alt="">
-        <span style="font:500 13px 'Work Sans',sans-serif;color:#555">${item.en || ""}</span>
+        <span class="al-pair-label">${item.en || ""}</span>
       </div>`
     )
     .join("");
@@ -63,7 +63,8 @@ function render() {
         : "";
       return `<div class="al-result-word ${ok ? "al-result-ok" : "al-result-no"}">
         <i class="fa-solid ${ok ? "fa-check" : "fa-xmark"}" style="color:${ok ? "#1f6b3a" : "#9d0000"}"></i>
-        <div><div style="font:600 19px/1.1 'Work Sans',sans-serif;color:#14100e">${item.sv}</div>
+        <div>
+        <div class="al-pair-label">${item.sv}</div>
         <div style="font:400 12.5px 'Work Sans',sans-serif;margin-top:2px">${note}</div></div>
       </div>`;
     })

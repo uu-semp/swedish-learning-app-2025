@@ -60,10 +60,20 @@ export function getBatch(number, mode) {
   return shuffle(batch.concat(pickN(known, number - batch.length)));
 }
 
+function setAudioPlaying(on) {
+  document
+    .querySelectorAll(".al-audio, .al-listen")
+    .forEach((el) => el.classList.toggle("is-playing", on));
+}
+
 export function playAudio(rel) {
   const src = vocabUrl(rel);
   if (!src) return;
   const audio = new Audio(src);
+  audio.addEventListener("playing", () => setAudioPlaying(true));
+  ["ended", "pause", "error"].forEach((evt) =>
+    audio.addEventListener(evt, () => setAudioPlaying(false))
+  );
   audio.play().catch(() => {});
 }
 
