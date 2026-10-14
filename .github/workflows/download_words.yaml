@@ -13,6 +13,8 @@ on:
 jobs:
   mirror_main:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     
     env:
       SHEETID: 1de16iRzmgSqWvTTxiNvQYM79sWJBwFJN0Up3Y0allDg
