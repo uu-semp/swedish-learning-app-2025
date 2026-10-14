@@ -1,160 +1,179 @@
 // ==============================================
 // Owned by Game 10
 // ==============================================
-import {loadProgress, saveProgress} from '../dev-tools/cookies.js'
 
-$(document).ready(function () {
-  window.vocabulary.when_ready(function() {
-    setupLevel(5); // Setup the game with 10 word pairs
-  });
+import { getLang } from "../dev-tools/cookies.js";
+import { applyI18n } from "../dev-tools/i18n.js";
+import { whenReady, getBatch, pickN, vocabUrl, preloadImages } from "../dev-tools/util.js";
 
-  let leftSelected = null;
-  let rightSelected = null;
-  const svg = document.querySelector('.wires');
-  const connections = [];
+const PAIR_COUNT = 4;
 
-  function setupLevel(wordCount) {
-    const foodIds = window.vocabulary.get_category("food"); // Assuming you have a "foods" category
-    
-    // Get a random selection of word IDs
-    const randomIds = foodIds.sort(() => 0.5 - Math.random()).slice(0, wordCount);
-    
-    const leftWords = [];
-    const rightWords = [];
+let lang = "en";
+let leftItems = [];
+let rightItems = [];
+let links = []; // {left, right}
+let drag = null;
 
-    randomIds.forEach(id => {
-      const vocab = window.vocabulary.get_vocab(id);
-      leftWords.push({ text: vocab.en, id: id });
-      rightWords.push({ text: vocab.sv, id: id });
-    });
-    // Shuffle the Swedish words to make it a challenge
-    rightWords.sort(() => 0.5 - Math.random());
-
-    // Create and append buttons
-    const leftCol = $('.col.left');
-    const rightCol = $('.col.right');
-    leftWords.forEach(word => {
-      leftCol.append(`<button class="word-btn" data-id="${word.id}">${word.text}</button>`);
-    });
-    rightWords.forEach(word => {
-      rightCol.append(`<button class="word-btn" data-id="${word.id}">${word.text}</button>`);
-    });
-  }
-  
-  // Re-attach event listeners since buttons are now dynamic
-  $('.match-stage').on('click', '.col.left .word-btn', function () {
-    const $btn = $(this);
-    if ($btn.hasClass('paired')) { unpairButton(this); return; }
-    if ($btn.hasClass('selected')) {
-      $btn.removeClass('selected');
-      leftSelected = null;
-      $('.col.left .word-btn').not('.paired').removeClass('disabled');
-      return;
-    }
-    $('.col.left .word-btn').not('.paired').removeClass('selected').addClass('disabled');
-    $btn.removeClass('disabled').addClass('selected');
-    leftSelected = this;
-    tryPair();
-  });
-
-  $('.match-stage').on('click', '.col.right .word-btn', function () {
-    const $btn = $(this);
-    if ($btn.hasClass('paired')) { unpairButton(this); return; }
-    if ($btn.hasClass('selected')) {
-      $btn.removeClass('selected');
-      rightSelected = null;
-      $('.col.right .word-btn').not('.paired').removeClass('disabled');
-      return;
-    }
-    $('.col.right .word-btn').not('.paired').removeClass('selected').addClass('disabled');
-    $btn.removeClass('disabled').addClass('selected');
-    rightSelected = this;
-    tryPair();
-  });
-
-  $('#submitBtn').on('click', function(){
-    saveGameState();
-    window.location.href = 'answer_verify.html';
-  });
-
-  function tryPair() {
-    if (leftSelected && rightSelected) {
-      // draw line
-      const line = drawLine(leftSelected, rightSelected);
-      connections.push({ left: leftSelected, right: rightSelected, line });
-
-      // mark paired
-      $(leftSelected).addClass('paired').removeClass('selected disabled');
-      $(rightSelected).addClass('paired').removeClass('selected disabled');
-
-      // reset for next pair
-      leftSelected = null;
-      rightSelected = null;
-
-      // re-enable all unpaired
-      $('.col.left .word-btn').not('.paired').removeClass('disabled');
-      $('.col.right .word-btn').not('.paired').removeClass('disabled');
-    }
-  }
-
-  function unpairButton(btn) {
-    // find the connection that involves this button
-    const idx = connections.findIndex(c => c.left === btn || c.right === btn);
-    if (idx >= 0) {
-      // remove line
-      svg.removeChild(connections[idx].line);
-      const leftBtn = connections[idx].left;
-      const rightBtn = connections[idx].right;
-
-      // unmark paired
-      $(leftBtn).removeClass('paired disabled');
-      $(rightBtn).removeClass('paired disabled');
-
-      // remove from connections
-      connections.splice(idx, 1);
-
-      // re-enable unpaired
-      $('.col.left .word-btn').not('.paired').removeClass('disabled');
-      $('.col.right .word-btn').not('.paired').removeClass('disabled');
-    }
-  }
-
-  function drawLine(elA, elB) {
-    const ra = elA.getBoundingClientRect();
-    const rb = elB.getBoundingClientRect();
-    const root = svg.getBoundingClientRect();
-    const ax = (ra.left + ra.right) / 2 - root.left;
-    const ay = (ra.top + ra.bottom) / 2 - root.top;
-    const bx = (rb.left + rb.right) / 2 - root.left;
-    const by = (rb.top + rb.bottom) / 2 - root.top;
-
-    const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
-    line.setAttribute("x1", ax);
-    line.setAttribute("y1", ay);
-    line.setAttribute("x2", bx);
-    line.setAttribute("y2", by);
-    line.setAttribute("stroke-width", 3);
-    line.setAttribute("stroke", "#888");
-    svg.appendChild(line);
-    return line;
-  }
-  function saveGameState() {
-    // collect the left/right button texts and the connections
-    const leftWords = $('.col.left .word-btn').map(function(){
-        return { text: $(this).text(), id: $(this).data('id') };
-    }).get();
-
-    const rightWords = $('.col.right .word-btn').map(function(){
-        return { text: $(this).text(), id: $(this).data('id') };
-    }).get();
-
-    // build array of pairs with index of left and right button
-    const pairs = connections.map(c => ({
-        leftId: $(c.left).data('id'),
-        rightId: $(c.right).data('id')
-    }));
-
-    const gameState = { leftWords, rightWords, pairs };
-    localStorage.setItem('level2GameState', JSON.stringify(gameState));
+function applyText() {
+  applyI18n(lang);
 }
+
+function nodePoint(side, index) {
+  const el = document.querySelector(`[data-${side}="${index}"] .al-node`);
+  if (!el) return { x: 0, y: 0 };
+  const stage = document.getElementById("stage");
+  const root = stage.getBoundingClientRect();
+  const box = el.getBoundingClientRect();
+  return { x: box.left + box.width / 2 - root.left, y: box.top + box.height / 2 - root.top };
+}
+
+function dropTargetAt(x, y, attr) {
+  const stack = document.elementsFromPoint(x, y);
+  for (const el of stack) {
+    const target = el.closest?.(`[data-${attr}]`);
+    if (target) return Number(target.dataset[attr]);
+  }
+  return null;
+}
+
+function drawPlayWires() {
+  const svg = document.getElementById("wires");
+  let html = "";
+  links.forEach((link) => {
+    const a = nodePoint("left", link.left);
+    const b = nodePoint("right", link.right);
+    html += `<line x1="${a.x}" y1="${a.y}" x2="${b.x}" y2="${b.y}" stroke="#9d0000" stroke-width="3" stroke-linecap="round"></line>`;
+  });
+  if (drag) {
+    const a = nodePoint(drag.from, drag.index);
+    html += `<line x1="${a.x}" y1="${a.y}" x2="${drag.x}" y2="${drag.y}" stroke="#9d0000" stroke-width="3" stroke-dasharray="7 6" stroke-linecap="round"></line>`;
+  }
+  svg.innerHTML = html;
+  document.querySelectorAll("[data-left]").forEach((el) => {
+    el.classList.toggle("al-linked", links.some((l) => l.left === Number(el.dataset.left)));
+  });
+  document.querySelectorAll("[data-right]").forEach((el) => {
+    el.classList.toggle("al-linked", links.some((l) => l.right === Number(el.dataset.right)));
+  });
+  document.getElementById("submit").disabled = links.length !== PAIR_COUNT;
+}
+
+function renderPlayBoard() {
+  const leftCol = document.getElementById("left-col");
+  const rightCol = document.getElementById("right-col");
+  leftCol.innerHTML = leftItems
+    .map(
+      (item, i) => `
+      <div class="al-pair" data-left="${i}">
+        <img draggable="false" src="${vocabUrl(item.img)}" alt="${item.en || item.sv}">
+        <span style="font:500 13px 'Work Sans',sans-serif;color:#555">${item.en || ""}</span>
+        <span class="al-node al-node-r"></span>
+      </div>`
+    )
+    .join("");
+  rightCol.innerHTML = rightItems
+    .map(
+      (item, i) => `
+      <div class="al-word" data-right="${i}">
+        <span class="al-node al-node-l"></span>
+        ${item.sv}
+      </div>`
+    )
+    .join("");
+  links = [];
+  drag = null;
+  requestAnimationFrame(drawPlayWires);
+}
+
+function startRound() {
+  leftItems = getBatch(PAIR_COUNT, "recognition");
+  preloadImages(leftItems);
+  rightItems = pickN(leftItems, PAIR_COUNT);
+  document.getElementById("round-label").textContent =
+    lang === "sv" ? "Matcha paren" : "Match the pairs";
+  renderPlayBoard();
+}
+
+function pointerPos(e, stage) {
+  const root = stage.getBoundingClientRect();
+  return { x: e.clientX - root.left, y: e.clientY - root.top };
+}
+
+function setupDrag() {
+  const stage = document.getElementById("stage");
+  stage.addEventListener("dragstart", (e) => e.preventDefault());
+  stage.addEventListener("pointerdown", (e) => {
+    if (e.button !== 0) return;
+    const leftCard = e.target.closest("[data-left]");
+    const rightCard = e.target.closest("[data-right]");
+    if (!leftCard && !rightCard) return;
+    e.preventDefault();
+    const from = leftCard ? "left" : "right";
+    const index = Number((leftCard || rightCard).dataset[from]);
+    links = links.filter((l) => l[from] !== index);
+    const p = pointerPos(e, stage);
+    drag = { from, index, x: p.x, y: p.y, hover: null };
+    stage.setPointerCapture(e.pointerId);
+    drawPlayWires();
+  });
+  stage.addEventListener("pointermove", (e) => {
+    if (!drag) return;
+    const p = pointerPos(e, stage);
+    drag.x = p.x;
+    drag.y = p.y;
+    const dropSide = drag.from === "left" ? "right" : "left";
+    drag.hover = dropTargetAt(e.clientX, e.clientY, dropSide);
+    drawPlayWires();
+  });
+  const endDrag = (e) => {
+    if (!drag) return;
+    if (stage.hasPointerCapture(e.pointerId)) {
+      stage.releasePointerCapture(e.pointerId);
+    }
+    const dropSide = drag.from === "left" ? "right" : "left";
+    const hover = drag.hover ?? dropTargetAt(e.clientX, e.clientY, dropSide);
+    if (hover != null) {
+      const left = drag.from === "left" ? drag.index : hover;
+      const right = drag.from === "right" ? drag.index : hover;
+      links = links.filter((l) => l.left !== left && l.right !== right);
+      links.push({ left, right });
+    }
+    drag = null;
+    drawPlayWires();
+  };
+  stage.addEventListener("pointerup", endDrag);
+  stage.addEventListener("pointercancel", (e) => {
+    if (stage.hasPointerCapture(e.pointerId)) {
+      stage.releasePointerCapture(e.pointerId);
+    }
+    drag = null;
+    drawPlayWires();
+  });
+  window.addEventListener("resize", () => requestAnimationFrame(drawPlayWires));
+}
+
+function submitRound() {
+  sessionStorage.setItem(
+    "eatLearnL2",
+    JSON.stringify({ leftItems, rightItems, links })
+  );
+  window.location.href = "answer_verify.html";
+}
+
+whenReady(() => {
+  lang = getLang();
+  applyText();
+  setupDrag();
+
+  document.querySelectorAll(".js-menu").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      window.location.href = "../index.html";
+    });
+  });
+  document.getElementById("clear").addEventListener("click", () => {
+    links = [];
+    drawPlayWires();
+  });
+  document.getElementById("submit").addEventListener("click", submitRound);
+  startRound();
 });

@@ -55,12 +55,15 @@ The data is structured like a relational database, keyed by vocabulary ID. Use t
     Words usually have the following metadata:
     - `en`              The vocabulary in english
     - `sv`              The vocabulary in swedish
-    - `sv_pl`           The plural of the vocabulary in swedish (Optional)
     - `article`         The article of the word (Optional)
+    - `sv_plural`           The plural of the vocabulary in swedish (Optional)
     - `literal`         The literal representation of the word (Optional)
+    - `subCat`          The subcategory of the word (i.e hat is a subcategory of category clothes)
     - `img`             The URL of the image for this word (Optional)
     - `img_copyright`   The copyright information for this image if it needs to be displayed (Optional)
+    - `img_is_plural`   "TRUE" if image depicts multiple of the word "FALSE" if not (optional)
     - `audio`           The URL of the audio for this word (Optional)
+    - `audio_is_plural`   "TRUE" if audio depicts multiple of the word "FALSE" if not (optional)
 
 * `get_category(category)`: Returns a list of vocabulary IDs belonging to the given category.
 

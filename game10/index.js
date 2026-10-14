@@ -2,110 +2,115 @@
 // Owned by Game 10
 // ==============================================
 
-"use strict";
+import { getLang, loadProgress, resetProgress, getWeight, getStreak, PLATEAU } from "./dev-tools/cookies.js";
+import { t, applyI18n } from "./dev-tools/i18n.js";
+import { proverbOfTheDay } from "./dev-tools/proverbs.js";
+import { whenReady, foodItems, vocabUrl } from "./dev-tools/util.js";
 
-import { loadProgress, resetProgress } from './dev-tools/cookies.js';
+const LEVEL_HREF = {
+  1: "level_one/level_one.html",
+  2: "level_two/level_two.html",
+  3: "level_three/level_three.html"
+};
 
-$(function() {window.vocabulary.when_ready(function () {
+function renderMenu() {
+  const lang = getLang();
+  const progress = loadProgress();
+  const foods = foodItems();
+  applyI18n(lang);
 
-  // These are only dummy functions and can be removed.
-  $("#check-jquery").on("click", () => {
-    alert("JavaScript and jQuery are working.");
+  const proverb = proverbOfTheDay();
+  document.getElementById("proverb-sv").textContent = proverb.sv;
+  document.getElementById("proverb-en").textContent = `“${proverb.en}”`;
+  document.getElementById("proverb-meaning").textContent = proverb.meaning[lang];
+
+  const learned = progress.learnedIds.length;
+  const total = Math.max(foods.length, 1);
+  document.getElementById("learned-count").textContent = String(learned);
+  document.getElementById("learned-total").textContent = String(foods.length);
+  document.getElementById("learned-bar").style.width = Math.min(100, (learned / total) * 100) + "%";
+  document.querySelectorAll("[data-score]").forEach((el) => {
+    const level = Number(el.dataset.score);
+    const streak = getStreak(level);
+    const levelcurrentStreak = streak.current;
+    const levelbestStreak = streak.best;
+    el.innerHTML = `${t(lang, "streak")} ${levelcurrentStreak} | ${t(lang, "best")} ${levelbestStreak}`;
   });
-
-  $("#display-vocab").text(JSON.stringify(window.vocabulary.get_random()));
-
-  $("#check-saving").on("click", () => {
-    var data = window.save.get("game10");
-    data.counter = data.counter ?? 0;
-    data.counter += 1;
-    $("#check-saving").text(`This button has been pressed ${data.counter} times`);
-    window.save.set("game10", data);
-  });
-
-})});
-
-document.addEventListener('DOMContentLoaded', () => {
-    const userProgress = loadProgress(); // From cookies.js
-    const currentLevel = userProgress.currentLevel;
-
-    updateProgressBar(userProgress);
-
-    const level2Link = document.getElementById('level-2-link');
-    const level3Link = document.getElementById('level-3-link');
-
-    // Check and lock Level 2
-    if (currentLevel < 2) {
-        lockLevel(level2Link, 2);
-    }
-
-    // Check and lock Level 3
-    if (currentLevel < 3) {
-        lockLevel(level3Link, 3);
-    }
-
-    const resetButton = document.getElementById('reset-progress-btn');
-    if (resetButton) {
-        resetButton.addEventListener('click', () => {
-            // Ask the user to confirm before deleting everything
-            if (confirm('Are you sure you want to reset all your progress? This action cannot be undone.')) {
-                resetProgress(); // This function is from cookies.js
-                // Clear all stats for team
-                save.stats.clear("game10");
-                alert('Your progress has been reset.');
-                location.reload(); // Reload the page to update the UI
-            }
-        });
-    }
-});
-
-/**
- * Calculates and updates the visual progress bar based on completed levels.
- * @param {{currentLevel: number, levelScores: object}} progress - The user's progress object.
- */
-function updateProgressBar(progress) {
-    let levelsCompleted = 0;
-    const scoreToComplete = 10; // The score needed to pass a level
-
-    if (progress.levelScores[1] >= scoreToComplete) {
-        levelsCompleted++;
-    }
-    if (progress.levelScores[2] >= scoreToComplete) {
-        levelsCompleted++;
-    }
-    if (progress.levelScores[3] >= scoreToComplete) {
-        levelsCompleted++;
-    }
-
-    const totalLevels = 3;
-    const completionPercentage = (levelsCompleted / totalLevels) * 100;
-
-    const progressBarInner = document.querySelector('.progress-bar-inner');
-    if (progressBarInner) {
-        progressBarInner.style.width = completionPercentage + '%';
-    }
 }
 
-/**
- * Disables a level link, adds a 'locked' class, and shows an alert on click.
- * @param {HTMLElement} linkElement - The <a> tag for the level.
- * @param {number} requiredLevel - The level required to unlock.
- */
-function lockLevel(linkElement, requiredLevel) {
-    if (!linkElement) return;
+let wordSort = "az";
+let wordReverse = false;
 
-    const button = linkElement.querySelector('button');
-    
-    // Add a 'locked' class for styling
-    button.classList.add('locked');
-    button.innerHTML += ' <i class="fa fa-lock"></i>'; // Adds a lock icon
+function renderWords() {
+  const lang = getLang();
+  const progress = loadProgress();
+  document.querySelector('[data-i18n="masteredRule"]').textContent = t(lang, "masteredRule", { n: PLATEAU });
+  document.querySelectorAll("[data-sort]").forEach((btn) => {
+    btn.classList.toggle("is-on", btn.dataset.sort === wordSort);
+  });
+  document.querySelector('[data-sort="az"]').textContent = wordReverse ? "Ö–A" : "A–Ö";
+  document.getElementById("words-reverse").classList.toggle("is-on", wordReverse);
+  const bar = (label, weight) => {
+    const cls = weight >= PLATEAU ? "is-full" : weight > 0 ? "is-half" : "";
+    return `<div class="al-word-score">${label} ${weight}/${PLATEAU}<div class="al-bar"><span class="${cls}" style="width:${(weight / PLATEAU) * 100}%"></span></div></div>`;
+  };
+  const score = (id, mode) => bar(t(lang, mode), getWeight(progress, id, mode));
+  document.getElementById("words-list").innerHTML = foodItems()
+    .sort((a, b) => {
+      let order = a.sv.localeCompare(b.sv, "sv");
+      if (wordSort !== "az") {
+        order = getWeight(progress, b.id, wordSort) - getWeight(progress, a.id, wordSort) || order;
+      }
+      return wordReverse ? -order : order;
+    })
+    .map((item, i) => {
+      return `<div class="al-word-row" style="--i:${Math.min(i, 12)}">
+        <img src="${vocabUrl(item.img)}" alt="">
+        <div class="al-word-name">${item.sv}<span>${item.en || ""}</span></div>
+        ${score(item.id, "recognition")}
+        ${score(item.id, "spelling")}
+      </div>`;
+    })
+    .join("");
+}
 
-    // Prevent clicking
-    linkElement.href = 'javascript:void(0)';
+whenReady(() => {
+  renderMenu();
 
-    // Show a message on click
-    linkElement.addEventListener('click', (e) => {
-        e.preventDefault(); // Stop navigation
-        alert(`You must complete Level ${requiredLevel - 1} to unlock this!`);
+  document.getElementById("open-learn").addEventListener("click", () => {
+    window.location.href = "learning_mode/learning_mode.html";
+  });
+
+  document.querySelectorAll(".al-level-card").forEach((card) => {
+    card.addEventListener("click", () => {
+      const level = Number(card.dataset.level);
+      window.location.href = LEVEL_HREF[level];
     });
-}
+  });
+
+  const wordsModal = document.getElementById("words-modal");
+  document.getElementById("words-open").addEventListener("click", () => {
+    renderWords();
+    wordsModal.classList.add("is-on");
+  });
+  document.querySelectorAll("[data-sort]").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      wordSort = btn.dataset.sort;
+      renderWords();
+    });
+  });
+  document.getElementById("words-reverse").addEventListener("click", () => {
+    wordReverse = !wordReverse;
+    renderWords();
+  });
+  document.getElementById("words-close").addEventListener("click", () => wordsModal.classList.remove("is-on"));
+
+  const modal = document.getElementById("reset-modal");
+  document.getElementById("reset-open").addEventListener("click", () => modal.classList.add("is-on"));
+  document.getElementById("reset-cancel").addEventListener("click", () => modal.classList.remove("is-on"));
+  document.getElementById("reset-confirm").addEventListener("click", () => {
+    resetProgress();
+    modal.classList.remove("is-on");
+    renderMenu();
+  });
+});
