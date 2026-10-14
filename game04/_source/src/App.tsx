@@ -1691,7 +1691,7 @@ const seasonInfo: Record<
             Ett år i Uppsala
           </h1>
           <p className="text-sm text-gray-600 mb-2 leading-relaxed">
-            Practise Swedish weekdays, months, dates, seasons and weather.
+            Practice Swedish weekdays, months, dates, seasons and weather.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-3">
