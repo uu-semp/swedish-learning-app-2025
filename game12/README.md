@@ -10,6 +10,17 @@ python3 -m http.server 8000
 
 Then open <http://localhost:8000/index.html>.
 
+## Dependencies 
+
+The game uses:
+
+- Vue 3 for displaying and updating the game interace
+- Papa Parse for reading the vocabulary CSV through the shared vocabulary loader
+- The shared Google Sheets database for vocabulary.
+- `scripts/vocabulary_await.js` and `scripts/database_config.js` for loading and accessing the vocabulary.
+- `scripts/save.js` for saving completed difficulties in the browser's localStorage.
+
+
 ## Game description
 Hitta rätt hus is game 12 of the Swedish Learning App. The game is divided into three difficulties:
 - Difficulty 1: choose the correct house on a street given a street name and a number between 1-99. For example: "Jag bor på Svartbäcksgatan 54".
@@ -42,6 +53,22 @@ The following components reside within the Model:
 - Graphics: a local folder with images used for graphics
 - Vocabulary: both a Google sheets, along with a library for interacting with it
 
+## Changing game content
+
+The paths below are relative to `game12/`
+
+| What to change | Where to change it |
+| --- | --- |
+| Vocabulary, translations and transport expressions | The shared Google Sheets vocabulary database |
+| Swedish and Englush question sentences | `scripts/database_config.js` |
+| Landmark and transport image mappings | `model/services/question_generator.js` |
+| House positions and street layouts | `model/services/board_generator.js` |
+| Number of questions and house number ranges | `model/services/game_manager.js` |
+| Game spacing, colours and sizes | `view/game/game.css` |
+| Menu text and translations | `view/menu/menu.js` |
+| Menu appearance | `view/menu/menu.css` |
+| End screen text | `view/end_screen/end_screen.html` |
+| Image files and licence information | `images/` and `images/Licenses/` |
 
 ## User stories
 **REQ-STUDENT1:** The user needs to be able to choose a difficulty level from the main menu, as seen in Figure 1, so that they can practice at a level appropriate to their current knowledge. :white_check_mark:

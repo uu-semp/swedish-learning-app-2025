@@ -272,6 +272,7 @@ hr {
   position: relative;
 }
 
+/* A smaller blue arrow sits inside the white arrow which leaves a white border.  */
 .street-text {
   position: absolute;
   width: 145px;
@@ -415,6 +416,7 @@ hr {
   font-size: 1.2rem;
 }
 
+/* Difficulties 2 and 3 share the straight street layout */
 #house-grid-T.horizontal-only {
   grid-template-columns: repeat(5, 100px);
   grid-template-rows: 80px 40px 80px;
@@ -531,6 +533,7 @@ hr {
   cursor: default;
 }
 
+/* Difficulty 3 needs extra room for the transport buttons */
 #prompt-words.difficulty-3 {
   top: 15px;
   margin-bottom: 55px;
@@ -611,7 +614,7 @@ hr {
   height: 90px;
 }
 
-
+/* Let straight street sings grow with the name and leave room for the arrow tip */
 #house-grid-T.horizontal-only .street-text {
     width: max-content;
     min-width: 150px;

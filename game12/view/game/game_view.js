@@ -16,6 +16,7 @@ createApp({
         //controller.Initialize_Controller(difficulty)
         const game = controller.game
         
+        // Keep both choices until the player has picked a house and a vehicle
         const difficulty3Selection = reactive({
         house: null,
         transport: null
@@ -47,6 +48,7 @@ createApp({
             setLanguage("sv")
         }
 
+        // Use the language buttons from the main app around the game
         const englishButton = window.parent.document.getElementById("lang-eng")
         const swedishButton = window.parent.document.getElementById("lang-sv")
 
@@ -55,6 +57,7 @@ createApp({
 
         setLanguage(display.language)
 
+        // Remove our listeners form the main apps buttons when leaving this page
         window.addEventListener("pagehide", function () {
             englishButton.removeEventListener("click", useEnglish)
             swedishButton.removeEventListener("click", useSwedish)
@@ -152,6 +155,7 @@ createApp({
                 game.selected_answer.houseNumber === house.houseNumber
         }
 
+        // Show or hide English sentence. Showing it counts as using a hint. 
         function toggleTranslation() {
             if (game.answer_locked || game.is_finished) {
                 return
@@ -206,6 +210,7 @@ createApp({
             window.location.href = "../menu/index.html"
         }
 
+        // Clear the previous hint and prepare the words for the next question 
         function PrepareQuestionDisplay() {
             display.showTranslation = false
             display.promptWords = []
@@ -235,7 +240,7 @@ createApp({
             }
         }
 
-        // Reset display settings when the controller changes questions.
+        // Difficulty 2 also watches the answer lock so a repeated question resets even if its index stays the same
         watch(
             [function () { 
                 return game.current_question_index}, 

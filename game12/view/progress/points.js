@@ -1,3 +1,5 @@
+
+// Read the saved completion flags and mark those difficulties in the menu.  
 const progress = window.save.get("game12")
 
 for (let difficulty = 1; difficulty <= 3; difficulty++) {

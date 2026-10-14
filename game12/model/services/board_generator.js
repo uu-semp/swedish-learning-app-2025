@@ -8,7 +8,7 @@ export function GenerateBoard(streets, ranges, difficulty, landmarks) {
 }
 
 
-
+// Straight street for difficulty 2 and 3
 function GenerateHorizontal(streets, ranges, landmarks) {
     let building_positions_horionztal = [
         { col: 1, row: 1 },
@@ -44,6 +44,7 @@ function GenerateHorizontal(streets, ranges, landmarks) {
     //Random selector for the landmarks 
     let chosen_landmark = landmarks[Math.floor((Math.random() * landmarks.length))]
 
+    // Replace the top middle house with the chosen Landmark
     let landmark = buildings_horionztal[4]
     landmark.type = "LANDMARK"
     landmark.nameSwedish = chosen_landmark.sv
@@ -58,8 +59,9 @@ function GenerateHorizontal(streets, ranges, landmarks) {
     }
 }
 
-
+// Two streets in a T shape (T section) for difficulty 1
 function GenerateT(streets, ranges) {
+    // Alternate between the two sides to keep odd on one side and even numbers on the other side. 
     let building_positions_horionztal = [
         { col: 1, row: 1 },
         { col: 1, row: 3 },

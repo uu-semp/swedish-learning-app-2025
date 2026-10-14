@@ -7,6 +7,8 @@
     <title>Hitta rätt hus</title>
 
     <link rel="stylesheet" href="./game.css">
+    
+    <!-- Allows js files to import from 'vue'. -->
    <script type="importmap">
     {
         "imports": {
@@ -17,9 +19,6 @@
 
     <script src="../../../scripts/save.js"></script>
     <script type="module" src="./game_view.js"></script>
-
-    <!-- Allows js files to import from 'vue'. -->
-   
 </head>
 
 <body>
@@ -82,7 +81,7 @@
 
                     <hr>
                 
-                    <!-- Question with individually translated words -->
+                    <!-- Each question word has its own button -->
                     <div
     id="prompt-words"
     :class="{

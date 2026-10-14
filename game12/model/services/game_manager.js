@@ -49,6 +49,7 @@ export async function Initialize(difficulty) {
     let available_landmarks = []
     let directions = []
 
+    // Load directions and match the Landmarks to their images. 
     if (difficulty === 2 || difficulty === 3) {
 
         const directions_ids = get_category("direction")
@@ -75,6 +76,7 @@ export async function Initialize(difficulty) {
 
     let transports = []
 
+// Match each transport phrase to a bike, bus or a car iamge. 
 if (difficulty === 3) {
     const transport_ids = get_category("transport")
 
@@ -101,6 +103,7 @@ if (difficulty === 3) {
 
     if (difficulty === 1 || difficulty === 2 || difficulty === 3) {
         
+        // Make 10 qeustions using all ranges and Landmarks before resuing them
         for (let index = 0; index < 10; index++) {
             let board = GenerateBoard(streets, available_ranges, difficulty, available_landmarks)
 
@@ -131,7 +134,7 @@ if (difficulty === 3) {
 }
 
 
-
+// Bring back wrong answers and qeustions answered with a ahint, in random order
 function StartRepetitionRound(game) {
     while (game.incorrect_questions.length > 0) {
         const random_index = Math.floor(Math.random() * game.incorrect_questions.length)
@@ -211,7 +214,7 @@ if (game.difficulty === 3) {
 else {
     game.answer_correct = house_correct
 }
-
+    // A qeustion is finished only wehn answered correctly without a hint
     if (game.answer_correct && !game.hint_used) {
         game.finished_questions.push(question_index)
     }
@@ -222,7 +225,7 @@ else {
 
     game.answered_in_round += 1
 
-
+    // Leave the feedback visible for two seconds before moving on to the next question
     feedback_timer = setTimeout(function () {
         feedback_timer = null
         NextRound_GM(game)
@@ -237,6 +240,7 @@ export function UseHint_GM(game) {
     game.hint_used = true
 }
 
+// SAve this difficulty as completed so it shows up in the menu
 function FinishGame(game) {
     game.is_finished = true
 

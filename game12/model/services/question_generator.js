@@ -1,6 +1,8 @@
 let available_transports = [] 
 let available_directions = []
 
+
+// Use all three directions before picking from the again
 function NextDirectionIndex(){
   if (available_directions.length === 0){
     available_directions = [0,1,2]
@@ -15,6 +17,7 @@ export function GenerateQuestion(difficulty, board, number_words, directions, tr
     correctStreet: null,
   };
 
+  // Houses left of (index 2), right of (index 6) and opposite of (index 5) the Landmark which mates the database order
   let target_indexes = [2, 6, 5]
 
   if (difficulty === 1) {
@@ -46,7 +49,7 @@ export function GenerateQuestion(difficulty, board, number_words, directions, tr
   }
    else if (difficulty === 3) {
 
-    // Logic for making sure every transport is used before repeating
+    // Use every transport phrase before repeation one
     if (available_transports.length === 0) {
         available_transports = transports.slice()
     }
@@ -63,7 +66,7 @@ export function GenerateQuestion(difficulty, board, number_words, directions, tr
     config.correctNumber = correct_house.houseNumber
     config.correctStreet = correct_house.street
 
-    // Needed for the Difficulty 3 transport buttons
+    // Show one button per vehicle even when it has several phrases
     config.transportOptions = transports.filter(
         (transport, index, array) =>
             array.findIndex(

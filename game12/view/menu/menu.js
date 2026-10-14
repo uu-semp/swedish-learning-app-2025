@@ -70,6 +70,7 @@ swedishButton.addEventListener("click", useSwedish)
 
 setLanguage(localStorage.getItem("game12Language") || "sv")
 
+// Remove our listeners from the main apps buttons when leaving this page
 window.addEventListener("pagehide", function () {
     englishButton.removeEventListener("click", useEnglish)
     swedishButton.removeEventListener("click", useSwedish)
