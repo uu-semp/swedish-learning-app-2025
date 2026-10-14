@@ -12,6 +12,8 @@ const menu = document.getElementById("game-menu");
 const stage = document.getElementById("game-stage");
 const backBtn = document.getElementById("back-btn");
 const filterBar = document.getElementById("filter-bar");
+const srsOpenBtn = document.getElementById("srs-open-btn");
+const stageTitle = document.getElementById("stage-title");
 
 let allGames = [];
 let currentLanguage = 'sv';
@@ -111,7 +113,6 @@ async function loadGames() {
   }
 }
 
-
 //// UI ////
 function buildFilter(themes) {
   filterBar.innerHTML = "";
@@ -207,6 +208,7 @@ function renderGrid(games) {
       </div>
       <div class="settings-actions">
         <button id="_clear_save" class="settings-btn secondary">${translations["clear-data"][currentLanguage]}</button>
+        <button id="_clear_srs" class="settings-btn secondary">${translations["srs-clear-btn"][currentLanguage]}</button>
       </div>
     `;
       
@@ -219,6 +221,40 @@ function renderGrid(games) {
 
     // Settings overlay event handlers
     overlay.querySelector('#_close_settings').addEventListener('click', () => overlay.remove());
+
+    overlay.querySelector('#_clear_srs').addEventListener('click', () => {
+      const confirmBox = document.createElement('div');
+      confirmBox.className = 'confirm-box translate';
+      confirmBox.innerHTML = `
+        ${translations["srs-clear-confirm"][currentLanguage]}
+        <div class="confirm-box-actions">
+          <button class="settings-btn confirm-box-btn cancel">${translations["cancel"][currentLanguage]}</button>
+          <button class="settings-btn confirm-box-btn confirm">${translations["srs-clear-btn"][currentLanguage]}</button>
+        </div>
+      `;
+      box.appendChild(confirmBox);
+
+      confirmBox.querySelector('.cancel').addEventListener('click', () => confirmBox.remove());
+      confirmBox.querySelector('.confirm').addEventListener('click', () => {
+        try {
+          window.srs.clear(allGames.map((game) => game.id));
+          confirmBox.remove();
+          frame.contentWindow?.postMessage({ type: "srsUpdated" }, window.location.origin);
+
+          const message = document.createElement('div');
+          message.className = 'success-message';
+          message.textContent = translations["srs-clear-success"][currentLanguage];
+          box.appendChild(message);
+          setTimeout(() => message.remove(), 3000);
+        } catch (error) {
+          console.error("Could not clear spaced-repetition history:", error);
+          const message = document.createElement('div');
+          message.className = 'error-message';
+          message.textContent = error.message;
+          confirmBox.appendChild(message);
+        }
+      });
+    });
 
     // Clear saved data button
     overlay.querySelector('#_clear_save').addEventListener('click', () => {
@@ -261,19 +297,35 @@ function renderGrid(games) {
 })();
 
 //// Navigation ////
+function updateStageTitle(src) {
+  const isSrsPage = new URL(src, window.location.href).pathname.endsWith("/srs.html");
+  if (isSrsPage) {
+    stageTitle.textContent = translations["srs-title"][currentLanguage];
+    frame.title = stageTitle.textContent;
+    return;
+  }
+
+  const gameId = src.match(/\.\/(game\d+)\//)?.[1];
+  const game = allGames.find((item) => item.id === gameId);
+  stageTitle.textContent = game ? game.title[currentLanguage] : "Game";
+  frame.title = stageTitle.textContent;
+}
+
 // Open game in iframe
 function openIframe(src) {
-  let back_btn
   frame.src = src;
   menu.hidden = true;
   stage.hidden = false;
-  // Get correctly translated text for the back button
-  back_btn = document.getElementById('back-btn')
-  back_btn.textContent = translations['back-btn'][currentLanguage]
+  backBtn.textContent = translations['back-btn'][currentLanguage];
+  updateStageTitle(src);
 
   // Save current game to sessionStorage
   sessionStorage.setItem("currentGameSrc", src);
 }
+
+srsOpenBtn.addEventListener("click", () => {
+  openIframe(`./srs.html?lang=${currentLanguage}`);
+});
 
 // Back to menu
 backBtn.addEventListener("click", () => {
@@ -339,6 +391,9 @@ async function setLanguage(lang) {
     if (allGames.length) {
       renderGrid(getFilteredGames());
     }
+    const currentSrc = sessionStorage.getItem("currentGameSrc");
+    if (currentSrc) updateStageTitle(currentSrc);
+    frame.contentWindow?.postMessage({ type: "setLanguage", lang }, window.location.origin);
    
   } catch (error) {
     console.error(error)

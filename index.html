@@ -15,6 +15,7 @@ Owned by the Menu Team
 
         <script src="./scripts/vocabulary.js"></script>
         <script src="./scripts/save.js"></script>
+        <script src="./scripts/srs.js"></script>
 
         <!-- You are allowed to use JQuery and Vue.js but don't have to. They just make a
   lot of things easier
@@ -46,6 +47,7 @@ Owned by the Menu Team
                     lang="sv"
                 >Svenska</button>
                 <!-- <button class="header-btn">About</button> --> <!-- Non functioning button: Can be used in the future to add an about page -->
+                <button class="header-btn translate" id="srs-open-btn"></button>
                 <button class="header-btn translate" id="settings-btn"></button>
             </div>
         </header>
@@ -66,7 +68,7 @@ Owned by the Menu Team
             <!-- Game stage -->
              <section id="game-stage" hidden>
                 <div class="stage-header">
-                    <h1>Game Title</h1>
+                    <h1 id="stage-title">Game Title</h1>
                     <button class="translate" id="back-btn"></button>
                 </div>
                 <div class ="game-container">
