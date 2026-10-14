@@ -12,9 +12,9 @@ Telling time in Swedish involves unique phrasing, particularly around the half-h
 
 ## Game Modes
 
-- ** Easy (Lätt):** Read the analog clock and select the matching Swedish time phrase from multiple-choice options.
-- ** Intermediate (Mellan – Set the Clock):** Read a Swedish phrase (e.g., *"Klockan är kvart över tre"*) and drag the analog clock hands (or use arrow keys) to set the matching time. Hands automatically snap to 5-minute intervals.
-- ** Advanced (Svår – Word Blocks):** A fast-paced 30-second timed challenge where players assemble Swedish time expressions by arranging clickable word tiles into slots.
+- **Easy (Lätt):** Read the analog clock and select the matching Swedish time phrase from multiple-choice options.
+- **Intermediate (Mellan – Set the Clock):** Read a Swedish phrase (e.g., *"Klockan är kvart över tre"*) and drag the analog clock hands (or use arrow keys) to set the matching time. Hands automatically snap to 5-minute intervals.
+- **Advanced (Svår – Word Blocks):** A fast-paced 30-second timed challenge where players assemble Swedish time expressions by arranging clickable word tiles into slots.
 
 ---
 
@@ -35,11 +35,11 @@ The following list includes all ten user stories from **D2 - Group 5, section 4 
 | ID | User story from D2 | Status | Implementation / remaining work |
 | --- | --- | --- | --- |
 | USER1 | The user shall only be given one correct alternative in multiple-choice questions, to avoid confusion. | **Completed** | Easy mode generates one correct Swedish time phrase and three distinct incorrect alternatives. |
-| USER2 | The user shall have a set time limit for answering Advanced questions, to add difficulty and incentive. | **Open (partial)** | Advanced has a 30-second timer per question and timeout feedback. Submission still needs a deadline check so an answer cannot be accepted after expiry but before the timer callback runs. |
+| USER2 | The user shall have a set time limit for answering Advanced questions, to add difficulty and incentive. | **Completed** | Advanced has a 30-second timer per question and timeout feedback. |
 | USER3 | The user shall be able to drag a clock's minute and hour hands to display the time of a question in Swedish. | **Completed** | Intermediate displays a Swedish time phrase and lets the player drag both hands, then checks the selected time. Keyboard controls are also available. |
 | USER4 | The user shall recognise Swedish words and/or phrases to improve reading comprehension. | **Completed** | Easy asks players to recognise the correct phrase; Intermediate asks them to read a phrase and set the clock; Advanced uses Swedish word blocks. |
-| USER5 | The user shall see a clockface and write the correct time phrase without premade options, to practise writing times. | **Open** | The available modes use multiple-choice answers, clock hands, or premade word blocks. The hidden text-input markup is not an available free-text game mode. |
-| USER6 | The user shall be able to replay previously incorrect questions with slight modifications, to target difficult subjects. | **Open (partial)** | Easy and Advanced offer **Train on failed questions**, generating related time questions. Intermediate has no working failed-question practice route. Practice queue deduplication and consistent question identities also need work; see [BUGS.md](BUGS.md). |
+| USER5 | The user shall see a clockface and write the correct time phrase, to practise writing times. | **Open** | The advanced level has this functionality. |
+| USER6 | The user shall be able to replay previously incorrect questions with slight modifications, to target difficult subjects. | **Open (partial)** | Easy and Advanced offer **Train on failed questions**, generating related time questions. Intermediate has no working failed-question practice route. |
 | DEV1 | The future developer shall have a clear, up-to-date README with instructions for setting up, running, and extending the game. | **Open (partial)** | This README describes the modes, features, structure, and D2 status. Explicit setup/run instructions and guidance for adding questions or levels are still missing. |
 | DEV2 | The future developer shall have a clearly structured codebase with relevant comments and documentation, to understand the implementation without reverse engineering it. | **Completed** | Controllers, clock components, question generation/loading, progress utilities, and styles are separated into files with responsibility and function comments. The structure is documented below. |
 | TEACH1 | The game should offer different difficulty levels so students with different Swedish proficiency and learning abilities can practise at an appropriate level. | **Completed** | Easy, Intermediate, and Advanced are available from the level-selection screen, with different exercise types. |
