@@ -23,6 +23,9 @@
 
   function getCategoryIds(category) {
     requireServices();
+    if (window._vocabulary?.pending !== 0) {
+      throw new Error("Vocabulary is still loading. Retry after window.vocabulary.when_ready().");
+    }
     if (typeof category !== "string" || !category.trim()) {
       throw new TypeError("category must be a non-empty string.");
     }
@@ -101,6 +104,9 @@
 
   function getSeenWords(gameIds, category = null) {
     requireServices();
+    if (window._vocabulary?.pending !== 0) {
+      throw new Error("Vocabulary is still loading. Retry after window.vocabulary.when_ready().");
+    }
     if (!Array.isArray(gameIds)) {
       throw new TypeError("gameIds must be an array of game IDs.");
     }

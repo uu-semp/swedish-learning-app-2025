@@ -46,6 +46,14 @@ function populateCategories() {
   categorySelect.value = categories.includes(previousValue) ? previousValue : "all";
 }
 
+function waitForVocabulary() {
+  if (window.parent._vocabulary?.pending === 0) return Promise.resolve();
+
+  return new Promise((resolve) => {
+    window.parent.vocabulary.when_ready(resolve);
+  });
+}
+
 function renderWords() {
   const category = categorySelect.value === "all" ? null : categorySelect.value;
   const words = window.parent.srs.getSeenWords(
@@ -74,9 +82,10 @@ function renderWords() {
   document.getElementById("srs-table").hidden = words.length === 0;
 }
 
-function refresh() {
+async function refresh() {
   const errorElement = document.getElementById("srs-error");
   try {
+    await waitForVocabulary();
     errorElement.hidden = true;
     populateCategories();
     renderWords();
@@ -87,7 +96,7 @@ function refresh() {
   }
 }
 
-categorySelect.addEventListener("change", renderWords);
+categorySelect.addEventListener("change", refresh);
 window.addEventListener("message", (event) => {
   if (event.source !== window.parent) return;
   if (event.data?.type === "setLanguage" && ["en", "sv"].includes(event.data.lang)) {
