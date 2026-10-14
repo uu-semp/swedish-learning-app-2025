@@ -66,7 +66,7 @@ function renderPlayBoard() {
       (item, i) => `
       <div class="al-pair" data-left="${i}">
         <img draggable="false" src="${vocabUrl(item.img)}" alt="${item.en || item.sv}">
-        <span style="font:500 13px 'Work Sans',sans-serif;color:#555">${item.en || ""}</span>
+        <span class="al-pair-label">${item.en || ""}</span>
         <span class="al-node al-node-r"></span>
       </div>`
     )
