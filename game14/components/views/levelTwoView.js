@@ -149,7 +149,12 @@ export const LevelTwoView = {
               <i class="fa-solid fa-volume-high find-word-icon"></i>
               {{ currentWord.article }} {{ currentWord.sv }}
             </button>
-            <p class="find-progress">{{ currentIndex + 1 }} / {{ words.length }}</p>
+            <p class="find-progress">
+              {{$language.translate('progress-word')}} {{ currentIndex + 1 }} {{$language.translate('progress-of')}} {{ words.length }}
+            </p>
+            <p class="find-score">
+              <i class="fa-solid fa-star"></i> {{$language.translate('score')}}: {{ firstTryCorrect }}
+            </p>
             <p class="find-feedback" :class="feedback">
               {{ feedback ? $language.translate('feedback-' + feedback) : '' }}
             </p>
@@ -158,8 +163,7 @@ export const LevelTwoView = {
           <!-- When all words are done -->
           <div class="explore-side" v-if="finished">
             <p class="find-result">
-              {{ firstTryCorrect }} / {{ words.length }} {{$language.translate('first-try')}}
-            </p>
+              {{$language.translate('result-you-got')}} {{ firstTryCorrect }} {{$language.translate('progress-of')}} {{ words.length }} {{$language.translate('result-points')}}            </p>
             <button class="word-cloud play-again" @click="playAgain">
               {{$language.translate('play-again')}}
             </button>
