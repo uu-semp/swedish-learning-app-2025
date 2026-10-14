@@ -83,6 +83,21 @@
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.35);
 }
 
+/* Tip about clicking again to hear the word */
+.explore-view .explore-audio-hint {
+    font-family: 'Fredoka', 'Arial Rounded MT Bold', sans-serif;
+    font-size: 20px;
+    font-weight: 600;
+    color: white;
+    text-align: center;
+    margin: 8px 0 0;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.35);
+}
+
+.explore-view .word-icon {
+    margin-right: 6px;
+}
+
 /* The word list */
 .explore-view .explore-words {
     display: flex;
@@ -128,6 +143,28 @@
     border-radius: 24px;
     padding: 16px 36px;
     box-shadow: 0 6px 0 rgba(0, 0, 0, 0.15);
+}
+
+/* The word card is a button, so it can be clicked to hear the word */
+.explore-view button.find-word {
+    border: none;
+    cursor: pointer;
+    transition: transform 0.1s;
+}
+
+.explore-view button.find-word:hover {
+    transform: scale(1.04);
+}
+
+.explore-view button.find-word:active {
+    transform: scale(0.97);
+}
+
+/* Speaker icon inside the word card */
+.explore-view .find-word-icon {
+    font-size: 28px;
+    margin-right: 12px;
+    opacity: 0.7;
 }
 
 .explore-view .find-progress {

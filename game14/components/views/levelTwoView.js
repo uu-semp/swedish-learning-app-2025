@@ -1,4 +1,5 @@
 import { loaddb, get_category, get_vocab } from "../../../scripts/vocabulary_await.js";
+import { playSound } from "../elements/playSound.js";
 
 const MAX_MISTAKES = 2; // Wrong clicks before the answer is shown
 
@@ -51,6 +52,10 @@ export const LevelTwoView = {
         [copy[i], copy[j]] = [copy[j], copy[i]];
       }
       return copy;
+    },
+
+    playWord() {
+      playSound(this.currentWord);
     },
 
      // Show a short message under the word, then hide it again
@@ -139,7 +144,11 @@ export const LevelTwoView = {
           <!-- While playing -->
           <div class="explore-side" v-if="currentWord && !finished">
             <p class="explore-instruction">{{$language.translate('level2-instruction')}}</p>
-            <div class="find-word">{{ currentWord.article }} {{ currentWord.sv }}</div>
+            <p class="explore-audio-hint">{{$language.translate('explore-audio-hint-level2')}}</p>
+            <button class="find-word" @click="playWord">
+              <i class="fa-solid fa-volume-high find-word-icon"></i>
+              {{ currentWord.article }} {{ currentWord.sv }}
+            </button>
             <p class="find-progress">{{ currentIndex + 1 }} / {{ words.length }}</p>
             <p class="find-feedback" :class="feedback">
               {{ feedback ? $language.translate('feedback-' + feedback) : '' }}
