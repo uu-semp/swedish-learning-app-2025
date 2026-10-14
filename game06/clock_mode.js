@@ -35,7 +35,7 @@ document.querySelector(".game-frame").insertAdjacentHTML("beforeend", `
             <p class="question-label">Set the clock to:</p>
             <p id="set-clock-question" class="question-text" lang="sv"></p>
           </div>
-          <p class="question-label">Drag the red hour hand and blue minute hand to match the Swedish phrase, then submit your answer. You can also focus a hand and use the arrow keys.</p>
+          <p class="question-label">Drag the red hour hand and blue minute hand to match the Swedish phrase. You can also press "shift" to the arrow keys.</p>
           <button id="set-clock-submit" class="submit-btn" type="button" disabled>Submit Answer</button>
           <button id="set-clock-next" class="next-btn" type="button" hidden>Next Question</button>
           <p id="set-clock-feedback" class="feedback-message" role="status" aria-live="polite" hidden></p>
