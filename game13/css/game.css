@@ -13,7 +13,7 @@
 
 .speech-bubble {
   position: relative;
-  background-image: url("../assets/Speechbubble\ horizontal.png");
+  background-image: url("../../assets/game13/Speechbubble\ horizontal.png");
   background-position: center;
   background-size: 100% 100% ;
   border-radius: 30%;
@@ -40,7 +40,7 @@
   align-items: stretch;
   justify-content: flex-start;
 
-  background-image: url("../assets/PaperPellesRoom.png");
+  background-image: url("../../assets/game13/PaperPellesRoom.png");
   background-size: 100% 100%;
   background-position: left;
 }
@@ -82,7 +82,7 @@ padding-right: 20px;
 .wardrobe {
   flex:1; 
   flex-direction: column;
-  background-image: url("../assets/wardrobe_white_bg.png");
+  background-image: url("../../assets/game13/wardrobe_white_bg.png");
   background-size: 100% 100%;
   background-position: center;
   background-repeat: no-repeat;
@@ -118,7 +118,7 @@ padding-right: 20px;
   width: 40px;
   height: 40px;
 
-  background-image: url("../assets/Speechbubble-tail.png");
+  background-image: url("../../assets/game13/Speechbubble-tail.png");
   background-size: contain;
   background-position: center;
   background-repeat: no-repeat;
@@ -169,7 +169,7 @@ padding-right: 20px;
   width: 40px;
   height: 40px;
 
-  background-image: url("../assets/Speechbubble-tail.png");
+  background-image: url("../../assets/game13/Speechbubble-tail.png");
   /* transform: scaleX(-1); mirror the image */
   background-size: contain;
   background-position: center;
