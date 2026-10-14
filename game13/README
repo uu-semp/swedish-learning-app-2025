@@ -54,15 +54,6 @@ Clothing assets are in `assets/game13` and were drawn by Shianne Tan, a member o
 
 ---
 
-## CSS
-
-all `.css` depends on `base.css`, so **`base.css` must be loaded first** in HTML files.
-**`css/base.css`**
-- Shared components such as buttons and popups.
-- Design variables (colors, screen size, shadows, font) in `:root`, so they can be changed in one place.
-
----
-
 ## Tech Stack
 
 - **Frontend:** HTML, CSS, vanilla JavaScript (ES modules)
@@ -70,10 +61,30 @@ all `.css` depends on `base.css`, so **`base.css` must be loaded first** in HTML
 - **Version control:** Git, GitHub
 - **Dev server:** Python's built-in `http.server`
 
----
+### HTML Overview
 
-## Testing
-...
+The game is split into three pages that follow the player's path. Each page loads its own JavaScript modules from `game/`.
+
+- **`index.html`** is the landing page (main menu). It shows the three level buttons with scores and a "How to play" popup.
+- **`level_introduction.html`** is shown before each level and shows the words the student should already know and the new words for the level. 
+- **`game.html`** is the game itself
+
+### JavaScript Overview
+
+**`index.js`** is the entry module that wires together the JavaScript files in `game13/game/`. The files in `game13/game/` are split by responsibility:
+
+- **Level configuration and word lists** (`level_configuration.js`, `level_wordlist.js`): define what each level contains and build the vocabulary lists shown before a level.
+- **Game logic** (`outfit_generator.js`, `progress.js`): generate random outfits with Swedish and English descriptions, and track each student's progress per level.
+- **Clothing and UI** (`clothing/`, `ui/`): define the garments and render the wardrobe and Pelle.
+
+### CSS Overview
+
+all `.css` depends on `base.css`, so **`base.css` must be loaded first** in HTML files.
+
+**`css/base.css`**:
+- Shared components such as buttons and popups.
+- Design variables (colors, screen size, shadows, font) in `:root`, so they can be changed in one place.
+
 ---
 
 ## Unimplemented Requirements
@@ -98,4 +109,3 @@ User requirements we did not have time to implement:
 
 ### Other implementations to follow up on:
 - Hide the scrollbars that are in the wardrobe.
-- Replace the "Back to level-selecting-page" button with a clearer "Back to menu" button.

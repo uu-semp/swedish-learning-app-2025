@@ -1,6 +1,3 @@
-/* Start page (index.html): the drawn start screen as background.
-   Load after base.css. */
-
 /* The artwork already shows the title and Pelle. The frame takes the
    artwork's proportions (2322 × 1473) so nothing is cropped or stretched. */
 .screen.start-screen {
