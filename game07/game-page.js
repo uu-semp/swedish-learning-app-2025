@@ -1,90 +1,110 @@
 // ==============================================
 // Owned by Game 07
+// Endless mode with lives
 // ==============================================
 
 "use strict";
 
-// Number of rounds in the game, can be changed whenever
-// Could also add a button in category, so the user can select the amount of rounds in any given game
-const rounds = 5;
+// How many lives the player starts with when lives are enabled.
+const STARTING_LIVES = 3;
 
-function game_start(category) {
-  var ids = [];
-  const game_words = [];
+// How long each round lasts when the timer is enabled.
+const TIMER_SECONDS = 10;
 
-  //If the player chooses the mixed option, retreive all categories into one list
+// Reads the player's saved preferences from the index page (defaults: no
+// timer, lives on — matching the original game behaviour).
+function get_settings() {
+  const defaults = { timerEnabled: false, livesEnabled: true };
+  const saved = JSON.parse(localStorage.getItem("game_settings") || "null");
+  return Object.assign({}, defaults, saved || {});
+}
+
+// Builds the full list of vocab ids for a category (or all combined for "mixed")
+function get_full_pool(category) {
   if (category == "mixed") {
     const clothing = window.vocabulary.get_category("clothing");
     const food = window.vocabulary.get_category("food");
     const furniture = window.vocabulary.get_category("furniture");
-    ids = ids.concat(clothing, food, furniture);
+    return [].concat(clothing, food, furniture);
   }
-  // Get all the words from the chosen category
-  else {
-    ids = window.vocabulary.get_category(category);
+  return window.vocabulary.get_category(category);
+}
+
+// Called once when a new game begins
+function game_start(category, timerEnabled, livesEnabled) {
+  const fullIds = get_full_pool(category);
+  const settings = get_settings();
+
+  // Prefer explicitly passed arguments if defined, otherwise fall back to saved settings
+  const useTimer = timerEnabled !== undefined ? timerEnabled : settings.timerEnabled;
+  const useLives = livesEnabled !== undefined ? livesEnabled : settings.livesEnabled;
+
+  // Store active category for cross-session high scores and tracking
+  if (window.save) {
+    window.save.set("game07", "current_category", category);
   }
 
-  //Loop through once for each round
-  for (let i = 0; i < rounds; i++) {
-    // Generate a random number between 1 and 4, this will be the answer for that round
-    const correct_answer = Math.floor(Math.random() * 4) + 1;
+  const state = {
+    category: category,
+    fullIds: fullIds,
+    ids: fullIds.slice(),
+    timerEnabled: useTimer,
+    livesEnabled: useLives,
+    lives: STARTING_LIVES,
+    round: 0,
+    total: 0,
+    history: [],
+    currentRoundWords: null,
+  };
 
-    // Pick four random words from the ids array
-    for (let j = 0; j < 4; j++) {
-      //Generate a random word from the array
-      const rand = Math.floor(Math.random() * ids.length);
-      const generated_word = window.vocabulary.get_vocab(ids[rand]);
+  generate_round(state);
+  localStorage.setItem("game_state", JSON.stringify(state));
+}
 
-      // If this word matches the random answer number, mark it as the answer, else mark it as false
-      if (j == correct_answer - 1) generated_word["answer"] = true;
-      else generated_word["answer"] = false;
+// Picks 4 words for one round, mutating state in place.
+// Refills the pool from fullIds whenever it gets too small to pick 4 unique words.
+function generate_round(state) {
+  if (state.ids.length < 4) {
+    state.ids = state.fullIds.slice();
+  }
 
-      game_words.push(generated_word);
-      ids.splice(rand, 1);
-    }
+  const correct_answer = Math.floor(Math.random() * 4) + 1;
+  const roundWords = [];
 
-   }
+  for (let j = 0; j < 4; j++) {
+    const rand = Math.floor(Math.random() * state.ids.length);
+    const generated_word = window.vocabulary.get_vocab(state.ids[rand]);
 
-    // Add a highscore object to the end of the array for tracking the score
-    // Depending on the number of rounds, will add that many items that track the score for that particular round
-    var highscore = {};
-    for (let i = 0; i < rounds; i++) {
-        highscore["round" + (i + 1)] = 0;
-    };
-    highscore["total"] = 0;
-    game_words.push(highscore);
+    generated_word["answer"] = (j == correct_answer - 1);
 
+    roundWords.push(generated_word);
+    state.ids.splice(rand, 1);
+  }
 
-    //Wrong words tracking for replay button
-    var wrong_words = {};
-    for (let i = 0; i < rounds; i++) {
-        wrong_words["round" + (i + 1)] = []; // empty array to hold wrong word IDs or names
-    }
-    wrong_words["all"] = []; // all wrong words across all rounds
-    game_words.push(wrong_words);
-
-    // Put the chosen words in local storage
-    localStorage.setItem('game_words', JSON.stringify(game_words));
-};
+  state.currentRoundWords = roundWords;
+}
 
 document.addEventListener("DOMContentLoaded", () => {
-  if(document.getElementById("categorybox")){
+  if (document.getElementById("categorybox")) {
     window.vocabulary.when_ready(function () {
       document.getElementById("loader").style.display = "none";
       document.querySelector(".categorybox").style.display = "block";
     });
   }
 
-    if (
+  if (
     document.getElementById("img-1") &&
     document.getElementById("img-2") &&
     document.getElementById("img-3") &&
     document.getElementById("img-4")
   ) {
-    startGame();
+    // Vocabulary may still be loading; wait for it before starting, since
+    // generating a fresh round (e.g. right after Try Again) needs
+    // window.vocabulary to be ready.
+    window.vocabulary.when_ready(startGame);
   } else {
     console.error("Game images missing");
-  } 
+  }
 });
 
 function startGame() {
@@ -99,24 +119,88 @@ function gameplay() {
     document.getElementById("img-4"),
   ];
 
+  const finishedBtn = document.getElementById("finished-button");
+
+  if (finishedBtn) {
+    finishedBtn.addEventListener("click", () => {
+      // Save current progress before leaving
+      saveState();
+      // Redirect to the results page
+      window.location.href = "results-page.html";
+    });
+  }
+
   const nextBtn = document.getElementById("next-button");
   const soundIcon = document.getElementById("sound-icon");
   const audio = document.getElementById("word-audio");
-  const audioSrc = document.getElementById("audio-src");
 
-  let words = JSON.parse(localStorage.getItem("game_words") || "[]");
-  if (!words.length) {
-    console.error("No words");
+  function stopPronunciation() {
+    audio.pause();
+    audio.currentTime = 0;
+  }
+
+  window.addEventListener("pagehide", stopPronunciation);
+  // Optional: add an element with this id in your HTML to show remaining lives
+  const livesDisplay = document.getElementById("lives-display");
+  // Optional: add an element with this id in your HTML to show the countdown
+  const timerDisplay = document.getElementById("timer-display");
+
+  let state = JSON.parse(localStorage.getItem("game_state") || "null");
+  if (!state) {
+    console.error("No game state");
     return;
   }
 
-  let correctImage = null;
-  let currentRound = 0;
-  let selectionLock = false; // Lock selection if user has clicked image
+  function saveState() {
+    localStorage.setItem("game_state", JSON.stringify(state));
+  }
 
-  function currentRoundWords(roundNumber) {
-    const start = roundNumber * 4;
-    return words.slice(start, start + 4);
+  // If there's no round loaded yet (e.g. results-page.html just reset the
+  // state via Try Again / Try Missed Words), generate the first one now —
+  // this page is guaranteed to have window.vocabulary ready.
+  if (!state.currentRoundWords) {
+    generate_round(state);
+    saveState();
+  }
+
+  let correctImage = null;
+  let selectionLock = false; // Lock selection if user has clicked image
+  let timerInterval = null;
+
+  function updateLivesDisplay() {
+    if (!livesDisplay) return;
+    livesDisplay.textContent = state.livesEnabled
+      ? "♥".repeat(Math.max(state.lives, 0))
+      : "∞";
+  }
+
+  function clearTimer() {
+    if (timerInterval) {
+      clearInterval(timerInterval);
+      timerInterval = null;
+    }
+  }
+
+  function startTimer() {
+    clearTimer();
+
+    if (!state.timerEnabled) {
+      if (timerDisplay) timerDisplay.textContent = "";
+      return;
+    }
+
+    let secondsLeft = TIMER_SECONDS;
+    if (timerDisplay) timerDisplay.textContent = secondsLeft + "s";
+
+    timerInterval = setInterval(() => {
+      secondsLeft--;
+      if (timerDisplay) timerDisplay.textContent = secondsLeft + "s";
+
+      if (secondsLeft <= 0) {
+        clearTimer();
+        revealAnswer(null); // ran out of time — treat like a miss, nothing clicked
+      }
+    }, 1000);
   }
 
   function markCorrectAnswer(image) {
@@ -140,68 +224,76 @@ function gameplay() {
     nextBtn.textContent = text;
   }
 
-  function startNewRound(roundNumber) {
+  function startNewRound() {
+    stopPronunciation();
     clearSelection();
-    const wordSet = currentRoundWords(roundNumber);
+    updateLivesDisplay();
 
-    wordSet.forEach((word, index) => {
+    state.currentRoundWords.forEach((word, index) => {
       const image = imageElements[index];
       image.src = "../" + word.img;
+      image.title = word.en || "Hint unavailable";
+
       if (word.answer) {
         correctImage = image;
       }
     });
 
-    // Update Next button text if current round number is same as total amount of rounds
-    if (roundNumber === rounds - 1) {
-      updateNextButtonText("Finish");
-    } else {
-      updateNextButtonText("Next");
-    }
+    // Always "Next" now — the game only stops when lives run out (if enabled)
+    updateNextButtonText("Next");
+    startTimer();
   }
 
-   function revealAnswer(clickedImage) {
-        // If locked, do nothing
-        if (selectionLock) {
-            return;
-        }
-
-        selectionLock = true;
-
-        let words = JSON.parse(localStorage.getItem('game_words') || '[]');
-        let highscore = words[words.length - 2]; // last element is the highscore object
-        let wrong_words = words[words.length - 1]; // last = wrong words
-        const wordSet = currentRoundWords(currentRound); // get current round's 4 words
-        const correctAnswer = wordSet.find((word) => word.answer === true);
-  
-        imageElements.forEach((image, index) => {
-            const word = wordSet[index]; // ✅ this defines the word for each image
-            
-            if (image === correctImage) {
-              markCorrectAnswer(image);
-            } 
-      
-            if (image === clickedImage && image === correctImage) {
-                document.getElementById('instruction').textContent = 
-                    "Correct answer! The correct answer was: " + correctAnswer.sv;
-                // Update high score  
-                highscore["round" + (currentRound + 1)] += 1;
-                highscore["total"] += 1;
-            } else if (image === clickedImage && image !== correctImage) {
-                document.getElementById('instruction').textContent =
-                    "Wrong answer! The correct answer was: " + correctAnswer.sv;
-                markIncorrectAnswer(image);
-                 // Add wrong word to tracking
-                wrong_words["round" + (currentRound + 1)].push(word);
-                wrong_words["all"].push(word);
-            }
-        });
-
-        // Save updated data in local storage
-        words[words.length - 2] = highscore;
-        words[words.length - 1] = wrong_words;
-        localStorage.setItem('game_words', JSON.stringify(words));
+  function revealAnswer(clickedImage) {
+    // If locked, do nothing
+    if (selectionLock) {
+      return;
     }
+    selectionLock = true;
+    clearTimer();
+
+    const wordSet = state.currentRoundWords;
+    const correctAnswer = wordSet.find((word) => word.answer === true);
+    const wrongThisRound = [];
+    const timedOut = clickedImage === null;
+    const articlePrefix = correctAnswer && correctAnswer.article ? correctAnswer.article + " " : "";
+
+    imageElements.forEach((image, index) => {
+      const word = wordSet[index];
+
+      if (image === correctImage) {
+        markCorrectAnswer(image);
+      }
+
+      if (!timedOut && image === clickedImage && image === correctImage) {
+        document.getElementById("instruction").textContent =
+          "Correct answer! The correct answer was: " + articlePrefix + correctAnswer.sv;
+        state.total += 1;
+      } else if (!timedOut && image === clickedImage && image !== correctImage) {
+        document.getElementById("instruction").textContent =
+          "Wrong answer! The correct answer was: " + articlePrefix + correctAnswer.sv;
+        markIncorrectAnswer(image);
+        wrongThisRound.push(correctAnswer);
+        if (state.livesEnabled) state.lives -= 1;
+      }
+    });
+
+    if (timedOut) {
+      document.getElementById("instruction").textContent =
+        "Time's up! The correct answer was: " + articlePrefix + correctAnswer.sv;
+      wrongThisRound.push(correctAnswer);
+      if (state.livesEnabled) state.lives -= 1;
+    }
+
+    state.history.push({ round: state.round + 1, wrong: wrongThisRound });
+    updateLivesDisplay();
+
+    if (state.livesEnabled && state.lives <= 0) {
+      updateNextButtonText("See results");
+    }
+
+    saveState();
+  }
 
   imageElements.forEach((image) => {
     image.addEventListener("click", () => {
@@ -213,24 +305,40 @@ function gameplay() {
     if (!selectionLock) {
       return;
     }
-    if (currentRound < rounds - 1) {
-      currentRound++;
-      startNewRound(currentRound);
-    } else {
-      // Game finished
+
+    if (state.livesEnabled && state.lives <= 0) {
+      stopPronunciation();
+      // Game over — go show results
       window.location.href = "results-page.html";
+      return;
     }
+
+    state.round++;
+    generate_round(state);
+    saveState();
+    startNewRound();
   });
 
   soundIcon.addEventListener("click", () => {
-    // TODO: Does not work yet, there is no sound played when clicking
-    const wordSet = currentRoundWords(currentRound);
-    const correctAnswer = wordSet.find((word) => word.answer === true);
-    audioSrc.src = "../" + correctAnswer.audio;
+    const correctAnswer = state.currentRoundWords.find(
+      (word) => word.answer === true
+    );
+    if (!correctAnswer) return;
+
+    stopPronunciation();
+    const article = (correctAnswer.article || "").trim().toLowerCase();
+    const word = (correctAnswer.sv || "").trim();
+    const phrase = (article === "en" || article === "ett") &&
+      !word.toLowerCase().startsWith(article + " ") ? `${article} ${word}` : word;
+    // Static KBLab recordings keep the Swedish voice consistent across browsers.
+    const recording = window.game07Pronunciations?.[phrase];
+    if (!recording && !correctAnswer.audio) return;
+    audio.src = recording || (correctAnswer.audio.startsWith("http")
+      ? correctAnswer.audio : "../" + correctAnswer.audio);
     audio.load();
-    audio.play();
+    audio.play().catch((error) => console.warn("Could not play pronunciation", error));
   });
 
   // First round
-  startNewRound(currentRound);
+  startNewRound();
 }
