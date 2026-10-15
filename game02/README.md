@@ -122,3 +122,33 @@ These functions are defined in `index.js`:
 8.  The game is won when the user finds all 8 pairs. The timer stops, the end screen is filled in, the win count is incremented and saved to local storage with `save.stats.incrementWin(team_name)` (from `../scripts/save.js`), and after 0.6 seconds the `end-screen` is displayed with the game's results.
 9.  If the user clicks "Quit" during a game, the timer stops, the game is reset and the menu screen is shown. Nothing is counted and there is no end screen.
 10. On the end screen, "Play Again" starts a new game at once in the same category and mode with new cards. "Go to main menu" resets the game and shows the menu, so the user can choose another category or mode.
+
+##### User Stories
+The following requirements are for students/ players of the game:
+REQ-STUDENT1. The student needs to be able to start the game so that they can play it whenever they want. - Complete
+REQ-STUDENT2. The student needs to be able to quit the game so that they can stop playing when they want to. - Complete
+REQ-STUDENT3. The student needs to be able to go back to the menu to be able to see what other games there are. - Complete
+REQ-STUDENT4. The student needs two cards that do not match to turn back, so that a mistake does not end the game. - Complete
+REQ-STUDENT5. The student needs the game to finish when all pairs are matched and then show an end screen with the number of moves, the time taken and their total number of wins, so that they know how they did. - Complete
+REQ-STUDENT6. The student needs to be able to play again after finishing or quitting, with a new random set of words or another difficulty level, so they can keep practising. - Partly complete, difficulty levels are not implemented
+REQ-STUDENT7. The student needs the game to work without a login, with only their total number of wins saved in the browser so they can see their progress. - Complete
+REQ-STUDENT8. The student needs to be able to select a picture mode where they can match the pictures to the words so they can practise the words. - Complete
+REQ-STUDENT9. The student needs to be able to select a spelling mode so they can practice spelling the words. - Complete
+REQ-STUDENT10. The students shall be able to select a listening mode, so they can practice listening comprehension. - Complete
+REQ-STUDENT11. The student needs to be able to select a dialect so they can practice on the dialect where they live. - Complete
+REQ-STUDENT12. The student needs to be able to select a section of the vocabulary so that they can practice the words in that section. - Complete
+REQ-STUDENT13. The student needs to be able to see a progress bar while playing so they can see how far they have progressed in the current game. - Complete
+REQ-STUDENT14. The student needs to be able to get a hint when pressing the help button so that they understand what to do. - Complete
+REQ-STUDENT15. The student needs clear colour contrast so they can read and understand the flow of the game. - Complete
+REQ-STUDENT16. The student needs to be able to see the objects/words when turning the cards so they can understand what is matching. - Complete
+REQ-STUDENT17. The system shall allow the player to replay any completed game mode and any vocabulary section so that they can practice more if needed. - Complete
+
+The following requirements are for developers of the game:
+REQ-DEVELOPER1. As a developer, I want the code to follow naming conventions so that it is easy to update the code later. - Partially complete, the naming conventions could be gone over once again.
+REQ-DEVELOPER2. As a developer, I want the vocabulary and pictures to be stored in the backend for easy updates of the game if the course content changes. - Complete
+REQ-DEVELOPER3. As a developer, I want the README.md file to be updated so I can understand how the code works when I read it. - Complete
+
+The following requirements are for the teachers of the Basic Swedish I and Swedish for Academics I courses:
+REQ-TEACHER1. The teacher needs the interface of the game to be easy and intuitive in order to aid students with learning. - Complete
+REQ-TEACHER2. The teacher needs the game to choose words randomly for each game play so that students can practice all vocabulary in the sections the game focuses on. - Complete
+REQ-TEACHER3. The teacher needs the words in the game to correspond to the vocabulary learnt in the course so that the game can be used for learning. - Complete
