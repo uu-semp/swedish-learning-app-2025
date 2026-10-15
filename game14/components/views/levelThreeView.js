@@ -1,3 +1,6 @@
+// Placeholder for Level 3 (writing the words), not implemented yet.
+// The Level 3 button in chooseLevelView.js is locked, so this view is never shown.
+
 export const LevelThreeView = {
     name: "level-three-view",
     props: ["switchTo"],
