@@ -1,5 +1,6 @@
 import { createApp, reactive } from "https://unpkg.com/vue@3/dist/vue.esm-browser.js";
 import components from "./components/index.js";
+import { loadGameData } from "./components/elements/gameData.js";
 
 // Global reactive language object, which sets language for whole application
 const language = reactive({
@@ -61,6 +62,10 @@ const app = createApp({
 
 app.config.globalProperties.$language = language;
 language.load("en");
+
+// Start loading the words, Pelle and sounds now, so the levels open quickly.
+// Errors are handled in the levels, which try again if this fails.
+loadGameData().catch(() => {});
 
 
 // Register all global components, created with help of generative AI
