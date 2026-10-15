@@ -75,6 +75,13 @@ function renderRound() {
 
   imgEl.src = normalizeAssetUrl(correct.img);
   imgEl.alt = correct.en || correct.sv;
+  const copyrightElement = document.getElementById("imageCopyright");
+
+  if (copyrightElement) {
+    copyrightElement.textContent = correct.img_copyright || "";
+  }
+
+  
 
   optsEl.innerHTML = "";
   for (const opt of shuffled(options)) {

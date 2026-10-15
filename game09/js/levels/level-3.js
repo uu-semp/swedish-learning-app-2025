@@ -111,7 +111,12 @@ function renderRound() {
 
   imgEl.src = normalizeAssetUrl(word.img);
   imgEl.alt = word.en || "";
+  const copyrightElement = document.getElementById("imageCopyright");
 
+  if (copyrightElement) {
+    copyrightElement.textContent = word.img_copyright || "";
+  }
+  
   articleInput.value = "";
 selectedArticle = null;
 

@@ -248,6 +248,10 @@ function renderRound() {
 
     setVocabImage(correct.img);
     imgEl.alt = correct.en || correct.sv;
+    const copyrightElement = document.getElementById("imageCopyright");
+    if (copyrightElement) {
+      copyrightElement.textContent = correct.img_copyright || "";
+    }
 
     selectedArticleBtn = null;
     selectedWordBtn = null;
