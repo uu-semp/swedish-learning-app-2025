@@ -1,4 +1,4 @@
-import { loaddb, get_category, get_vocab } from "../../../scripts/vocabulary_await.js";
+import { loadGameData } from "../elements/gameData.js";
 import { playSound } from "../elements/playSound.js";
 
 const MAX_MISTAKES = 2; // Wrong clicks before the answer is shown
@@ -26,15 +26,11 @@ export const LevelTwoView = {
     },
   },
   async mounted() {
-    // Load the SVG as text so every body part is clickable
-    const response = await fetch("./components/assets/pellecharacterbody.svg");
-    this.pelleSvg = await response.text();
-
-    // Load the body part words from the shared vocabulary database
+    // Get Pelle and the body part words, already loaded when the game started
     try {
-      await loaddb();
-      const words = get_category("body-part").map((id) => get_vocab(id));
-      this.words = this.shuffle(words);
+      const { pelleSvg, bodyParts } = await loadGameData();
+      this.pelleSvg = pelleSvg;
+      this.words = this.shuffle(bodyParts); // shuffle makes a copy, the shared list stays the same
     } catch (error) {
       console.error("Could not load the words from the database", error);
     }

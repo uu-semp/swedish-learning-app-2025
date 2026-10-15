@@ -1,4 +1,4 @@
-import { loaddb, get_category, get_vocab } from "../../../scripts/vocabulary_await.js";
+import { loadGameData } from "../elements/gameData.js";
 import { playSound } from "../elements/playSound.js";
 
 export const LevelOneView = {
@@ -12,15 +12,11 @@ export const LevelOneView = {
     };
   },
   async mounted() {
-    // Load the SVG as text so it becomes part of the page,
-    // which makes every body part clickable
-    const response = await fetch("./components/assets/pellecharacterbody.svg");
-    this.pelleSvg = await response.text();
-
-    // Load the body part words from the shared vocabulary database
+    // Get Pelle and the body part words, already loaded when the game started
     try {
-      await loaddb();
-      this.words = get_category("body-part").map((id) => get_vocab(id));
+      const { pelleSvg, bodyParts } = await loadGameData();
+      this.pelleSvg = pelleSvg;
+      this.words = bodyParts;
     } catch (error) {
       console.error("Could not load the words from the database", error);
     }
