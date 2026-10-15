@@ -1,18 +1,6 @@
 /*
 =================================================
-Owned by Game 10 – Level 2 Game Page
+Owned by Game 10
 =================================================
 */
-
-.word-btn.correct {
-  border-color: green !important;
-}
-.word-btn.incorrect {
-  border-color: red !important;
-}
-line.correct {
-  stroke: green !important;
-}
-line.incorrect {
-  stroke: red !important;
-}
+/* New UI styles are in ../index.css */

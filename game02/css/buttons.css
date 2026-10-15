@@ -1,0 +1,87 @@
+/* Owned by Game 02 — buttons & in-game controls */
+
+/* Buttons styling */
+button {
+    border: none;
+    padding: 12px 20px;
+    font-size: 1em;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background-color: #85B79D;
+    color: black;
+}
+
+button:hover {
+    background-color: #64b88d;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+button:active {
+    transform: translateY(0);
+    box-shadow: none;
+}
+
+/* Game Controls*/
+#game-screen {
+    position: relative;
+    /* make it the reference for absolute positioning */
+}
+
+#game-controls {
+    position: absolute;
+    /* position relative to #game-screen */
+    top: 290px;
+    /* distance from top of game scene */
+    right: 40px;
+    /* distance from right of game scene */
+    display: flex;
+    flex-direction: column;
+    /* stack vertically */
+    gap: 190px;
+    /* space between buttons */
+}
+
+#game-controls button {
+    width: 120px;
+    /* optional fixed width */
+    padding: 10px 15px;
+}
+
+#hint-button {
+    background-color: #DB9D47;
+    /* yellow */
+    color: #000;
+    /* dark text for contrast */
+    padding: 12px 20px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+#hint-button:hover {
+    background-color: #d4ac0d;
+    /* darker yellow on hover */
+    transform: translateY(-2px);
+}
+
+#end-game {
+    background-color: #9d0000;
+    /* red */
+    color: black;
+    padding: 12px 20px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+#end-game:hover {
+    background-color: #c0392b;
+    /* darker red on hover */
+    transform: translateY(-2px);
+}
