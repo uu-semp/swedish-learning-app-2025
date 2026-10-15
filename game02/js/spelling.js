@@ -12,10 +12,10 @@ import { initSpellingLicenses } from "./hints.js";
 
 export function initSpelling({ showScreen }) {
   // constants
-  const team_name = "game02"; // Same stats key as the memory game
-  const words_per_round = 8;
-  const success_delay = 1000; // ms before moving on after a correct answer
-  const reveal_delay = 2000; // ms before moving on after "Show answer"
+  const teamName = "game02"; // Same stats key as the memory game
+  const wordsPerRound = 8;
+  const successDelay = 1000; // ms before moving on after a correct answer
+  const revealDelay = 2000; // ms before moving on after "Show answer"
 
   // variables
   let words = [];
@@ -101,7 +101,7 @@ export function initSpelling({ showScreen }) {
       $("#spelling-input").addClass("correct");
       renderParts(result.parts);
       $("#spelling-feedback").addClass("success").text("✓ Correct!");
-      advance(success_delay);
+      advance(successDelay);
       return;
     }
 
@@ -133,12 +133,12 @@ export function initSpelling({ showScreen }) {
     $("#spelling-misses").text(`misses: ${misses}`);
     $("#spelling-feedback").removeClass("success revealed").empty();
     renderSlots(Array.from(words[index].sv).map((ch) => ({ ch, status: "revealed" })));
-    advance(reveal_delay);
+    advance(revealDelay);
   }
 
   // Create table with stats of the previous 3 spelling games
   function buildPrevSpellingGamesTable() {
-    let prevSpellingGames = save.get(team_name, "spelling-stats");
+    let prevSpellingGames = save.get(teamName, "spelling-stats");
     const table = document.getElementById("prev-spelling-games");
     if(prevSpellingGames != null) {
       table.replaceChildren(); // Clear previous rows
@@ -179,7 +179,7 @@ export function initSpelling({ showScreen }) {
     if(prevSpellingGames.length > 3) {
       prevSpellingGames = prevSpellingGames.slice(-3); // Keep only the last 3 games
     }
-    save.set(team_name, "spelling-stats", prevSpellingGames);
+    save.set(teamName, "spelling-stats", prevSpellingGames);
   }
 
   function finishGame(won) {
@@ -197,8 +197,8 @@ export function initSpelling({ showScreen }) {
 
     buildPrevSpellingGamesTable(); // Update the previous spelling games table
 
-    if (won) save.stats.incrementWin(team_name);
-    $("#spelling-wins").text(save.stats.get(team_name).wins);
+    if (won) save.stats.incrementWin(teamName);
+    $("#spelling-wins").text(save.stats.get(teamName).wins);
     showScreen("spelling-end-screen");
   }
 
@@ -216,7 +216,7 @@ export function initSpelling({ showScreen }) {
   async function startGame(newCategory) {
     category = newCategory;
     resetGame();
-    words = await loadSpellingWords(words_per_round, category);
+    words = await loadSpellingWords(wordsPerRound, category);
     if (words.length === 0) {
       alert("Could not load any words. Please try again later.");
       return;
