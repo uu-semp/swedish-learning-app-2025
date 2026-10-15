@@ -55,6 +55,7 @@ All user stories from D2 and whether they are completed or still open.
 - Add more vocabulary from Section 7.3, such as adjectives, eye colours and phrases for describing yourself (REQ-TEACHER1). This could be done as a new type of level.
 - Adapt the layout for phones, tablets and touch screens, and fix the performance issues in Safari (REQ-STUDENT1).
 - Change the main page so it has the correct new name
+- Split `index.css` into smaller files in `components/styling/`, one per view or component (for example sky background, buttons, language flags and help view), in the same way as `chooseLevelStyles.css` and `pelleLevels.css` (REQ-DEVELOPER3).
 
 ## 🧰 Technologies Used
 
