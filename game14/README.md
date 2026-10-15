@@ -54,6 +54,7 @@ All user stories from D2 and whether they are completed or still open.
 - Implement **Level 3**, where the player writes the Swedish word for each body part themselves. This level should also include a way to enter å, ä and ö (REQ-STUDENT10).
 - Add more vocabulary from Section 7.3, such as adjectives, eye colours and phrases for describing yourself (REQ-TEACHER1). This could be done as a new type of level.
 - Adapt the layout for phones, tablets and touch screens, and fix the performance issues in Safari (REQ-STUDENT1).
+- Change the main page so it has the correct new name
 
 ## 🧰 Technologies Used
 
@@ -89,6 +90,14 @@ All user stories from D2 and whether they are completed or still open.
 ```
    http://localhost:8000
 ```
+
+## 🧩 How the Game Works
+
+- Pelle is an SVG image (`components/assets/pellecharacterbody.svg`) that is loaded into the page as code, which makes every body part clickable.
+- Each body part in the SVG is a group (`<g>`) with an `id` that matches the English word in the shared vocabulary database, for example `id="nose"`. To add a new body part, add it both in the SVG and in the database (category `body-part`).
+- The words, articles and audio files are loaded from the shared vocabulary database.
+- Level 1 is in `components/views/levelOneView.js` and Level 2 in `components/views/levelTwoView.js`.
+- All texts are in `language/english.json` and `language/swedish.json`.
 
 ## 👥 Team Members / Contributors
 
