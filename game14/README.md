@@ -15,6 +15,13 @@ This project is an interactive Swedish language-learning game designed to make v
 - Score and result summary at the end of Level 2
 - Support for English and Swedish language
 
+## 🧩 How the Game Works
+
+- Pelle is an SVG image (`components/assets/pellecharacterbody.svg`) that is loaded into the page as code, which makes every body part clickable.
+- Each body part in the SVG is a group (`<g>`) with an `id` that matches the English word in the shared vocabulary database, for example `id="nose"`. To add a new body part, add it both in the SVG and in the database (category `body-part`). OBS! See the text editor for the svg file. 
+- The Pelle SVG and the words, articles and audio files from the shared vocabulary database are loaded once in `components/elements/gameData.js` when the game starts, so everything is ready before a level opens.
+- All texts are in `language/english.json` and `language/swedish.json`.
+
 ## 📋 User Stories
 
 All user stories from D2 and whether they are completed or still open.
@@ -91,14 +98,6 @@ All user stories from D2 and whether they are completed or still open.
 ```
    http://localhost:8000
 ```
-
-## 🧩 How the Game Works
-
-- Pelle is an SVG image (`components/assets/pellecharacterbody.svg`) that is loaded into the page as code, which makes every body part clickable.
-- Each body part in the SVG is a group (`<g>`) with an `id` that matches the English word in the shared vocabulary database, for example `id="nose"`. To add a new body part, add it both in the SVG and in the database (category `body-part`).
-- The words, articles and audio files are loaded from the shared vocabulary database.
-- Level 1 is in `components/views/levelOneView.js` and Level 2 in `components/views/levelTwoView.js`.
-- All texts are in `language/english.json` and `language/swedish.json`.
 
 ## 👥 Team Members / Contributors
 
