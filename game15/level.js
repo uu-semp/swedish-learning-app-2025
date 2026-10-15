@@ -25,7 +25,6 @@ async function initializeGame() {
         textAnswer: "",
         currentQuestion: null,
         remainingQuestions: [],
-        translation: "",
         feedback: "",
         feedbackClass: "",
         showAnswerOption: false,
@@ -39,12 +38,14 @@ async function initializeGame() {
         startTime: Date.now(),
         correctAnswersThisLevel: 0,
         levelComplete: false,
+        isEnglish: false,
         wrongCount: 0,
         previousWrongCount: null
       },
 
       created() { 
         console.log('Vue instance created, generating questions...');
+        this.isEnglish = sessionStorage.getItem('game15_lang') === 'en';
         this.questions = this.generateQuestions();
 
         const progress = getGameProgress();
@@ -72,12 +73,13 @@ async function initializeGame() {
         },
 
         createQuestion(streetInfo, level) {
-          const cardinalNumber = streetInfo.number.cardinal.sv;
+          const cardinalNumberSv = streetInfo.number.cardinal.sv;
+          const cardinalNumberEn = streetInfo.number.cardinal.en;
 
-          // Level 1: Find the house by its address number
           if (level === 1) {
             return {
-              instruction: `Jag bor på ${streetInfo.streetName} ${cardinalNumber}. Välj huset där jag bor.`,
+              instructionSv: `Jag bor på ${streetInfo.streetName} ${cardinalNumberSv}. Välj huset där jag bor.`,
+              instructionEn: `I live on ${streetInfo.streetName} ${cardinalNumberEn}. Choose the house where I live.`,
               correct: {
                 street: streetInfo.streetName,
                 number: streetInfo.number.cardinal.literal
@@ -87,12 +89,13 @@ async function initializeGame() {
             };
           }
 
-          // Level 2: Find the house by its position on the street
           if (level === 2) {
-            const ordinalNumber = streetInfo.number.ordinal.sv;
+            const ordinalNumberSv = streetInfo.number.ordinal.sv;
+            const ordinalNumberEn = streetInfo.number.ordinal.en;
 
             return {
-              instruction: `Jag bor i det ${ordinalNumber} huset på ${streetInfo.streetName}. Välj huset där jag bor.`,
+              instructionSv: `Jag bor i det ${ordinalNumberSv} huset på ${streetInfo.streetName}. Välj huset där jag bor.`,
+              instructionEn: `I live in the ${ordinalNumberEn} house on ${streetInfo.streetName}. Choose the house where I live.`,
               correct: {
                 street: streetInfo.streetName,
                 number: streetInfo.number.cardinal.literal
@@ -102,16 +105,32 @@ async function initializeGame() {
             };
           }
 
-          // Level 3: Spell the address number of the indicated house
           const colorSv = streetInfo.color.sv;
+          const colorEn = streetInfo.color.en;
 
           return {
-            instruction: `Jag bor i det ${colorSv}a huset på ${streetInfo.streetName}. Stava ut min adress.`,
-            correct: `${streetInfo.streetName.toLowerCase()} ${cardinalNumber}`,
+            instructionSv: `Jag bor i det ${colorSv}a huset på ${streetInfo.streetName}. Stava ut min adress.`,
+            instructionEn: `I live in the ${colorEn} house on ${streetInfo.streetName}. Spell out my address.`,
+            correct: `${streetInfo.streetName.toLowerCase()} ${cardinalNumberSv}`,
             type: "text",
             target: streetInfo,
             streetInfo
           };
+        },
+
+        toggleLanguage() {
+          this.isEnglish = !this.isEnglish;
+          sessionStorage.setItem('game15_lang', this.isEnglish ? 'en' : 'sv');
+          
+          const headerTitle = document.querySelector('header h1');
+          const backBtn = document.querySelector('.back-button');
+          if (this.isEnglish) {
+            if (headerTitle) headerTitle.textContent = headerTitle.getAttribute('data-en');
+            if (backBtn) backBtn.childNodes[0].nodeValue = backBtn.getAttribute('data-en');
+          } else {
+            if (headerTitle) headerTitle.textContent = headerTitle.getAttribute('data-sv');
+            if (backBtn) backBtn.childNodes[0].nodeValue = backBtn.getAttribute('data-sv');
+          }
         },
 
         startLevel(lv, resume = false) {
@@ -157,7 +176,6 @@ async function initializeGame() {
         },
 
         pickNextQuestion() {
-          this.translation = "";
           this.feedback = "";
           this.feedbackClass = "";
           this.showAnswerOption = false;
@@ -266,7 +284,7 @@ async function initializeGame() {
             this.score += 10;
             this.correctAnswersThisLevel++;
             this.updateGameProgressMethod();
-            this.feedback = "✅ Rätt svar!";
+            this.feedback = this.isEnglish ? "✅ Correct answer!" : "✅ Rätt svar!";
             this.feedbackClass = "correct";
             setTimeout(() => this.pickNextQuestion(), 1000);
           } else { 
@@ -285,7 +303,7 @@ async function initializeGame() {
             this.score += 10;
             this.correctAnswersThisLevel++;
             this.updateGameProgressMethod();
-            this.feedback = "✅ Rätt! Bra jobbat.";
+            this.feedback = this.isEnglish ? "✅ Correct! Good job." : "✅ Rätt! Bra jobbat.";
             this.feedbackClass = "correct";
             setTimeout(() => this.pickNextQuestion(), 1000);
           } else { 
@@ -297,7 +315,7 @@ async function initializeGame() {
         fail() {
           this.wrongCount++;
           this.saveWrongCount();
-          this.feedback = "❌ Fel svar! Försök igen.";
+          this.feedback = this.isEnglish ? "❌ Wrong answer! Try again." : "❌ Fel svar! Försök igen.";
           this.feedbackClass = "wrong";
           this.showAnswerOption = true;
           setTimeout(() => {
@@ -328,27 +346,6 @@ async function initializeGame() {
           this.pickNextQuestion();
         },
 
-        translateQuestion() {
-          if (!this.currentQuestion) return;
-          
-          if (this.translation) {
-            this.translation = "";
-            return;
-          }
-
-          const streetInfo = this.currentQuestion.streetInfo;
-          
-          if (this.currentQuestion.type === "map") {
-            if (this.level === 1) {
-              this.translation = `I live on ${streetInfo.streetName} ${streetInfo.number.cardinal.en}. Choose the house where I live.`;
-            } else if (this.level === 2) {
-              this.translation = `I live in the ${streetInfo.number.ordinal.en} house on ${streetInfo.streetName}. Choose the house where I live.`;
-            }
-          } else if (this.currentQuestion.type === "text") {
-            const colorEn = streetInfo.color.en;
-            this.translation = `I live in the ${colorEn} house on ${streetInfo.streetName}. Spell out my address.`;
-          }
-        }
       }
     });
   } catch (error) {
