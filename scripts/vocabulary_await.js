@@ -69,10 +69,27 @@ import * as DB from "./database_type.js"
 /** @type {Database} */
 let db;
 
+async function urlExists(path) {
+  // prints error 404 in dev console if words.csv isnt there.
+  // But if that is the case we fetch the google sheet
+  const response = await fetch(path, {
+      method: "HEAD"
+  })
+
+  if(!response.ok){
+    console.log("Fetching google sheet");
+  }else{
+    console.log("Using internal words")
+  }
+  return response.ok
+    
+}
+
 async function fetch_sheets() {
-  const SRC = FETCH_EXTERNAL
-    ? EXTERNAL_URL
-    : new URL(INTERNAL_URL, import.meta.url);
+  const csv_exists = await urlExists(INTERNAL_URL);
+  const SRC = csv_exists
+    ? new URL(INTERNAL_URL, import.meta.url)
+    : EXTERNAL_URL;
   const RESP = await fetch(SRC);
   // Without this a 404 body gets handed to the CSV parser and silently
   // becomes an empty database.
