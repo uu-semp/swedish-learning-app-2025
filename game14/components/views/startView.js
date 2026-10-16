@@ -20,7 +20,7 @@ export const StartView = {
           </div>
         </div>
         <img
-          src="./components/assets/pelleimg.png"
+          src="./components/assets/pictures/pelleimg.png"
           alt="Pelle"
           class="pelle-start-right"
         />

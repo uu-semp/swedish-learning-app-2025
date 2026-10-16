@@ -6,7 +6,7 @@ export const LanguageSelection = {
   template: `
     <div class="language-selection">
       <language-flag-button
-        src="./components/assets/game14FlagSE.png"
+        src="./components/assets/pictures/game14FlagSE.png"
         alt="Swedish"
         value="sv"
         :selected="$language.selectedLanguage === 'sv'"
@@ -14,7 +14,7 @@ export const LanguageSelection = {
       ></language-flag-button>
 
       <language-flag-button
-        src="./components/assets/game14FlagEN.png"
+        src="./components/assets/pictures/game14FlagEN.png"
         alt="English"
         value="en"
         :selected="$language.selectedLanguage === 'en'"

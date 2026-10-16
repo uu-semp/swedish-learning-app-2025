@@ -26,7 +26,7 @@ async function loadEverything() {
 // Load the SVG as text so it becomes part of the page,
 // which makes every body part clickable
 async function loadPelleSvg() {
-  const response = await fetch("./components/assets/pellecharacterbody.svg");
+  const response = await fetch("./components/assets/pictures/pellecharacterbody.svg");
   return await response.text();
 }
 
