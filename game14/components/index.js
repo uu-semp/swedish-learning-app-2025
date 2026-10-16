@@ -6,16 +6,7 @@ import { LevelTwoView } from './views/levelTwoView.js';
 import { LevelThreeView } from './views/levelThreeView.js';
 
 import {
-  StartGameButton,
-  HowToPlayButton,
-  InfoButton,
-  LicenseButton,
-  GoBackButton,
-  LevelButton,
-  CategoryClothingButton,
-  ClothingItemButton,
   LanguageFlagButton,
-  ExitGameButton,
   CapsuleButton,
 } from "./elements/buttons.js";
 
@@ -30,16 +21,7 @@ export default {
   LevelOneView,
   LevelTwoView,
   LevelThreeView,
-  StartGameButton,
-  HowToPlayButton,
-  GoBackButton,
-  InfoButton,
-  LicenseButton,
-  LevelButton,
-  CategoryClothingButton,
-  ClothingItemButton,
   LanguageFlagButton,
-  ExitGameButton,
   CapsuleButton,
   SkyBackground,
   LanguageSelection
