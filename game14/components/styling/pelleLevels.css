@@ -1,0 +1,253 @@
+/* Layout for the explore view (level 1) */
+.explore-view {
+    position: relative;
+    z-index: 10; /* Above the clouds from the sky background */
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    padding: 20px 20px 30px 20px;
+}
+
+/* Title in the same golden style as the start page, but smaller */
+.explore-view .explore-title {
+    font-family: 'Fredoka', 'Arial Rounded MT Bold', sans-serif;
+    font-size: 48px;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    text-align: center;
+    margin: 0;
+
+    background: linear-gradient(180deg, #fcebc2 0%, #f4d393 45%, #e1af63 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+    filter: drop-shadow(0px 4px 0px #8e5e29)
+            drop-shadow(2px 2px 0px #8e5e29)
+            drop-shadow(-2px -2px 0px #8e5e29);
+}
+
+/* Pelle on the left, words on the right. In front of the grass */
+.explore-view .explore-content {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    align-items: flex-end;
+    gap: 20px;
+    position: relative;
+    z-index: 6;
+}
+
+.explore-view .explore-pelle {
+    flex: 1;
+    height: 100%;
+}
+
+.explore-view .explore-pelle svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+/* Every body part in Pelle (head, nose, arm ...) is a group with an id */
+.explore-view .explore-pelle svg g[id] {
+    cursor: pointer;
+    transition: filter 0.15s ease;
+}
+
+/* Lime green outline on the body part under the mouse, and on the selected one */
+.explore-view .explore-pelle svg g[id]:hover,
+.explore-view .explore-pelle svg g[id].selected {
+    filter: url(#outline-green);
+}
+
+/* The right side: instruction above the word list */
+.explore-view .explore-side {
+    flex: 1;
+    align-self: center;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+/* Instruction text */
+.explore-view .explore-instruction {
+    font-family: 'Fredoka', 'Arial Rounded MT Bold', sans-serif;
+    font-size: 20px;
+    font-weight: 600;
+    color: white;
+    text-align: center;
+    margin: 0;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.35);
+}
+
+/* Tip about clicking again to hear the word */
+.explore-view .explore-audio-hint {
+    font-family: 'Fredoka', 'Arial Rounded MT Bold', sans-serif;
+    font-size: 20px;
+    font-weight: 600;
+    color: white;
+    text-align: center;
+    margin: 8px 0 0;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.35);
+}
+
+.explore-view .word-icon {
+    margin-right: 6px;
+}
+
+/* The word list */
+.explore-view .explore-words {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+}
+
+/* Each word as a small white cloud */
+.explore-view .word-cloud {
+    font-family: 'Fredoka', 'Arial Rounded MT Bold', sans-serif;
+    font-size: 18px;
+    font-weight: 600;
+    color: #1e528e;
+    background: white;
+    border: none;
+    border-radius: 999px;
+    padding: 10px 18px;
+    box-shadow: 0 4px 0 rgba(0, 0, 0, 0.15);
+    cursor: pointer;
+}
+
+.explore-view .word-cloud:hover {
+    transform: translateY(-2px);
+}
+
+/* The selected word turns lime green */
+.explore-view .word-cloud.selected {
+    background: #7CFC00;
+    color: #1e3a0a;
+}
+
+/* ===== Level 2: find the body part ===== */
+
+/* The word to find, as a big white card */
+.explore-view .find-word {
+    align-self: center;
+    font-family: 'Fredoka', 'Arial Rounded MT Bold', sans-serif;
+    font-size: 40px;
+    font-weight: 700;
+    color: #1e528e;
+    background: white;
+    border-radius: 24px;
+    padding: 16px 36px;
+    box-shadow: 0 6px 0 rgba(0, 0, 0, 0.15);
+}
+
+/* The word card is a button, so it can be clicked to hear the word */
+.explore-view button.find-word {
+    border: none;
+    cursor: pointer;
+    transition: transform 0.1s;
+}
+
+.explore-view button.find-word:hover {
+    transform: scale(1.04);
+}
+
+.explore-view button.find-word:active {
+    transform: scale(0.97);
+}
+
+/* Speaker icon inside the word card */
+.explore-view .find-word-icon {
+    font-size: 28px;
+    margin-right: 12px;
+    opacity: 0.7;
+}
+
+.explore-view .find-progress {
+    font-family: 'Fredoka', 'Arial Rounded MT Bold', sans-serif;
+    font-size: 20px;
+    font-weight: 600;
+    color: white;
+    text-align: center;
+    margin: 0;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.35);
+}
+
+/* Level 2: score shown while playing */
+.explore-view .find-score {
+    font-family: 'Fredoka', 'Arial Rounded MT Bold', sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: white;
+    text-align: center;
+    margin: 0;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.35);
+}
+
+.explore-view .find-score i {
+    color: #ffd84d;
+    margin-right: 6px;
+}
+
+/* Level 2: white outline on hover, so green only means "correct" */
+.explore-view.find-mode .explore-pelle svg g[id]:hover {
+    filter: url(#outline-white);
+}
+
+/* Level 2: found body parts stay green */
+.explore-view.find-mode .explore-pelle svg g[id].found {
+    filter: url(#outline-green);
+}
+
+/* Level 2: a wrong click flashes red */
+.explore-view.find-mode .explore-pelle svg g[id].wrong {
+    filter: url(#outline-red);
+}
+
+/* Level 2: after too many mistakes, the right part blinks green */
+.explore-view.find-mode .explore-pelle svg g[id].hint {
+    animation: hint-blink 0.6s steps(1) 3;
+}
+
+@keyframes hint-blink {
+    0%   { filter: url(#outline-green); }
+    50%  { filter: none; }
+}
+
+/* Level 2: result when all words are done */
+.explore-view .find-result {
+    font-family: 'Fredoka', 'Arial Rounded MT Bold', sans-serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: white;
+    text-align: center;
+    margin: 0;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.35);
+}
+
+.explore-view .play-again {
+    align-self: center;
+    font-size: 22px;
+    padding: 12px 28px;
+}
+
+/* Level 2: short feedback under the word */
+.explore-view .find-feedback {
+    font-family: 'Fredoka', 'Arial Rounded MT Bold', sans-serif;
+    font-size: 24px;
+    font-weight: 700;
+    text-align: center;
+    margin: 0;
+    min-height: 32px;
+    color: white;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+.explore-view .find-feedback.right       { color: #7CFC00; }
+.explore-view .find-feedback.wrong       { color: #ffb3b3; }
+.explore-view .find-feedback.show-answer { color: #fff3b0; }
