@@ -20,23 +20,53 @@
     },
     
     "intro-desc": {
-        "en": "Here you can practice basic Swedish from the courses <a href=\"https://www.uu.se/en/study/course?query=5PU028\"target=\"_blank\"> Basic Swedish 1</a> / <a href=\"https://www.uu.se/en/staff/employment/continuing-professional-development/courses-for-employees/swedish-for-academics-1-75-hp\" target=\"_blank\">Swedish for Academics 1</a> at Uppsala University. Each game matches one or more chapters in the course book. Use the filters below to pick the chapter you want to study. Have fun!",
-        "sv": "Här kan du öva på enkel svenska från kurserna <a href=\"https://www.uu.se/en/study/course?query=5PU028\"target=\"_blank\">Basic Swedish 1</a>/<a href=\"https://www.uu.se/en/staff/employment/continuing-professional-development/courses-for-employees/swedish-for-academics-1-75-hp\" target=\"_blank\">Swedish for Academics 1</a> på Uppsala Universitet. Varje spel matchar ett eller flera kapitel i kursboken. Använd filter-knapparna nedanför för att välja ett kapitel att öva på. Ha så kul!"
+        "en": "Here you can practice basic Swedish from the courses <a href=\"https://www.uu.se/en/study/course?query=5PU028\"target=\"_blank\"> Basic Swedish 1</a> / <a href=\"https://www.uu.se/en/staff/employment/continuing-professional-development/courses-for-employees/swedish-for-academics-1-75-hp\" target=\"_blank\">Swedish for Academics 1</a> at Uppsala University. Each game focuses on one or more learning themes. Use the filters below to pick one or more themes you want to study. Have fun!",
+        "sv": "Här kan du öva på enkel svenska från kurserna <a href=\"https://www.uu.se/en/study/course?query=5PU028\"target=\"_blank\">Basic Swedish 1</a>/<a href=\"https://www.uu.se/en/staff/employment/continuing-professional-development/courses-for-employees/swedish-for-academics-1-75-hp\" target=\"_blank\">Swedish for Academics 1</a> på Uppsala Universitet. Varje spel fokuserar på ett eller flera lärandeteman. Använd filter-knapparna nedanför för att välja ett eller flera teman att öva på. Ha så kul!"
     },
 
     "filter": {
-        "en": "Filter by chapter:",
-        "sv": "Filtrera efter kapitel:"
+        "en": "Filter by theme:",
+        "sv": "Filtrera efter tema:"
     },
 
-    "chapter": {
-        "en": "Chapter",
-        "sv": "Kapitel"
+    "theme-all": {
+        "en": "All themes",
+        "sv": "Alla teman"
     },
 
-    "add-word": {
-        "en": "Add vocabulary",
-        "sv": "Lägg till glosor"
+    "theme-clothing": {
+        "en": "Clothes",
+        "sv": "Kläder"
+    },
+
+    "theme-furniture": {
+        "en": "Furniture",
+        "sv": "Möbler"
+    },
+
+    "theme-food": {
+        "en": "Food",
+        "sv": "Mat"
+    },
+
+    "theme-time": {
+        "en": "Time",
+        "sv": "Tid"
+    },
+
+    "theme-numbers": {
+        "en": "Numbers",
+        "sv": "Siffror"
+    },
+
+    "theme-places": {
+        "en": "Places",
+        "sv": "Platser"
+    },
+
+    "theme-colors": {
+        "en": "Colors",
+        "sv": "Färger"
     },
 
     "clear?": {
@@ -57,5 +87,165 @@
     "close": {
         "en": "Close",
         "sv": "Stäng"
+    },
+
+    "srs-title": {
+        "en": "Your vocabulary practice",
+        "sv": "Din ordförrådsträning"
+    },
+
+    "srs-open-btn": {
+        "en": "Vocabulary practice",
+        "sv": "Din ordförrådsträning"
+    },
+
+    "srs-filter-label": {
+        "en": "Filter by category:",
+        "sv": "Filtrera efter kategori:"
+    },
+
+    "srs-all-categories": {
+        "en": "All categories",
+        "sv": "Alla kategorier"
+    },
+
+    "srs-word": {
+        "en": "Word",
+        "sv": "Ord"
+    },
+
+    "srs-category-heading": {
+        "en": "Category",
+        "sv": "Kategori"
+    },
+
+    "srs-seen": {
+        "en": "Seen",
+        "sv": "Visad"
+    },
+
+    "srs-correct": {
+        "en": "Correct",
+        "sv": "Rätt"
+    },
+
+    "srs-wrong": {
+        "en": "Wrong",
+        "sv": "Fel"
+    },
+
+    "srs-empty": {
+        "en": "Words you have answered will appear here.",
+        "sv": "Ord som du har svarat på visas här."
+    },
+
+    "srs-clear-btn": {
+        "en": "Clear practice history",
+        "sv": "Rensa träningshistorik"
+    },
+
+    "srs-clear-confirm": {
+        "en": "<h3>Clear practice history?</h3>\n<p>This will remove your spaced-repetition word history, but keep other saved game progress.</p>",
+        "sv": "<h3>Rensa träningshistorik?</h3>\n<p>Detta tar bort din repetitionshistorik men behåller övriga sparade spelresultat.</p>"
+    },
+
+    "srs-clear-success": {
+        "en": "Practice history cleared.",
+        "sv": "Träningshistoriken har rensats."
+    },
+
+    "srs-category-clothing": {
+        "en": "Clothing",
+        "sv": "Kläder"
+    },
+
+    "srs-category-furniture": {
+        "en": "Furniture",
+        "sv": "Möbler"
+    },
+
+    "srs-category-food": {
+        "en": "Food",
+        "sv": "Mat"
+    },
+
+    "srs-category-number": {
+        "en": "Numbers",
+        "sv": "Siffror"
+    },
+
+    "srs-category-ordinal-number": {
+        "en": "Ordinal numbers",
+        "sv": "Ordningstal"
+    },
+
+    "srs-category-time-text-minues": {
+        "en": "Time expressions",
+        "sv": "Tidsuttryck"
+    },
+
+    "srs-category-weather": {
+        "en": "Weather",
+        "sv": "Väder"
+    },
+
+    "srs-category-day": {
+        "en": "Days",
+        "sv": "Dagar"
+    },
+
+    "srs-category-month": {
+        "en": "Months",
+        "sv": "Månader"
+    },
+
+    "srs-category-color": {
+        "en": "Colors",
+        "sv": "Färger"
+    },
+
+    "srs-category-character": {
+        "en": "Characters",
+        "sv": "Karaktärer"
+    },
+
+    "srs-category-street": {
+        "en": "Streets",
+        "sv": "Gator"
+    },
+
+    "srs-category-hat": {
+        "en": "Hats",
+        "sv": "Mössor"
+    },
+
+    "srs-category-shirt": {
+        "en": "Shirts",
+        "sv": "Tröjor"
+    },
+
+    "srs-category-pants": {
+        "en": "Pants",
+        "sv": "Byxor"
+    },
+
+    "srs-category-direction": {
+        "en": "Directions",
+        "sv": "Riktningar"
+    },
+
+    "srs-category-landmarks": {
+        "en": "Landmarks",
+        "sv": "Landmärken"
+    },
+
+    "srs-category-transport": {
+        "en": "Transport",
+        "sv": "Transport"
+    },
+
+    "srs-category-body-part": {
+        "en": "Body parts",
+        "sv": "Kroppsdelar"
     }
 }
