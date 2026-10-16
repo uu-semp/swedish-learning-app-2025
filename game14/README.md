@@ -64,7 +64,7 @@ All user stories from D2 and whether they are completed or still open.
 - Change the main page so it has the correct new name
 - Split `index.css` into smaller files in `components/styling/`, one per view or component (for example sky background, buttons, language flags and help view), in the same way as `chooseLevelStyles.css` and `pelleLevels.css` (REQ-DEVELOPER3).
 - The language is currently chosen separately in the main menu and in the game. The game could instead use the language selected in the main menu, so the player only has to choose once.
-
+- Show a loading message while the game data is loading, so the player can see that the game is loading and does not think it is broken.
 
 ## 🧰 Technologies Used
 
