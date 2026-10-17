@@ -55,9 +55,10 @@
             // Get stored game data
             const score = localStorage.getItem('gameScore');
             const level = localStorage.getItem('gameLevel');
+            const room = localStorage.getItem('gameRoom') || 'office';
             
             // Debug: log what we found
-            console.log('Retrieved from localStorage - Score:', score, 'Level:', level);
+            console.log('Retrieved from localStorage - Score:', score, 'Level:', level, 'Room:', room);
             console.log('All localStorage keys:', Object.keys(localStorage));
             
             // Update the summary display
@@ -68,26 +69,26 @@
                 // Set the "Play Again" link based on the completed level
                 const playAgainBtn = document.getElementById('play-again-btn');
                 if (level === 'Level 1') {
-                    playAgainBtn.href = "level.html?level=1";
+                    playAgainBtn.href = `level.html?level=1&room=${room}&reset=true`;
                 } else if (level === 'Level 2') {
-                    playAgainBtn.href = "level.html?level=2";
+                    playAgainBtn.href = `level.html?level=2&room=${room}&reset=true`;
                 } else if (level === 'Level 3') {
-                    playAgainBtn.href = "level.html?level=3";
+                    playAgainBtn.href = `level.html?level=3&room=${room}&reset=true`;
                 } else {
                     // Default to level 1 if level is unknown
-                    playAgainBtn.href = "level.html?level=1";
+                    playAgainBtn.href = `level.html?level=1&room=${room}&reset=true`;
                 }
 
                 const playNextBtn = document.getElementById('play-next-btn');
                 if (level === 'Level 1') {
-                    playNextBtn.href = "level.html?level=2";
+                    playNextBtn.href = `level.html?level=2&room=${room}&reset=true`;
                 } else if (level === 'Level 2') {
-                    playNextBtn.href = "level.html?level=3";
+                    playNextBtn.href = `level.html?level=3&room=${room}&reset=true`;
                 } else if (level === 'Level 3') {
                     playNextBtn.href = "index.html";
                 } else {
                     // Default to level 1 if level is unknown
-                    playNextBtn.href = "level.html?level=2";
+                    playNextBtn.href = `level.html?level=2&room=${room}&reset=true`;
                 }
                 
                 // Clear the stored data after displaying

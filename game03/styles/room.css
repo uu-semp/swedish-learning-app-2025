@@ -4,7 +4,9 @@
     width: 580px;
     height: 332.2px;
     perspective: 1000px; 
-    background-color: lightgrey;
+    background-color: var(--wall-color, lightgrey);
+    background-image: var(--wall-pattern, none);
+    background-size: var(--wall-size, auto);
 }
 
 .floor {
@@ -19,8 +21,10 @@
 
 .floor-tile {
     flex: 1;
-    border: 2px solid #a3856a;
-    background-color: #c5a98b;
+    border: 2px solid var(--floor-line, #a3856a);
+    background-color: var(--floor-color, #c5a98b);
+    background-image: var(--floor-pattern, none);
+    background-size: var(--floor-size, auto);
     transition: background-color 0.2s ease;
 }
 
@@ -61,4 +65,46 @@
     left: 1%;
     bottom: 20%;
     transform: translateZ(-200px);
+}
+
+
+/* ===== Room themes: wall + floor per room (class set from ?room=) ===== */
+.room-office {
+    --wall-color: #e6e0d2;
+    --wall-pattern: linear-gradient(to bottom, transparent 48%, #b8aa8e 48% 50%, #d6cdb9 50%);
+    --floor-color: #c5a98b;
+    --floor-line: #a3856a;
+}
+.room-livingroom {
+    --wall-color: #f2e2a4;
+    --wall-pattern: repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.4) 0 14px, transparent 14px 28px);
+    --floor-color: #b98c5e;
+    --floor-line: #92693f;
+}
+.room-bedroom {
+    --wall-color: #d3daf0;
+    --wall-pattern: radial-gradient(rgba(255, 255, 255, 0.65) 3px, transparent 4px);
+    --wall-size: 26px 26px;
+    --floor-color: #d8bf9b;
+    --floor-line: #b99c75;
+}
+.room-kitchen {
+    --wall-color: #eef2e4;
+    --wall-pattern:
+        linear-gradient(#c9d3b8 2px, transparent 2px),
+        linear-gradient(90deg, #c9d3b8 2px, transparent 2px);
+    --wall-size: 28px 28px;
+    --floor-color: #e6e8e8;
+    --floor-pattern: conic-gradient(#cfd4d6 25%, transparent 0 50%, #cfd4d6 0 75%, transparent 0);
+    --floor-size: 50% 50%;
+    --floor-line: #b4babd;
+}
+.room-bathroom {
+    --wall-color: #bfe2ea;
+    --wall-pattern:
+        linear-gradient(#f4fbfd 2px, transparent 2px),
+        linear-gradient(90deg, #f4fbfd 2px, transparent 2px);
+    --wall-size: 30px 30px;
+    --floor-color: #dbe7ec;
+    --floor-line: #a9bdc6;
 }

@@ -18,6 +18,7 @@ header, footer { display: block; }
 body > div { display: block; }
 
 header {
+  position: relative;
   padding: 14px 16px;
   background: var(--panel);
   border-bottom: 1px solid var(--border);
