@@ -108,11 +108,23 @@
   align-items: center;
   margin-bottom: 40px;
   margin-top: 40px;
+  position: relative
 }
 #vocabImg {
   width: 100%;
   height: 100%;
   object-fit: contain;
+}
+#imageCopyright {
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+  margin: 0;
+  padding: 3px 6px;
+  font-size: 5px;
+  color: white;
+  background: rgba(0, 0, 0, 0.6);
+  border-radius: 4px;
 }
 
 .options {
