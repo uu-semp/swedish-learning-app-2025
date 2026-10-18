@@ -11,22 +11,22 @@ import { initSpelling } from "./js/spelling.js";
 
 $(function () {
   // constants
-  const team_name = "game02"; // Team name for saving data
-  const corrects_needed = 8; // number of correct pairs needed to win
-  const misses_max = 20; // number of misses allowed before losing
+  const teamName = "game02"; // Team name for saving data
+  const correctsNeeded = 8; // number of correct pairs needed to win
+  const missesMax = 20; // number of misses allowed before losing
   const numPairs = 8; // number of pairs of cards
-  const mode_titles = {
+  const modeTitles = {
     picture: "Match each picture to its Swedish word",
     spelling: "Type the Swedish word for each picture",
     listening: "Match each sound to its Swedish word",
     dialect: "Match each dialect sound to its Swedish word",
   }; // heading above the board for each mode
-  const dialect_categories = ["furniture"];
+  const dialectCategories = ["furniture"];
 
   // variables
   let corrects = 0;
   let misses = 0;
-  let wins = save.stats.get(team_name).wins; // Load wins from storage
+  let wins = save.stats.get(teamName).wins; // Load wins from storage
   $("#wins-count").text(wins); // Update the display with the loaded win count
 
   let flippedCards = []; // array of currently flipped cards
@@ -57,8 +57,8 @@ $(function () {
   }
 
   function updateProgress() {
-    $("#progress-fill").css("width", (corrects / corrects_needed) * 100 + "%");
-    $("#progress-text").text(`${corrects} / ${corrects_needed} pairs`);
+    $("#progress-fill").css("width", (corrects / correctsNeeded) * 100 + "%");
+    $("#progress-text").text(`${corrects} / ${correctsNeeded} pairs`);
   }
 
   function resetGame() {
@@ -72,7 +72,7 @@ $(function () {
 
   function updateEndScreen() {
     $("#header_endscreen").text(
-      corrects >= corrects_needed
+      corrects >= correctsNeeded
         ? "Congratulations! You've won the game!"
         : "Game Over!"
     );
@@ -82,7 +82,7 @@ $(function () {
 
   // Create table with stats of the previous 3 games
   function buildPrevGamesTable() {
-    let prevGames = save.get(team_name, "memory-stats");
+    let prevGames = save.get(teamName, "memory-stats");
     const table = document.getElementById("prev-games");
     if(prevGames != null) {
       table.replaceChildren(); // Clear previous rows
@@ -123,7 +123,7 @@ $(function () {
     if(prevGames.length > 3) {
       prevGames = prevGames.slice(-3); // Keep only the last 3 games
     }
-    save.set(team_name, "memory-stats", prevGames);
+    save.set(teamName, "memory-stats", prevGames);
   }
 
   function foundMatch() {
@@ -131,11 +131,11 @@ $(function () {
     updateProgress();
     $("#moves").text(`moves: ${misses + corrects}`);
 
-    if (corrects >= corrects_needed) {
+    if (corrects >= correctsNeeded) {
       stopTimer();
       updateEndScreen();
-      save.stats.incrementWin(team_name); // Save the new win count
-      wins = save.stats.get(team_name).wins; // Re-read, spelling can also add wins
+      save.stats.incrementWin(teamName); // Save the new win count
+      wins = save.stats.get(teamName).wins; // Re-read, spelling can also add wins
       $("#wins-count").text(wins); // Update wins display
       buildPrevGamesTable(); // Update the previous games table
       setTimeout(() => {
@@ -150,7 +150,7 @@ $(function () {
   function notMatch() {
     misses++;
     $("#moves").text(`moves: ${misses + corrects}`);
-    // if (misses >= misses_max) {
+    // if (misses >= missesMax) {
     //   stopTimer();
     //   alert("Game Over! You've exceeded the maximum number of moves.");
     //   updateEndScreen();
@@ -230,7 +230,7 @@ $(function () {
       return;
     }
 
-    $("#game-title").text(mode_titles[mode]);
+    $("#game-title").text(modeTitles[mode]);
     // The licenses are for the images, which listening and dialect never show
     $("#licenses-button").toggle(mode !== "listening" && mode !== "dialect");
 
@@ -303,7 +303,7 @@ $(function () {
     $(this).addClass("selected");
 
     // Grey out the dialects that have no recordings for this category (Standard Swedish always works)
-    const hasDialects = dialect_categories.includes($(this).data("category"));
+    const hasDialects = dialectCategories.includes($(this).data("category"));
     $(".dialect-btn").not('[data-dialect="standard"]').prop("disabled", !hasDialects);
     if (!hasDialects) {
       $(".dialect-btn").removeClass("selected");

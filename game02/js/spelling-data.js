@@ -8,7 +8,7 @@ import { get_category, get_vocab } from "../../scripts/vocabulary_await.js";
 import { initDb } from "./game-data.js";
 import { getRandomPairs } from "./cards.js";
 
-const DEFAULT_CATEGORY = "furniture";
+const defaultCategory = "furniture";
 
 // Vocab image paths are relative to the repo root, our pages are in game02/
 function imagePath(img) {
@@ -22,7 +22,7 @@ function imagePath(img) {
  * @param {string} category
  * @returns {Promise<Array<{id: *, sv: string, article: string, img: string}>>}
  */
-export async function loadSpellingWords(count = 8, category = DEFAULT_CATEGORY) {
+export async function loadSpellingWords(count = 8, category = defaultCategory) {
   await initDb();
 
   const ids = get_category(category);
