@@ -36,15 +36,19 @@ Each row on the sheet corresponds to one vocabulary. The following is a descript
 | Swedish_plural | The vocabulary in Swedish |
 | Literal | The literal representation of the vocabulary or empty |
 | Category | The category this word belongs to |
+| Subcategory | Subcategory of the item |
 | Image-url | URL of an image. Can be relative (/assets/images/<id>.png) or an external URL. Supported: PNG, JPG. |
 | Image_copyright_info | Copyright information which might need to be displayed with the image for legal reasons. |
+| Image_is_plural | TRUE if image shows multiple of item|
 | Audio-url | URL of an audio file. Can be relative (/assets/audio/<id>.mp3) or an external URL. Supported: MP3, WAV. |
+| Audio_is_plural | TRUE if audio describes multiple of item|
+
 
 ⚠️ Check license information before adding images or audio files. Most assets require attribution. Prefer making your own assets or using images from the public domain, which don't require attribution.
 
-| ID       | English | Article | Swedish | Swedish_plural | Literal | Category  | Image_URL                | Image_copyright_info | Audio_URL               |
+| ID       | English | Article | Swedish | Swedish_plural | Literal | Category  | Subcategory | chairs | Image_URL                | Image_copyright_info | Image_is_plural | Audio_URL               | Audio_is_plural |
 | -------- | ------- | ------- | ------- |--------------- | ------- | --------- | ------------------------ | -------------------- | ----------------------- |
-| a1b2c3d4 | chair   | en      | stol    | stolar         |         | furniture | /assets/images/chair.png | "Standard chair modern" by <a href="https://commons.wikimedia.org/wiki/user:Pk0001">Pk0001</a> licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0">CC BY-SA 4.0</a> | /assets/audio/chair.mp3 |
+| a1b2c3d4 | chair   | en      | stol    | stolar         |         | furniture | /assets/images/chair.png | "Standard chair modern" by <a href="https://commons.wikimedia.org/wiki/user:Pk0001">Pk0001</a> licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0">CC BY-SA 4.0</a> | FALSE | /assets/audio/chair.mp3 | FALSE |
 
 #### Access general data
 
@@ -56,14 +60,15 @@ The data is structured like a relational database, keyed by vocabulary ID. Use t
     - `en`              The vocabulary in english
     - `sv`              The vocabulary in swedish
     - `article`         The article of the word (Optional)
-    - `sv_plural`           The plural of the vocabulary in swedish (Optional)
+    - `sv_plural`       The plural of the vocabulary in swedish (Optional)
     - `literal`         The literal representation of the word (Optional)
     - `subCat`          The subcategory of the word (i.e hat is a subcategory of category clothes)
     - `img`             The URL of the image for this word (Optional)
+    - `img_is_plural`   "TRUE" if image shows multiple of the word "FALSE" otherwise. (may be empty)
     - `img_copyright`   The copyright information for this image if it needs to be displayed (Optional)
     - `img_is_plural`   "TRUE" if image depicts multiple of the word "FALSE" if not (optional)
     - `audio`           The URL of the audio for this word (Optional)
-    - `audio_is_plural`   "TRUE" if audio depicts multiple of the word "FALSE" if not (optional)
+    - `audio_is_plural` "TRUE" if audio describe multiple of the word "FALSE" otherwise. (may be empty)
 
 * `get_category(category)`: Returns a list of vocabulary IDs belonging to the given category.
 
@@ -133,10 +138,6 @@ For faster loading and version control, the Google Sheets data can be exported a
 
 1. Download the CSV from the Google Sheets document.
 2. Save it as `words.csv` in the repository root.
-3. In `scripts/database_config.js`, set:
-    ```js
-    const FETCH_EXTERNAL = false;
-    ```
 
 Done — the website now loads vocabulary from the local CSV file.
 
@@ -145,6 +146,8 @@ Done — the website now loads vocabulary from the local CSV file.
 * **New word not showing up?**
 
   Refresh the page or check for typos in the ID.
+  You can also remove cache from browser. ctrl + shift + del on pc 
+  cmd + shift + del on mac
 
 * **Invalid JSON in game column?**
 
