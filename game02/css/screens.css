@@ -11,7 +11,8 @@
 }
 
 /* Info box styling */
-#info-box {
+#info-box,
+.help-modal-content {
     background-color: #FFCAE9;
     border-left: 6px solid #9d0000;
     padding: 15px 20px;
@@ -24,22 +25,26 @@
     font-weight: bold;
 }
 
-#info-box h3 {
+#info-box h3,
+.help-modal-content h3 {
     margin-top: 0;
     color: black;
 }
 
-#info-box ol {
+#info-box ol,
+.help-modal-content ol {
     padding-left: 20px;
 }
 
-#info-box li {
+#info-box li,
+.help-modal-content li {
     margin: 8px 0;
     line-height: 1.5;
     color: #555;
 }
 
-#info-box p {
+#info-box p,
+.help-modal-content p {
     margin-top: 15px;
     font-weight: bold;
     color: #555;
@@ -53,10 +58,70 @@
     border-radius: 10px;
 }
 
-#restart-game {
+#restart-game,
+#go-to-menu,
+#spelling-restart,
+#spelling-go-to-menu {
     padding: 20px 40px;
     font-size: 2em;
     padding: 20px 40px;
     font-size: 1.5em;
     border-radius: 10px;
+    margin: 0 10px;
+}
+
+/* Menu: game mode buttons on the left, info box on the right */
+#menu-body {
+    display: flex;
+    gap: 20px;
+    width: 100%;
+    min-height: 280px;
+}
+
+#mode-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* The selected game mode gets the same color as the info box */
+.mode-btn.selected {
+    background-color: #FFCAE9;
+}
+
+/* Menu: dialect buttons below Start Game (shown when Dialect is selected) */
+#dialect-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+/* Selected mode/dialect: a dark outline too, so it is not shown by colour alone */
+.mode-btn.selected,
+.dialect-btn.selected,
+.category-btn.selected {
+    box-shadow: inset 0 0 0 3px #000;
+    background-color: #FFCAE9;
+}
+
+/* Menu: the menu already spaces its parts with gap, so the heading needs no margin of its own */
+#menu-screen h2 {
+    margin: 0;
+}
+
+/* Menu: word category buttons between the heading and "How to Play" */
+#category-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.category-btn {
+    padding: 6px 18px;
+}
+
+.dialect-btn:disabled {
+    background-color: #e0e0e0;
+    color: #595959;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
 }
