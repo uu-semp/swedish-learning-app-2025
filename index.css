@@ -315,3 +315,72 @@ header {
     70% { opacity: 1; }
     100% { opacity: 0; }
 }
+
+/* Browser Storage Consent */
+#storage-consent-overlay {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.45);
+    z-index: 10000;
+}
+
+#storage-consent-overlay[hidden] {
+    display: none;
+}
+
+#storage-consent-box {
+    background: white;
+    width: min(90%, 500px);
+    padding: 24px;
+    border-radius: 12px;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.25);
+}
+
+#storage-consent-box h2 {
+    margin: 0 0 12px 0;
+    color: #222;
+}
+
+#storage-consent-box p {
+    margin: 0 0 24px 0;
+    color: #444;
+    line-height: 1.5;
+}
+
+#storage-consent-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+#storage-consent-actions .settings-btn {
+    width: auto;
+}
+
+#storage-consent-language {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+.consent-language-btn {
+    background: transparent;
+    border: 1px solid #ccc;
+    padding: 4px 10px;
+    border-radius: 15px;
+    cursor: pointer;
+    font-size: 0.85rem;
+}
+
+.consent-language-btn:hover {
+    background: #f0f0f0;
+}
+.consent-language-btn.active {
+    background: #ddd;
+    border-color: #999;
+    font-weight: bold;
+}
