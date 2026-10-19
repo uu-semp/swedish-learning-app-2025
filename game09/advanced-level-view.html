@@ -6,10 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   
   
-    <link rel="stylesheet" href="../Global.css">
+    <link rel="stylesheet" href="css/main.css">
 
     
-    <link rel="stylesheet" href="../Styles/AdvancedLevelview.css">
+    <link rel="stylesheet" href="css/advanced-level-view.css">
 </head>
 <body>
   <main class="quiz">
@@ -37,14 +37,32 @@
 
     <section class="image-area">
       <img id="vocabImg" alt="vocab image" />
+      <p id="imageCopyright"></p>
     </section>
+
+    <div class="l3-phrase">
+      <span id="slotArticle" class="l3-slot">?</span>
+      <span id="slotWord" class="l3-slot l3-word-slot">?</span>
+    </div>
    
     <section id="options" class="options">
         <div class="input-area">
-          <input id="articleInput" type="text" placeholder=" (en / ett)" maxlength="4" />
+          <div class="article-group" role="group" aria-label="Choose an article">
+            <button type="button" class="article-choice"
+            data-article="en" aria-pressed="false">En</button>
+            <span class="article-slash">/</span>
+            <button type="button" class="article-choice"
+            data-article="ett" aria-pressed="false">Ett</button>
+            <span class="article-slash">/</span>
+            <button type="button" class="article-choice"
+            data-article="" aria-pressed="false">No article</button>
+          </div>
+
+          <input id="articleInput" type="hidden" value="" />
           <input id="wordInput" type="text" placeholder="words" />
           <button id="submitBtn" class="btn green">Submit</button>
         </div>
+
         <p id="gameFeedback" class="feedback-text"></p>
       </section>
       
@@ -59,15 +77,15 @@
   
   
 
-  <script src="../../scripts/vocabulary.js"></script>
+  <script src="../scripts/vocabulary.js"></script>
   
-  <script src="../../scripts/save.js"></script>
+  <script src="../scripts/save.js"></script>
   <script>
     const params = new URLSearchParams(window.location.search);
     const level = params.get("level") || "3";
 
     const script = document.createElement("script");
-    script.src = `../JS/GameLevel${level}.js`;
+    script.src = `js/levels/level-${level}.js`;
     document.head.appendChild(script);
   </script>
 </body>
