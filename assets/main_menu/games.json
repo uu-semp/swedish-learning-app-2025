@@ -26,12 +26,12 @@
   {
     "id": "game04",
     "title": {
-      "en": "Clock it",
-      "sv": "Klocka det"
+      "en": "A year in Uppsala",
+      "sv": "Ett år i Uppsala"
     },
     "desc": {
-      "en": "A game about the clock, containing both multiple choice, free text and drag-and-drop questions.",
-      "sv": "Ett spel för att lära sig klockan, bestående av flervalsfrågor, fri text och \"klicka-drag\" frågor."
+      "en": "A game for learning weekdays, months and seasons through a whole year in Uppsala, with multiple-choice, calendar and “click-and-drag” questions.",
+      "sv": "Ett spel för att lära sig veckodagar, månader och årstider genom ett helt år i Uppsala, med flervalsfrågor, kalender och “klicka-drag” frågor."
     },
     "supported_chapters": [1, 2]
   },
