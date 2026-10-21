@@ -22,35 +22,71 @@
   <script type="module" src="localStorage.js"></script>
   <script type="module" src="setUpLevels.js"></script>
   <script type="module" src="level.js"></script>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      if (sessionStorage.getItem('game15_lang') === 'en') {
+        document.querySelectorAll('[data-en]').forEach(el => {
+          if (el.tagName.toLowerCase() === 'title') {
+            document.title = el.getAttribute('data-en');
+          } else {
+            el.childNodes[0].nodeValue = el.getAttribute('data-en');
+          }
+        });
+      }
+    });
+  </script>
 </head>
 <body>
   <header>
-    <h1>Var bor jag?</h1>
-    <button class="back-button" onclick="window.location.href='index.html'">
+    <h1 data-sv="Var bor jag?" data-en="Where do I live?">Var bor jag?</h1>
+    <button class="back-button" onclick="window.location.href='index.html'" data-sv="← Tillbaka" data-en="← Back">
       ← Tillbaka
     </button>
   </header>
 
   <main class="game-frame">
     <div id="app" v-cloak>
-      <div class="status-bar">
-        <div>❤️ Liv: {{ lives }}</div>
-        <div>⭐ Poäng: {{ score }}</div>
-        <div>📈 Nivå: {{ level }}</div>
+      <div class="status-bar" style="position: relative;">
+        <div>⭐ {{ isEnglish ? 'Score' : 'Poäng' }}: {{ score }}</div>
+        <div>📈 {{ isEnglish ? 'Level' : 'Nivå' }}: {{ level }}</div>
+        <button class="lang-toggle-btn" @click="toggleLanguage">
+          {{ isEnglish ? 'Byt till Svenska' : 'Switch to English' }}
+        </button>
+      </div>
+      
+      <div class="last-wrong" v-if="previousWrongCount !== null">
+        {{ isEnglish ? 'Last time you answered ' + previousWrongCount + ' questions wrong.' : 'Förra gången svarade du fel på ' + previousWrongCount + ' frågor.' }}
       </div>
 
-      <div class="game-content">
+      <div v-if="levelComplete" class="level-completion">
+        <h2>🎉 {{ isEnglish ? 'You passed level ' + level + '!' : 'Du har klarat nivå ' + level + '!' }}</h2>
+
+        <p v-if="level < 3">
+          {{ isEnglish ? 'You are ready for the next level.' : 'Du är redo att gå vidare till nästa nivå.' }}
+        </p>
+        <p v-else>
+          {{ isEnglish ? 'You have passed all levels!' : 'Du har klarat alla nivåer!' }}
+        </p>
+
+        <button @click="continueAfterLevelCompletion">
+          <span v-if="level < 3">{{ isEnglish ? 'Go to next level' : 'Gå vidare till nästa nivå' }}</span>
+          <span v-else>{{ isEnglish ? 'Go to main menu' : 'Gå till huvudmenyn' }}</span>
+        </button>
+      </div>
+
+      <div class="game-content" v-if="!levelComplete">
+      
         <div class="left-panel">
           <div class="character-section">
             <div class="character">
               <div class="character-name"><strong>{{ character.name }}</strong></div>
-              <img src="kevin.png" alt="Kevin">
+              <img src="Kevin.png" alt="Kevin">
             </div>
 
+            <!-- FIXED SPEECH BUBBLE -->
             <div class="speech" v-if="currentQuestion">
-              <div>{{ currentQuestion.instruction }}</div>
-              <div v-if="translation" class="translation">{{ translation }}</div>
-              <button class="translate-btn" @click="translateQuestion">🌍 Översätt</button>
+              <div>{{ isEnglish ? currentQuestion.instructionEn : currentQuestion.instructionSv }}</div>
             </div>
           </div>
 
@@ -58,12 +94,27 @@
             {{ feedback }}
           </div>
 
+          <button
+             v-if="showAnswerOption && !correctAnswerVisible"
+             @click="revealCorrectAnswer">
+             {{ isEnglish ? 'Show correct answer' : 'Visa rätt svar' }}
+          </button>
+          <div v-if="correctAnswerVisible" class="correct-answer">
+             {{ isEnglish ? 'Correct answer:' : 'Rätt svar:' }} {{ correctAnswer }}
+          </div>
+
           <div class="text-question" v-if="currentQuestion && currentQuestion.type === 'text'">
             <input 
+              ref="textAnswer"
               v-model="textAnswer" 
               @keyup.enter="checkTextAnswer"
-              placeholder="Ex: ringgatan ett">
-            <button @click="checkTextAnswer">Skicka</button>
+              :placeholder="isEnglish ? 'Ex: one' : 'Ex: ett'">
+            <div v-if="level === 3" class="character-buttons">
+              <button type="button" @mousedown.prevent @click="insertSwedishCharacter('å')">å</button>
+              <button type="button" @mousedown.prevent @click="insertSwedishCharacter('ä')">ä</button>
+              <button type="button" @mousedown.prevent @click="insertSwedishCharacter('ö')">ö</button>
+            </div>
+            <button @click="checkTextAnswer">{{ isEnglish ? 'Submit' : 'Skicka' }}</button>
           </div>
         </div>
 
@@ -71,7 +122,28 @@
           <div class="map-wrapper">
             <div class="map-container">
               <img src="map.png" alt="Karta" class="map-image">
-              
+              <!-- Display address numbers with text that scales with each circle -->
+              <div
+                v-for="(h, i) in houses"
+                :key="'number-' + i"
+                class="house-number"
+                :style="{
+                  top: (h.labelCoords.y * 100) + '%',
+                  left: (h.labelCoords.x * 100) + '%'
+                }"
+              >
+                <svg viewBox="0 0 100 100" width="100%" height="100%">
+                  <text
+                    x="50"
+                    y="50"
+                    text-anchor="middle"
+                    dominant-baseline="central"
+                    font-size="42"
+                    font-weight="500"
+                    fill="#222"
+                  >{{ h.number.cardinal.literal }}</text>
+                </svg>
+              </div>
               <div
                 v-for="(h, i) in houses"
                 :key="i"

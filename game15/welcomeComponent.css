@@ -61,18 +61,6 @@ body {
     transform: scale(0.98);
 }
 
-.level-btn.locked {
-    background-color: #ccc;
-    border: 1px solid #999;
-    cursor: not-allowed;
-    color: #666;
-}
-
-.level-btn.locked:hover {
-    background-color: #ccc;
-    transform: none;
-}
-
 .level-info {
     display: flex;
     justify-content: space-between;
@@ -102,11 +90,6 @@ body {
     background-color: white;
     border-radius: 4px;
     transition: width 0.3s ease;
-}
-
-.locked-icon {
-    font-size: 14px;
-    margin-left: 5px;
 }
 
 .summary-btn {
@@ -213,4 +196,28 @@ body {
 .status-locked {
     color: #999;
     font-weight: bold;
+}
+
+.lang-toggle-btn {
+    position: absolute;
+    right: 1rem;
+    padding: 0.4rem 0.8rem;
+    background: white;
+    border: 2px solid #ccc;
+    border-radius: 0.5rem;
+    color: #333;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 0.875rem;
+    transition: all 0.2s;
+    white-space: nowrap;
+    width: auto !important;
+    height: auto !important;
+    line-height: normal;
+    display: inline-block;
+}
+
+.lang-toggle-btn:hover {
+    background: #f0f0f0;
+    border-color: #999;
 }
