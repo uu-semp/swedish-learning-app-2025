@@ -26,5 +26,5 @@ window.vocabulary.when_ready(() => {
   
   /* Button link to main page */
   function goBacktomainpage() {
-    window.location.href = '../index.html';
+    window.location.href = 'index.html';
   }
