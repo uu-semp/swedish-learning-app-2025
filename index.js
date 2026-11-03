@@ -349,4 +349,54 @@ async function init() {
   loadGames();
 }
 
-init()
+init();
+
+//// Browser Storage Consent ////
+;(() => {
+  const CONSENT_KEY = "storageConsent";
+
+  const overlay = document.getElementById("storage-consent-overlay");
+  const acceptBtn = document.getElementById("storage-consent-accept");
+  const declineBtn = document.getElementById("storage-consent-decline");
+  const langEnBtn = document.getElementById("storage-consent-lang-en");
+  const langSvBtn = document.getElementById("storage-consent-lang-sv");
+
+  if (!overlay || !acceptBtn || !declineBtn || !langEnBtn || !langSvBtn) return;
+
+  function showStorageConsent() {
+    overlay.hidden = false;
+    updateConsentLanguageButtons(currentLanguage);
+  }
+  function hideStorageConsent() {
+    overlay.hidden = true;
+  }
+  function updateConsentLanguageButtons(lang) {
+  langEnBtn.classList.toggle("active", lang === "en");
+  langSvBtn.classList.toggle("active", lang === "sv");
+  }
+
+  acceptBtn.addEventListener("click", () => {
+    localStorage.setItem(CONSENT_KEY, "accepted");
+    hideStorageConsent();
+  });
+
+  declineBtn.addEventListener("click", () => {
+    localStorage.setItem(CONSENT_KEY, "declined");
+    hideStorageConsent();
+  });
+  langEnBtn.addEventListener("click", async () => {
+    await setLanguage("en");
+    updateConsentLanguageButtons("en");
+  });
+
+  langSvBtn.addEventListener("click", async () => {
+    await setLanguage("sv");
+    updateConsentLanguageButtons("sv");
+  });
+
+  const consent = localStorage.getItem(CONSENT_KEY);
+
+  if (consent === null) {
+    showStorageConsent();
+  }
+})();

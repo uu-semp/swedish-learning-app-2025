@@ -57,5 +57,29 @@
     "close": {
         "en": "Close",
         "sv": "Stäng"
-    }
+    },
+"storage-consent-title": {
+    "en": "Browser Storage",
+    "sv": "Webbläsarlagring"
+},
+
+"storage-consent-text": {
+    "en": "This website can store game progress and other application data in your browser. You can choose whether you want to allow this storage.",
+    "sv": "Den här webbplatsen kan lagra spelresultat och annan programdata i din webbläsare. Du kan välja om du vill tillåta denna lagring."
+},
+
+"storage-consent-accept": {
+    "en": "Allow storage",
+    "sv": "Tillåt lagring"
+},
+
+"storage-consent-decline": {
+    "en": "Decline",
+    "sv": "Avböj"
+},
+
+"storage-footer": {
+    "en": "This website stores game data in your browser.",
+    "sv": "Den här webbplatsen lagrar speldata i din webbläsare."
+}
 }
