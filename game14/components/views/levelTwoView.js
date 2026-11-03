@@ -1,12 +1,170 @@
+import { loadGameData } from "../elements/gameData.js";
+import { playSound } from "../elements/playSound.js";
+
+const MAX_MISTAKES = 2; // Wrong clicks before the answer is shown
+
 export const LevelTwoView = {
-    name: "level-two-view",
-    props: ["switchTo"],
-    template: `
-        <div>
-        <h1 class = "main-text">THIS IS THE LEVEL 2 VIEW</h1>    
-        <div class = button-container> 
-          <go-back-button @click="switchTo('ChooseLevelView')"></go-back-button>
+  name: "level-two-view",
+  props: ["switchTo"],
+  data() {
+    return {
+      pelleSvg: "",          // The SVG code of Pelle, loaded when the page opens
+      words: [],             // The body part words in random order
+      currentIndex: 0,       // Which word the player is looking for now
+      mistakesOnCurrent: 0,  // Wrong clicks on the current word
+      locked: false,         // True while the answer is shown, to ignore clicks
+      finished: false,       // True when all words are done
+      firstTryCorrect: 0,    // Words found without any wrong click
+       feedback: "",          // "right", "wrong" or "show-answer", shown under the word
+      feedbackTimer: null,   // Timer that hides the feedback again
+    };
+  },
+  computed: {
+    // The word the player is looking for right now
+    currentWord() {
+      return this.words[this.currentIndex];
+    },
+  },
+  async mounted() {
+    // Get Pelle and the body part words, already loaded when the game started
+    try {
+      const { pelleSvg, bodyParts } = await loadGameData();
+      this.pelleSvg = pelleSvg;
+      this.words = this.shuffle(bodyParts); // shuffle makes a copy, the shared list stays the same
+    } catch (error) {
+      console.error("Could not load the words from the database", error);
+    }
+  },
+  // Stop the feedback timer if the player leaves in the middle of a game
+  beforeUnmount() {
+    clearTimeout(this.feedbackTimer);
+  },
+  methods: {
+    // Put the words in random order (Fisher-Yates shuffle)
+    shuffle(list) {
+      const copy = [...list];
+      for (let i = copy.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [copy[i], copy[j]] = [copy[j], copy[i]];
+      }
+      return copy;
+    },
+
+    playWord() {
+      playSound(this.currentWord);
+    },
+
+     // Show a short message under the word, then hide it again
+    setFeedback(type, duration = 1200) {
+      clearTimeout(this.feedbackTimer);
+      this.feedback = type;
+      this.feedbackTimer = setTimeout(() => (this.feedback = ""), duration);
+    },
+
+    // Check if the player clicked the right body part
+    handlePelleClick(event) {
+      const part = event.target.closest("g[id]");
+      if (!part || !this.currentWord || this.locked || this.finished) return;
+
+      if (part.id === this.currentWord.en) {
+        // Right: keep the part green and go to the next word
+        part.classList.add("found");
+        if (this.mistakesOnCurrent === 0) this.firstTryCorrect++;
+        this.setFeedback("right");
+        this.nextWord();
+      } else {
+        // Wrong: flash the clicked part red
+        this.mistakesOnCurrent++;
+        part.classList.add("wrong");
+        setTimeout(() => part.classList.remove("wrong"), 600);
+
+        if (this.mistakesOnCurrent >= MAX_MISTAKES) {
+          this.setFeedback("show-answer", 1800);
+          this.showAnswer();
+        } else {
+          this.setFeedback("wrong");
+        }
+      }
+    },
+
+    // After too many mistakes: blink the right body part, then move on
+    showAnswer() {
+      this.locked = true;
+      const svg = this.$el.querySelector(".explore-pelle svg");
+      const rightPart = svg.querySelector("#" + this.currentWord.en);
+      rightPart.classList.add("hint");
+
+      setTimeout(() => {
+        rightPart.classList.remove("hint");
+        rightPart.classList.add("found");
+        this.locked = false;
+        this.nextWord();
+      }, 1800);
+    },
+
+    nextWord() {
+      this.mistakesOnCurrent = 0;
+      if (this.currentIndex < this.words.length - 1) {
+        this.currentIndex++;
+      } else {
+        this.finished = true;
+      }
+    },
+
+    // Start over with the words in a new random order
+    playAgain() {
+      this.$el.querySelectorAll("g.found").forEach((part) => part.classList.remove("found"));
+      this.words = this.shuffle(this.words);
+      this.currentIndex = 0;
+      this.mistakesOnCurrent = 0;
+      this.firstTryCorrect = 0;
+      this.finished = false;
+      this.feedback = "";
+    },
+  },
+  template: `
+      <div class="explore-view find-mode">
+        <div class="go-back-wrapper">
+          <capsule-button
+            label="go-back"
+            size="md"
+            @click="switchTo('ChooseLevelView')"
+          ></capsule-button>
         </div>
+
+        <h1 class="explore-title">{{$language.translate('level2')}}</h1>
+
+        <div class="explore-content">
+          <div class="explore-pelle" v-html="pelleSvg" @click="handlePelleClick"></div>
+
+          <!-- While playing -->
+          <div class="explore-side" v-if="currentWord && !finished">
+            <p class="explore-instruction">{{$language.translate('level2-instruction')}}</p>
+            <p class="explore-audio-hint">{{$language.translate('explore-audio-hint-level2')}}</p>
+            <button class="find-word" @click="playWord">
+              <i class="fa-solid fa-volume-high find-word-icon"></i>
+              {{ currentWord.article }} {{ currentWord.sv }}
+            </button>
+            <p class="find-progress">
+              {{$language.translate('progress-word')}} {{ currentIndex + 1 }} {{$language.translate('progress-of')}} {{ words.length }}
+            </p>
+            <p class="find-score">
+              <i class="fa-solid fa-star"></i> {{$language.translate('score')}}: {{ firstTryCorrect }}
+            </p>
+            <p class="find-feedback" :class="feedback">
+              {{ feedback ? $language.translate('feedback-' + feedback) : '' }}
+            </p>
+          </div>
+
+          <!-- When all words are done -->
+          <div class="explore-side" v-if="finished">
+            <p class="find-result">
+              {{$language.translate('result-you-got')}} {{ firstTryCorrect }} {{$language.translate('progress-of')}} {{ words.length }} {{$language.translate('result-points')}}            </p>
+            <button class="word-cloud play-again" @click="playAgain">
+              {{$language.translate('play-again')}}
+            </button>
+          </div>
         </div>
-      `,
-  };
+      </div>
+    `,
+};

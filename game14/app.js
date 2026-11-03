@@ -1,5 +1,6 @@
 import { createApp, reactive } from "https://unpkg.com/vue@3/dist/vue.esm-browser.js";
 import components from "./components/index.js";
+import { loadGameData } from "./components/elements/gameData.js";
 
 // Global reactive language object, which sets language for whole application
 const language = reactive({
@@ -28,6 +29,7 @@ const app = createApp({
   data() {
     return {
       currentView: "StartView", //Default start page
+      skyViews: ["StartView", "ChooseLevelView", "LevelOneView", "LevelTwoView", "HelpView"], // Views shown on top of the sky background
     };
   },
 
@@ -38,12 +40,32 @@ const app = createApp({
   },
 
   template: `
-    <component :is="currentView" :switch-to="switchViewTo"></component>  
+    <sky-background v-if="skyViews.includes(currentView)">
+      <language-selection>
+        <!-- Help button next to the flags, only on the start view -->
+        <capsule-button
+          v-if="currentView === 'StartView'"
+          size="sm"
+          label="?"
+          :translate-key="false"
+          :title="$language.translate('help')"
+          @click="switchViewTo('HelpView')"
+        ></capsule-button>
+      </language-selection>
+      <component :is="currentView" :switch-to="switchViewTo"></component>
+    </sky-background>
+    <component v-else :is="currentView" :switch-to="switchViewTo"></component>
     `, //The visual app shown through the index.html, passes the method switchViewTo which is taken as prop from child components
+    // Views in skyViews are placed inside the sky background, which stays mounted while switching between them
+    // The language flags are shown once here, on top of every sky view
 });
 
 app.config.globalProperties.$language = language;
 language.load("en");
+
+// Start loading the words, Pelle and sounds now, so the levels open quickly.
+// Errors are handled in the levels, which try again if this fails.
+loadGameData().catch(() => {});
 
 
 // Register all global components, created with help of generative AI

@@ -3,16 +3,10 @@ export const ChooseLevelView = {
   props: ["switchTo"],
   data() {
     return {
-      selectedLanguage: this.$language.selectedLanguage, // 'sv' or 'en' 
       showLockedModal: false,
     };
   },
   methods: {
-    languageSwitch(Language) {
-      this.$language.load(Language);
-      this.selectedLanguage = this.$language.selectedLanguage;
-    },
-
     openLockedPrompt() {
       this.showLockedModal = true;
     },
@@ -21,39 +15,36 @@ export const ChooseLevelView = {
       this.showLockedModal = false;
     }
   },
+  // The sky background and language flags are added around this view in app.js
   template: `
       <div class="choose-level-view">
-          <!-- Language selection -->
-          <div class="language-selection">
-              <language-flag-button
-                src="./components/assets/game14FlagSE.png"
-                alt="Swedish"
-                value="sv"
-                :selected="selectedLanguage === 'sv'"
-                @click="languageSwitch('sv')"
-                @select="selectedLanguage = $event"
-              ></language-flag-button>
-
-              <language-flag-button
-                src="./components/assets/game14FlagEN.png"
-                alt="English"
-                value="en"
-                :selected="selectedLanguage === 'en'"
-                @click="languageSwitch('en')"
-                @select="selectedLanguage = $event"
-              ></language-flag-button>
-          </div>
-
           <h1 class="main-text">{{$language.translate('choose-level')}}</h1>    
           
           <div class="level-buttons-container">
-              <level-button :label="$language.translate('level1')" class="big-buttons" @click="switchTo('LevelOneView')"></level-button>
-              <level-button :label="$language.translate('level2-locked')" class="big-buttons-locked" @click="openLockedPrompt"></level-button>
-              <level-button :label="$language.translate('level3-locked')" class="big-buttons-locked" @click="openLockedPrompt"></level-button>
+              <capsule-button
+                label="level1"
+                size="lg"
+                @click="switchTo('LevelOneView')"
+              ></capsule-button>
+              <capsule-button
+                label="level2"
+                size="lg"
+                @click="switchTo('LevelTwoView')"
+              ></capsule-button>
+              <capsule-button
+                label="level3-locked"
+                size="lg"
+                :locked="true"
+                @click="openLockedPrompt"
+              ></capsule-button>
           </div>
 
           <div class="go-back-wrapper"> 
-              <go-back-button @click="switchTo('StartView')"></go-back-button>
+              <capsule-button
+                label="go-back"
+                size="md"
+                @click="switchTo('StartView')"
+              ></capsule-button>
           </div>
 
           <!-- Modal prompt -->
