@@ -53,6 +53,10 @@ window.vocabulary = {
         return resolved_methods.get_category(category);
     },
 
+    get_categories() {
+        return resolved_methods.get_categories();
+    },
+
     // Returns a random vocabulary item. See `get_vocab()`
     get_random() {
         return resolved_methods.get_random();

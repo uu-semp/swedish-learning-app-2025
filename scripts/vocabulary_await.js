@@ -203,6 +203,18 @@ export function get_category(category) {
 }
 
 /**
+ * Returns the names of all available vocabulary categories.
+ * @returns {string[] | null}
+ */
+export function get_categories() {
+  if (db == undefined) {
+    console.error("Database has not been loaded");
+    return null;
+  }
+  return Object.keys(db.categories);
+}
+
+/**
  * @description Returns a random vocabulary item. See `get_vocab()`
  * @returns {DB.VocabEntry}
  */
