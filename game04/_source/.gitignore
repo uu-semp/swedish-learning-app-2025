@@ -1,0 +1,23 @@
+# Dependencies (installed by npm install)
+node_modules/
+
+# Build output inside _source (the built copy in game04/ is committed instead)
+dist/
+
+# Logs
+*.log
+npm-debug.log*
+
+# Environment files and secrets
+.env
+.env.*
+*.local
+
+# TypeScript cache
+*.tsbuildinfo
+
+# OS and editor files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

@@ -1,0 +1,30 @@
+<!doctype html>
+
+<!--
+=================================================
+Owned by Game 04
+=================================================
+-->
+
+<html lang="sv">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ett år i Uppsala</title>
+    <script>
+      // Loads the site-wide save API (see /scripts/SAVE.MD) so this game's progress
+      // persists the same way every other game's does. Injected as a plain DOM script
+      // instead of a normal <script src> tag because the file lives one level up in the
+      // shared repo, outside this Vite project's root — Vite can't bundle/resolve it.
+      (function () {
+        var s = document.createElement('script');
+        s.src = '../scripts/save.js';
+        document.head.appendChild(s);
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
