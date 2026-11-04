@@ -1,15 +1,14 @@
-
 function goBacktomainpage() {
     
-    window.location.href = "../index.html";
+    window.location.href = "index.html";
   }
   
  
   function startLevel(levelNum) {
     if (levelNum === 3) {
-      window.location.href = `../Views/AdvancedLevelview.html?level=${levelNum}`;
+      window.location.href = `advanced-level-view.html?level=${levelNum}`;
     } else {
-      window.location.href = `../Views/Levelview.html?level=${levelNum}`;
+      window.location.href = `level-view.html?level=${levelNum}`;
     }
   }
   
