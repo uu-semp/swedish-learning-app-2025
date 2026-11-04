@@ -1,0 +1,111 @@
+# Paper Pelle 
+
+**A browser game for learning basic Swedish clothing and color vocabulary.**
+
+Paper Pelle is an educational game built for students of Swedish for Academics 1 at Uppsala University, taught by Sandra Uitto (Lecturer, Department of Scandinavian Languages). Players read a Swedish description of an outfit and dress Pelle the cat accordingly by selecting clothing from a wardrobe. This game content match the course syllabus.
+
+---
+
+## Table of Contents
+- [How to Run](#how-to-run)
+- [How to Play](#how-to-play)
+- [Features](#features)
+- [Clothing Assets](#clothing-assets)
+- [CSS](#css)
+- [Tech Stack](#tech-stack)
+- [Testing](#testing)
+- [Unimplemented Requirements](#unimplemented-requirements)
+
+---
+## How to Run
+**See README in root**
+
+## How to Play
+1. Open the landing page and choose a level.
+2. Read the level introduction, which covers the vocabulary the level will adress.
+3. Read the instruction text describing the outfit Pelle want to wear.
+4. Click items in the wardrobe to dress Pelle. 
+5. Click **Confirm Outfit** when you think Pelle is dressed correctly.
+6. Get instant feedback:
+   - ✅ **Correct!**: the round is completed.
+   - ❌ **Incorrect items / Missing items**: the game tells you which categories need fixing, and you can try again.
+7. Click **Next** for a new round, **Give up** to skip the current one or **Next level** to proced to nex level (higher dificullty)
+
+---
+
+## Features
+
+- **Level selection menu** with a "How to play" popup.
+- **Level introductions** that present the vocabulary for each level.
+- **Randomly generated outfits**: each round is a new Swedish description.
+- **Clothing generation**: generates clothes by masking clothing.png with colors or patterns. The correct clothing has its color/pattern used more than once on other clothing.
+- **Click or drag to dress** 
+- **Undo** and **Remove all** controls for quick corrections.
+- **Targeted feedback**: tells the player which items are missing or wrong.
+- **Progress tracking per level**: completed rounds and "first try" successes, shown in the menu and in-game.
+- **Give up** option and a **Next level** button.
+- **Persistent stats** saved via the shared `save.js` module.
+
+---
+
+
+## Clothing Assets
+Clothing assets are in `assets/game13` and were drawn by Shianne Tan, a member of the group, so there are no copyright conflicts.
+
+---
+
+## Tech Stack
+
+- **Frontend:** HTML, CSS, vanilla JavaScript (ES modules)
+- **Fonts:** Work Sans (Google Fonts)
+- **Version control:** Git, GitHub
+- **Dev server:** Python's built-in `http.server`
+
+### HTML Overview
+
+The game is split into three pages that follow the player's path. Each page loads its own JavaScript modules from `game/`.
+
+- **`index.html`** is the landing page (main menu). It shows the three level buttons with scores and a "How to play" popup.
+- **`level_introduction.html`** is shown before each level and shows the words the student should already know and the new words for the level. 
+- **`game.html`** is the game itself
+
+### JavaScript Overview
+
+**`index.js`** is the entry module that wires together the JavaScript files in `game13/game/`. The files in `game13/game/` are split by responsibility:
+
+- **Level configuration and word lists** (`level_configuration.js`, `level_wordlist.js`): define what each level contains and build the vocabulary lists shown before a level.
+- **Game logic** (`outfit_generator.js`, `progress.js`): generate random outfits with Swedish and English descriptions, and track each student's progress per level.
+- **Clothing and UI** (`clothing/`, `ui/`): define the garments and render the wardrobe and Pelle.
+
+### CSS Overview
+
+all `.css` depends on `base.css`, so **`base.css` must be loaded first** in HTML files.
+
+**`css/base.css`**:
+- Shared components such as buttons and popups.
+- Design variables (colors, screen size, shadows, font) in `:root`, so they can be changed in one place.
+
+---
+
+## Unimplemented Requirements
+
+User requirements we did not have time to implement:
+
+
+- **REQ-STUDENT-2**: A student needs the instructions to be simple, so they can understand them even with limited knowledge of Swedish.
+  - **REQ-STUDENT-2.1**: Instructions shall use short sentences and vocabulary already covered in the course. *(Requires user testing with students.)*
+
+- **REQ-TEACHER-5**: A teacher needs the game to be available to students with different accessibility requirements, so that all students can use the game.
+  - **REQ-TEACHER-5.1**: The system shall provide options that allow students with different requirements to interact with the game.
+
+- **REQ-DEVELOPER-7**: A future developer needs a way to test the game logic, so changes can be verified without manually checking everything by hand.
+  - **REQ-DEVELOPER-7.1**: The system shall include an automated test suite that verifies the game logic and can be run with a single command.
+  - **REQ-DEVELOPER-7.2**: The system shall report the result of each test run as pass or fail per test, with a message that identifies which test failed and why, so a developer can locate the problem without manual checking.
+
+- **REQ-STUDENT-20**: A student needs the game to render and function consistently across common web browsers (e.g. Chrome, Firefox, Safari), so that all students have a reliable experience regardless of which browser they use. *(This should probably work, but it has not been thoroughly tested.)*
+
+- **REQ-STUDENT-22**: A student needs to be able to get help when stuck in the game, so the student does not give up.
+  - **REQ-STUDENT-22.1**: Add language hints.
+
+### Other implementations to follow up on:
+- Hide the scrollbars that are in the wardrobe.

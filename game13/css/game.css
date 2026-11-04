@@ -1,0 +1,432 @@
+/*Reused layout components*/
+.bar {
+  background-color: var(--color-surface);
+  border-radius: 9px;
+  border: 3px solid #333;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  text-align: center;
+  flex-shrink: 0;
+  box-sizing: border-box;
+}
+
+.speech-bubble {
+  position: relative;
+  background-image: url("../../assets/game13/Speechbubble\ horizontal.png");
+  background-position: center;
+  background-size: 100% 100% ;
+  border-radius: 30%;
+}
+
+.speech-bubble p {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+/* Main layout components*/
+
+/*container for the UI*/
+.screen {
+  width: var(--screen-width);
+  height: var(--screen-height);
+  display:flex;
+  flex-direction: column;
+  overflow: hidden;
+  padding:10px;
+
+    /* flex-centering from base.css */
+  align-items: stretch;
+  justify-content: flex-start;
+
+  background-image: url("../../assets/game13/PaperPellesRoom.png");
+  background-size: 100% 100%;
+  background-position: left;
+}
+
+/* The top-bar displaying Level, rounds and other relevant stats*/
+.status-bar {
+padding-left: 20px;
+padding-right: 20px;
+}
+
+/* the interactive area including stage and wardrobe*/
+.game-area{
+  display: flex;
+  flex-direction: row;
+  flex:1;
+  overflow: hidden;
+
+  min-height: 0;
+  height:100%;
+}
+
+/* the area with pelle */
+.stage {
+  display:flex;
+  position: relative;
+  flex: 2; 
+  background-repeat: no-repeat;
+  border-right: 3px solid var(--color-text);
+  overflow: hidden;
+  min-height: 0;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
+  min-width: 0;
+  height:100%;
+}
+
+/* The section for the warderobe containing all clothes */
+.wardrobe {
+  flex:1; 
+  flex-direction: column;
+  background-image: url("../../assets/game13/wardrobe_white_bg.png");
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  padding: 25px;
+  padding-top: 40px;
+  padding-bottom: 40px;
+  display: flex;
+  align-items: stretch;
+  gap: 15px; /* represents the visuals "planks" between the shelves to match the image*/
+
+  /* critical bits */
+  min-height: 0;     /* allow it to shrink within the grid row */
+  overflow: hidden;  /* keep overflow inside the wardrobe-box */
+}
+
+/* Section for the outfit-prompt*/
+.instructions {
+  padding: 20px 30px;
+  margin: 6px;
+  max-width: 400px;
+
+  width: 70%; 
+  align-self: flex-start;
+}
+
+/* The tail pointing towards Pelle */
+.instructions::after {
+  content: "";
+  position: absolute;
+  bottom: -35px;
+  left: 30%;
+
+  width: 40px;
+  height: 40px;
+
+  background-image: url("../../assets/game13/Speechbubble-tail.png");
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  transform: scaleX(-1);
+}
+/* confirm / give up, feedback, next (inside the stage) */
+.submissionbar {
+  padding: 6px;
+  justify-content: space-between;
+}
+
+.score-bar {
+  display: flex;
+  padding: 10px 20px;
+  background-color: var(--color-accent-light);
+  border-radius: 9px;
+  color: var(--color-text-accent);
+}
+
+.score-bar > *:not(:last-child) {
+  border-right: 2px solid var(--color-text-accent);
+}
+
+.score-text {
+  padding: 0 15px;
+}
+
+/*feedback shown after submission*/
+.feedback {
+    position: absolute;
+    padding: 20px 30px;
+    width: 30%;
+    right: 5%; 
+    top: 35%;
+    display: none;
+}
+
+.feedback.visible {
+  display: block;
+}
+
+.feedback::after {
+  content: "";
+  position: absolute;
+  top: 40px;
+  left: -20px;
+
+  width: 40px;
+  height: 40px;
+
+  background-image: url("../../assets/game13/Speechbubble-tail.png");
+  /* transform: scaleX(-1); mirror the image */
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  transform: scaleX(-1) rotate(-100deg);
+}
+
+
+
+/* dressing related CSS*/
+
+/* defines the area cintaining the paper-pelle image and dropzone */
+.paper-pelle-area{
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+  display: flex;
+  position: relative;
+  justify-content: center;
+  align-items: flex-end;
+}
+
+.paper-pelle-image {
+  height: 90%; /* leave some room at the top for the headwear*/
+  width: auto;
+  z-index: 1; /* the paper Pelle image should lay below all garments*/
+  user-select: none;
+  pointer-events: none;
+}
+
+/* Drop highlight: Pelle glows while an item is dragged over him */
+.paper-pelle-area.drop-target .paper-pelle-image {
+  filter: drop-shadow(0 0 6px #4caf50) drop-shadow(0 0 14px #4caf50);
+}
+
+/* Dropzone for clothes*/
+.dropzone-area {
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  position:absolute; /* position above cat-image*/
+  
+  /* Center any child image in the box nicely */
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+
+  /* IMPORTANT: allow clicking images inside the dropzone */
+  pointer-events: auto;
+  z-index: 2; /* above cat */
+}
+
+/* Define dropzone for different garments*/
+.dropzone {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center; /*center the image within the dropzone*/
+  align-items: center; /*center the image within the dropzone*/
+}
+
+/* Settings for garments areas*/
+.headwear{ height: 25%; top: 0%}
+.face {height: 25%; top:20%}
+.top   { height: 35%; top:45%; z-index: 3;} /* obs bottom and top area overlap, z-index places top above bottom*/
+.hands  { height: 20%; }
+.bottom  { height: 25%; top:70%} 
+.shoes   { height: 15%; top: 80%}
+
+
+/*wardrobe related CSS*/
+
+/* Container for each shelf and its arrows */
+.shelf-wrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    flex: 1;
+    width: 100%;
+    min-height: 0;
+    gap: 4px;
+}
+
+/* each row of clothes*/
+.wardrobe-shelf {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  flex: 1 1 0;;
+  height: 100%;
+  min-height: 0;
+  padding: 4px;
+  gap: 8px;
+  box-sizing: border-box;
+  overflow-x: auto; /* each row scrolls in horizontal direction*/
+  overflow-y: hidden; 
+  -webkit-overflow-scrolling: touch; 
+  scrollbar-width: none; /* Hide scrollbar in Firefox */
+}
+
+/* Hide scrollbar in Chrome, Edge and Safari */
+.wardrobe-shelf::-webkit-scrollbar {
+  display: none;
+}
+
+/* Wrapper for JS*/
+.menu-item {
+  display: flex;
+  justify-content: center;
+  flex-shrink: 0;
+  height: 100%;
+}
+
+/* A clothing item that was confirmed as wrong: grayed out, can't be chosen */
+.menu-item.is-wrong .thumb {
+  filter: grayscale(100%);
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* Navigation arrows */
+.shelf-arrow {
+    flex-shrink: 0;
+    width: 22px;
+    height: 40px;
+    padding: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: transparent;
+    border: none;
+    color: #333;
+    font-size: 22px;
+    cursor: pointer;
+}
+
+.shelf-arrow:hover:not(:disabled) {
+    color: var(--color-primary);
+}
+
+.shelf-arrow:disabled {
+    opacity: 0.25;
+    cursor: default;
+}
+
+
+/*The image used for the garments*/
+.thumb {
+  height: 100%; /*the thumb size is fitted to the height of the container*/
+  width: auto; /*width changes according to ratio*/
+  object-fit: contain; /*the original ratio of the image will be kept*/
+  display: block;
+  cursor: pointer; 
+
+  /* lodrät swipe scrollar garderoben, sidledes drag startar dragning */
+  touch-action: pan-y;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-user-drag: none;
+}
+
+/* clothing on pelle turn gray in the wardrobe */
+.thumb.is-worn {
+  filter: grayscale(100%);
+  opacity: 0.4;
+  touch-action: auto;
+}
+
+/* Kopia som följer pekaren vid dragning */
+.drag-ghost {
+  position: fixed;
+  z-index: 1000;
+  pointer-events: none;
+  opacity: 0.85;
+  transform: scale(1.05);
+  cursor: grabbing;
+  height: auto;
+  max-height: none;
+  object-fit: contain;
+}
+
+/* Place buttons in corner of stage*/
+.tool-buttons-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  position: absolute;
+  right: 0%;
+  top:5%
+}
+
+/* ---------- Game buttons ----------
+   Färg, typsnitt, ram, hover och disabled kommer från .btn i base.css.
+   Här sätts bara storlek och placering. */
+
+.footer-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.btn {
+  flex: none;
+  width: 140px;
+  height: 50px;
+  padding: 0;
+}
+
+.toolBtn  { width: 100px; }
+.clearBtn { width: 110px; }
+
+.btn--small {
+  width: auto;
+  height: auto;
+  padding: 4px 12px;
+  font-size: 16px;
+  border-width: 2px;
+}
+
+/* Masked garments (garment_renderer.js): Pelle, every worn garment and
+   Pelle's raised hand are images of the same size, stacked exactly on top
+   of each other. Stacking order comes from each garment's layer in
+   clothing_catalog.js (0 Pelle, 10–70 clothes, 90 hand, 100 hand accessories). */
+.pelle-stack {
+  position: relative;
+  height: 100%;
+  aspect-ratio: 698 / 1305; /* same as pelle.png and every garment file */
+  isolation: isolate; /* garment z-indexes only compete with each other */
+}
+
+.pelle-stack .paper-pelle-image,
+.pelle-stack .worn-garment,
+.pelle-stack .pelle-hand {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  user-select: none;
+}
+
+.pelle-stack .paper-pelle-image { z-index: 0; }
+.pelle-stack .pelle-hand { z-index: 90; }
+
+/* The dropzones cover all of Pelle and must not create their own stacking
+   order, otherwise garment layers in different zones could not interleave. */
+.pelle-stack .dropzone-area { z-index: auto; }
+.pelle-stack .dropzone {
+  top: 0;
+  height: 100%;
+  z-index: auto;
+  pointer-events: none;
+}
+
+.pelle-stack.drop-target .paper-pelle-image {
+  filter: drop-shadow(0 0 6px #4caf50) drop-shadow(0 0 14px #4caf50);
+}
