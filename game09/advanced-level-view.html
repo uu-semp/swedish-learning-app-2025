@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Clothing Quiz</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  
+  
+    <link rel="stylesheet" href="css/main.css">
+
+    
+    <link rel="stylesheet" href="css/advanced-level-view.css">
+</head>
+<body>
+  <main class="quiz">
+  <button class="backtoLevelSelect-btn" onclick="goBacktoLevelSelectpage()">⬅</button>
+  <button id="helpBtn" class="help-btn">?</button>
+
+  <div id="resultPopup" class="result-Popup hidden">
+  <button id="closeResult" class="close-btn">✕</button>
+  <h2 id="resultTitle" ></h2>
+  <div class="stars" id="starContainer">⭐ ⭐ ⭐</div>
+  <p id="mistakeInfo"></p>
+  <div class="popup-actions">
+    <button id="playAgainBtn" class="btn red">Play again</button>
+    <button id="homeBtn" class="btn brown" onclick="goBacktomainpage()">🏠</button>
+    <button id="nextLevelBtn" class="btn green">Next level</button>
+  </div>
+</div>
+
+      
+  <div id="helpPopup" class="help-popup hidden">
+    <button id="closeHelp" class="close-btn">✕</button>
+    <p>Enter the correct article and word!!</p>
+  </div>
+
+
+    <section class="image-area">
+      <img id="vocabImg" alt="vocab image" />
+      <p id="imageCopyright"></p>
+    </section>
+
+    <div class="l3-phrase">
+      <span id="slotArticle" class="l3-slot">?</span>
+      <span id="slotWord" class="l3-slot l3-word-slot">?</span>
+    </div>
+   
+    <section id="options" class="options">
+        <div class="input-area">
+          <div class="article-group" role="group" aria-label="Choose an article">
+            <button type="button" class="article-choice"
+            data-article="en" aria-pressed="false">En</button>
+            <span class="article-slash">/</span>
+            <button type="button" class="article-choice"
+            data-article="ett" aria-pressed="false">Ett</button>
+            <span class="article-slash">/</span>
+            <button type="button" class="article-choice"
+            data-article="" aria-pressed="false">No article</button>
+          </div>
+
+          <input id="articleInput" type="hidden" value="" />
+          <input id="wordInput" type="text" placeholder="words" />
+          <button id="submitBtn" class="btn green">Submit</button>
+        </div>
+
+        <p id="gameFeedback" class="feedback-text"></p>
+      </section>
+      
+  
+    <section class="bottom">
+      <div class="progress-wrap">
+        <div id="progress" class="progress"></div>
+      </div>
+      <button id="nextBtn" class="next hidden">➡</button>
+    </section>
+  </main>
+  
+  
+
+  <script src="../scripts/vocabulary.js"></script>
+  
+  <script src="../scripts/save.js"></script>
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const level = params.get("level") || "3";
+
+    const script = document.createElement("script");
+    script.src = `js/levels/level-${level}.js`;
+    document.head.appendChild(script);
+  </script>
+</body>
+</html>

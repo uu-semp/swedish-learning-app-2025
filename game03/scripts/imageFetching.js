@@ -1,8 +1,13 @@
 // fetchImages.js
-import { questionsLoaded } from './level.js';
+import { questionsLoaded } from './level.js?v=20261008';
 
 export async function loadImages() {
     const selectedQuestions = await questionsLoaded;
+    if (!Array.isArray(selectedQuestions) || selectedQuestions.length === 0) {
+        console.warn('No valid questions loaded for this level.');
+        return [];
+    }
+
     return new Promise(async resolve => {
         window.vocabulary.when_ready(async () => {
             // Get level from URL first
@@ -40,6 +45,16 @@ export async function loadImages() {
                     // console.log('Added required image:', imageName);
                 }
             });
+
+            if (requiredImages.includes('shower') && !imageElements.some(image => image.dataset.name === 'shower')) {
+                const img = document.createElement('img');
+                img.src = '../assets/images/furniture/shower.png';
+                img.draggable = true;
+                img.className = 'image-item';
+                img.dataset.name = 'shower';
+                sidebar.appendChild(img);
+                imageElements.push(img);
+            }
 
             // Load additional random distractor images
             if (levelIndex === "2" && window.getRandomDistractorImages) {

@@ -21,26 +21,51 @@
   <script type="module" src="setUpLevels.js"></script>
   <script type="module" src="welcomeComponent.js"></script>
   <script type="module" src="index.js"></script>
+
+  <script>
+    function toggleLang() {
+      const current = sessionStorage.getItem('game15_lang');
+      sessionStorage.setItem('game15_lang', current === 'en' ? 'sv' : 'en');
+      location.reload(); 
+    }
+    
+    document.addEventListener("DOMContentLoaded", () => {
+      const isEn = sessionStorage.getItem('game15_lang') === 'en';
+      const btn = document.getElementById('lang-btn');
+      if (btn) btn.innerHTML = isEn ? 'Byt till Svenska' : 'Switch to English';
+      
+      if (isEn) {
+        document.querySelectorAll('[data-en]').forEach(el => {
+          if (el.tagName.toLowerCase() === 'title') {
+            document.title = el.getAttribute('data-en');
+          } else {
+            el.childNodes[0].nodeValue = el.getAttribute('data-en');
+          }
+        });
+      }
+    });
+  </script>
 </head>
 <body>
   <main class="game-frame">
     <div class="welcome-container">
-      <h1 class="game-title">Var bor jag?</h1>
-      <h2 class="welcome-message">Välkommen!</h2>
-      <p class="subtitle">Välj en nivå...</p>
+      <button id="lang-btn" class="lang-toggle-btn" onclick="toggleLang()" style="position: static; display: block; margin: 0 auto 20px auto;"> Switch to English </button>
+      <h1 class="game-title" data-sv="Var bor jag?" data-en="Where do I live?">Var bor jag?</h1>
+      <h2 class="welcome-message" data-sv="Välkommen!" data-en="Welcome!">Välkommen!</h2>
+      <p class="subtitle" data-sv="Välj en nivå..." data-en="Choose a level...">Välj en nivå...</p>
       
       <div class="level-buttons" id="levelButtons">
         <!-- Levels will be populated by JavaScript -->
       </div>
       
-      <button class="summary-btn" onclick="showSummary()">Visa Sammanfattning</button>
+      <button class="summary-btn" data-sv="Visa resultat" data-en="Show results" onclick="showSummary()">Visa resultat</button>
     </div>
 
     <!-- Summary Modal -->
     <div id="summaryModal" class="modal">
       <div class="modal-content">
         <div class="modal-header">
-          <h2>Elevens Framsteg</h2>
+          <h2 data-sv="Elevens Framsteg" data-en="Student Progress">Elevens Framsteg</h2>
           <span class="close" onclick="closeSummary()">&times;</span>
         </div>
         <div class="modal-body" id="summaryContent">

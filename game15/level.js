@@ -1,6 +1,9 @@
 "use strict";
 
-import { setUpLevel } from './setUpLevels.js';
+import {
+  setUpLevel,
+  randomizeHouseNumbers
+} from './setUpLevels.js';
 import { getGameProgress, updateGameProgress } from './localStorage.js';
 
 $(function() {
@@ -17,105 +20,196 @@ async function initializeGame() {
       el: '#app',
       data: {
         character: { name: 'Kevin' },
-        lives: 3, 
         score: 0, 
         level: 1,
         textAnswer: "",
         currentQuestion: null,
         remainingQuestions: [],
-        translation: "",
         feedback: "",
         feedbackClass: "",
+        showAnswerOption: false,
+        correctAnswerVisible: false,
+        correctAnswer: "",  
         hoveredHouse: null,
         houses: allHouses,
         levelStreets: streets,
         questions: {},
         allStreetData: allData,
         startTime: Date.now(),
-        correctAnswersThisLevel: 0
+        correctAnswersThisLevel: 0,
+        levelComplete: false,
+        isEnglish: false,
+        wrongCount: 0,
+        previousWrongCount: null
       },
 
       created() { 
         console.log('Vue instance created, generating questions...');
+        this.isEnglish = sessionStorage.getItem('game15_lang') === 'en';
         this.questions = this.generateQuestions();
-        
+
+        const progress = getGameProgress();
+        this.previousWrongCount =
+          typeof progress.lastWrongCount === "number" ? progress.lastWrongCount : null;
+
         const selectedLevel = window.save.get("game15", "selectedLevel") || 1;
         console.log('Selected level from storage:', selectedLevel);
-        this.startLevel(selectedLevel);
+        // Restore saved progress when loading the page
+        this.startLevel(selectedLevel, true);
       },
 
       methods: {
         generateQuestions() {
-          console.log('Generating questions from street data...');
           const questions = {};
-          
-          questions[1] = this.levelStreets.map(streetInfo => {
-            const cardinalNumber = streetInfo.number.cardinal.sv;
-            return {
-              instruction: `Jag bor på ${streetInfo.streetName} ${cardinalNumber}`,
-              correct: { 
-                street: streetInfo.streetName, 
-                number: streetInfo.number.cardinal.literal 
-              },
-              type: "map",
-              streetInfo
-            };
-          });
-          
-          questions[2] = this.levelStreets.map(streetInfo => {
-            const ordinalNumber = streetInfo.number.ordinal.sv;
-            return {
-              instruction: `Jag bor i det ${ordinalNumber} huset på ${streetInfo.streetName}`,
-              correct: { 
-                street: streetInfo.streetName, 
-                number: streetInfo.number.cardinal.literal 
-              },
-              type: "map",
-              streetInfo
-            };
-          });
-          
-          questions[3] = this.levelStreets.map(streetInfo => {
-            const colorSv = streetInfo.color.sv;
-            const cardinalNumber = streetInfo.number.cardinal.sv;
-            return {
-              instruction: `Jag bor i det ${colorSv}a huset på ${streetInfo.streetName}. Stava ut min adress.`,
-              correct: `${streetInfo.streetName.toLowerCase()} ${cardinalNumber}`,
-              type: "text",
-              target: streetInfo,
-              streetInfo
-            };
-          });
-          
-          console.log('Generated questions:', questions);
+
+          // Prepare the question list for each level
+          for (const level of [1, 2, 3]) {
+            questions[level] = this.levelStreets.map(streetInfo =>
+              this.createQuestion(streetInfo, level)
+            );
+          }
+
           return questions;
         },
 
-        startLevel(lv) {
+        createQuestion(streetInfo, level) {
+          const cardinalNumberSv = streetInfo.number.cardinal.sv;
+          const cardinalNumberEn = streetInfo.number.cardinal.en;
+
+          if (level === 1) {
+            return {
+              instructionSv: `Jag bor på ${streetInfo.streetName} ${cardinalNumberSv}. Välj huset där jag bor.`,
+              instructionEn: `I live on ${streetInfo.streetName} ${cardinalNumberEn}. Choose the house where I live.`,
+              correct: {
+                street: streetInfo.streetName,
+                number: streetInfo.number.cardinal.literal
+              },
+              type: "map",
+              streetInfo
+            };
+          }
+
+          if (level === 2) {
+            const ordinalNumberSv = streetInfo.number.ordinal.sv;
+            const ordinalNumberEn = streetInfo.number.ordinal.en;
+
+            return {
+              instructionSv: `Jag bor i det ${ordinalNumberSv} huset på ${streetInfo.streetName}. Välj huset där jag bor.`,
+              instructionEn: `I live in the ${ordinalNumberEn} house on ${streetInfo.streetName}. Choose the house where I live.`,
+              correct: {
+                street: streetInfo.streetName,
+                number: streetInfo.number.cardinal.literal
+              },
+              type: "map",
+              streetInfo
+            };
+          }
+
+          const colorSv = streetInfo.color.sv;
+          const colorEn = streetInfo.color.en;
+
+          return {
+            instructionSv: `Jag bor i det ${colorSv}a huset på ${streetInfo.streetName}. Stava ut min adress.`,
+            instructionEn: `I live in the ${colorEn} house on ${streetInfo.streetName}. Spell out my address.`,
+            correct: `${streetInfo.streetName.toLowerCase()} ${cardinalNumberSv}`,
+            type: "text",
+            target: streetInfo,
+            streetInfo
+          };
+        },
+
+        toggleLanguage() {
+          this.isEnglish = !this.isEnglish;
+          sessionStorage.setItem('game15_lang', this.isEnglish ? 'en' : 'sv');
+          
+          const headerTitle = document.querySelector('header h1');
+          const backBtn = document.querySelector('.back-button');
+          if (this.isEnglish) {
+            if (headerTitle) headerTitle.textContent = headerTitle.getAttribute('data-en');
+            if (backBtn) backBtn.childNodes[0].nodeValue = backBtn.getAttribute('data-en');
+          } else {
+            if (headerTitle) headerTitle.textContent = headerTitle.getAttribute('data-sv');
+            if (backBtn) backBtn.childNodes[0].nodeValue = backBtn.getAttribute('data-sv');
+          }
+        },
+
+        startLevel(lv, resume = false) {
           console.log(`Starting level ${lv}...`);
+
+          const gameProgress = getGameProgress();
+          const savedCompleted = gameProgress[`level${lv}`].completed;
+
           this.level = lv;
-          this.correctAnswersThisLevel = 0;
+          this.startTime = Date.now();
+
+          // Resume unfinished levels; completed levels start a new round
+          this.correctAnswersThisLevel =
+            resume && savedCompleted < 10 ? savedCompleted : 0;
+
+          // Restore the score after a page refresh
+          if (resume) {
+            this.score = savedCompleted < 10
+              ? (gameProgress.score ?? this.correctAnswersThisLevel * 10)
+              : 0;
+          }
+
+          // Remember the current level, including automatic level changes
+          window.save.set("game15", "selectedLevel", lv);
+
+          this.levelComplete = false;
           this.remainingQuestions = [...this.questions[lv]];
-          console.log(`Level ${lv} has ${this.remainingQuestions.length} questions`);
           this.pickNextQuestion();
         },
 
+        insertSwedishCharacter(character) {
+          const input = this.$refs.textAnswer;
+          const start = input ? input.selectionStart : this.textAnswer.length;
+          const end = input ? input.selectionEnd : this.textAnswer.length;
+
+          this.textAnswer = `${this.textAnswer.slice(0, start)}${character}${this.textAnswer.slice(end)}`;
+          this.$nextTick(() => {
+            if (input) {
+              input.focus();
+              input.setSelectionRange(start + character.length, start + character.length);
+            }
+          });
+        },
+
         pickNextQuestion() {
-          this.translation = "";
           this.feedback = "";
           this.feedbackClass = "";
+          this.showAnswerOption = false;
+          this.correctAnswerVisible = false;
+          this.correctAnswer = "";
           this.hoveredHouse = null;
 
           if (this.correctAnswersThisLevel >= 10) {
             console.log(`Level ${this.level} complete with ${this.correctAnswersThisLevel} correct answers!`);
-            this.updateGameProgressMethod();
             this.completeLevel();
             return;
           }
 
           if (this.remainingQuestions.length > 0) {
+            // Select the house for the next question
             const i = Math.floor(Math.random() * this.remainingQuestions.length);
-            this.currentQuestion = this.remainingQuestions.splice(i, 1)[0];
+            const selectedQuestion = this.remainingQuestions.splice(i, 1)[0];
+
+            // Assign new address numbers before displaying the question
+            randomizeHouseNumbers(this.houses);
+
+            // Find the selected house by its street and fixed position
+            const selectedHouse = this.houses.find(house =>
+              house.street === selectedQuestion.streetInfo.streetName &&
+              house.position === selectedQuestion.streetInfo.coords.position
+            );
+
+            // Use the house's updated number when creating the question
+            const streetInfo = {
+              ...selectedHouse,
+              streetName: selectedHouse.street
+            };
+
+            this.currentQuestion = this.createQuestion(streetInfo, this.level);
             this.textAnswer = "";
           } else {
             console.log(`Reloading questions. Progress: ${this.correctAnswersThisLevel}/10`);
@@ -130,45 +224,57 @@ async function initializeGame() {
         },
 
         completeLevel() {
+           this.levelComplete = true;
+           this.feedback = "";
+           this.feedbackClass = "";
+},
+
+        continueAfterLevelCompletion() {
           if (this.level < 3) {
-            this.feedback = `🎉 Du klarade nivå ${this.level}! Bra jobbat 👏`;
-            this.feedbackClass = "correct";
-            
-            setTimeout(() => {
-              this.startTime = Date.now();
-              this.startLevel(this.level + 1);
-            }, 2000);
+            this.startLevel(this.level + 1);
           } else {
-            this.feedback = "🏆 Du har klarat alla nivåer! Fantastiskt 🎉";
-            this.feedbackClass = "correct";
-            setTimeout(() => {
-              window.location.href = 'index.html';
-            }, 3000);
-          }
-        },
+            window.location.href = "index.html";
+        }
+      },    
 
         updateGameProgressMethod() {
           const gameProgress = getGameProgress();
           const levelKey = `level${this.level}`;
-          
-          const timeSpent = Math.round((Date.now() - this.startTime) / 60000);
+          const levelCompleted = this.correctAnswersThisLevel >= 10;
           
           gameProgress[levelKey].completed = this.correctAnswersThisLevel;
-          gameProgress[levelKey].attempts++;
-          gameProgress[levelKey].timeSpent += timeSpent;
-          gameProgress[levelKey].lastPlayed = new Date().toISOString().split('T')[0];
-
-          if (this.level === 1 && this.correctAnswersThisLevel >= 10) {
-            gameProgress.level2.unlocked = true;
-          } else if (this.level === 2 && this.correctAnswersThisLevel >= 10) {
-            gameProgress.level3.unlocked = true;
+          // Save the score together with the completed question count
+          gameProgress.score = this.score;
+          if (levelCompleted) {
+            const timeSpent = Math.round((Date.now() - this.startTime) / 60000);
+            gameProgress[levelKey].timeSpent += timeSpent;
           }
+          gameProgress[levelKey].lastPlayed = new Date().toISOString().split('T')[0];
+          gameProgress.lastWrongCount = this.wrongCount;
+          updateGameProgress(gameProgress);
+        },
 
+
+        saveWrongCount() {
+          const gameProgress = getGameProgress();
+          gameProgress.lastWrongCount = this.wrongCount;
+          updateGameProgress(gameProgress);
+        },
+
+       
+       
+
+        recordAttempt() {
+          const gameProgress = getGameProgress();
+          const levelKey = `level${this.level}`;
+          gameProgress[levelKey].attempts++;
           updateGameProgress(gameProgress);
         },
 
         checkHouseClick(house) {
           if (this.currentQuestion.type !== "map") return;
+
+          this.recordAttempt();
           
           const correctLiteral = this.currentQuestion.correct.number;
           const houseLiteral = house.number.cardinal.literal;
@@ -178,7 +284,7 @@ async function initializeGame() {
             this.score += 10;
             this.correctAnswersThisLevel++;
             this.updateGameProgressMethod();
-            this.feedback = "✅ Rätt svar!";
+            this.feedback = this.isEnglish ? "✅ Correct answer!" : "✅ Rätt svar!";
             this.feedbackClass = "correct";
             setTimeout(() => this.pickNextQuestion(), 1000);
           } else { 
@@ -188,39 +294,50 @@ async function initializeGame() {
 
         checkTextAnswer() {
           if (this.currentQuestion.type !== "text") return;
+
+          this.recordAttempt();
           
           const ans = this.textAnswer.trim().toLowerCase().replace(/\s+/g," ");
-          if (ans === this.currentQuestion.correct) {
+          const parts = this.currentQuestion.correct.split(" ");
+          if (ans === parts[1]) {
             this.score += 10;
             this.correctAnswersThisLevel++;
             this.updateGameProgressMethod();
-            this.feedback = "✅ Rätt! Bra jobbat.";
+            this.feedback = this.isEnglish ? "✅ Correct! Good job." : "✅ Rätt! Bra jobbat.";
             this.feedbackClass = "correct";
             setTimeout(() => this.pickNextQuestion(), 1000);
           } else { 
             this.fail(); 
+            this.textAnswer = "";
           }
         },
 
         fail() {
-          this.lives--; 
-          this.feedback = "❌ Fel svar! Försök igen.";
+          this.wrongCount++;
+          this.saveWrongCount();
+          this.feedback = this.isEnglish ? "❌ Wrong answer! Try again." : "❌ Fel svar! Försök igen.";
           this.feedbackClass = "wrong";
-          
-          if (this.lives <= 0) { 
-            this.feedback = `💀 Du förlorade alla liv i nivå ${this.level}. Försök igen!`;
-            this.feedbackClass = "wrong";
-            setTimeout(() => this.restartLevel(), 2000); 
-          } else {
-            setTimeout(() => {
+          this.showAnswerOption = true;
+          setTimeout(() => {
               this.feedback = "";
               this.feedbackClass = "";
             }, 1500);
+        },
+
+        revealCorrectAnswer() {
+          if (this.currentQuestion.type === "map") {
+            this.correctAnswer =
+              `${this.currentQuestion.correct.street} ${this.currentQuestion.correct.number}`;
+          } else if (this.currentQuestion.type === "text") {
+            this.correctAnswer =
+             this.currentQuestion.correct.split(" ").slice(1).join(" ");
           }
+
+          this.correctAnswerVisible = true;
+          this.showAnswerOption = false;
         },
 
         restartLevel() {
-          this.lives = 3;
           this.feedback = "";
           this.feedbackClass = "";
           this.startTime = Date.now();
@@ -229,27 +346,6 @@ async function initializeGame() {
           this.pickNextQuestion();
         },
 
-        translateQuestion() {
-          if (!this.currentQuestion) return;
-          
-          if (this.translation) {
-            this.translation = "";
-            return;
-          }
-
-          const streetInfo = this.currentQuestion.streetInfo;
-          
-          if (this.currentQuestion.type === "map") {
-            if (this.level === 1) {
-              this.translation = `I live on ${streetInfo.streetName} ${streetInfo.number.cardinal.en}`;
-            } else if (this.level === 2) {
-              this.translation = `I live in the ${streetInfo.number.ordinal.en} house on ${streetInfo.streetName}`;
-            }
-          } else if (this.currentQuestion.type === "text") {
-            const colorEn = streetInfo.color.en;
-            this.translation = `I live in the ${colorEn} house on ${streetInfo.streetName}. Spell out my address.`;
-          }
-        }
       }
     });
   } catch (error) {
@@ -259,49 +355,47 @@ async function initializeGame() {
 }
 
 function createHousesArray(allData) {
-  const houses = [];
-  
-  allData.Ringgatan.forEach((house, index) => {
-    houses.push({
-      street: "Ringgatan",
-      number: house.number.cardinal.literal,
-      color: house.color.sv,
+  // Number label positions on the map, ordered by house position
+  const labelPositions = {
+    Ringgatan: [
+      { x: 0.484, y: 0.812 },
+      { x: 0.322, y: 0.848 },
+      { x: 0.383, y: 0.737 },
+      { x: 0.163, y: 0.741 },
+      { x: 0.201, y: 0.568 },
+      { x: 0.128, y: 0.512 },
+      { x: 0.061, y: 0.463 }
+    ],
+    Skolgatan: [
+      { x: 0.671, y: 0.664 },
+      { x: 0.539, y: 0.569 },
+      { x: 0.399, y: 0.445 },
+      { x: 0.288, y: 0.365 },
+      { x: 0.205, y: 0.299 },
+      { x: 0.053, y: 0.248 }
+    ],
+    "Parkvägen": [
+      { x: 0.796, y: 0.484 },
+      { x: 0.686, y: 0.404 },
+      { x: 0.599, y: 0.329 },
+      { x: 0.531, y: 0.276 },
+      { x: 0.455, y: 0.219 },
+      { x: 0.385, y: 0.155 },
+      { x: 0.253, y: 0.126 }
+    ]
+  };
+
+  // Collect all houses with their click areas and number label positions
+  return Object.entries(allData).flatMap(([street, houses]) =>
+    houses.map(house => ({
+      ...house,
+      street,
       x: house.coords.x,
       y: house.coords.y,
       width: house.coords.width,
       height: house.coords.height,
       position: house.coords.position,
-      ...house
-    });
-  });
-  
-  allData.Skolgatan.forEach((house, index) => {
-    houses.push({
-      street: "Skolgatan",
-      number: house.number.cardinal.literal,
-      color: house.color.sv,
-      x: house.coords.x,
-      y: house.coords.y,
-      width: house.coords.width,
-      height: house.coords.height,
-      position: house.coords.position,
-      ...house
-    });
-  });
-  
-  allData.Parkvägen.forEach((house, index) => {
-    houses.push({
-      street: "Parkvägen",
-      number: house.number.cardinal.literal,
-      color: house.color.sv,
-      x: house.coords.x,
-      y: house.coords.y,
-      width: house.coords.width,
-      height: house.coords.height,
-      position: house.coords.position,
-      ...house
-    });
-  });
-  
-  return houses;
+      labelCoords: labelPositions[street][house.coords.position - 1]
+    }))
+  );
 }

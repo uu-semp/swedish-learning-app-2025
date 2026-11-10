@@ -41,6 +41,10 @@ header {
     width: 7rem;
 }
 
+#srs-open-btn {
+    max-width: 14rem;
+}
+
 .header-btn:hover {
     background: white;
     color: rgb(55, 54, 54);
@@ -97,6 +101,46 @@ header {
     gap: 1.5rem;
     padding: 1rem;
     align-items: start;
+}
+
+#srs-history {
+    margin: 2rem 5%;
+    padding: 1.25rem;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    height: calc(100vh - 4rem);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    box-sizing: border-box;
+}
+
+#srs-history h2 {
+    margin-top: 0;
+}
+
+#srs-category {
+    margin: 0.5rem 0 1rem;
+    padding: 0.4rem 0.65rem;
+}
+
+.srs-table-wrap {
+    overflow-x: auto;
+}
+
+#srs-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+#srs-table th,
+#srs-table td {
+    padding: 0.6rem;
+    border-bottom: 1px solid #ddd;
+}
+
+#srs-table th {
+    background: #f5f5f5;
 }
 
 .card {
@@ -308,6 +352,11 @@ header {
     padding: 12px 24px;
     border-radius: 4px;
     animation: fadeOut 3s forwards;
+}
+
+.error-message {
+    margin-top: 12px;
+    color: var(--primary-color);
 }
 
 @keyframes fadeOut {

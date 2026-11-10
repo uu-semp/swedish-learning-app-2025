@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Vocabulary practice - UU-Games</title>
+    <link rel="stylesheet" href="index.css" />
+    <script src="srs-page.js" defer></script>
+</head>
+<body>
+    <main>
+        <section id="srs-history" aria-labelledby="srs-title">
+            <h1 class="translate" id="srs-title"></h1>
+            <label for="srs-category" class="translate" id="srs-filter-label"></label>
+            <select id="srs-category"></select>
+            <div class="srs-table-wrap">
+                <table id="srs-table">
+                    <thead>
+                        <tr>
+                            <th class="translate" id="srs-word"></th>
+                            <th class="translate" id="srs-category-heading"></th>
+                            <th class="translate" id="srs-seen"></th>
+                            <th class="translate" id="srs-correct"></th>
+                            <th class="translate" id="srs-wrong"></th>
+                        </tr>
+                    </thead>
+                    <tbody id="srs-words"></tbody>
+                </table>
+            </div>
+            <p id="srs-empty" class="translate" hidden></p>
+            <p id="srs-error" role="alert" hidden></p>
+        </section>
+    </main>
+</body>
+</html>
