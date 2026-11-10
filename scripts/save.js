@@ -19,13 +19,15 @@ window.save = {
         const consent = localStorage.getItem("storageConsent");
 
         if (consent !== "accepted") {
+            console.warn("Your data cannot be saved because browser storage consent was declined.");
+            alert("Your data was not saved because browser storage consent was declined.");
             return false;
         }
 
         let currentData = this.get(game_name);
 
         if (typeof key_or_data === "object" && value === null) {
-            currentData = {...currentData, ...key_or_data};
+            currentData = {...currentData, ...key_or_data };
         } else {
             currentData[key_or_data] = value;
         }
