@@ -123,8 +123,6 @@ export async function loaddb() {
   const rows = parsed.data;
 
   const game_column = `Game04`;
-  console.log(game_column)
-
   // Creating two alternative access patterns based on rows
   const idToMeta = {};
   const catToIds = {};

@@ -15,21 +15,30 @@ window.save = {
     },
 
     set(game_name, key_or_data, value = null) {
-        try {
-            let currentData = this.get(game_name);
-            if (typeof key_or_data === "object" && value === null) {
-                currentData = {...currentData, ...key_or_data };
-            } else {
-                currentData[key_or_data] = value;
-            }
-            localStorage.setItem(game_name, JSON.stringify(currentData));
-            return true;
-        } catch (error) {
-            console.warn(`Save API: Failed to set data for ${game_name}:`, error);
+    try {
+        const consent = localStorage.getItem("storageConsent");
+
+        if (consent !== "accepted") {
+            console.warn("Your data cannot be saved because browser storage consent was declined.");
+            alert("Your data was not saved because browser storage consent was declined.");
             return false;
         }
-    },
 
+        let currentData = this.get(game_name);
+
+        if (typeof key_or_data === "object" && value === null) {
+            currentData = {...currentData, ...key_or_data };
+        } else {
+            currentData[key_or_data] = value;
+        }
+
+        localStorage.setItem(game_name, JSON.stringify(currentData));
+        return true;
+    } catch (error) {
+        console.warn(`Save API: Failed to set data for ${game_name}:`, error);
+        return false;
+    }
+},
     clear(game_name) {
         try {
             localStorage.removeItem(game_name);
