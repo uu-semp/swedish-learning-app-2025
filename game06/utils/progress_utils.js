@@ -4,13 +4,14 @@
  * Rules:
  * - A question becomes **mastered** after the first correct answer.
  * - Regular sessions exclude mastered questions.
+ * - Practice sessions include mastered questions without clearing their history.
  * - Review modes:
  *    • "review-current": wrong > 0 AND correct == 0 (unsolved mistakes)
  *    • "review-all":     wrong > 0 (historical mistakes, even if later mastered)
  */
 
 /** @typedef {"regular"|"clock"} QuestionType */
-/** @typedef {"regular"|"review-current"|"review-all"} SessionMode */
+/** @typedef {"regular"|"practice"|"review-current"|"review-all"} SessionMode */
 
 /**
  * Common fields for all questions.
@@ -36,6 +37,7 @@
  * @property {number} wrong     // number of wrong attempts
  * @property {number} lastAt    // epoch ms of last attempt
  * @property {boolean} mastered // true after first correct attempt
+ * @property {boolean} [saved] // whether an attempt was persisted (recordResult only)
  */
 
 /**
@@ -61,6 +63,18 @@
  * @property {function(): (Question|null)} next        // get next eligible question or null
  * @property {function(Question, boolean): QuestionStatus} record // persist result to progress store
  */
+
+import {
+	createClockQuestions,
+	createMcqClockQuestion,
+	createAdvancedModeQuestions,
+} from "./clock_questions.js";
+
+/**
+ * Collection of replacement questions generated from failed attempts.
+ * @type {Question[]}
+ */
+export const replay_collection = [];
 
 /**
  * Key to access data from localStorage.
@@ -89,11 +103,11 @@ function _load() {
 /**
  * Persist the progress database to localStorage.
  * @param {Database} db
- * @returns {void}
+ * @returns {boolean} Whether the database was saved successfully.
  */
 function _save(db) {
 	console.log("Saved data: ", db);
-	window.save.set(LS_KEY, db);
+	return window.save.set(LS_KEY, db) !== false;
 }
 
 /**
@@ -144,14 +158,23 @@ export function getStatus(id) {
 /**
  * Record the outcome of an attempt.
  * - When `wasCorrect === true`, increments `correct` and sets `mastered = true`.
- * - When `wasCorrect === false`, increments `wrong` (mastered remains unchanged).
+ * - When `wasCorrect === false`, increments `wrong` (mastered remains unchanged)
+ *   and adds a new question with matching tags and difficulty to replay_collection.
  * - Always updates `lastAt` to `Date.now()`.
  * Side effect: writes to localStorage.
- * @param {string} id
+ * @param {string|Question} idOrQuestion
  * @param {boolean} wasCorrect
+ * @param {Question} [questionObj]
  * @returns {QuestionStatus} The updated status for this question.
  */
-export function recordResult(id, wasCorrect) {
+export function recordResult(idOrQuestion, wasCorrect, questionObj = null) {
+	const question = (typeof idOrQuestion === "object" && idOrQuestion !== null)
+		? idOrQuestion
+		: questionObj;
+	const id = (typeof idOrQuestion === "object" && idOrQuestion !== null)
+		? idOrQuestion.id
+		: idOrQuestion;
+
 	const db = _load();
 	if (!db[id]) db[id] = { correct: 0, wrong: 0, lastAt: 0, mastered: false };
 	if (wasCorrect) {
@@ -159,10 +182,49 @@ export function recordResult(id, wasCorrect) {
 		db[id].mastered = true;
 	} else {
 		db[id].wrong += 1;
+
+		if (question) {
+			const tagSet = question.tags instanceof Set
+				? question.tags
+				: new Set(question.tags || []);
+			const specificTags = new Set(Array.from(tagSet).filter((t) => t !== "all_times"));
+			const filterTags = specificTags.size > 0 ? specificTags : tagSet;
+
+			const pool = createClockQuestions(filterTags);
+			if (pool.length > 0) {
+				const existingIds = new Set(replay_collection.map((q) => q.id));
+				existingIds.add(id);
+				const candidates = pool.filter((c) => !existingIds.has(c.id) && (c.hour !== question.hour || c.minute !== question.minute));
+				const target = (candidates.length > 0 ? candidates : pool)[
+					Math.floor(Math.random() * (candidates.length > 0 ? candidates.length : pool.length))
+				];
+
+				const diff = question.difficulty || "easy";
+				let newQuestion;
+				if (diff === "easy") {
+					newQuestion = createMcqClockQuestion(target.hour, target.minute, "easy");
+				} else if (diff === "hard") {
+					newQuestion = createAdvancedModeQuestions().find(
+						(q) => q.hour === target.hour && q.minute === target.minute
+					) || target;
+				} else {
+					newQuestion = target;
+				}
+
+				replay_collection.push(newQuestion);
+			}
+		}
 	}
+
+	// Remove the question that was just answered from replay_collection (if present)
+	const removeIndex = replay_collection.findIndex((q) => q.id === id);
+	if (removeIndex !== -1) {
+		replay_collection.splice(removeIndex, 1);
+	}
+
 	db[id].lastAt = Date.now();
-	_save(db);
-	return db[id];
+	const saved = _save(db);
+	return { ...db[id], saved };
 }
 
 /**
@@ -309,6 +371,7 @@ export function nextReviewAll(questions, { excludeIds = null } = {}) {
  * Create a session that serves up to `size` **distinct** questions with NO repeats.
  * Eligibility per `mode`:
  *  - "regular":        not mastered
+ *  - "practice":       all questions, including mastered questions
  *  - "review-current": wrong > 0 && correct == 0
  *  - "review-all":     wrong > 0
  *
@@ -318,7 +381,9 @@ export function nextReviewAll(questions, { excludeIds = null } = {}) {
  * are no more eligible questions.
  *
  * @param {Question[]} questions - The working pool (e.g., only "easy" items).
- * @param {{ mode?: SessionMode, size?: number }} [options]
+ * In practice mode, questionClass optionally keeps the next question in the
+ * same class after a mistake, until a correct answer restores the full pool.
+ * @param {{ mode?: SessionMode, size?: number, questionClass?: function(Question): string }} [options]
  * @returns {SessionObject}
  *
  * @example
@@ -331,11 +396,18 @@ export function nextReviewAll(questions, { excludeIds = null } = {}) {
  * }
  * console.log(session.seenIds); // IDs served in this run
  */
-export function createSession(questions, { mode = "regular", size = 5 } = {}) {
+export function createSession(questions, { mode = "regular", size = 5, questionClass = null } = {}) {
 	const seen = new Set();
 	let asked = 0;
+	let preferredClass = null;
 
 	function pickNext() {
+		if (mode === "practice") {
+			const eligible = questions.filter((q) => !seen.has(q.id));
+			const preferred = preferredClass === null ? eligible
+				: eligible.filter((q) => questionClass(q) === preferredClass);
+			return randPick(preferred.length ? preferred : eligible);
+		}
 		const opts = { excludeIds: seen };
 		if (mode === "review-current")
 			return nextReviewCurrent(questions, opts);
@@ -368,7 +440,11 @@ export function createSession(questions, { mode = "regular", size = 5 } = {}) {
 
 		/** Record the result into progress store */
 		record(q, wasCorrect) {
-			return recordResult(q.id, wasCorrect);
+			const status = recordResult(q, wasCorrect);
+			if (mode === "practice" && questionClass) {
+				preferredClass = wasCorrect ? null : questionClass(q);
+			}
+			return status;
 		},
 	};
 }

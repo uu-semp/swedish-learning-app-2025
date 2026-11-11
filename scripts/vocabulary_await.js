@@ -5,7 +5,7 @@ import {
 } from "./database_config.js";
 import * as DB from "./database_type.js"
 // ==============================================
-// Owned by the Data Team and Game08
+// Owned by main menu and backend team
 // ==============================================
 
 /**
@@ -23,7 +23,6 @@ import * as DB from "./database_type.js"
  * A list of vocab IDs
  */
 
-// Currently there are some problems with these typings because of how the database is structured.
 /**
  * @typedef {Object} RowItem
  * @property {string} Article - The grammatical article (e.g., "ett" or "en").
@@ -69,10 +68,27 @@ import * as DB from "./database_type.js"
 /** @type {Database} */
 let db;
 
+async function urlExists(path) {
+  // prints error 404 in dev console if words.csv isnt there.
+  // But if that is the case we fetch the google sheet
+  const response = await fetch(path, {
+      method: "HEAD"
+  })
+
+  if(!response.ok){
+    console.log("Fetching google sheet");
+  }else{
+    console.log("Using internal words")
+  }
+  return response.ok
+    
+}
+
 async function fetch_sheets() {
-  const SRC = FETCH_EXTERNAL
-    ? EXTERNAL_URL
-    : new URL(INTERNAL_URL, import.meta.url);
+  const csv_exists = await urlExists(INTERNAL_URL);
+  const SRC = csv_exists
+    ? new URL(INTERNAL_URL, import.meta.url)
+    : EXTERNAL_URL;
   const RESP = await fetch(SRC);
   // Without this a 404 body gets handed to the CSV parser and silently
   // becomes an empty database.
@@ -85,7 +101,7 @@ async function fetch_sheets() {
 /**
  * @param {int} game_id The number of your game, if game specific data should be loaded
  */
-export async function loaddb(game_id = -1) {
+export async function loaddb() {
   // Fetching a parser
   const papa_promise = new Promise((resolve, reject) => {
     const script = document.createElement("script");
@@ -106,12 +122,9 @@ export async function loaddb(game_id = -1) {
   const parsed = Papa.parse(text, { header: true, skipEmptyLines: true });
   const rows = parsed.data;
 
-  // Stringify incase this get a number
-  const game_id_str = String(game_id).padStart(4, "0");
   const game_column = `Game04`;
   // Creating two alternative access patterns based on rows
   const idToMeta = {};
-  const gameIds = [];
   const catToIds = {};
 
   for (const row of rows) {
@@ -121,6 +134,7 @@ export async function loaddb(game_id = -1) {
     // Metadata
     const meta = { en: row["English"], sv: row["Swedish"] };
     if (row["Article"]?.trim()) meta.article = row["Article"];
+    if (row["Swedish_plural"]?.trim()) meta.sv_plural = row["Swedish_plural"];
     if (row["Literal"]?.trim()) meta.literal = row["Literal"];
     if (row["Image_url"]?.trim()) meta.img = row["Image_url"];
     if (row["Image_copyright_info"]?.trim())
@@ -149,9 +163,7 @@ export async function loaddb(game_id = -1) {
     // Game data
     if (row[game_column]) {
       meta.game = row[game_column].trim();
-      gameIds.push(id);
     };
-
 
     idToMeta[id] = meta;
   }
@@ -160,7 +172,6 @@ export async function loaddb(game_id = -1) {
     vocab: idToMeta,
     categories: catToIds,
     rows: rows,
-    game: gameIds,
     vocabLength: Object.keys(idToMeta).length,
   };
 }
@@ -198,6 +209,18 @@ export function get_category(category) {
   }
 
   return null;
+}
+
+/**
+ * Returns the names of all available vocabulary categories.
+ * @returns {string[] | null}
+ */
+export function get_categories() {
+  if (db == undefined) {
+    console.error("Database has not been loaded");
+    return null;
+  }
+  return Object.keys(db.categories);
 }
 
 /**

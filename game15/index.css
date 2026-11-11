@@ -209,7 +209,7 @@ header h1 {
 
 .text-question button {
     width: 100%;
-    padding: 0.75rem;
+    padding: 3px;
     background: #9d0000;
     color: white;
     border: none;
@@ -222,6 +222,16 @@ header h1 {
 
 .text-question button:hover {
     background: #7d0000;
+}
+
+.text-question .character-buttons {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.text-question .character-buttons button {
+    flex: 1;
+    width: auto;
 }
 
 .feedback {
@@ -308,6 +318,84 @@ header h1 {
     }
 }
 
+.last-wrong {
+  text-align: center;
+  margin: 8px 0;
+  font-weight: bold;
+}
+
 footer {
     display: none;
+}
+
+.level-completion {
+    max-width: 500px;
+    margin: 3rem auto;
+    padding: 2rem;
+    text-align: center;
+    background: #ffffff;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+}
+
+.level-completion h2 {
+    color: #2e7d32;
+    margin-bottom: 1rem;
+}
+
+.level-completion button {
+    padding: 0.75rem 1.25rem;
+    background: #9d0000;
+    color: white;
+    border: none;
+    border-radius: 0.375rem;
+    cursor: pointer;
+    font-weight: 600;
+}
+/* Cover the fixed map numbers with the current address numbers */
+.house-number {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    width: 6%;
+    aspect-ratio: 1;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 3px solid #555;
+    border-radius: 50%;
+    background: #eee;
+
+    /* Allow clicks to reach the house underneath */
+    pointer-events: none;
+    z-index: 6;
+}
+
+/* Keep the level 3 pointer above the number labels */
+.map-container .pointer {
+    z-index: 7;
+}
+
+.lang-toggle-btn {
+    position: absolute;
+    right: 1rem;
+    padding: 0.4rem 0.8rem;
+    background: white;
+    border: 2px solid #ccc;
+    border-radius: 0.5rem;
+    color: #333;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 0.875rem;
+    transition: all 0.2s;
+    white-space: nowrap;
+    width: auto !important;
+    height: auto !important;
+    line-height: normal;
+    display: inline-block;
+}
+
+.lang-toggle-btn:hover {
+    background: #f0f0f0;
+    border-color: #999;
 }

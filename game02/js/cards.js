@@ -9,13 +9,17 @@ export function getRandomPairs(data, numPairs) {
   return shuffled.slice(0, numPairs);
 }
 
-export function prepareGridItems(pairs) {
+export function prepareGridItems(pairs, mode) {
   const cards = [];
 
   pairs.forEach((pair, index) => {
     const id = `pair-${index}`;
     cards.push({ id, type: "description", content: pair.swedish });
-    cards.push({ id, type: "image", content: pair.image_url });
+    if (mode === "listening" || mode === "dialect") {
+      cards.push({ id, type: "sound", content: pair.audio_url });
+    } else {
+      cards.push({ id, type: "image", content: pair.image_url });
+    }
   });
 
   // Shuffle the final cards
@@ -41,14 +45,18 @@ export function renderGrid(cards) {
       const imagePath = card.content.startsWith("assets/")
         ? "../" + card.content
         : card.content;
-      backContent = `<img src="${imagePath}" alt="Furniture" style="width: 100%; height: 100%; object-fit: cover; border-radius: 10px;">`;
+      backContent = `<img src="${imagePath}" alt="Pictures" style="width: 100%; height: 100%; object-fit: cover; border-radius: 10px;">`;
+    } else if (card.type === "sound") {
+      backContent = "🔊";
     } else {
       backContent = card.content;
     }
 
     cardElement.innerHTML = `
       <div class="card-inner">
-        <div class="card-face card-front">${index + 1}</div>
+        <div class="card-face card-front">
+          <span class="card-title">What<br>Am I?</span>
+        </div>
         <div class="card-face card-back">${backContent}</div>
       </div>
     `;

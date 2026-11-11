@@ -230,15 +230,12 @@ We welcome contributions! Please follow these guidelines:
 
 ### Future Development Opportunities
 
-| Priority  | Area                   | Description                                                                |
-| --------- | ---------------------- | -------------------------------------------------------------------------- |
-| ⚠️ Urgent | Code Modularity        | Refactor JavaScript for better modularity and reusability                  |
-| 🔥 High   | Testing Enhancement    | Implement comprehensive stress and security testing                        |
-| 🔥 High   | Accessibility          | Fix HTML structure for screen reader compatibility                         |
-| 🔥 High   | DB and Image Loading   | Provide animations for loading and make loading faster and less noticeable |
-| 🟡 Medium | Progress Visualization | Display player progress metrics within the game interface                  |
-| 🟡 Medium | Design Refinement      | Improve visual consistency across all pages                                |
-| 🟡 Medium | Documentation          | Create detailed documentation for display components                       |
+- Add a dedicated mistake review mode
+- Introduce achievements or streak
+- Add more categories
+- Select number of rounds 
+- Remove dead code
+
 
 ---
 

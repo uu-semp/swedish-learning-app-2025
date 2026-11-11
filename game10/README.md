@@ -1,3 +1,46 @@
+# Game 10 – Ät och lär
+
+## User stories
+
+All user stories from our requirements elicitation (D2, version 2026-09-23).
+
+Status: Done, Partly done, or Open.
+
+### Learner
+
+| ID | User story | Status |
+|---|---|---|
+| REQ-LEARNER-1 | A learner wants the game to use images from the book used in class so that they can connect the vocabulary in the game with what they are learning in the classroom. | Done |
+| REQ-LEARNER-2 | A learner wants an easy-to-understand interface so that they can focus on learning the vocabulary rather than on understanding how to use the game. | Done |
+| REQ-LEARNER-3 | A learner wants to know whether their answer was correct or incorrect so that they can understand how they are doing. | Done |
+| REQ-LEARNER-4 | A learner wants to see the correct picture–word pair after an incorrect true-or-false answer so that they can learn the correct vocabulary from their mistake. | Done |
+| REQ-LEARNER-5 | A learner wants to practise each word before words are repeated so that they can practise all of the vocabulary in the exercise. | Done |
+| REQ-LEARNER-6 | A learner wants to access any practice level without completing previous levels so that they can choose a level that suits their learning needs. | Done |
+| REQ-LEARNER-7 | A learner wants to review the vocabulary they answered incorrectly after completing an exercise so that they can focus further practice on words they found difficult. | Partly done (levels 1 and 3, not level 2) |
+| REQ-LEARNER-8 | A learner wants the in-game buttons and instructions to follow the language selected on the website so that they can understand how to use the game in either English or Swedish. | Done |
+| REQ-LEARNER-9 | A learner wants to be able to reset their Game 10 progress so that they can start the game again without previous scores or progress carrying over. | Done |
+| REQ-LEARNER-10 | A learner wants to see their progress during an exercise so that they know how much of the activity they have completed and how much is left. | Done |
+| REQ-LEARNER-11 | A learner wants their score to accurately reflect their performance in the current exercise so that they can understand how well they did. | Done |
+| REQ-LEARNER-12 | A learner wants the images in the game to be fully and clearly visible so that they can easily recognise the objects connected to the vocabulary. | Done |
+| REQ-LEARNER-13 | A learner wants to be informed if they try to submit an incomplete exercise so that they do not accidentally finish it without answering all of the questions. | Done |
+| REQ-LEARNER-14 | A learner wants to hear how vocabulary words are pronounced so that they can practise words that they find difficult to pronounce. | Done |
+| REQ-LEARNER-15 | A learner wants important information in the game to be understandable without relying only on colour so that they can use the game despite colour-vision difficulties. | Done |
+| REQ-LEARNER-16 | A learner wants their completed progress to be remembered when they leave and return to the game so that they can continue learning without losing what they have already completed. | Done |
+
+### Teacher
+
+| ID | User story | Status |
+|---|---|---|
+| REQ-TEACHER-1 | A teacher wants the game to practise vocabulary used in class so that it can support their students' classroom learning. | Done |
+| REQ-TEACHER-2 | A teacher wants learners to be able to choose different practice levels so that students with different abilities can practise at an appropriate level. | Done |
+| REQ-TEACHER-3 | A teacher wants vocabulary practice to include engaging game activities so that students remain motivated to continue practising. | Done |
+
+### Development team
+
+| ID | User story | Status |
+|---|---|---|
+| REQ-DEV-1 | A developer wants copyright information for the images used in the game to be displayed so that the creators are credited and the legal requirements for using the images are fulfilled. | Open |
+
 # Development Workflow
 
 All changes to the source code must have a ticket created in Jira. For example:

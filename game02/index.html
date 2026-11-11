@@ -36,28 +36,91 @@ Owned by Game 02
 
   <main class="game-frame">
 
-    <!-- Menu Screen -->
+        <!-- Menu Screen -->
     <section id="menu-screen">
-      <h2>WHO AM I - FURNITURE MEMORY</h2>
-      <div id="info-box">
-        <h3>How to Play</h3>
-        <ol>
-          <li>Click on a card to reveal its image or text.</li>
-          <li>Then, click on another card.</li>
-          <li>If image and description match, the pair is removed from the game board.</li>
-        </ol>
+      <h2>WHAT AM I?</h2>
+      <div id="category-buttons">
+        <button class="category-btn selected" data-category="furniture">Furniture</button>
+        <button class="category-btn" data-category="clothing">Clothes</button>
+        <button class="category-btn" data-category="food">Food</button>
+      </div>
 
-        <p>Once all pairs are removed, the game is won.</p>
+
+      <div id="menu-body">
+        <!-- Game modes -->
+        <div id="mode-buttons">
+          <button class="mode-btn selected" data-mode="picture">Picture</button>
+          <button class="mode-btn" data-mode="spelling">Spelling</button>
+          <button class="mode-btn" data-mode="listening">Listening</button>
+          <button class="mode-btn" data-mode="dialect">Dialect</button>
+        </div>
+
+        <!-- Info about the selected game mode -->
+        <div id="info-box">
+          <div id="info-picture" class="mode-info">
+            <h3>How to Play</h3>
+            <ol>
+              <li>Click on a card to reveal its image or text.</li>
+              <li>Then, click on another card.</li>
+              <li>If image and description match, the pair is removed from the game board.</li>
+            </ol>
+
+            <p>Once all pairs are removed, the game is won.</p>
+          </div>
+
+          <div id="info-spelling" class="mode-info" style="display: none;">
+            <h3>How to Play</h3>
+            <ol>
+              <li>A picture is shown.</li>
+              <li>Type the Swedish word for it.</li>
+              <li>Wrong letters are marked in red. Ask for a hint if you get stuck.</li>
+            </ol>
+
+            <p>Spell 8 words to finish.</p>
+          </div>
+
+          <div id="info-listening" class="mode-info" style="display: none;">
+            <h3>How to Play</h3>
+            <ol>
+              <li>Click on a card to hear a word or see a picture.</li>
+              <li>Then, click on another card.</li>
+              <li>If the sound and the picture match, the pair is removed from the game board.</li>
+            </ol>
+
+            <p>Once all pairs are removed, the game is won.</p>
+          </div>
+          
+          <div id="info-dialect" class="mode-info" style="display: none;">
+            <h3>How to Play</h3>
+            <ol>
+              <li>Click on a card to hear a word in a dialect or see a picture.</li>
+              <li>Then, click on another card.</li>
+              <li>If the sound and the picture match, the pair is removed from the game board.</li>
+            </ol>
+
+            <p>Once all pairs are removed, the game is won.</p>
+          </div>
+        </div>
       </div>
 
       <button id="start-game">Start Game</button>
+      <!-- Dialects, only shown when the Dialect mode is selected -->
+      <div id="dialect-buttons" style="display: none;">
+        <button class="dialect-btn selected" data-dialect="standard">Standard Swedish</button>
+        <button class="dialect-btn" data-dialect="malmo">Malmö</button>
+        <button class="dialect-btn" data-dialect="gothenburg">Gothenburg</button>
+        <button class="dialect-btn" data-dialect="finnish-swedish">Finnish-Swedish</button>
+      </div>
+
+
     </section>
 
 
 
     <!-- Game Screen -->
     <section id="game-screen" style="display: none;">
-      <h2>Match the image to the description to clear the board</h2>
+      <div id="progress-bar"><div id="progress-fill"></div><span id="progress-text">0 / 8 pairs</span></div>
+      <h2 id="game-title">Match the image to the description to clear the board</h2>
       <div id="game-board">
         <!-- 16 example cards -->
         <div class="card" data-index="1">
@@ -166,21 +229,148 @@ Owned by Game 02
       </div>
 
       <div id="game-controls">
-        <button id="hint-button">Help</button>
+        <button id="help-button">Help</button>
+        <button id="hint-button">Hint</button>
+        <button id="licenses-button">Licenses</button>
         <button id="end-game">Quit</button>
       </div>
-      <p id="moves">moves: 0</p>
-      <p id="elapsed-time">Time: 0s</p>
-
+      <div id="help-modal" class="help-modal" style="display: none;">
+        <div class="help-modal-content" role="dialog" aria-modal="true" aria-labelledby="help-title">
+          <button type="button" id="close-help" class="help-close" aria-label="Close help">&times;</button>
+          <h3 id="help-title">How to Play</h3>
+          <ol>
+            <li>Click on a card to reveal its image or text.</li>
+            <li>Then, click on another card.</li>
+            <li>If image and description match, the pair is removed from the game board.</li>
+          </ol>
+          <p>Once all pairs are removed, the game is won.</p>
+        </div>
+      </div>
+      <div id="licenses-modal" class="help-modal" style="display: none;">
+        <div class="help-modal-content" role="dialog" aria-modal="true" aria-labelledby="licenses-title">
+          <button type="button" id="close-licenses" class="help-close" aria-label="Close licenses">
+            &times;
+          </button>
+          <h3 id="licenses-title">Image licenses</h3>
+          <div id="licenses-list">
+            <!-- Licenses will be added here dynamically -->
+          </div>
+        </div>
+      </div>
+      <div id="game-stats">
+        <p id="moves">moves: 0</p>
+        <p id="elapsed-time">Time: 0s</p>
+      </div>
+      
     </section>
-
+    
     <!-- End Screen -->
     <section id="end-screen" style="display: none;">
       <h2><span id="header_endscreen"></span></h2>
       <p>Number of moves: <span id="score">0</span></p>
       <p>Time elapsed: <span id="time">0</span></p>
       <p>Total Wins: <span id="wins-count">0</span></p>
+      <p class="previous-games-title">Previous Memory Games</p>
+      <table class="previous-games-table">
+        <thead>
+          <tr>
+            <th>Mode</th>
+            <th>Time</th>
+            <th>Moves</th>
+          </tr>
+        </thead>
+        <tbody id="prev-games">
+          <!-- Rows will be added here dynamically -->
+        </tbody>
+      </table>
       <button id="restart-game">Play Again</button>
+      <button id="go-to-menu">Go to main menu</button>
+    </section>
+
+    <!-- Spelling Game Screen -->
+    <section id="spelling-screen" style="display: none;">
+      <div id="spelling-progress-bar"><div id="spelling-progress-fill"></div><span id="spelling-progress-text">0 / 8 words</span></div>
+      <h2>Spell the word for the picture</h2>
+
+      <div id="spelling-image-row">
+        <img id="spelling-image" alt="Word to spell" />
+        <div id="spelling-umlauts" aria-label="Swedish letters">
+          <button type="button" class="umlaut-button" data-char="å">å</button>
+          <button type="button" class="umlaut-button" data-char="ä">ä</button>
+          <button type="button" class="umlaut-button" data-char="ö">ö</button>
+        </div>
+      </div>
+
+      <p id="spelling-slots" aria-label="Number of letters"></p>
+
+      <form id="spelling-form" autocomplete="off">
+        <input id="spelling-input" type="text" autocomplete="off" autocapitalize="off"
+          autocorrect="off" spellcheck="false" aria-label="Your answer" />
+        <button type="submit" id="spelling-submit">Check</button>
+      </form>
+
+      <p id="spelling-feedback" role="status" aria-live="polite"></p>
+
+      <div id="spelling-controls">
+        <button type="button" id="spelling-help">Help</button>
+        <button type="button" id="spelling-hint">Hint</button>
+        <button type="button" id="spelling-show-answer">Show answer</button>
+        <button type="button" id="spelling-licenses-button">Licenses</button>
+        <button type="button" id="spelling-quit">Quit</button>
+      </div>
+      <div id="spelling-help-modal" class="help-modal" style="display: none;">
+        <div class="help-modal-content" role="dialog" aria-modal="true" aria-labelledby="spelling-help-title">
+          <button type="button" id="spelling-close-help" class="help-close" aria-label="Close help">&times;</button>
+          <h3 id="spelling-help-title">How to Play</h3>
+          <ol>
+            <li>Look at the picture.</li>
+            <li>Type the Swedish word for it (without "en" or "ett").</li>
+            <li>Wrong letters are marked in red, and a missing letter shows as a red gap.</li>
+            <li>Hint fills in the next missing letter, and Show answer reveals the word. Both are counted.</li>
+            <li>Use the å, ä and ö buttons if your keyboard doesn't have them.</li>
+          </ol>
+          <p>Spell all the words to win the game.</p>
+        </div>
+      </div>
+      <div id="spelling-licenses-modal" class="help-modal" style="display: none;">
+        <div class="help-modal-content" role="dialog" aria-modal="true" aria-labelledby="licenses-title">
+          <button type="button" id="spelling-close-licenses" class="help-close" aria-label="Close licenses">
+            &times;
+          </button>
+          <h3 id="spelling-licenses-title">Image licenses</h3>
+          <div id="spelling-licenses-list">
+            <!-- Licenses will be added here dynamically -->
+          </div>
+        </div>
+      </div>
+      <p id="spelling-misses">misses: 0</p>
+      <p id="spelling-hints">hints: 0</p>
+      <p id="spelling-time">Time: 0s</p>
+    </section>
+
+    <!-- Spelling End Screen -->
+    <section id="spelling-end-screen" style="display: none;">
+      <h2><span id="spelling-end-header"></span></h2>
+      <p>Words spelled: <span id="spelling-score">0</span></p>
+      <p>Misses: <span id="spelling-end-misses">0</span></p>
+      <p>Hints used: <span id="spelling-end-hints">0</span></p>
+      <p>Time elapsed: <span id="spelling-end-time">0</span></p>
+      <p>Total Wins: <span id="spelling-wins">0</span></p>
+      <p class="previous-games-title">Previous Spelling Games</p>
+      <table class="previous-games-table">
+        <thead>
+          <tr>
+            <th>Time</th>
+            <th>Misses</th>
+            <th>Hints</th>
+          </tr>
+        </thead>
+        <tbody id="prev-spelling-games">
+          <!-- Rows will be added here dynamically -->
+        </tbody>
+      </table>
+      <button id="spelling-restart">Play Again</button>
+      <button id="spelling-go-to-menu">Go to main menu</button>
     </section>
 
   </main>

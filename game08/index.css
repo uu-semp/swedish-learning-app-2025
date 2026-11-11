@@ -3,6 +3,7 @@
 Owned by Game 08
 =================================================
 */
+@import url("./theme.css");
 
 /* Design tokens and responsive sizes */
 :root {
@@ -257,4 +258,231 @@ kbd {
   padding: 2px 6px;
   font-family: monospace;
   box-shadow: 0 1px 0 rgba(0,0,0,0.2);
+}
+
+body {
+  min-height: 100vh;
+  overflow-x: hidden;
+  background-color: var(--game-bg);
+  background-image: radial-gradient(rgba(30, 27, 26, 0.075) 1px, transparent 1px);
+  background-size: 18px 18px;
+  color: var(--ink);
+  font-family: var(--font-body);
+}
+
+.welcome {
+  width: min(100%, 56rem);
+  min-height: 100vh;
+  min-height: 100svh;
+  background: transparent;
+  padding: clamp(5.5rem, 12vh, 8rem) 1.25rem 3.5rem;
+  justify-content: center;
+}
+
+.welcome__title {
+  color: var(--red);
+  font-family: var(--font-display);
+  font-size: clamp(3.5rem, 11vw, 6.5rem);
+  font-weight: 700;
+  line-height: 0.98;
+  text-shadow: 3px 3px 0 var(--ink);
+}
+
+.welcome__subtitle {
+  max-width: 34rem;
+  margin: 1rem 0 2rem;
+  color: var(--ink);
+  font-size: clamp(1.05rem, 3vw, 1.35rem);
+  line-height: 1.5;
+}
+
+.welcome__tutorial-btn {
+  width: min(19rem, 90%);
+  min-height: 10rem;
+  height: auto;
+  margin-bottom: 1.25rem;
+  border: var(--border);
+  border-radius: var(--radius);
+  background: var(--yellow);
+  box-shadow: var(--shadow);
+  color: var(--ink);
+  transition: transform var(--transition), box-shadow var(--transition), background-color var(--transition);
+}
+
+.welcome__tutorial-btn:hover {
+  transform: translate(-2px, -2px);
+  background: #F7D779;
+  box-shadow: var(--shadow-large);
+}
+
+.welcome__tutorial-btn:active {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0 var(--ink);
+}
+
+.welcome__tutorial-text {
+  color: var(--ink);
+  font-family: var(--font-display);
+  font-size: 1.45rem;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+.welcome__start-btn {
+  width: min(19rem, 90%);
+  max-width: none;
+  margin-top: 0.5rem;
+  padding: 0.9rem 2rem;
+  border: var(--border);
+  border-radius: var(--radius-small);
+  background: var(--blue);
+  box-shadow: var(--shadow);
+  color: var(--surface);
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  transition: transform var(--transition), box-shadow var(--transition), background-color var(--transition);
+}
+
+.welcome__start-btn:hover {
+  transform: translate(-2px, -2px);
+  background: var(--blue-dark);
+  box-shadow: var(--shadow-large);
+}
+
+.welcome__start-btn:active {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0 var(--ink);
+}
+
+#open-settings-button {
+  top: 1.25rem;
+  right: 1.25rem;
+}
+
+#tutorial-modal {
+  width: min(42rem, calc(100vw - 2rem));
+  max-height: min(86vh, 52rem);
+  overflow: auto;
+  border: var(--border);
+  border-radius: 20px;
+  background: var(--surface);
+  box-shadow: var(--shadow-large);
+  color: var(--ink);
+}
+
+#tutorial-modal::backdrop,
+#settings-modal::backdrop {
+  background: rgba(30, 27, 26, 0.56);
+}
+
+#tutorial-modal-content {
+  padding: clamp(1.25rem, 5vw, 2.25rem);
+}
+
+#tutorial-modal-content h2 {
+  margin: 0.8rem 0;
+  color: var(--red);
+  font-family: var(--font-display);
+  font-size: 1.65rem;
+  text-align: left;
+}
+
+#tutorial-modal-content p {
+  margin: 0 0 1rem;
+  color: var(--ink);
+  font-size: 1rem;
+  line-height: 1.65;
+}
+
+#close-tutorial {
+  top: 0.75rem;
+  right: 0.75rem;
+  width: 2.75rem;
+  height: 2.75rem;
+  border: 2px solid var(--ink);
+  border-radius: var(--radius-small);
+  background: var(--red);
+  box-shadow: 2px 2px 0 var(--ink);
+  color: var(--surface);
+  font-family: var(--font-body);
+  font-size: 1.8rem;
+}
+
+.keybinding-help {
+  overflow-x: auto;
+  justify-content: flex-start;
+}
+
+.keybinding-help table {
+  width: 100%;
+  border-spacing: 0;
+  text-align: left;
+}
+
+.keybinding-help th,
+.keybinding-help td {
+  padding: 0.55rem 0.7rem;
+  border-bottom: 1px solid var(--surface-soft);
+}
+
+.keybinding-help th {
+  font-weight: 800;
+}
+
+kbd {
+  border: 2px solid var(--ink);
+  border-radius: 5px;
+  background: var(--surface-soft);
+  box-shadow: 0 2px 0 var(--ink);
+  color: var(--ink);
+  font-family: var(--font-body);
+}
+
+#persistent-popup {
+  z-index: 20;
+  top: 1rem;
+  left: 1rem;
+  width: min(28rem, calc(100vw - 2rem));
+  height: auto;
+  padding: 1rem 1rem 3.5rem;
+  border: var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  box-shadow: var(--shadow);
+}
+
+#persistent-popup p {
+  padding: 0;
+  color: var(--ink);
+  line-height: 1.5;
+}
+
+#persistent-popup button {
+  right: 1rem;
+  bottom: 0.75rem;
+  padding: 0.5rem 0.85rem;
+  border: 2px solid var(--ink);
+  border-radius: 7px;
+  background: var(--blue);
+  color: white;
+  font: 700 0.95rem var(--font-body);
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+.welcome__tutorial-btn:focus-visible {
+  outline: 3px solid var(--red);
+  outline-offset: 4px;
+}
+
+@media (max-width: 540px) {
+  .welcome { padding-top: 6rem; }
+  .welcome__tutorial-btn { min-height: 8rem; }
+  #tutorial-modal-content { padding-top: 3.5rem; }
+  .keybinding-help table { min-width: 26rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { scroll-behavior: auto !important; animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
 }

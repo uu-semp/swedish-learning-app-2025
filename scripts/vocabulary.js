@@ -36,14 +36,6 @@ window.vocabulary = {
     callbacks: [],
 
     // This returns the vocabulary metadata belonging to the given ID.
-    //
-    // Words usually have the following metadata:
-    // - `en`       The vocabulary in english
-    // - `sv`       The vocabulary in swedish
-    // - `article`  The article of the word (Optional)
-    // - `literal`  The literal representation of the word (Optional)
-    // - `img`      The URL of the image for this word (Optional)
-    // - `audio`    The URL of the audio for this word (Optional)
     get_vocab(id) {
         return resolved_methods.get_vocab(id);
     },
@@ -51,6 +43,10 @@ window.vocabulary = {
     // Returns a list of vocabulary IDs belonging to the given category.
     get_category(category) {
         return resolved_methods.get_category(category);
+    },
+
+    get_categories() {
+        return resolved_methods.get_categories();
     },
 
     // Returns a random vocabulary item. See `get_vocab()`

@@ -47,3 +47,52 @@ export function initHints(getCurrentPairs) {
     }
   });
 }
+
+export function initLicenses(getWords) {
+  $("#licenses-button").on("click", function () {
+    const currentWords = getWords();
+    
+    const list = document.getElementById("licenses-list");
+    list.replaceChildren();
+
+    console.log("Building license modal with words:", currentWords);
+
+    currentWords.forEach(word => {
+      const entry = document.createElement("div");
+      entry.className = "license-entry";
+
+      const title = document.createElement("h4");
+      title.textContent = word.english;
+
+      const license = document.createElement("p");
+      license.innerHTML = word.license;
+
+      entry.append(title, license);
+      list.appendChild(entry);
+    });
+  });
+}
+
+export function initSpellingLicenses(getWords) {
+  $("#spelling-licenses-button").on("click", function () {
+    
+    const list = document.getElementById("spelling-licenses-list");
+    list.replaceChildren();
+
+    const words = getWords();
+
+    words.forEach(word => {
+      const entry = document.createElement("div");
+      entry.className = "license-entry";
+
+      const title = document.createElement("h4");
+      title.textContent = word.english;
+
+      const license = document.createElement("p");
+      license.innerHTML = word.license;
+
+      entry.append(title, license);
+      list.appendChild(entry);
+    });
+  });
+} 

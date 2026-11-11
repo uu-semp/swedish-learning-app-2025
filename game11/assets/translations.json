@@ -1,0 +1,148 @@
+{
+    "toggle-language-btn": {
+        "sv": "English",
+        "en": "Svenska"
+    },
+    "toggle-language-text": {
+        "sv": "Change language",
+        "en": "Byt språk"
+    },
+    "toggle-contrast-btn": {
+        "sv": "AV",
+        "en": "ON"
+    },
+    "toggle-contrast-text": {
+        "sv": "Hög kontrast",
+        "en": "High contrast"
+    },
+    "restart-btn": {
+        "sv": "Börja om",
+        "en": "Restart"
+    },
+    "mode1-btn": {
+        "sv": "Bildinlärning",
+        "en": "Image matching"
+    },
+    "mode2-btn": {
+        "sv": "Ordmatchning",
+        "en": "Word matching"
+    },
+    "mode3-btn": {
+        "sv": "Lyssningsövning",
+        "en": "Listening practice"
+    },
+    "close-settings-btn": {
+        "sv": "Stäng",
+        "en": "Close"
+    },
+    "instructions": {
+        "sv": "<p><strong>Hur du spelar</strong><br>Hitta objekten från inköpslistan på hyllan,<br>klicka eller dra och släpp den i varukorgen.</p>",
+        "en": "<p><strong>How to play</strong><br>Find the items in the shopping list on the shelf,<br>click or drag and drop the items into the cart.</p>"
+    },
+
+  "info-content": {
+    "en": "<strong>Welcome!</strong><br><br>This minigame helps Swedish learners practise everyday grocery shopping vocabulary.<br><br><strong>How to play</strong><br><br>• Match items from the shopping list with the correct products on the shelf.<br><br>• Click or drag products into the cart.<br><br>• Try to find as many correct items as possible.<br><br><strong>About this game</strong><br><br>While playing, you will encounter common Swedish words used in supermarkets and everyday shopping situations. The goal is to strengthen vocabulary recognition through repeated exposure and interaction with common grocery items.<br><br><strong> Info about the Spaced Repetition mode:</strong> <br><br>• When you click the Activate button the game move you to a different game mode, here the game registered how many time it took for guessing every word and based on that it will decide when to show that words in the future. <br><br>• Every day you have a fixed set of words to learn so when you have done with the day words you won't be able to play spaced repetion again for the day. <br><br>• You can exit the game mode by either going to other modalities or pressing the deactivate button.<br><br>• The delete data button will delete every data related to the words that you have repeted, by deleting them you'll lose all the progress done.<br><br>",
+
+    "sv": "<strong>Välkommen!</strong><br><br>Det här minispelet hjälper dig att träna vanliga svenska ord som används när man handlar mat.<br><br><strong>Så spelar du</strong><br><br>• Matcha orden i inköpslistan med rätt produkter på hyllan.<br><br>• Klicka eller dra produkterna till kundvagnen.<br><br>• Försök hitta så många rätt varor som möjligt.<br><br><strong>Om spelet</strong><br><br>Under spelets gång möter du vanliga svenska ord som används i svenska butiker och vardagliga inköpssituationer. Målet är att stärka ordförrådet genom upprepad exponering och interaktion med vanliga matvaror. <br><br><strong>Information om läget för spridd repetition:</strong><br><br>•När du klickar på 'Aktivera'-knappen växlar spelet till ett annat spelläge. Här registreras hur lång tid det tar att gissa varje ord och utifrån detta avgörs när orden ska visas igen i framtiden.<br><br>•Varje dag har du ett bestämt antal ord att lära dig. När du har gått igenom dagens ord kan du inte spela detta läge mer förrän nästa dag.<br><br>• Du kan lämna spelläget genom att antingen välja ett annat läge eller trycka på 'Avaktivera'-knappen.<br><br>•'Radera minne'-knappen tar bort all information kopplad till de ord du har repeterat. Om du raderar denna data förlorar du alla framsteg du gjort.<br><br>"
+    },
+    "menu-header-text": {
+        "sv": "Meny",
+        "en": "Menu"
+    },
+    "progressPill": {
+        "sv": "not used",
+        "en": "not used"
+    },
+    "firstTryPill": {
+        "sv": "not used",
+        "en": "not used"
+    },
+    "mistakesPill": {
+        "sv": "not used",
+        "en": "not used"
+    },
+    "targetPill": {
+        "sv": "not used",
+        "en": "not used"
+    },
+    "copyright-header-text": {
+        "sv": "Licenser <i class=\"fas fa-minus\"></i>numrerad vänster till höger, uppifrån och ner <i class=\"fas fa-minus\"></i> skrolla för att se mer",
+        "en": "Licenses <i class=\"fas fa-minus\"></i>numbered left to right, top to bottom <i class=\"fas fa-minus\"></i> scroll to see more"
+    },
+    "copyright-table-image-text": {
+        "sv": "Bild",
+        "en": "Image"
+    },
+    "copyright-table-license-text": {
+        "sv": "Licens",
+        "en": "License"
+    },
+    "main-menu-btn": {
+        "sv": "Meny ☰",
+        "en": "Menu ☰"
+    },
+    "audio-error": {
+        "sv": "Ljudet kunde inte spelas upp",
+        "en": "The audio could not be played"
+    },
+    "sr-info-text": {
+        "sv": "För att komma ihåg dina framsteg sparas information om vilka ord du har tränat på och när de ska repeteras igen. Informationen sparas lokalt i din webbläsare.",
+        "en": "To save your progress in this game, information of which words you have seen and when they will be repeated again. The inforamtion is saved locally in your browser."
+    },
+    "sr-accept-btn": {
+        "sv": "Godkänn och aktivera",
+        "en": "Confirm and activate"
+    },
+    "sr-info-cancel-btn": {
+        "sv": "Avbryt",
+        "en": "Cancel"
+    },
+    "sr-delete-text": {
+        "sv": "Alla sparade Spaced Repetition-framsteg kommer att raderas. Detta går inte att ångra.",
+        "en": "All saved spaced repetition progress will be deleted. This cannot be reverted."
+    },
+    "sr-delete-confirm-btn": {
+        "sv": "Radera",
+        "en": "Delete"
+    },
+    "sr-delete-cancel-btn": {
+        "sv": "Avbryt",
+        "en": "Cancel"
+    },
+    "sr-no-words-text": {
+        "sv": "Inga ord att repetera idag. Kom tillbaka imorgon!",
+        "en": "No words left to repeat today. Come back tomorrow!"
+    },
+    "sr-no-words-close-btn": {
+        "sv": "Tillbaka till normalt läge",
+        "en": "Back to normal mode"
+    },
+    "sr-enable-btn": {
+        "sv": "Aktivera",
+        "en": "Activate"
+    },
+    "sr-disable-btn": {
+        "sv": "Avaktivera",
+        "en": "Deactivate"
+    },
+    "sr-delete-btn": {
+        "sv": "Radera minne",
+        "en": "Delete memory"
+    },
+    "sr-title": {
+        "sv": "Tidsfördelad repetition",
+        "en": "Spaced repetition"
+    },
+    "sr-info-header": {
+        "sv": "Tidsfördelad repetition",
+        "en": "Spaced repetition"
+    },
+    "sr-no-words-header": {
+        "sv": "Tidsfördelad repetition",
+        "en": "Spaced repetition"
+    },
+    "sr-delete-header": {
+        "sv": "Är du säker?",
+        "en": "Are you sure?"
+    }
+}

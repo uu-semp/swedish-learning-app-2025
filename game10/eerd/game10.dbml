@@ -1,0 +1,101 @@
+// AI disclosure
+// Tool used: Claude Opus 5
+// By whom: Viktor
+// Purpose: Help modelling the game's browser-stored data as an EERD in DBML
+// Prompt(s) (summarized): Asked for help describing the game's cookie,
+// localStorage and sessionStorage data as DBML tables for dbdiagram.io
+
+// Shared vocabulary (read only)
+
+Table vocabulary {
+  id      text [pk, note: "vocabulary id, the key passed to vocabulary.get_vocab(id)"]
+  sv      text [not null, note: "Swedish word. Items without it are filtered out by foodItems()"]
+  en      text [note: "English translation, shown as the hint and in feedback"]
+  article text [note: "en | ett. Optional"]
+  literal text [note: "literal representation. Optional"]
+  img     text [note: "image path relative to the repo root, resolved by vocabUrl()"]
+  audio   text [note: "audio path relative to the repo root, played by playAudio()"]
+
+  Note: "Owned by the whole app, loaded async by scripts/vocabulary.js. Every game page waits on vocabulary.when_ready() before touching it."
+}
+
+Table vocabulary_categories {
+  vocab_id text [not null, ref: > vocabulary.id]
+  category text [not null, note: "game10 only reads 'food'"]
+
+  indexes {
+    (category, vocab_id) [pk]
+  }
+
+  Note: "vocabulary.get_category(category) returns the ids. Modelled as a join table because one word can sit in more than one category."
+}
+
+// Player progress (cookie)
+
+Table player_progress {
+  game_completed boolean [not null, default: false, note: "set once level 3 reaches a total of 10. Never flips back except on reset"]
+  current_level  integer [not null, default: 1, note: "CHECK 1..3. The highest UNLOCKED level, so levels above it are locked in the menu"]
+
+  Note: "One JSON cookie holds this row plus level_scores and learned_words. loadProgress() merges it over defaults, so a missing or broken cookie reads as a fresh player. resetProgress() deletes the cookie and clears game_stats."
+}
+
+Table level_scores {
+  level       integer [pk, note: "CHECK 1..3"]
+  total_score integer [not null, default: 0, note: "CUMULATIVE across rounds: each round adds its score. A total of 10 (SCORE_TO_PASS) on the current level unlocks the next one"]
+
+  Note: "Stored as progress.levelScores {1, 2, 3}. The menu caps the shown score at 10."
+}
+
+Table learned_words {
+  vocab_id text [pk, ref: > vocabulary.id, note: "added by learning mode when a card is marked learned. No duplicates"]
+
+  Note: "Stored as progress.learnedIds. Its length over the size of the food category is the menu's progress bar."
+}
+
+// Settings (localStorage)
+
+Table player_settings {
+  lang text [not null, default: "en", note: "CHECK en | sv. Anything else reads as en. Kept outside the progress cookie, so a reset keeps the language"]
+}
+
+// Shared stats (localStorage)
+
+Table game_stats {
+  game_name  text    [pk, note: "always 'game10'"]
+  wins       integer [not null, default: 0, note: "+1 the first time level 3 is passed (guarded by player_progress.game_completed)"]
+  completion integer [not null, default: 0, note: "CHECK 0..100. Set to 33 / 67 / 100 when level 1 / 2 / 3 is passed"]
+
+  Note: "The menu team's save API. We only call setCompletion, incrementWin and clear."
+}
+
+// Level two round (sessionStorage)
+
+Table level_two_rounds {
+  round_id text [pk, note: "implicit: there is only ever one round in flight per tab"]
+
+  Note: "Written by level_two/game_page.js on submit, read by answer_verify.js to grade the round. Lives only as long as the tab. leftItems and rightItems are the same words in two shuffled orders."
+}
+
+Table level_two_items {
+  round_id text    [not null, ref: > level_two_rounds.round_id]
+  side     text    [not null, note: "CHECK left | right"]
+  position integer [not null, note: "index in leftItems or rightItems, 0..PAIR_COUNT-1"]
+  vocab_id text    [not null, ref: > vocabulary.id, note: "the item is a copy of the vocabulary row, id included"]
+
+  indexes {
+    (round_id, side, position) [pk]
+  }
+}
+
+Table level_two_links {
+  round_id       text    [not null, ref: > level_two_rounds.round_id]
+  left_position  integer [not null, note: "the {left} of a link"]
+  right_position integer [not null, note: "the {right} of a link"]
+
+  indexes {
+    (round_id, left_position)  [unique, note: "one line per left word"]
+    (round_id, right_position) [unique, note: "one line per right word"]
+  }
+
+  Note: "A link is correct when both positions point at the same vocab_id. Submit is only enabled once every word has a link."
+}
